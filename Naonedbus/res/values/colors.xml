@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
+ *  Copyright (C) 2011 Romain Guefveneu
+ *  
+ *  This file is part of naonedbus.
+ *  
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<resources>
+
+    <color name="backgroundColor">#ff0000</color>
+    <color name="activity_background_light">#ffefefef</color>
+    <color name="pinned_header_menu_background">#006699</color>
+    <color name="pinned_header_menu_text">#90ffffff</color>
+    <color name="menu_divider">#25ffffff</color>
+    <color name="menu_background">#006699</color>
+    <color name="divider_light">#cccccc</color>
+    <color name="divider_dark">#333333</color>
+    <color name="map_pane_text_color">#000000</color>
+    <color name="holo_blue_light">#ff2F93C5</color>
+    <color name="holo_blue_dark">#ff70AFCE</color>
+
+    <!-- PagerHeader -->
+    <color name="pager_header_background_color">#ff333333</color>
+    <color name="pager_header_active_text_color">#ffffff</color>
+    <color name="pager_header_inactive_text_color">#ffbbbbbb</color>
+    <color name="pager_header_line_color">#ff666666</color>
+
+    <!-- Parkings -->
+    <color name="parking_state_blue">#ff0079bc</color>
+    <color name="parking_state_orange">#ffee7907</color>
+    <color name="parking_state_red">#ffe53238</color>
+    <color name="parking_state_closed">#ffe53238</color>
+    <color name="parking_state_undefined">#333333</color>
+    <color name="parking_state_subscriber">#ff9c71a9</color>
+    <!-- Map -->
+    <color name="map_pin_arret">#2D9B48</color>
+    <color name="map_pin_parking">#ff0079bc</color> <!-- #1D72F9 -->
+    <color name="map_pin_bicloo">#FEAE00</color>
+    <color name="map_pin_marguerite">#FF6418</color>
+    <color name="map_pin_covoiturage">#34B1DB</color>
+    <color name="map_pin_lila">#024F93</color>
+
+</resources>

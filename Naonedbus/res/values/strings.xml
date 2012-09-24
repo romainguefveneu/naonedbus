@@ -1,0 +1,180 @@
+<resources>
+
+    <string name="app_name">NaonedBus</string>
+    <string name="version_number">Version %s</string>
+    <string name="version_name">Acapulco</string>
+    <string name="menu_settings">Settings</string>
+    <string name="read_more">Lire la suite »</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="yesterday">Hier</string>
+    <string name="tomorrow">Demain</string>
+    <string name="loading">Chargement&#8230;</string>
+    <string name="loading_layers">Chargement des calques&#8230;</string>
+    <string name="whatsup">Que se passe-t-il ?</string>
+    <string name="emptyString"></string>
+    <!-- Activities -->
+    <string name="title_activity_main">Accueil</string>
+    <string name="title_activity_infos_trafic">Infos Trafic</string>
+    <string name="title_activity_map">Sur la carte</string>
+    <string name="title_activity_itineraire">Itinéraire</string>
+    <string name="title_activity_equipements">Equipements</string>
+    <string name="title_activity_parkings">Parkings</string>
+    <string name="title_activity_commentaire">Commentaire</string>
+    <string name="title_activity_parametres">Paramètres</string>
+    <!-- Slide menu -->
+    <string name="menu_accueil">Accueil</string>
+    <string name="menu_info_trafic">Infos trafic</string>
+    <string name="menu_itineraires">Itineraires</string>
+    <string name="menu_parkings">Parkings</string>
+    <string name="menu_equipements">Equipements</string>
+    <string name="menu_carte">Carte</string>
+    <string name="menu_parametres">Paramètres</string>
+    <string name="menu_about">A propos</string>
+    <!-- Actions -->
+    <string name="action_share">Partager</string>
+    <string name="action_refresh">Actualiser</string>
+    <string name="action_edit">Commenter le trafic</string>
+    <string name="action_import">Importer</string>
+    <string name="action_export">Exporter</string>
+    <string name="action_sort">Trier</string>
+    <string name="action_sort_name">Trier par nom</string>
+    <string name="action_sort_distance">Trier par distance</string>
+    <string name="action_sort_parking_places">Trier par places disponibles</string>
+    <string name="action_filter">Filtrer</string>
+    <string name="action_send">Envoyer</string>
+    <string name="action_feedback">Envoyer un retour</string>
+    <string name="action_rate">Noter cette application</string>
+    <!-- Erreurs -->
+    <string name="error_title">Une erreur est survenue</string>
+    <string name="error_title_network">Une erreur réseau est survenue</string>
+    <string name="error_title_empty">Aucune donnée n\'est disponible</string>
+    <string name="error_title_empty_favori">Aucun favori</string>
+    <string name="error_summary">Merci de réessayer !</string>
+    <string name="error_summary_network">Vérifiez votre connexion et réessayez</string>
+    <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
+    <string name="error_summary_empty_favori">Glissez vers l\'écran de gauche pour naviguer entre les lignes.</string>
+    <!-- Accueil -->
+    <string name="title_fragment_lignes">Lignes</string>
+    <string name="title_fragment_favoris">Favoris</string>
+    <string name="title_fragment_proximite">A proximité</string>
+    <!-- A propos -->
+    <string name="title_fragment_about">A propos</string>
+    <string name="title_fragment_versions">Nouveautés</string>
+    <string name="about_autors_title">Auteurs</string>
+    <string name="about_autors_content"><![CDATA[Romain Guefveneu <br />Benoît Cotinat]]></string>
+    <string name="about_info_title">Informations</string>
+    <string name="about_info_content"><![CDATA[<p>Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.</p><p>Les données sont celles disponibles sur les sites <a href="http://www.tan.fr">www.tan.fr</a> et <a href="http://data.nantes.fr">data.nantes.fr</a></p> <p>Pour tout problème, merci de le signaler par twitter ou bien par e-mail <a href="mailto:naonedbus@gmail.com">naonedbus@gmail.com</a>.</p>]]></string>
+    <string name="about_thanks_title">Remerciements</string>
+    <string name="about_licences_title">Licences</string>
+    <string name="about_licences_content"><![CDATA[Certaines icônes sont issues de <a href="http://thenounproject.com">The Noon Project.</a>]]></string>
+    <!-- Tan -->
+    <string name="title_fragment_sens">Sens</string>
+    <string name="title_fragment_horaires">Horaires</string>
+    <!-- Infos trafic -->
+    <string name="title_fragment_tan_actu">Tan Actu</string>
+    <string name="title_fragment_en_direct">En direct</string>
+    <!-- Equipements -->
+    <string name="title_fragment_parkings_publics">Publics</string>
+    <string name="title_fragment_parkings_relais">Relais</string>
+    <string name="title_fragment_bicloos">Bicloos</string>
+    <string name="title_fragment_marguerites">Marguerites</string>
+    <string name="title_fragment_lila">Lila</string>
+    <string name="title_fragment_covoiturage">Co-Voiturage</string>
+    <string name="title_fragment_arrets">Arrets</string>
+    <!-- Commentaires -->
+    <string name="commentaire_action_transmission">Transmission en cours&#8230;</string>
+    <string name="commentaire_tan_info_trafic">Tan info trafic</string>
+    <string name="commentaire_tout">Tout le réseau</string>
+    <string name="commentaire_message_service">Message de service</string>
+    <string name="time_line_yesterday">Hier</string>
+    <string name="time_line_after">A venir</string>
+    <string name="time_line_now">Aujourd\'hui</string>
+    <string name="time_line_before">Précédement</string>
+    <string name="source_prefix">Envoyé depuis</string>
+    <string name="source_unknown">quelque chose, mais je sais pas trop quoi</string>
+    <string name="source_naonedbus">naonedbus</string>
+    <string name="source_twitter">Twitter</string>
+    <string name="source_simpletan">Simpletan</string>
+    <string name="source_naonedbus_service">Discovery One</string>
+    <!-- Parkings -->
+    <string name="parking_section_disponible">Beaucoup de places</string>
+    <string name="parking_section_limite">Plus beaucoup de places</string>
+    <string name="parking_section_info">Informations</string>
+    <string name="parking_section_carte">Sur la carte</string>
+    <string name="parking">Parking</string>
+    <string name="parking_relai">Parking relai</string>
+    <string name="parking_ferme">Fermé</string>
+    <string name="parking_abonne">Abonnés</string>
+    <string name="parking_invalide">Information non disponible</string>
+    <string name="parking_ouvert">Ouvert</string>
+    <string name="parking_titre_places_disponibles">Places disponibles</string>
+    <string name="parking_titre_places_totales">Places totales</string>
+    <string name="parking_titre_mise_a_jour">Mise à jour</string>
+    <string name="parking_titre_telephone">Téléphone</string>
+    <string name="parking_places_disponibles_zero">C\'est plein !</string>
+    <string name="parking_places_disponibles_na">Aucune info disponible</string>
+
+    <plurals name="parking_places_disponibles">
+        <item quantity="one">1 place restante, dépéchez-vous !</item>
+        <item quantity="other">%d places disponibles</item>
+    </plurals>
+    <!-- Carte -->
+    <string name="map_calques">Calques</string>
+    <string name="map_calque_arret">Arrêt Tan</string>
+    <string name="map_calque_parkings">Parkings</string>
+    <string name="map_calque_parking_relai">Parking Relai</string>
+    <string name="map_calque_bicloo">Station Bicloo</string>
+    <string name="map_calque_marguerite">Station Marguerite</string>
+    <string name="map_calque_satellite">Vue satellite</string>
+    <string name="map_calque_covoiturage">Station de co-voiturage</string>
+    <string name="map_calque_lila">Arrêt Lila</string>
+
+    <!-- Sections -->
+    <string name="section_distance_none">Aucune information de distance</string>
+    <string name="section_distance_100000">Beaucoup trop loin !</string>
+    <string name="section_distance_50000">Moins de 100 Km</string>
+    <string name="section_distance_40000">Moins de 50 Km</string>
+    <string name="section_distance_30000">Moins de 40 Km</string>
+    <string name="section_distance_20000">Moins de 30 Km</string>
+    <string name="section_distance_10000">Moins de 20 Km</string>
+    <string name="section_distance_5000">Moins de 10 Km</string>
+    <string name="section_distance_1000">Moins de 5 Km</string>
+    <string name="section_distance_500">Moins de 1 Km</string>
+    <string name="section_distance_0">Moins de 500 m</string>
+    <!-- Messages -->
+    <!-- - - Erreurs -->
+    <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
+    <string name="msg_error_location_title">La géolocalisation est désactivée</string>
+    <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
+    <!-- Warning -->
+    <string name="msg_warning_send_comment">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>
+    <!-- - - Vide -->
+    <string name="msg_nothing_telephone">Pas de téléphone</string>
+    <string name="msg_element_not_localized">Cet élément ne peut pas être localisé.</string>
+    <!-- - - Divers -->
+    <string name="msg_loading_address">Récupération de l\'adresse en cours&#8230;</string>
+    <string name="btn_geolocation_service">Services de localisation</string>
+    <!-- Hint -->
+    <string name="hint_ajouter_commentaire">Que se passe-t-il sur le réseau Tan ?</string>
+    <!-- Dialogs -->
+    <string name="dialog_title_information">Information</string>
+    <string name="dialog_title_warning">Attention</string>
+    <string name="dialog_title_invalid_comment">Message trop court</string>
+    <string name="dialog_title_comment_sending_error">Votre message n\'a pas pu être délivré !</string>
+    <string name="dialog_content_comment_sending_error">Une erreur s\'est produite pendant l\'envoi du message, merci de réessayer plus tard…</string>
+    <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
+
+    <!-- Target -->
+    <string name="target_ligne">Ligne</string>
+    <string name="target_sens">Sens</string>
+    <string name="target_arret">Arret</string>
+    <string name="target_toutes_lignes_symbole">\u221E</string>
+    <string name="target_toutes_lignes">Toutes les lignes</string>
+    <string name="target_tous_sens">Tous les sens</string>
+    <string name="target_tous_arrets">Tous les arrêts</string>
+    <!-- Prompt -->
+    <string name="prompt_ligne">Toutes les lignes</string>
+    <string name="prompt_sens">Tous les sens</string>
+    <string name="prompt_arret">Tous les arrêts</string>
+
+</resources>

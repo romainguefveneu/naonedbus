@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultActivity" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/BigTitle"
+            android:layout_marginRight="10dip" />
+
+        <TextView
+            android:id="@id/itemDescription"
+            style="@style/ItemParkingDescription"
+            android:background="@drawable/item_symbole_back" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/colLeft"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/SectionTitle"
+                android:text="@string/parking_section_info" />
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="5dp" >
+
+                    <TextView
+                        android:id="@+id/placesDisponibles"
+                        style="@style/ItemPrimaryText"
+                        android:text="aucune" />
+
+                    <TextView
+                        style="@style/SectionTitle.Small"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/parking_titre_places_disponibles" />
+
+                    <TextView
+                        android:id="@+id/placesTotales"
+                        style="@style/ItemPrimaryText"
+                        android:text="aucune" />
+
+                    <TextView
+                        style="@style/SectionTitle.Small"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/parking_titre_places_totales" />
+
+                    <TextView
+                        android:id="@+id/majDate"
+                        style="@style/ItemPrimaryText"
+                        android:text="aucune" />
+
+                    <TextView
+                        style="@style/SectionTitle.Small"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/parking_titre_mise_a_jour" />
+
+                    <TextView
+                        android:id="@+id/itemTelephone"
+                        style="@style/ItemPrimaryText" />
+
+                    <TextView
+                        style="@style/SectionTitle.Small"
+                        android:text="@string/parking_titre_telephone" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/colRight"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <TextView
+                style="@style/SectionTitle"
+                android:text="@string/parking_section_carte" />
+
+            <com.google.android.maps.MapView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/map_view"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:apiKey="@string/google_map_api_key"
+                android:clickable="true" />
+
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/msg_element_not_localized"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

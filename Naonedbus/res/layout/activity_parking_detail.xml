@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultActivity" >
+
+    <LinearLayout
+        android:id="@+id/parkingInfo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp" >
+
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/BigTitle"
+            android:layout_marginLeft="8dip" />
+
+        <TextView
+            android:id="@id/itemDescription"
+            style="@style/ItemParkingDescription"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="8dip" />
+
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/parking_section_info" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp" >
+
+            <TwoLineListItem
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/placesDisponibles"
+                    style="@style/ItemPrimaryText" />
+
+                <TextView
+                    style="@style/SectionTitle.Small"
+                    android:layout_below="@id/placesDisponibles"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/parking_titre_places_disponibles" />
+            </TwoLineListItem>
+
+            <TwoLineListItem
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/placesTotales"
+                    style="@style/ItemPrimaryText" />
+
+                <TextView
+                    style="@style/SectionTitle.Small"
+                    android:layout_below="@id/placesTotales"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/parking_titre_places_totales" />
+            </TwoLineListItem>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp" >
+
+            <TwoLineListItem
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/majDate"
+                    style="@style/ItemPrimaryText" />
+
+                <TextView
+                    style="@style/SectionTitle.Small"
+                    android:layout_below="@id/majDate"
+                    android:text="@string/parking_titre_mise_a_jour" />
+            </TwoLineListItem>
+
+            <TwoLineListItem
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/itemTelephone"
+                    style="@style/ItemPrimaryText" />
+
+                <TextView
+                    style="@style/SectionTitle.Small"
+                    android:layout_below="@id/itemTelephone"
+                    android:text="@string/parking_titre_telephone" />
+            </TwoLineListItem>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <TextView
+            style="@style/SectionTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/parking_section_carte" />
+
+        <com.google.android.maps.MapView
+            android:id="@+id/map_view"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:apiKey="@string/google_map_api_key"
+            android:clickable="true" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/msg_element_not_localized"
+            android:visibility="gone" />
+    </LinearLayout>
+
+</LinearLayout>

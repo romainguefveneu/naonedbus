@@ -1,0 +1,98 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="net.naonedbus"
+    android:versionCode="1"
+    android:versionName="3.0 - Snapshot" >
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".NBApplication"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Acapulco.Light" >
+        <activity
+            android:name=".activity.impl.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.impl.AboutActivity"
+            android:label="@string/title_activity_main" />
+        <activity
+            android:name=".activity.impl.InfosTraficActivity"
+            android:label="@string/title_activity_infos_trafic" />
+        <activity android:name=".activity.impl.SensActivity" />
+        <activity android:name=".activity.impl.ArretsActivity" />
+        <activity
+            android:name=".activity.impl.CommentaireActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
+        <activity
+            android:name=".activity.impl.EquipementsActivity"
+            android:label="@string/title_activity_equipements" />
+        <activity
+            android:name=".activity.impl.ParkingsActivity"
+            android:label="@string/title_activity_parkings" />
+        <activity
+            android:name=".activity.impl.CommentaireDetailActivity"
+            android:label="@string/title_activity_commentaire" />
+        <activity
+            android:name=".activity.impl.SettingsActivity"
+            android:label="@string/title_activity_parametres" />
+        <activity
+            android:name=".activity.impl.MapActivity"
+            android:label="@string/title_activity_map" />
+        <activity
+            android:name=".activity.impl.ParkingDetailActivity"
+            android:label="@string/emptyString" />
+
+        <provider
+            android:name=".provider.impl.LigneProvider"
+            android:authorities="net.naonedbus.provider.LigneProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+        <provider
+            android:name=".provider.impl.SensProvider"
+            android:authorities="net.naonedbus.provider.SensProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+        <provider
+            android:name=".provider.impl.ArretProvider"
+            android:authorities="net.naonedbus.provider.ArretProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+        <provider
+            android:name=".provider.impl.EquipementProvider"
+            android:authorities="net.naonedbus.provider.EquipementProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+        <provider
+            android:name=".provider.impl.UpdaterProvider"
+            android:authorities="net.naonedbus.provider.UpdaterProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+        <provider
+            android:name=".provider.impl.TypeEquipementProvider"
+            android:authorities="net.naonedbus.provider.TypeEquipementProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+        <provider
+            android:name=".provider.impl.TypeLigneProvider"
+            android:authorities="net.naonedbus.provider.TypeLigneProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+
+        <uses-library android:name="com.google.android.maps" />
+    </application>
+
+</manifest>

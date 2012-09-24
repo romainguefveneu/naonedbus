@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultLine.Content"
+    android:minHeight="?android:attr/listPreferredItemHeight" >
+
+    <TextView
+        android:id="@id/itemSymbole"
+        style="@style/ItemSymbole"
+        android:layout_marginRight="10dp" />
+
+    <TextView
+        android:id="@+id/ligneFrom"
+        style="@style/ItemPrimaryText.SingleLine"
+        android:layout_toRightOf="@id/itemSymbole" />
+
+    <TextView
+        android:id="@+id/ligneTo"
+        style="@style/ItemPrimaryText.SingleLine"
+        android:layout_below="@id/ligneFrom"
+        android:layout_toRightOf="@id/itemSymbole" />
+
+</RelativeLayout>

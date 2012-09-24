@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ *  Copyright (C) 2011 Romain Guefveneu
+ *  
+ *  This file is part of naonedbus.
+ *  
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="DefaultActivity">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="DefaultActivityContent">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
+    </style>
+
+    <style name="DefaultActivityContent.Inner">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="DefaultFragment">
+        <item name="android:background">?attr/activityBackground</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Header">
+        <item name="android:background">?attr/activityBackground</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dip</item>
+        <item name="android:background">?attr/dividerColor</item>
+    </style>
+
+    <style name="SectionTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!-- See comments for @dimen/list_section_divider_min_height -->
+        <item name="android:minHeight">@dimen/list_section_divider_min_height</item>
+        <item name="android:background">?attr/sectionBackground</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">?attr/sectionColor</item>
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="SectionTitle.Center">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="SectionTitle.Small" parent="ItemPrimaryText.Small">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">?attr/secondaryColor</item>
+    </style>
+
+    <style name="SectionTitle.Menu">
+        <item name="android:background">@drawable/list_section_menu_underline</item>
+        <item name="android:textColor">@color/pinned_header_menu_text</item>
+    </style>
+
+    <style name="SectionContent">
+        <item name="android:padding">8dip</item>
+    </style>
+
+    <style name="DefaultLine">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="DefaultLine.Single">
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
+    <style name="DefaultLine.Content">
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="DefaultLine.Content.Space">
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+    </style>
+
+    <style name="DefaultLine.Content.Fixed">
+        <item name="android:layout_height">65dp</item>
+    </style>
+
+    <style name="ButtonBar"></style>
+
+    <style name="TwoListItem">
+        <item name="android:layout_width">0dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:mode">twoLine</item>
+    </style>
+
+    <style name="ItemSymbole">
+        <item name="android:textSize">23dip</item>
+        <item name="android:layout_width">40dip</item>
+        <item name="android:layout_height">40dip</item>
+        <item name="android:layout_alignParentTop">false</item>
+        <item name="android:layout_gravity">center|center_vertical</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="ItemSymbole.Small">
+        <item name="android:textSize">18dip</item>
+        <item name="android:layout_width">35dip</item>
+        <item name="android:layout_height">35dip</item>
+    </style>
+
+    <style name="ItemSymbole.Tiny">
+        <item name="android:textSize">16dip</item>
+        <item name="android:layout_width">30dip</item>
+        <item name="android:layout_height">30dip</item>
+    </style>
+
+    <style name="ItemPrimaryText" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textSize">18dip</item>
+        <item name="android:textColor">?attr/primaryColor</item>
+        <item name="android:layout_gravity">left|center_vertical</item>
+    </style>
+
+    <style name="ItemPrimaryText.SingleLine">
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="ItemPrimaryText.Medium">
+        <item name="android:textSize">16dip</item>
+    </style>
+
+    <style name="ItemPrimaryText.Small">
+        <item name="android:textSize">14dip</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="ItemPrimaryText.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ItemTraficTitle" parent="ItemPrimaryText">
+        <item name="android:textSize">16dip</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ItemMenuTitle" parent="ItemPrimaryText">
+        <item name="android:textColor">@color/item_primary_text_dark</item>
+    </style>
+
+    <style name="ItemPrimaryText.Widget" parent="ItemPrimaryText.SingleLine">
+        <item name="android:textColor">@color/item_primary_text_dark</item>
+    </style>
+
+    <style name="ItemPrimaryText.Widget.Small" parent="ItemPrimaryText.Small">
+        <item name="android:textColor">@color/item_primary_text_dark</item>
+    </style>
+
+    <style name="ItemPrimaryText.SingleLine.Small" parent="@style/ItemPrimaryText.Small">
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="ItemSecondaryText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:textSize">16dip</item>
+        <item name="android:textColor">?attr/secondaryColor</item>
+        <item name="android:layout_gravity">left|center_vertical</item>
+    </style>
+
+    <style name="ItemSecondaryText.SingleLine">
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="ItemSecondaryText.Small">
+        <item name="android:textSize">13dip</item>
+    </style>
+
+    <style name="ItemSecondaryText.SingleLine.Small">
+        <item name="android:textSize">13dip</item>
+    </style>
+
+    <style name="ItemSecondaryText.Widget" parent="ItemSecondaryText.SingleLine.Small">
+        <item name="android:textColor">@color/item_secondary_text_dark</item>
+    </style>
+
+    <style name="ItemParkingDescription" parent="ItemSecondaryText.SingleLine.Small">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:paddingTop">5dip</item>
+        <item name="android:paddingBottom">5dip</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ItemTime">
+        <item name="android:textColor">?attr/secondaryColor</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textSize">12dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ItemTime.Secondary">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="CommentDetail">
+        <item name="android:textColor">?attr/primaryColor</item>
+        <item name="android:textSize">19dip</item>
+    </style>
+
+    <style name="PageTitle">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="PageSubTitle">
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">#cccccc</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="BigTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">32dip</item>
+        <item name="android:textColor">?attr/primaryColor</item>
+    </style>
+
+    <style name="Listview">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:overScrollMode">always</item>
+        <item name="android:fastScrollEnabled">true</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+    </style>
+
+    <style name="Listview.Holo">
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+    </style>
+
+    <style name="MenuSearch">
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:background">@drawable/textfield_default_holo_light</item>
+        <item name="android:drawableLeft">@drawable/ic_menu_search</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:hint">Arrêts, parkings, bicloo, ...</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@color/pinned_header_menu_text</item>
+    </style>
+
+</resources>

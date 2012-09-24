@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@id/menu_edit"
+        android:icon="@drawable/ic_action_edit"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/action_edit">
+    </item>
+    <item
+        android:id="@id/menu_filter"
+        android:icon="@drawable/ic_action_labels"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:title="@string/action_filter">
+        <menu>
+        </menu>
+    </item>
+
+</menu>

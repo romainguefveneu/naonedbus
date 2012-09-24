@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/net.naonedbus"
+    style="@style/DefaultActivity"
+    android:padding="10dip" >
+
+    <EditText
+        android:id="@android:id/input"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:background="@drawable/block_light"
+        android:gravity="top|left"
+        android:hint="@string/hint_ajouter_commentaire"
+        android:imeOptions="actionSend"
+        android:inputType="textShortMessage|textCapSentences|textMultiLine"
+        android:maxLength="140"
+        android:maxLines="10"
+        android:minLines="6"
+        android:padding="10dip"
+        android:scrollHorizontally="false"
+        android:singleLine="false" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip" >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/SectionTitle.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:text="@string/target_ligne" />
+
+            <TextView
+                style="@style/SectionTitle.Small"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+                android:text="@string/target_sens" />
+
+            <TextView
+                style="@style/SectionTitle.Small"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="fill"
+                android:layout_weight="1"
+                android:text="@string/target_arret" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:id="@id/commentaireLigneSpinner"
+                style="?android:attr/dropDownSpinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill|bottom"
+                android:paddingRight="18dip" >
+
+                <TextView
+                    android:id="@id/commentaireLigne"
+                    style="@style/ItemSymbole.Tiny"
+                    android:background="@drawable/item_symbole_back"
+                    android:text="@string/target_toutes_lignes_symbole"
+                    android:textColor="@android:color/black" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@id/commentaireSens"
+                style="?android:attr/dropDownSpinnerStyle"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill|bottom"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/target_tous_sens" />
+
+            <TextView
+                android:id="@id/commentaireArret"
+                style="?android:attr/dropDownSpinnerStyle"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_gravity="fill|bottom"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:enabled="false"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/target_tous_arrets" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

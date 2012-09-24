@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="first_preferencescreen"
+    android:title="@string/app_name" >
+
+    <PreferenceCategory android:title="Thème" >
+        <ListPreference
+            android:entries="@array/themeOptions"
+            android:entryValues="@array/themeValues"
+            android:key="theme"
+            android:persistent="true"
+            android:title="Thème de l&apos;application" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Favoris" >
+        <Preference
+            android:key="favoris.export"
+            android:title="Exporter dans le cloud" />
+        <Preference
+            android:key="favoris.import"
+            android:title="Importer avec ma clé" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Plan des lignes" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="plan.cache.enabled"
+            android:title="Activer le cache" />
+
+        <Preference
+            android:key="plan.cache.clear"
+            android:summary="Taille du cache : 0 Ko"
+            android:title="Vider le cache" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Horaires" >
+        <Preference
+            android:key="horaires.cache.clear"
+            android:title="Vider le cache" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

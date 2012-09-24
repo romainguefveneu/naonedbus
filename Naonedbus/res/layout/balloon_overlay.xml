@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/balloon_main_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/balloon_overlay_bg_selector"
+    android:minWidth="200dip"
+    android:paddingBottom="15dip"
+    android:paddingLeft="0dip"
+    android:paddingRight="5dip"
+    android:paddingTop="0dip" >
+
+    <ImageView
+        android:id="@id/itemSymbole"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/item_symbole_back"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/map_layer_arret" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_toLeftOf="@+id/moreAction"
+        android:layout_toRightOf="@id/itemSymbole"
+        android:orientation="vertical"
+        android:padding="10dip" >
+
+        <TextView
+            android:id="@+id/itemTitle"
+            style="@style/ItemPrimaryText.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/map_pane_text_color"
+            android:textSize="20dip" />
+
+        <TextView
+            android:id="@id/itemDescription"
+            style="@style/ItemSecondaryText.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/map_pane_text_color"
+            android:textSize="14dip" />
+
+        <LinearLayout
+            android:id="@+id/lignes"
+            android:layout_width="fill_parent"
+            android:layout_height="20dip"
+            android:gravity="left|center_vertical"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@id/moreAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/balloon_disclosure" />
+
+</RelativeLayout>

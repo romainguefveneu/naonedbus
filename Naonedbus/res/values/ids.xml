@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ *  Copyright (C) 2011 Romain Guefveneu
+ *  
+ *  This file is part of naonedbus.
+ *  
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Items -->
+    <item name="itemHeaderStub" type="id"/>
+    <item name="itemHeader" type="id"/>
+    <item name="itemSymbole" type="id"/>
+    <item name="itemIcon" type="id"/>
+    <item name="itemTitle" type="id"/>
+    <item name="itemSubTitle" type="id"/>
+    <item name="itemDescription" type="id"/>
+    <item name="itemTime" type="id"/>
+    <item name="itemDistance" type="id"/>
+    <item name="itemLignes" type="id"/>
+    <item name="send" type="id"/>
+    <item name="actionbarFadeTop" type="id"/>
+    <item name="actionBarSubTitle" type="id"/>
+    <item name="ligneCode" type="id"/>
+    <item name="pageTitle" type="id"/>
+    <item name="pageSubTitle" type="id"/>
+    <item name="star" type="id"/>
+    <item name="fragmentLoading" type="id"/>
+    <item name="fragmentMessageStub" type="id"/>
+    <item name="fragmentMessage" type="id"/>
+    <item name="fragmentContent" type="id"/>
+    <item name="gd_action_bar_bottom" type="id"/>
+    <item name="pane_content_view" type="id"/>
+    <item name="colLeft" type="id"/>
+    <item name="colRight" type="id"/>
+    <item name="sectionSensA" type="id"/>
+    <item name="sensAHoraires" type="id"/>
+    <item name="sectionSensB" type="id"/>
+    <item name="sensBHoraires" type="id"/>
+    <item name="separatorText" type="id"/>
+    <item name="separatorLine" type="id"/>
+    <item name="balloon_inner_layout" type="id"/>
+    <item name="balloon_close" type="id"/>
+    <item name="header" type="id"/>
+    <item name="webView" type="id"/>
+
+    <!-- Layouts -->
+    <item name="commentaireLigneSpinner" type="id"/>
+    <item name="commentaireLigne" type="id"/>
+    <item name="commentaireSens" type="id"/>
+    <item name="commentaireArret" type="id"/>
+
+    <!-- Menus -->
+    <item name="menu_share" type="id"/>
+    <item name="menu_refresh" type="id"/>
+    <item name="menu_edit" type="id"/>
+    <item name="menu_import_export" type="id"/>
+    <item name="menu_import" type="id"/>
+    <item name="menu_export" type="id"/>
+    <item name="menu_navigation" type="id"/>
+    <item name="menu_phone" type="id"/>
+    <item name="menu_sort" type="id"/>
+    <item name="menu_sort_name" type="id"/>
+    <item name="menu_sort_parking_places" type="id"/>
+    <item name="menu_sort_distance" type="id"/>
+    <item name="menu_filter" type="id"/>
+    <item name="menu_send" type="id"/>
+    <item name="menu_feedback" type="id"/>
+    <item name="menu_rate" type="id"/>
+
+</resources>
