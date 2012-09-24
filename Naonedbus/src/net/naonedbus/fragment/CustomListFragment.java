@@ -4,7 +4,12 @@ import java.io.IOException;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.widget.PinnedHeaderListView;
+
+import org.joda.time.DateTime;
+
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
@@ -12,10 +17,23 @@ import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public abstract class CustomListFragment extends ListFragment implements LoaderCallbacks<AsyncResult<ListAdapter>> {
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+
+public abstract class CustomListFragment extends SherlockListFragment implements
+		LoaderCallbacks<AsyncResult<ListAdapter>> {
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
@@ -27,11 +45,26 @@ public abstract class CustomListFragment extends ListFragment implements LoaderC
 	private int messageEmptySummaryId = R.string.error_summary_empty;
 	private int messageEmptyDrawableId = R.drawable.sad_face;
 
+	private int titleId;
+	private int layoutId;
+	private ViewGroup fragmentView;
+
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
 
+	/**
+	 * Gestion du refraichissement
+	 */
+	private DateTime nextUpdate = null;
+	/**
+	 * Nombre de minutes pendant lesquelles le contenu est considéré comme à
+	 * jour.
+	 */
+	private int timeToLive = 5;
+
 	public CustomListFragment(final int titleId, final int layoutId) {
-		super(titleId, layoutId);
+		this.titleId = titleId;
+		this.layoutId = layoutId;
 	}
 
 	@Override
@@ -56,6 +89,14 @@ public abstract class CustomListFragment extends ListFragment implements LoaderC
 			mListViewStateTop = 0;
 		}
 
+		fragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
+		View view = inflater.inflate(this.layoutId, container, false);
+		view.setId(R.id.fragmentContent);
+
+		fragmentView.addView(view);
+
+		setupListView(inflater, fragmentView);
+
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
@@ -77,6 +118,210 @@ public abstract class CustomListFragment extends ListFragment implements LoaderC
 	public void cancelLoading() {
 		getLoaderManager().destroyLoader(LOADER_INIT);
 		getLoaderManager().destroyLoader(LOADER_REFRESH);
+	}
+
+	private void setupListView(LayoutInflater inflater, View view) {
+		final ListView listView = (ListView) fragmentView.findViewById(android.R.id.list);
+
+		if (listView instanceof PinnedHeaderListView) {
+			final PinnedHeaderListView pinnedListView = (PinnedHeaderListView) listView;
+			pinnedListView.setPinnedHeaderView(inflater.inflate(R.layout.list_item_header, pinnedListView, false));
+			pinnedListView.setOnScrollListener(new OnScrollListener() {
+
+				@Override
+				public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+				}
+
+				@Override
+				public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+					final Adapter adapter = getListAdapter();
+					if (adapter != null && adapter instanceof OnScrollListener) {
+						final OnScrollListener sectionAdapter = (OnScrollListener) adapter;
+						sectionAdapter.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+					}
+				}
+			});
+		}
+	}
+
+	public int getTitleId() {
+		return titleId;
+	}
+
+	/**
+	 * Définir les textes et images affichés si la liste est vide.
+	 * 
+	 * @param titleId
+	 *            L'identifiant du titre.
+	 * @param summaryId
+	 *            L'identifiant de la description.
+	 * @param drawableId
+	 *            L'identifiant du drawable.
+	 */
+	protected void setEmptyMessageValues(int titleId, int summaryId, int drawableId) {
+		this.messageEmptyTitleId = titleId;
+		this.messageEmptySummaryId = summaryId;
+		this.messageEmptyDrawableId = drawableId;
+	}
+
+	/**
+	 * Afficher l'indicateur de chargement.
+	 */
+	protected void showLoader() {
+		fragmentView.findViewById(R.id.fragmentContent).setVisibility(View.GONE);
+		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
+			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
+		}
+		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.VISIBLE);
+	}
+
+	/**
+	 * Afficher le contenu.
+	 */
+	protected void showContent() {
+		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
+		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
+			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
+		}
+		final View content = fragmentView.findViewById(R.id.fragmentContent);
+		content.setVisibility(View.VISIBLE);
+		content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+	}
+
+	/**
+	 * Afficher le message avec un symbole d'erreur.
+	 * 
+	 * @param titleRes
+	 *            L'identifiant du titre.
+	 * @param descriptionRes
+	 *            L'identifiant de la description.
+	 */
+	protected void showError(int titleRes, int descriptionRes) {
+		showMessage(getString(titleRes), getString(descriptionRes), R.drawable.warning);
+	}
+
+	/**
+	 * Afficher le message avec un symbole d'erreur.
+	 * 
+	 * @param title
+	 *            Le titre.
+	 * @param description
+	 *            La description.
+	 */
+	protected void showError(String title, String description) {
+		showMessage(title, description, R.drawable.warning);
+	}
+
+	/**
+	 * Afficher le message.
+	 * 
+	 * @param titleRes
+	 *            L'identifiant du titre.
+	 * @param descriptionRes
+	 *            L'identifiant de la description.
+	 * @param drawableRes
+	 *            L'identifiant du drawable.
+	 */
+	protected void showMessage(int titleRes, int descriptionRes, int drawableRes) {
+		showMessage(getString(titleRes), (descriptionRes != 0) ? getString(descriptionRes) : null, drawableRes);
+	}
+
+	/**
+	 * Afficher un message avec une desciption et un symbole.
+	 * 
+	 * @param title
+	 *            Le titre.
+	 * @param description
+	 *            La description.
+	 * @param drawableRes
+	 *            L'identifiant du symbole.
+	 */
+	protected void showMessage(String title, String description, int drawableRes) {
+		fragmentView.findViewById(R.id.fragmentContent).setVisibility(View.GONE);
+		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
+
+		View message = fragmentView.findViewById(R.id.fragmentMessage);
+		if (message == null) {
+			final ViewStub messageStrub = (ViewStub) fragmentView.findViewById(R.id.fragmentMessageStub);
+			message = messageStrub.inflate();
+			final Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
+		}
+
+		message.setVisibility(View.VISIBLE);
+
+		final TextView titleView = (TextView) message.findViewById(android.R.id.title);
+		titleView.setText(title);
+		titleView.setCompoundDrawablesWithIntrinsicBounds(0, drawableRes, 0, 0);
+
+		final TextView descriptionView = (TextView) message.findViewById(android.R.id.summary);
+		if (description != null) {
+			descriptionView.setText(description);
+			descriptionView.setVisibility(View.VISIBLE);
+		} else {
+			descriptionView.setVisibility(View.GONE);
+		}
+	}
+
+	/**
+	 * Définir l'action du bouton lors de l'affichage du message.
+	 * 
+	 * @param title
+	 *            Le titre du boutton.
+	 * @param onClickListener
+	 *            Son action.
+	 */
+	protected void setMessageButton(int title, OnClickListener onClickListener) {
+		setMessageButton(getString(title), onClickListener);
+	}
+
+	/**
+	 * Définir l'action du bouton lors de l'affichage du message.
+	 * 
+	 * @param title
+	 *            Le titre du boutton.
+	 * @param onClickListener
+	 *            Son action.
+	 */
+	protected void setMessageButton(String title, OnClickListener onClickListener) {
+		final View message = fragmentView.findViewById(R.id.fragmentMessage);
+		if (message != null) {
+			final Button button = (Button) message.findViewById(android.R.id.button1);
+			button.setText(title);
+			button.setOnClickListener(onClickListener);
+			button.setVisibility(View.VISIBLE);
+		}
+	}
+
+	/**
+	 * Définir le nombre de minutes pendant lesquelles les données sont
+	 * considérées comme à jour
+	 * 
+	 * @param timeToLive
+	 */
+	protected void setTimeToLive(int timeToLive) {
+		this.timeToLive = timeToLive;
+	}
+
+	/**
+	 * Redéfinir la date d'expiration du cache à maintenant
+	 */
+	protected void resetNextUpdate() {
+		nextUpdate = new DateTime().plusMinutes(timeToLive);
+	}
+
+	/**
+	 * Indique si les données sont toujours considérées comme à jour ou non
+	 * 
+	 * @return true si elle ne sont plus à jour | false si elle sont à jour
+	 */
+	protected boolean isNotUpToDate() {
+		if (nextUpdate != null) {
+			return (nextUpdate.isBeforeNow());
+		} else {
+			return true;
+		}
 	}
 
 	/**
@@ -144,6 +389,10 @@ public abstract class CustomListFragment extends ListFragment implements LoaderC
 
 	@Override
 	public void onLoaderReset(Loader<AsyncResult<ListAdapter>> arg0) {
+
+	}
+
+	public void onCreateOptionsMenu(Menu menu) {
 
 	}
 

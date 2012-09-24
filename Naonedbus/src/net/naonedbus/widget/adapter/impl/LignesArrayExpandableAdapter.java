@@ -86,7 +86,7 @@ public class LignesArrayExpandableAdapter extends SectionAdapter<Ligne> implemen
 
 	@Override
 	public int getGroupCount() {
-		return 0;
+		return getCount();
 	}
 
 	@Override
@@ -96,12 +96,12 @@ public class LignesArrayExpandableAdapter extends SectionAdapter<Ligne> implemen
 
 	@Override
 	public Object getGroup(int groupPosition) {
-		return null;
+		return getItem(groupPosition);
 	}
 
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
-		return null;
+		return getItem(groupPosition);
 	}
 
 	@Override
@@ -133,11 +133,11 @@ public class LignesArrayExpandableAdapter extends SectionAdapter<Ligne> implemen
 			ViewGroup parent) {
 		final View v;
 		if (convertView == null) {
-			v = newView(getContext(), childPosition);
+			v = newView(getContext(), groupPosition);
 		} else {
 			v = convertView;
 		}
-		bindView(v, getContext(), childPosition);
+		bindView(v, getContext(), groupPosition);
 
 		return convertView;
 	}

@@ -31,9 +31,9 @@ public abstract class ListFragment extends SherlockListFragment implements Custo
 	private int messageEmptySummaryId = R.string.error_summary_empty;
 	private int messageEmptyDrawableId = R.drawable.sad_face;
 
-	protected int titleId;
-	protected int layoutId;
-	protected ViewGroup fragmentView;
+	private int titleId;
+	private int layoutId;
+	private ViewGroup fragmentView;
 
 	/**
 	 * Gestion du refraichissement
@@ -53,7 +53,7 @@ public abstract class ListFragment extends SherlockListFragment implements Custo
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		setRetainInstance(true);
+		
 	}
 
 	@Override

@@ -8,26 +8,26 @@ import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.fragment.CustomExpandableListFragment;
 import net.naonedbus.fragment.CustomFragmentActions;
-import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.TypeLigneManager;
-import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
+import net.naonedbus.widget.adapter.impl.LignesArrayExpandableAdapter;
 import net.naonedbus.widget.indexer.impl.LigneIndexer;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.widget.AdapterView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class LignesFragment extends CustomListFragment implements CustomFragmentActions {
+public class LignesFragment extends CustomExpandableListFragment<LignesArrayExpandableAdapter> implements
+		CustomFragmentActions {
 
 	public LignesFragment() {
-		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
+		super(R.string.title_fragment_lignes, R.layout.fragment_expandablelistview_section);
 	}
 
 	@Override
@@ -49,22 +49,20 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-
+	public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
 		final Intent intent = new Intent(getActivity(), ArretsActivity.class);
 		startActivity(intent);
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
-		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
+	protected AsyncResult<LignesArrayExpandableAdapter> loadContent(final Context context) {
+		final AsyncResult<LignesArrayExpandableAdapter> result = new AsyncResult<LignesArrayExpandableAdapter>();
 		try {
 			final TypeLigneManager typeLigneManager = TypeLigneManager.getInstance();
 			final LigneManager ligneManager = LigneManager.getInstance();
 			final List<TypeLigne> typesLignes = typeLigneManager.getAll(context.getContentResolver(), null, null);
 			final List<Ligne> items = ligneManager.getAll(context.getContentResolver(), null, null);
-			final LignesArrayAdapter adapter = new LignesArrayAdapter(context, items);
+			final LignesArrayExpandableAdapter adapter = new LignesArrayExpandableAdapter(context, items);
 			adapter.setIndexer(new LigneIndexer(typesLignes));
 
 			result.setResult(adapter);

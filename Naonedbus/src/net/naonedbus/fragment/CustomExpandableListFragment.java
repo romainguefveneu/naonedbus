@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.widget.PinnedHeaderListView;
 
 import org.joda.time.DateTime;
 
@@ -21,18 +20,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.Adapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.app.SherlockFragment;
 
-public abstract class CustomExpandableListFragment extends SherlockListFragment implements CustomFragmentActions,
-		LoaderCallbacks<AsyncResult<ListAdapter>> {
+public abstract class CustomExpandableListFragment<T extends ListAdapter & ExpandableListAdapter> extends
+		SherlockFragment implements CustomFragmentActions, OnItemClickListener, LoaderCallbacks<AsyncResult<T>> {
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
@@ -44,12 +42,15 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	private int messageEmptySummaryId = R.string.error_summary_empty;
 	private int messageEmptyDrawableId = R.drawable.sad_face;
 
-	protected int titleId;
-	protected int layoutId;
-	protected ViewGroup fragmentView;
-
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
+
+	private int titleId;
+	private int layoutId;
+	private ViewGroup fragmentView;
+
+	private ExpandableListView listView;
+	private T listAdapter;
 
 	/**
 	 * Gestion du refraichissement
@@ -70,7 +71,7 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
-		if (getListAdapter() == null) {
+		if (listAdapter == null) {
 			getLoaderManager().initLoader(LOADER_INIT, null, this);
 		}
 	}
@@ -101,6 +102,19 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 		return fragmentView;
 	}
 
+	public ExpandableListView getListView() {
+		return listView;
+	}
+
+	public T getListAdapter() {
+		return listAdapter;
+	}
+
+	public void setAdapter(T adapter) {
+		listAdapter = adapter;
+		listView.setAdapter((ExpandableListAdapter) adapter);
+	}
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		if (isAdded()) {
@@ -117,28 +131,32 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	}
 
 	private void setupListView(LayoutInflater inflater, View view) {
-		final ListView listView = (ListView) fragmentView.findViewById(android.R.id.list);
+		this.listView = (ExpandableListView) fragmentView.findViewById(android.R.id.list);
 
-		if (listView instanceof PinnedHeaderListView) {
-			final PinnedHeaderListView pinnedListView = (PinnedHeaderListView) listView;
-			pinnedListView.setPinnedHeaderView(inflater.inflate(R.layout.list_item_header, pinnedListView, false));
-			pinnedListView.setOnScrollListener(new OnScrollListener() {
-
-				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-				}
-
-				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-					final Adapter adapter = getListAdapter();
-					if (adapter != null && adapter instanceof OnScrollListener) {
-						final OnScrollListener sectionAdapter = (OnScrollListener) adapter;
-						sectionAdapter.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
-					}
-				}
-			});
-		}
+		// if (listView instanceof PinnedHeaderListView) {
+		// final PinnedHeaderListView pinnedListView = (PinnedHeaderListView)
+		// listView;
+		// pinnedListView.setPinnedHeaderView(inflater.inflate(R.layout.list_item_header,
+		// pinnedListView, false));
+		// pinnedListView.setOnScrollListener(new OnScrollListener() {
+		//
+		// @Override
+		// public void onScrollStateChanged(AbsListView view, int scrollState) {
+		//
+		// }
+		//
+		// @Override
+		// public void onScroll(AbsListView view, int firstVisibleItem, int
+		// visibleItemCount, int totalItemCount) {
+		// final Adapter adapter = getListAdapter();
+		// if (adapter != null && adapter instanceof OnScrollListener) {
+		// final OnScrollListener sectionAdapter = (OnScrollListener) adapter;
+		// sectionAdapter.onScroll(view, firstVisibleItem, visibleItemCount,
+		// totalItemCount);
+		// }
+		// }
+		// });
+		// }
 	}
 
 	public int getTitleId() {
@@ -152,22 +170,6 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	public void cancelLoading() {
 		getLoaderManager().destroyLoader(LOADER_INIT);
 		getLoaderManager().destroyLoader(LOADER_REFRESH);
-	}
-
-	/**
-	 * Définir les textes et images affichés si la liste est vide.
-	 * 
-	 * @param titleId
-	 *            L'identifiant du titre.
-	 * @param summaryId
-	 *            L'identifiant de la description.
-	 * @param drawableId
-	 *            L'identifiant du drawable.
-	 */
-	protected void setEmptyMessageValues(int titleId, int summaryId, int drawableId) {
-		this.messageEmptyTitleId = titleId;
-		this.messageEmptySummaryId = summaryId;
-		this.messageEmptyDrawableId = drawableId;
 	}
 
 	/**
@@ -334,7 +336,7 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	 * 
 	 * @return AsyncResult du resultat.
 	 */
-	protected abstract AsyncResult<ListAdapter> loadContent(final Context context);
+	protected abstract AsyncResult<T> loadContent(final Context context);
 
 	/**
 	 * Après le chargement.
@@ -343,10 +345,10 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	}
 
 	@Override
-	public Loader<AsyncResult<ListAdapter>> onCreateLoader(int arg0, Bundle arg1) {
-		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
+	public Loader<AsyncResult<T>> onCreateLoader(int arg0, Bundle arg1) {
+		final Loader<AsyncResult<T>> loader = new AsyncTaskLoader<AsyncResult<T>>(getActivity()) {
 			@Override
-			public AsyncResult<ListAdapter> loadInBackground() {
+			public AsyncResult<T> loadInBackground() {
 				return loadContent(getActivity());
 			}
 		};
@@ -357,7 +359,7 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	}
 
 	@Override
-	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
+	public void onLoadFinished(Loader<AsyncResult<T>> loader, AsyncResult<T> result) {
 
 		if (result == null) {
 			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
@@ -370,7 +372,7 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 			if (result.getResult() == null || result.getResult().getCount() == 0) {
 				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
 			} else {
-				setListAdapter(result.getResult());
+				setAdapter(result.getResult());
 				if (mListViewStatePosition != -1 && isAdded()) {
 					getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
 					mListViewStatePosition = -1;
@@ -393,7 +395,7 @@ public abstract class CustomExpandableListFragment extends SherlockListFragment 
 	}
 
 	@Override
-	public void onLoaderReset(Loader<AsyncResult<ListAdapter>> arg0) {
+	public void onLoaderReset(Loader<AsyncResult<T>> arg0) {
 
 	}
 
