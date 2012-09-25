@@ -42,6 +42,14 @@ public abstract class ColorUtils {
 		return d;
 	}
 
+	public static synchronized int getDarkerColor(int color) {
+		// Get darker color
+		float[] hsv = new float[3];
+		Color.colorToHSV(color, hsv);
+		hsv[2] *= 0.7f; // value component
+		return Color.HSVToColor(hsv);
+	}
+
 	public static synchronized GradientDrawable getRoundedGradiant(int color) {
 		GradientDrawable d = getGradiant(color);
 		d.setCornerRadius(3);

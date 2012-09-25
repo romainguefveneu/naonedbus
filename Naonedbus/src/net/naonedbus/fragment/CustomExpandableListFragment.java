@@ -24,13 +24,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public abstract class CustomExpandableListFragment<T extends ListAdapter & ExpandableListAdapter> extends
-		SherlockFragment implements CustomFragmentActions, OnItemClickListener, LoaderCallbacks<AsyncResult<T>> {
+public abstract class CustomExpandableListFragment<T extends ExpandableListAdapter> extends SherlockFragment implements
+		CustomFragmentActions, OnItemClickListener, LoaderCallbacks<AsyncResult<T>> {
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
@@ -369,7 +368,7 @@ public abstract class CustomExpandableListFragment<T extends ListAdapter & Expan
 		final Exception exception = result.getException();
 
 		if (exception == null) {
-			if (result.getResult() == null || result.getResult().getCount() == 0) {
+			if (result.getResult() == null || result.getResult().isEmpty()) {
 				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
 			} else {
 				setAdapter(result.getResult());
