@@ -64,6 +64,10 @@
     <item name="commentaireSens" type="id"/>
     <item name="commentaireArret" type="id"/>
 
+    <!-- LigneDialogFragment -->
+    <item name="ligne_dialog_header" type="id"/>
+    <item name="ligne_dialog_code" type="id"/>
+    
     <!-- Menus -->
     <item name="menu_share" type="id"/>
     <item name="menu_refresh" type="id"/>

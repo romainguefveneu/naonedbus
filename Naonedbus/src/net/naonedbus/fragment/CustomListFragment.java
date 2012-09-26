@@ -30,9 +30,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
 
-public abstract class CustomListFragment extends SherlockListFragment implements
+public abstract class CustomListFragment extends SherlockListFragment implements CustomFragmentActions,
 		LoaderCallbacks<AsyncResult<ListAdapter>> {
 
 	private static final int LOADER_INIT = 0;
@@ -45,9 +44,9 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private int messageEmptySummaryId = R.string.error_summary_empty;
 	private int messageEmptyDrawableId = R.drawable.sad_face;
 
-	private int titleId;
-	private int layoutId;
-	private ViewGroup fragmentView;
+	protected int titleId;
+	protected int layoutId;
+	protected ViewGroup fragmentView;
 
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
@@ -93,11 +92,13 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		View view = inflater.inflate(this.layoutId, container, false);
 		view.setId(R.id.fragmentContent);
 
+		bindView(view, savedInstanceState);
+
 		fragmentView.addView(view);
 
 		setupListView(inflater, fragmentView);
 
-		return super.onCreateView(inflater, container, savedInstanceState);
+		return fragmentView;
 	}
 
 	@Override
@@ -111,13 +112,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		super.onSaveInstanceState(outState);
 	}
 
-	public void refreshContent() {
-		getLoaderManager().restartLoader(LOADER_REFRESH, null, this);
-	}
+	protected void bindView(View view, Bundle savedInstanceState) {
 
-	public void cancelLoading() {
-		getLoaderManager().destroyLoader(LOADER_INIT);
-		getLoaderManager().destroyLoader(LOADER_REFRESH);
 	}
 
 	private void setupListView(LayoutInflater inflater, View view) {
@@ -147,6 +143,15 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	public int getTitleId() {
 		return titleId;
+	}
+
+	public void refreshContent() {
+		getLoaderManager().restartLoader(LOADER_REFRESH, null, this);
+	}
+
+	public void cancelLoading() {
+		getLoaderManager().destroyLoader(LOADER_INIT);
+		getLoaderManager().destroyLoader(LOADER_REFRESH);
 	}
 
 	/**
@@ -389,10 +394,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	@Override
 	public void onLoaderReset(Loader<AsyncResult<ListAdapter>> arg0) {
-
-	}
-
-	public void onCreateOptionsMenu(Menu menu) {
 
 	}
 
