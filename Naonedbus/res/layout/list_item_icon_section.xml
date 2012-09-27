@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /*
  *  Copyright (C) 2011 Romain Guefveneu
  *  
@@ -16,43 +18,16 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.bean;
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultLine" >
 
-import java.io.Serializable;
+    <include layout="@layout/list_item_header" />
 
-import net.naonedbus.widget.item.SectionItem;
+    <include
+        layout="@layout/list_item_content_icon_section"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
 
-public class Sens implements SectionItem, Serializable {
-
-	private static final long serialVersionUID = 1604101176510697928L;
-	public static Object section = new Object();
-
-	public int _id;
-	public String code;
-	public String codeLigne;
-	public String text;
-
-	public Sens() {
-	}
-
-	public Sens(final int id, final String nom) {
-		this._id = id;
-		this.text = nom;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof Sens)) {
-			return false;
-		}
-
-		final Sens autreSens = (Sens) o;
-		return autreSens._id == _id;
-	}
-
-	@Override
-	public Object getSection() {
-		return section;
-	}
-
-}
+</LinearLayout>
