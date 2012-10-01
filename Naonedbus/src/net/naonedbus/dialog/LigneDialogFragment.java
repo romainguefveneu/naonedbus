@@ -2,6 +2,7 @@ package net.naonedbus.dialog;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Sens;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
@@ -22,10 +23,11 @@ import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class LigneDialogFragment extends DialogFragment {
 
@@ -35,6 +37,17 @@ public class LigneDialogFragment extends DialogFragment {
 	private Typeface mRobotoLight;
 	private SensManager mSensManager;
 	private ImageView mMenuCarte;
+
+	private OnSensClickListener mOnSensClickListener;
+	private OnMapClickListener mOnMapClickListener;
+
+	public static interface OnSensClickListener {
+		void onSensClickListener(int id);
+	}
+
+	public static interface OnMapClickListener {
+		void onMapClickListener();
+	}
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -53,6 +66,7 @@ public class LigneDialogFragment extends DialogFragment {
 		mLigne = (Ligne) args.get(BUNDLE_LIGNE);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.dialog_ligne, container);
@@ -64,7 +78,9 @@ public class LigneDialogFragment extends DialogFragment {
 		mMenuCarte.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getActivity(), "Click !", Toast.LENGTH_SHORT).show();
+				if (mOnMapClickListener != null) {
+					mOnMapClickListener.onMapClickListener();
+				}
 			}
 		});
 		mMenuCarte.setColorFilter(mLigne.couleurTexte, Mode.MULTIPLY);
@@ -81,8 +97,25 @@ public class LigneDialogFragment extends DialogFragment {
 		adapter.setIndexer(new LigneDialogIndexer());
 
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+				final Sens sens = (Sens) adapter.getItemAtPosition(position);
+				if (mOnSensClickListener != null) {
+					mOnSensClickListener.onSensClickListener(sens._id);
+				}
+			}
+		});
 
 		return view;
+	}
+
+	public void setOnSensClickListener(OnSensClickListener onSensClickListener) {
+		this.mOnSensClickListener = onSensClickListener;
+	}
+
+	public void setOnMapClickListener(OnMapClickListener onMapClickListener) {
+		this.mOnMapClickListener = onMapClickListener;
 	}
 
 	private void setupListView(final LayoutInflater inflater, final ListView listView) {

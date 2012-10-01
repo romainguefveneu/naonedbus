@@ -60,17 +60,6 @@ public class ArretManager extends SQLiteManager<Arret> {
 		return getFromCursor(c);
 	}
 
-	// public List<ArretSpinnerItem> getAllForSpinner(ContentResolver
-	// contentResolver, String codeLigne, String codeSens) {
-	// List<Arret> items = getAll(contentResolver, codeLigne, codeSens);
-	// List<ArretSpinnerItem> spinnerItems = new ArrayList<ArretSpinnerItem>();
-	//
-	// for (Arret item : items) {
-	// spinnerItems.add(new ArretSpinnerItem(item));
-	// }
-	// return spinnerItems;
-	// }
-
 	@Override
 	public Arret getSingle(ContentResolver contentResolver, int id) {
 		Cursor c = getCursor(contentResolver, ArretTable.TABLE_NAME + "._id = ?", new String[] { String.valueOf(id) });

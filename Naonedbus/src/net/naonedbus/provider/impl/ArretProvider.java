@@ -38,10 +38,11 @@ public class ArretProvider extends ReadOnlyContentProvider {
 	private static final int ARRET_ID = 30;
 
 	/**
-	 * Récupérer un arrêt par son code ligne et code sens
+	 * Récupérer un arrêt par son code ligne et code sens.
 	 */
 	private static final int ARRET_CODESENS_CODELIGNE = 40;
-	public static final String ARRET_CODESENS_CODELIGNE_URI_PATH_QUERY = "sensLigne";
+	public static final String ARRET_CODESENS_CODELIGNE_URI_PATH_QUERY = "codeSensLigne";
+
 	/**
 	 * Récupérer un arrêt par son code arret, code ligne et code sens
 	 */
@@ -78,7 +79,6 @@ public class ArretProvider extends ReadOnlyContentProvider {
 			queryBuilder.appendWhere(ArretTable.TABLE_NAME + "." + ArretTable._ID + "=");
 			queryBuilder.appendWhereEscapeString(uri.getLastPathSegment());
 			break;
-
 		case ARRET_CODESENS_CODELIGNE:
 			queryBuilder.appendWhere(ArretTable.TABLE_NAME + "." + ArretTable.CODE_SENS + " = ");
 			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeSens"));

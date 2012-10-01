@@ -41,7 +41,8 @@ CREATE INDEX IF NOT EXISTS equipements_id ON equipements (_id);
 CREATE INDEX IF NOT EXISTS equipements_type ON equipements (idType);
 CREATE INDEX IF NOT EXISTS equipements_nom ON equipements (nom collate nocase);
 CREATE INDEX IF NOT EXISTS equipements_normalizedNom ON equipements (normalizedNom collate nocase);
-
+CREATE INDEX IF NOT EXISTS equipements_coordonnees ON equipements (latitude, longitude);
+CREATE INDEX IF NOT EXISTS equipements_code ON equipements (codeEquipement);
   
 -- Décrire ARRETS	
 CREATE TABLE IF NOT EXISTS arrets (
@@ -52,6 +53,9 @@ CREATE TABLE IF NOT EXISTS arrets (
   idStation INT NOT NULL);
 CREATE INDEX IF NOT EXISTS arrets_id ON arrets (_id);
 CREATE INDEX IF NOT EXISTS arrets_code ON arrets (code);
+CREATE INDEX IF NOT EXISTS arrets_codeLigne ON arrets (codeLigne);
+CREATE INDEX IF NOT EXISTS arrets_codeSens ON arrets (codeLigne, codeSens);
+CREATE INDEX IF NOT EXISTS arrets_station ON arrets (idStation);
 
 -- Décrire SENS
 CREATE TABLE IF NOT EXISTS sens (
@@ -67,10 +71,11 @@ CREATE INDEX IF NOT EXISTS sens_code ON sens (code);
 CREATE TABLE IF NOT EXISTS horaires (
 	_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	terminus NVARCHAR(255), 
+	dayTrip INTEGER NOT NULL,
 	timestamp INTEGER NOT NULL, 
 	idArret INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS horaires_id ON horaires (_id);
-CREATE INDEX IF NOT EXISTS horaires_timestamp ON horaires (timestamp);
+CREATE INDEX IF NOT EXISTS horaires_dayTrip ON horaires (dayTrip);
 CREATE INDEX IF NOT EXISTS horaires_idArret ON horaires (idArret);
 
 -- Décrire FAVORIS

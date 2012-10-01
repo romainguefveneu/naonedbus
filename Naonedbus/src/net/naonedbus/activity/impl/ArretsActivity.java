@@ -9,12 +9,14 @@ import android.os.Bundle;
 public class ArretsActivity extends RootActivity {
 
 	public static enum Param implements IIntentParamKey {
-		idLigne
+		idSens
 	};
 
 	private static int[] titles = new int[] { R.string.title_fragment_arrets };
 
 	private static Class<?>[] classes = new Class<?>[] { ArretsFragment.class };
+
+	private Bundle[] bundles;
 
 	public ArretsActivity() {
 		super(R.layout.activity_main);
@@ -23,8 +25,17 @@ public class ArretsActivity extends RootActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		int idSens = (Integer) getParamValue(Param.idSens);
+
+		final Bundle bundle = new Bundle();
+		bundle.putInt(ArretsFragment.PARAM_ID_SENS, idSens);
+
+		bundles = new Bundle[1];
+		bundles[0] = bundle;
+
 		if (savedInstanceState == null) {
-			addFragments(titles, classes);
+			addFragments(titles, classes, bundles);
 		}
 	}
 

@@ -30,6 +30,7 @@ public abstract class RootActivity extends SlidingSherlockFragmentActivity imple
 	 */
 	private int[] titles;
 	private String[] classes;
+	private Bundle[] bundles;
 
 	/**
 	 * Sert à la détection du changement de thème.
@@ -156,14 +157,20 @@ public abstract class RootActivity extends SlidingSherlockFragmentActivity imple
 	}
 
 	protected void addFragments(int[] titles, String[] classes) {
+		addFragments(titles, classes, new Bundle[classes.length]);
+	}
+
+	protected void addFragments(int[] titles, String[] classes, Bundle[] bundles) {
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		this.classes = classes;
 		this.titles = titles;
+		this.bundles = bundles;
 
 		final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		for (int i = 0; i < titles.length; i++) {
-			final Fragment fragment = Fragment.instantiate(this, this.classes[i]);
+			final Fragment fragment = Fragment.instantiate(this, this.classes[i], this.bundles[i]);
+			fragment.setArguments(this.bundles[i]);
 			transaction.add(fragment, this.classes[i]);
 			transaction.detach(fragment);
 		}
@@ -174,6 +181,24 @@ public abstract class RootActivity extends SlidingSherlockFragmentActivity imple
 			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
 		}
 
+	}
+
+	/**
+	 * Ajouter les information de fragments.
+	 * 
+	 * @param titles
+	 *            Les titres (ressources).
+	 * @param classes
+	 *            Les classes des fragments.
+	 * @param bundles
+	 *            Les bundles des fragments.
+	 */
+	protected void addFragments(int[] titles, Class<?>[] classes, Bundle[] bundles) {
+		this.classes = new String[classes.length];
+		for (int i = 0; i < classes.length; i++) {
+			this.classes[i] = classes[i].getName();
+		}
+		addFragments(titles, this.classes, bundles);
 	}
 
 	/**

@@ -68,11 +68,12 @@ public abstract class ColorUtils {
 	}
 
 	public static boolean isLightColor(int color) {
-		if (color == -1627337) // Rouge c'est limite comme couleur !
-			return false;
+		if (color == -4204410 || color == -1457269) // Vert clair et marron
+													// clair
+			return true;
 		float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
-		return (hsv[2] > 0.83);
+		return (hsv[2] > 0.94);
 	}
 
 }

@@ -41,12 +41,12 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 
 	private static int COUNT = 0;
 
-	private final SparseArray<Comparator<Equipement>> comparators;
-	private final SparseArray<CustomSectionIndexer<Equipement>> indexers;
+	protected final SparseArray<Comparator<Equipement>> comparators;
+	protected final SparseArray<CustomSectionIndexer<Equipement>> indexers;
 
 	protected MyLocationProvider myLocationProvider;
 	private DistanceTask loaderDistance;
-	private int currentSortPreference = SORT_NOM;
+	protected int currentSortPreference = SORT_NOM;
 	private Equipement.Type type;
 	private SousType sousType;
 
