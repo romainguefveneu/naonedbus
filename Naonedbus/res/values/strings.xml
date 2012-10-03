@@ -21,6 +21,7 @@
     <string name="title_activity_parkings">Parkings</string>
     <string name="title_activity_commentaire">Commentaire</string>
     <string name="title_activity_parametres">Paramètres</string>
+    <string name="title_activity_horaires">Horaires</string>
     <!-- Slide menu -->
     <string name="menu_accueil">Accueil</string>
     <string name="menu_info_trafic">Infos trafic</string>

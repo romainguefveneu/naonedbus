@@ -1,12 +1,12 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.RootActivity;
+import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.ParkingsPublicsFragment;
 import net.naonedbus.fragment.impl.ParkingsRelaisFragment;
 import android.os.Bundle;
 
-public class ParkingsActivity extends RootActivity {
+public class ParkingsActivity extends SlidingMenuActivity {
 
 	private static int[] titles = new int[] { R.string.title_fragment_parkings_publics,
 			R.string.title_fragment_parkings_relais };

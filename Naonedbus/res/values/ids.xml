@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -39,10 +39,6 @@
     <item name="pageTitle" type="id"/>
     <item name="pageSubTitle" type="id"/>
     <item name="star" type="id"/>
-    <item name="fragmentLoading" type="id"/>
-    <item name="fragmentMessageStub" type="id"/>
-    <item name="fragmentMessage" type="id"/>
-    <item name="fragmentContent" type="id"/>
     <item name="gd_action_bar_bottom" type="id"/>
     <item name="pane_content_view" type="id"/>
     <item name="colLeft" type="id"/>
@@ -58,16 +54,26 @@
     <item name="header" type="id"/>
     <item name="webView" type="id"/>
 
+    <!-- Fragments -->
+    <item name="fragmentLoading" type="id"/>
+    <item name="fragmentMessageStub" type="id"/>
+    <item name="fragmentMessage" type="id"/>
+    <item name="fragmentContent" type="id"/>
+    <item name="fragmentLignes" type="id"/>
+    <item name="fragmentFavoris" type="id"/>
+    <item name="fragmentProximite" type="id"/>
+
     <!-- Layouts -->
     <item name="commentaireLigneSpinner" type="id"/>
     <item name="commentaireLigne" type="id"/>
     <item name="commentaireSens" type="id"/>
     <item name="commentaireArret" type="id"/>
+    <item name="viewPager" type="id"/>
 
     <!-- LigneDialogFragment -->
-    <item name="ligne_dialog_header" type="id"/>
-    <item name="ligne_dialog_code" type="id"/>
-    
+    <item name="ligneDialogHeader" type="id"/>
+    <item name="ligneDialogCode" type="id"/>
+
     <!-- Menus -->
     <item name="menu_share" type="id"/>
     <item name="menu_refresh" type="id"/>

@@ -1,7 +1,7 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.RootActivity;
+import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.FavorisFragment;
 import net.naonedbus.fragment.impl.LignesFragment;
 import net.naonedbus.fragment.impl.ProximiteFragment;
@@ -12,7 +12,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-public class MainActivity extends RootActivity {
+public class MainActivity extends SlidingMenuActivity {
 
 	private static int[] titles = new int[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
 			R.string.title_fragment_proximite };
@@ -59,6 +59,8 @@ public class MainActivity extends RootActivity {
 		setTitle(R.string.title_activity_main);
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();
+		} else {
+			addFragments(titles, classes);
 		}
 	}
 

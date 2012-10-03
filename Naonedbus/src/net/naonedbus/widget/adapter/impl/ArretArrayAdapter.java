@@ -31,7 +31,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	public void bindView(View view, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Arret arret = getItem(position);
-		holder.itemTitle.setText(arret.text);
+		holder.itemTitle.setText(arret.nom);
 	}
 
 	public void bindViewHolder(View view) {

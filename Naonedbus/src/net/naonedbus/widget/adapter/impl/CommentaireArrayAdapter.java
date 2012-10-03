@@ -190,7 +190,7 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 			title = itemView.getContext().getString(R.string.commentaire_tout);
 		} else {
 			if (item.getArret() != null) {
-				title = item.getArret().text + " ";
+				title = item.getArret().nom + " ";
 			}
 			if (item.getSens() != null) {
 				title = title + "\u2192 " + item.getSens().text;

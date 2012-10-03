@@ -1,7 +1,7 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.RootActivity;
+import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.AboutFragment;
 import net.naonedbus.fragment.impl.VersionsFragment;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class AboutActivity extends RootActivity {
+public class AboutActivity extends SlidingMenuActivity {
 
 	private static int[] titles = new int[] { R.string.title_fragment_about, R.string.title_fragment_versions };
 

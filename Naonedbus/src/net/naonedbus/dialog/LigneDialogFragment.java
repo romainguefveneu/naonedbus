@@ -70,8 +70,8 @@ public class LigneDialogFragment extends DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.dialog_ligne, container);
-		final View header = view.findViewById(R.id.ligne_dialog_header);
-		final TextView code = (TextView) view.findViewById(R.id.ligne_dialog_code);
+		final View header = view.findViewById(R.id.ligneDialogHeader);
+		final TextView code = (TextView) view.findViewById(R.id.ligneDialogCode);
 		final ListView listView = (ListView) view.findViewById(android.R.id.list);
 
 		mMenuCarte = (ImageView) view.findViewById(R.id.menu_navigation);
@@ -123,7 +123,6 @@ public class LigneDialogFragment extends DialogFragment {
 			final PinnedHeaderListView pinnedListView = (PinnedHeaderListView) listView;
 			pinnedListView.setPinnedHeaderView(inflater.inflate(R.layout.list_item_header, pinnedListView, false));
 			pinnedListView.setOnScrollListener(new OnScrollListener() {
-
 				@Override
 				public void onScrollStateChanged(AbsListView view, int scrollState) {
 

@@ -34,6 +34,7 @@
             android:label="@string/title_activity_infos_trafic" />
         <activity android:name=".activity.impl.SensActivity" />
         <activity android:name=".activity.impl.ArretsActivity" />
+        <activity android:name=".activity.impl.HoraireActivity" />
         <activity
             android:name=".activity.impl.CommentaireActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />

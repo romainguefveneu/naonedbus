@@ -31,10 +31,10 @@ public class Arret implements Serializable {
 	public String code;
 	public String codeEquipement;
 	public String normalizedNom;
-	public float latitude;
-	public float longitude;
+	public Float latitude;
+	public Float longitude;
 	public int idStation;
-	public String text;
+	public String nom;
 
 	public Arret() {
 	}
@@ -42,7 +42,7 @@ public class Arret implements Serializable {
 	public Arret(int id, String nom) {
 		super();
 		this._id = id;
-		this.text = nom;
+		this.nom = nom;
 	}
 
 	@Override
@@ -53,4 +53,53 @@ public class Arret implements Serializable {
 		final Arret autreArret = (Arret) o;
 		return autreArret._id == _id;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public int get_id() {
+		return _id;
+	}
+
+	public String getCodeLigne() {
+		return codeLigne;
+	}
+
+	public String getLettre() {
+		return lettre;
+	}
+
+	public String getCodeSens() {
+		return codeSens;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getCodeEquipement() {
+		return codeEquipement;
+	}
+
+	public String getNormalizedNom() {
+		return normalizedNom;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
+
+	public int getIdStation() {
+		return idStation;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
 }

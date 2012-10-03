@@ -1,14 +1,14 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.RootActivity;
+import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.CommentairesFragment;
 import net.naonedbus.fragment.impl.SensFragment;
 import net.naonedbus.fragment.impl.TanActuFragment;
 import net.naonedbus.intent.IIntentParamKey;
 import android.os.Bundle;
 
-public class SensActivity extends RootActivity {
+public class SensActivity extends SlidingMenuActivity {
 
 	public static enum Param implements IIntentParamKey {
 		idLigne

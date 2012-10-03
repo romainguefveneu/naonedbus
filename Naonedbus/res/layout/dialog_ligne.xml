@@ -4,7 +4,7 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@id/ligne_dialog_header"
+        android:id="@id/ligneDialogHeader"
         android:layout_width="match_parent"
         android:layout_height="75dip"
         android:clickable="true"
@@ -20,7 +20,7 @@
             android:src="@drawable/ic_action_map" />
 
         <TextView
-            android:id="@id/ligne_dialog_code"
+            android:id="@id/ligneDialogCode"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"

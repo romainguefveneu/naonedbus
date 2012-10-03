@@ -159,7 +159,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			setPageTitle("Tout le réseau");
 		} else {
 			if (arret != null) {
-				setPageTitle(arret.text);
+				setPageTitle(arret.nom);
 			}
 			if (sens != null) {
 				if (arret == null) {
@@ -217,7 +217,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			} else if (ligne != null) {
 				title = "Ligne " + ligne.lettre;
 				if (arret != null) {
-					title += ", " + arret.text;
+					title += ", " + arret.nom;
 				}
 				if (sens != null) {
 					title += "\u2192 " + sens.text;

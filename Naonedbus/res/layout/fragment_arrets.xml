@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
+/**
  *  Copyright (C) 2011 Romain Guefveneu
  *  
  *  This file is part of naonedbus.
@@ -19,16 +19,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    style="@style/DefaultActivity"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <android.support.v4.view.ViewPager
-        android:id="@id/viewPager"
+    <ListView
+        android:id="@id/android:list"
+        style="@style/Listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"
+        android:layout_below="@id/ligneDialogHeader" />
 
-</FrameLayout>
+</RelativeLayout>
