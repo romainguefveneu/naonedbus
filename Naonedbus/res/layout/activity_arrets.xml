@@ -20,7 +20,6 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
     style="@style/DefaultActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -67,10 +66,10 @@
             android:textColor="@android:color/white" />
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@id/viewPager"
+    <FrameLayout
+        android:id="@id/fragmentContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-    </android.support.v4.view.ViewPager>
+    </FrameLayout>
 
 </LinearLayout>

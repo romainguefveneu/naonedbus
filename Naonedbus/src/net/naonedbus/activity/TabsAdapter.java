@@ -48,7 +48,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements ActionBar.TabLi
 		tab.setTag(tag);
 
 		mTabs.add(info);
-		mActionBar.addTab(tab);
+		// mActionBar.addTab(tab);
 
 		notifyDataSetChanged();
 	}
@@ -70,7 +70,7 @@ public class TabsAdapter extends FragmentPagerAdapter implements ActionBar.TabLi
 
 	@Override
 	public void onPageSelected(int position) {
-		mActionBar.setSelectedNavigationItem(position);
+//		mActionBar.setSelectedNavigationItem(position);
 		mActivity.invalidateOptionsMenu();
 	}
 
@@ -80,6 +80,18 @@ public class TabsAdapter extends FragmentPagerAdapter implements ActionBar.TabLi
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		final int position = tab.getPosition();
+		final TabInfo tabInfo = mTabs.get(position);
+
+		final Fragment fragment = mActivity.getSupportFragmentManager().findFragmentByTag(tabInfo.clss.getName());
+
+		if (fragment.isAdded()) {
+			ft.show(fragment);
+		} else {
+			ft.attach(fragment);
+			ft.add(android.R.id.content, fragment);
+		}
+
 		mViewPager.setCurrentItem(tab.getPosition());
 		mActivity.invalidateOptionsMenu();
 	}

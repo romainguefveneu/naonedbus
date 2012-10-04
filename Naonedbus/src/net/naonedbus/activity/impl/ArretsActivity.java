@@ -24,7 +24,6 @@ public class ArretsActivity extends SimpleFragmentActivity {
 
 	private static int[] titles = new int[] { R.string.title_fragment_arrets };
 	private static Class<?>[] classes = new Class<?>[] { ArretsFragment.class };
-
 	private Bundle[] bundles;
 
 	public ArretsActivity() {

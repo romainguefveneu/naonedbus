@@ -59,8 +59,6 @@ public class MainActivity extends SlidingMenuActivity {
 		setTitle(R.string.title_activity_main);
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();
-		} else {
-			addFragments(titles, classes);
 		}
 	}
 

@@ -8,23 +8,29 @@ import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivity {
+public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivity implements TabListener {
 
 	private static String BUNDLE_TABS_CURRENT = "tabsCurrent";
+	private static String BUNDLE_TABS_TITLES = "tabsTitles";
+	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 
-	private int mLayoutId;
-	private ViewPager mViewPager;
-	private TabsAdapter mTabsAdapter;
+	private int layoutId;
+
+	/**
+	 * Liste des fragments
+	 */
+	private int[] titles;
+	private String[] classes;
+	private Bundle[] bundles;
 
 	/**
 	 * Sert à la détection du changement de thème.
@@ -37,7 +43,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	private SlidingMenuHelper slidingMenuHelper;
 
 	public SlidingMenuActivity(int layoutId) {
-		this.mLayoutId = layoutId;
+		this.layoutId = layoutId;
 		this.slidingMenuHelper = new SlidingMenuHelper(this);
 	}
 
@@ -45,12 +51,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(NBApplication.THEME);
 		super.onCreate(savedInstanceState);
-
-		setContentView(mLayoutId);
-		mViewPager = (ViewPager) findViewById(R.id.viewPager);
-
-		mTabsAdapter = new TabsAdapter(this, getSupportActionBar(), mViewPager);
-
+		setContentView(layoutId);
 		setBehindContentView(R.layout.menu);
 		slidingMenuHelper.setupActionBar(getSupportActionBar());
 		slidingMenuHelper.setupSlidingMenu(getSlidingMenu());
@@ -66,7 +67,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	public boolean onCreateOptionsMenu(Menu menu) {
 		final Fragment fragment = getCurrentFragment();
 
-		if (fragment.isAdded() && fragment instanceof CustomFragmentActions) {
+		if (fragment instanceof CustomFragmentActions) {
 			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
 			customListFragment.onCreateOptionsMenu(menu);
 		}
@@ -109,12 +110,19 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(BUNDLE_TABS_CURRENT, getSupportActionBar().getSelectedNavigationIndex());
+		outState.putIntArray(BUNDLE_TABS_TITLES, titles);
+		outState.putStringArray(BUNDLE_TABS_CLASSES, classes);
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		if (savedInstanceState.containsKey(BUNDLE_TABS_CURRENT)) {
+		if (savedInstanceState.containsKey(BUNDLE_TABS_TITLES)) {
+			final int[] titles = savedInstanceState.getIntArray(BUNDLE_TABS_TITLES);
+			final String[] classes = savedInstanceState.getStringArray(BUNDLE_TABS_CLASSES);
 			final int selectedPosition = savedInstanceState.getInt(BUNDLE_TABS_CURRENT);
+
+			addFragments(titles, classes);
+
 			getSupportActionBar().setSelectedNavigationItem(selectedPosition);
 		}
 		super.onRestoreInstanceState(savedInstanceState);
@@ -148,32 +156,24 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 		return super.onKeyDown(keyCode, event);
 	}
 
-	/**
-	 * Ajouter les information de fragments.
-	 * 
-	 * @param titles
-	 *            Les titres (ressources).
-	 * @param classes
-	 *            Les classes des fragments.
-	 * @param bundles
-	 *            Les bundles des fragments.
-	 */
-	protected void addFragments(int[] titles, Class<?>[] classes, Bundle[] bundles) {
+	protected void addFragments(int[] titles, String[] classes) {
 		final ActionBar actionBar = getSupportActionBar();
-		// final FragmentManager fragmentManager = getSupportFragmentManager();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		this.classes = classes;
+		this.titles = titles;
 
-		// final FragmentTransaction transaction =
-		// fragmentManager.beginTransaction();
+		final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		for (int i = 0; i < titles.length; i++) {
-			// final Fragment fragment = Fragment.instantiate(this,
-			// classes[i].getName(), bundles[i]);
-			// transaction.add(fragment, classes[i].getName());
-
-			mTabsAdapter.addTab(actionBar.newTab().setText(titles[i]), classes[i], bundles[i]);
+			final Fragment fragment = Fragment.instantiate(this, this.classes[i]);
+			transaction.add(fragment, this.classes[i]);
+			transaction.detach(fragment);
 		}
-		// transaction.commit();
-		// fragmentManager.executePendingTransactions();
+		transaction.commit();
+		getSupportFragmentManager().executePendingTransactions();
+
+		for (int i = 0; i < titles.length; i++) {
+			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
+		}
 
 	}
 
@@ -186,17 +186,37 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	 *            Les classes des fragments.
 	 */
 	protected void addFragments(int[] titles, Class<?>[] classes) {
-		final ActionBar actionBar = getSupportActionBar();
-		// final FragmentManager fragmentManager = getSupportFragmentManager();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		for (int i = 0; i < titles.length; i++) {
-			// final Fragment fragment = Fragment.instantiate(this,
-			// classes[i].getName(), null);
-			// fragmentManager.putFragment(null, classes[i].getName(),
-			// fragment);
-			mTabsAdapter.addTab(actionBar.newTab().setText(titles[i]), classes[i], null);
+		this.classes = new String[classes.length];
+		for (int i = 0; i < classes.length; i++) {
+			this.classes[i] = classes[i].getName();
 		}
+		addFragments(titles, this.classes);
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		final int position = tab.getPosition();
+		final Fragment fragment = getSupportFragmentManager().findFragmentByTag(this.classes[position]);
+
+		if (fragment.isAdded()) {
+			ft.show(fragment);
+		} else {
+			ft.attach(fragment);
+			ft.add(R.id.fragmentContent, fragment);
+		}
+
+		invalidateOptionsMenu();
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		final int position = tab.getPosition();
+		final Fragment fragment = getSupportFragmentManager().findFragmentByTag(this.classes[position]);
+		ft.hide(fragment);
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 	}
 
 	/**
@@ -207,7 +227,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	private Fragment getCurrentFragment() {
 		final Tab tab = getSupportActionBar().getSelectedTab();
 		if (tab != null) {
-			return mTabsAdapter.getItem(tab.getPosition());
+			return getSupportFragmentManager().findFragmentByTag(this.classes[tab.getPosition()]);
 		}
 		return null;
 	}

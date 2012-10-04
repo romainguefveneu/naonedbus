@@ -54,9 +54,10 @@ public class LigneDialogFragment extends DialogFragment {
 		final Dialog dialog = super.onCreateDialog(savedInstanceState);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		mRobotoLight = Typeface.createFromAsset(dialog.getContext().getAssets(), "fonts/Roboto-Light.ttf");
-
 		mSensManager = SensManager.getInstance();
-
+		if (savedInstanceState != null) {
+			mLigne = (Ligne) savedInstanceState.get(BUNDLE_LIGNE);
+		}
 		return dialog;
 	}
 
@@ -64,6 +65,12 @@ public class LigneDialogFragment extends DialogFragment {
 	public void setArguments(Bundle args) {
 		super.setArguments(args);
 		mLigne = (Ligne) args.get(BUNDLE_LIGNE);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putSerializable(BUNDLE_LIGNE, mLigne);
 	}
 
 	@SuppressWarnings("deprecation")
