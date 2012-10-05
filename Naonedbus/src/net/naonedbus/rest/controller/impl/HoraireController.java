@@ -64,12 +64,12 @@ public class HoraireController extends RestController<HoraireContainer> {
 		final List<Horaire> result = new ArrayList<Horaire>();
 		final List<HoraireTan> horaires;
 
-		url.addSegment(arret.codeEquipement);
+		url.addSegment(arret.code);
 		url.addSegment(arret.codeLigne);
 		url.addSegment(arret.codeSens);
 		url.addSegment(dateFormat.format(date.toDate()));
-
 		HoraireContainer content = parseJson(url, HoraireContainer.class);
+
 		if (content != null) {
 			horaires = content.horaires;
 			// Transformation des horaires TAN en horaire naonedbus.
@@ -83,6 +83,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 				}
 				for (String minute : horaireTan.passages) {
 					horaire = new Horaire();
+					horaire.setDayTrip(date.getMillis());
 					try {
 						horaire.setTimestamp(timeOffset + dateDecode.parse(heure + minute).getTime());
 					} catch (ParseException e) {

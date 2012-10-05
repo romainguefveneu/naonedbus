@@ -8,9 +8,9 @@ import android.widget.ListAdapter;
 
 import com.actionbarsherlock.view.Menu;
 
-public class HorairesFragement extends CustomListFragment {
+public class HorairesFragment extends CustomListFragment {
 
-	public HorairesFragement() {
+	public HorairesFragment() {
 		super(R.string.title_activity_horaires, R.layout.fragment_listview_section);
 	}
 

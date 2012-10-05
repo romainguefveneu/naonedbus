@@ -3,6 +3,7 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.R;
 import net.naonedbus.activity.SimpleFragmentActivity;
 import net.naonedbus.fragment.impl.ArretsFragment;
+import net.naonedbus.fragment.impl.HorairesFragment;
 import net.naonedbus.intent.IIntentParamKey;
 import android.os.Bundle;
 
@@ -16,7 +17,7 @@ public class HoraireActivity extends SimpleFragmentActivity {
 
 	private static int[] titles = new int[] { R.string.title_fragment_arrets };
 
-	private static Class<?>[] classes = new Class<?>[] { ArretsFragment.class };
+	private static Class<?>[] classes = new Class<?>[] { HorairesFragment.class };
 
 	private Bundle[] bundles;
 

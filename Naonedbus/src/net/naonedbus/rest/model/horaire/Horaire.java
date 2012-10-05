@@ -22,7 +22,7 @@ import net.naonedbus.model.common.IHoraire;
 
 /**
  * @author romain
- *
+ * 
  */
 public class Horaire implements IHoraire {
 
@@ -30,12 +30,15 @@ public class Horaire implements IHoraire {
 
 	private Integer id;
 	private String terminus;
+	private Long dayTrip;
 	private Long timestamp;
-	
-	public Horaire(){}
-	
-	public Horaire(Horaire horaire){
+
+	public Horaire() {
+	}
+
+	public Horaire(Horaire horaire) {
 		this.id = horaire.getId();
+		this.dayTrip = horaire.getDayTrip();
 		this.terminus = horaire.getTerminus();
 		this.timestamp = horaire.getTimestamp();
 	}
@@ -58,6 +61,14 @@ public class Horaire implements IHoraire {
 	@Override
 	public Long getTimestamp() {
 		return timestamp;
+	}
+
+	public Long getDayTrip() {
+		return dayTrip;
+	}
+
+	public void setDayTrip(Long dayTrip) {
+		this.dayTrip = dayTrip;
 	}
 
 	@Override

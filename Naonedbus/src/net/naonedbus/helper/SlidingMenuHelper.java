@@ -159,6 +159,6 @@ public class SlidingMenuHelper {
 	public void setupActionBar(ActionBar actionBar) {
 		actionBar.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.actionbar_back));
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setIcon(R.drawable.ic_tb_show_as_list);
+		
 	}
 }

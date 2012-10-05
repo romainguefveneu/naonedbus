@@ -1055,7 +1055,7 @@ containing a value of this type.
         public static final int gd_map_pin_dot_parking=0x7f02007f;
         public static final int gd_map_pin_dot_parking_relai=0x7f020080;
         public static final int gd_map_pin_pin=0x7f020081;
-        public static final int ic_ab_home_as_up=0x7f020082;
+        public static final int ic_ab_home_as_menu=0x7f020082;
         public static final int ic_action_call=0x7f020083;
         public static final int ic_action_direction=0x7f020084;
         public static final int ic_action_edit=0x7f020085;
@@ -1693,8 +1693,10 @@ containing a value of this type.
         public static final int TextAppearance_Sherlock_Widget_PopupMenu_Large=0x7f0d003f;
         public static final int TextAppearance_Sherlock_Widget_PopupMenu_Small=0x7f0d0041;
         public static final int TextAppearance_Sherlock_Widget_TextView_SpinnerItem=0x7f0d0043;
-        public static final int Theme_Acapulco_Dark=0x7f0d0088;
+        public static final int Theme_Acapulco_Dark=0x7f0d0089;
+        public static final int Theme_Acapulco_Dark_HomeAsMenu=0x7f0d008a;
         public static final int Theme_Acapulco_Light=0x7f0d0087;
+        public static final int Theme_Acapulco_Light_HomeAsMenu=0x7f0d0088;
         public static final int Theme_Sherlock=0x7f0d004e;
         public static final int Theme_Sherlock_Dialog=0x7f0d0056;
         public static final int Theme_Sherlock_ForceOverflow=0x7f0d0053;

@@ -1,9 +1,7 @@
 package net.naonedbus.activity;
 
-import net.naonedbus.R;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
-
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -19,8 +17,6 @@ public abstract class SimpleActivity extends SherlockActivity {
 
 		slidingMenuHelper = new SlidingMenuHelper(this);
 		slidingMenuHelper.setupActionBar(getSupportActionBar());
-
-		getSupportActionBar().setIcon(R.drawable.ic_launcher);
 	}
 
 	@Override

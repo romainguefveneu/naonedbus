@@ -9,7 +9,10 @@
         <item name="sectionColor">@color/holo_blue_light</item>
         <item name="blockBackground">@drawable/block_light</item>
         <item name="sectionBackground">@drawable/list_section_underline_light</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_home_as_up</item>
+    </style>
+
+    <style name="Theme.Acapulco.Light.HomeAsMenu">
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_home_as_menu</item>
     </style>
 
     <style name="Theme.Acapulco.Dark" parent="@style/Theme.Sherlock">
@@ -20,7 +23,11 @@
         <item name="sectionColor">@color/holo_blue_dark</item>
         <item name="blockBackground">@drawable/block_dark</item>
         <item name="sectionBackground">@drawable/list_section_underline_dark</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_home_as_up</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_home_as_menu</item>
+    </style>
+
+    <style name="Theme.Acapulco.Dark.HomeAsMenu">
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_home_as_menu</item>
     </style>
 
 </resources>
