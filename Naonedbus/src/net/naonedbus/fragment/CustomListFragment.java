@@ -1,6 +1,8 @@
 package net.naonedbus.fragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.async.AsyncResult;
@@ -40,9 +42,9 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private static final String STATE_POSITION = "position";
 	private static final String STATE_TOP = "top";
 
-	private int messageEmptyTitleId = R.string.error_title_empty;
-	private int messageEmptySummaryId = R.string.error_summary_empty;
-	private int messageEmptyDrawableId = R.drawable.sad_face;
+	int messageEmptyTitleId = R.string.error_title_empty;
+	int messageEmptySummaryId = R.string.error_summary_empty;
+	int messageEmptyDrawableId = R.drawable.sad_face;
 
 	protected int titleId;
 	protected int layoutId;
@@ -50,6 +52,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
+
+	private List<OnScrollListener> mOnScrollListeners = new ArrayList<AbsListView.OnScrollListener>();
 
 	/**
 	 * Gestion du refraichissement
@@ -119,10 +123,21 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private void setupListView(LayoutInflater inflater, View view) {
 		final ListView listView = (ListView) fragmentView.findViewById(android.R.id.list);
 
+		listView.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				triggerOnScrollListeners(listView, firstVisibleItem, visibleItemCount, totalItemCount);
+			}
+		});
+
 		if (listView instanceof PinnedHeaderListView) {
 			final PinnedHeaderListView pinnedListView = (PinnedHeaderListView) listView;
 			pinnedListView.setPinnedHeaderView(inflater.inflate(R.layout.list_item_header, pinnedListView, false));
-			pinnedListView.setOnScrollListener(new OnScrollListener() {
+			addOnScrollListener(new OnScrollListener() {
 
 				@Override
 				public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -152,6 +167,17 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	public void cancelLoading() {
 		getLoaderManager().destroyLoader(LOADER_INIT);
 		getLoaderManager().destroyLoader(LOADER_REFRESH);
+	}
+
+	protected void addOnScrollListener(OnScrollListener onScrollListener) {
+		mOnScrollListeners.add(onScrollListener);
+	}
+
+	private void triggerOnScrollListeners(AbsListView view, int firstVisibleItem, int visibleItemCount,
+			int totalItemCount) {
+		for (OnScrollListener l : mOnScrollListeners) {
+			l.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
+		}
 	}
 
 	/**
@@ -190,8 +216,10 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
 		}
 		final View content = fragmentView.findViewById(R.id.fragmentContent);
-		content.setVisibility(View.VISIBLE);
-		content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+		if (content.getVisibility() != View.VISIBLE) {
+			content.setVisibility(View.VISIBLE);
+			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
+		}
 	}
 
 	/**

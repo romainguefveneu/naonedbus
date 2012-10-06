@@ -27,11 +27,11 @@ import java.util.List;
 import java.util.TimeZone;
 
 import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.horaire.HoraireTan;
 import net.naonedbus.rest.UrlBuilder;
+import net.naonedbus.rest.container.HoraireContainer;
 import net.naonedbus.rest.controller.RestController;
-import net.naonedbus.rest.model.horaire.Horaire;
-import net.naonedbus.rest.model.horaire.HoraireContainer;
-import net.naonedbus.rest.model.horaire.HoraireTan;
 
 import org.joda.time.DateMidnight;
 
@@ -89,6 +89,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 					} catch (ParseException e) {
 						Log.e(LOG_TAG, "Erreur de convertion.", e);
 					}
+					horaire.setSection(new DateMidnight(horaire.getTimestamp()));
 					result.add(horaire);
 				}
 			}

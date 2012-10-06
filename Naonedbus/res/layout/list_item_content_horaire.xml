@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultLine.Content.Fixed" >
+
+    <ImageView
+        android:id="@id/itemIcon"
+        style="@style/ItemSymbole"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/item_symbole_back" />
+
+    <TextView
+        android:id="@id/itemTitle"
+        style="@style/ItemPrimaryText.SingleLine"
+        android:layout_height="25dip"
+        android:layout_above="@id/itemDescription"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toLeftOf="@id/itemTime"
+        android:layout_toRightOf="@id/itemIcon" />
+
+    <TextView
+        android:id="@id/itemDescription"
+        style="@style/ItemSecondaryText.SingleLine"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/itemIcon" />
+
+    <TextView
+        android:id="@id/itemTime"
+        style="@style/ItemTime"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/itemTitle" />
+
+</RelativeLayout>

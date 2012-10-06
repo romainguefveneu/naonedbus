@@ -2,9 +2,9 @@
 <!--
 /*
  *  Copyright (C) 2011 Romain Guefveneu
- *  
+ *
  *  This file is part of naonedbus.
- *  
+ *
  *  Naonedbus is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -21,28 +21,29 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
     android:minHeight="?android:attr/listPreferredItemHeight" >
 
-    <ImageView
-        android:id="@id/itemIcon"
-        style="@style/ItemSymbole"
-        android:layout_height="match_parent"
-        android:src="@drawable/map_layer_arret" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
 
-    <ImageView
-        android:id="@+id/itemFavori"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignBottom="@id/itemIcon"
-        android:layout_alignRight="@id/itemIcon" />
+        <ProgressBar
+            android:id="@android:id/progress"
+            android:layout_width="25dip"
+            android:layout_height="25dip" />
 
-    <TextView
-        android:id="@id/itemTitle"
-        style="@style/ItemPrimaryText"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/itemIcon"
-        android:paddingLeft="10dip"
-        android:paddingRight="8dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@android:id/progress"
+            android:paddingLeft="5dip"
+            android:text="@string/loading"
+            android:textSize="20dip" />
+    </RelativeLayout>
 
 </RelativeLayout>

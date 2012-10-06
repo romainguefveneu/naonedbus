@@ -21,7 +21,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_icon, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_arret, null);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);
@@ -32,6 +32,15 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Arret arret = getItem(position);
 		holder.itemTitle.setText(arret.nom);
+
+		if (position == 0) {
+			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_first);
+		} else if (position == getCount() - 1) {
+			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_last);
+		} else {
+			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_inner);
+		}
+
 	}
 
 	public void bindViewHolder(View view) {
@@ -39,7 +48,6 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		holder = new ViewHolder();
 		holder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
-		holder.itemIcon.setImageResource(R.drawable.map_layer_arret);
 
 		view.setTag(holder);
 	}

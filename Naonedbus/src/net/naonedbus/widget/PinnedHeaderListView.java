@@ -16,9 +16,11 @@
 
 package net.naonedbus.widget;
 
+import android.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;

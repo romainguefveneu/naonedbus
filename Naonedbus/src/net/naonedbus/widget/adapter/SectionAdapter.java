@@ -76,6 +76,14 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 		return v;
 	}
 
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+		if (mIndexer != null) {
+			mIndexer.buildIndex(getContext(), this);
+		}
+	}
+
 	/**
 	 * @see android.widget.ListAdapter#getView(int, View, ViewGroup)
 	 */

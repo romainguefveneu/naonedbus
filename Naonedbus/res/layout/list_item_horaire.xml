@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /**
  *  Copyright (C) 2011 Romain Guefveneu
  *  
@@ -16,15 +18,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.rest.model.horaire;
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultLine" >
 
-import java.util.List;
+    <include layout="@layout/list_item_header" />
 
-/**
- * @author romain
- * 
- */
-public class HoraireTan {
-	public String heure;
-	public List<String> passages;
-}
+    <include layout="@layout/list_item_content_horaire" />
+
+</LinearLayout>

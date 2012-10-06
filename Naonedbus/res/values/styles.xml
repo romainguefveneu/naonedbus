@@ -291,6 +291,10 @@
         <item name="android:textColor">?attr/primaryColor</item>
     </style>
 
+    <style name="BigSubTitle" parent="BigTitle">
+        <item name="android:textSize">18dip</item>
+    </style>
+
     <style name="Listview">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
@@ -325,7 +329,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">8dip</item>
-<!--         <item name="android:background">?android:attr/selectableItemBackground</item> -->
+        <!-- <item name="android:background">?android:attr/selectableItemBackground</item> -->
     </style>
 
 </resources>

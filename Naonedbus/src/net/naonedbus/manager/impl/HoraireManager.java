@@ -26,13 +26,13 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.HoraireToken;
 import net.naonedbus.bean.NextHoraireTask;
+import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.horaire.HoraireToken;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.HoraireProvider;
 import net.naonedbus.provider.table.HoraireTable;
 import net.naonedbus.rest.controller.impl.HoraireController;
-import net.naonedbus.rest.model.horaire.Horaire;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -89,6 +89,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		item.setId(c.getInt(c.getColumnIndex(HoraireTable._ID)));
 		item.setTimestamp(c.getLong(c.getColumnIndex(HoraireTable.TIMESTAMP)));
 		item.setTerminus(c.getString(c.getColumnIndex(HoraireTable.TERMINUS)));
+		item.setDayTrip(c.getLong(c.getColumnIndex(HoraireTable.DAY_TRIP)));
+		item.setSection(new DateMidnight(item.getTimestamp()));
 		return item;
 	}
 
@@ -207,8 +209,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 				// Charger la veille si besoin (pour les horaires passé minuit)
 				if (date.isEqual(currentDay) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
 					final HoraireToken previousFlag = new HoraireToken(date.minusDays(1).getMillis(), arret._id);
-					if (!isInDB(contentResolver, arret, date.minusDays(1))
-							&& (!emptyHoraires.contains(previousFlag))) {
+					if (!isInDB(contentResolver, arret, date.minusDays(1)) && (!emptyHoraires.contains(previousFlag))) {
 						horaires = controller.getAllFromWeb(arret, date.minusDays(1));
 						fillDB(contentResolver, arret, previousFlag, horaires);
 					}
@@ -246,8 +247,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getNextHoraires(ContentResolver contentResolver, Arret arret, DateMidnight date,
-			int limit) throws IOException, JsonSyntaxException {
+	public List<Horaire> getNextHoraires(ContentResolver contentResolver, Arret arret, DateMidnight date, int limit)
+			throws IOException, JsonSyntaxException {
 		List<Horaire> horaires;
 		final long now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
 		final List<Horaire> nextHoraires = new ArrayList<Horaire>();

@@ -16,15 +16,18 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.rest.model.horaire;
+package net.naonedbus.bean.horaire;
+
+import java.util.Date;
 
 import net.naonedbus.model.common.IHoraire;
+import net.naonedbus.widget.item.SectionItem;
 
 /**
  * @author romain
  * 
  */
-public class Horaire implements IHoraire {
+public class Horaire implements IHoraire, SectionItem {
 
 	private static final long serialVersionUID = 6005990920131960102L;
 
@@ -32,6 +35,11 @@ public class Horaire implements IHoraire {
 	private String terminus;
 	private Long dayTrip;
 	private Long timestamp;
+
+	private Date date;
+	private String delai;
+	private Object section;
+	private boolean isBeforeNow;
 
 	public Horaire() {
 	}
@@ -79,6 +87,36 @@ public class Horaire implements IHoraire {
 	@Override
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
+		this.date = new Date(timestamp);
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public String getDelai() {
+		return delai;
+	}
+
+	public void setDelai(String delai) {
+		this.delai = delai;
+	}
+
+	public boolean isBeforeNow() {
+		return isBeforeNow;
+	}
+
+	public void setBeforeNow(boolean isBeforeNow) {
+		this.isBeforeNow = isBeforeNow;
+	}
+
+	public void setSection(Object section) {
+		this.section = section;
+	}
+
+	@Override
+	public Object getSection() {
+		return section;
 	}
 
 }
