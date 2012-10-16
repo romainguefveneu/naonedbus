@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
 /**
  *  Copyright (C) 2011 Romain Guefveneu
  *  
@@ -18,16 +16,24 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
--->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+package net.naonedbus.comparator;
 
-    <ListView
-        android:id="@id/android:list"
-        style="@style/Listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/ligneDialogHeader" />
+import java.util.Comparator;
 
-</RelativeLayout>
+import net.naonedbus.bean.Arret;
+
+/**
+ * @author romain
+ * 
+ */
+public class ArretOrdreComparator implements Comparator<Arret> {
+
+	@Override
+	public int compare(Arret e1, Arret e2) {
+		if (e1 == null || e2 == null)
+			return 0;
+
+		return Integer.valueOf(e1.ordre).compareTo(e2.ordre);
+	}
+
+}

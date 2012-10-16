@@ -85,8 +85,6 @@ public class ArretProvider extends ReadOnlyContentProvider {
 			queryBuilder.appendWhere(" AND ");
 			queryBuilder.appendWhere(ArretTable.TABLE_NAME + "." + ArretTable.CODE_LIGNE + " = ");
 			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeLigne"));
-			queryBuilder.appendWhere(" AND ");
-			queryBuilder.appendWhere(EquipementTable.TABLE_NAME + "." + EquipementTable.CODE + " is not null");
 			break;
 		case ARRET_CODEARRET_CODESENS_CODELIGNE:
 			queryBuilder.appendWhere(ArretTable.TABLE_NAME + "." + ArretTable.CODE + " = ");
@@ -97,8 +95,6 @@ public class ArretProvider extends ReadOnlyContentProvider {
 			queryBuilder.appendWhere(" AND ");
 			queryBuilder.appendWhere(ArretTable.TABLE_NAME + "." + ArretTable.CODE_LIGNE + " = ");
 			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeLigne"));
-			queryBuilder.appendWhere(" AND ");
-			queryBuilder.appendWhere(EquipementTable.TABLE_NAME + "." + EquipementTable.CODE + " is not null");
 			break;
 
 		case ARRETS:

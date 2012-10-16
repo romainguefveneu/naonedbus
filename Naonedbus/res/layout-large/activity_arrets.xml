@@ -28,16 +28,30 @@
     <RelativeLayout
         android:id="@id/ligneDialogHeader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/actionbar_height" >
+        android:layout_height="75dip"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/BigTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/ligneDialogCode"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:padding="3dip"
+            android:singleLine="true" />
 
         <TextView
             android:id="@id/ligneDialogCode"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/padding_small"
-            android:layout_marginTop="-10dip"
-            android:textSize="58dp" />
+            android:layout_marginTop="-60dip"
+            android:paddingLeft="10dip"
+            android:textSize="120dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -45,9 +59,8 @@
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
             android:background="#50000000"
-            android:gravity="right"
+            android:gravity="center"
             android:padding="3dip"
-            android:text="Aucune perturbation en cours."
             android:textColor="@android:color/white" />
     </RelativeLayout>
 

@@ -27,15 +27,19 @@ public interface ArretTable extends BaseColumns {
 	public static final String CODE_SENS = "codeSens";
 	public static final String CODE_LIGNE = "codeLigne";
 	public static final String ID_STATION = "idStation";
+	public static final String ORDRE = "ordre";
 
-	public static String TABLE_JOIN_STATIONS = " LEFT JOIN " + EquipementTable.TABLE_NAME
-			+ " ON idType = 0 AND idStation = " + EquipementTable.TABLE_NAME + "._id " + "LEFT JOIN "
-			+ LigneTable.TABLE_NAME + " ON " + ArretTable.TABLE_NAME + "." + ArretTable.CODE_LIGNE + " = "
-			+ LigneTable.TABLE_NAME + "." + LigneTable.CODE;
+	//@formatter:off
+	public static String TABLE_JOIN_STATIONS = 
+			" LEFT JOIN " + EquipementTable.TABLE_NAME + 
+				" ON idType = 0 AND idStation = " + EquipementTable.TABLE_NAME + "._id AND " + EquipementTable.CODE + " IS NOT NULL " + 
+			" LEFT JOIN " + LigneTable.TABLE_NAME + 
+				" ON " + ArretTable.TABLE_NAME + "." + ArretTable.CODE_LIGNE + " = " + LigneTable.TABLE_NAME + "." + LigneTable.CODE;
+	//@formatter:on
 
 	public static final String[] PROJECTION = new String[] { TABLE_NAME + "." + _ID + " as _id",
 			TABLE_NAME + "." + CODE, TABLE_NAME + "." + CODE_SENS, TABLE_NAME + "." + CODE_LIGNE,
-			TABLE_NAME + "." + ID_STATION, LigneTable.TABLE_NAME + "." + LigneTable.LETTRE,
+			TABLE_NAME + "." + ID_STATION, TABLE_NAME + "." + ORDRE, LigneTable.TABLE_NAME + "." + LigneTable.LETTRE,
 			EquipementTable.TABLE_NAME + "." + EquipementTable.CODE,
 			EquipementTable.TABLE_NAME + "." + EquipementTable.NOM,
 			EquipementTable.TABLE_NAME + "." + EquipementTable.NORMALIZED_NOM,

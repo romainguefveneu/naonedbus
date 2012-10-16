@@ -34,6 +34,7 @@ public class Arret implements Serializable {
 	public Float latitude;
 	public Float longitude;
 	public int idStation;
+	public int ordre;
 	public String nom;
 
 	public Arret() {
@@ -100,6 +101,10 @@ public class Arret implements Serializable {
 
 	public String getNom() {
 		return nom;
+	}
+
+	public int getOrder() {
+		return ordre;
 	}
 
 }

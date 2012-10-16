@@ -7,11 +7,10 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HoraireActivity;
 import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.ArretComparator;
-import net.naonedbus.comparator.ArretDistanceComparator;
+import net.naonedbus.comparator.ArretOrdreComparator;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
@@ -19,11 +18,7 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
-import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
 import android.content.Context;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ListAdapter;
@@ -36,15 +31,14 @@ import com.actionbarsherlock.view.MenuItem;
 public class ArretsFragment extends CustomListFragment implements CustomFragmentActions {
 
 	private final static int SORT_NOM = R.id.menu_sort_name;
-	private final static int SORT_DISTANCE = R.id.menu_sort_distance;
+	private final static int SORT_ORDRE = R.id.menu_sort_ordre;
 
 	public static final String PARAM_ID_SENS = "idSens";
 
 	protected final SparseArray<Comparator<Arret>> mComparators;
 
 	protected MyLocationProvider mLocationProvider;
-	private DistanceTask mLoaderDistance;
-	protected int mCurrentSortPreference = SORT_NOM;
+	protected int mCurrentSortPreference = SORT_ORDRE;
 
 	private final SensManager mSensManager;
 
@@ -56,13 +50,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 		this.mComparators = new SparseArray<Comparator<Arret>>();
 		this.mComparators.append(SORT_NOM, new ArretComparator());
-		this.mComparators.append(SORT_DISTANCE, new ArretDistanceComparator());
+		this.mComparators.append(SORT_ORDRE, new ArretOrdreComparator());
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_equipements, menu);
+		menuInflater.inflate(R.menu.fragment_arrets, menu);
 		menu.findItem(mCurrentSortPreference).setChecked(true);
 	}
 
@@ -75,8 +69,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 			mCurrentSortPreference = SORT_NOM;
 			sort();
 			break;
-		case R.id.menu_sort_distance:
-			mCurrentSortPreference = SORT_DISTANCE;
+		case R.id.menu_sort_ordre:
+			mCurrentSortPreference = SORT_ORDRE;
 			sort();
 			break;
 		}
@@ -107,75 +101,31 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	 * @param adapter
 	 */
 	private void sort(ArretArrayAdapter adapter) {
-		final Comparator<Arret> comparator;
-
-		if (mCurrentSortPreference == SORT_DISTANCE && !mLocationProvider.isProviderEnabled()) {
-			// Tri par défaut si pas le localisation
-			comparator = mComparators.get(SORT_NOM);
-		} else {
-			comparator = mComparators.get(mCurrentSortPreference);
-		}
-
+		final Comparator<Arret> comparator = mComparators.get(mCurrentSortPreference);
 		adapter.sort(comparator);
 	}
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
-
 		final int idSens = getArguments().getInt(PARAM_ID_SENS);
 		final Sens sens = mSensManager.getSingle(getActivity().getContentResolver(), idSens);
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 			final ArretManager arretManager = ArretManager.getInstance();
-
 			final List<Arret> arrets = arretManager.getAll(context.getContentResolver(), sens.codeLigne, sens.code);
-
 			final ArretArrayAdapter adapter = new ArretArrayAdapter(context, arrets);
-			result.setResult(adapter);
 
+			result.setResult(adapter);
 		} catch (Exception e) {
 			result.setException(e);
 		}
 		return result;
 	}
 
-	/**
-	 * Classe de calcul de la distance des équipements.
-	 * 
-	 * @author romain
-	 */
-	private class DistanceTask extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			final ListAdapter adapter = getListAdapter();
-
-			final Location equipementLocation = new Location(LocationManager.GPS_PROVIDER);
-			final Location currentLocation = mLocationProvider.getLastKnownLocation();
-
-			if (currentLocation != null) {
-				for (int i = 0; i < adapter.getCount(); i++) {
-					final Equipement item = (Equipement) adapter.getItem(i);
-					final double latitude = item.getLatitude();
-					final double longitude = item.getLongitude();
-					if (latitude != 0) {
-						equipementLocation.setLatitude(latitude);
-						equipementLocation.setLongitude(longitude);
-						item.setDistance(currentLocation.distanceTo(equipementLocation));
-					}
-				}
-			}
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			final EquipementArrayAdapter adapter = (EquipementArrayAdapter) getListAdapter();
-			adapter.notifyDataSetChanged();
-		}
-
+	@Override
+	protected void onPostExecute() {
+		sort();
 	}
 
 }

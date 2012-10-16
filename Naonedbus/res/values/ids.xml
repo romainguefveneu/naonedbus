@@ -87,6 +87,7 @@
     <item name="menu_sort_name" type="id"/>
     <item name="menu_sort_parking_places" type="id"/>
     <item name="menu_sort_distance" type="id"/>
+    <item name="menu_sort_ordre" type="id"/>
     <item name="menu_filter" type="id"/>
     <item name="menu_send" type="id"/>
     <item name="menu_feedback" type="id"/>

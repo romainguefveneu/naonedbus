@@ -139,7 +139,6 @@ public abstract class SimpleFragmentActivity extends SherlockFragmentActivity im
 
 	protected void addFragments(int[] titles, String[] classes) {
 		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		this.classes = classes;
 		this.titles = titles;
 
@@ -156,11 +155,15 @@ public abstract class SimpleFragmentActivity extends SherlockFragmentActivity im
 			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
 		}
 
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		if (titles.length == 1) {
+			actionBar.setSelectedNavigationItem(0);
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		}
 	}
 
 	protected void addFragments(int[] titles, String[] classes, Bundle[] bundles) {
 		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		this.classes = classes;
 		this.titles = titles;
 		this.bundles = bundles;
@@ -178,6 +181,11 @@ public abstract class SimpleFragmentActivity extends SherlockFragmentActivity im
 			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
 		}
 
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		if (titles.length == 1) {
+			actionBar.setSelectedNavigationItem(0);
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		}
 	}
 
 	/**

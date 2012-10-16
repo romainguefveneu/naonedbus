@@ -1,7 +1,7 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.SimpleFragmentActivity;
+import net.naonedbus.activity.OneFragmentActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
@@ -17,19 +17,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
-
-public class HoraireActivity extends SimpleFragmentActivity {
+public class HoraireActivity extends OneFragmentActivity {
 
 	public static enum Param implements IIntentParamKey {
 		idArret
 	};
-
-	private static int[] titles = new int[] { R.string.title_fragment_arrets };
-
-	private static Class<?>[] classes = new Class<?>[] { HorairesFragment.class };
-
-	private Bundle[] bundles;
 
 	public HoraireActivity() {
 		super(R.layout.activity_horaires);
@@ -43,12 +35,8 @@ public class HoraireActivity extends SimpleFragmentActivity {
 		final Bundle bundle = new Bundle();
 		bundle.putInt(HorairesFragment.PARAM_ID_ARRET, idArret);
 
-		bundles = new Bundle[1];
-		bundles[0] = bundle;
-
 		if (savedInstanceState == null) {
-			addFragments(titles, classes, bundles);
-			getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+			addFragment(HorairesFragment.class, bundle);
 		}
 
 		final Typeface robotoLight = Typeface.createFromAsset(this.getAssets(), "fonts/Roboto-Light.ttf");
@@ -70,14 +58,20 @@ public class HoraireActivity extends SimpleFragmentActivity {
 		code.setTypeface(robotoLight);
 
 		final TextView title = (TextView) findViewById(R.id.itemTitle);
-		title.setText(arret.nom);
-		title.setTextColor(ligne.couleurTexte);
-		title.setTypeface(robotoLight);
+		if (title == null) {
+			// Small devices
+			getSupportActionBar().setTitle(SymbolesUtils.formatArretSens(arret.nom, sens.text));
+		} else {
 
-		final TextView subTitle = (TextView) findViewById(R.id.itemSubTitle);
-		subTitle.setText(SymbolesUtils.formatSens(sens.text));
-		subTitle.setTextColor(ligne.couleurTexte);
-		subTitle.setTypeface(robotoLight);
+			title.setText(arret.nom);
+			title.setTextColor(ligne.couleurTexte);
+			title.setTypeface(robotoLight);
+
+			final TextView subTitle = (TextView) findViewById(R.id.itemSubTitle);
+			subTitle.setText(SymbolesUtils.formatSens(sens.text));
+			subTitle.setTextColor(ligne.couleurTexte);
+			subTitle.setTypeface(robotoLight);
+		}
 
 	}
 

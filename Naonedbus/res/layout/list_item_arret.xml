@@ -20,9 +20,10 @@
  */
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeight" >
+    style="@style/DefaultLine"
+    android:layout_margin="0dip"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:padding="0dip" >
 
     <ImageView
         android:id="@id/itemIcon"

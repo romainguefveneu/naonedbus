@@ -87,6 +87,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 		item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
 		item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
 		item.idStation = c.getInt(c.getColumnIndex(ArretTable.ID_STATION));
+		item.ordre = c.getInt(c.getColumnIndex(ArretTable.ORDRE));
 		return item;
 	}
 
@@ -102,6 +103,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 		item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
 		item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
 		item.idStation = c.getInt(c.getColumnIndex(ArretTable.ID_STATION));
+		item.ordre = c.getInt(c.getColumnIndex(ArretTable.ORDRE));
 		return item;
 	}
 
@@ -151,6 +153,8 @@ public class ArretManager extends SQLiteManager<Arret> {
 		values.put(ArretTable.CODE_LIGNE, item.codeLigne);
 		values.put(ArretTable.CODE_SENS, item.codeSens);
 		values.put(ArretTable.CODE, item.code);
+		values.put(ArretTable.ID_STATION, item.idStation);
+		values.put(ArretTable.ORDRE, item.ordre);
 		values.put(EquipementTable.NOM, item.nom);
 		values.put(EquipementTable.NORMALIZED_NOM, item.normalizedNom);
 

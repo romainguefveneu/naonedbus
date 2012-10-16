@@ -38,7 +38,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		} else if (position == getCount() - 1) {
 			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_last);
 		} else {
-			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_inner);
+			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_step);
 		}
 
 	}

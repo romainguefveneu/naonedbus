@@ -11,4 +11,8 @@ public abstract class SymbolesUtils {
 		return SENS_ARROW + " " + sens;
 	}
 
+	public static String formatArretSens(String arret, String sens) {
+		return arret + " " + SENS_ARROW + " " + sens;
+	}
+
 }

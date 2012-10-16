@@ -16,6 +16,9 @@
 
 <resources>
 
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
     <dimen name="actionbar_home_width">48dp</dimen>
     <dimen name="actionbar_height">48dp</dimen>
     <dimen name="shadow_width">15dp</dimen>

@@ -50,11 +50,13 @@ CREATE TABLE IF NOT EXISTS arrets (
   code TEXT, 
   codeSens TEXT, 
   codeLigne TEXT, 
-  idStation INT NOT NULL);
+  idStation INT NOT NULL,
+  ordre INT NOT NULL);
 CREATE INDEX IF NOT EXISTS arrets_id ON arrets (_id);
 CREATE INDEX IF NOT EXISTS arrets_code ON arrets (code);
 CREATE INDEX IF NOT EXISTS arrets_codeLigne ON arrets (codeLigne);
-CREATE INDEX IF NOT EXISTS arrets_codeSens ON arrets (codeLigne, codeSens);
+CREATE INDEX IF NOT EXISTS arrets_codeSens ON arrets (codeSens);
+CREATE INDEX IF NOT EXISTS arrets_codeLigneSens ON arrets (codeLigne, codeSens);
 CREATE INDEX IF NOT EXISTS arrets_station ON arrets (idStation);
 
 -- Décrire SENS

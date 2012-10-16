@@ -16,11 +16,10 @@
 
 package net.naonedbus.widget;
 
-import android.R;
+import net.naonedbus.R;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.view.Display;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -103,6 +102,8 @@ public class PinnedHeaderListView extends ListView {
 
 		mHeaderView.findViewById(net.naonedbus.R.id.header_text).setVisibility(View.VISIBLE);
 		mHeaderView.findViewById(net.naonedbus.R.id.divider).setVisibility(View.GONE);
+
+		mHeaderViewHeight = getResources().getDimensionPixelSize(R.dimen.list_section_divider_min_height);
 
 		// Disable vertical fading when the pinned header is present
 		// TODO change ListView to allow separate measures for top and bottom
