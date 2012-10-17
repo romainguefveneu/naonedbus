@@ -28,20 +28,35 @@
     <RelativeLayout
         android:id="@id/ligneDialogHeader"
         android:layout_width="match_parent"
-        android:layout_height="75dip"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true" >
+        android:layout_height="75dip" >
 
         <TextView
             android:id="@id/itemTitle"
             style="@style/BigTitle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
             android:layout_toRightOf="@id/ligneDialogCode"
             android:ellipsize="end"
             android:gravity="right"
-            android:padding="3dip"
+            android:paddingRight="3dip"
+            android:paddingTop="3dip"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@id/itemSubTitle"
+            style="@style/BigSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/itemTitle"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/itemTitle"
+            android:layout_marginLeft="8dip"
+            android:layout_toRightOf="@id/itemTitle"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingRight="3dip"
+            android:paddingTop="10dip"
             android:singleLine="true" />
 
         <TextView
@@ -59,8 +74,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
             android:background="#50000000"
-            android:gravity="center"
+            android:gravity="right"
             android:padding="3dip"
+            android:text="Aucune perturbation en cours."
             android:textColor="@android:color/white" />
     </RelativeLayout>
 

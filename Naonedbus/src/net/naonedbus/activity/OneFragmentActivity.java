@@ -130,6 +130,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		this.mClasse = classe;
 
 		mFragment = Fragment.instantiate(this, this.mClasse);
+		mFragment.setRetainInstance(true);
 		getSupportFragmentManager().beginTransaction().add(R.id.fragmentContent, mFragment).commit();
 
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -141,6 +142,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		this.mBundle = bundle;
 
 		mFragment = Fragment.instantiate(this, classe, bundle);
+		mFragment.setRetainInstance(true);
 		getSupportFragmentManager().beginTransaction().add(R.id.fragmentContent, mFragment).commit();
 
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);

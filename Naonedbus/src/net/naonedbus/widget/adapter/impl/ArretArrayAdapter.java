@@ -14,8 +14,18 @@ import android.widget.TextView;
 
 public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 
+	public static enum ViewType {
+		TYPE_STANDARD, TYPE_METRO
+	}
+
+	private ViewType mViewType = ViewType.TYPE_METRO;
+
 	public ArretArrayAdapter(Context context, List<Arret> objects) {
 		super(context, 0, objects);
+	}
+
+	public void setViewType(ViewType viewType) {
+		this.mViewType = viewType;
 	}
 
 	@Override
@@ -33,12 +43,20 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		final Arret arret = getItem(position);
 		holder.itemTitle.setText(arret.nom);
 
-		if (position == 0) {
-			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_first);
-		} else if (position == getCount() - 1) {
-			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_last);
+		if (mViewType == ViewType.TYPE_METRO) {
+			if (position == 0) {
+				holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_first);
+			} else if (position == getCount() - 1) {
+				holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_last);
+			} else {
+				holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_step);
+			}
+
+			holder.itemIcon.setVisibility(View.INVISIBLE);
+			holder.itemMetroPoint.setVisibility(View.VISIBLE);
 		} else {
-			holder.itemIcon.setBackgroundResource(R.drawable.ic_arret_step);
+			holder.itemIcon.setVisibility(View.VISIBLE);
+			holder.itemMetroPoint.setVisibility(View.INVISIBLE);
 		}
 
 	}
@@ -46,6 +64,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	public void bindViewHolder(View view) {
 		final ViewHolder holder;
 		holder = new ViewHolder();
+		holder.itemMetroPoint = (ImageView) view.findViewById(R.id.itemMetroPoint);
 		holder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 
@@ -53,6 +72,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	}
 
 	private static class ViewHolder {
+		ImageView itemMetroPoint;
 		ImageView itemIcon;
 		TextView itemTitle;
 	}

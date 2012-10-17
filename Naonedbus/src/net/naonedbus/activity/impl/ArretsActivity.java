@@ -63,6 +63,7 @@ public class ArretsActivity extends OneFragmentActivity {
 			// Small devices
 			getSupportActionBar().setTitle(SymbolesUtils.formatSens(sens.text));
 		} else {
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
 			sensTitle.setText(sens.text);
 			sensTitle.setTextColor(ligne.couleurTexte);
 			sensTitle.setTypeface(robotoLight);

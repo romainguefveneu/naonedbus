@@ -38,7 +38,7 @@
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:drawable/toast_frame"
+        android:background="@drawable/toast_frame"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="20dp"

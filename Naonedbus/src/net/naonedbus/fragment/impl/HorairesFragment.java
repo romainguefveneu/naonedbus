@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.MapActivity;
+import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.fragment.CustomInfiniteListFragement;
+import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.widget.adapter.impl.HoraireArrayAdapter;
@@ -17,12 +20,16 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.DatePicker;
 import android.widget.ListAdapter;
 
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class HorairesFragment extends CustomInfiniteListFragement {
 
@@ -35,10 +42,17 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private HoraireArrayAdapter mAdapter;
 	private List<Horaire> mHoraires;
 
+	private Arret mArret;
 	private boolean mIsFirstLoad = true;
 
 	private DateMidnight mLastDayLoaded;
 	private DateTime mLastDateTimeLoaded;
+
+	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			changeDate(new DateMidnight(year, monthOfYear + 1, dayOfMonth));
+		}
+	};
 
 	public HorairesFragment() {
 		super(R.string.title_activity_horaires, R.layout.fragment_listview_section);
@@ -54,6 +68,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		super.onActivityCreated(savedInstanceState);
 		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
 		mAdapter.setIndexer(new HoraireIndexer());
+
+		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
+		mArret = mArretManager.getSingle(getActivity().getContentResolver(), idArret);
 	}
 
 	@Override
@@ -72,6 +89,54 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu) {
+		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
+		menuInflater.inflate(R.menu.fragment_horaires, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_place:
+			showArretPlan();
+			break;
+		case R.id.menu_date:
+			changeDate();
+			break;
+		case R.id.menu_date_maintenant:
+			changeDateToNow();
+			break;
+		default:
+			break;
+		}
+		return false;
+	}
+
+	private void changeDate() {
+		final DatePickerDialog dateDialog = new DatePickerDialog(getActivity(), mDateSetListener,
+				mLastDayLoaded.getYear(), mLastDayLoaded.getMonthOfYear() - 1, mLastDayLoaded.getDayOfMonth());
+		dateDialog.show();
+	}
+
+	protected void changeDateToNow() {
+		changeDate(new DateMidnight());
+	}
+
+	protected void showArretPlan() {
+		ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+		intent.putExtra(MapActivity.Param.itemId, mArret.idStation);
+		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
+		startActivity(intent);
+	}
+
+	/**
+	 * Clear data and reload with a new date
+	 * 
+	 * @param date
+	 */
+	public void changeDate(DateMidnight date) {
+		mAdapter.clear();
+		mAdapter.notifyDataSetChanged();
+		loadHoraires(date);
 	}
 
 	@Override

@@ -62,6 +62,7 @@ public class HoraireActivity extends OneFragmentActivity {
 			// Small devices
 			getSupportActionBar().setTitle(SymbolesUtils.formatArretSens(arret.nom, sens.text));
 		} else {
+			getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 			title.setText(arret.nom);
 			title.setTextColor(ligne.couleurTexte);

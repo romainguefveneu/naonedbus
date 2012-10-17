@@ -201,7 +201,7 @@ public class MapActivity extends SlidingSherlockMapActivity {
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
 		if (myLocationProvider.isProviderEnabled() == true) {
-			menu.add(0, ACTION_CENTER_MAP, 0, "Centrer").setIcon(R.drawable.ic_menu_compass)
+			menu.add(0, ACTION_CENTER_MAP, 0, "Centrer").setIcon(R.drawable.ic_action_location_found)
 					.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		}
 

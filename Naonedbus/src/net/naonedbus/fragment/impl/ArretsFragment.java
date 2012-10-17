@@ -18,6 +18,7 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
+import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
 import android.content.Context;
 import android.util.SparseArray;
 import android.view.View;
@@ -63,14 +64,17 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		item.setChecked(true);
+		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
 
 		switch (item.getItemId()) {
 		case R.id.menu_sort_name:
 			mCurrentSortPreference = SORT_NOM;
+			adapter.setViewType(ViewType.TYPE_STANDARD);
 			sort();
 			break;
 		case R.id.menu_sort_ordre:
 			mCurrentSortPreference = SORT_ORDRE;
+			adapter.setViewType(ViewType.TYPE_METRO);
 			sort();
 			break;
 		}

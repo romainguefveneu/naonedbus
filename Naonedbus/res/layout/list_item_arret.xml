@@ -23,10 +23,21 @@
     style="@style/DefaultLine"
     android:layout_margin="0dip"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:padding="0dip" >
+    android:paddingBottom="0dip"
+    android:paddingLeft="8dip"
+    android:paddingRight="8dip"
+    android:paddingTop="0dip" >
 
     <ImageView
         android:id="@id/itemIcon"
+        style="@style/ItemSymbole"
+        android:background="@drawable/item_symbole_back"
+        android:padding="5dp"
+        android:src="@drawable/ic_arret"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/itemMetroPoint"
         style="@style/ItemSymbole"
         android:layout_height="match_parent"
         android:src="@drawable/map_layer_arret" />

@@ -45,7 +45,14 @@
     <string name="action_filter">Filtrer</string>
     <string name="action_send">Envoyer</string>
     <string name="action_feedback">Envoyer un retour</string>
+    <string name="action_feedback_bug">Signaler un bug</string>
     <string name="action_rate">Noter cette application</string>
+    <string name="action_show_plan">Plan de ligne</string>
+    <string name="action_change_date">Changer de date</string>
+    <string name="action_change_date_now">Aujourd\'hui</string>
+    <string name="action_change_sens">Autre sens</string>
+    <string name="action_show_on_map">Voir sur le plan</string>
+    <string name="action_favori">Favori</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
     <string name="error_title_network">Une erreur réseau est survenue</string>
