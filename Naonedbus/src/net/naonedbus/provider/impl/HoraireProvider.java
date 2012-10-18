@@ -91,7 +91,7 @@ public class HoraireProvider extends CustomContentProvider {
 				queryBuilder.appendWhere(" OR (");
 				queryBuilder.appendWhere(HoraireTable.DAY_TRIP + " < " + dayTrip);
 				queryBuilder.appendWhere(" AND ");
-				queryBuilder.appendWhere(HoraireTable.TIMESTAMP + " > " + dayTrip);
+				queryBuilder.appendWhere(HoraireTable.TIMESTAMP + " >= " + dayTrip);
 				queryBuilder.appendWhere(")");
 			}
 

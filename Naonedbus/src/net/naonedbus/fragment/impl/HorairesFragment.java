@@ -21,7 +21,10 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.DatePicker;
@@ -33,9 +36,29 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class HorairesFragment extends CustomInfiniteListFragement {
 
+	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 	public static final String PARAM_ID_ARRET = "idArret";
 
 	private static final String formatDelay = "dans %d min";
+
+	private final static IntentFilter intentFilter;
+	static {
+		intentFilter = new IntentFilter();
+		intentFilter.addAction(HorairesFragment.ACTION_UPDATE_DELAYS);
+		intentFilter.addAction(Intent.ACTION_TIME_TICK);
+		intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
+		intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
+	}
+
+	/**
+	 * Reçoit les intents de notre intentFilter
+	 */
+	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			updateItemsTime();
+		}
+	};
 
 	private final HoraireManager mHoraireManager;
 	private final ArretManager mArretManager;
@@ -66,11 +89,19 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		getActivity().registerReceiver(intentReceiver, intentFilter);
+
 		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
 		mAdapter.setIndexer(new HoraireIndexer());
 
 		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
 		mArret = mArretManager.getSingle(getActivity().getContentResolver(), idArret);
+	}
+
+	@Override
+	public void onDestroy() {
+		getActivity().unregisterReceiver(intentReceiver);
+		super.onDestroy();
 	}
 
 	@Override
@@ -135,7 +166,10 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	 */
 	public void changeDate(DateMidnight date) {
 		mAdapter.clear();
-		mAdapter.notifyDataSetChanged();
+		mIsFirstLoad = true;
+		mLastDateTimeLoaded = null;
+
+		setListAdapter(null);
 		loadHoraires(date);
 	}
 
@@ -148,15 +182,12 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		final Arret arret = mArretManager.getSingle(context.getContentResolver(), idArret);
 
 		try {
+
 			data = mHoraireManager
 					.getHoraires(context.getContentResolver(), arret, mLastDayLoaded, mLastDateTimeLoaded);
-
 			mHoraires.addAll(data);
-
 			result.setResult(mAdapter);
-			for (Horaire horaire : data) {
-				Log.d("Horaire", String.valueOf(horaire.getTimestamp()));
-			}
+
 		} catch (Exception e) {
 			result.setException(e);
 		}

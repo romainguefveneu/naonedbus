@@ -27,11 +27,6 @@
     <dimen name="widget_padding">8dp</dimen>
     <!-- Dimensions for PagerHeaders -->
     <dimen name="pager_header_height">32dp</dimen>
-    <!--
-         Minimum height used with @drawable/list_section_divider_holo_custom.
-         Right now the drawable has implicit 32dip minimal height, which is confusing.
-         This value is for making the hidden configuration explicit in xml.
-    -->
     <dimen name="list_section_divider_min_height">32dip</dimen>
 
 </resources>

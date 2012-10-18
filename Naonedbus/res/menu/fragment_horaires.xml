@@ -20,7 +20,7 @@
         android:title="@string/action_show_on_map"/>
     <item
         android:id="@id/menu_date"
-        android:icon="@drawable/ic_action_event"
+        android:icon="@drawable/ic_action_change_date"
         android:orderInCategory="400"
         android:showAsAction="ifRoom"
         android:title="@string/action_change_date"/>
@@ -32,6 +32,7 @@
         android:title="@string/action_change_date_now"/>
     <item
         android:id="@id/menu_sens"
+        android:icon="@drawable/ic_action_repeat"
         android:orderInCategory="600"
         android:showAsAction="ifRoom"
         android:title="@string/action_change_sens"/>
@@ -39,6 +40,7 @@
         android:id="@id/menu_feedback_bug"
         android:orderInCategory="10000"
         android:showAsAction="never"
-        android:title="@string/action_feedback_bug"/>
+        android:title="@string/action_feedback_bug"
+        android:visible="false"/>
 
 </menu>
