@@ -21,45 +21,40 @@ package net.naonedbus.widget.adapter.impl;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.InfoTraficLigne;
+import net.naonedbus.bean.InfoTraficDetail;
 import net.naonedbus.widget.adapter.SectionAdapter;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class InfoTraficLignesArrayAdapter extends SectionAdapter<InfoTraficLigne> {
-
-	private Drawable icoInfoTraficCurrent;
+public class InfoTraficDetailArrayAdapter extends SectionAdapter<InfoTraficDetail> {
 
 	static class ViewHolder {
 		TextView itemTitle = null;
-		TextView description = null;
-		TextView date = null;
-		LinearLayout zoneTitle = null;
+		TextView itemTime = null;
+		TextView itemDate = null;
 	}
 
-	public InfoTraficLignesArrayAdapter(Context context, List<InfoTraficLigne> objects) {
-		super(context, R.layout.list_item_trafic, objects);
-		this.icoInfoTraficCurrent = getContext().getResources().getDrawable(R.drawable.info_trafic_on);
+	public InfoTraficDetailArrayAdapter(Context context, List<InfoTraficDetail> objects) {
+		super(context, R.layout.list_item_trafic_ligne, objects);
 	}
 
 	@Override
 	public void bindView(View view, Context context, int position) {
 		ViewHolder holder = (ViewHolder) view.getTag();
-		InfoTraficLigne item = getItem(position);
-		holder.itemTitle.setText(item.getNumLigne() + " " + item.getLibelleTrafic());
-		holder.description.setText(String.valueOf(item.getEtatTrafic()));
+		InfoTraficDetail item = getItem(position);
+		holder.itemTitle.setText(item.getTitre());
+		holder.itemTime.setText(item.getType());
+		holder.itemDate.setText(item.getPeriode());
+
 	}
 
 	@Override
 	public void bindViewHolder(View view) {
 		ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
-		holder.description = (TextView) view.findViewById(R.id.itemDescription);
-		holder.date = (TextView) view.findViewById(R.id.itemTime);
-		holder.zoneTitle = (LinearLayout) view.findViewById(R.id.zoneTitle);
+		holder.itemTime = (TextView) view.findViewById(R.id.itemTime);
+		holder.itemDate = (TextView) view.findViewById(R.id.itemDate);
 
 		view.setTag(holder);
 	}

@@ -22,6 +22,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="DefaultActivity">
+        <item name="android:background">?attr/activityBackground</item>
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:orientation">vertical</item>
@@ -288,11 +289,20 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">32dip</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
         <item name="android:textColor">?attr/primaryColor</item>
     </style>
 
     <style name="BigSubTitle" parent="BigTitle">
         <item name="android:textSize">18dip</item>
+    </style>
+
+    <style name="BigCode">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">78dip</item>
+        <item name="android:textColor">?attr/primaryColor</item>
     </style>
 
     <style name="Listview">

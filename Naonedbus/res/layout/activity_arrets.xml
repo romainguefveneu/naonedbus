@@ -19,42 +19,97 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:showcase="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/net.naonedbus"
     style="@style/DefaultActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <RelativeLayout
-        android:id="@id/ligneDialogHeader"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/actionbar_height" >
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@id/ligneDialogHeader"
+            android:layout_width="match_parent"
+            android:layout_height="85dip" >
+
+            <TextView
+                android:id="@id/itemCode"
+                style="@style/BigCode"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:layout_marginRight="3dip"
+                android:layout_marginTop="-20dip"
+                android:text="00" />
+
+            <Spinner
+                android:id="@id/itemTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/itemPerturbation"
+                android:layout_margin="0dip"
+                android:layout_toRightOf="@id/itemCode"
+                android:background="@drawable/spinner_background_holo_light"
+                android:paddingBottom="0dip"
+                android:paddingLeft="0dip"
+                android:paddingTop="0dip" />
+
+            <TextView
+                android:id="@id/itemPerturbation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:background="#50000000"
+                android:gravity="right"
+                android:padding="3dip"
+                android:text="Aucune perturbation en cours."
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@id/fragmentContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </FrameLayout>
+    </LinearLayout>
+
+    <com.espian.showcaseview.ShowcaseView
+        android:id="@+id/showcase"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        showcase:backgroundColor="#aa000000" >
 
         <TextView
-            android:id="@id/ligneDialogCode"
+            android:id="@+id/textView"
+            style="@style/ShowcaseTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/padding_small"
-            android:layout_marginTop="-10dip"
-            android:textSize="58dp" />
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="200dp"
+            android:text="@string/showcase_arrets_title" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/textView1"
+            style="@style/ShowcaseText"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/textView"
+            android:layout_below="@id/textView"
+            android:text="@string/showcase_arrets_content" />
+
+        <Button
+            android:id="@id/showcase_button"
+            style="@style/ShowcaseButton"
             android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:background="#50000000"
-            android:gravity="right"
-            android:padding="3dip"
-            android:text="Aucune perturbation en cours."
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="6dp"
+            android:text="@android:string/ok"
             android:textColor="@android:color/white" />
-    </RelativeLayout>
+    </com.espian.showcaseview.ShowcaseView>
 
-    <FrameLayout
-        android:id="@id/fragmentContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

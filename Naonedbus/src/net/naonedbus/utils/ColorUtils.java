@@ -46,7 +46,17 @@ public abstract class ColorUtils {
 		// Get darker color
 		float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
-		hsv[2] *= 0.7f; // value component
+		hsv[2] *= 0.7f;
+		return Color.HSVToColor(hsv);
+	}
+
+	public static synchronized int getLighterColor(int color) {
+		// Get lighter color
+		float[] hsv = new float[3];
+
+		Color.colorToHSV(color, hsv);
+		hsv[1] *= 0.2f; // Saturation
+		hsv[2] *= 1.5f; // Value
 		return Color.HSVToColor(hsv);
 	}
 

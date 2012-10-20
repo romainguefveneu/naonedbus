@@ -4,3 +4,6 @@
 [submodule "SlidingMenu"]
 	path = SlidingMenu
 	url = https://github.com/jfeinstein10/SlidingMenu.git
+[submodule "ShowcaseView"]
+	path = ShowcaseView
+	url = https://github.com/Espiandev/ShowcaseView.git

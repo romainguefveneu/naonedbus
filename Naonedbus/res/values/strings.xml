@@ -173,6 +173,10 @@
     <string name="dialog_content_comment_sending_error">Une erreur s\'est produite pendant l\'envoi du message, merci de réessayer plus tard…</string>
     <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
 
+    <!-- Showcase -->
+    <string name="showcase_arrets_title">Changez facilement de sens</string>
+    <string name="showcase_arrets_content">Cliquez sur le sens pour en changer.</string>
+
     <!-- Target -->
     <string name="target_ligne">Ligne</string>
     <string name="target_sens">Sens</string>

@@ -8,10 +8,8 @@ import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -175,7 +173,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	 * 
 	 * @return the current Fragment, or <code>null</code> if we can't find it.
 	 */
-	private Fragment getCurrentFragment() {
+	protected Fragment getCurrentFragment() {
 		return mFragment;
 	}
 

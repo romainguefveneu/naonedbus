@@ -3,6 +3,7 @@ package net.naonedbus.utils;
 public abstract class SymbolesUtils {
 
 	public static final String SENS_ARROW = "\u2192";
+	public static final String TOUT_LE_RESEAU = "\u221E";
 
 	private SymbolesUtils() {
 	}

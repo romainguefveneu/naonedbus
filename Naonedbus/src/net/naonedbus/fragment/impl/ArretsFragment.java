@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.ArretsActivity.OnChangeSens;
 import net.naonedbus.activity.impl.HoraireActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Sens;
@@ -15,7 +16,6 @@ import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
-import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
@@ -29,24 +29,20 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ArretsFragment extends CustomListFragment implements CustomFragmentActions {
+public class ArretsFragment extends CustomListFragment implements CustomFragmentActions, OnChangeSens {
 
 	private final static int SORT_NOM = R.id.menu_sort_name;
 	private final static int SORT_ORDRE = R.id.menu_sort_ordre;
-
-	public static final String PARAM_ID_SENS = "idSens";
 
 	protected final SparseArray<Comparator<Arret>> mComparators;
 
 	protected MyLocationProvider mLocationProvider;
 	protected int mCurrentSortPreference = SORT_ORDRE;
 
-	private final SensManager mSensManager;
+	private Sens mSens;
 
 	public ArretsFragment() {
 		super(R.string.title_fragment_arrets, R.layout.fragment_listview);
-		mSensManager = SensManager.getInstance();
-
 		this.mLocationProvider = NBApplication.getLocationProvider();
 
 		this.mComparators = new SparseArray<Comparator<Arret>>();
@@ -111,13 +107,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
-		final int idSens = getArguments().getInt(PARAM_ID_SENS);
-		final Sens sens = mSensManager.getSingle(getActivity().getContentResolver(), idSens);
+		if (mSens == null)
+			cancelLoading();
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 			final ArretManager arretManager = ArretManager.getInstance();
-			final List<Arret> arrets = arretManager.getAll(context.getContentResolver(), sens.codeLigne, sens.code);
+			final List<Arret> arrets = arretManager.getAll(context.getContentResolver(), mSens.codeLigne, mSens.code);
 			final ArretArrayAdapter adapter = new ArretArrayAdapter(context, arrets);
 
 			result.setResult(adapter);
@@ -130,6 +126,12 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	protected void onPostExecute() {
 		sort();
+	}
+
+	@Override
+	public void onChangeSens(Sens sens) {
+		mSens = sens;
+		refreshContent();
 	}
 
 }

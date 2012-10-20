@@ -8,9 +8,6 @@ import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.dialog.LigneDialogFragment;
-import net.naonedbus.dialog.LigneDialogFragment.OnMapClickListener;
-import net.naonedbus.dialog.LigneDialogFragment.OnSensClickListener;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
@@ -20,7 +17,6 @@ import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
 import net.naonedbus.widget.indexer.impl.LigneIndexer;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -56,30 +52,9 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 		super.onListItemClick(l, v, position, id);
 
 		final Ligne ligne = (Ligne) l.getItemAtPosition(position);
-		final LigneDialogFragment dialog = new LigneDialogFragment();
-		final Bundle bundle = new Bundle();
-		bundle.putSerializable(LigneDialogFragment.BUNDLE_LIGNE, ligne);
-		dialog.setArguments(bundle);
-		dialog.setOnMapClickListener(new OnMapClickListener() {
-			@Override
-			public void onMapClickListener() {
-				// TODO:Afficher la map
-				dialog.dismiss();
-			}
-		});
-		dialog.setOnSensClickListener(new OnSensClickListener() {
-			@Override
-			public void onSensClickListener(int id) {
-				dialog.dismiss();
-
-				final ParamIntent intent = new ParamIntent(getActivity(), ArretsActivity.class);
-				intent.putExtra(ArretsActivity.Param.idSens, id);
-
-				getActivity().startActivity(intent);
-			}
-		});
-
-		dialog.show(getFragmentManager(), "ligneDialog");
+		final ParamIntent intent = new ParamIntent(getActivity(), ArretsActivity.class);
+		intent.putExtra(ArretsActivity.Param.codeLigne, ligne.code);
+		getActivity().startActivity(intent);
 	}
 
 	@Override

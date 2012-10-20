@@ -26,12 +26,14 @@
     <item name="itemHeader" type="id"/>
     <item name="itemSymbole" type="id"/>
     <item name="itemIcon" type="id"/>
+    <item name="itemCode" type="id"/>
     <item name="itemTitle" type="id"/>
     <item name="itemSubTitle" type="id"/>
     <item name="itemDescription" type="id"/>
     <item name="itemTime" type="id"/>
     <item name="itemDistance" type="id"/>
     <item name="itemLignes" type="id"/>
+    <item name="itemPerturbation" type="id"/>
     <item name="send" type="id"/>
     <item name="actionbarFadeTop" type="id"/>
     <item name="actionBarSubTitle" type="id"/>
@@ -62,6 +64,7 @@
     <item name="fragmentLignes" type="id"/>
     <item name="fragmentFavoris" type="id"/>
     <item name="fragmentProximite" type="id"/>
+    <item name="fragmentHoraires" type="id"/>
 
     <!-- Layouts -->
     <item name="commentaireLigneSpinner" type="id"/>
