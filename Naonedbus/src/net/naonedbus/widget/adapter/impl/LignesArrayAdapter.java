@@ -82,4 +82,7 @@ public class LignesArrayAdapter extends SectionAdapter<Ligne> {
 		view.setTag(holder);
 	}
 
+	@Override
+	public void customizeHeaderView(View view, int position) {
+	}
 }

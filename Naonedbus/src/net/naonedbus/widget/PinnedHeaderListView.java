@@ -19,10 +19,8 @@ package net.naonedbus.widget;
 import net.naonedbus.R;
 import net.naonedbus.utils.ThemeUtils;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -103,8 +101,8 @@ public class PinnedHeaderListView extends ListView {
 	public void setPinnedHeaderView(View view) {
 		mHeaderView = view;
 
-		mHeaderView.findViewById(net.naonedbus.R.id.header_text).setVisibility(View.VISIBLE);
-		mHeaderView.findViewById(net.naonedbus.R.id.divider).setVisibility(View.GONE);
+		mHeaderView.findViewById(net.naonedbus.R.id.headerTitle).setVisibility(View.VISIBLE);
+//		mHeaderView.findViewById(net.naonedbus.R.id.headerDivider).setVisibility(View.GONE);
 
 		mHeaderViewHeight = getResources().getDimensionPixelSize(R.dimen.list_section_divider_min_height);
 		mHeaderViewHeight += ThemeUtils.getDimensionPixelSize(getContext(), android.R.attr.dividerHeight);

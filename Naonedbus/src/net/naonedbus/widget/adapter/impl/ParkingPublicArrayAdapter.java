@@ -88,4 +88,8 @@ public class ParkingPublicArrayAdapter extends SectionAdapter<ParkingPublic> {
 		parkingPublic.setDetail(detail);
 	}
 
+	@Override
+	public void customizeHeaderView(View view, int position) {
+	}
+
 }

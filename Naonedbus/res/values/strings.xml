@@ -82,6 +82,7 @@
     <!-- Infos trafic -->
     <string name="title_fragment_tan_actu">Tan Actu</string>
     <string name="title_fragment_en_direct">En direct</string>
+    <string name="title_fragment_trafic_detail">Détail</string>
     <!-- Equipements -->
     <string name="title_fragment_parkings_publics">Publics</string>
     <string name="title_fragment_parkings_relais">Relais</string>
@@ -189,5 +190,9 @@
     <string name="prompt_ligne">Toutes les lignes</string>
     <string name="prompt_sens">Tous les sens</string>
     <string name="prompt_arret">Tous les arrêts</string>
+
+    <!-- Trafic -->
+    <string name="trafic_en_cours">En cours</string>
+    <string name="trafic_a_venir">A venir</string>
 
 </resources>

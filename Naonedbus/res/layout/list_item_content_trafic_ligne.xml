@@ -19,22 +19,40 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine.Content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/contentView"
+    style="@style/DefaultLine.Content.Space"
+    android:background="@drawable/item_block_background"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@id/itemTime"
-        style="@style/ItemSecondaryText.SingleLine.Small"
-        android:layout_width="wrap_content"
-        android:layout_marginRight="3dp" />
+    <LinearLayout
+        android:id="@+id/symboleZone"
+        style="@style/ItemSymbole"
+        android:layout_gravity="center|top"
+        android:layout_marginRight="@dimen/padding_small"
+        android:background="@drawable/item_symbole_back" >
+
+        <TextView
+            android:id="@id/itemTime"
+            style="@style/ItemSecondaryText.SingleLine.Tiny"
+            android:layout_gravity="center"
+            android:drawablePadding="@dimen/padding_tiny"
+            android:drawableTop="@drawable/trafic_ok"
+            android:gravity="center"
+            android:text="En cours" />
+    </LinearLayout>
 
     <TextView
         android:id="@id/itemTitle"
-        style="@style/ItemPrimaryText" />
+        style="@style/ItemPrimaryText"
+        android:layout_toRightOf="@id/symboleZone"
+        android:text="title" />
 
     <TextView
         android:id="@id/itemDate"
-        style="@style/ItemSecondaryText.SingleLine.Small" />
+        style="@style/ItemSecondaryText.SingleLine.Small"
+        android:layout_below="@id/itemTitle"
+        android:layout_toRightOf="@id/symboleZone"
+        android:text="date" />
 
-</LinearLayout>
+</RelativeLayout>

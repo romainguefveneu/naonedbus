@@ -20,11 +20,11 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header_view"
+    android:id="@id/headerView"
     style="@style/Header" >
 
     <TextView
-        android:id="@+id/header_text"
+        android:id="@id/headerTitle"
         style="@style/SectionTitle"
         android:layout_marginBottom="5dp"
         android:visibility="gone" />

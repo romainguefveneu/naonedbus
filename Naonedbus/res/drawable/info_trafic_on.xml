@@ -21,4 +21,4 @@
 -->
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="top|right"
-    android:src="@drawable/whatshot" />
+    android:src="@drawable/whatshot_alpha" />

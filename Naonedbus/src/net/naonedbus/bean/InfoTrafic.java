@@ -4,18 +4,20 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.naonedbus.widget.item.SectionItem;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.google.gson.annotations.SerializedName;
 
-public class InfoTrafic implements Serializable {
+public class InfoTrafic implements Serializable, SectionItem {
 
 	private static final long serialVersionUID = -2516041836875800927L;
-	private static final DateTimeFormatter fullDateParser = DateTimeFormat.forPattern("dd/MM/yyyy");
-	private static final DateTimeFormatter simpleDateParser = DateTimeFormat.forPattern("MM/yyyy");
-	private static final DateTimeFormatter timeParser = DateTimeFormat.forPattern("HH:mm");
+	private static final DateTimeFormatter fullDateParser = DateTimeFormat.forPattern("dd/MM/yyyy").withZoneUTC();
+	private static final DateTimeFormatter simpleDateParser = DateTimeFormat.forPattern("MM/yyyy").withZoneUTC();
+	private static final DateTimeFormatter timeParser = DateTimeFormat.forPattern("HH:mm").withZoneUTC();
 
 	@SerializedName("CODE")
 	private String code;
@@ -40,8 +42,11 @@ public class InfoTrafic implements Serializable {
 
 	private Set<String> lignes = new TreeSet<String>();
 
+	private Object section;
+
 	private DateTime dateDebut;
 	private DateTime dateFin;
+	private String dateFormated;
 
 	public String getCode() {
 		return code;
@@ -77,6 +82,14 @@ public class InfoTrafic implements Serializable {
 		return this.dateFin;
 	}
 
+	public String getDateFormated() {
+		return dateFormated;
+	}
+
+	public void setDateFormated(String dateFormated) {
+		this.dateFormated = dateFormated;
+	}
+
 	public boolean isPerturbationTerminee() {
 		return perturbationTerminee;
 	}
@@ -93,9 +106,38 @@ public class InfoTrafic implements Serializable {
 		return lignes;
 	}
 
+	public void setSection(Object section) {
+		this.section = section;
+	}
+
+	@Override
+	public Object getSection() {
+		return section;
+	}
+
+	public InfoTrafic clone() {
+		final InfoTrafic clone = new InfoTrafic();
+		clone.code = code;
+		clone.dateDebut = dateDebut;
+		clone.dateDebutString = dateDebutString;
+		clone.dateFin = dateFin;
+		clone.dateFinString = dateFinString;
+		clone.dateFormated = dateFormated;
+		clone.heureDebutString = heureDebutString;
+		clone.heureFinString = heureFinString;
+		clone.intitule = intitule;
+		clone.lignes = lignes;
+		clone.perturbationTerminee = perturbationTerminee;
+		clone.resume = resume;
+		clone.texteVocal = texteVocal;
+		clone.troncons = troncons;
+		return clone;
+	}
+
 	@Override
 	public String toString() {
-		return new StringBuilder("[").append(this.code).append(";").append(this.intitule).append("]").toString();
+		return new StringBuilder("[").append(this.code).append(";").append(this.intitule).append(";")
+				.append((Ligne) section).append("]").toString();
 	}
 
 	/**
@@ -118,4 +160,5 @@ public class InfoTrafic implements Serializable {
 		}
 		return dateTime;
 	}
+
 }

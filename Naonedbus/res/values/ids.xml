@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -34,6 +34,13 @@
     <item name="itemDistance" type="id"/>
     <item name="itemLignes" type="id"/>
     <item name="itemPerturbation" type="id"/>
+
+    <!-- Headers -->
+    <item name="headerView" type="id"/>
+    <item name="headerTitle" type="id"/>
+    <item name="headerDivider" type="id"/>
+
+    <!--  -->
     <item name="send" type="id"/>
     <item name="actionbarFadeTop" type="id"/>
     <item name="actionBarSubTitle" type="id"/>
@@ -55,6 +62,7 @@
     <item name="balloon_close" type="id"/>
     <item name="header" type="id"/>
     <item name="webView" type="id"/>
+    <item name="contentView" type="id"/>
 
     <!-- Fragments -->
     <item name="fragmentLoading" type="id"/>

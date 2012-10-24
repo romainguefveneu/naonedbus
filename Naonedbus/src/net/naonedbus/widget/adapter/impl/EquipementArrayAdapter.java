@@ -111,10 +111,14 @@ public class EquipementArrayAdapter extends SectionAdapter<Equipement> {
 		view.setTag(holder);
 	}
 
+	@Override
+	public void customizeHeaderView(View view, int position) {
+	}
+
 	private void bindHeaderView(View view, int position) {
 		final int section = getSectionForPosition(position);
 		if (getPositionForSection(section) == position) {
-			final TextView headerText = (TextView) view.findViewById(R.id.header_text);
+			final TextView headerText = (TextView) view.findViewById(R.id.headerTitle);
 			headerText.setText(getSections()[section].toString());
 		}
 	}

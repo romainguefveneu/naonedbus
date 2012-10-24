@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultActivity" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/fragment_base" />
+
+    <LinearLayout
+        android:id="@id/fragmentContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@id/ligneDialogHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/padding_small"
+            android:paddingLeft="@dimen/padding_medium"
+            android:paddingRight="@dimen/padding_medium"
+            android:paddingTop="@dimen/padding_small" >
+
+            <TextView
+                android:id="@id/itemTitle"
+                style="@style/BigTitle"
+                android:gravity="center_vertical"
+                android:singleLine="false"
+                android:text="title" />
+
+            <TextView
+                android:id="@id/itemTime"
+                style="@style/BigSubTitle.Small"
+                android:text="Subtitle" />
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/DefaultLine"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="?attr/blockBackground"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <TextView
+                style="@style/SectionTitle"
+                android:layout_marginBottom="5dp"
+                android:text="Description" />
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@id/itemDescription"
+                    style="@style/CommentDetail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="8dp" />
+            </ScrollView>
+
+            <TextView
+                style="@style/SectionTitle"
+                android:layout_marginBottom="10dp"
+                android:text="Lignes concernées" />
+
+            <LinearLayout
+                android:id="@+id/lignes"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -29,7 +29,7 @@ import android.net.Uri;
 public class LigneProvider extends ReadOnlyContentProvider {
 
 	/**
-	 * Toutes les lignes
+	 * Toutes les lignes.
 	 */
 	public static final int LIGNES = 100;
 	public static final String LIGNE_URI_PATH_QUERY = "lignes";
@@ -40,7 +40,7 @@ public class LigneProvider extends ReadOnlyContentProvider {
 	public static final int LIGNE_ID = 110;
 
 	/**
-	 * Ligne par son Code.
+	 * Ligne par son code.
 	 */
 	public static final int LIGNE_CODE = 120;
 	public static final String LIGNE_CODE_URI_PATH_QUERY = "code";
@@ -52,7 +52,7 @@ public class LigneProvider extends ReadOnlyContentProvider {
 	public static final String LIGNE_STATION_URI_PATH_QUERY = "arret";
 
 	/**
-	 * Lignes par type
+	 * Lignes par type.
 	 */
 	public static final int LIGNE_TYPE = 300;
 	public static final String LIGNE_TYPE_URI_PATH_QUERY = "type";
@@ -72,7 +72,7 @@ public class LigneProvider extends ReadOnlyContentProvider {
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(LigneTable.TABLE_NAME);
 
 		if (sortOrder == null) {
@@ -105,22 +105,19 @@ public class LigneProvider extends ReadOnlyContentProvider {
 			throw new IllegalArgumentException("Unknown URI");
 		}
 
-		Cursor cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, null, null,
-				sortOrder);
+		final Cursor cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, null,
+				null, sortOrder);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		return cursor;
 	}
 
 	/**
-	 * Composants de la requête de sélection des lignes passant par un arrêt
-	 * 
-	 * @author romain.guefveneu
-	 * 
+	 * Composants de la requête de sélection des lignes passant par un arrêt.
 	 */
 	private static interface LigneArretQuery {
 		public static final String WHERE = LigneTable.CODE + "  IN (SELECT distinct(" + ArretTable.CODE_LIGNE
 				+ " ) FROM " + ArretTable.TABLE_NAME + " WHERE " + ArretTable.ID_STATION + "= %s)";
-		public static final String ORDER_BY = LigneTable.TYPE + ", CAST(" + LigneTable.CODE + " as numeric) ";
+		public static final String ORDER_BY = LigneTable.TYPE + ", CAST(" + LigneTable.LETTRE + " as numeric) ";
 
 	}
 

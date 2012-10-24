@@ -48,6 +48,9 @@
             android:name=".activity.impl.CommentaireDetailActivity"
             android:label="@string/title_activity_commentaire" />
         <activity
+            android:name=".activity.impl.InfoTraficDetailActivity"
+            android:label="@string/title_activity_commentaire" />
+        <activity
             android:name=".activity.impl.SettingsActivity"
             android:label="@string/title_activity_parametres" />
         <activity

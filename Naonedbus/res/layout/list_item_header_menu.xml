@@ -20,7 +20,7 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header_view"
+    android:id="@id/headerView"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
@@ -28,13 +28,13 @@
     android:orientation="vertical" >
 
     <View
-        android:id="@+id/divider"
+        android:id="@id/headerDivider"
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:background="@color/menu_divider" />
 
     <TextView
-        android:id="@+id/header_text"
+        android:id="@id/headerTitle"
         style="@style/SectionTitle.Menu"
         android:visibility="gone" />
 

@@ -58,11 +58,13 @@ public class DateTimeFormatHelper {
 		final StringBuilder builder = new StringBuilder();
 		builder.append(format(debut)).append(ARROW);
 
-		if (debut.toDateMidnight().equals(fin.toDateMidnight())) {
-			// Même jour
-			formatTime(fin, builder);
-		} else {
-			builder.append(format(fin));
+		if (fin != null) {
+			if (debut.toDateMidnight().equals(fin.toDateMidnight())) {
+				// Même jour
+				formatTime(fin, builder);
+			} else {
+				builder.append(format(fin));
+			}
 		}
 
 		return builder.toString();

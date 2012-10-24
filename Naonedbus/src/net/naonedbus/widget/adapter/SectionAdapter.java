@@ -43,7 +43,7 @@ import android.widget.TextView;
 public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter<T> implements OnScrollListener,
 		PinnedHeaderAdapter {
 
-	private CustomSectionIndexer<T> mIndexer;
+	protected CustomSectionIndexer<T> mIndexer;
 	protected LayoutInflater mLayoutInflater;
 
 	private int mLayoutId;
@@ -101,7 +101,7 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 	}
 
 	/**
-	 * Remplire la vue.
+	 * Remplir la vue.
 	 * 
 	 * @param view
 	 * @param context
@@ -110,11 +110,19 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 	public abstract void bindView(View view, Context context, int position);
 
 	/**
-	 * Remplire le tag de la vue avec un ViewHolder.
+	 * Remplir le tag de la vue avec un ViewHolder.
 	 * 
 	 * @param view
 	 */
 	public abstract void bindViewHolder(View view);
+
+	/**
+	 * Personnaliser si besoin le header.
+	 * 
+	 * @param view
+	 * @param position
+	 */
+	public abstract void customizeHeaderView(View view, int position);
 
 	/**
 	 * Remplir la section.
@@ -123,12 +131,12 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 	 * @param position
 	 */
 	protected void bindSectionHeader(View itemView, int position) {
-		final View headerView = itemView.findViewById(R.id.header_view);
+		final View headerView = itemView.findViewById(R.id.headerView);
 
 		if (headerView != null) {
 			final int section = getSectionForPosition(position);
-			final TextView headerTextView = (TextView) itemView.findViewById(R.id.header_text);
-			final View divider = itemView.findViewById(R.id.divider);
+			final TextView headerTextView = (TextView) itemView.findViewById(R.id.headerTitle);
+			final View divider = itemView.findViewById(R.id.headerDivider);
 
 			if (getPositionForSection(section) == position) {
 				final String title = (String) mIndexer.getSections()[section];
@@ -211,12 +219,13 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 
 	@Override
 	public void configurePinnedHeader(View v, int position, int alpha) {
-		TextView header = (TextView) v.findViewById(R.id.header_text);
-
+		final TextView header = (TextView) v.findViewById(R.id.headerTitle);
 		final int section = getSectionForPosition(position);
 		final String title = (String) getSections()[section];
 
 		header.setText(title);
+
+		customizeHeaderView(v, position);
 	}
 
 }

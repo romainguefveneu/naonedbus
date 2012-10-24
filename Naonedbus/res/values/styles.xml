@@ -233,6 +233,10 @@
         <item name="android:textSize">13dip</item>
     </style>
 
+    <style name="ItemSecondaryText.SingleLine.Tiny">
+        <item name="android:textSize">9dip</item>
+    </style>
+
     <style name="ItemSecondaryText.Widget" parent="ItemSecondaryText.SingleLine.Small">
         <item name="android:textColor">@color/item_secondary_text_dark</item>
     </style>
@@ -296,6 +300,10 @@
 
     <style name="BigSubTitle" parent="BigTitle">
         <item name="android:textSize">18dip</item>
+    </style>
+
+    <style name="BigSubTitle.Small" parent="BigTitle">
+        <item name="android:textSize">16dip</item>
     </style>
 
     <style name="BigCode">

@@ -62,6 +62,10 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 		view.setTag(holder);
 	}
 
+	@Override
+	public void customizeHeaderView(View view, int position) {
+	}
+
 	private static class ViewHolder {
 		ImageView itemIcon;
 		TextView itemTitle;

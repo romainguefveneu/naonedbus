@@ -29,7 +29,7 @@ import com.actionbarsherlock.view.MenuItem;
 public class CommentairesFragment extends CustomListFragment {
 
 	public CommentairesFragment() {
-		super(R.string.title_fragment_en_direct, R.layout.fragment_en_direct);
+		super(R.string.title_fragment_en_direct, R.layout.fragment_listview_box);
 	}
 
 	@Override

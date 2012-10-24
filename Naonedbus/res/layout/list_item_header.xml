@@ -20,15 +20,15 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/header_view"
+    android:id="@id/headerView"
     style="@style/Header" >
 
     <View
-        android:id="@+id/divider"
+        android:id="@id/headerDivider"
         style="@style/Divider" />
 
     <TextView
-        android:id="@+id/header_text"
+        android:id="@id/headerTitle"
         style="@style/SectionTitle" />
 
 </LinearLayout>

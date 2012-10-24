@@ -15,10 +15,11 @@ CREATE TABLE IF NOT EXISTS lignes (
 	type SMALLINT);
 CREATE INDEX IF NOT EXISTS lignes_id ON lignes (_id);
 CREATE INDEX IF NOT EXISTS lignes_code ON lignes (code);
+CREATE INDEX IF NOT EXISTS lignes_lettre ON lignes (lettre);
 
 -- Décrire TYPESEQUIPEMENTS
 CREATE TABLE IF NOT EXISTS typesEquipements (
-	_id INT NOT NULL, 
+	_id INT  NOT NULL, 
 	nom TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS typesEquipements_id ON typesEquipements (_id);
 
@@ -43,6 +44,7 @@ CREATE INDEX IF NOT EXISTS equipements_nom ON equipements (nom collate nocase);
 CREATE INDEX IF NOT EXISTS equipements_normalizedNom ON equipements (normalizedNom collate nocase);
 CREATE INDEX IF NOT EXISTS equipements_coordonnees ON equipements (latitude, longitude);
 CREATE INDEX IF NOT EXISTS equipements_code ON equipements (codeEquipement);
+CREATE INDEX IF NOT EXISTS equipements_type_station_code ON equipements (idType, _id, codeEquipement);
   
 -- Décrire ARRETS	
 CREATE TABLE IF NOT EXISTS arrets (
@@ -78,7 +80,8 @@ CREATE TABLE IF NOT EXISTS horaires (
 	idArret INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS horaires_id ON horaires (_id);
 CREATE INDEX IF NOT EXISTS horaires_dayTrip ON horaires (dayTrip);
-CREATE INDEX IF NOT EXISTS horaires_idArret ON horaires (idArret);
+CREATE INDEX IF NOT EXISTS horaires_idArret_dayTrip ON horaires (idArret, dayTrip);
+CREATE INDEX IF NOT EXISTS horaires_idArret_dayTrip_timestamp ON horaires (idArret, dayTrip, timestamp);
 
 -- Décrire FAVORIS
 CREATE TABLE IF NOT EXISTS favoris (

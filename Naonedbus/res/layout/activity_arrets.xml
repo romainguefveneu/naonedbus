@@ -81,7 +81,7 @@
         android:id="@+id/showcase"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        showcase:backgroundColor="#aa000000" >
+        showcase:backgroundColor="#cc000000" >
 
         <TextView
             android:id="@+id/textView"

@@ -48,6 +48,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	protected int titleId;
 	protected int layoutId;
+	protected int layoutListHeaderId = R.layout.list_item_header;
 	protected ViewGroup fragmentView;
 
 	private int mListViewStatePosition;
@@ -68,6 +69,11 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	public CustomListFragment(final int titleId, final int layoutId) {
 		this.titleId = titleId;
 		this.layoutId = layoutId;
+	}
+
+	public CustomListFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
+		this(titleId, layoutId);
+		this.layoutListHeaderId = layoutListHeaderId;
 	}
 
 	@Override
@@ -136,7 +142,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 		if (listView instanceof PinnedHeaderListView) {
 			final PinnedHeaderListView pinnedListView = (PinnedHeaderListView) listView;
-			pinnedListView.setPinnedHeaderView(inflater.inflate(R.layout.list_item_header, pinnedListView, false));
+			pinnedListView.setPinnedHeaderView(inflater.inflate(layoutListHeaderId, pinnedListView, false));
 			addOnScrollListener(new OnScrollListener() {
 
 				@Override
