@@ -42,7 +42,7 @@ import com.actionbarsherlock.view.SubMenu;
 
 public class ProximiteFragment extends CustomListFragment implements CustomFragmentActions, MyLocationListener {
 
-	private static final int MAX_EQUIPEMENTS = 2500;
+	private static final int MAX_EQUIPEMENTS = 25;
 	private static final int MENU_GROUP_TYPES = 1;
 
 	private static final String PREF_PROXIMITE_LAYER = "proximite.layer.";

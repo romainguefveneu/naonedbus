@@ -41,17 +41,15 @@ public class InfoTraficController extends NodRestController<List<InfoTrafic>> {
 	public List<InfoTrafic> getAll() throws IOException {
 		final List<InfoTrafic> infosTrafics = new ArrayList<InfoTrafic>();
 
+		final List<InfoTrafic> infosReel = super.getAll(API_REEL, "ROOT", "LISTE_INFOTRAFICS", "INFOTRAFIC");
+		if (infosReel != null) {
+			infosTrafics.addAll(infosReel);
+		}
 		final List<InfoTrafic> infosPrevisionnel = super.getAll(API_PREVISIONNEL, "ROOT", "LISTE_INFOTRAFICS",
 				"INFOTRAFIC");
 		if (infosPrevisionnel != null) {
 			infosTrafics.addAll(infosPrevisionnel);
 		}
-
-		final List<InfoTrafic> infosReel = super.getAll(API_REEL, "ROOT", "LISTE_INFOTRAFICS", "INFOTRAFIC");
-		if (infosReel != null) {
-			infosTrafics.addAll(infosReel);
-		}
-
 		return infosTrafics;
 	}
 }

@@ -30,7 +30,7 @@ import com.actionbarsherlock.view.MenuItem;
 public class TanActuFragment extends CustomListFragment {
 
 	public TanActuFragment() {
-		super(R.string.title_fragment_tan_actu, R.layout.fragment_listview_box, R.layout.list_item_header_trafic);
+		super(R.string.title_fragment_tan_actu, R.layout.fragment_listview_box, R.layout.list_item_header_pinned_trafic);
 	}
 
 	@Override

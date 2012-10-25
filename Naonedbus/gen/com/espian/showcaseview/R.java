@@ -1355,7 +1355,7 @@ containing a value of this type.
         public static final int header=0x7f070036;
         public static final int headerDivider=0x7f070022;
         public static final int headerTitle=0x7f070021;
-        public static final int headerUnderline=0x7f0700a6;
+        public static final int headerUnderline=0x7f0700a5;
         /**  Headers 
          */
         public static final int headerView=0x7f070020;
@@ -1449,12 +1449,11 @@ containing a value of this type.
         public static final int showTitle=0x7f07000b;
         public static final int showcase=0x7f070083;
         public static final int showcase_button=0x7f070000;
-        public static final int slidingmenulayout=0x7f0700a9;
-        public static final int slidingmenumain=0x7f0700a8;
-        public static final int slidingmenurowicon=0x7f0700aa;
-        public static final int slidingmenurowtitle=0x7f0700ab;
+        public static final int slidingmenulayout=0x7f0700a8;
+        public static final int slidingmenumain=0x7f0700a7;
+        public static final int slidingmenurowicon=0x7f0700a9;
+        public static final int slidingmenurowtitle=0x7f0700aa;
         public static final int star=0x7f070029;
-        public static final int symboleZone=0x7f0700a5;
         public static final int tabMode=0x7f070007;
         public static final int text=0x7f070091;
         public static final int textView=0x7f070084;
@@ -1466,7 +1465,7 @@ containing a value of this type.
         public static final int viewPager=0x7f070045;
         public static final int webView=0x7f070037;
         public static final int wrap_content=0x7f070004;
-        public static final int zoneTitle=0x7f0700a7;
+        public static final int zoneTitle=0x7f0700a6;
     }
     public static final class integer {
         public static final int abs__max_action_buttons=0x7f0d0000;
@@ -1534,31 +1533,32 @@ containing a value of this type.
         public static final int list_item_equipement=0x7f03003b;
         public static final int list_item_header=0x7f03003c;
         public static final int list_item_header_menu=0x7f03003d;
-        public static final int list_item_header_simple=0x7f03003e;
-        public static final int list_item_header_trafic=0x7f03003f;
-        public static final int list_item_horaire=0x7f030040;
-        public static final int list_item_icon=0x7f030041;
-        public static final int list_item_icon_section=0x7f030042;
-        public static final int list_item_ligne=0x7f030043;
-        public static final int list_item_loader=0x7f030044;
-        public static final int list_item_menu=0x7f030045;
-        public static final int list_item_menu_content=0x7f030046;
-        public static final int list_item_parking=0x7f030047;
-        public static final int list_item_sens_spinner=0x7f030048;
-        public static final int list_item_station=0x7f030049;
-        public static final int list_item_trafic=0x7f03004a;
-        public static final int list_item_trafic_ligne=0x7f03004b;
-        public static final int main=0x7f03004c;
-        public static final int menu=0x7f03004d;
-        public static final int menu_header=0x7f03004e;
-        public static final int shadow=0x7f03004f;
-        public static final int sherlock_spinner_dropdown_item=0x7f030050;
-        public static final int sherlock_spinner_item=0x7f030051;
-        public static final int slidingmenumain=0x7f030052;
-        public static final int slidingmenumainlist=0x7f030053;
-        public static final int slidingmenurow=0x7f030054;
-        public static final int spinner_item_icon=0x7f030055;
-        public static final int spinner_item_symbole=0x7f030056;
+        public static final int list_item_header_pinned_trafic=0x7f03003e;
+        public static final int list_item_header_simple=0x7f03003f;
+        public static final int list_item_header_trafic=0x7f030040;
+        public static final int list_item_horaire=0x7f030041;
+        public static final int list_item_icon=0x7f030042;
+        public static final int list_item_icon_section=0x7f030043;
+        public static final int list_item_ligne=0x7f030044;
+        public static final int list_item_loader=0x7f030045;
+        public static final int list_item_menu=0x7f030046;
+        public static final int list_item_menu_content=0x7f030047;
+        public static final int list_item_parking=0x7f030048;
+        public static final int list_item_sens_spinner=0x7f030049;
+        public static final int list_item_station=0x7f03004a;
+        public static final int list_item_trafic=0x7f03004b;
+        public static final int list_item_trafic_ligne=0x7f03004c;
+        public static final int main=0x7f03004d;
+        public static final int menu=0x7f03004e;
+        public static final int menu_header=0x7f03004f;
+        public static final int shadow=0x7f030050;
+        public static final int sherlock_spinner_dropdown_item=0x7f030051;
+        public static final int sherlock_spinner_item=0x7f030052;
+        public static final int slidingmenumain=0x7f030053;
+        public static final int slidingmenumainlist=0x7f030054;
+        public static final int slidingmenurow=0x7f030055;
+        public static final int spinner_item_icon=0x7f030056;
+        public static final int spinner_item_symbole=0x7f030057;
     }
     public static final class menu {
         public static final int activity_about=0x7f100000;

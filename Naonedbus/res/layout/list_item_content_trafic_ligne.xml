@@ -25,34 +25,27 @@
     android:background="@drawable/item_block_background"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/symboleZone"
+    <ImageView
+        android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
-        android:layout_gravity="center|top"
+        android:layout_alignTop="@id/itemTitle"
         android:layout_marginRight="@dimen/padding_small"
-        android:background="@drawable/item_symbole_back" >
-
-        <TextView
-            android:id="@id/itemTime"
-            style="@style/ItemSecondaryText.SingleLine.Tiny"
-            android:layout_gravity="center"
-            android:drawablePadding="@dimen/padding_tiny"
-            android:drawableTop="@drawable/trafic_ok"
-            android:gravity="center"
-            android:text="En cours" />
-    </LinearLayout>
+        android:background="@drawable/item_symbole_back"
+        android:src="@drawable/infotrafic" />
 
     <TextView
         android:id="@id/itemTitle"
         style="@style/ItemPrimaryText"
-        android:layout_toRightOf="@id/symboleZone"
+        android:layout_toRightOf="@id/itemSymbole"
         android:text="title" />
 
     <TextView
         android:id="@id/itemDate"
         style="@style/ItemSecondaryText.SingleLine.Small"
         android:layout_below="@id/itemTitle"
-        android:layout_toRightOf="@id/symboleZone"
+        android:layout_toRightOf="@id/itemSymbole"
+        android:drawableLeft="@drawable/trafic_ok"
+        android:drawablePadding="@dimen/padding_tiny"
         android:text="date" />
 
 </RelativeLayout>

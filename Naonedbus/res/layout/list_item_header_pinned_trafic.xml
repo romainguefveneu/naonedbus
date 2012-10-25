@@ -21,8 +21,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/headerView"
-    style="@style/Header"
-    android:paddingBottom="5dip" >
+    style="@style/Header" >
 
     <TextView
         android:id="@id/headerTitle"

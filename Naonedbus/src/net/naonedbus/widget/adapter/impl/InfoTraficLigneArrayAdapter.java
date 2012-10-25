@@ -35,7 +35,6 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 
 	static class ViewHolder {
 		TextView itemTitle = null;
-		TextView itemTime = null;
 		TextView itemDate = null;
 	}
 
@@ -69,12 +68,11 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 
 			holder.itemTitle.setText(item.getIntitule());
 			holder.itemDate.setText(item.getDateFormated());
-			holder.itemTime.setText(isCurrent(item) ? R.string.trafic_en_cours : R.string.trafic_a_venir);
 
 			if (isCurrent(item)) {
-				holder.itemTime.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.trafic_ok, 0, 0);
+				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.trafic_perturbation, 0, 0, 0);
 			} else {
-				holder.itemTime.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.trafic_unknown, 0, 0);
+				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.trafic_unknown, 0, 0, 0);
 			}
 
 			view.setEnabled(false);
@@ -89,7 +87,6 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 	public void bindViewHolder(View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
-		holder.itemTime = (TextView) view.findViewById(R.id.itemTime);
 		holder.itemDate = (TextView) view.findViewById(R.id.itemDate);
 
 		view.setTag(holder);

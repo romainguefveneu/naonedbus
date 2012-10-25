@@ -69,8 +69,6 @@ public class InfoTraficManager {
 			result = cache.get(code);
 		}
 
-		Collections.sort(result, new InfoTraficComparator());
-
 		return result;
 	}
 
