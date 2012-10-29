@@ -29,13 +29,15 @@ import net.naonedbus.widget.adapter.SectionAdapter;
 import android.content.Context;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 
 	static class ViewHolder {
-		TextView itemTitle = null;
-		TextView itemDate = null;
+		TextView itemTitle;
+		TextView itemDate;
+		ImageView itemSymbole;
 	}
 
 	private SparseArray<Integer> mTraficImages;
@@ -55,6 +57,7 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 	public void bindView(View view, Context context, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final InfoTrafic item = getItem(position);
+		final Ligne ligne = (Ligne) item.getSection();
 
 		if (item instanceof EmptyInfoTrafic) {
 			view.findViewById(R.id.contentView).setVisibility(View.GONE);
@@ -68,6 +71,12 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 
 			holder.itemTitle.setText(item.getIntitule());
 			holder.itemDate.setText(item.getDateFormated());
+			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
+			if (ColorUtils.isLightColor(ligne.couleurBackground)) {
+				holder.itemSymbole.setImageResource(R.drawable.infotrafic);
+			} else {
+				holder.itemSymbole.setImageResource(R.drawable.infotrafic_white);
+			}
 
 			if (isCurrent(item)) {
 				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.trafic_perturbation, 0, 0, 0);
@@ -88,52 +97,9 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDate = (TextView) view.findViewById(R.id.itemDate);
+		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
 
 		view.setTag(holder);
-	}
-
-	/**
-	 * Remplir la section.
-	 * 
-	 * @param view
-	 * @param position
-	 */
-	protected void bindSectionHeader(View view, int position) {
-		final View headerView = view.findViewById(R.id.headerView);
-
-		if (headerView != null) {
-			final int section = getSectionForPosition(position);
-			final TextView headerTextView = (TextView) view.findViewById(R.id.headerTitle);
-			final View headerUnderline = view.findViewById(R.id.headerUnderline);
-
-			if (getPositionForSection(section) == position) {
-				final String title = (String) mIndexer.getSections()[section];
-				headerTextView.setText(title);
-				headerTextView.setVisibility(View.VISIBLE);
-				headerUnderline.setVisibility(View.VISIBLE);
-				customizeHeaderView(headerView, position);
-			} else {
-				headerUnderline.setVisibility(View.GONE);
-				headerTextView.setVisibility(View.GONE);
-			}
-
-		}
-
-	}
-
-	@Override
-	public void customizeHeaderView(View view, int position) {
-		final InfoTrafic item = getItem(position);
-		final Ligne ligne = (Ligne) item.getSection();
-
-		final TextView headerTitle = (TextView) view.findViewById(R.id.headerTitle);
-		final View headerUnderline = view.findViewById(R.id.headerUnderline);
-
-		final int color = ColorUtils.isLightColor(ligne.couleurBackground) ? ColorUtils
-				.getDarkerColor(ligne.couleurBackground) : ligne.couleurBackground;
-
-		headerTitle.setTextColor(color);
-		headerUnderline.setBackgroundColor(color);
 	}
 
 	/**

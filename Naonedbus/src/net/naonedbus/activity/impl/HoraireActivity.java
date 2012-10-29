@@ -52,28 +52,17 @@ public class HoraireActivity extends OneFragmentActivity {
 		final View header = findViewById(R.id.ligneDialogHeader);
 		header.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
 
-		final TextView code = (TextView) findViewById(R.id.ligneDialogCode);
+		final TextView code = (TextView) findViewById(R.id.itemCode);
 		code.setText(ligne.lettre);
 		code.setTextColor(ligne.couleurTexte);
 		code.setTypeface(robotoLight);
 
 		final TextView title = (TextView) findViewById(R.id.itemTitle);
-		if (title == null) {
-			// Small devices
-			getSupportActionBar().setTitle(SymbolesUtils.formatArretSens(arret.nom, sens.text));
-		} else {
-			getSupportActionBar().setDisplayShowTitleEnabled(false);
+		title.setText(arret.nom);
+		title.setTextColor(ligne.couleurTexte);
+		title.setTypeface(robotoLight);
 
-			title.setText(arret.nom);
-			title.setTextColor(ligne.couleurTexte);
-			title.setTypeface(robotoLight);
-
-			final TextView subTitle = (TextView) findViewById(R.id.itemSubTitle);
-			subTitle.setText(SymbolesUtils.formatSens(sens.text));
-			subTitle.setTextColor(ligne.couleurTexte);
-			subTitle.setTypeface(robotoLight);
-		}
-
+		getSupportActionBar().setTitle(SymbolesUtils.formatSens(sens.text));
 	}
 
 }

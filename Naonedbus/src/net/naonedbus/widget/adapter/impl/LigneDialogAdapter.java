@@ -49,8 +49,4 @@ public class LigneDialogAdapter extends SectionAdapter<SectionItem> {
 		TextView itemTitle;
 	}
 
-	@Override
-	public void customizeHeaderView(View view, int position) {
-	}
-
 }

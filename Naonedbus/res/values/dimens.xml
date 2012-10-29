@@ -29,5 +29,8 @@
     <!-- Dimensions for PagerHeaders -->
     <dimen name="pager_header_height">32dp</dimen>
     <dimen name="list_section_divider_min_height">32dip</dimen>
+    <!-- Clock -->
+    <dimen name="clock_hand_width">2dip</dimen>
+    <dimen name="clock_hand_height">12dip</dimen>
 
 </resources>

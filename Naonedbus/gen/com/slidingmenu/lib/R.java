@@ -1016,6 +1016,11 @@ containing a value of this type.
         public static final int action_button_min_width=0x7f0b0014;
         public static final int actionbar_height=0x7f0b001a;
         public static final int actionbar_home_width=0x7f0b0019;
+        public static final int clock_hand_height=0x7f0b0022;
+        /**  Clock 
+ Clock 
+         */
+        public static final int clock_hand_width=0x7f0b0021;
         public static final int list_section_divider_min_height=0x7f0b0020;
         public static final int menu_header_line=0x7f0b0002;
         public static final int menu_header_padding_top=0x7f0b0001;
@@ -1242,8 +1247,8 @@ containing a value of this type.
         public static final int ic_menu_today_holo_light=0x7f0200cd;
         public static final int ic_my_location_small=0x7f0200ce;
         public static final int ic_tb_show_as_list=0x7f0200cf;
-        public static final int info_trafic_on=0x7f0200d0;
-        public static final int infotrafic=0x7f0200d1;
+        public static final int infotrafic=0x7f0200d0;
+        public static final int infotrafic_white=0x7f0200d1;
         public static final int item_block_background=0x7f0200d2;
         public static final int item_symbole_back=0x7f0200d3;
         public static final int list_section_menu_underline=0x7f0200d4;
@@ -1277,8 +1282,6 @@ containing a value of this type.
         public static final int trafic_perturbation=0x7f0200f0;
         public static final int trafic_unknown=0x7f0200f1;
         public static final int warning=0x7f0200f2;
-        public static final int whatshot=0x7f0200f3;
-        public static final int whatshot_alpha=0x7f0200f4;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f070072;

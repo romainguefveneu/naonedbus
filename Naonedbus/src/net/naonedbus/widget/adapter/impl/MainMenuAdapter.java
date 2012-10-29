@@ -39,8 +39,4 @@ public class MainMenuAdapter extends SectionAdapter<MainMenuItem> {
 		TextView title = null;
 	}
 
-	@Override
-	public void customizeHeaderView(View view, int position) {
-	}
-
 }

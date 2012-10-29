@@ -37,8 +37,6 @@ public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 
 	private DateTimeFormatHelper dateTimeFormatHelper;
 
-	private Drawable icoInfoTraficCurrent;
-
 	static class ViewHolder {
 		TextView itemTitle = null;
 		TextView description = null;
@@ -49,7 +47,6 @@ public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 	public InfoTraficArrayAdapter(Context context, List<InfoTrafic> objects) {
 		super(context, R.layout.list_item_trafic, objects);
 		this.dateTimeFormatHelper = new DateTimeFormatHelper(context);
-		this.icoInfoTraficCurrent = getContext().getResources().getDrawable(R.drawable.info_trafic_on);
 	}
 
 	@Override
@@ -85,11 +82,11 @@ public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 			holder.description.setText("Texte Vocal : \u00AB " + item.getTexteVocal() + " \u00BB");
 		}
 
-		if (isCurrent(item)) {
-			holder.zoneTitle.setBackgroundDrawable(icoInfoTraficCurrent);
-		} else {
-			holder.zoneTitle.setBackgroundDrawable(null);
-		}
+//		if (isCurrent(item)) {
+//			holder.zoneTitle.setBackgroundDrawable(icoInfoTraficCurrent);
+//		} else {
+//			holder.zoneTitle.setBackgroundDrawable(null);
+//		}
 
 		holder.date.setText(dateTimeFormatHelper.formatDuree(item.getDateDebut(), item.getDateFin()));
 

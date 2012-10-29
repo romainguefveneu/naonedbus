@@ -75,7 +75,7 @@
     <string name="about_info_content"><![CDATA[<p>Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.</p><p>Les données sont celles disponibles sur les sites <a href="http://www.tan.fr">www.tan.fr</a> et <a href="http://data.nantes.fr">data.nantes.fr</a></p> <p>Pour tout problème, merci de le signaler par twitter ou bien par e-mail <a href="mailto:naonedbus@gmail.com">naonedbus@gmail.com</a>.</p>]]></string>
     <string name="about_thanks_title">Remerciements</string>
     <string name="about_licences_title">Licences</string>
-    <string name="about_licences_content"><![CDATA[Certaines icônes sont issues de <a href="http://thenounproject.com">The Noon Project.</a>]]></string>
+    <string name="about_licences_content"><![CDATA[Certaines icônes sont issues de <a href="http://thenounproject.com">The Noon Project.</a> : <a href="http://thenounproject.com/noun/information/#icon-No5949" target="_blank">Information</a> designed by <a href="http://thenounproject.com/mimosa.cb" target="_blank">Christopher T. Howlett</a> from The Noun Project]]></string>
     <!-- Tan -->
     <string name="title_fragment_sens">Sens</string>
     <string name="title_fragment_horaires">Horaires</string>

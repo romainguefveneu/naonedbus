@@ -117,14 +117,6 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 	public abstract void bindViewHolder(View view);
 
 	/**
-	 * Personnaliser si besoin le header.
-	 * 
-	 * @param view
-	 * @param position
-	 */
-	public abstract void customizeHeaderView(View view, int position);
-
-	/**
 	 * Remplir la section.
 	 * 
 	 * @param itemView
@@ -224,8 +216,6 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 		final String title = (String) getSections()[section];
 
 		header.setText(title);
-
-		customizeHeaderView(v, position);
 	}
 
 }

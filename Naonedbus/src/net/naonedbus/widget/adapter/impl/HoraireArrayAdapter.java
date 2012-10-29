@@ -5,8 +5,13 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.utils.DrawableUtils;
 import net.naonedbus.widget.adapter.SectionAdapter;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,10 +19,20 @@ import android.widget.TextView;
 public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 
 	final DateFormat timeFormat;
+	final Bitmap mBackgroundEnabled;
+	final Bitmap mBackgroundDisabled;
+	final float mClockHandWidth;
+	final float mClockHandHeight;
 
 	public HoraireArrayAdapter(Context context, List<Horaire> objects) {
 		super(context, R.layout.list_item_horaire, objects);
 		timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+
+		mBackgroundEnabled = BitmapFactory.decodeResource(context.getResources(), R.drawable.horraireselect);
+		mBackgroundDisabled = BitmapFactory.decodeResource(context.getResources(), R.drawable.horraireselect_disabled);
+
+		mClockHandWidth = context.getResources().getDimension(R.dimen.clock_hand_width);
+		mClockHandHeight = context.getResources().getDimension(R.dimen.clock_hand_height);
 	}
 
 	@Override
@@ -41,15 +56,22 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 			holder.itemTime.setVisibility(View.GONE);
 		}
 
+		Bitmap bitmap;
+		int color;
+
 		if (item.isBeforeNow()) {
 			holder.itemTitle.setEnabled(false);
 			holder.itemDescription.setEnabled(false);
-			holder.itemIcon.setImageResource(R.drawable.horraireselect_disabled);
+			bitmap = mBackgroundDisabled.copy(Config.ARGB_8888, true);
+			color = Color.GRAY;
 		} else {
 			holder.itemTitle.setEnabled(true);
 			holder.itemDescription.setEnabled(true);
-			holder.itemIcon.setImageResource(R.drawable.horraireselect);
+			bitmap = mBackgroundEnabled.copy(Config.ARGB_8888, true);
+			color = Color.BLACK;
 		}
+		DrawableUtils.drawClockBitmap(bitmap, color, mClockHandWidth, mClockHandHeight, item.getDate());
+		holder.itemIcon.setImageBitmap(bitmap);
 	}
 
 	@Override
@@ -60,10 +82,6 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 		holder.itemTime = (TextView) view.findViewById(R.id.itemTime);
 		holder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
 		view.setTag(holder);
-	}
-
-	@Override
-	public void customizeHeaderView(View view, int position) {
 	}
 
 	private static class ViewHolder {
