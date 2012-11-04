@@ -10,13 +10,13 @@
         android:id="@id/menu_show_plan"
         android:icon="@drawable/ic_action_plan"
         android:orderInCategory="200"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/action_show_plan"/>
     <item
         android:id="@id/menu_place"
         android:icon="@drawable/ic_action_place"
         android:orderInCategory="300"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/action_show_on_map"/>
     <item
         android:id="@id/menu_date"

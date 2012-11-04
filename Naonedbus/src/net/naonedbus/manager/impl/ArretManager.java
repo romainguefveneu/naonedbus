@@ -112,9 +112,9 @@ public class ArretManager extends SQLiteManager<Arret> {
 
 		final Uri.Builder builder = ArretProvider.CONTENT_URI.buildUpon();
 		builder.path(ArretProvider.ARRET_CODEARRET_CODESENS_CODELIGNE_URI_PATH_QUERY);
-		builder.appendQueryParameter("codeArret", favori.getCodeArret());
-		builder.appendQueryParameter("codeSens", favori.getCodeSens());
-		builder.appendQueryParameter("codeLigne", favori.getCodeLigne());
+		builder.appendQueryParameter("codeArret", favori.code);
+		builder.appendQueryParameter("codeSens", favori.codeSens);
+		builder.appendQueryParameter("codeLigne", favori.codeLigne);
 
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
 		final Arret arretItem = getFirstFromCursor(c);
@@ -129,8 +129,8 @@ public class ArretManager extends SQLiteManager<Arret> {
 		Integer id = null;
 
 		final Cursor c = db.query(ArretTable.TABLE_NAME, new String[] { ArretTable._ID }, ArretTable.CODE + "=? AND "
-				+ ArretTable.CODE_SENS + "=? AND " + ArretTable.CODE_LIGNE + "=?", new String[] {
-				favori.getCodeArret(), favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
+				+ ArretTable.CODE_SENS + "=? AND " + ArretTable.CODE_LIGNE + "=?",
+				new String[] { favori.code, favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
 
 		if (c.getCount() > 0) {
 			c.moveToFirst();

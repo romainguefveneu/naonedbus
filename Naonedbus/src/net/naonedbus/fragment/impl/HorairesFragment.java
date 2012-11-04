@@ -7,11 +7,13 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.fragment.CustomInfiniteListFragement;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
+import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.widget.adapter.impl.HoraireArrayAdapter;
 import net.naonedbus.widget.indexer.impl.HoraireIndexer;
@@ -26,10 +28,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -62,6 +65,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private final HoraireManager mHoraireManager;
 	private final ArretManager mArretManager;
+	private final FavoriManager mFavoriManager;
 	private HoraireArrayAdapter mAdapter;
 	private List<Horaire> mHoraires;
 
@@ -80,9 +84,10 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	public HorairesFragment() {
 		super(R.string.title_activity_horaires, R.layout.fragment_listview_section);
 		mHoraireManager = HoraireManager.getInstance();
+		mFavoriManager = FavoriManager.getInstance();
 		mArretManager = ArretManager.getInstance();
-		mHoraires = new ArrayList<Horaire>();
 
+		mHoraires = new ArrayList<Horaire>();
 		mLastDayLoaded = new DateMidnight();
 	}
 
@@ -122,11 +127,18 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	public void onCreateOptionsMenu(Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_horaires, menu);
+
+		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
+		int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		menuFavori.setIcon(icon);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.menu_favori:
+			onStarClick();
+			break;
 		case R.id.menu_place:
 			showArretPlan();
 			break;
@@ -142,14 +154,40 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		return false;
 	}
 
+	private boolean isFavori() {
+		final Favori item = mFavoriManager.getSingle(getActivity().getContentResolver(), mArret._id);
+		return (item != null);
+	}
+
+	private void onStarClick() {
+		if (isFavori()) {
+			removeFromFavoris();
+			Toast.makeText(getActivity(), R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
+		} else {
+			addToFavoris();
+			Toast.makeText(getActivity(), R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
+		}
+
+		final SherlockFragmentActivity activity = (SherlockFragmentActivity) getActivity();
+		activity.invalidateOptionsMenu();
+	}
+
 	private void changeDate() {
 		final DatePickerDialog dateDialog = new DatePickerDialog(getActivity(), mDateSetListener,
 				mLastDayLoaded.getYear(), mLastDayLoaded.getMonthOfYear() - 1, mLastDayLoaded.getDayOfMonth());
 		dateDialog.show();
 	}
 
-	protected void changeDateToNow() {
+	private void changeDateToNow() {
 		changeDate(new DateMidnight());
+	}
+
+	private void addToFavoris() {
+		mFavoriManager.addFavori(getActivity().getContentResolver(), mArret);
+	}
+
+	private void removeFromFavoris() {
+		mFavoriManager.removeFavori(getActivity().getContentResolver(), mArret._id);
 	}
 
 	protected void showArretPlan() {

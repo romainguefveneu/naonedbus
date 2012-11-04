@@ -18,47 +18,24 @@
  */
 package net.naonedbus.bean;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * @author romain
  * 
  */
-public class Favori {
+public class Favori extends Arret {
 
-	private String codeLigne;
-	private String codeArret;
-	private String codeSens;
-	private String nomFavori;
+	private static final long serialVersionUID = -9006334622713944691L;
 
-	public String getCodeLigne() {
-		return codeLigne;
-	}
+	public String nomFavori;
+	public String nomSens;
+	public int idStation;
+	public int couleurBackground;
+	public int couleurTexte;
+	public String lettre;
 
-	public void setCodeLigne(String codeLigne) {
-		this.codeLigne = codeLigne;
-	}
-
-	public String getCodeArret() {
-		return codeArret;
-	}
-
-	public void setCodeArret(String codeArret) {
-		this.codeArret = codeArret;
-	}
-
-	public String getCodeSens() {
-		return codeSens;
-	}
-
-	public void setCodeSens(String codeSens) {
-		this.codeSens = codeSens;
-	}
-
-	public String getNomFavori() {
-		return nomFavori;
-	}
-
-	public void setNomFavori(String nomFavori) {
-		this.nomFavori = nomFavori;
-	}
+	public Drawable background;
+	public String delay;
 
 }

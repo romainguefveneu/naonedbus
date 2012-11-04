@@ -240,6 +240,12 @@ public class MapActivity extends SlidingSherlockMapActivity {
 	}
 
 	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		slidingMenuHelper.onSaveInstanceState(outState);
+	}
+
+	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		slidingMenuHelper.onWindowFocusChanged(hasFocus, getSlidingMenu());

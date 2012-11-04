@@ -99,7 +99,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		}
 
 		fragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
-		View view = inflater.inflate(this.layoutId, container, false);
+		final View view = inflater.inflate(this.layoutId, container, false);
 		view.setId(R.id.fragmentContent);
 
 		bindView(view, savedInstanceState);
@@ -114,7 +114,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		if (isAdded()) {
-			View v = getListView().getChildAt(0);
+			final View v = getListView().getChildAt(0);
 			int top = (v == null) ? 0 : v.getTop();
 			outState.putInt(STATE_POSITION, getListView().getFirstVisiblePosition());
 			outState.putInt(STATE_TOP, top);

@@ -30,6 +30,8 @@ public class HoraireActivity extends OneFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 		int idArret = (Integer) getParamValue(Param.idArret);
 
 		final Bundle bundle = new Bundle();
@@ -62,7 +64,10 @@ public class HoraireActivity extends OneFragmentActivity {
 		title.setTextColor(ligne.couleurTexte);
 		title.setTypeface(robotoLight);
 
-		getSupportActionBar().setTitle(SymbolesUtils.formatSens(sens.text));
+		final TextView subTitle = (TextView) findViewById(R.id.itemSubTitle);
+		subTitle.setText(SymbolesUtils.formatSens(sens.text));
+		subTitle.setTextColor(ligne.couleurTexte);
+		subTitle.setTypeface(robotoLight);
 	}
 
 }

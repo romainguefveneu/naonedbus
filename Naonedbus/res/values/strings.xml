@@ -190,6 +190,9 @@
     <string name="prompt_ligne">Toutes les lignes</string>
     <string name="prompt_sens">Tous les sens</string>
     <string name="prompt_arret">Tous les arrêts</string>
+    <!-- Toasts -->
+    <string name="toast_favori_ajout">Favori ajouté</string>
+    <string name="toast_favori_retire">Favori retiré</string>
 
     <!-- Trafic -->
     <string name="trafic_en_cours">En cours</string>

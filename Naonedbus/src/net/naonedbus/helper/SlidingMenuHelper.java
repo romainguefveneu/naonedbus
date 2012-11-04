@@ -64,7 +64,8 @@ public class SlidingMenuHelper {
 	}
 
 	public void onPostCreate(final Intent intent, final SlidingMenu slidingMenu, final Bundle savedInstanceState) {
-		if (intent.getBooleanExtra("fromMenu", false)) {
+		if (intent.getBooleanExtra("fromMenu", false)
+				&& (savedInstanceState == null || !savedInstanceState.containsKey("menuConsumed"))) {
 			// Afficher le menu au démarrage, pour la transition.
 			slidingMenu.showBehind();
 
@@ -80,6 +81,10 @@ public class SlidingMenuHelper {
 			// rotation.
 			intent.putExtra("fromMenu", false);
 		}
+	}
+
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putBoolean("menuConsumed", true);
 	}
 
 	public void onWindowFocusChanged(boolean hasFocus, final SlidingMenu slidingMenu) {

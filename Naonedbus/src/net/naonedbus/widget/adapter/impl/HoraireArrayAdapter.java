@@ -19,20 +19,17 @@ import android.widget.TextView;
 public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 
 	final DateFormat timeFormat;
-	final Bitmap mBackgroundEnabled;
-	final Bitmap mBackgroundDisabled;
 	final float mClockHandWidth;
 	final float mClockHandHeight;
+	final int mClockSize;
 
 	public HoraireArrayAdapter(Context context, List<Horaire> objects) {
 		super(context, R.layout.list_item_horaire, objects);
 		timeFormat = android.text.format.DateFormat.getTimeFormat(context);
 
-		mBackgroundEnabled = BitmapFactory.decodeResource(context.getResources(), R.drawable.horraireselect);
-		mBackgroundDisabled = BitmapFactory.decodeResource(context.getResources(), R.drawable.horraireselect_disabled);
-
 		mClockHandWidth = context.getResources().getDimension(R.dimen.clock_hand_width);
 		mClockHandHeight = context.getResources().getDimension(R.dimen.clock_hand_height);
+		mClockSize = context.getResources().getDimensionPixelSize(R.dimen.clock_icon_size);
 	}
 
 	@Override
@@ -56,18 +53,16 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 			holder.itemTime.setVisibility(View.GONE);
 		}
 
-		Bitmap bitmap;
+		final Bitmap bitmap = Bitmap.createBitmap(mClockSize, mClockSize, Bitmap.Config.ARGB_8888);
 		int color;
 
 		if (item.isBeforeNow()) {
 			holder.itemTitle.setEnabled(false);
 			holder.itemDescription.setEnabled(false);
-			bitmap = mBackgroundDisabled.copy(Config.ARGB_8888, true);
 			color = Color.GRAY;
 		} else {
 			holder.itemTitle.setEnabled(true);
 			holder.itemDescription.setEnabled(true);
-			bitmap = mBackgroundEnabled.copy(Config.ARGB_8888, true);
 			color = Color.BLACK;
 		}
 		DrawableUtils.drawClockBitmap(bitmap, color, mClockHandWidth, mClockHandHeight, item.getDate());

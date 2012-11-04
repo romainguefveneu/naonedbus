@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -52,9 +53,12 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_arrets, menu);
-		menu.findItem(mCurrentSortPreference).setChecked(true);
+		final SherlockFragmentActivity activity = getSherlockActivity();
+		if (activity != null) {
+			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
+			menuInflater.inflate(R.menu.fragment_arrets, menu);
+			menu.findItem(mCurrentSortPreference).setChecked(true);
+		}
 	}
 
 	@Override

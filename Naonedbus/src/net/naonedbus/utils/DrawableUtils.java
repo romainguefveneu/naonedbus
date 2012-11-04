@@ -26,11 +26,14 @@ public abstract class DrawableUtils {
 
 		final Canvas canvas = new Canvas(background);
 		final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeJoin(Paint.Join.ROUND);
 		paint.setStrokeCap(Paint.Cap.ROUND);
 		paint.setPathEffect(new CornerPathEffect(5));
 		paint.setColor(color);
 		paint.setStrokeWidth(handWidth);
+
+		canvas.drawCircle(x, y, handHeight + handWidth, paint);
 
 		// Heure
 		canvas.drawLine(x, y, (float) (x + hourHandHeight * Math.cos(Math.toRadians((hour / 12.0f * 360.0f) - 90f))),

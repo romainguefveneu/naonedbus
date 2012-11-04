@@ -44,6 +44,7 @@ public class ArretsActivity extends OneFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 		final SensManager sensManager = SensManager.getInstance();
 		final LigneManager ligneManager = LigneManager.getInstance();
@@ -84,8 +85,6 @@ public class ArretsActivity extends OneFragmentActivity {
 
 			}
 		});
-
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 		final ShowcaseView sv = (ShowcaseView) findViewById(R.id.showcase);
 		sv.setShowcaseView(sensTitle);

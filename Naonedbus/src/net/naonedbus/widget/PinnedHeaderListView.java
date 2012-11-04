@@ -68,22 +68,17 @@ public class PinnedHeaderListView extends ListView {
 		 *            pinned header view.
 		 * @param position
 		 *            position of the first visible list item.
-		 * @param alpha
-		 *            fading of the header view, between 0 and 255.
 		 */
-		void configurePinnedHeader(View header, int position, int alpha);
+		void configurePinnedHeader(View header, int position);
 
 		int getSectionForPosition(int position);
 	}
-
-	private static final int MAX_ALPHA = 255;
 
 	private PinnedHeaderAdapter mAdapter;
 	private View mHeaderView;
 	private boolean mHeaderViewVisible;
 
 	private int mHeaderViewWidth;
-
 	private int mHeaderViewHeight;
 
 	public PinnedHeaderListView(Context context) {
@@ -101,9 +96,6 @@ public class PinnedHeaderListView extends ListView {
 	public void setPinnedHeaderView(View view) {
 		mHeaderView = view;
 
-		mHeaderView.findViewById(net.naonedbus.R.id.headerTitle).setVisibility(View.VISIBLE);
-//		mHeaderView.findViewById(net.naonedbus.R.id.headerDivider).setVisibility(View.GONE);
-
 		mHeaderViewHeight = getResources().getDimensionPixelSize(R.dimen.list_section_divider_min_height);
 		mHeaderViewHeight += ThemeUtils.getDimensionPixelSize(getContext(), android.R.attr.dividerHeight);
 
@@ -114,6 +106,8 @@ public class PinnedHeaderListView extends ListView {
 		// bottom edge.
 		if (mHeaderView != null) {
 			setFadingEdgeLength(0);
+			mHeaderView.findViewById(net.naonedbus.R.id.headerTitle).setVisibility(View.VISIBLE);
+			mHeaderView.findViewById(net.naonedbus.R.id.headerDivider).setVisibility(View.GONE);
 		}
 		requestLayout();
 	}
@@ -146,7 +140,7 @@ public class PinnedHeaderListView extends ListView {
 	@Override
 	public void setSelection(int position) {
 		if (mAdapter != null && mAdapter.getSectionForPosition(position) == 0) {
-			setSelectionFromTop(position, mHeaderViewHeight);
+			setSelectionFromTop(position, mHeaderViewHeight - 1);
 		} else {
 			setSelectionFromTop(position, 0);
 		}
@@ -157,7 +151,25 @@ public class PinnedHeaderListView extends ListView {
 			return;
 		}
 
+		boolean hasHeader = false;
+
+		final View firstView = getChildAt(0);
+		final int top = (firstView == null) ? 0 : firstView.getTop();
+
+		int nextChild = position - getFirstVisiblePosition();
+		if (top < 0)
+			nextChild += 1;
+		if (nextChild < getChildCount()) {
+			hasHeader = getChildAt(nextChild).findViewById(R.id.headerTitle).getVisibility() == View.VISIBLE;
+		}
+
 		int state = mAdapter.getPinnedHeaderState(position);
+		if (state == PinnedHeaderAdapter.PINNED_HEADER_VISIBLE && top > 0 && hasHeader) {
+			state = PinnedHeaderAdapter.PINNED_HEADER_PUSHED_UP;
+		} else if (state == PinnedHeaderAdapter.PINNED_HEADER_PUSHED_UP && !hasHeader) {
+			state = PinnedHeaderAdapter.PINNED_HEADER_VISIBLE;
+		}
+
 		switch (state) {
 		case PinnedHeaderAdapter.PINNED_HEADER_GONE: {
 			mHeaderViewVisible = false;
@@ -165,7 +177,7 @@ public class PinnedHeaderListView extends ListView {
 		}
 
 		case PinnedHeaderAdapter.PINNED_HEADER_VISIBLE: {
-			mAdapter.configurePinnedHeader(mHeaderView, position, MAX_ALPHA);
+			mAdapter.configurePinnedHeader(mHeaderView, position);
 			if (mHeaderView.getTop() != 0) {
 				mHeaderView.layout(getHeaderLeft(), 0, mHeaderViewWidth + getHeaderLeft(), mHeaderViewHeight);
 			}
@@ -174,20 +186,17 @@ public class PinnedHeaderListView extends ListView {
 		}
 
 		case PinnedHeaderAdapter.PINNED_HEADER_PUSHED_UP: {
-			View firstView = getChildAt(0);
 			if (firstView != null) {
+				int y;
 				int bottom = firstView.getBottom();
 				int headerHeight = mHeaderView.getHeight();
-				int y;
-				int alpha;
+
 				if (bottom < headerHeight) {
-					y = (bottom - headerHeight);
-					alpha = MAX_ALPHA * (headerHeight + y) / headerHeight;
+					y = bottom - headerHeight;
 				} else {
-					y = 0;
-					alpha = MAX_ALPHA;
+					y = (top < 0) ? 0 : top;
 				}
-				mAdapter.configurePinnedHeader(mHeaderView, position, alpha);
+				mAdapter.configurePinnedHeader(mHeaderView, position);
 				if (mHeaderView.getTop() != y) {
 					mHeaderView.layout(getHeaderLeft(), y, mHeaderViewWidth + getHeaderLeft(), mHeaderViewHeight + y);
 				}

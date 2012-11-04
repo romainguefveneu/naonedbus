@@ -112,6 +112,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 		outState.putInt(BUNDLE_TABS_CURRENT, getSupportActionBar().getSelectedNavigationIndex());
 		outState.putIntArray(BUNDLE_TABS_TITLES, titles);
 		outState.putStringArray(BUNDLE_TABS_CLASSES, classes);
+		slidingMenuHelper.onSaveInstanceState(outState);
 	}
 
 	@Override

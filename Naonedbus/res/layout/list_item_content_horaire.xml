@@ -27,7 +27,7 @@
     <TextView
         android:id="@id/itemTime"
         style="@style/ItemTime"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/itemTitle" />
+        android:layout_alignBaseline="@id/itemTitle"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

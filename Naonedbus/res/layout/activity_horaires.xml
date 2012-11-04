@@ -28,35 +28,34 @@
     <RelativeLayout
         android:id="@id/ligneDialogHeader"
         android:layout_width="match_parent"
-        android:layout_height="85dip" >
+        android:layout_height="70dip" >
 
         <TextView
             android:id="@id/itemCode"
             style="@style/BigCode"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/padding_small"
-            android:layout_marginRight="3dip"
-            android:layout_marginTop="-20dip"
-            android:text="00" />
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small"
+            android:text="00"
+            android:textSize="50dip" />
 
         <TextView
             android:id="@id/itemTitle"
             style="@style/BigTitle"
             android:layout_marginLeft="@dimen/padding_small"
-            android:layout_marginTop="@dimen/padding_small"
             android:layout_toRightOf="@id/itemCode"
-            android:text="Commerce" />
+            android:paddingRight="3dip"
+            android:text="François" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:background="#50000000"
-            android:gravity="right"
-            android:padding="3dip"
-            android:text="Aucune perturbation en cours."
-            android:textColor="@android:color/white" />
+            android:id="@id/itemSubTitle"
+            style="@style/BigSens"
+            android:layout_below="@id/itemTitle"
+            android:layout_marginLeft="@dimen/padding_small"
+            android:layout_marginTop="-3dip"
+            android:layout_toRightOf="@id/itemCode"
+            android:paddingRight="3dip"
+            android:text="François" />
     </RelativeLayout>
 
     <FrameLayout

@@ -210,7 +210,7 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 	}
 
 	@Override
-	public void configurePinnedHeader(View v, int position, int alpha) {
+	public void configurePinnedHeader(View v, int position) {
 		final TextView header = (TextView) v.findViewById(R.id.headerTitle);
 		final int section = getSectionForPosition(position);
 		final String title = (String) getSections()[section];
