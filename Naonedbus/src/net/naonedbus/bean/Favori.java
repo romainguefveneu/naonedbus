@@ -30,10 +30,8 @@ public class Favori extends Arret {
 
 	public String nomFavori;
 	public String nomSens;
-	public int idStation;
 	public int couleurBackground;
 	public int couleurTexte;
-	public String lettre;
 
 	public Drawable background;
 	public String delay;

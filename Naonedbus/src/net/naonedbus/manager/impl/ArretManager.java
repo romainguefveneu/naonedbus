@@ -77,7 +77,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 	public Arret getSingleFromCursor(Cursor c) {
 		Arret item = new Arret();
 		item._id = c.getInt(c.getColumnIndex(ArretTable._ID));
-		item.code = c.getString(c.getColumnIndex(ArretTable.CODE));
+		item.codeArret = c.getString(c.getColumnIndex(ArretTable.CODE));
 		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
 		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
 		item.codeLigne = c.getString(c.getColumnIndex(ArretTable.CODE_LIGNE));
@@ -94,7 +94,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 	public Arret getSingleFromCursorWrapper(CursorWrapper c) {
 		Arret item = new Arret();
 		item._id = c.getInt(c.getColumnIndex(ArretTable._ID));
-		item.code = c.getString(c.getColumnIndex(ArretTable.CODE));
+		item.codeArret = c.getString(c.getColumnIndex(ArretTable.CODE));
 		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
 		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
 		item.codeLigne = c.getString(c.getColumnIndex(ArretTable.CODE_LIGNE));
@@ -112,7 +112,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 
 		final Uri.Builder builder = ArretProvider.CONTENT_URI.buildUpon();
 		builder.path(ArretProvider.ARRET_CODEARRET_CODESENS_CODELIGNE_URI_PATH_QUERY);
-		builder.appendQueryParameter("codeArret", favori.code);
+		builder.appendQueryParameter("codeArret", favori.codeArret);
 		builder.appendQueryParameter("codeSens", favori.codeSens);
 		builder.appendQueryParameter("codeLigne", favori.codeLigne);
 
@@ -130,7 +130,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 
 		final Cursor c = db.query(ArretTable.TABLE_NAME, new String[] { ArretTable._ID }, ArretTable.CODE + "=? AND "
 				+ ArretTable.CODE_SENS + "=? AND " + ArretTable.CODE_LIGNE + "=?",
-				new String[] { favori.code, favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
+				new String[] { favori.codeArret, favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
 
 		if (c.getCount() > 0) {
 			c.moveToFirst();
@@ -152,7 +152,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 		values.put(ArretTable._ID, item._id);
 		values.put(ArretTable.CODE_LIGNE, item.codeLigne);
 		values.put(ArretTable.CODE_SENS, item.codeSens);
-		values.put(ArretTable.CODE, item.code);
+		values.put(ArretTable.CODE, item.codeArret);
 		values.put(ArretTable.ID_STATION, item.idStation);
 		values.put(ArretTable.ORDRE, item.ordre);
 		values.put(EquipementTable.NOM, item.nom);

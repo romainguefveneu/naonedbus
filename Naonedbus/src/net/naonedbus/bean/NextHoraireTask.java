@@ -78,7 +78,7 @@ public class NextHoraireTask {
 	}
 	
 	public String toString(){
-		return String.format("%d|%s|%d|%s", this.id, this.arret.code, this.limit, this.actionCallback);  
+		return String.format("%d|%s|%d|%s", this.id, this.arret.codeArret, this.limit, this.actionCallback);  
 	}
 
 }

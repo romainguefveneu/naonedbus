@@ -28,7 +28,7 @@ public class Arret implements Serializable {
 	public String codeLigne;
 	public String lettre;
 	public String codeSens;
-	public String code;
+	public String codeArret;
 	public String codeEquipement;
 	public String normalizedNom;
 	public Float latitude;
@@ -76,7 +76,7 @@ public class Arret implements Serializable {
 	}
 
 	public String getCode() {
-		return code;
+		return codeArret;
 	}
 
 	public String getCodeEquipement() {

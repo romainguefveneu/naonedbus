@@ -298,6 +298,10 @@
         <item name="android:textColor">?attr/primaryColor</item>
     </style>
 
+    <style name="BigTitle.Blue">
+        <item name="android:textColor">@color/holo_blue_light</item>
+    </style>
+
     <style name="BigSubTitle" parent="BigTitle">
         <item name="android:textSize">18dip</item>
     </style>

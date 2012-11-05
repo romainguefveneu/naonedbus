@@ -100,7 +100,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		item.codeLigne = c.getString(c.getColumnIndex(FavoriTable.CODE_LIGNE));
 		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
 		item.codeSens = c.getString(c.getColumnIndex(FavoriTable.CODE_SENS));
-		item.code = c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET));
+		item.codeArret = c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET));
 		item.nomFavori = c.getString(c.getColumnIndex(FavoriTable.NOM));
 
 		if (c.getColumnIndex(SensTable.NOM) != -1) {
@@ -172,7 +172,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		values.put(FavoriTable._ID, item._id);
 		values.put(FavoriTable.CODE_LIGNE, item.codeLigne);
 		values.put(FavoriTable.CODE_SENS, item.codeSens);
-		values.put(FavoriTable.CODE_ARRET, item.code);
+		values.put(FavoriTable.CODE_ARRET, item.codeArret);
 		values.put(FavoriTable.NOM, item.nomFavori);
 
 		return values;
@@ -190,7 +190,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		values.put(FavoriTable._ID, item._id);
 		values.put(FavoriTable.CODE_LIGNE, item.codeLigne);
 		values.put(FavoriTable.CODE_SENS, item.codeSens);
-		values.put(FavoriTable.CODE_ARRET, item.code);
+		values.put(FavoriTable.CODE_ARRET, item.codeArret);
 		return values;
 	}
 
@@ -230,7 +230,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 			writer.beginArray();
 			for (Favori favoriItem : favoris) {
 				writer.beginObject();
-				writer.name("codeArret").value(favoriItem.code);
+				writer.name("codeArret").value(favoriItem.codeArret);
 				writer.name("codeSens").value(favoriItem.codeSens);
 				writer.name("codeLigne").value(favoriItem.codeLigne);
 				writer.name("nomFavori").value(favoriItem.nomFavori);
@@ -339,14 +339,12 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		contentResolver.delete(FavoriProvider.CONTENT_URI, null, null);
 
 		// Add new items
-		for (Favori favori : favoris) {
-			final Favori favoriItem = toFavori(favori);
-
-			itemId = arretManager.getIdByFavori(contentResolver, favoriItem);
+		for (final Favori favori : favoris) {
+			itemId = arretManager.getIdByFavori(contentResolver, favori);
 
 			if (itemId != null) {
-				favoriItem._id = itemId;
-				addFavori(contentResolver, favoriItem);
+				favori._id = itemId;
+				addFavori(contentResolver, favori);
 			}
 		}
 	}
@@ -359,7 +357,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	private Favori toFavori(final HashMap<String, String> element) {
 		final Favori favoriItem = new Favori();
-		favoriItem.code = element.get("codeArret");
+		favoriItem.codeArret = element.get("codeArret");
 		favoriItem.codeSens = element.get("codeSens");
 		favoriItem.codeLigne = element.get("codeLigne");
 		favoriItem.nomFavori = element.get("nomFavori");
@@ -374,7 +372,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	private Favori toFavori(final Favori favori) {
 		final Favori favoriItem = new Favori();
-		favoriItem.code = favori.code;
+		favoriItem.codeArret = favori.codeArret;
 		favoriItem.codeSens = favori.codeSens;
 		favoriItem.codeLigne = favori.codeLigne;
 		favoriItem.nomFavori = favori.nomFavori;

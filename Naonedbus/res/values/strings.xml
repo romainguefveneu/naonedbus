@@ -164,6 +164,11 @@
     <!-- - - Divers -->
     <string name="msg_loading_address">Récupération de l\'adresse en cours&#8230;</string>
     <string name="btn_geolocation_service">Services de localisation</string>
+    <!-- - - Horaires -->
+    <string name="msg_depart_proche">départ proche</string>
+    <string name="msg_aucun_depart_24h">dans longtemps</string>
+
+    <!--  -->
     <!-- Hint -->
     <string name="hint_ajouter_commentaire">Que se passe-t-il sur le réseau Tan ?</string>
     <!-- Dialogs -->

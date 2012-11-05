@@ -283,7 +283,7 @@ public class CommentaireActivity extends SherlockActivity {
 	private void prepareAndSendComment() {
 		final Commentaire commentaireItem = new Commentaire();
 		if (arret != null) {
-			commentaireItem.setCodeArret(arret.code);
+			commentaireItem.setCodeArret(arret.codeArret);
 		}
 		if (sens != null) {
 			commentaireItem.setCodeSens(sens.code);

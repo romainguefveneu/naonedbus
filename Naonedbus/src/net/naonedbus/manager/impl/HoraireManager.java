@@ -59,7 +59,6 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	private static final int DAYS_IN_CACHE = 3;
 
 	private static final int END_OF_TRIP_HOURS = 4;
-	private static final int END_OF_TRIP_MINUTES = 30;
 
 	private static Set<HoraireToken> emptyHoraires = new HashSet<HoraireToken>();
 
@@ -300,6 +299,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * signal TimeService.ACTION_APPWIDGET_UPDATE est envoyé.
 	 */
 	public synchronized void schedule(final NextHoraireTask task) {
+		Log.i(LOG_TAG, "Plannification de la tâche " + task);
 		horairesTasksQueue.add(task);
 		if (loadThread == null || !loadThread.isAlive()) {
 			loadThread = new Thread(loadHoraireTask);
@@ -330,7 +330,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		}
 
 		private void load(final NextHoraireTask task) {
-			Log.d(LOG_TAG, "Récupération des horaires de l'arrêt " + task.getArret().code);
+			Log.d(LOG_TAG, "Récupération des horaires de l'arrêt " + task.getArret().codeArret);
 
 			try {
 				getNextHoraires(task.getContext().getContentResolver(), task.getArret(), new DateMidnight(),

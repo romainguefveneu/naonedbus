@@ -64,7 +64,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 		final List<Horaire> result = new ArrayList<Horaire>();
 		final List<HoraireTan> horaires;
 
-		url.addSegment(arret.code);
+		url.addSegment(arret.codeArret);
 		url.addSegment(arret.codeLigne);
 		url.addSegment(arret.codeSens);
 		url.addSegment(dateFormat.format(date.toDate()));

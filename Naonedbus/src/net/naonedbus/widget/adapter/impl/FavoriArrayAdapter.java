@@ -5,8 +5,10 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,11 @@ import android.widget.TextView;
 
 public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 
+	private final Typeface robotoLight;
+
 	public FavoriArrayAdapter(Context context, List<Favori> objects) {
 		super(context, 0, objects);
+		robotoLight = FontUtils.getRobotoLight(context);
 	}
 
 	@Override
@@ -71,6 +76,7 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.progressBar = (ProgressBar) view.findViewById(R.id.loading);
 		holder.nextHoraire = (TextView) view.findViewById(R.id.itemTime);
+		holder.ligneCode.setTypeface(robotoLight);
 
 		view.setTag(holder);
 	}
