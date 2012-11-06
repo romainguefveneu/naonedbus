@@ -94,6 +94,7 @@
     <item name="menu_sens" type="id"/>
     <item name="menu_refresh" type="id"/>
     <item name="menu_edit" type="id"/>
+    <item name="menu_delete" type="id"/>
     <item name="menu_import_export" type="id"/>
     <item name="menu_import" type="id"/>
     <item name="menu_export" type="id"/>

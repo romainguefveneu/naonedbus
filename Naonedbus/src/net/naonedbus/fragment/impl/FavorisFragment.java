@@ -6,6 +6,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.FavorisImportActivity;
 import net.naonedbus.activity.impl.HoraireActivity;
+import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.async.AsyncResult;
@@ -13,6 +14,7 @@ import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.FavoriManager.OnActionListener;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 
@@ -26,16 +28,20 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 import com.google.gson.JsonSyntaxException;
 
-public class FavorisFragment extends CustomListFragment implements CustomFragmentActions {
+public class FavorisFragment extends CustomListFragment implements CustomFragmentActions, OnItemLongClickListener,
+		ActionMode.Callback {
 
 	private static final String LOG_TAG = FavorisFragment.class.getSimpleName();
 
@@ -63,6 +69,26 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	// comparators.append(SORT_DISTANCE, new FavoriDistanceComparator());
 	// }
 
+	private ActionMode mActionMode;
+
+	/**
+	 * Action sur les favoris.
+	 */
+	private OnActionListener onImportListener = new OnActionListener() {
+		@Override
+		public void onImport() {
+			refreshContent();
+		}
+
+		public void onAdd(Arret item) {
+			refreshContent();
+		};
+
+		public void onRemove(int id) {
+			refreshContent();
+		};
+	};
+
 	/**
 	 * Reçoit les intents de notre intentFilter
 	 */
@@ -82,14 +108,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private FavoriManager mFavoriManager;
 
 	public FavorisFragment() {
-		super(R.string.title_fragment_favoris, R.layout.fragment_listview);
+		super(R.string.title_fragment_favoris, R.layout.fragment_favoris);
 		mFavoriManager = FavoriManager.getInstance();
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getActivity().registerReceiver(intentReceiver, intentFilter);
 	}
 
 	@Override
@@ -105,15 +125,27 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		refreshContent();
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		mFavoriManager.setActionListener(onImportListener);
 	}
 
 	@Override
-	public void onDetach() {
+	public void onStop() {
+		mFavoriManager.unsetActionListener();
+		super.onStart();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		getActivity().registerReceiver(intentReceiver, intentFilter);
+	}
+
+	@Override
+	public void onPause() {
 		getActivity().unregisterReceiver(intentReceiver);
-		super.onDetach();
+		super.onPause();
 	}
 
 	@Override
@@ -129,16 +161,28 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		final Favori item = (Favori) l.getItemAtPosition(position);
-		final ParamIntent intent = new ParamIntent(getActivity(), HoraireActivity.class);
-		intent.putExtra(HoraireActivity.Param.idArret, item._id);
-		startActivity(intent);
+		if (mActionMode == null) {
+			final Favori item = (Favori) l.getItemAtPosition(position);
+			final ParamIntent intent = new ParamIntent(getActivity(), HoraireActivity.class);
+			intent.putExtra(HoraireActivity.Param.idArret, item._id);
+			startActivity(intent);
+		}
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
+		if (mActionMode == null) {
+			getSherlockActivity().startActionMode(this);
+		}
+		getListView().setItemChecked(position, !getListView().isItemChecked(position));
+		return true;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
+		getListView().setOnItemLongClickListener(this);
 	}
 
 	@Override
@@ -284,5 +328,28 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.d(LOG_TAG, "LoadHoraires end");
 		}
 
+	}
+
+	@Override
+	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
+		menuInflater.inflate(R.menu.fragment_favoris_contextuel, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+		mActionMode = mode;
+		return false;
+	}
+
+	@Override
+	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+		return false;
+	}
+
+	@Override
+	public void onDestroyActionMode(ActionMode mode) {
+		mActionMode = null;
 	}
 }
