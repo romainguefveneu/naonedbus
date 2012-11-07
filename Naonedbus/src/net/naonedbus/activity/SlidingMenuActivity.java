@@ -194,6 +194,10 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 		addFragments(titles, this.classes);
 	}
 
+	protected void setSelectedTab(int position) {
+		getSupportActionBar().setSelectedNavigationItem(position);
+	}
+
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		final int position = tab.getPosition();

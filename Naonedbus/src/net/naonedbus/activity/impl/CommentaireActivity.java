@@ -345,7 +345,7 @@ public class CommentaireActivity extends SherlockActivity {
 	 */
 	private void setArret(final Arret arret) {
 		this.arret = arret;
-		textArret.setText(arret.nom);
+		textArret.setText(arret.nomArret);
 	}
 
 	/**

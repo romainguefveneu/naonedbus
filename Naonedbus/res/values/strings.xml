@@ -40,6 +40,7 @@
     <string name="action_sort">Trier</string>
     <string name="action_delete">Supprimer</string>
     <string name="action_rename">Renommer</string>
+    <string name="action_groups">Groupes</string>
     <string name="action_sort_name">Trier par nom</string>
     <string name="action_sort_distance">Trier par distance</string>
     <string name="action_sort_ordre">Trier par position</string>

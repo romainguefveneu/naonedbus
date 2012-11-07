@@ -43,11 +43,11 @@ public class FavoriCursorAdapter extends CursorAdapter {
 		holder.ligneCode.setTextColor(item.couleurTexte);
 
 		if (item.nomFavori == null) {
-			holder.itemTitle.setText(item.nom);
+			holder.itemTitle.setText(item.nomArret);
 			holder.itemDescription.setText("\u2192 " + item.nomSens);
 		} else {
 			holder.itemTitle.setText(item.nomFavori);
-			holder.itemDescription.setText(item.nom + " \u2192 " + item.nomSens);
+			holder.itemDescription.setText(item.nomArret + " \u2192 " + item.nomSens);
 		}
 
 		if (item.delay == null) {

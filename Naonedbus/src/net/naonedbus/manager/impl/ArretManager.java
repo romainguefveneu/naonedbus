@@ -82,7 +82,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
 		item.codeLigne = c.getString(c.getColumnIndex(ArretTable.CODE_LIGNE));
 		item.codeSens = c.getString(c.getColumnIndex(ArretTable.CODE_SENS));
-		item.nom = c.getString(c.getColumnIndex(EquipementTable.NOM));
+		item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
 		item.normalizedNom = c.getString(c.getColumnIndex(EquipementTable.NORMALIZED_NOM));
 		item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
 		item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
@@ -99,7 +99,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
 		item.codeLigne = c.getString(c.getColumnIndex(ArretTable.CODE_LIGNE));
 		item.codeSens = c.getString(c.getColumnIndex(ArretTable.CODE_SENS));
-		item.nom = c.getString(c.getColumnIndex(EquipementTable.NOM));
+		item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
 		item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
 		item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
 		item.idStation = c.getInt(c.getColumnIndex(ArretTable.ID_STATION));
@@ -155,7 +155,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 		values.put(ArretTable.CODE, item.codeArret);
 		values.put(ArretTable.ID_STATION, item.idStation);
 		values.put(ArretTable.ORDRE, item.ordre);
-		values.put(EquipementTable.NOM, item.nom);
+		values.put(EquipementTable.NOM, item.nomArret);
 		values.put(EquipementTable.NORMALIZED_NOM, item.normalizedNom);
 
 		return values;

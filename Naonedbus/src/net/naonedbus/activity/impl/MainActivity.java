@@ -5,6 +5,8 @@ import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.FavorisFragment;
 import net.naonedbus.fragment.impl.LignesFragment;
 import net.naonedbus.fragment.impl.ProximiteFragment;
+import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
@@ -77,6 +79,11 @@ public class MainActivity extends SlidingMenuActivity {
 			progressDialog.dismiss();
 		}
 		addFragments(titles, classes);
+		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final int count = favoriManager.getAll(getContentResolver()).size();
+		if (count > 0) {
+			setSelectedTab(1);
+		}
 	}
 
 	/**
@@ -102,10 +109,9 @@ public class MainActivity extends SlidingMenuActivity {
 			final UpdaterManager updaterManager = UpdaterManager.getInstance();
 			updaterManager.triggerUpdate(getContentResolver());
 
-			// TODO: Vider les anciens horaires
-			// final HoraireManager horaireManager =
-			// HoraireManager.getInstance();
-			// horaireManager.clearOldHoraires(getContentResolver());
+			// Vider les anciens horaires
+			final HoraireManager horaireManager = HoraireManager.getInstance();
+			horaireManager.clearOldHoraires(getContentResolver());
 
 			CustomContentProvider.setDatabaseActionListener(null);
 			return null;

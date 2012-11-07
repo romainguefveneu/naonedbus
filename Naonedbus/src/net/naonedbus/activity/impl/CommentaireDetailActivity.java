@@ -157,7 +157,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			setPageTitle("Tout le réseau");
 		} else {
 			if (arret != null) {
-				setPageTitle(arret.nom);
+				setPageTitle(arret.nomArret);
 			}
 			if (sens != null) {
 				if (arret == null) {
@@ -220,7 +220,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			} else if (ligne != null) {
 				title = "Ligne " + ligne.lettre;
 				if (arret != null) {
-					title += ", " + arret.nom;
+					title += ", " + arret.nomArret;
 				}
 				if (sens != null) {
 					title += SymbolesUtils.formatSens(sens.text);

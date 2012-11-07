@@ -41,7 +41,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	public void bindView(View view, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Arret arret = getItem(position);
-		holder.itemTitle.setText(arret.nom);
+		holder.itemTitle.setText(arret.nomArret);
 
 		if (mViewType == ViewType.TYPE_METRO) {
 			if (position == 0) {

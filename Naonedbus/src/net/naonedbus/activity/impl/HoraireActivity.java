@@ -60,7 +60,7 @@ public class HoraireActivity extends OneFragmentActivity {
 		code.setTypeface(robotoLight);
 
 		final TextView title = (TextView) findViewById(R.id.itemTitle);
-		title.setText(arret.nom);
+		title.setText(arret.nomArret);
 		title.setTextColor(ligne.couleurTexte);
 		title.setTypeface(robotoLight);
 

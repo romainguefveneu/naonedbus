@@ -35,7 +35,7 @@ public class Arret implements Serializable {
 	public Float longitude;
 	public int idStation;
 	public int ordre;
-	public String nom;
+	public String nomArret;
 
 	public Arret() {
 	}
@@ -43,7 +43,7 @@ public class Arret implements Serializable {
 	public Arret(int id, String nom) {
 		super();
 		this._id = id;
-		this.nom = nom;
+		this.nomArret = nom;
 	}
 
 	@Override
@@ -100,7 +100,7 @@ public class Arret implements Serializable {
 	}
 
 	public String getNom() {
-		return nom;
+		return nomArret;
 	}
 
 	public int getOrder() {
