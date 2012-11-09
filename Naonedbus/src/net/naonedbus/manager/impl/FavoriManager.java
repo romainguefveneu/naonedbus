@@ -156,7 +156,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	}
 
 	public void setFavori(ContentResolver contentResolver, Favori item) {
-		ContentValues values = getContentValues(item);
+		final ContentValues values = getContentValues(item);
 		contentResolver.update(FavoriProvider.CONTENT_URI, values, FavoriTable._ID + "=?",
 				new String[] { String.valueOf(item._id) });
 	}

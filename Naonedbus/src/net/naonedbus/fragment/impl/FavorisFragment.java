@@ -17,6 +17,8 @@ import net.naonedbus.comparator.FavoriComparator;
 import net.naonedbus.comparator.FavoriDistanceComparator;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
+import net.naonedbus.helper.FavorisHelper;
+import net.naonedbus.helper.FavorisHelper.FavorisActionListener;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.FavoriManager.OnActionListener;
@@ -28,6 +30,7 @@ import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 import org.joda.time.DateMidnight;
 
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -39,6 +42,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -97,11 +101,15 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 
 		public void onAdd(Arret item) {
-			refreshContent();
+			FavoriArrayAdapter adapter;
+			if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null)
+				adapter.notifyDataSetChanged();
 		};
 
 		public void onRemove(int id) {
-			refreshContent();
+			FavoriArrayAdapter adapter;
+			if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null)
+				adapter.notifyDataSetChanged();
 		};
 	};
 
@@ -138,15 +146,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			break;
 		case R.id.menu_sort_distance:
 			item.setChecked(true);
-			mCurrentSort = SORT_DISTANCE;
-			updateSortPref();
-			sort();
+			menuSort(SORT_DISTANCE);
 			break;
 		case R.id.menu_sort_name:
 			item.setChecked(true);
-			mCurrentSort = SORT_NOM;
-			updateSortPref();
-			sort();
+			menuSort(SORT_NOM);
 			break;
 		default:
 			return false;
@@ -165,13 +169,68 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		return mSharedPreferences.getInt(NBApplication.PREF_FAVORIS_SORT, SORT_NOM);
 	}
 
+	private void menuEdit() {
+		final Favori item = getFirstSelectedItem();
+		if (item != null) {
+			final FavorisHelper favorisUtils = new FavorisHelper(getActivity(), new FavorisActionListener() {
+				@Override
+				public void onFavoriRenamed(Favori newItem) {
+					final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+					item.nomFavori = newItem.nomFavori;
+					adapter.notifyDataSetChanged();
+				}
+			});
+			favorisUtils.renameFavori(item._id);
+		}
+	}
+
+	private void menuDelete() {
+		final ContentResolver contentResolver = getActivity().getContentResolver();
+		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+		final SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
+		Favori item;
+		for (int i = 0; i < checkedItems.size(); i++) {
+			if (checkedItems.valueAt(i)) {
+				item = adapter.getItem(checkedItems.keyAt(i));
+				mFavoriManager.removeFavori(contentResolver, item._id);
+			}
+		}
+	}
+
+	private void menuPlace() {
+
+	}
+
+	private void menuShowPlan() {
+
+	}
+
+	private void menuSort(int sortOrder) {
+		mCurrentSort = sortOrder;
+		updateSortPref();
+		sort();
+	}
+
+	private Favori getFirstSelectedItem() {
+		final SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
+		final int index = checkedItems.indexOfValue(true);
+		if (index > -1) {
+			final int position = checkedItems.keyAt(index);
+			return (Favori) mListView.getItemAtPosition(position);
+		} else {
+			return null;
+		}
+	}
+
 	/**
 	 * Trier les parkings selon les préférences.
 	 */
 	private void sort() {
 		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
-		sort(adapter);
-		adapter.notifyDataSetChanged();
+		if (adapter != null) {
+			sort(adapter);
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	/**
@@ -255,6 +314,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			startActivity(intent);
 		} else {
 			mListView.setItemChecked(position, !mListView.isItemChecked(position));
+			mActionMode.invalidate();
 			if (mListView.getCheckedItemPositions().size() == 0)
 				mActionMode.finish();
 		}
@@ -262,9 +322,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
+		mListView.setItemChecked(position, !mListView.isItemChecked(position));
 		if (mActionMode == null) {
 			getSherlockActivity().startActionMode(this);
 		} else {
+			mActionMode.invalidate();
 			if (mListView.getCheckedItemPositions().size() == 0)
 				mActionMode.finish();
 		}
@@ -427,12 +489,40 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 		mActionMode = mode;
+		final MenuItem menuEdit = menu.findItem(R.id.menu_edit);
+		final MenuItem menuPlace = menu.findItem(R.id.menu_place);
+		final MenuItem menuShowPlan = menu.findItem(R.id.menu_show_plan);
+
+		if (mListView.getCheckedItemPositions().size() == 1) {
+			menuEdit.setVisible(true);
+			menuPlace.setVisible(true);
+			menuShowPlan.setVisible(true);
+		} else {
+			menuEdit.setVisible(false);
+			menuPlace.setVisible(false);
+			menuShowPlan.setVisible(false);
+		}
 		return false;
 	}
 
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-		return false;
+		switch (item.getItemId()) {
+		case R.id.menu_edit:
+			menuEdit();
+			break;
+		case R.id.menu_delete:
+			menuDelete();
+			break;
+		case R.id.menu_place:
+			break;
+		case R.id.menu_show_plan:
+			break;
+		default:
+			return false;
+		}
+		mode.finish();
+		return true;
 	}
 
 	@Override
@@ -444,6 +534,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	public void onLocationChanged(Location location) {
 		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators.get(SORT_DISTANCE);
 		comparator.setReferentiel(location);
+		if (mCurrentSort == SORT_DISTANCE) {
+			sort();
+		}
 	}
 
 	@Override
