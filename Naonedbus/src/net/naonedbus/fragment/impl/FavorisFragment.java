@@ -1,6 +1,7 @@
 package net.naonedbus.fragment.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -101,13 +102,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 
 		public void onAdd(Arret item) {
-			FavoriArrayAdapter adapter;
-			if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null)
-				adapter.notifyDataSetChanged();
+			refreshContent();
 		};
 
 		public void onRemove(int id) {
-			FavoriArrayAdapter adapter;
+			final FavoriArrayAdapter adapter;
 			if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null)
 				adapter.notifyDataSetChanged();
 		};
@@ -185,16 +184,19 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	private void menuDelete() {
+		Favori item;
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
-		final SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
-		Favori item;
-		for (int i = 0; i < checkedItems.size(); i++) {
-			if (checkedItems.valueAt(i)) {
-				item = adapter.getItem(checkedItems.keyAt(i));
+
+		for (int i = mListView.getCount() - 1; i > -1; i--) {
+			if (mListView.isItemChecked(i)) {
+				item = adapter.getItem(i);
+				adapter.remove(item);
 				mFavoriManager.removeFavori(contentResolver, item._id);
 			}
 		}
+
+		adapter.notifyDataSetChanged();
 	}
 
 	private void menuPlace() {
@@ -219,6 +221,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			return (Favori) mListView.getItemAtPosition(position);
 		} else {
 			return null;
+		}
+	}
+
+	private void uncheckAll() {
+		for (int i = 0; i < mListView.getCount(); i++) {
+			mListView.setItemChecked(i, false);
 		}
 	}
 
@@ -276,8 +284,13 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onStop() {
+	public void onDestroy() {
 		mFavoriManager.unsetActionListener();
+		super.onDestroy();
+	}
+
+	@Override
+	public void onStop() {
 		mLocationProvider.removeListener(this);
 		super.onStart();
 	}
@@ -528,6 +541,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public void onDestroyActionMode(ActionMode mode) {
 		mActionMode = null;
+		uncheckAll();
 	}
 
 	@Override

@@ -121,7 +121,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	}
 
 	public void addFavori(final ContentResolver contentResolver, final Arret item) {
-		ContentValues values = getContentValues(item);
+		final ContentValues values = getContentValues(item);
 		contentResolver.insert(FavoriProvider.CONTENT_URI, values);
 
 		if (actionListener != null && isImporting == false) {
@@ -130,7 +130,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	}
 
 	public void addFavori(final ContentResolver contentResolver, final Favori item) {
-		ContentValues values = getContentValues(item);
+		final ContentValues values = getContentValues(item);
 		contentResolver.insert(FavoriProvider.CONTENT_URI, values);
 
 		if (actionListener != null && isImporting == false) {
@@ -139,7 +139,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	}
 
 	public void addFavori(final SQLiteDatabase db, final Favori item) {
-		ContentValues values = getContentValues(item);
+		final ContentValues values = getContentValues(item);
 		db.insert(FavoriTable.TABLE_NAME, null, values);
 
 		if (actionListener != null && isImporting == false) {

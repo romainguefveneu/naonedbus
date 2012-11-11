@@ -11,11 +11,13 @@ import net.naonedbus.widget.PinnedHeaderListView;
 import org.joda.time.DateTime;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,14 +29,13 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public abstract class CustomListFragment extends SherlockListFragment implements CustomFragmentActions,
-		LoaderCallbacks<AsyncResult<ListAdapter>> {
+public abstract class CustomCursorFragment extends SherlockListFragment implements CustomFragmentActions,
+		LoaderCallbacks<AsyncResult<Cursor>> {
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
@@ -54,6 +55,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
 
+	private CursorAdapter mCursorAdapter;
+
 	private List<OnScrollListener> mOnScrollListeners = new ArrayList<AbsListView.OnScrollListener>();
 
 	/**
@@ -66,12 +69,12 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 */
 	private int timeToLive = 5;
 
-	public CustomListFragment(final int titleId, final int layoutId) {
+	public CustomCursorFragment(final int titleId, final int layoutId) {
 		this.titleId = titleId;
 		this.layoutId = layoutId;
 	}
 
-	public CustomListFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
+	public CustomCursorFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
 		this(titleId, layoutId);
 		this.layoutListHeaderId = layoutListHeaderId;
 	}
@@ -80,6 +83,9 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
+
+		mCursorAdapter = getCursorAdapter(getActivity());
+
 		if (getListAdapter() == null) {
 			getLoaderManager().initLoader(LOADER_INIT, null, this);
 		}
@@ -167,7 +173,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	public void refreshContent() {
-		getLoaderManager().restartLoader(LOADER_INIT, null, this);
+		getLoaderManager().restartLoader(LOADER_REFRESH, null, this);
 	}
 
 	public void cancelLoading() {
@@ -364,11 +370,19 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	/**
+	 * Créer un CursorAdapter.
+	 * 
+	 * @param context
+	 * @return le CursorAdapter.
+	 */
+	protected abstract CursorAdapter getCursorAdapter(final Context context);
+
+	/**
 	 * Charger le contenu en background.
 	 * 
 	 * @return AsyncResult du resultat.
 	 */
-	protected abstract AsyncResult<ListAdapter> loadContent(final Context context);
+	protected abstract AsyncResult<Cursor> loadContent(final Context context);
 
 	/**
 	 * Après le chargement.
@@ -377,10 +391,10 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	@Override
-	public Loader<AsyncResult<ListAdapter>> onCreateLoader(int arg0, Bundle arg1) {
-		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
+	public Loader<AsyncResult<Cursor>> onCreateLoader(int arg0, Bundle arg1) {
+		final Loader<AsyncResult<Cursor>> loader = new AsyncTaskLoader<AsyncResult<Cursor>>(getActivity()) {
 			@Override
-			public AsyncResult<ListAdapter> loadInBackground() {
+			public AsyncResult<Cursor> loadInBackground() {
 				return loadContent(getActivity());
 			}
 		};
@@ -391,7 +405,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	@Override
-	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
+	public void onLoadFinished(Loader<AsyncResult<Cursor>> loader, AsyncResult<Cursor> result) {
 
 		if (result == null) {
 			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
@@ -404,7 +418,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			if (result.getResult() == null || result.getResult().getCount() == 0) {
 				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
 			} else {
-				setListAdapter(result.getResult());
+				mCursorAdapter.swapCursor(result.getResult());
 				if (mListViewStatePosition != -1 && isAdded()) {
 					getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
 					mListViewStatePosition = -1;
@@ -427,7 +441,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	@Override
-	public void onLoaderReset(Loader<AsyncResult<ListAdapter>> arg0) {
+	public void onLoaderReset(Loader<AsyncResult<Cursor>> arg0) {
 
 	}
 

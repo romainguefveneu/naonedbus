@@ -1332,15 +1332,14 @@ containing a value of this type.
         public static final int abs__up=0x7f07000f;
         public static final int actionBarSubTitle=0x7f070025;
         public static final int actionbarFadeTop=0x7f070024;
-        public static final int arret=0x7f07009d;
-        public static final int autors=0x7f07009f;
+        public static final int arret=0x7f07009c;
+        public static final int autors=0x7f07009e;
         public static final int balloon_close=0x7f070035;
         public static final int balloon_inner_layout=0x7f070034;
         public static final int balloon_main_layout=0x7f070094;
         public static final int codename=0x7f070098;
         public static final int colLeft=0x7f07002c;
         public static final int colRight=0x7f07002d;
-        public static final int comment=0x7f07009a;
         public static final int commentaireArret=0x7f070044;
         public static final int commentaireLigne=0x7f070042;
         /**  Layouts 
@@ -1370,19 +1369,19 @@ containing a value of this type.
         public static final int headerView=0x7f070020;
         public static final int homeAsUp=0x7f07000a;
         public static final int icon=0x7f070092;
-        public static final int info=0x7f0700a0;
+        public static final int info=0x7f07009f;
         public static final int itemCode=0x7f070018;
         public static final int itemDate=0x7f070088;
         public static final int itemDescription=0x7f07001b;
         public static final int itemDistance=0x7f07001d;
-        public static final int itemFavori=0x7f0700a3;
+        public static final int itemFavori=0x7f0700a2;
         public static final int itemHeader=0x7f070015;
         /**  Items 
          */
         public static final int itemHeaderStub=0x7f070014;
         public static final int itemIcon=0x7f070017;
         public static final int itemLignes=0x7f07001e;
-        public static final int itemMetroPoint=0x7f0700a2;
+        public static final int itemMetroPoint=0x7f0700a1;
         public static final int itemPerturbation=0x7f07001f;
         public static final int itemSource=0x7f070089;
         public static final int itemSubTitle=0x7f07001a;
@@ -1390,20 +1389,20 @@ containing a value of this type.
         public static final int itemTelephone=0x7f070090;
         public static final int itemTime=0x7f07001c;
         public static final int itemTitle=0x7f070019;
-        public static final int licences=0x7f0700a1;
-        public static final int ligne=0x7f07009b;
+        public static final int licences=0x7f0700a0;
+        public static final int ligne=0x7f07009a;
         public static final int ligneCode=0x7f070026;
         public static final int ligneDialogCode=0x7f070047;
         /**  LigneDialogFragment 
          */
         public static final int ligneDialogHeader=0x7f070046;
-        public static final int ligneFrom=0x7f0700a6;
-        public static final int ligneTo=0x7f0700a7;
+        public static final int ligneFrom=0x7f0700a5;
+        public static final int ligneTo=0x7f0700a6;
         public static final int lignes=0x7f070096;
         public static final int listMode=0x7f070006;
         public static final int loader=0x7f07008b;
-        public static final int loading=0x7f0700a9;
-        public static final int mainContent=0x7f0700a4;
+        public static final int loading=0x7f0700a8;
+        public static final int mainContent=0x7f0700a3;
         public static final int majDate=0x7f07008f;
         public static final int map_view=0x7f07008a;
         public static final int margin=0x7f070001;
@@ -1444,14 +1443,14 @@ containing a value of this type.
         public static final int parkingInfo=0x7f07008c;
         public static final int placesDisponibles=0x7f07008d;
         public static final int placesTotales=0x7f07008e;
-        public static final int secondLine=0x7f0700a5;
+        public static final int secondLine=0x7f0700a4;
         public static final int sectionSensA=0x7f07002e;
         public static final int sectionSensB=0x7f070030;
         public static final int selected_view=0x7f070003;
         /**   
          */
         public static final int send=0x7f070023;
-        public static final int sens=0x7f07009c;
+        public static final int sens=0x7f07009b;
         public static final int sensAHoraires=0x7f07002f;
         public static final int sensBHoraires=0x7f070031;
         public static final int separatorLine=0x7f070033;
@@ -1461,10 +1460,10 @@ containing a value of this type.
         public static final int showTitle=0x7f07000b;
         public static final int showcase=0x7f070085;
         public static final int showcase_button=0x7f070000;
-        public static final int slidingmenulayout=0x7f0700ab;
-        public static final int slidingmenumain=0x7f0700aa;
-        public static final int slidingmenurowicon=0x7f0700ac;
-        public static final int slidingmenurowtitle=0x7f0700ad;
+        public static final int slidingmenulayout=0x7f0700aa;
+        public static final int slidingmenumain=0x7f0700a9;
+        public static final int slidingmenurowicon=0x7f0700ab;
+        public static final int slidingmenurowtitle=0x7f0700ac;
         public static final int star=0x7f070029;
         public static final int tabMode=0x7f070007;
         public static final int text=0x7f070093;
@@ -1472,12 +1471,12 @@ containing a value of this type.
         public static final int textView1=0x7f070087;
         public static final int title=0x7f070097;
         public static final int useLogo=0x7f070008;
-        public static final int version=0x7f07009e;
+        public static final int version=0x7f07009d;
         public static final int versionNotes=0x7f070099;
         public static final int viewPager=0x7f070045;
         public static final int webView=0x7f070037;
         public static final int wrap_content=0x7f070004;
-        public static final int zoneTitle=0x7f0700a8;
+        public static final int zoneTitle=0x7f0700a7;
     }
     public static final class integer {
         public static final int abs__max_action_buttons=0x7f0d0000;

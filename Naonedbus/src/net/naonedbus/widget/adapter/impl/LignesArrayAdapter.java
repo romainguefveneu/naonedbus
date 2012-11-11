@@ -23,6 +23,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.SectionAdapter;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -46,7 +47,7 @@ public class LignesArrayAdapter extends SectionAdapter<Ligne> {
 
 	public LignesArrayAdapter(Context context, List<Ligne> lignes) {
 		super(context, R.layout.list_item_ligne, lignes);
-		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+		robotoLight = FontUtils.getRobotoLight(context);
 	}
 
 	@Override
