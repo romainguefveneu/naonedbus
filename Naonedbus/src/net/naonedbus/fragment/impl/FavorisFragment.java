@@ -1,7 +1,6 @@
 package net.naonedbus.fragment.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -10,6 +9,9 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.FavorisImportActivity;
 import net.naonedbus.activity.impl.HoraireActivity;
+import net.naonedbus.activity.impl.MapActivity;
+import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.NextHoraireTask;
@@ -200,11 +202,18 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	private void menuPlace() {
-
+		final Favori item = getFirstSelectedItem();
+		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+		intent.putExtra(MapActivity.Param.itemId, item.idStation);
+		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
+		startActivity(intent);
 	}
 
 	private void menuShowPlan() {
-
+		final Favori item = getFirstSelectedItem();
+		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.Param.codeLigne, item.codeLigne);
+		startActivity(intent);
 	}
 
 	private void menuSort(int sortOrder) {
@@ -214,20 +223,33 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	private Favori getFirstSelectedItem() {
-		final SparseBooleanArray checkedItems = mListView.getCheckedItemPositions();
-		final int index = checkedItems.indexOfValue(true);
-		if (index > -1) {
-			final int position = checkedItems.keyAt(index);
-			return (Favori) mListView.getItemAtPosition(position);
-		} else {
-			return null;
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
+		for (int i = 0; i < checkedPositions.size(); i++) {
+			if (checkedPositions.valueAt(i)) {
+				return (Favori) mListView.getItemAtPosition(checkedPositions.keyAt(i));
+			}
 		}
+		return null;
 	}
 
-	private void uncheckAll() {
-		for (int i = 0; i < mListView.getCount(); i++) {
-			mListView.setItemChecked(i, false);
+	private int getCheckedItemsCount() {
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
+		int count = 0;
+		for (int i = 0; i < checkedPositions.size(); i++) {
+			if (checkedPositions.valueAt(i)) {
+				count++;
+			}
 		}
+		return count;
+	}
+
+	private boolean hasItemChecked() {
+		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
+		boolean hasCheckedElement = false;
+		for (int i = 0; i < checked.size() && !hasCheckedElement; i++) {
+			hasCheckedElement = checked.valueAt(i);
+		}
+		return hasCheckedElement;
 	}
 
 	/**
@@ -263,9 +285,21 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		// adapter.setIndexer(indexer);
 	}
 
+	public void onItemSelected() {
+		if (mActionMode == null) {
+			getSherlockActivity().startActionMode(this);
+		} else if (hasItemChecked() == false) {
+			mActionMode.finish();
+		} else {
+			mActionMode.invalidate();
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
+
 		mFavoriManager.setActionListener(onImportListener);
 		mLocationProvider.addListener(this);
 		// Initaliser le comparator avec la position actuelle.
@@ -277,8 +311,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		Log.d(LOG_TAG, "onActivityCreated");
+
 		super.onActivityCreated(savedInstanceState);
-		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
 		mListView = getListView();
 		mListView.setOnItemLongClickListener(this);
 	}
@@ -299,6 +334,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	public void onResume() {
 		super.onResume();
 		getActivity().registerReceiver(intentReceiver, intentFilter);
+		loadHorairesFavoris();
 	}
 
 	@Override
@@ -327,22 +363,16 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			startActivity(intent);
 		} else {
 			mListView.setItemChecked(position, !mListView.isItemChecked(position));
-			mActionMode.invalidate();
-			if (mListView.getCheckedItemPositions().size() == 0)
-				mActionMode.finish();
+			mListView.invalidate();
+			onItemSelected();
 		}
 	}
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
 		mListView.setItemChecked(position, !mListView.isItemChecked(position));
-		if (mActionMode == null) {
-			getSherlockActivity().startActionMode(this);
-		} else {
-			mActionMode.invalidate();
-			if (mListView.getCheckedItemPositions().size() == 0)
-				mActionMode.finish();
-		}
+		mListView.invalidate();
+		onItemSelected();
 		return true;
 	}
 
@@ -506,7 +536,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final MenuItem menuPlace = menu.findItem(R.id.menu_place);
 		final MenuItem menuShowPlan = menu.findItem(R.id.menu_show_plan);
 
-		if (mListView.getCheckedItemPositions().size() == 1) {
+		final int checkedItems = getCheckedItemsCount();
+		mActionMode.setTitle(getResources().getQuantityString(R.plurals.selected_items, checkedItems, checkedItems));
+
+		if (checkedItems < 2) {
 			menuEdit.setVisible(true);
 			menuPlace.setVisible(true);
 			menuShowPlan.setVisible(true);
@@ -528,8 +561,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			menuDelete();
 			break;
 		case R.id.menu_place:
+			menuPlace();
 			break;
 		case R.id.menu_show_plan:
+			menuShowPlan();
 			break;
 		default:
 			return false;
@@ -541,7 +576,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public void onDestroyActionMode(ActionMode mode) {
 		mActionMode = null;
-		uncheckAll();
+		mListView.clearChoices();
 	}
 
 	@Override
@@ -562,4 +597,5 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			sort();
 		}
 	}
+
 }

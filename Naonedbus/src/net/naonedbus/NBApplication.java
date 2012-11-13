@@ -37,6 +37,7 @@ public class NBApplication extends Application {
 	public static final String PREF_FAVORIS_EXPORT = "favoris.export";
 	public static final String PREF_CALENDRIER_DEFAUT = "calendrier.defaut";
 	public static final String PREF_MAP_SATELLITE = "map.satellite";
+	public static final String PREF_PLAN_CACHE = "plan.cache";
 
 	private static MyLocationProvider myLocationProvider;
 	private static SharedPreferences preferences;

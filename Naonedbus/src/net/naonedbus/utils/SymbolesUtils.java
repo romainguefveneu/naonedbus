@@ -4,6 +4,7 @@ public abstract class SymbolesUtils {
 
 	public static final String SENS_ARROW = "\u2192";
 	public static final String TOUT_LE_RESEAU = "\u221E";
+	public static final String DOT = "\u2192";
 
 	private SymbolesUtils() {
 	}

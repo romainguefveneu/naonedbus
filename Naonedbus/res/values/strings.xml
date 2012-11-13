@@ -82,6 +82,8 @@
     <!-- Tan -->
     <string name="title_fragment_sens">Sens</string>
     <string name="title_fragment_horaires">Horaires</string>
+    <string name="title_fragment_plan">Plan</string>
+    <string name="title_activity_plan">Ligne %1$s &#8226; %2$s</string>
     <!-- Infos trafic -->
     <string name="title_fragment_tan_actu">Tan Actu</string>
     <string name="title_fragment_en_direct">En direct</string>
@@ -159,6 +161,7 @@
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
+    <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <!-- Warning -->
     <string name="msg_warning_send_comment">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>
     <!-- - - Vide -->
@@ -205,5 +208,11 @@
     <!-- Trafic -->
     <string name="trafic_en_cours">En cours</string>
     <string name="trafic_a_venir">A venir</string>
+
+    <!-- Items -->
+    <plurals name="selected_items">
+        <item quantity="one">1 sélectionné</item>
+        <item quantity="other">%d sélectionnés</item>
+    </plurals>
 
 </resources>

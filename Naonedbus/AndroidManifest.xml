@@ -69,6 +69,9 @@
         <activity
             android:name=".activity.impl.FavorisImportActivity"
             android:label="@string/emptyString" />
+        <activity
+            android:name=".activity.impl.PlanActivity"
+            android:label="@string/emptyString" />
 
         <provider
             android:name=".provider.impl.LigneProvider"
