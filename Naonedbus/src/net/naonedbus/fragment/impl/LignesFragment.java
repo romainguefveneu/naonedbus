@@ -5,6 +5,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.CommentaireActivity;
+import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.bean.async.AsyncResult;
@@ -17,12 +18,15 @@ import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
 import net.naonedbus.widget.indexer.impl.LigneIndexer;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class LignesFragment extends CustomListFragment implements CustomFragmentActions {
@@ -32,9 +36,43 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		registerForContextMenu(getListView());
+	}
+
+	@Override
 	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_lignes, menu);
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+		final ListView listview = getListView();
+		final Ligne ligne = (Ligne) listview.getItemAtPosition(cmi.position);
+
+		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
+		inflater.inflate(R.menu.fragment_lignes_contextual, menu);
+
+		menu.setHeaderTitle(getString(R.string.dialog_title_menu_lignes, ligne.lettre));
+	}
+
+	@Override
+	public boolean onContextItemSelected(android.view.MenuItem item) {
+		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final Ligne ligne = (Ligne) getListView().getItemAtPosition(cmi.position);
+
+		switch (item.getItemId()) {
+		case R.id.menu_show_plan:
+			menuShowPlan(ligne);
+			break;
+		default:
+			break;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -55,6 +93,12 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 		final ParamIntent intent = new ParamIntent(getActivity(), ArretsActivity.class);
 		intent.putExtra(ArretsActivity.Param.codeLigne, ligne.code);
 		getActivity().startActivity(intent);
+	}
+
+	private void menuShowPlan(final Ligne ligne) {
+		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.Param.codeLigne, ligne.code);
+		startActivity(intent);
 	}
 
 	@Override

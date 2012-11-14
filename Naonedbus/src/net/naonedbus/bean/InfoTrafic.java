@@ -155,7 +155,7 @@ public class InfoTrafic implements Serializable, SectionItem {
 		} else if (date.length() == 7) {
 			dateTime = simpleDateParser.parseDateTime(date);
 		}
-		if (heure != null && heure.length() == 5) {
+		if (dateTime != null && heure != null && heure.length() == 5) {
 			dateTime = dateTime.plusMinutes(timeParser.parseDateTime(heure).minuteOfDay().get());
 		}
 		return dateTime;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.CommentaireActivity;
+import net.naonedbus.activity.impl.InfoTraficDetailActivity.Param;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
@@ -148,6 +150,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		case R.id.menu_date_maintenant:
 			changeDateToNow();
 			break;
+		case R.id.menu_comment:
+			menuComment();
+			break;
 		default:
 			break;
 		}
@@ -191,9 +196,15 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	protected void showArretPlan() {
-		ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
 		intent.putExtra(MapActivity.Param.itemId, mArret.idStation);
 		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
+		startActivity(intent);
+	}
+
+	private void menuComment() {
+		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.Param.idArret, mArret._id);
 		startActivity(intent);
 	}
 

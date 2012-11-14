@@ -7,6 +7,7 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity.OnChangeSens;
 import net.naonedbus.activity.impl.HoraireActivity;
+import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.bean.async.AsyncResult;
@@ -77,6 +78,9 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 			adapter.setViewType(ViewType.TYPE_METRO);
 			sort();
 			break;
+		case R.id.menu_show_plan:
+			menuShowPlan();
+			break;
 		}
 		return false;
 	}
@@ -87,6 +91,12 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		final Arret item = (Arret) l.getItemAtPosition(position);
 		final ParamIntent intent = new ParamIntent(getActivity(), HoraireActivity.class);
 		intent.putExtra(HoraireActivity.Param.idArret, item._id);
+		startActivity(intent);
+	}
+
+	private void menuShowPlan() {
+		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.Param.codeLigne, mSens.codeLigne);
 		startActivity(intent);
 	}
 

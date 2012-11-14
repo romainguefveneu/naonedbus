@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@id/menu_edit"
-        android:icon="@drawable/ic_action_edit"
+        android:id="@id/menu_comment"
+        android:icon="@drawable/ic_action_new_event"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_edit"/>
+        android:title="@string/action_comment"/>
     <item
         android:id="@id/menu_refresh"
         android:icon="@drawable/ic_action_refresh"

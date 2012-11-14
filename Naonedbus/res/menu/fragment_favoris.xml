@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_action_sort_by_size"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_edit">
+        android:title="@string/action_sort">
         <menu>
             <group android:checkableBehavior="single" >
                 <item
@@ -31,7 +31,7 @@
         android:icon="@drawable/ic_action_import_export"
         android:orderInCategory="300"
         android:showAsAction="always"
-        android:title="@string/action_edit">
+        android:title="@string/action_import">
         <menu>
             <item
                 android:id="@id/menu_import"

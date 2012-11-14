@@ -34,7 +34,7 @@
     <!-- Actions -->
     <string name="action_share">Partager</string>
     <string name="action_refresh">Actualiser</string>
-    <string name="action_edit">Commenter le trafic</string>
+    <string name="action_comment">Commenter le trafic</string>
     <string name="action_import">Importer</string>
     <string name="action_export">Exporter</string>
     <string name="action_sort">Trier</string>
@@ -184,7 +184,7 @@
     <string name="dialog_title_comment_sending_error">Votre message n\'a pas pu être délivré !</string>
     <string name="dialog_content_comment_sending_error">Une erreur s\'est produite pendant l\'envoi du message, merci de réessayer plus tard…</string>
     <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
-
+    <string name="dialog_title_menu_lignes">Ligne %1$s</string>
     <!-- Showcase -->
     <string name="showcase_arrets_title">Changez facilement de sens</string>
     <string name="showcase_arrets_content">Cliquez sur le sens pour en changer.</string>

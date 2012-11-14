@@ -13,6 +13,7 @@ import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.helper.SlidingMenuHelper;
+import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
@@ -49,6 +50,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
 public class CommentaireActivity extends SherlockActivity {
+
+	public static enum Param implements IIntentParamKey {
+		idLigne, idSens, idArret
+	};
 
 	private static final String BUNDLE_KEY_LIGNE = "ligne";
 	private static final String BUNDLE_KEY_SENS = "sens";

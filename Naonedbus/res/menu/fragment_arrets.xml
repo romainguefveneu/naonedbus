@@ -26,8 +26,14 @@
         android:id="@id/menu_show_plan"
         android:icon="@drawable/ic_action_plan"
         android:orderInCategory="200"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/action_show_plan"/>
+    <item
+        android:id="@id/menu_comment"
+        android:icon="@drawable/ic_action_new_event"
+        android:orderInCategory="300"
+        android:showAsAction="always"
+        android:title="@string/action_comment"/>
     <item
         android:id="@id/menu_feedback_bug"
         android:orderInCategory="300"

@@ -13,11 +13,17 @@
         android:showAsAction="always"
         android:title="@string/action_show_plan"/>
     <item
-        android:id="@id/menu_place"
+        android:id="@id/menu_comment"
         android:icon="@drawable/ic_action_place"
         android:orderInCategory="300"
         android:showAsAction="always"
-        android:title="@string/action_show_on_map"/>
+        android:title="@string/action_comment"/>
+    <item
+        android:id="@id/menu_comment"
+        android:icon="@drawable/ic_action_new_event"
+        android:orderInCategory="350"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_comment"/>
     <item
         android:id="@id/menu_date"
         android:icon="@drawable/ic_action_change_date"

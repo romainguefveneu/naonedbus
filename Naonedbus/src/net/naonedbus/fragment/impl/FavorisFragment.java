@@ -525,7 +525,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_favoris_contextuel, menu);
+		menuInflater.inflate(R.menu.fragment_favoris_contextual, menu);
 		return true;
 	}
 
