@@ -286,6 +286,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	public void onItemSelected() {
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
+		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+		adapter.setCheckedItemPositions(checkedPositions);
+
 		if (mActionMode == null) {
 			getSherlockActivity().startActionMode(this);
 		} else if (hasItemChecked() == false) {
@@ -362,8 +366,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			intent.putExtra(HoraireActivity.Param.idArret, item._id);
 			startActivity(intent);
 		} else {
-			mListView.setItemChecked(position, !mListView.isItemChecked(position));
-			mListView.invalidate();
 			onItemSelected();
 		}
 	}
@@ -371,7 +373,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
 		mListView.setItemChecked(position, !mListView.isItemChecked(position));
-		mListView.invalidate();
 		onItemSelected();
 		return true;
 	}
@@ -577,6 +578,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	public void onDestroyActionMode(ActionMode mode) {
 		mActionMode = null;
 		mListView.clearChoices();
+
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
+		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+		adapter.setCheckedItemPositions(checkedPositions);
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override

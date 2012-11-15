@@ -10,6 +10,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import android.widget.TextView;
 public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 
 	private final Typeface robotoLight;
+
+	private SparseBooleanArray checkedItemPositions = new SparseBooleanArray();
 
 	public FavoriArrayAdapter(Context context, List<Favori> objects) {
 		super(context, 0, objects);
@@ -39,6 +43,14 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 	private void bindView(View view, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Favori item = (Favori) getItem(position);
+
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+			if (this.checkedItemPositions.get(position)) {
+				view.setBackgroundResource(R.color.holo_blue_dark);
+			} else {
+				view.setBackgroundResource(android.R.color.transparent);
+			}
+		}
 
 		if (item.background == null) {
 			final GradientDrawable background = (GradientDrawable) ColorUtils
@@ -79,6 +91,10 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 		holder.ligneCode.setTypeface(robotoLight);
 
 		view.setTag(holder);
+	}
+
+	public void setCheckedItemPositions(SparseBooleanArray checkedItemPositions) {
+		this.checkedItemPositions = checkedItemPositions;
 	}
 
 	private static class ViewHolder {
