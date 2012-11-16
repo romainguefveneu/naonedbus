@@ -18,9 +18,15 @@ import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ListAdapter;
@@ -31,10 +37,16 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ArretsFragment extends CustomListFragment implements CustomFragmentActions, OnChangeSens {
+public class ArretsFragment extends CustomListFragment implements CustomFragmentActions, OnChangeSens,
+		MyLocationListener {
 
 	private final static int SORT_NOM = R.id.menu_sort_name;
 	private final static int SORT_ORDRE = R.id.menu_sort_ordre;
+	private final static float SMOOTH_SCROLL_MIN_DISTANCE = 500f;
+
+	private interface NearestStationCallback {
+		void onNearestStationFound(Integer position);
+	}
 
 	protected final SparseArray<Comparator<Arret>> mComparators;
 
@@ -43,13 +55,50 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	private Sens mSens;
 
+	private FindNearestStationTask mFindNearestStationTask;
+	private NearestStationCallback mNearestStationCallback;
+
 	public ArretsFragment() {
 		super(R.string.title_fragment_arrets, R.layout.fragment_listview);
-		this.mLocationProvider = NBApplication.getLocationProvider();
+		mLocationProvider = NBApplication.getLocationProvider();
+		mLocationProvider.addListener(this);
 
-		this.mComparators = new SparseArray<Comparator<Arret>>();
-		this.mComparators.append(SORT_NOM, new ArretComparator());
-		this.mComparators.append(SORT_ORDRE, new ArretOrdreComparator());
+		mComparators = new SparseArray<Comparator<Arret>>();
+		mComparators.append(SORT_NOM, new ArretComparator());
+		mComparators.append(SORT_ORDRE, new ArretOrdreComparator());
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		mNearestStationCallback = new NearestStationCallback() {
+			@SuppressLint("NewApi")
+			@Override
+			public void onNearestStationFound(Integer position) {
+				if (position != null) {
+					// if (Build.VERSION.SDK_INT < Build.VERSION_CODES.FROYO) {
+					getListView().setSelection(position);
+					// } else {
+					// getListView().smoothScrollToPosition(position);
+					// }
+				}
+			}
+		};
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		mLocationProvider.start();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		mLocationProvider.stop();
+		if (mFindNearestStationTask != null) {
+			mFindNearestStationTask.cancel(true);
+		}
 	}
 
 	@Override
@@ -140,12 +189,91 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	protected void onPostExecute() {
 		sort();
+
+		if (mFindNearestStationTask != null) {
+			mFindNearestStationTask.cancel(true);
+		}
+		mFindNearestStationTask = (FindNearestStationTask) new FindNearestStationTask(mNearestStationCallback,
+				mLocationProvider.getLastKnownLocation(), getListAdapter()).execute();
 	}
 
 	@Override
 	public void onChangeSens(Sens sens) {
 		mSens = sens;
 		refreshContent();
+	}
+
+	private class FindNearestStationTask extends AsyncTask<Void, Void, Integer> {
+
+		private NearestStationCallback mNearestStationCallback;
+		private ListAdapter mAdapter;
+		private Location mCurrentLocation;
+
+		public FindNearestStationTask(final NearestStationCallback callback, final Location currentLocation,
+				final ListAdapter adapter) {
+			mNearestStationCallback = callback;
+			mCurrentLocation = currentLocation;
+			mAdapter = adapter;
+		}
+
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+			mNearestStationCallback = null;
+		}
+
+		@Override
+		protected Integer doInBackground(Void... params) {
+			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+
+			final int count = mAdapter.getCount();
+			Arret arret;
+			Integer nearestPosition = null;
+			Float nearestDistance = Float.MAX_VALUE;
+			Float distance = null;
+
+			final Location arretLocation = new Location(LocationManager.GPS_PROVIDER);
+
+			for (int i = 0; i < count - 1; i++) {
+				arret = (Arret) mAdapter.getItem(i);
+
+				arretLocation.setLatitude(arret.getLatitude());
+				arretLocation.setLongitude(arret.getLongitude());
+
+				distance = arretLocation.distanceTo(mCurrentLocation);
+				if (distance < nearestDistance) {
+					nearestDistance = distance;
+					nearestPosition = i;
+				}
+
+				if (isCancelled()) {
+					break;
+				}
+			}
+
+			if (nearestDistance < SMOOTH_SCROLL_MIN_DISTANCE) {
+				return nearestPosition;
+			} else {
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			if (!isCancelled() && mNearestStationCallback != null) {
+				mNearestStationCallback.onNearestStationFound(result);
+			}
+		}
+
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+	}
+
+	@Override
+	public void onLocationDisabled() {
+
 	}
 
 }
