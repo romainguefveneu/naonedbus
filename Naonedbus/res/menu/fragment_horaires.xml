@@ -13,7 +13,7 @@
         android:showAsAction="always"
         android:title="@string/action_show_plan"/>
     <item
-        android:id="@id/menu_comment"
+        android:id="@id/menu_place"
         android:icon="@drawable/ic_action_place"
         android:orderInCategory="300"
         android:showAsAction="always"

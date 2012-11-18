@@ -18,14 +18,14 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.task.AddressResolverTask;
+import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -40,7 +40,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
-public class ProximiteFragment extends CustomListFragment implements CustomFragmentActions, MyLocationListener {
+public class ProximiteFragment extends CustomListFragment implements CustomFragmentActions, MyLocationListener,
+		AddressTaskListener {
 
 	private static final int MAX_EQUIPEMENTS = 25;
 	private static final int MENU_GROUP_TYPES = 1;
@@ -50,7 +51,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	private SharedPreferences preferences;
 	private MyLocationProvider myLocationProvider;
 	private Set<Equipement.Type> selectedTypesEquipements;
-	private AddressTask loadAddress;
+	private AddressResolverTask mAddressResolverTask;
 
 	private TextView headerTextView;
 	private ImageView imageView;
@@ -82,8 +83,16 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		if (myLocationProvider.isProviderEnabled() == false) {
 			onLocationDisabled();
 		}
-		loadAddress(myLocationProvider.getLastKnownLocation());
+		loadAddress();
+	}
 
+	@Override
+	public void onStop() {
+		super.onStop();
+
+		if (mAddressResolverTask != null) {
+			mAddressResolverTask.cancel(false);
+		}
 	}
 
 	@Override
@@ -152,15 +161,15 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	/**
-	 * Lance le chargement des éléments
+	 * Lance la récupération de l'adresse courante.
 	 * 
 	 * @param location
 	 */
-	private void loadAddress(Location location) {
-		if (loadAddress != null) {
-			loadAddress.cancel(true);
+	private void loadAddress() {
+		if (mAddressResolverTask != null) {
+			mAddressResolverTask.cancel(true);
 		}
-		loadAddress = (AddressTask) new AddressTask().execute(location);
+		mAddressResolverTask = (AddressResolverTask) new AddressResolverTask(this).execute();
 	}
 
 	@Override
@@ -215,56 +224,9 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		}
 	}
 
-	/**
-	 * Classe de chargement de l'adresse postale courante
-	 * 
-	 * @author romain
-	 * 
-	 */
-	private class AddressTask extends AsyncTask<Location, Void, String> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			imageView.setVisibility(View.INVISIBLE);
-			headerTextView.setText(R.string.msg_loading_address);
-		}
-
-		@Override
-		protected String doInBackground(Location... params) {
-			String result = null;
-			if (myLocationProvider != null) {
-				final Address address = myLocationProvider.getLastKnownAddress();
-
-				if (address != null) {
-					StringBuilder builder = new StringBuilder();
-					if (address.getMaxAddressLineIndex() > 0) {
-						builder.append(address.getAddressLine(0));
-						builder.append(" - ");
-					}
-					builder.append(address.getLocality());
-					result = builder.toString();
-				}
-			}
-			return result;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			if (result != null) {
-				headerTextView.setText(result);
-				imageView.setVisibility(View.VISIBLE);
-			} else {
-				headerTextView.setText("Adresse inconnue.");
-			}
-		}
-
-	}
-
 	@Override
 	public void onLocationChanged(Location location) {
-		loadAddress(location);
+		loadAddress();
 		refreshContent();
 	}
 
@@ -303,6 +265,22 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	 */
 	private void setLayerPreference(final Integer id, final boolean enabled) {
 		preferences.edit().putBoolean(PREF_PROXIMITE_LAYER + id, enabled).commit();
+	}
+
+	@Override
+	public void onAddressTaskPreExecute() {
+		imageView.setVisibility(View.INVISIBLE);
+		headerTextView.setText(R.string.msg_loading_address);
+	}
+
+	@Override
+	public void onAddressTaskResult(String address) {
+		if (address != null) {
+			headerTextView.setText(address);
+			imageView.setVisibility(View.VISIBLE);
+		} else {
+			headerTextView.setText("Adresse inconnue.");
+		}
 	}
 
 }

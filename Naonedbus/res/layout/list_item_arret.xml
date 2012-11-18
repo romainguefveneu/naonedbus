@@ -53,8 +53,29 @@
         android:id="@id/itemTitle"
         style="@style/ItemPrimaryText"
         android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/dotLocation"
         android:layout_toRightOf="@id/itemIcon"
         android:paddingLeft="10dip"
-        android:paddingRight="8dp" />
+        android:paddingRight="8dp"
+        android:text="Titre" />
+
+    <ImageView
+        android:id="@id/dotLocation"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/itemDistance"
+        android:src="@drawable/dot_location" />
+
+    <TextView
+        android:id="@id/itemDistance"
+        style="@style/ItemSecondaryText.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:drawablePadding="8dip"
+        android:text="0m" />
 
 </RelativeLayout>

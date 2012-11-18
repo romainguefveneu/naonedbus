@@ -29,8 +29,20 @@
         android:showAsAction="always|withText"
         android:title="@string/action_show_plan"/>
     <item
-        android:id="@id/menu_feedback_bug"
+        android:id="@id/menu_location"
+        android:icon="@drawable/ic_action_location_found"
         android:orderInCategory="300"
+        android:showAsAction="always|withText"
+        android:title="@string/action_list_location_center"/>
+    <item
+        android:id="@id/menu_comment"
+        android:icon="@drawable/ic_action_new_event"
+        android:orderInCategory="400"
+        android:showAsAction="always|withText"
+        android:title="@string/action_comment"/>
+    <item
+        android:id="@id/menu_feedback_bug"
+        android:orderInCategory="500"
         android:showAsAction="never"
         android:title="@string/action_feedback_bug"/>
 

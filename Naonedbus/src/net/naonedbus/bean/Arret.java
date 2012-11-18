@@ -36,6 +36,7 @@ public class Arret implements Serializable {
 	public int idStation;
 	public int ordre;
 	public String nomArret;
+	public Float distance;
 
 	public Arret() {
 	}

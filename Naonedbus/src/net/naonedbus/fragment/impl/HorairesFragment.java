@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.activity.impl.InfoTraficDetailActivity.Param;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;

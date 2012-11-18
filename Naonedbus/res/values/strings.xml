@@ -56,6 +56,7 @@
     <string name="action_change_sens">Autre sens</string>
     <string name="action_show_on_map">Voir sur le plan</string>
     <string name="action_favori">Favori</string>
+    <string name="action_list_location_center">Centrer sur le plus proche</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
     <string name="error_title_network">Une erreur réseau est survenue</string>

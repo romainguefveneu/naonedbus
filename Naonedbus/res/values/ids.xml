@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -34,6 +34,7 @@
     <item name="itemDistance" type="id"/>
     <item name="itemLignes" type="id"/>
     <item name="itemPerturbation" type="id"/>
+    <item name="dotLocation" type="id"/>
 
     <!-- Headers -->
     <item name="headerView" type="id"/>
@@ -113,5 +114,6 @@
     <item name="menu_rate" type="id"/>
     <item name="menu_show_plan" type="id"/>
     <item name="menu_comment" type="id"/>
+    <item name="menu_location" type="id"/>
 
 </resources>
