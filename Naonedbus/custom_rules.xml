@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="naonedbus-custom" default="help">
+
+	<target name="process-template">
+		<exec executable="git" outputproperty="git.revision">
+			<arg value="rev-parse"/>
+			<arg value="--short"/>
+			<arg value="HEAD"/>
+		</exec>
+
+		<filterset id="build-tokens">
+		    <filter token="version.tag" value="${version.tag}"/>
+		    <filter token="maps.key" value="${maps.key}"/>
+		    <filter token="bugsense.key" value="${bugsense.key}"/>
+		    <filter token="privatekey.mod" value="${privatekey.mod}"/>
+		    <filter token="privatekey.exp" value="${privatekey.exp}"/>
+		    <filter token="git.revision" value="${git.revision}"/>
+		</filterset>
+		<copy file="ant-templates/keys.xml" todir="./res/values/" overwrite="true" encoding="utf-8">
+			<filterset refid="build-tokens" />
+		</copy>
+	</target>
+
+	<target name="read-debug-properties">
+		<property file="./ant-profiles/debug.properties" />
+	</target>
+
+	<target name="read-release-properties">
+		<property file="./ant-profiles/release.properties" />
+	</target>
+
+	<target name="make-debug" depends="read-debug-properties,process-template"/>
+
+	<target name="make-release" depends="read-release-properties,process-template"/>
+
+</project>
