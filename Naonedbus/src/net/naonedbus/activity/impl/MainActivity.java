@@ -84,6 +84,7 @@ public class MainActivity extends SlidingMenuActivity {
 		if (count > 0) {
 			setSelectedTab(1);
 		}
+
 	}
 
 	/**

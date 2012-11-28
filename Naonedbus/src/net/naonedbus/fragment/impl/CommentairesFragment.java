@@ -18,6 +18,7 @@ import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -33,14 +34,15 @@ public class CommentairesFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_en_direct, menu);
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		loadContent();
 	}
 
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
+	public void onCreateOptionsMenu(Menu menu) {
+		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
+		menuInflater.inflate(R.menu.fragment_en_direct, menu);
 	}
 
 	@Override

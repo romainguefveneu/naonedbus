@@ -37,18 +37,14 @@ public class TanActuFragment extends CustomListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
-		getLoaderManager().initLoader(0, null, this);
+
+		loadContent();
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_en_direct, menu);
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
 	}
 
 	@Override

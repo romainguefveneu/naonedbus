@@ -25,38 +25,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@id/ligneDialogHeader"
-        android:layout_width="match_parent"
-        android:layout_height="70dip" >
-
-        <TextView
-            android:id="@id/itemCode"
-            style="@style/BigCode"
-            android:layout_centerVertical="true"
-            android:paddingLeft="@dimen/padding_small"
-            android:paddingRight="@dimen/padding_small"
-            android:text="00"
-            android:textSize="50dip" />
-
-        <TextView
-            android:id="@id/itemTitle"
-            style="@style/BigTitle"
-            android:layout_marginLeft="@dimen/padding_small"
-            android:layout_toRightOf="@id/itemCode"
-            android:paddingRight="3dip"
-            android:text="François" />
-
-        <TextView
-            android:id="@id/itemSubTitle"
-            style="@style/BigSens"
-            android:layout_below="@id/itemTitle"
-            android:layout_marginLeft="@dimen/padding_small"
-            android:layout_marginTop="-3dip"
-            android:layout_toRightOf="@id/itemCode"
-            android:paddingRight="3dip"
-            android:text="François" />
-    </RelativeLayout>
+    <include layout="@layout/header_activity" />
 
     <FrameLayout
         android:id="@id/fragmentContent"

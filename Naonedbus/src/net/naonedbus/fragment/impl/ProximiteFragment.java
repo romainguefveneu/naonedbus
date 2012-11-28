@@ -82,7 +82,10 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		myLocationProvider.start();
 		if (myLocationProvider.isProviderEnabled() == false) {
 			onLocationDisabled();
+		} else {
+			loadContent();
 		}
+
 		loadAddress();
 	}
 
@@ -178,10 +181,6 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		EquipementArrayAdapter adapter = null;
 
 		try {
-
-			if (myLocationProvider.isProviderEnabled() == false) {
-				cancelLoading();
-			}
 
 			if (selectedTypesEquipements.size() > 0) {
 				final EquipementManager equipementManager = EquipementManager.getInstance();

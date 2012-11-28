@@ -31,7 +31,8 @@
         android:icon="@drawable/ic_action_import_export"
         android:orderInCategory="300"
         android:showAsAction="always"
-        android:title="@string/action_import">
+        android:title="@string/action_import"
+        android:visible="false">
         <menu>
             <item
                 android:id="@id/menu_import"

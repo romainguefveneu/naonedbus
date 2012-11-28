@@ -80,9 +80,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
-		if (getListAdapter() == null) {
-			getLoaderManager().initLoader(LOADER_INIT, null, this);
-		}
 	}
 
 	@Override
@@ -166,13 +163,14 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		return titleId;
 	}
 
-	public void refreshContent() {
-		getLoaderManager().restartLoader(LOADER_INIT, null, this);
+	public void loadContent() {
+		if (getListAdapter() == null) {
+			getLoaderManager().initLoader(LOADER_INIT, null, this);
+		}
 	}
 
-	public void cancelLoading() {
-		getLoaderManager().destroyLoader(LOADER_INIT);
-		getLoaderManager().destroyLoader(LOADER_REFRESH);
+	public void refreshContent() {
+		getLoaderManager().restartLoader(LOADER_REFRESH, null, this);
 	}
 
 	protected void addOnScrollListener(OnScrollListener onScrollListener) {

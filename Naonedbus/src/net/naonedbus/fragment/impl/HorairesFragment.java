@@ -6,6 +6,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
+import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
@@ -42,8 +43,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 	public static final String PARAM_ID_ARRET = "idArret";
-
-	private static final String formatDelay = "dans %d min";
 
 	private final static IntentFilter intentFilter;
 	static {
@@ -102,6 +101,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
 		mArret = mArretManager.getSingle(getActivity().getContentResolver(), idArret);
+
+		loadContent();
 	}
 
 	@Override
@@ -151,6 +152,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			break;
 		case R.id.menu_comment:
 			menuComment();
+			break;
+		case R.id.menu_show_plan:
+			menuShowPlan();
 			break;
 		default:
 			break;
@@ -204,6 +208,12 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private void menuComment() {
 		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
 		intent.putExtra(CommentaireActivity.Param.idArret, mArret._id);
+		startActivity(intent);
+	}
+
+	private void menuShowPlan() {
+		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.Param.codeLigne, mArret.codeLigne);
 		startActivity(intent);
 	}
 
@@ -270,9 +280,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			int delay = Minutes.minutesBetween(now, itemDateTime).getMinutes();
 
 			if (delay > 0 && delay < 60) {
-				horaire.setDelai(String.format(formatDelay, delay));
+				horaire.setDelai(getString(R.string.msg_depart_min, delay));
 			} else if (delay == 0) {
-				horaire.setDelai("départ proche");
+				horaire.setDelai(getString(R.string.msg_depart_proche));
 			} else {
 				horaire.setDelai(null);
 			}

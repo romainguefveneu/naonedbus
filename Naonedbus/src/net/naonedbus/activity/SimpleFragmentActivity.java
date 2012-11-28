@@ -42,7 +42,7 @@ public abstract class SimpleFragmentActivity extends SherlockFragmentActivity im
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(NBApplication.THEME);
+		setTheme(NBApplication.THEMES_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
 

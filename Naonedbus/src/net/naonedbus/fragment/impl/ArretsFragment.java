@@ -1,5 +1,6 @@
 package net.naonedbus.fragment.impl;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -55,13 +56,16 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	protected final SparseArray<Comparator<Arret>> mComparators;
-	protected int mCurrentSortPreference = SORT_ORDRE;
+	protected int mCurrentSortPreference = SORT_NOM;
 
 	private MyLocationProvider mLocationProvider;
 	private DistanceTask mDistanceTask;
 	private DistanceTaskCallback mDistanceTaskCallback;
 	private AddressResolverTask mAddressResolverTask;
 	private Integer mNearestArretPosition;
+	private ArretArrayAdapter mAdapter;
+
+	private List<Arret> mArrets;
 
 	private Sens mSens;
 
@@ -78,6 +82,10 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		mArrets = new ArrayList<Arret>();
+		mAdapter = new ArretArrayAdapter(getActivity(), mArrets);
+
 		mDistanceTaskCallback = new DistanceTaskCallback() {
 			@SuppressLint("NewApi")
 			@Override
@@ -128,20 +136,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		item.setChecked(true);
-		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
 
 		switch (item.getItemId()) {
 		case R.id.menu_sort_name:
-			mCurrentSortPreference = SORT_NOM;
-			adapter.setViewType(ViewType.TYPE_STANDARD);
-			sort();
-			loadDistances();
+			changeSortOrder(SORT_NOM, ViewType.TYPE_STANDARD);
 			break;
 		case R.id.menu_sort_ordre:
-			mCurrentSortPreference = SORT_ORDRE;
-			adapter.setViewType(ViewType.TYPE_METRO);
-			sort();
-			loadDistances();
+			changeSortOrder(SORT_ORDRE, ViewType.TYPE_METRO);
 			break;
 		case R.id.menu_show_plan:
 			menuShowPlan();
@@ -186,12 +187,31 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	/**
+	 * Changer l'ordre de tri des arrêts.
+	 * 
+	 * @param sortOrder
+	 *            L'id du comparator
+	 * @param viewType
+	 *            Le type de vue de l'adapter
+	 */
+	private void changeSortOrder(int sortOrder, ViewType viewType) {
+		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
+		mCurrentSortPreference = sortOrder;
+		adapter.setViewType(viewType);
+		getListView().setSelection(0);
+		sort();
+		loadDistances();
+	}
+
+	/**
 	 * Trier les parkings selon les préférences.
 	 */
 	private void sort() {
 		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
-		sort(adapter);
-		adapter.notifyDataSetChanged();
+		if (adapter != null) {
+			sort(adapter);
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	/**
@@ -206,16 +226,16 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
-		if (mSens == null)
-			cancelLoading();
-
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 			final ArretManager arretManager = ArretManager.getInstance();
 			final List<Arret> arrets = arretManager.getAll(context.getContentResolver(), mSens.codeLigne, mSens.code);
-			final ArretArrayAdapter adapter = new ArretArrayAdapter(context, arrets);
 
-			result.setResult(adapter);
+			mArrets.clear();
+			mArrets.addAll(arrets);
+			mAdapter.notifyDataSetChanged();
+
+			result.setResult(mAdapter);
 		} catch (Exception e) {
 			result.setException(e);
 		}
@@ -339,7 +359,9 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	public void onAddressTaskResult(String address) {
-		Toast.makeText(getActivity(), address, Toast.LENGTH_LONG).show();
+		if (address.length() > 0) {
+			Toast.makeText(getActivity(), address, Toast.LENGTH_LONG).show();
+		}
 	}
 
 }

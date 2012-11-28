@@ -20,7 +20,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		TYPE_STANDARD, TYPE_METRO
 	}
 
-	private ViewType mViewType = ViewType.TYPE_METRO;
+	private ViewType mViewType = ViewType.TYPE_STANDARD;
 	private int mNearestPosition = -1;
 
 	public ArretArrayAdapter(Context context, List<Arret> objects) {

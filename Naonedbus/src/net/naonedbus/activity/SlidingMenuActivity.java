@@ -49,7 +49,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(NBApplication.THEME);
+		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
 		setBehindContentView(R.layout.menu);

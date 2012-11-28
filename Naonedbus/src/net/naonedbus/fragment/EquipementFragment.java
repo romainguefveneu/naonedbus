@@ -82,6 +82,12 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	}
 
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		loadContent();
+	}
+
+	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		myLocationProvider.removeListener(locationListener);

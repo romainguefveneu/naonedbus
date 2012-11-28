@@ -51,7 +51,7 @@
 
     <TextView
         android:id="@id/itemTitle"
-        style="@style/ItemPrimaryText"
+        style="@style/ItemPrimaryText.SingleLine"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/dotLocation"
         android:layout_toRightOf="@id/itemIcon"

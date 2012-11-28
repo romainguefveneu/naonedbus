@@ -27,8 +27,7 @@ import com.bugsense.trace.BugSenseHandler;
 
 public abstract class InfoDialogUtils {
 
-	private static final String DATA_PATH = "/data/data/%s/msg/";
-	private static final String FILE_PATH = DATA_PATH + "%s";
+	private static final String MESSAGE_FOLDER = "msg";
 
 	/**
 	 * Afficher une dialog avec le titre "Information"
@@ -120,8 +119,7 @@ public abstract class InfoDialogUtils {
 	 * @param messageId
 	 */
 	public static void showIfNecessary(Context context, int titreId, int messageId) {
-		String dataPath = String.format(FILE_PATH, context.getPackageName(), messageId);
-		File dataFile = new File(dataPath);
+		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + messageId);
 
 		createDir(context);
 		if (!dataFile.exists()) {
@@ -142,8 +140,7 @@ public abstract class InfoDialogUtils {
 	 * @param messageId
 	 */
 	public static void showIfNecessary(Context context, int messageId) {
-		String dataPath = String.format(FILE_PATH, context.getPackageName(), messageId);
-		File dataFile = new File(dataPath);
+		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + messageId);
 
 		createDir(context);
 		if (!dataFile.exists()) {
@@ -163,8 +160,7 @@ public abstract class InfoDialogUtils {
 	 * @param fileFromAssets
 	 */
 	public static void showAssetIfNecessary(Context context, String fileFromAssets) {
-		String dataPath = String.format(FILE_PATH, context.getPackageName(), fileFromAssets);
-		File dataFile = new File(dataPath);
+		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + fileFromAssets);
 
 		createDir(context);
 		if (!dataFile.exists()) {
@@ -214,9 +210,8 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 */
 	public static void showWelcomeDialogIfNecessary(Context context) {
-		String version = VersionUtils.getVersion(context);
-		String dataPath = String.format(FILE_PATH, context.getPackageName(), version);
-		File dataFile = new File(dataPath);
+		final String version = VersionUtils.getVersion(context);
+		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + version);
 
 		createDir(context);
 		if (!dataFile.exists()) {
@@ -247,10 +242,9 @@ public abstract class InfoDialogUtils {
 	 * @param fileFromAssets
 	 */
 	public static void showVersionNoteIfNecessary(Context context, String fileFromAssets) {
-		VersionUtils versionUtils = new VersionUtils(context, fileFromAssets);
-		String version = VersionUtils.getVersion(context);
-		String dataPath = String.format(FILE_PATH, context.getPackageName(), version);
-		File dataFile = new File(dataPath);
+		final VersionUtils versionUtils = new VersionUtils(context, fileFromAssets);
+		final String version = VersionUtils.getVersion(context);
+		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + version);
 
 		createDir(context);
 		if (!dataFile.exists()) {
@@ -269,9 +263,9 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 */
 	private static void createDir(Context context) {
-		File file = new File(String.format(DATA_PATH, context.getPackageName()));
+		final File file = new File(context.getFilesDir(), MESSAGE_FOLDER);
 		if (!file.exists()) {
-			file.mkdir();
+			file.mkdirs();
 		}
 	}
 
@@ -312,8 +306,7 @@ public abstract class InfoDialogUtils {
 	 *         <code>false</code> s'il l'a déjà été.
 	 */
 	public static boolean isNotAlreadyShown(final Context context, int messageId) {
-		final String dataPath = String.format(FILE_PATH, context.getPackageName(), messageId);
-		final File dataFile = new File(dataPath);
+		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + messageId);
 		boolean result = true;
 
 		createDir(context);

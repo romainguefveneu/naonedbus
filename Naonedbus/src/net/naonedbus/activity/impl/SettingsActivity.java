@@ -2,6 +2,7 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.SlidingSherlockPreferenceActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -12,9 +13,8 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceManager;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
-public class SettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
+public class SettingsActivity extends SlidingSherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	private ListPreference theme;
 

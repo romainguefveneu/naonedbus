@@ -64,8 +64,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	private static final String LOG_TAG = FavorisFragment.class.getSimpleName();
 
-	private static final String FORMAT_DELAY_MIN = "dans %d min";
-	private static final String FORMAT_DELAY_HOUR = "dans %d h";
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 	private static final Integer MIN_HOUR = 60;
 	private static final Integer MIN_DURATION = 0;
@@ -320,6 +318,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		super.onActivityCreated(savedInstanceState);
 		mListView = getListView();
 		mListView.setOnItemLongClickListener(this);
+
+		loadContent();
 	}
 
 	@Override
@@ -501,9 +501,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 					if (delay == MIN_DURATION) {
 						favori.delay = getString(R.string.msg_depart_proche);
 					} else if (delay <= MIN_HOUR) {
-						favori.delay = String.format(FORMAT_DELAY_MIN, delay);
+						favori.delay = getString(R.string.msg_depart_min, delay);
 					} else {
-						favori.delay = String.format(FORMAT_DELAY_HOUR, (delay / MIN_HOUR));
+						favori.delay = getString(R.string.msg_depart_heure, delay / MIN_HOUR);
 					}
 				}
 			} else {

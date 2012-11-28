@@ -39,6 +39,8 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(getListView());
+
+		loadContent();
 	}
 
 	@Override
