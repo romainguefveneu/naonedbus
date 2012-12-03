@@ -12,6 +12,17 @@
     <string name="loading_layers">Chargement des calques&#8230;</string>
     <string name="whatsup">Que se passe-t-il ?</string>
     <string name="emptyString"></string>
+    <string name="updating">Mise à jour en cours&#8230;</string>
+    <string name="setup">Installation en cours&#8230;</string>
+    <!-- Tuto -->
+    <string name="tuto_0_title">Bienvenue dans</string>
+    <string name="tuto_0_summary"><![CDATA[Prenez quelques instants pour découvrir l\'application.<br /><big>&rarr;</big>]]></string>
+    <string name="tuto_1_title">Menu principal</string>
+    <string name="tuto_1_summary">Affichez le menu en cliquant sur l\'îcone.</string>
+    <string name="tuto_2_title">Navigation</string>
+    <string name="tuto_2_summary">Accedez à toutes les fonctionnalitées de naonedbus via ce menu.</string>
+    <string name="tuto_beta_title">Version bêta</string>
+    <string name="tuto_beta_summary"><![CDATA[Vous utilisez une version Bêta de naonedbus.<br />Merci de nous signaler tout problème : <br /><br /> <font color="#ffffff">naonedbus@gmail.com</font>]]></string>
     <!-- Activities -->
     <string name="title_activity_main">Accueil</string>
     <string name="title_activity_infos_trafic">Infos Trafic</string>

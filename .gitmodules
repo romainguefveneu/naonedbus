@@ -7,3 +7,6 @@
 [submodule "ShowcaseView"]
 	path = ShowcaseView
 	url = https://github.com/romainguefveneu/ShowcaseView.git
+[submodule "Android-ViewPagerIndicator"]
+	path = Android-ViewPagerIndicator
+	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git

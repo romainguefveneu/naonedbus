@@ -11,6 +11,7 @@ import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -23,6 +24,9 @@ public class MainActivity extends SlidingMenuActivity {
 			ProximiteFragment.class };
 
 	private ProgressDialog progressDialog;
+	private boolean mHasSetup = false;
+	private boolean mContentLoaded = false;
+	private boolean mIsFrontActivity = false;
 
 	private DatabaseActionListener listener = new DatabaseActionListener() {
 
@@ -32,7 +36,7 @@ public class MainActivity extends SlidingMenuActivity {
 				@Override
 				public void run() {
 					progressDialog = new ProgressDialog(MainActivity.this);
-					progressDialog.setMessage("Mise à jour en cours...");
+					progressDialog.setMessage(getString(R.string.updating));
 					progressDialog.show();
 				}
 			});
@@ -43,8 +47,9 @@ public class MainActivity extends SlidingMenuActivity {
 			MainActivity.this.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
+					startActivity(new Intent(MainActivity.this, TutorialActivity.class));
 					progressDialog = new ProgressDialog(MainActivity.this);
-					progressDialog.setMessage("Installation en cours...");
+					progressDialog.setMessage(getString(R.string.setup));
 					progressDialog.show();
 				}
 			});
@@ -64,6 +69,35 @@ public class MainActivity extends SlidingMenuActivity {
 		}
 	}
 
+	@Override
+	protected void onResume() {
+		mIsFrontActivity = true;
+		if (mHasSetup && mContentLoaded == false) {
+			loadContent();
+		}
+		super.onResume();
+	}
+
+	@Override
+	protected void onStop() {
+		mIsFrontActivity = false;
+		super.onStop();
+	}
+
+	private void loadContent() {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+		addFragments(titles, classes);
+		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final int count = favoriManager.getAll(getContentResolver()).size();
+		if (count > 0) {
+			setSelectedTab(1);
+		}
+
+		mContentLoaded = true;
+	}
+
 	/**
 	 * Effectuer les actions avant de déclencher la mise à jour.
 	 */
@@ -75,16 +109,10 @@ public class MainActivity extends SlidingMenuActivity {
 	 * Effectuer les actions après l'éventuelle mise à jour.
 	 */
 	private void afterUpdate() {
-		if (progressDialog != null) {
-			progressDialog.dismiss();
+		mHasSetup = true;
+		if (mIsFrontActivity && mContentLoaded == false) {
+			loadContent();
 		}
-		addFragments(titles, classes);
-		final FavoriManager favoriManager = FavoriManager.getInstance();
-		final int count = favoriManager.getAll(getContentResolver()).size();
-		if (count > 0) {
-			setSelectedTab(1);
-		}
-
 	}
 
 	/**
@@ -107,7 +135,7 @@ public class MainActivity extends SlidingMenuActivity {
 			CustomContentProvider.setDatabaseActionListener(listener);
 
 			// Déclencher une éventuelle mise à jour
-			final UpdaterManager updaterManager = UpdaterManager.getInstance();
+			final UpdaterManager updaterManager = new UpdaterManager(getApplicationContext());
 			updaterManager.triggerUpdate(getContentResolver());
 
 			// Vider les anciens horaires

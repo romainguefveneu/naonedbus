@@ -18,24 +18,27 @@
  */
 package net.naonedbus.manager.impl;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.controller.impl.CommentaireController;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.joda.time.base.BaseDateTime;
 
 import android.content.Context;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class CommentaireManager {
 	private static CommentaireManager instance;
@@ -48,35 +51,26 @@ public class CommentaireManager {
 		return instance;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Commentaire> getFromCache(Context context, String codeLigne, String codeSens, String codeArret) {
+		final File cacheFile = new File(context.getCacheDir(), genKey(codeLigne, codeSens, codeArret) + ".timeline");
 		List<Commentaire> data = new ArrayList<Commentaire>();
-		File cacheFile = new File(context.getCacheDir(), genKey(codeLigne, codeSens, codeArret) + ".timeline");
 
 		if (cacheFile.exists()) {
+			BufferedReader br = null;
+			final Gson gson = new Gson();
 
-			ObjectInputStream oos = null;
 			try {
+				br = new BufferedReader(new FileReader(cacheFile));
 
-				final FileInputStream fis = new FileInputStream(cacheFile);
-				oos = new ObjectInputStream(fis);
-				data = (List<Commentaire>) oos.readObject();
+				final Type type = new TypeToken<List<Commentaire>>() {
+				}.getType();
 
-			} catch (FileNotFoundException e) {
-				BugSenseHandler.sendException(e);
+				data = gson.fromJson(br, type);
 			} catch (IOException e) {
-				BugSenseHandler.sendException(e);
-			} catch (ClassNotFoundException e) {
-				BugSenseHandler.sendException(e);
+				BugSenseHandler.sendExceptionMessage("Erreur lors de la lecture du cache timeline.", null, e);
 			} finally {
-				if (oos != null) {
-					try {
-						oos.close();
-					} catch (IOException e) {
-					}
-				}
+				IOUtils.closeQuietly(br);
 			}
-
 		}
 
 		return data;
@@ -95,24 +89,13 @@ public class CommentaireManager {
 	}
 
 	private void saveToCache(Context context, String key, List<Commentaire> data) {
-		ObjectOutputStream oos = null;
+		final File cacheFile = new File(context.getCacheDir(), key + ".timeline");
+		final Gson gson = new Gson();
 		try {
-
-			final FileOutputStream fos = new FileOutputStream(new File(context.getCacheDir(), key + ".timeline"));
-			oos = new ObjectOutputStream(fos);
-			oos.writeObject(data);
-			oos.flush();
-
-		} catch (FileNotFoundException e) {
-			BugSenseHandler.sendException(e);
+			final String json = gson.toJson(data);
+			FileUtils.writeStringToFile(cacheFile, json, "UTF-8");
 		} catch (IOException e) {
-			BugSenseHandler.sendException(e);
-		}
-		if (oos != null) {
-			try {
-				oos.close();
-			} catch (IOException e) {
-			}
+			BugSenseHandler.sendExceptionMessage("Erreur lors de l'écriture du cache timeline.", null, e);
 		}
 	}
 

@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -40,6 +40,9 @@
     <item name="headerView" type="id"/>
     <item name="headerTitle" type="id"/>
     <item name="headerDivider" type="id"/>
+
+    <!-- Tutorial -->
+    <item name="tutorialButton" type="id"/>
 
     <!--  -->
     <item name="send" type="id"/>
@@ -81,6 +84,7 @@
     <item name="commentaireSens" type="id"/>
     <item name="commentaireArret" type="id"/>
     <item name="viewPager" type="id"/>
+    <item name="viewPagerIndicator" type="id"/>
 
     <!-- LigneDialogFragment -->
     <item name="ligneDialogHeader" type="id"/>

@@ -20,6 +20,8 @@ package net.naonedbus.manager.impl;
 
 import net.naonedbus.provider.impl.UpdaterProvider;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 
 /**
@@ -28,19 +30,12 @@ import android.database.Cursor;
  */
 public class UpdaterManager {
 
-	private static UpdaterManager instance;
+	public static final String ACTION_ON_POST_EXECUTE = "UpdaterManager:OnPostExecute";
 
-	/**
-	 * Make it singleton !
-	 */
-	public static synchronized UpdaterManager getInstance() {
-		if (instance == null) {
-			instance = new UpdaterManager();
-		}
-		return instance;
-	}
+	private final Context mContext;
 
-	private UpdaterManager() {
+	public UpdaterManager(final Context context) {
+		mContext = context;
 	}
 
 	/**
@@ -48,11 +43,12 @@ public class UpdaterManager {
 	 * 
 	 * @param contentResolver
 	 */
-	public void triggerUpdate(ContentResolver contentResolver) {
+	public void triggerUpdate(final ContentResolver contentResolver) {
 		final Cursor c = contentResolver.query(UpdaterProvider.CONTENT_URI, null, null, null, null);
-		if (c != null){
+		if (c != null) {
 			c.close();
 		}
+		mContext.sendBroadcast(new Intent(ACTION_ON_POST_EXECUTE));
 	}
 
 }

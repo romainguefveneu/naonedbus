@@ -48,7 +48,7 @@ public class CommentairesFragment extends CustomListFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_edit:
+		case R.id.menu_comment:
 			startActivity(new Intent(getActivity(), CommentaireActivity.class));
 			break;
 		case R.id.menu_refresh:
