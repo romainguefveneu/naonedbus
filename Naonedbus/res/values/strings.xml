@@ -117,7 +117,7 @@
     <string name="time_line_after">A venir</string>
     <string name="time_line_now">Aujourd\'hui</string>
     <string name="time_line_before">Précédement</string>
-    <string name="source_prefix">Envoyé depuis</string>
+    <string name="source">Envoyé depuis %s</string>
     <string name="source_unknown">quelque chose, mais je sais pas trop quoi</string>
     <string name="source_naonedbus">naonedbus</string>
     <string name="source_twitter">Twitter</string>

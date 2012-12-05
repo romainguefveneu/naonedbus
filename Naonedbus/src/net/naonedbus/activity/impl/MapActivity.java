@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.SlidingSherlockMapActivity;
 import net.naonedbus.activity.map.layerloader.ItemSelectedInfo;
 import net.naonedbus.activity.map.layerloader.MapLayer;
 import net.naonedbus.activity.map.layerloader.impl.BiclooMapLayer;
@@ -51,6 +50,7 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
@@ -60,7 +60,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 
-public class MapActivity extends SlidingSherlockMapActivity {
+public class MapActivity extends SherlockMapActivity {
 
 	private static final String LOG_TAG = MapActivity.class.getSimpleName();
 
@@ -145,9 +145,9 @@ public class MapActivity extends SlidingSherlockMapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-		setBehindContentView(R.layout.menu);
+		//setBehindContentView(R.layout.menu);
 		slidingMenuHelper.setupActionBar(getSupportActionBar());
-		slidingMenuHelper.setupSlidingMenu(getSlidingMenu());
+//		slidingMenuHelper.setupSlidingMenu(getSlidingMenu());
 
 		final Location location = myLocationProvider.getLastKnownLocation();
 
@@ -212,7 +212,7 @@ public class MapActivity extends SlidingSherlockMapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			toggle();
+//			toggle();
 			break;
 		case ACTION_LAYERS:
 			showOptions();
@@ -236,7 +236,7 @@ public class MapActivity extends SlidingSherlockMapActivity {
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		slidingMenuHelper.onPostCreate(getIntent(), getSlidingMenu(), savedInstanceState);
+//		slidingMenuHelper.onPostCreate(getIntent(), getSlidingMenu(), savedInstanceState);
 	}
 
 	@Override
@@ -248,7 +248,7 @@ public class MapActivity extends SlidingSherlockMapActivity {
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		slidingMenuHelper.onWindowFocusChanged(hasFocus, getSlidingMenu());
+//		slidingMenuHelper.onWindowFocusChanged(hasFocus, getSlidingMenu());
 	}
 
 	@Override
@@ -275,7 +275,7 @@ public class MapActivity extends SlidingSherlockMapActivity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			toggle();
+//			toggle();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

@@ -14,10 +14,12 @@ import android.view.KeyEvent;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.slidingmenu.lib.SlidingMenu;
 
-public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivity implements TabListener {
+public abstract class SlidingMenuActivity extends SherlockFragmentActivity implements TabListener {
 
 	private static String BUNDLE_TABS_CURRENT = "tabsCurrent";
 	private static String BUNDLE_TABS_TITLES = "tabsTitles";
@@ -40,11 +42,12 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	/**
 	 * Gestion du menu latéral.
 	 */
-	private SlidingMenuHelper slidingMenuHelper;
+	private SlidingMenu mSlidingMenu;
+	private SlidingMenuHelper mSlidingMenuHelper;
 
 	public SlidingMenuActivity(int layoutId) {
 		this.layoutId = layoutId;
-		this.slidingMenuHelper = new SlidingMenuHelper(this);
+
 	}
 
 	@Override
@@ -52,15 +55,19 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
-		setBehindContentView(R.layout.menu);
-		slidingMenuHelper.setupActionBar(getSupportActionBar());
-		slidingMenuHelper.setupSlidingMenu(getSlidingMenu());
+
+		mSlidingMenu = new SlidingMenu(this);
+		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
+		mSlidingMenuHelper.setupSlidingMenu(mSlidingMenu);
 	}
 
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		slidingMenuHelper.onPostCreate(getIntent(), getSlidingMenu(), savedInstanceState);
+		mSlidingMenuHelper.onPostCreate(getIntent(), mSlidingMenu, savedInstanceState);
 	}
 
 	@Override
@@ -94,7 +101,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			toggle();
+			mSlidingMenu.toggle();
 			return true;
 		default:
 			final Fragment fragment = getCurrentFragment();
@@ -112,7 +119,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 		outState.putInt(BUNDLE_TABS_CURRENT, getSupportActionBar().getSelectedNavigationIndex());
 		outState.putIntArray(BUNDLE_TABS_TITLES, titles);
 		outState.putStringArray(BUNDLE_TABS_CLASSES, classes);
-		slidingMenuHelper.onSaveInstanceState(outState);
+		mSlidingMenuHelper.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -142,7 +149,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 			finish();
 		}
 
-		slidingMenuHelper.onWindowFocusChanged(hasFocus, getSlidingMenu());
+		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
 	}
 
 	/**
@@ -151,7 +158,7 @@ public abstract class SlidingMenuActivity extends SlidingSherlockFragmentActivit
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			toggle();
+			mSlidingMenu.toggle();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

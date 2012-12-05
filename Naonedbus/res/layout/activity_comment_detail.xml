@@ -38,6 +38,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignWithParentIfMissing="true"
             android:layout_toRightOf="@id/itemCode"
+            android:drawablePadding="8dip"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/padding_small"
@@ -51,7 +52,7 @@
         android:layout_margin="@dimen/padding_small"
         android:background="?attr/blockBackground"
         android:orientation="vertical"
-        android:padding="@dimen/padding_small" >
+        android:padding="@dimen/padding_medium" >
 
         <TextView
             android:id="@+id/itemDescription"
@@ -60,20 +61,28 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:autoLink="web"
-            android:linksClickable="true" />
+            android:linksClickable="true"
+            android:text="@android:string/untitled" />
+
+        <View
+            android:id="@id/headerDivider"
+            style="@style/Divider"
+            android:layout_marginBottom="10dp" />
 
         <TextView
             android:id="@+id/itemDate"
             style="@style/ItemSecondaryText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp"
+            android:text="@android:string/untitled" />
 
         <TextView
             android:id="@+id/itemSource"
             style="@style/ItemSecondaryText.Small"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@android:string/untitled" />
     </LinearLayout>
 
 </LinearLayout>

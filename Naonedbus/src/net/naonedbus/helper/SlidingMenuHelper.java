@@ -28,7 +28,6 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.slidingmenu.lib.SlidingMenu;
-import com.slidingmenu.lib.app.SlidingActivityBase;
 
 public class SlidingMenuHelper {
 	/**
@@ -67,13 +66,13 @@ public class SlidingMenuHelper {
 		if (intent.getBooleanExtra("fromMenu", false)
 				&& (savedInstanceState == null || !savedInstanceState.containsKey("menuConsumed"))) {
 			// Afficher le menu au démarrage, pour la transition.
-			slidingMenu.showBehind();
+			slidingMenu.showMenu();
 
 			// Masquer le menu.
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					slidingMenu.showAbove();
+					slidingMenu.showContent();
 				}
 			}, 350);
 
@@ -89,11 +88,11 @@ public class SlidingMenuHelper {
 
 	public void onWindowFocusChanged(boolean hasFocus, final SlidingMenu slidingMenu) {
 		// Gérer le masquage de menu
-		if (hasFocus == false && slidingMenu.isBehindShowing()) {
+		if (hasFocus == false && slidingMenu.isMenuShowing()) {
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					slidingMenu.showAbove();
+					slidingMenu.showContent();
 				}
 			}, 500);
 		}
@@ -109,6 +108,7 @@ public class SlidingMenuHelper {
 		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 		slidingMenu.setShadowWidthRes(R.dimen.shadow_width);
 		slidingMenu.setShadowDrawable(R.drawable.shadow);
+		slidingMenu.setMenu(R.layout.menu);
 
 		final View menuHeader = LayoutInflater.from(activity).inflate(R.layout.menu_header, null);
 		menuListView = (ListView) slidingMenu.findViewById(android.R.id.list);
@@ -143,17 +143,14 @@ public class SlidingMenuHelper {
 
 				if (activity.getClass().equals(item.getIntentClass())) {
 					// Même activité
-					slidingMenu.showAbove();
+					slidingMenu.showMenu();
 					menuListView.setClickable(true);
 				} else {
 					// Nouvelle activité
 					final Intent intent = new Intent(activity, item.getIntentClass());
 					intent.putExtra("fromMenu", true);
 					activity.startActivity(intent);
-
-					if (SlidingActivityBase.class.isAssignableFrom(item.getIntentClass())) {
-						activity.overridePendingTransition(0, android.R.anim.fade_out);
-					}
+					activity.overridePendingTransition(0, android.R.anim.fade_out);
 				}
 
 			}

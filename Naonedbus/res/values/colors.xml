@@ -32,6 +32,8 @@
     <color name="map_pane_text_color">#000000</color>
     <color name="holo_blue_light">#ff2F93C5</color>
     <color name="holo_blue_dark">#ff70AFCE</color>
+    <color name="message_service_header">#2F93C5</color>
+    <color name="message_tan_header">#358243</color>
 
     <!-- PagerHeader -->
     <color name="pager_header_background_color">#ff333333</color>

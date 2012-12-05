@@ -2,7 +2,7 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.SlidingSherlockPreferenceActivity;
+import net.naonedbus.helper.SlidingMenuHelper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -12,21 +12,31 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceManager;
 
-import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.slidingmenu.lib.SlidingMenu;
 
-public class SettingsActivity extends SlidingSherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
+public class SettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	private ListPreference theme;
 
+	/**
+	 * Gestion du menu latéral.
+	 */
+	private SlidingMenu mSlidingMenu;
+	private SlidingMenuHelper mSlidingMenuHelper;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(NBApplication.THEME);
+		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 
 		super.onCreate(savedInstanceState);
 
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.actionbar_back));
-		actionBar.setIcon(R.drawable.ic_launcher);
+		mSlidingMenu = new SlidingMenu(this);
+		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
+		mSlidingMenuHelper.setupSlidingMenu(mSlidingMenu);
 
 		addPreferencesFromResource(R.xml.preferences);
 
@@ -36,6 +46,26 @@ public class SettingsActivity extends SlidingSherlockPreferenceActivity implemen
 
 		theme = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_THEME);
 		initTheme(preferences);
+	}
+
+	@Override
+	public void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		mSlidingMenuHelper.onPostCreate(getIntent(), mSlidingMenu, savedInstanceState);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		mSlidingMenuHelper.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus) {
+			mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
+		}
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package net.naonedbus.activity.impl;
 
 import java.text.DateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
@@ -32,11 +34,18 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		commentaire
 	};
 
+	private static final Map<String, Integer> sourceTitle = new HashMap<String, Integer>();
+	static {
+		sourceTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
+		sourceTitle.put(NaonedbusClient.SIMPLETAN.name(), R.string.source_simpletan);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_twitter);
+		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
+	}
+
 	private SlidingMenuHelper slidingMenuHelper;
 
 	private TextView itemTitle;
 	private TextView itemSubTitle;
-	private TextView ligneCode;
 	private ImageView ligneCodeBackground;
 
 	private Commentaire commentaire;
@@ -77,23 +86,19 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		itemDate.setText(dateFormat.format(commentaire.getTimestamp()) + " "
 				+ timeFormat.format(commentaire.getTimestamp()));
 
-		// itemSource.setText(getString(R.string.source_prefix) + " "
-		// +
-		// getString(TimeLineConverter.getSourceTitle(commentaire.getSource())));
+		itemSource.setText(getString(R.string.source, getString(sourceTitle.get(commentaire.getSource()))));
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(commentaire.getSource())) {
 
-			ligneCodeBackground.setBackgroundDrawable(getResources().getDrawable(R.drawable.logo_tan));
-			ligneCodeBackground.setVisibility(View.VISIBLE);
-			ligneCode.setVisibility(View.GONE);
+			itemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.logo_tan, 0, 0, 0);
 			setPageTitle(getString(R.string.commentaire_tan_info_trafic));
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(commentaire.getSource())) {
 
-			ligneCodeBackground.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_launcher));
-			ligneCodeBackground.setVisibility(View.VISIBLE);
-			ligneCode.setVisibility(View.GONE);
+			itemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_launcher, 0, 0, 0);
 			setPageTitle(getString(R.string.commentaire_message_service));
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header));
 
 		} else {
 
@@ -175,12 +180,16 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 	@SuppressWarnings("deprecation")
 	public void setLineColor(int color, String codeLigne) {
+		setHeaderBackgroundColor(color);
+		this.itemLigneCode.setText(codeLigne);
+	}
+
+	private void setHeaderBackgroundColor(int color) {
 		final int textColor = ColorUtils.isLightColor(color) ? Color.BLACK : Color.WHITE;
 
 		this.header.setBackgroundDrawable(ColorUtils.getGradiant(color));
-		this.itemLigneCode.setText(codeLigne);
-
 		this.itemLigneCode.setTextColor(textColor);
+
 		this.itemSubTitle.setTextColor(textColor);
 		this.itemTitle.setTextColor(textColor);
 	}
