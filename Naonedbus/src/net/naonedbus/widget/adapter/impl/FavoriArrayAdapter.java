@@ -6,6 +6,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
+import net.naonedbus.utils.SymbolesUtils;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -65,10 +66,10 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 
 		if (item.nomFavori == null) {
 			holder.itemTitle.setText(item.nomArret);
-			holder.itemDescription.setText("\u2192 " + item.nomSens);
+			holder.itemDescription.setText(SymbolesUtils.formatSens(item.nomSens));
 		} else {
 			holder.itemTitle.setText(item.nomFavori);
-			holder.itemDescription.setText(item.nomArret + " \u2192 " + item.nomSens);
+			holder.itemDescription.setText(SymbolesUtils.formatArretSens(item.nomArret, item.nomSens));
 		}
 
 		if (item.delay == null) {

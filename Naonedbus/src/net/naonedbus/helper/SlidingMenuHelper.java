@@ -10,13 +10,14 @@ import net.naonedbus.activity.impl.InfosTraficActivity;
 import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParkingsActivity;
-import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.utils.DpiUtils;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.indexer.impl.MainMenuIndexer;
+import net.naonedbus.widget.item.impl.LinkMainMenuItem;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
@@ -47,11 +48,13 @@ public class SlidingMenuHelper {
 		menuItems = new ArrayList<MainMenuItem>();
 		menuItems.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_menu_home, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_menu_notifications, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_itineraires, AboutActivity.class, R.drawable.ic_menu_directions, 0));
+//		menuItems.add(new MainMenuItem(R.string.menu_itineraires, AboutActivity.class, R.drawable.ic_menu_directions, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_menu_parking, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_menu_goto, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_menu_mapmode, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_menu_manage, 1));
+//		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_menu_manage, 1));
+		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_menu_star, 1));
+		menuItems.add(new LinkMainMenuItem(R.string.menu_bug, "http://code.google.com/p/naonedbus/issues/entry", R.drawable.ic_menu_emoticons, 1));
 		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_menu_info_details, 1));
 		// @formatter:on
 	}
@@ -141,16 +144,23 @@ public class SlidingMenuHelper {
 
 				final MainMenuItem item = (MainMenuItem) menuListView.getItemAtPosition(position);
 
-				if (activity.getClass().equals(item.getIntentClass())) {
-					// Même activité
-					slidingMenu.showMenu();
-					menuListView.setClickable(true);
-				} else {
-					// Nouvelle activité
-					final Intent intent = new Intent(activity, item.getIntentClass());
-					intent.putExtra("fromMenu", true);
+				if (item instanceof LinkMainMenuItem) {
+					final LinkMainMenuItem linkItem = (LinkMainMenuItem) item;
+					final Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse(linkItem.getUrl()));
 					activity.startActivity(intent);
-					activity.overridePendingTransition(0, android.R.anim.fade_out);
+				} else {
+					if (activity.getClass().equals(item.getIntentClass())) {
+						// Même activité
+						slidingMenu.showMenu();
+						menuListView.setClickable(true);
+					} else {
+						// Nouvelle activité
+						final Intent intent = new Intent(activity, item.getIntentClass());
+						intent.putExtra("fromMenu", true);
+						activity.startActivity(intent);
+						activity.overridePendingTransition(0, android.R.anim.fade_out);
+					}
 				}
 
 			}

@@ -11,8 +11,10 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 
 public class SettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -63,9 +65,33 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		if (hasFocus) {
-			mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
+		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
+	}
+
+	/**
+	 * Show the menu when home icon is clicked.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			mSlidingMenu.toggle();
+			return true;
+		default:
 		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Show the menu when menu button pressed, hide it when back is pressed
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_MENU || (mSlidingMenu.isMenuShowing() && keyCode == KeyEvent.KEYCODE_BACK)) {
+			mSlidingMenu.toggle();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

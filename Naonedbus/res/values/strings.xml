@@ -41,6 +41,8 @@
     <string name="menu_equipements">Equipements</string>
     <string name="menu_carte">Carte</string>
     <string name="menu_parametres">Paramètres</string>
+    <string name="menu_don">Faire un don</string>
+    <string name="menu_bug">Signaler un bug</string>
     <string name="menu_about">A propos</string>
     <!-- Actions -->
     <string name="action_share">Partager</string>

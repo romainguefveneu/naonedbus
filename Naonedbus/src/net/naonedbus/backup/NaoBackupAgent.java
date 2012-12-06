@@ -1,13 +1,8 @@
 package net.naonedbus.backup;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import net.naonedbus.manager.impl.FavoriManager;
-
-import org.apache.commons.io.IOUtils;
-
 import android.annotation.TargetApi;
 import android.app.backup.BackupAgent;
 import android.app.backup.BackupDataInput;
@@ -19,6 +14,7 @@ import android.util.Log;
 public class NaoBackupAgent extends BackupAgent {
 
 	private static final String LOG_TAG = "NaoBackupAgent";
+	private static final String BACKUP_KEY = "favoris";
 
 	@Override
 	public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState)
@@ -29,34 +25,28 @@ public class NaoBackupAgent extends BackupAgent {
 
 		Log.i(LOG_TAG, "\t " + favoriJson);
 
-		FileOutputStream output = null;
-		try {
-			output = new FileOutputStream(newState.getFileDescriptor());
-			IOUtils.write(favoriJson, output);
-		} catch (IOException e) {
-			Log.e(LOG_TAG, "Erreur lors du backup", e);
-		} finally {
-			IOUtils.closeQuietly(output);
-		}
-
+		final byte[] favoriBytes = favoriJson.getBytes();
+		data.writeEntityHeader(BACKUP_KEY, favoriBytes.length);
+		data.writeEntityData(favoriBytes, favoriBytes.length);
 	}
 
 	@Override
 	public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) throws IOException {
-		Log.i(LOG_TAG, "Restoration en cours...");
+		Log.i(LOG_TAG, "Restauration en cours...");
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 
-		FileInputStream input = null;
-		try {
-			input = new FileInputStream(newState.getFileDescriptor());
-			final String favoriJson = IOUtils.toString(input);
-			Log.i(LOG_TAG, "\t" + favoriJson);
-			favoriManager.fromJson(getContentResolver(), favoriJson);
-		} catch (IOException e) {
-			Log.e(LOG_TAG, "Erreur lors de la restoration", e);
-		} finally {
-			IOUtils.closeQuietly(input);
+		while (data.readNextHeader()) {
+			if (data.getKey().equals(BACKUP_KEY)) {
+				final int dataSize = data.getDataSize();
+				final byte[] buffer = new byte[dataSize];
+				data.readEntityData(buffer, 0, dataSize);
+
+				final String favoriJson = new String(buffer);
+				favoriManager.fromJson(getContentResolver(), favoriJson);
+				Log.i(LOG_TAG, "\t" + favoriJson);
+			}
 		}
+
 	}
 
 }

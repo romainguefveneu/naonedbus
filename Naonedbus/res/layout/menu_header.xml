@@ -3,4 +3,5 @@
     style="@style/MenuSearch"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:enabled="false"
     android:inputType="text" />

@@ -6,6 +6,7 @@ import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -153,11 +154,11 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	}
 
 	/**
-	 * Show the menu when menu button pressed.
+	 * Show the menu when menu button pressed, hide it when back is pressed
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU) {
+		if (keyCode == KeyEvent.KEYCODE_MENU || (mSlidingMenu.isMenuShowing() && keyCode == KeyEvent.KEYCODE_BACK)) {
 			mSlidingMenu.toggle();
 			return true;
 		}
