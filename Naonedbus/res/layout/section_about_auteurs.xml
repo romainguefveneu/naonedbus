@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <TextView
+        style="@style/SectionTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_autors_title" />
+
+    <RelativeLayout
+        android:id="@id/aboutTwitterRomain"
+        style="@style/SectionContentItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/avatarRomain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dip"
+            android:src="@drawable/romain" />
+
+        <TextView
+            android:id="@+id/titleRomain"
+            style="@style/ItemPrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/avatarRomain"
+            android:text="@string/about_autors_content_romain" />
+
+        <TextView
+            style="@style/ItemSecondaryText.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleRomain"
+            android:layout_toRightOf="@id/avatarRomain"
+            android:text="@string/about_autors_content_romain_twitter" />
+    </RelativeLayout>
+
+    <View
+        android:id="@id/headerDivider"
+        style="@style/Divider" />
+
+    <RelativeLayout
+        android:id="@id/aboutTwitterBenoit"
+        style="@style/SectionContentItem"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/avatarBenoit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dip"
+            android:src="@drawable/benoit" />
+
+        <TextView
+            android:id="@+id/titleBenoit"
+            style="@style/ItemPrimaryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/avatarBenoit"
+            android:text="@string/about_autors_content_benoit" />
+
+        <TextView
+            style="@style/ItemSecondaryText.SingleLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleBenoit"
+            android:layout_toRightOf="@id/avatarBenoit"
+            android:text="@string/about_autors_content_benoit_twitter" />
+    </RelativeLayout>
+
+</merge>

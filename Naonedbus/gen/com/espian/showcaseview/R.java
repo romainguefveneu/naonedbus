@@ -26,11 +26,11 @@ public final class R {
 		public static final int[] ShowcaseView = { 0x7f01001f };
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f0200c9;
-		public static final int cling_button_bg = 0x7f020081;
-		public static final int cling = 0x7f020080;
-		public static final int btn_cling_normal = 0x7f02007d;
-		public static final int btn_cling_pressed = 0x7f02007e;
+		public static final int ic_launcher = 0x7f0200cb;
+		public static final int cling_button_bg = 0x7f020082;
+		public static final int cling = 0x7f020081;
+		public static final int btn_cling_normal = 0x7f02007e;
+		public static final int btn_cling_pressed = 0x7f02007f;
 	}
 	public static final class attr {
 		public static final int backgroundColor = 0x7f01001f;

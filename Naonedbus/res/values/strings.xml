@@ -31,8 +31,10 @@
     <string name="title_activity_equipements">Equipements</string>
     <string name="title_activity_parkings">Parkings</string>
     <string name="title_activity_commentaire">Commentaire</string>
+    <string name="title_activity_actu">Actualité</string>
     <string name="title_activity_parametres">Paramètres</string>
     <string name="title_activity_horaires">Horaires</string>
+    <string name="title_activity_about">A propos</string>
     <!-- Slide menu -->
     <string name="menu_accueil">Accueil</string>
     <string name="menu_info_trafic">Infos trafic</string>
@@ -87,12 +89,21 @@
     <string name="title_fragment_about">A propos</string>
     <string name="title_fragment_versions">Nouveautés</string>
     <string name="about_autors_title">Auteurs</string>
-    <string name="about_autors_content"><![CDATA[Romain Guefveneu <br />Benoît Cotinat]]></string>
+    <string name="about_autors_content_romain">Romain Guefveneu</string>
+    <string name="about_autors_content_romain_twitter">\@romainguefveneu &#8599;</string>
+    <string name="about_autors_content_benoit">Benoît Cotinat</string>
+    <string name="about_autors_content_benoit_twitter">\@benoitcotinat &#8599;</string>
+    <string name="about_com_title">Communiquons</string>
+    <string name="about_com_twitter">Twitter</string>
+    <string name="about_com_facebook">Facebook</string>
+    <string name="about_com_google_plus">Google+</string>
     <string name="about_info_title">Informations</string>
-    <string name="about_info_content"><![CDATA[<p>Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.</p><p>Les données sont celles disponibles sur les sites <a href="http://www.tan.fr">www.tan.fr</a> et <a href="http://data.nantes.fr">data.nantes.fr</a></p> <p>Pour tout problème, merci de le signaler par twitter ou bien par e-mail <a href="mailto:naonedbus@gmail.com">naonedbus@gmail.com</a>.</p>]]></string>
+    <string name="about_info_content">Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.\n\nLes données sont celles disponibles sur les sites www.tan.fr et data.nantes.fr</string>
     <string name="about_thanks_title">Remerciements</string>
+    <string name="about_thanks_content">Merci à Netapsys pour les moyens techniques mis à disposition.\n\nMerci à Sebastien(s), Pierre-Yves et Céline pour leur aide &amp; conseils.\n\nMerci à Cheewie pour sa vectorisation d\'icônes.\n\nMerci à Arzhel et Guillaume pour leur don ;)\n\nEt bien sûr, merci aux utilisateurs !</string>
     <string name="about_licences_title">Licences</string>
-    <string name="about_licences_content"><![CDATA[Certaines icônes sont issues de <a href="http://thenounproject.com">The Noon Project.</a> : <a href="http://thenounproject.com/noun/information/#icon-No5949" target="_blank">Information</a> designed by <a href="http://thenounproject.com/mimosa.cb" target="_blank">Christopher T. Howlett</a> from The Noun Project]]></string>
+    <string name="about_licences_libs">Librairies</string>
+    <string name="about_licences_icons">Icones</string>
     <!-- Tan -->
     <string name="title_fragment_sens">Sens</string>
     <string name="title_fragment_horaires">Horaires</string>

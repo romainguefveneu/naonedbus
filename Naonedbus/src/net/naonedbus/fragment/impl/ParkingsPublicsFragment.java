@@ -71,13 +71,13 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 		// Initaliser le comparator avec la position actuelle.
 		locationListener.onLocationChanged(myLocationProvider.getLastKnownLocation());
-		loadContent();
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		getListView().setDividerHeight(0);
+		loadContent();
 	}
 
 	@Override

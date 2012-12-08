@@ -10,8 +10,12 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import net.naonedbus.R;
+
+import org.apache.commons.io.IOUtils;
+
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
 import android.text.Html;
 import android.text.util.Linkify;
@@ -159,17 +163,15 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param fileFromAssets
 	 */
-	public static void showAssetIfNecessary(Context context, String fileFromAssets) {
-		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + fileFromAssets);
-
-		createDir(context);
-		if (!dataFile.exists()) {
-			try {
-				showHtml(context, convertStreamToString(context.getAssets().open(fileFromAssets)));
-				dataFile.createNewFile();
-			} catch (IOException e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
-			}
+	public static void showHtmlFromRaw(Context context, int fileId) {
+		String content;
+		try {
+			content = IOUtils.toString(context.getResources().openRawResource(fileId));
+			showHtml(context, content);
+		} catch (NotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

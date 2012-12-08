@@ -49,18 +49,15 @@
             android:text="@string/version_name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            style="@style/SectionTitle"
-            android:layout_width="fill_parent"
+        <include
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_autors_title" />
+            layout="@layout/section_about_auteurs" />
 
-        <TextView
-            android:id="@+id/autors"
-            style="@style/SectionContent"
-            android:layout_width="fill_parent"
+        <include
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/about_autors_content" />
+            layout="@layout/section_about_com" />
 
         <TextView
             style="@style/SectionTitle"
@@ -69,12 +66,11 @@
             android:text="@string/about_info_title" />
 
         <TextView
-            android:id="@+id/info"
             style="@style/SectionContent"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:linksClickable="true"
-            android:text="@string/about_licences_content" />
+            android:text="@string/about_info_content" />
 
         <TextView
             style="@style/SectionTitle"
@@ -83,18 +79,37 @@
             android:text="@string/about_thanks_title" />
 
         <TextView
+            style="@style/SectionContent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:linksClickable="true"
+            android:text="@string/about_thanks_content" />
+
+        <TextView
             style="@style/SectionTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_licences_title" />
 
         <TextView
-            android:id="@+id/licences"
-            style="@style/SectionContent"
+            android:id="@id/aboutLicenceLibs"
+            style="@style/SectionContentItem"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:linksClickable="true"
-            android:text="@string/about_licences_content" />
+            android:text="@string/about_licences_libs" />
+
+        <View
+            android:id="@id/headerDivider"
+            style="@style/Divider" />
+
+        <TextView
+            android:id="@id/aboutLicenceIcons"
+            style="@style/SectionContentItem"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:linksClickable="true"
+            android:text="@string/about_licences_icons" />
     </LinearLayout>
 
 </ScrollView>

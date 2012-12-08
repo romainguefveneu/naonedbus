@@ -59,6 +59,7 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
+import com.slidingmenu.lib.SlidingMenu;
 
 public class MapActivity extends SherlockMapActivity {
 
@@ -94,6 +95,12 @@ public class MapActivity extends SherlockMapActivity {
 
 	private Integer selectedItemId;
 	private TypeOverlayItem selectedItemType;
+
+	/**
+	 * Gestion du menu latéral.
+	 */
+	private SlidingMenu mSlidingMenu;
+	private SlidingMenuHelper mSlidingMenuHelper;
 
 	private MyLocationProvider myLocationProvider;
 
@@ -143,11 +150,16 @@ public class MapActivity extends SherlockMapActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-		//setBehindContentView(R.layout.menu);
-		slidingMenuHelper.setupActionBar(getSupportActionBar());
-//		slidingMenuHelper.setupSlidingMenu(getSlidingMenu());
+
+		mSlidingMenu = new SlidingMenu(this);
+		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
+		mSlidingMenuHelper.setupSlidingMenu(mSlidingMenu);
 
 		final Location location = myLocationProvider.getLastKnownLocation();
 
@@ -212,7 +224,7 @@ public class MapActivity extends SherlockMapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-//			toggle();
+			mSlidingMenu.toggle();
 			break;
 		case ACTION_LAYERS:
 			showOptions();
@@ -236,19 +248,19 @@ public class MapActivity extends SherlockMapActivity {
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-//		slidingMenuHelper.onPostCreate(getIntent(), getSlidingMenu(), savedInstanceState);
+		mSlidingMenuHelper.onPostCreate(getIntent(), mSlidingMenu, savedInstanceState);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		slidingMenuHelper.onSaveInstanceState(outState);
+		mSlidingMenuHelper.onSaveInstanceState(outState);
 	}
 
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-//		slidingMenuHelper.onWindowFocusChanged(hasFocus, getSlidingMenu());
+		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
 	}
 
 	@Override
@@ -270,12 +282,12 @@ public class MapActivity extends SherlockMapActivity {
 	}
 
 	/**
-	 * Show the menu when menu button pressed.
+	 * Show the menu when menu button pressed, hide it when back is pressed
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU) {
-//			toggle();
+		if (keyCode == KeyEvent.KEYCODE_MENU || (mSlidingMenu.isMenuShowing() && keyCode == KeyEvent.KEYCODE_BACK)) {
+			mSlidingMenu.toggle();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

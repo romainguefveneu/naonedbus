@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/SectionTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_com_title" />
+
+    <TextView
+        android:id="@id/aboutTwitter"
+        style="@style/SectionContentItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/twitter_account"
+        android:text="@string/about_com_twitter" />
+
+    <View
+        android:id="@id/headerDivider"
+        style="@style/Divider" />
+
+    <TextView
+        android:id="@id/aboutFacebook"
+        style="@style/SectionContentItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/facebook_account"
+        android:text="@string/about_com_facebook" />
+
+    <View
+        android:id="@id/headerDivider"
+        style="@style/Divider" />
+
+    <TextView
+        android:id="@id/aboutGooglePlus"
+        style="@style/SectionContentItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/plus_account"
+        android:text="@string/about_com_google_plus" />
+
+</LinearLayout>

@@ -53,9 +53,9 @@ public class SlidingMenuHelper {
 		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_menu_goto, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_menu_mapmode, 0));
 //		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_menu_manage, 1));
+		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_menu_info_details, 1));
 		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_menu_star, 1));
 		menuItems.add(new LinkMainMenuItem(R.string.menu_bug, "http://code.google.com/p/naonedbus/issues/entry", R.drawable.ic_menu_emoticons, 1));
-		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_menu_info_details, 1));
 		// @formatter:on
 	}
 
@@ -95,7 +95,7 @@ public class SlidingMenuHelper {
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					slidingMenu.showContent();
+					slidingMenu.showContent(false);
 				}
 			}, 500);
 		}
@@ -152,7 +152,7 @@ public class SlidingMenuHelper {
 				} else {
 					if (activity.getClass().equals(item.getIntentClass())) {
 						// Même activité
-						slidingMenu.showMenu();
+						slidingMenu.showContent();
 						menuListView.setClickable(true);
 					} else {
 						// Nouvelle activité
@@ -171,6 +171,5 @@ public class SlidingMenuHelper {
 	public void setupActionBar(ActionBar actionBar) {
 		actionBar.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.actionbar_back));
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
 	}
 }

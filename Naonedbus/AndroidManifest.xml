@@ -38,7 +38,7 @@
         </activity>
         <activity
             android:name=".activity.impl.AboutActivity"
-            android:label="@string/title_activity_main" />
+            android:label="@string/title_activity_about" />
         <activity
             android:name=".activity.impl.InfosTraficActivity"
             android:label="@string/title_activity_infos_trafic" />
@@ -59,7 +59,7 @@
             android:label="@string/title_activity_commentaire" />
         <activity
             android:name=".activity.impl.InfoTraficDetailActivity"
-            android:label="@string/title_activity_commentaire" />
+            android:label="@string/title_activity_actu" />
         <activity
             android:name=".activity.impl.SettingsActivity"
             android:label="@string/title_activity_parametres" />
