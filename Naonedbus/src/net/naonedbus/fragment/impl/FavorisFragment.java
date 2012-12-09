@@ -62,7 +62,7 @@ import com.google.gson.JsonSyntaxException;
 public class FavorisFragment extends CustomListFragment implements CustomFragmentActions, OnItemLongClickListener,
 		MyLocationListener, ActionMode.Callback {
 
-	private static final String LOG_TAG = FavorisFragment.class.getSimpleName();
+	private static final String LOG_TAG = "FavorisFragment";
 
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 	private static final Integer MIN_HOUR = 60;
@@ -91,6 +91,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private ListView mListView;
 	private SharedPreferences mSharedPreferences;
 	private int mCurrentSort = SORT_NOM;
+	private boolean mContentHasChanged = false;
 
 	/**
 	 * Action sur les favoris.
@@ -98,17 +99,20 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private OnActionListener onImportListener = new OnActionListener() {
 		@Override
 		public void onImport() {
-			refreshContent();
+			Log.d(LOG_TAG, "onImport");
+
+			if (isVisible())
+				refreshContent();
 		}
 
 		public void onAdd(Arret item) {
-			refreshContent();
+			Log.d(LOG_TAG, "onAdd : " + item);
+			mContentHasChanged = true;
 		};
 
 		public void onRemove(int id) {
-			final FavoriArrayAdapter adapter;
-			if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null)
-				adapter.notifyDataSetChanged();
+			Log.d(LOG_TAG, "onRemove : " + id);
+			mContentHasChanged = true;
 		};
 	};
 
@@ -243,15 +247,15 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	private boolean hasItemChecked() {
 		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
-		boolean hasCheckedElement = false;
-		for (int i = 0; i < checked.size() && !hasCheckedElement; i++) {
-			hasCheckedElement = checked.valueAt(i);
+		for (int i = 0; i < checked.size() - 1; i++) {
+			if (checked.valueAt(i))
+				return true;
 		}
-		return hasCheckedElement;
+		return false;
 	}
 
 	/**
-	 * Trier les parkings selon les préférences.
+	 * Trier les favoris selon les préférences.
 	 */
 	private void sort() {
 		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
@@ -324,25 +328,40 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onDestroy() {
+		Log.d(LOG_TAG, "onDestroy");
+
 		mFavoriManager.unsetActionListener();
 		super.onDestroy();
 	}
 
 	@Override
 	public void onStop() {
+		Log.d(LOG_TAG, "onStop");
+
 		mLocationProvider.removeListener(this);
 		super.onStart();
 	}
 
 	@Override
 	public void onResume() {
+		Log.d(LOG_TAG, "onResume");
 		super.onResume();
+
 		getActivity().registerReceiver(intentReceiver, intentFilter);
-		loadHorairesFavoris();
+
+		if (mContentHasChanged) {
+			refreshContent();
+		} else {
+			loadHorairesFavoris();
+		}
+
 	}
 
 	@Override
 	public void onPause() {
+		Log.d(LOG_TAG, "onPause");
+
+		mContentHasChanged = false;
 		getActivity().unregisterReceiver(intentReceiver);
 		super.onPause();
 	}
@@ -360,7 +379,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		Log.d(LOG_TAG, "onListItemClick " + mActionMode);
 		if (mActionMode == null) {
+			mListView.setItemChecked(position, false);
 			final Favori item = (Favori) l.getItemAtPosition(position);
 			final ParamIntent intent = new ParamIntent(getActivity(), HoraireActivity.class);
 			intent.putExtra(HoraireActivity.Param.idArret, item._id);
@@ -379,6 +400,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+		Log.d(LOG_TAG, "loadContent");
+
 		final HoraireManager horaireManager = HoraireManager.getInstance();
 		final DateMidnight today = new DateMidnight();
 
@@ -408,6 +431,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	protected void onPostExecute() {
+		Log.d(LOG_TAG, "onPostExecute");
+
 		loadHorairesFavoris();
 	}
 
@@ -579,9 +604,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mActionMode = null;
 		mListView.clearChoices();
 
-		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
 		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
-		adapter.setCheckedItemPositions(checkedPositions);
+		adapter.clearCheckedItemPositions();
 		adapter.notifyDataSetChanged();
 	}
 

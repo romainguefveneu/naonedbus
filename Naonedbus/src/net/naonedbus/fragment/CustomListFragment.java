@@ -11,6 +11,7 @@ import net.naonedbus.widget.PinnedHeaderListView;
 import org.joda.time.DateTime;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -399,17 +400,32 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		final Exception exception = result.getException();
 
 		if (exception == null) {
-			if (result.getResult() == null || result.getResult().getCount() == 0) {
+
+			final ListAdapter adapter = result.getResult();
+			if (adapter == null || adapter.getCount() == 0) {
 				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
 			} else {
+				
+				adapter.registerDataSetObserver(new DataSetObserver() {
+					@Override
+					public void onChanged() {
+						super.onChanged();
+						onListAdapterChange(adapter);
+					}
+				});
+
 				setListAdapter(result.getResult());
+				
 				if (mListViewStatePosition != -1 && isAdded()) {
 					getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
 					mListViewStatePosition = -1;
 				}
+				
 				showContent();
 				resetNextUpdate();
+				
 			}
+
 		} else {
 			Log.e(getClass().getSimpleName(), "Erreur de chargement.", exception);
 
@@ -427,6 +443,20 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	@Override
 	public void onLoaderReset(Loader<AsyncResult<ListAdapter>> arg0) {
 
+	}
+
+	/**
+	 * Gestion du changement du contenu de l'adapter : affichage ou non du
+	 * message comme quoi la liste est vide.
+	 * 
+	 * @param adapter
+	 */
+	public void onListAdapterChange(ListAdapter adapter) {
+		if (adapter == null || adapter.getCount() == 0) {
+			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
+		} else {
+			showContent();
+		}
 	}
 
 }

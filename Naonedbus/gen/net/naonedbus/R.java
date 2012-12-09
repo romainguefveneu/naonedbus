@@ -1144,10 +1144,10 @@ containing a value of this type.
         public static final int abs__bright_foreground_inverse_holo_dark=0x7f080018;
         public static final int abs__bright_foreground_inverse_holo_light=0x7f080019;
         public static final int abs__holo_blue_light=0x7f08001a;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f080038;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f080039;
-        public static final int abs__primary_text_holo_dark=0x7f08003a;
-        public static final int abs__primary_text_holo_light=0x7f08003b;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f080039;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f08003a;
+        public static final int abs__primary_text_holo_dark=0x7f08003b;
+        public static final int abs__primary_text_holo_light=0x7f08003c;
         public static final int activity_background_light=0x7f08001c;
         public static final int backgroundColor=0x7f08001b;
         public static final int default_circle_indicator_fill_color=0x7f080008;
@@ -1164,41 +1164,42 @@ containing a value of this type.
         public static final int holo_blue_bright=0x7f080011;
         public static final int holo_blue_dark=0x7f080025;
         public static final int holo_blue_light=0x7f080024;
-        public static final int item_disabled_text_dark=0x7f08003c;
-        public static final int item_disabled_text_light=0x7f08003d;
-        public static final int item_primary_text_dark=0x7f08003e;
-        public static final int item_primary_text_light=0x7f08003f;
-        public static final int item_secondary_text_dark=0x7f080040;
-        public static final int item_secondary_text_light=0x7f080041;
+        public static final int holo_blue_selected=0x7f080026;
+        public static final int item_disabled_text_dark=0x7f08003d;
+        public static final int item_disabled_text_light=0x7f08003e;
+        public static final int item_primary_text_dark=0x7f08003f;
+        public static final int item_primary_text_light=0x7f080040;
+        public static final int item_secondary_text_dark=0x7f080041;
+        public static final int item_secondary_text_light=0x7f080042;
         public static final int map_pane_text_color=0x7f080023;
         /**  Map 
          */
-        public static final int map_pin_arret=0x7f080032;
+        public static final int map_pin_arret=0x7f080033;
         /**  #1D72F9 
          */
-        public static final int map_pin_bicloo=0x7f080034;
-        public static final int map_pin_covoiturage=0x7f080036;
-        public static final int map_pin_lila=0x7f080037;
-        public static final int map_pin_marguerite=0x7f080035;
-        public static final int map_pin_parking=0x7f080033;
+        public static final int map_pin_bicloo=0x7f080035;
+        public static final int map_pin_covoiturage=0x7f080037;
+        public static final int map_pin_lila=0x7f080038;
+        public static final int map_pin_marguerite=0x7f080036;
+        public static final int map_pin_parking=0x7f080034;
         public static final int menu_background=0x7f080020;
         public static final int menu_divider=0x7f08001f;
-        public static final int message_service_header=0x7f080026;
-        public static final int message_tan_header=0x7f080027;
-        public static final int pager_header_active_text_color=0x7f080029;
+        public static final int message_service_header=0x7f080027;
+        public static final int message_tan_header=0x7f080028;
+        public static final int pager_header_active_text_color=0x7f08002a;
         /**  PagerHeader 
          */
-        public static final int pager_header_background_color=0x7f080028;
-        public static final int pager_header_inactive_text_color=0x7f08002a;
-        public static final int pager_header_line_color=0x7f08002b;
+        public static final int pager_header_background_color=0x7f080029;
+        public static final int pager_header_inactive_text_color=0x7f08002b;
+        public static final int pager_header_line_color=0x7f08002c;
         /**  Parkings 
          */
-        public static final int parking_state_blue=0x7f08002c;
-        public static final int parking_state_closed=0x7f08002f;
-        public static final int parking_state_orange=0x7f08002d;
-        public static final int parking_state_red=0x7f08002e;
-        public static final int parking_state_subscriber=0x7f080031;
-        public static final int parking_state_undefined=0x7f080030;
+        public static final int parking_state_blue=0x7f08002d;
+        public static final int parking_state_closed=0x7f080030;
+        public static final int parking_state_orange=0x7f08002e;
+        public static final int parking_state_red=0x7f08002f;
+        public static final int parking_state_subscriber=0x7f080032;
+        public static final int parking_state_undefined=0x7f080031;
         public static final int pinned_header_menu_background=0x7f08001d;
         public static final int pinned_header_menu_text=0x7f08001e;
         public static final int vpi__background_holo_dark=0x7f080000;
@@ -1209,8 +1210,8 @@ containing a value of this type.
         public static final int vpi__bright_foreground_holo_light=0x7f080003;
         public static final int vpi__bright_foreground_inverse_holo_dark=0x7f080006;
         public static final int vpi__bright_foreground_inverse_holo_light=0x7f080007;
-        public static final int vpi__dark_theme=0x7f080042;
-        public static final int vpi__light_theme=0x7f080043;
+        public static final int vpi__dark_theme=0x7f080043;
+        public static final int vpi__light_theme=0x7f080044;
     }
     public static final class dimen {
         /**  Default height of an action bar. 

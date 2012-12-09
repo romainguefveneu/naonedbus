@@ -47,7 +47,7 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			if (this.checkedItemPositions.get(position)) {
-				view.setBackgroundResource(R.color.holo_blue_dark);
+				view.setBackgroundResource(R.color.holo_blue_selected);
 			} else {
 				view.setBackgroundResource(android.R.color.transparent);
 			}
@@ -96,6 +96,10 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 
 	public void setCheckedItemPositions(SparseBooleanArray checkedItemPositions) {
 		this.checkedItemPositions = checkedItemPositions;
+	}
+
+	public void clearCheckedItemPositions() {
+		this.checkedItemPositions.clear();
 	}
 
 	private static class ViewHolder {

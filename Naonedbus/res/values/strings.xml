@@ -80,7 +80,7 @@
     <string name="error_summary">Merci de réessayer !</string>
     <string name="error_summary_network">Vérifiez votre connexion et réessayez</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
-    <string name="error_summary_empty_favori">Glissez vers l\'écran de gauche pour naviguer entre les lignes.</string>
+    <string name="error_summary_empty_favori"></string>
     <!-- Accueil -->
     <string name="title_fragment_lignes">Lignes</string>
     <string name="title_fragment_favoris">Favoris</string>

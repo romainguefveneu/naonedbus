@@ -76,7 +76,7 @@ public class LigneProvider extends ReadOnlyContentProvider {
 		queryBuilder.setTables(LigneTable.TABLE_NAME);
 
 		if (sortOrder == null) {
-			sortOrder = "type, CAST(" + LigneTable.CODE + " as numeric)";
+			sortOrder = "type, CAST(" + LigneTable.LETTRE + " as numeric)";
 		}
 
 		int uriType = URI_MATCHER.match(uri);

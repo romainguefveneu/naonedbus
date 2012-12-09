@@ -160,14 +160,14 @@ public final class R {
 		public static final int abs__bright_foreground_holo_light = 0x7f080015;
 		public static final int abs__bright_foreground_holo_dark = 0x7f080014;
 		public static final int abs__bright_foreground_disabled_holo_light = 0x7f080017;
-		public static final int abs__primary_text_disable_only_holo_dark = 0x7f080038;
+		public static final int abs__primary_text_disable_only_holo_dark = 0x7f080039;
 		public static final int abs__bright_foreground_inverse_holo_dark = 0x7f080018;
 		public static final int abs__background_holo_dark = 0x7f080012;
-		public static final int abs__primary_text_disable_only_holo_light = 0x7f080039;
+		public static final int abs__primary_text_disable_only_holo_light = 0x7f08003a;
 		public static final int abs__background_holo_light = 0x7f080013;
 		public static final int abs__bright_foreground_disabled_holo_dark = 0x7f080016;
-		public static final int abs__primary_text_holo_dark = 0x7f08003a;
-		public static final int abs__primary_text_holo_light = 0x7f08003b;
+		public static final int abs__primary_text_holo_dark = 0x7f08003b;
+		public static final int abs__primary_text_holo_light = 0x7f08003c;
 	}
 	public static final class string {
 		public static final int abs__action_bar_up_description = 0x7f0d0002;
