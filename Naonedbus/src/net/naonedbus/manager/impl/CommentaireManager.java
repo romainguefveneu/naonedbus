@@ -24,7 +24,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import net.naonedbus.bean.Commentaire;
@@ -38,6 +37,7 @@ import android.content.Context;
 
 import com.bugsense.trace.BugSenseHandler;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 public class CommentaireManager {
@@ -68,6 +68,9 @@ public class CommentaireManager {
 				data = gson.fromJson(br, type);
 			} catch (IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la lecture du cache timeline.", null, e);
+				cacheFile.delete();
+			} catch (JsonSyntaxException e) {
+				cacheFile.delete();
 			} finally {
 				IOUtils.closeQuietly(br);
 			}

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.InfoTraficDetailActivity;
 import net.naonedbus.bean.EmptyInfoTrafic;
@@ -23,10 +26,6 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
 public class TanActuFragment extends CustomListFragment {
 
 	public TanActuFragment() {
@@ -42,12 +41,6 @@ public class TanActuFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_en_direct, menu);
-	}
-
-	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		final InfoTrafic item = (InfoTrafic) getListAdapter().getItem(position);
@@ -55,6 +48,10 @@ public class TanActuFragment extends CustomListFragment {
 		final ParamIntent intent = new ParamIntent(getActivity(), InfoTraficDetailActivity.class);
 		intent.putExtra(InfoTraficDetailActivity.Param.codeInfoTrafic, item.getCode());
 		startActivity(intent);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu) {
 	}
 
 	@Override
@@ -106,4 +103,5 @@ public class TanActuFragment extends CustomListFragment {
 		}
 		return result;
 	}
+
 }

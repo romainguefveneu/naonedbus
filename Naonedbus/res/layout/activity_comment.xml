@@ -60,10 +60,10 @@
 
             <FrameLayout
                 android:id="@id/commentaireLigneSpinner"
-                style="?android:attr/dropDownSpinnerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill|bottom"
+                android:background="@drawable/spinner_background_holo_light"
                 android:paddingRight="18dip" >
 
                 <TextView
@@ -76,11 +76,11 @@
 
             <TextView
                 android:id="@id/commentaireSens"
-                style="?android:attr/dropDownSpinnerStyle"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill|bottom"
                 android:layout_weight="1"
+                android:background="@drawable/spinner_background_holo_light"
                 android:ellipsize="end"
                 android:enabled="false"
                 android:gravity="center_vertical"
@@ -89,11 +89,11 @@
 
             <TextView
                 android:id="@id/commentaireArret"
-                style="?android:attr/dropDownSpinnerStyle"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
                 android:layout_gravity="fill|bottom"
                 android:layout_weight="1"
+                android:background="@drawable/spinner_background_holo_light"
                 android:ellipsize="end"
                 android:enabled="false"
                 android:gravity="center_vertical"

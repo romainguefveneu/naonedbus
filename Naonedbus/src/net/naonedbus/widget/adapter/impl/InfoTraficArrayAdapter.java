@@ -24,7 +24,6 @@ import net.naonedbus.R;
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.helper.DateTimeFormatHelper;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,11 +81,11 @@ public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 			holder.description.setText("Texte Vocal : \u00AB " + item.getTexteVocal() + " \u00BB");
 		}
 
-//		if (isCurrent(item)) {
-//			holder.zoneTitle.setBackgroundDrawable(icoInfoTraficCurrent);
-//		} else {
-//			holder.zoneTitle.setBackgroundDrawable(null);
-//		}
+		// if (isCurrent(item)) {
+		// holder.zoneTitle.setBackgroundDrawable(icoInfoTraficCurrent);
+		// } else {
+		// holder.zoneTitle.setBackgroundDrawable(null);
+		// }
 
 		holder.date.setText(dateTimeFormatHelper.formatDuree(item.getDateDebut(), item.getDateFin()));
 

@@ -15,8 +15,12 @@
 		    <filter token="privatekey.mod" value="${privatekey.mod}"/>
 		    <filter token="privatekey.exp" value="${privatekey.exp}"/>
 		    <filter token="git.revision" value="${git.revision}"/>
+		    <filter token="serveur.url" value="${serveur.url}"/>
 		</filterset>
 		<copy file="ant-templates/keys.xml" todir="./res/values/" overwrite="true" encoding="utf-8">
+			<filterset refid="build-tokens" />
+		</copy>
+		<copy file="ant-templates/RestConfiguration.java" todir="./src/net/naonedbus/rest/controller/" overwrite="true" encoding="utf-8">
 			<filterset refid="build-tokens" />
 		</copy>
 	</target>
@@ -29,8 +33,14 @@
 		<property file="./ant-profiles/release.properties" />
 	</target>
 
+	<target name="read-alpha-properties">
+		<property file="./ant-profiles/alpha.properties" />
+	</target>
+	
 	<target name="make-debug" depends="read-debug-properties,process-template"/>
 
 	<target name="make-release" depends="read-release-properties,process-template"/>
+	
+	<target name="make-alpha" depends="read-alpha-properties,process-template"/>
 
 </project>

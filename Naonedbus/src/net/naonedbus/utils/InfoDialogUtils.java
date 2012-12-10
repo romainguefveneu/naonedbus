@@ -73,6 +73,7 @@ public abstract class InfoDialogUtils {
 		textView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		textView.setScrollbarFadingEnabled(true);
 		textView.setText(Html.fromHtml(context.getString(messageId)));
+		textView.setTextColor(context.getResources().getColor(R.color.item_primary_text_dark));
 		textView.setGravity(Gravity.CENTER_VERTICAL);
 		scrollView.addView(textView);
 

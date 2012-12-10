@@ -27,9 +27,7 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.adapter.SectionAdapter;
 import android.content.Context;
-import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
@@ -37,20 +35,11 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 	static class ViewHolder {
 		TextView itemTitle;
 		TextView itemDate;
-		ImageView itemSymbole;
+		View itemSymbole;
 	}
-
-	private SparseArray<Integer> mTraficImages;
-
-	private static final int ETAT_TRAFIC_OK = 1;
-	private static final int ETAT_TRAFIC_PERTURBATION = 2;
 
 	public InfoTraficLigneArrayAdapter(Context context, List<InfoTrafic> objects) {
 		super(context, R.layout.list_item_trafic_ligne, objects);
-
-		mTraficImages = new SparseArray<Integer>();
-		mTraficImages.put(ETAT_TRAFIC_OK, R.drawable.trafic_ok);
-		mTraficImages.put(ETAT_TRAFIC_PERTURBATION, R.drawable.trafic_perturbation);
 	}
 
 	@Override
@@ -71,17 +60,12 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 
 			holder.itemTitle.setText(item.getIntitule());
 			holder.itemDate.setText(item.getDateFormated());
-			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
-			if (ColorUtils.isLightColor(ligne.couleurBackground)) {
-				holder.itemSymbole.setImageResource(R.drawable.infotrafic);
-			} else {
-				holder.itemSymbole.setImageResource(R.drawable.infotrafic_white);
-			}
+			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
 
 			if (isCurrent(item)) {
-				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.trafic_perturbation, 0, 0, 0);
+				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.info_trafic_on, 0, 0, 0);
 			} else {
-				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.trafic_unknown, 0, 0, 0);
+				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.info_trafic_off, 0, 0, 0);
 			}
 
 			view.setEnabled(false);
@@ -97,7 +81,7 @@ public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
 		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDate = (TextView) view.findViewById(R.id.itemDate);
-		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
+		holder.itemSymbole = view.findViewById(R.id.itemSymbole);
 
 		view.setTag(holder);
 	}
