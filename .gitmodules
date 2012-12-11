@@ -10,3 +10,6 @@
 [submodule "Android-ViewPagerIndicator"]
 	path = Android-ViewPagerIndicator
 	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git
+[submodule "GridLayout"]
+	path = GridLayout
+	url = https://github.com/dlew/android-gridlayout.git

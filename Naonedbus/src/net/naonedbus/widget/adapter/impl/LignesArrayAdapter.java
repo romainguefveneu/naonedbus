@@ -44,10 +44,15 @@ public class LignesArrayAdapter extends SectionAdapter<Ligne> {
 	}
 
 	private final Typeface robotoLight;
+	private boolean mHideDivider;
 
 	public LignesArrayAdapter(Context context, List<Ligne> lignes) {
 		super(context, R.layout.list_item_ligne, lignes);
 		robotoLight = FontUtils.getRobotoLight(context);
+	}
+
+	public void setHideDivider(boolean hide) {
+		mHideDivider = hide;
 	}
 
 	@Override
@@ -61,13 +66,17 @@ public class LignesArrayAdapter extends SectionAdapter<Ligne> {
 		} else {
 			holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
 		}
-		if ((ligne.depuis == null || ligne.depuis.length() == 0)) {
+		if ((ligne.depuis == null || ligne.depuis.length() == 0 || ligne.depuis.equals(ligne.vers))) {
 			holder.sens1.setText(ligne.nom);
 			holder.sens2.setVisibility(View.GONE);
 		} else {
 			holder.sens1.setText(ligne.depuis);
 			holder.sens2.setText(ligne.vers);
 			holder.sens2.setVisibility(View.VISIBLE);
+		}
+
+		if (mHideDivider) {
+			view.findViewById(R.id.headerDivider).setVisibility(View.GONE);
 		}
 	}
 

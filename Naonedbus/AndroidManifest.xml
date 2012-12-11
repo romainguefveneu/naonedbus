@@ -47,6 +47,7 @@
         <activity android:name=".activity.impl.HoraireActivity" />
         <activity
             android:name=".activity.impl.CommentaireActivity"
+            android:label="@string/emptyString"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
         <activity
             android:name=".activity.impl.EquipementsActivity"

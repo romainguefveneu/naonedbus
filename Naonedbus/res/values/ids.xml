@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -35,7 +35,8 @@
     <item name="itemLignes" type="id"/>
     <item name="itemPerturbation" type="id"/>
     <item name="dotLocation" type="id"/>
-
+    <item name="ligneFrom" type="id"/>
+    <item name="ligneTo" type="id"/>
     <!-- Headers -->
     <item name="headerView" type="id"/>
     <item name="headerTitle" type="id"/>

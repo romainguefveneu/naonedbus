@@ -193,7 +193,9 @@ public class CommentaireActivity extends SherlockActivity {
 	private ListAdapter getLignesAdapter() {
 		final List<Ligne> lignes = ligneManager.getAll(getContentResolver());
 		lignes.add(0, allLignes);
-		return new LignesArrayAdapter(this, lignes);
+		final LignesArrayAdapter adapter = new LignesArrayAdapter(this, lignes);
+		adapter.setHideDivider(true);
+		return adapter;
 	}
 
 	private ListAdapter getSensAdapter(final String codeLigne) {

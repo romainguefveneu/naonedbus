@@ -1,35 +1,32 @@
 package net.naonedbus.fragment.impl;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.comparator.LigneLettreComparator;
 import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.manager.impl.InfoTraficManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.utils.ColorUtils;
-import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.gridlayout.GridLayout;
 
-public class InfoTraficDetailFragment extends CustomFragment implements LoaderCallbacks<AsyncResult<InfoTrafic>> {
+public class InfoTraficDetailFragment extends CustomFragment {
 
 	public static final String PARAM_ID_INFO_TRAFIC = "idInfoTrafic";
 
@@ -38,7 +35,7 @@ public class InfoTraficDetailFragment extends CustomFragment implements LoaderCa
 	private TextView itemTitle;
 	private TextView itemDescription;
 	private TextView itemTime;
-	private LinearLayout lignes;
+	private GridLayout lignes;
 	protected View fragmentView;
 
 	public InfoTraficDetailFragment() {
@@ -51,7 +48,14 @@ public class InfoTraficDetailFragment extends CustomFragment implements LoaderCa
 
 		mCodeInfoTrafic = getArguments().getString(PARAM_ID_INFO_TRAFIC);
 
-		getLoaderManager().initLoader(0, null, this);
+		final InfoTraficManager infoTraficManager = InfoTraficManager.getInstance();
+		try {
+			loadInfotrafic(infoTraficManager.getById(getActivity(), Integer.valueOf(mCodeInfoTrafic)));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -80,7 +84,7 @@ public class InfoTraficDetailFragment extends CustomFragment implements LoaderCa
 		itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		itemTime = (TextView) view.findViewById(R.id.itemTime);
 		itemTime.setTypeface(robotoLight);
-		lignes = (LinearLayout) view.findViewById(R.id.lignes);
+		lignes = (GridLayout) view.findViewById(R.id.lignes);
 	}
 
 	private void loadInfotrafic(final InfoTrafic infoTrafic) {
@@ -91,72 +95,23 @@ public class InfoTraficDetailFragment extends CustomFragment implements LoaderCa
 		itemDescription.setText(Html.fromHtml(infoTrafic.getResume()));
 		itemTime.setText(infoTrafic.getDateFormated());
 
-		final Set<String> lignesConcernees = infoTrafic.getLignes();
+		final List<String> lignesConcernees = new ArrayList<String>(infoTrafic.getLignes());
+		final List<Ligne> listLignes = new ArrayList<Ligne>();
+
 		for (final String codeLigne : lignesConcernees) {
 			final Ligne ligne = ligneManager.getSingle(getActivity().getContentResolver(), codeLigne);
-
 			if (ligne != null) {
-				final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, lignes, false);
-				textView.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
-				textView.setText(ligne.lettre);
-				textView.setTextColor(ligne.couleurTexte);
-
-				lignes.addView(textView);
+				listLignes.add(ligne);
 			}
 		}
-
-	}
-
-	@Override
-	public Loader<AsyncResult<InfoTrafic>> onCreateLoader(int arg0, Bundle arg1) {
-		final Loader<AsyncResult<InfoTrafic>> loader = new AsyncTaskLoader<AsyncResult<InfoTrafic>>(getActivity()) {
-			@Override
-			public AsyncResult<InfoTrafic> loadInBackground() {
-				return loadContent(getActivity());
-			}
-		};
-		showLoader();
-		loader.forceLoad();
-
-		return loader;
-	}
-
-	private AsyncResult<InfoTrafic> loadContent(Context context) {
-		final AsyncResult<InfoTrafic> result = new AsyncResult<InfoTrafic>();
-
-		try {
-			final InfoTraficManager infoTraficManager = InfoTraficManager.getInstance();
-			result.setResult(infoTraficManager.getById(getActivity(), Integer.valueOf(mCodeInfoTrafic)));
-		} catch (IOException e) {
-			result.setException(e);
+		Collections.sort(listLignes, new LigneLettreComparator());
+		for (Ligne l : listLignes) {
+			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, lignes, false);
+			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.couleurBackground));
+			textView.setText(l.lettre);
+			textView.setTextColor(l.couleurTexte);
+			lignes.addView(textView);
 		}
-
-		return result;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<AsyncResult<InfoTrafic>> loader, AsyncResult<InfoTrafic> result) {
-		final Exception exception = result.getException();
-
-		if (exception == null) {
-			showContent();
-			if (result.getResult() != null) {
-				loadInfotrafic(result.getResult());
-			}
-		} else {
-			Log.e(getClass().getSimpleName(), "Erreur de chargement.", exception);
-
-			// Erreur réseau ou interne ?
-			if (exception instanceof IOException) {
-				showMessage(R.string.error_title_network, R.string.error_summary_network, R.drawable.orage);
-			} else {
-				showError(R.string.error_title, R.string.error_summary);
-			}
-		}
-	}
-
-	@Override
-	public void onLoaderReset(Loader<AsyncResult<InfoTrafic>> arg0) {
 
 	}
 

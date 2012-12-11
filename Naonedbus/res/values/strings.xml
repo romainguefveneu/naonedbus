@@ -201,6 +201,10 @@
     <string name="msg_depart_min">dans %d min</string>
     <string name="msg_depart_heure">dans %d h</string>
 
+    <!-- Info trafic -->
+    <string name="lignes_concernees">Lignes concernées</string>
+    <string name="description">Description</string>
+    
     <!--  -->
     <!-- Hint -->
     <string name="hint_ajouter_commentaire">Que se passe-t-il sur le réseau Tan ?</string>

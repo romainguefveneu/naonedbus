@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultActivity" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultActivity"
+    android:padding="@dimen/padding_small" >
 
     <LinearLayout
-        android:id="@id/fragmentContent"
+        android:id="@id/ligneDialogHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/padding_small" >
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingLeft="@dimen/padding_small" >
 
-        <LinearLayout
-            android:id="@id/ligneDialogHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_small"
-            android:paddingLeft="@dimen/padding_small" >
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/BigTitle"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:text="title" />
 
-            <TextView
-                android:id="@id/itemTitle"
-                style="@style/BigTitle"
-                android:gravity="center_vertical"
-                android:maxLines="2"
-                android:singleLine="false"
-                android:text="title" />
+        <TextView
+            android:id="@id/itemTime"
+            style="@style/BigSubTitle.Small"
+            android:text="Subtitle" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@id/itemTime"
-                style="@style/BigSubTitle.Small"
-                android:text="Subtitle" />
-        </LinearLayout>
+    <LinearLayout
+        android:id="@id/colLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/ligneDialogHeader"
+        android:layout_marginRight="@dimen/padding_small"
+        android:layout_toLeftOf="@id/colRight"
+        android:orientation="vertical" >
 
         <TextView
             style="@style/SectionTitle"
@@ -51,6 +55,15 @@
                 android:paddingLeft="@dimen/padding_small"
                 android:paddingRight="@dimen/padding_small" />
         </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/colRight"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ligneDialogHeader"
+        android:orientation="vertical" >
 
         <TextView
             style="@style/SectionTitle"
@@ -65,9 +78,9 @@
             android:paddingLeft="@dimen/padding_small"
             android:paddingRight="@dimen/padding_small"
             gridlayout:alignmentMode="alignBounds"
-            gridlayout:columnCount="10"
+            gridlayout:columnCount="6"
             gridlayout:columnOrderPreserved="true"
             gridlayout:useDefaultMargins="false" />
     </LinearLayout>
 
-</FrameLayout>
+</RelativeLayout>
