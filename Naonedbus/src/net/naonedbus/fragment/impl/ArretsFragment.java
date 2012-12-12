@@ -233,7 +233,6 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 			mArrets.clear();
 			mArrets.addAll(arrets);
-			mAdapter.notifyDataSetChanged();
 
 			result.setResult(mAdapter);
 		} catch (Exception e) {
@@ -246,6 +245,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	protected void onPostExecute() {
 		sort();
 		loadDistances();
+		mAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -359,7 +359,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	public void onAddressTaskResult(String address) {
-		if (address.length() > 0) {
+		if (address != null && address.length() > 0) {
 			Toast.makeText(getActivity(), address, Toast.LENGTH_LONG).show();
 		}
 	}
