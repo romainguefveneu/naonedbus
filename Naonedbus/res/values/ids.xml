@@ -41,6 +41,9 @@
     <item name="headerView" type="id"/>
     <item name="headerTitle" type="id"/>
     <item name="headerDivider" type="id"/>
+    <item name="headerTitle" type="id"/>
+    <item name="headerSubTitle" type="id"/>
+    <item name="headerCode" type="id"/>
 
     <!-- Tutorial -->
     <item name="tutorialButton" type="id"/>

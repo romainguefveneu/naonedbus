@@ -71,11 +71,11 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		header = findViewById(R.id.ligneDialogHeader);
 
-		itemTitle = (TextView) findViewById(R.id.itemTitle);
+		itemTitle = (TextView) findViewById(R.id.headerTitle);
 		itemTitle.setTypeface(robotoLight);
-		itemSubTitle = (TextView) findViewById(R.id.itemSubTitle);
+		itemSubTitle = (TextView) findViewById(R.id.headerSubTitle);
 		itemSubTitle.setTypeface(robotoLight);
-		itemLigneCode = (TextView) findViewById(R.id.itemCode);
+		itemLigneCode = (TextView) findViewById(R.id.headerCode);
 		itemLigneCode.setTypeface(robotoLight);
 		itemDescription = (TextView) findViewById(R.id.itemDescription);
 		itemDate = (TextView) findViewById(R.id.itemDate);

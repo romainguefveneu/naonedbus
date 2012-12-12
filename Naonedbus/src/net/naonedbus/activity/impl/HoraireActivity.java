@@ -54,17 +54,17 @@ public class HoraireActivity extends OneFragmentActivity {
 		final View header = findViewById(R.id.ligneDialogHeader);
 		header.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
 
-		final TextView code = (TextView) findViewById(R.id.itemCode);
+		final TextView code = (TextView) findViewById(R.id.headerCode);
 		code.setText(ligne.lettre);
 		code.setTextColor(ligne.couleurTexte);
 		code.setTypeface(robotoLight);
 
-		final TextView title = (TextView) findViewById(R.id.itemTitle);
+		final TextView title = (TextView) findViewById(R.id.headerTitle);
 		title.setText(arret.nomArret);
 		title.setTextColor(ligne.couleurTexte);
 		title.setTypeface(robotoLight);
 
-		final TextView subTitle = (TextView) findViewById(R.id.itemSubTitle);
+		final TextView subTitle = (TextView) findViewById(R.id.headerSubTitle);
 		subTitle.setText(SymbolesUtils.formatSens(sens.text));
 		subTitle.setTextColor(ligne.couleurTexte);
 		subTitle.setTypeface(robotoLight);
