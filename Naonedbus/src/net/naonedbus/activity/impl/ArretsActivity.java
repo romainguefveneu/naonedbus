@@ -11,6 +11,7 @@ import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.impl.SensSpinnerAdapter;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -57,7 +58,8 @@ public class ArretsActivity extends OneFragmentActivity {
 			addFragment(ArretsFragment.class);
 		}
 
-		final Typeface robotoLight = Typeface.createFromAsset(this.getAssets(), "fonts/Roboto-Light.ttf");
+		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
+		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 
 		final Sens sens = sensManager.getSingle(this.getContentResolver(), idSens);
 		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), sens.codeLigne);
@@ -68,7 +70,7 @@ public class ArretsActivity extends OneFragmentActivity {
 		final TextView code = (TextView) findViewById(R.id.itemCode);
 		code.setText(ligne.lettre);
 		code.setTextColor(ligne.couleurTexte);
-		code.setTypeface(robotoLight);
+		code.setTypeface(robotoMedium);
 
 		final Spinner sensTitle = (Spinner) findViewById(R.id.itemTitle);
 		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, ligne.couleurTexte, robotoLight));

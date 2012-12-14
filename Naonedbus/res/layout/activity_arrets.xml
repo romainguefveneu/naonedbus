@@ -40,9 +40,8 @@
                 style="@style/BigCode"
                 android:layout_centerVertical="true"
                 android:paddingLeft="@dimen/padding_small"
-                android:paddingRight="@dimen/padding_small"
                 android:text="00"
-                android:textSize="50dip" />
+                android:textSize="50sp" />
 
             <Spinner
                 android:id="@id/itemTitle"

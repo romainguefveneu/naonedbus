@@ -11,6 +11,7 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.SymbolesUtils;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -41,8 +42,9 @@ public class HoraireActivity extends OneFragmentActivity {
 			addFragment(HorairesFragment.class, bundle);
 		}
 
-		final Typeface robotoLight = Typeface.createFromAsset(this.getAssets(), "fonts/Roboto-Light.ttf");
-
+		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
+		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
+		
 		final SensManager sensManager = SensManager.getInstance();
 		final LigneManager ligneManager = LigneManager.getInstance();
 		final ArretManager arretManager = ArretManager.getInstance();
@@ -57,7 +59,7 @@ public class HoraireActivity extends OneFragmentActivity {
 		final TextView code = (TextView) findViewById(R.id.headerCode);
 		code.setText(ligne.lettre);
 		code.setTextColor(ligne.couleurTexte);
-		code.setTypeface(robotoLight);
+		code.setTypeface(robotoMedium);
 
 		final TextView title = (TextView) findViewById(R.id.headerTitle);
 		title.setText(arret.nomArret);

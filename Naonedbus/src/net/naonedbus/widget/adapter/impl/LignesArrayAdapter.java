@@ -43,12 +43,12 @@ public class LignesArrayAdapter extends SectionAdapter<Ligne> {
 		TextView sens2;
 	}
 
-	private final Typeface robotoLight;
+	private final Typeface robotoMedium;
 	private boolean mHideDivider;
 
 	public LignesArrayAdapter(Context context, List<Ligne> lignes) {
 		super(context, R.layout.list_item_ligne, lignes);
-		robotoLight = FontUtils.getRobotoLight(context);
+		robotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	public void setHideDivider(boolean hide) {
@@ -87,7 +87,7 @@ public class LignesArrayAdapter extends SectionAdapter<Ligne> {
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
 		holder.sens2 = (TextView) view.findViewById(R.id.ligneTo);
-		holder.icon.setTypeface(robotoLight);
+		holder.icon.setTypeface(robotoMedium);
 
 		view.setTag(holder);
 	}

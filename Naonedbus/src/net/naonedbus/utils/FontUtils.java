@@ -9,4 +9,7 @@ public abstract class FontUtils {
 		return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
 	}
 
+	public static Typeface getRobotoMedium(final Context context) {
+		return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
+	}
 }

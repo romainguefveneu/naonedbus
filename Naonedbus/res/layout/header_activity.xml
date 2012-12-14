@@ -29,9 +29,8 @@
         style="@style/BigCode"
         android:layout_centerVertical="true"
         android:paddingLeft="@dimen/padding_small"
-        android:paddingRight="@dimen/padding_small"
         android:text="00"
-        android:textSize="50dip" />
+        android:textSize="50sp" />
 
     <TextView
         android:id="@id/headerSubTitle"
@@ -45,11 +44,12 @@
         android:paddingLeft="@dimen/padding_small"
         android:paddingRight="@dimen/padding_small"
         android:singleLine="true"
-        android:text="subTitle" />
+        android:text="AjkolpqrSt" />
 
     <TextView
         android:id="@id/headerTitle"
         style="@style/BigTitle"
+        android:layout_height="35dip"
         android:layout_above="@id/headerSubTitle"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
@@ -59,8 +59,7 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/padding_small"
-        android:paddingTop="5dip"
         android:singleLine="true"
-        android:text="Title" />
+        android:text="AjkolpqrSt" />
 
 </RelativeLayout>
