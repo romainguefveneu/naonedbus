@@ -79,6 +79,7 @@
     <item name="balloon_close" type="id"/>
     <item name="header" type="id"/>
     <item name="webView" type="id"/>
+    <item name="planView" type="id"/>
     <item name="contentView" type="id"/>
 
     <!-- Fragments -->

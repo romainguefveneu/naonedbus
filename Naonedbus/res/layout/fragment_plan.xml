@@ -20,6 +20,7 @@
  */
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:gesture-image="http://schemas.polites.com/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
@@ -49,10 +50,13 @@
             android:progress="0" />
     </LinearLayout>
 
-    <WebView
-        android:id="@id/webView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone" />
+    <com.polites.android.GestureImageView
+        android:id="@id/planView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        gesture-image:max-scale="3.0"
+        gesture-image:min-scale="0.5"
+        gesture-image:strict="false" />
 
 </RelativeLayout>

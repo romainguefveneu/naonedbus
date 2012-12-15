@@ -17,31 +17,30 @@ import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.manager.impl.LigneManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
+import com.polites.android.GestureImageView;
 
 public class PlanFragment extends CustomFragment {
 	public static final String PARAM_CODE_LIGNE = "codeLigne";
 
-	private static final String FILE_EXT = ".jpg";
-	private static final String URL = "http://naonedbus.romain-guefveneu.net/plans/L{ligne}" + FILE_EXT;
+	private static final String FILE_EXT = ".png";
+	private static final String URL = "http://naonedbus.romain-guefveneu.net/plans2/{ligne}" + FILE_EXT;
 
-	private WebView mWebView;
+	private GestureImageView mGestureView;
 	private ProgressBar mProgressBar;
-	private LinearLayout mLoaderView;
 	private LigneManager mLigneManager;
 	private Ligne mLigne;
+	private boolean mSaveToCache;
 
 	public PlanFragment() {
 		super(R.string.title_fragment_plan, R.layout.fragment_plan);
@@ -54,64 +53,38 @@ public class PlanFragment extends CustomFragment {
 		final View view = getView();
 
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		final Boolean planCache = preferences.getBoolean(NBApplication.PREF_PLAN_CACHE, true);
+		mSaveToCache = preferences.getBoolean(NBApplication.PREF_PLAN_CACHE, true);
 
 		final String codeLigne = getArguments().getString(PARAM_CODE_LIGNE);
 		mLigneManager = LigneManager.getInstance();
 		mLigne = mLigneManager.getSingle(context.getContentResolver(), codeLigne);
 
-		mWebView = (WebView) view.findViewById(R.id.webView);
+		mGestureView = (GestureImageView) view.findViewById(R.id.planView);
 		mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
-		mLoaderView = (LinearLayout) view.findViewById(R.id.loader);
-
-		mWebView.getSettings().setBuiltInZoomControls(true);
 
 		if (isInCache(mLigne.lettre)) {
 			afterLoaded();
 		} else {
-
-			if (planCache) {
-				try {
-					save(mLigne.lettre);
-				} catch (MalformedURLException e) {
-					onError(e);
-				} catch (IOException e) {
-					onError(e);
-				}
-			} else {
-				loadFromWeb(mLigne.lettre);
+			try {
+				save(mLigne.lettre);
+			} catch (MalformedURLException e) {
+				onError(e);
+			} catch (IOException e) {
+				onError(e);
 			}
-
 		}
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		return false;
-	}
-
-	@Override
-	protected void bindView(View view, Bundle savedInstanceState) {
-
 	}
 
 	/**
 	 * Afficher le plan en cache
 	 */
 	private void afterLoaded() {
-		mWebView.loadUrl(getLocalUrl(mLigne.lettre));
 		mProgressBar.setVisibility(View.GONE);
-		mWebView.setVisibility(View.VISIBLE);
+		mGestureView.setVisibility(View.VISIBLE);
+		mGestureView.setImageURI(Uri.parse(getLocalPath(mLigne.code)));
+		if (mSaveToCache == false) {
+			deleteFile(mLigne.code);
+		}
 	}
 
 	/**
@@ -121,23 +94,8 @@ public class PlanFragment extends CustomFragment {
 	 * @throws MalformedURLException
 	 */
 	private void save(String codeLigne) throws MalformedURLException, IOException {
-		DownloadFile downloadFile = new DownloadFile();
+		final DownloadFile downloadFile = new DownloadFile();
 		downloadFile.execute(codeLigne);
-	}
-
-	private void loadFromWeb(String codeLigne) {
-		mWebView.setWebChromeClient(new WebChromeClient() {
-			@Override
-			public void onProgressChanged(WebView view, int newProgress) {
-				mProgressBar.setProgress(newProgress);
-				if (newProgress == 100) {
-					mLoaderView.setVisibility(View.GONE);
-					mWebView.setVisibility(View.VISIBLE);
-				}
-			}
-		});
-
-		mWebView.loadUrl(getRemoteUrl(codeLigne));
 	}
 
 	/**
@@ -146,16 +104,18 @@ public class PlanFragment extends CustomFragment {
 	 * @return vrai|faux si le plan est dans le cache
 	 */
 	private boolean isInCache(final String codeLigne) {
-		File cache = new File(getLocalPath(codeLigne));
+		final File cache = new File(getLocalPath(codeLigne));
 		return cache.exists();
 	}
 
 	/**
+	 * Supprimer le fichier.
+	 * 
 	 * @param codeLigne
-	 * @return L'url du plan dans le cache
 	 */
-	private String getLocalUrl(String codeLigne) {
-		return "file://" + getLocalPath(codeLigne);
+	private void deleteFile(final String codeLigne) {
+		final File cache = new File(getLocalPath(codeLigne));
+		cache.delete();
 	}
 
 	/**
@@ -244,5 +204,25 @@ public class PlanFragment extends CustomFragment {
 				onError(null);
 			}
 		}
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu) {
+
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		return false;
+	}
+
+	@Override
+	protected void bindView(View view, Bundle savedInstanceState) {
+
 	}
 }

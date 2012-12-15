@@ -13,3 +13,6 @@
 [submodule "GridLayout"]
 	path = GridLayout
 	url = https://github.com/dlew/android-gridlayout.git
+[submodule "Gesture-ImageView"]
+	path = Gesture-ImageView
+	url = https://github.com/jasonpolites/gesture-imageview.git
