@@ -10,6 +10,7 @@ import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.EquipementComparator;
 import net.naonedbus.comparator.EquipementDistanceComparator;
+import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.manager.impl.EquipementManager.SousType;
@@ -45,8 +46,10 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	protected final SparseArray<CustomSectionIndexer<Equipement>> indexers;
 
 	protected MyLocationProvider myLocationProvider;
-	private DistanceTask loaderDistance;
 	protected int currentSortPreference = SORT_NOM;
+
+	private StateHelper mStateHelper;
+	private DistanceTask loaderDistance;
 	private Equipement.Type type;
 	private SousType sousType;
 
@@ -77,14 +80,25 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		myLocationProvider.addListener(locationListener);
+
 		// Initaliser le comparator avec la position actuelle.
 		locationListener.onLocationChanged(myLocationProvider.getLastKnownLocation());
+
+		// Gestion du tri par défaut
+		mStateHelper = new StateHelper(getActivity());
+		currentSortPreference = mStateHelper.getSortType(this, SORT_NOM);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		loadContent();
+	}
+
+	@Override
+	public void onPause() {
+		mStateHelper.setSortType(this, currentSortPreference);
+		super.onPause();
 	}
 
 	@Override
@@ -155,6 +169,8 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 
 			final EquipementArrayAdapter adapter = new EquipementArrayAdapter(context, equipements);
 			adapter.setIndexer(indexers.get(currentSortPreference));
+			adapter.sort(comparators.get(currentSortPreference));
+
 			result.setResult(adapter);
 
 		} catch (Exception e) {
@@ -246,20 +262,21 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	};
 
 	/**
-	 * Trier les parkings selon les préférences.
+	 * Trier les équipements selon les préférences.
 	 */
 	private void sort() {
 		final EquipementArrayAdapter adapter = (EquipementArrayAdapter) getListAdapter();
-		sort(adapter);
+		setIndexerAndComparator(adapter);
 		adapter.notifyDataSetChanged();
 	}
 
 	/**
-	 * Trier les parkings selon les préférences.
+	 * Définir l'indexer et comparator en fonction de
+	 * {@link #currentSortPreference}.
 	 * 
 	 * @param adapter
 	 */
-	private void sort(EquipementArrayAdapter adapter) {
+	private void setIndexerAndComparator(EquipementArrayAdapter adapter) {
 		final Comparator<Equipement> comparator;
 		final CustomSectionIndexer<Equipement> indexer;
 

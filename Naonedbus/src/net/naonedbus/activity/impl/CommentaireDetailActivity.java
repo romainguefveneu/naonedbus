@@ -9,10 +9,12 @@ import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
+import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.SmileyParser;
 import net.naonedbus.utils.SymbolesUtils;
 import android.content.Intent;
@@ -20,7 +22,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -42,15 +43,10 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
 	}
 
-	private SlidingMenuHelper slidingMenuHelper;
-
-	private TextView itemTitle;
-	private TextView itemSubTitle;
-	private ImageView ligneCodeBackground;
+	private SlidingMenuHelper mSlidingMenuHelper;
+	private HeaderHelper mHeaderHelper;
 
 	private Commentaire commentaire;
-	private View header;
-	private TextView itemLigneCode;
 	private TextView itemDescription;
 	private TextView itemDate;
 	private TextView itemSource;
@@ -60,23 +56,16 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment_detail);
 
-		slidingMenuHelper = new SlidingMenuHelper(this);
-		slidingMenuHelper.setupActionBar(getSupportActionBar());
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 
-		final Typeface robotoLight = Typeface.createFromAsset(this.getAssets(), "fonts/Roboto-Light.ttf");
 		final DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getApplicationContext());
 		final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getApplicationContext());
 		SmileyParser.init(getApplicationContext());
 		final SmileyParser simSmileyParser = SmileyParser.getInstance();
 
-		header = findViewById(R.id.ligneDialogHeader);
+		mHeaderHelper = new HeaderHelper(this);
 
-		itemTitle = (TextView) findViewById(R.id.headerTitle);
-		itemTitle.setTypeface(robotoLight);
-		itemSubTitle = (TextView) findViewById(R.id.headerSubTitle);
-		itemSubTitle.setTypeface(robotoLight);
-		itemLigneCode = (TextView) findViewById(R.id.headerCode);
-		itemLigneCode.setTypeface(robotoLight);
 		itemDescription = (TextView) findViewById(R.id.itemDescription);
 		itemDate = (TextView) findViewById(R.id.itemDate);
 		itemSource = (TextView) findViewById(R.id.itemSource);
@@ -90,14 +79,14 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(commentaire.getSource())) {
 
-			itemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.logo_tan, 0, 0, 0);
-			setPageTitle(getString(R.string.commentaire_tan_info_trafic));
+			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
+			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_info_trafic));
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(commentaire.getSource())) {
 
-			itemTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_launcher, 0, 0, 0);
-			setPageTitle(getString(R.string.commentaire_message_service));
+			mHeaderHelper.setTitleIcon(R.drawable.ic_launcher);
+			mHeaderHelper.setTitle(getString(R.string.commentaire_message_service));
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header));
 
 		} else {
@@ -153,62 +142,39 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		if (ligne != null) {
 			setLineColor(ligne.couleurBackground, ligne.code);
-			setPageTitle(ligne.nom);
+			mHeaderHelper.setTitle(ligne.nom);
 		} else {
-			setLineColor(Color.WHITE, "");
+			setLineColor(Color.TRANSPARENT, "");
 		}
 
 		if (arret == null && sens == null && ligne == null) {
-			setPageTitle("Tout le réseau");
+			mHeaderHelper.setTitle("Tout le réseau");
 		} else {
 			if (arret != null) {
-				setPageTitle(arret.nomArret);
+				mHeaderHelper.setTitle(arret.nomArret);
 			}
 			if (sens != null) {
 				if (arret == null) {
-					setPageTitle(SymbolesUtils.formatSens(sens.text));
-					setPageSubTitle("");
+					mHeaderHelper.setTitle(SymbolesUtils.formatSens(sens.text));
+					mHeaderHelper.setSubTitle(null);
 				} else {
-					setPageSubTitle(SymbolesUtils.formatSens(sens.text));
+					mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
 				}
 			} else {
-				setPageSubTitle("");
+				mHeaderHelper.setSubTitle(null);
 			}
 		}
 
 	}
 
-	@SuppressWarnings("deprecation")
 	public void setLineColor(int color, String codeLigne) {
 		setHeaderBackgroundColor(color);
-		this.itemLigneCode.setText(codeLigne);
+		mHeaderHelper.setCode(codeLigne);
 	}
 
 	private void setHeaderBackgroundColor(int color) {
-		final int textColor = ColorUtils.isLightColor(color) ? Color.BLACK : Color.WHITE;
-
-		this.header.setBackgroundDrawable(ColorUtils.getGradiant(color));
-		this.itemLigneCode.setTextColor(textColor);
-
-		this.itemSubTitle.setTextColor(textColor);
-		this.itemTitle.setTextColor(textColor);
-	}
-
-	protected void setPageTitle(CharSequence title) {
-		if (title.length() > 0) {
-			this.itemTitle.setVisibility(View.VISIBLE);
-			this.itemTitle.setText(title);
-		} else {
-			this.itemTitle.setVisibility(View.GONE);
-		}
-	}
-
-	protected void setPageSubTitle(CharSequence title) {
-		if (title.length() > 0) {
-			this.itemSubTitle.setVisibility(View.VISIBLE);
-			this.itemSubTitle.setText(title);
-		} else {
-			this.itemSubTitle.setVisibility(View.GONE);
+		if (color != Color.TRANSPARENT) {
+			mHeaderHelper.setBackgroundColor(color);
 		}
 	}
 

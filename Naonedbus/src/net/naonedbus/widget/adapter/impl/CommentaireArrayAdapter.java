@@ -26,6 +26,7 @@ import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.SectionAdapter;
 import net.naonedbus.widget.adapter.impl.CommentaireArrayAdapter.ViewHolder;
 import android.content.Context;
@@ -56,11 +57,11 @@ public class CommentaireArrayAdapter extends SectionAdapter<Commentaire> {
 		TextView ligneCode;
 	}
 
-	private final Typeface robotoLight;
+	private final Typeface robotoMedium;
 
 	public CommentaireArrayAdapter(Context context) {
 		super(context, R.layout.list_item_commentaire);
-		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Light.ttf");
+		robotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	@Override
@@ -86,8 +87,8 @@ public class CommentaireArrayAdapter extends SectionAdapter<Commentaire> {
 		holder.itemDate = (TextView) view.findViewById(R.id.itemTime);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 
-		holder.ligneCode.setTypeface(robotoLight);
-		holder.itemDate.setTypeface(robotoLight);
+		holder.ligneCode.setTypeface(robotoMedium);
+		holder.itemDate.setTypeface(robotoMedium);
 
 		view.setTag(holder);
 	}

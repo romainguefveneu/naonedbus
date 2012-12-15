@@ -20,30 +20,30 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/ligneDialogHeader"
+    android:id="@id/headerView"
     android:layout_width="match_parent"
     android:layout_height="60dip"
     android:background="#ccc"
     android:gravity="center_vertical" >
 
     <TextView
-        android:id="@id/itemCode"
+        android:id="@id/headerCode"
         style="@style/BigCode"
         android:gravity="center_horizontal"
         android:paddingLeft="@dimen/padding_large"
         android:paddingRight="@dimen/padding_large"
         android:text="00"
-        android:textSize="40dip" />
+        android:textSize="40sp" />
 
     <TextView
-        android:id="@id/itemTitle"
+        android:id="@id/headerTitle"
         style="@style/BigTitle"
         android:layout_marginLeft="@dimen/padding_small"
         android:paddingRight="3dip"
         android:text="François" />
 
     <TextView
-        android:id="@id/itemSubTitle"
+        android:id="@id/headerSubTitle"
         style="@style/BigSens"
         android:layout_marginLeft="@dimen/padding_small"
         android:layout_marginTop="3dip"

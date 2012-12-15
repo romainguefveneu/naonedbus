@@ -6,17 +6,13 @@ import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.fragment.impl.HorairesFragment;
+import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
-import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.SymbolesUtils;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
 public class HoraireActivity extends OneFragmentActivity {
 
@@ -42,9 +38,6 @@ public class HoraireActivity extends OneFragmentActivity {
 			addFragment(HorairesFragment.class, bundle);
 		}
 
-		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
-		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
-		
 		final SensManager sensManager = SensManager.getInstance();
 		final LigneManager ligneManager = LigneManager.getInstance();
 		final ArretManager arretManager = ArretManager.getInstance();
@@ -53,23 +46,11 @@ public class HoraireActivity extends OneFragmentActivity {
 		final Sens sens = sensManager.getSingle(this.getContentResolver(), arret.codeLigne, arret.codeSens);
 		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), arret.codeLigne);
 
-		final View header = findViewById(R.id.ligneDialogHeader);
-		header.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
-
-		final TextView code = (TextView) findViewById(R.id.headerCode);
-		code.setText(ligne.lettre);
-		code.setTextColor(ligne.couleurTexte);
-		code.setTypeface(robotoMedium);
-
-		final TextView title = (TextView) findViewById(R.id.headerTitle);
-		title.setText(arret.nomArret);
-		title.setTextColor(ligne.couleurTexte);
-		title.setTypeface(robotoLight);
-
-		final TextView subTitle = (TextView) findViewById(R.id.headerSubTitle);
-		subTitle.setText(SymbolesUtils.formatSens(sens.text));
-		subTitle.setTextColor(ligne.couleurTexte);
-		subTitle.setTypeface(robotoLight);
+		final HeaderHelper headerHelper = new HeaderHelper(this);
+		headerHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
+		headerHelper.setCode(ligne.lettre);
+		headerHelper.setTitle(arret.nomArret);
+		headerHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
 	}
 
 }

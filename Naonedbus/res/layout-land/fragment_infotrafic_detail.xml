@@ -4,7 +4,7 @@
     android:padding="@dimen/padding_small" >
 
     <LinearLayout
-        android:id="@id/ligneDialogHeader"
+        android:id="@id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/ligneDialogHeader"
+        android:layout_below="@id/headerView"
         android:layout_marginRight="@dimen/padding_small"
         android:layout_toLeftOf="@id/colRight"
         android:orientation="vertical" >
@@ -62,7 +62,7 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/ligneDialogHeader"
+        android:layout_below="@id/headerView"
         android:orientation="vertical" >
 
         <TextView

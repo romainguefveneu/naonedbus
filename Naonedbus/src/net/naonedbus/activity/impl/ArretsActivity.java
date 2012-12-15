@@ -7,6 +7,7 @@ import net.naonedbus.activity.OneFragmentActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.fragment.impl.ArretsFragment;
+import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
@@ -35,7 +36,10 @@ public class ArretsActivity extends OneFragmentActivity {
 		void onChangeSens(Sens sens);
 	}
 
+	private StateHelper mStateHelper;
 	private OnChangeSens mOnChangeSens;
+	private String mCodeLigne;
+	private Sens mCurrentSens;
 
 	public ArretsActivity() {
 		super(R.layout.activity_arrets);
@@ -50,9 +54,11 @@ public class ArretsActivity extends OneFragmentActivity {
 		final SensManager sensManager = SensManager.getInstance();
 		final LigneManager ligneManager = LigneManager.getInstance();
 
-		final String codeLigne = (String) getParamValue(Param.codeLigne);
-		final List<Sens> sensList = sensManager.getAll(getContentResolver(), codeLigne);
-		final int idSens = sensList.get(0)._id;
+		mStateHelper = new StateHelper(getApplicationContext());
+
+		mCodeLigne = (String) getParamValue(Param.codeLigne);
+		final List<Sens> sensList = sensManager.getAll(getContentResolver(), mCodeLigne);
+		final int idSens = mStateHelper.getSens(mCodeLigne, sensList.get(0)._id);
 
 		if (savedInstanceState == null) {
 			addFragment(ArretsFragment.class);
@@ -64,7 +70,7 @@ public class ArretsActivity extends OneFragmentActivity {
 		final Sens sens = sensManager.getSingle(this.getContentResolver(), idSens);
 		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), sens.codeLigne);
 
-		final View header = findViewById(R.id.ligneDialogHeader);
+		final View header = findViewById(R.id.headerView);
 		header.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
 
 		final TextView code = (TextView) findViewById(R.id.itemCode);
@@ -80,6 +86,7 @@ public class ArretsActivity extends OneFragmentActivity {
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int location, long arg3) {
 				final Sens sens = sensList.get(location);
 				mOnChangeSens.onChangeSens(sens);
+				mCurrentSens = sens;
 			}
 
 			@Override
@@ -87,6 +94,7 @@ public class ArretsActivity extends OneFragmentActivity {
 
 			}
 		});
+		sensTitle.setSelection(getSensPosition(sensList, idSens));
 
 		final ShowcaseView sv = (ShowcaseView) findViewById(R.id.showcase);
 		sv.setShowcaseView(sensTitle);
@@ -106,6 +114,22 @@ public class ArretsActivity extends OneFragmentActivity {
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mOnChangeSens = (OnChangeSens) getCurrentFragment();
+	}
+
+	@Override
+	protected void onStop() {
+		mStateHelper.setSens(mCodeLigne, mCurrentSens._id);
+		super.onStop();
+	}
+
+	private int getSensPosition(List<Sens> sensList, int id) {
+		Sens sens;
+		for (int i = 0; i < sensList.size(); i++) {
+			sens = sensList.get(i);
+			if (sens._id == id)
+				return i;
+		}
+		return 0;
 	}
 
 }

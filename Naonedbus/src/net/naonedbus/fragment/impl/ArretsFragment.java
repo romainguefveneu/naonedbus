@@ -16,6 +16,7 @@ import net.naonedbus.comparator.ArretComparator;
 import net.naonedbus.comparator.ArretOrdreComparator;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
+import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
@@ -56,8 +57,9 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	protected final SparseArray<Comparator<Arret>> mComparators;
-	protected int mCurrentSortPreference = SORT_NOM;
+	protected int mCurrentSortPreference;
 
+	private StateHelper mStateHelper;
 	private MyLocationProvider mLocationProvider;
 	private DistanceTask mDistanceTask;
 	private DistanceTaskCallback mDistanceTaskCallback;
@@ -83,8 +85,14 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		mStateHelper = new StateHelper(getActivity());
+		mCurrentSortPreference = mStateHelper.getSortType(this, SORT_NOM);
+
 		mArrets = new ArrayList<Arret>();
 		mAdapter = new ArretArrayAdapter(getActivity(), mArrets);
+		if (mCurrentSortPreference == SORT_ORDRE) {
+			mAdapter.setViewType(ViewType.TYPE_METRO);
+		}
 
 		mDistanceTaskCallback = new DistanceTaskCallback() {
 			@SuppressLint("NewApi")
@@ -117,6 +125,10 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public void onStop() {
 		super.onStop();
+
+		// Save state
+		mStateHelper.setSortType(this, mCurrentSortPreference);
+
 		mLocationProvider.stop();
 		if (mDistanceTask != null) {
 			mDistanceTask.cancel(true);
@@ -197,8 +209,10 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	private void changeSortOrder(int sortOrder, ViewType viewType) {
 		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
 		mCurrentSortPreference = sortOrder;
+
 		adapter.setViewType(viewType);
 		getListView().setSelection(0);
+
 		sort();
 		loadDistances();
 	}
@@ -359,7 +373,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	public void onAddressTaskResult(String address) {
-		if (address != null && address.length() > 0) {
+		if (getActivity() != null && address != null && address.length() > 0) {
 			Toast.makeText(getActivity(), address, Toast.LENGTH_LONG).show();
 		}
 	}

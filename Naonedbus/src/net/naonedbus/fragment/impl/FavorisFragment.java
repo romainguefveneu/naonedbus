@@ -22,6 +22,7 @@ import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.helper.FavorisHelper.FavorisActionListener;
+import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.FavoriManager.OnActionListener;
@@ -37,12 +38,9 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -52,6 +50,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -89,7 +88,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	protected MyLocationProvider mLocationProvider;
 	private ActionMode mActionMode;
 	private ListView mListView;
-	private SharedPreferences mSharedPreferences;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
 
@@ -133,11 +131,91 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	};
 
 	private FavoriManager mFavoriManager;
+	private StateHelper mStateHelper;
 
 	public FavorisFragment() {
 		super(R.string.title_fragment_favoris, R.layout.fragment_favoris);
 		mFavoriManager = FavoriManager.getInstance();
 		mLocationProvider = NBApplication.getLocationProvider();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
+
+		mFavoriManager.setActionListener(onImportListener);
+		mLocationProvider.addListener(this);
+		// Initaliser le comparator avec la position actuelle.
+		onLocationChanged(mLocationProvider.getLastKnownLocation());
+
+		// Gestion du tri par défaut
+		mStateHelper = new StateHelper(getActivity());
+		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		Log.d(LOG_TAG, "onActivityCreated");
+
+		super.onActivityCreated(savedInstanceState);
+
+		mListView = getListView();
+		mListView.setOnItemLongClickListener(this);
+
+		loadContent();
+	}
+
+	@Override
+	public void onDestroy() {
+		Log.d(LOG_TAG, "onDestroy");
+
+		mFavoriManager.unsetActionListener();
+		super.onDestroy();
+	}
+
+	@Override
+	public void onStop() {
+		Log.d(LOG_TAG, "onStop");
+
+		mStateHelper.setSortType(this, mCurrentSort);
+
+		mLocationProvider.removeListener(this);
+		super.onStart();
+	}
+
+	@Override
+	public void onResume() {
+		Log.d(LOG_TAG, "onResume");
+		super.onResume();
+
+		getActivity().registerReceiver(intentReceiver, intentFilter);
+
+		if (mContentHasChanged) {
+			refreshContent();
+		} else {
+			loadHorairesFavoris();
+		}
+
+	}
+
+	@Override
+	public void onPause() {
+		Log.d(LOG_TAG, "onPause");
+
+		mContentHasChanged = false;
+		getActivity().unregisterReceiver(intentReceiver);
+		super.onPause();
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu) {
+		final SherlockFragmentActivity activity = getSherlockActivity();
+		if (activity != null) {
+			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
+			menuInflater.inflate(R.menu.fragment_favoris, menu);
+			menu.findItem(mCurrentSort).setChecked(true);
+		}
 	}
 
 	@Override
@@ -160,16 +238,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 
 		return true;
-	}
-
-	private void updateSortPref() {
-		final Editor editor = mSharedPreferences.edit();
-		editor.putInt(NBApplication.PREF_FAVORIS_SORT, mCurrentSort);
-		editor.commit();
-	}
-
-	private int getSortPref() {
-		return mSharedPreferences.getInt(NBApplication.PREF_FAVORIS_SORT, SORT_NOM);
 	}
 
 	private void menuEdit() {
@@ -220,7 +288,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	private void menuSort(int sortOrder) {
 		mCurrentSort = sortOrder;
-		updateSortPref();
 		sort();
 	}
 
@@ -299,82 +366,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		} else {
 			mActionMode.invalidate();
 		}
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
-
-		mFavoriManager.setActionListener(onImportListener);
-		mLocationProvider.addListener(this);
-		// Initaliser le comparator avec la position actuelle.
-		onLocationChanged(mLocationProvider.getLastKnownLocation());
-
-		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		mCurrentSort = getSortPref();
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d(LOG_TAG, "onActivityCreated");
-
-		super.onActivityCreated(savedInstanceState);
-		mListView = getListView();
-		mListView.setOnItemLongClickListener(this);
-
-		loadContent();
-	}
-
-	@Override
-	public void onDestroy() {
-		Log.d(LOG_TAG, "onDestroy");
-
-		mFavoriManager.unsetActionListener();
-		super.onDestroy();
-	}
-
-	@Override
-	public void onStop() {
-		Log.d(LOG_TAG, "onStop");
-
-		mLocationProvider.removeListener(this);
-		super.onStart();
-	}
-
-	@Override
-	public void onResume() {
-		Log.d(LOG_TAG, "onResume");
-		super.onResume();
-
-		getActivity().registerReceiver(intentReceiver, intentFilter);
-
-		if (mContentHasChanged) {
-			refreshContent();
-		} else {
-			loadHorairesFavoris();
-		}
-
-	}
-
-	@Override
-	public void onPause() {
-		Log.d(LOG_TAG, "onPause");
-
-		mContentHasChanged = false;
-		getActivity().unregisterReceiver(intentReceiver);
-		super.onPause();
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_favoris, menu);
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-		menu.findItem(mCurrentSort).setChecked(true);
 	}
 
 	@Override

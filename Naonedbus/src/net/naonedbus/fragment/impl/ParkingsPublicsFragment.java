@@ -14,6 +14,7 @@ import net.naonedbus.comparator.ParkingComparator;
 import net.naonedbus.comparator.ParkingDistanceComparator;
 import net.naonedbus.comparator.ParkingPlacesComparator;
 import net.naonedbus.fragment.CustomListFragment;
+import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
@@ -55,6 +56,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		indexers.append(SORT_PLACES, new ParkingPlaceIndexer());
 	}
 
+	private StateHelper mStateHelper;
 	private MyLocationProvider myLocationProvider;
 	private ParkingDistance loaderDistance;
 	private int currentSortPreference = SORT_NOM;
@@ -71,6 +73,9 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 		// Initaliser le comparator avec la position actuelle.
 		locationListener.onLocationChanged(myLocationProvider.getLastKnownLocation());
+
+		mStateHelper = new StateHelper(getActivity());
+		currentSortPreference = mStateHelper.getSortType(this, SORT_NOM);
 	}
 
 	@Override
@@ -84,6 +89,12 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	public void onResume() {
 		super.onResume();
 		myLocationProvider.removeListener(locationListener);
+	}
+
+	@Override
+	public void onStop() {
+		mStateHelper.setSortType(this, currentSortPreference);
+		super.onStop();
 	}
 
 	@Override

@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -98,10 +98,6 @@
     <item name="commentaireArret" type="id"/>
     <item name="viewPager" type="id"/>
     <item name="viewPagerIndicator" type="id"/>
-
-    <!-- LigneDialogFragment -->
-    <item name="ligneDialogHeader" type="id"/>
-    <item name="ligneDialogCode" type="id"/>
 
     <!-- Menus -->
     <item name="menu_share" type="id"/>
