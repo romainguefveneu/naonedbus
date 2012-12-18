@@ -405,7 +405,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			if (adapter == null || adapter.getCount() == 0) {
 				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
 			} else {
-				
+
 				adapter.registerDataSetObserver(new DataSetObserver() {
 					@Override
 					public void onChanged() {
@@ -414,16 +414,16 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 					}
 				});
 
-				setListAdapter(result.getResult());
-				
+				setListAdapter(adapter);
+
 				if (mListViewStatePosition != -1 && isAdded()) {
 					getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
 					mListViewStatePosition = -1;
 				}
-				
+
 				showContent();
 				resetNextUpdate();
-				
+
 			}
 
 		} else {

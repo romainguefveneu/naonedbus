@@ -31,6 +31,7 @@ import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.Ligne;
+import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.GeoPointUtils;
@@ -113,11 +114,9 @@ public class StationMapLayer extends EquipementMapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-				// final ParamIntent intent = new ParamIntent(context,
-				// ParcoursActivity.class);
-				// intent.putExtra(ParcoursActivity.Param.idStation,
-				// item.getId());
-				// return intent;
+//				final ParamIntent intent = new ParamIntent(context, ParcoursActivity.class);
+//				intent.putExtra(ParcoursActivity.Param.idStation, item.getId());
+//				return intent;
 				return null;
 			}
 

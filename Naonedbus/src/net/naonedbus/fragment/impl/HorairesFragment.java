@@ -3,6 +3,7 @@ package net.naonedbus.fragment.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
@@ -33,6 +34,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.ListAdapter;
 import android.widget.Toast;
@@ -43,6 +45,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class HorairesFragment extends CustomInfiniteListFragement {
+
+	private static final String LOG_TAG = "HorairesFragment";
 
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 	public static final String PARAM_ID_ARRET = "idArret";
@@ -74,6 +78,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private Arret mArret;
 	private boolean mIsFirstLoad = true;
+	private AtomicBoolean mIsLoading = new AtomicBoolean(false);
 
 	private DateMidnight mLastDayLoaded;
 	private DateTime mLastDateTimeLoaded;
@@ -122,7 +127,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	private void loadHoraires(DateMidnight date) {
-		if (!getLoaderManager().hasRunningLoaders()) {
+		if (mIsLoading.get() == false) {
+			Log.d(LOG_TAG, "loadHoraires " + date.toString() + "\t" + mIsLoading.get());
 			mLastDayLoaded = date;
 			refreshContent();
 		}
@@ -236,17 +242,29 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(Context context) {
+		mIsLoading.set(true);
+
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		List<Horaire> data = new ArrayList<Horaire>();
 
 		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
 		final Arret arret = mArretManager.getSingle(context.getContentResolver(), idArret);
 
+		Log.d(LOG_TAG, "\tloadContent " + mLastDayLoaded.toString());
+
 		try {
 
-			data = mHoraireManager
-					.getHoraires(context.getContentResolver(), arret, mLastDayLoaded, mLastDateTimeLoaded);
-			mHoraires.addAll(data);
+			List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), arret, mLastDayLoaded,
+					mLastDateTimeLoaded);
+
+			if (data.size() == 0) {
+				mHoraires.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDate()));
+			} else {
+				mHoraires.addAll(data);
+
+				final Horaire lastHoraire = mHoraires.get(mHoraires.size() - 1);
+				mLastDateTimeLoaded = new DateTime(lastHoraire.getTimestamp());
+			}
+
 			result.setResult(mAdapter);
 
 		} catch (Exception e) {
@@ -258,44 +276,34 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	@Override
 	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
 
-		final Long currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
-
 		if (result.getException() == null) {
-
-			HoraireArrayAdapter listAdapter = (HoraireArrayAdapter) result.getResult();
-
-			if (listAdapter.getCount() == 0) {
-				listAdapter.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDate()));
+			final ListAdapter adapter = result.getResult();
+			if (!adapter.equals(getListAdapter())) {
+				setListAdapter(adapter);
 			}
-			setListAdapter(result.getResult());
 
-			showContent();
-			resetNextUpdate();
 			updateItemsTime();
-
+			showContent();
 		} else {
 			final Exception exception = result.getException();
 			final int errorMessageRes = (exception instanceof IOException) ? R.string.msg_connection_error
 					: R.string.msg_webservice_error;
-
 			showError(R.string.error_title_network, errorMessageRes);
 		}
 
 		resetNextUpdate();
-
 		onPostExecute();
+
 	}
 
 	@Override
 	protected void onPostExecute() {
 		super.onPostExecute();
-		if (mAdapter.getCount() > 0) {
-			final Horaire lastHoraire = mAdapter.getItem(mAdapter.getCount() - 1);
-			mLastDateTimeLoaded = new DateTime(lastHoraire.getTimestamp());
-		}
 
 		mAdapter.notifyDataSetChanged();
 		updateItemsTime();
+
+		mIsLoading.set(false);
 	}
 
 	/**
@@ -306,12 +314,14 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		final Long currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
 		final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
 
-		DateTime itemDateTime;
 		int nextHorairePosition = -1;
 		int delay;
 
+		DateTime itemDateTime;
+		Horaire horaire;
+
 		for (int i = 0; i < mAdapter.getCount(); i++) {
-			Horaire horaire = mAdapter.getItem(i);
+			horaire = mAdapter.getItem(i);
 
 			if (horaire instanceof EmptyHoraire) {
 				continue;

@@ -17,14 +17,14 @@ import android.widget.TextView;
 
 public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 
-	final DateFormat timeFormat;
+	final DateFormat mTimeFormat;
 	final float mClockHandWidth;
 	final float mClockHandHeight;
 	final int mClockSize;
 
 	public HoraireArrayAdapter(Context context, List<Horaire> objects) {
 		super(context, R.layout.list_item_horaire, objects);
-		timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+		mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
 
 		mClockHandWidth = context.getResources().getDimension(R.dimen.clock_hand_width);
 		mClockHandHeight = context.getResources().getDimension(R.dimen.clock_hand_height);
@@ -44,7 +44,7 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 	}
 
 	private void bindHoraireView(ViewHolder holder, Horaire item) {
-		holder.itemTitle.setText(timeFormat.format(item.getDate()));
+		holder.itemTitle.setText(mTimeFormat.format(item.getDate()));
 
 		if (item.getTerminus() != null) {
 			holder.itemDescription.setText(item.getTerminus());
