@@ -1,5 +1,6 @@
 package net.naonedbus.fragment.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.bean.horaire.EmptyHoraire;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.fragment.CustomInfiniteListFragement;
 import net.naonedbus.intent.ParamIntent;
@@ -30,6 +32,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.Loader;
 import android.widget.DatePicker;
 import android.widget.ListAdapter;
 import android.widget.Toast;
@@ -106,7 +109,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onStop() {
 		getActivity().unregisterReceiver(intentReceiver);
 		super.onDestroy();
 	}
@@ -253,6 +256,37 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
+	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
+
+		final Long currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
+
+		if (result.getException() == null) {
+
+			HoraireArrayAdapter listAdapter = (HoraireArrayAdapter) result.getResult();
+
+			if (listAdapter.getCount() == 0) {
+				listAdapter.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDate()));
+			}
+			setListAdapter(result.getResult());
+
+			showContent();
+			resetNextUpdate();
+			updateItemsTime();
+
+		} else {
+			final Exception exception = result.getException();
+			final int errorMessageRes = (exception instanceof IOException) ? R.string.msg_connection_error
+					: R.string.msg_webservice_error;
+
+			showError(R.string.error_title_network, errorMessageRes);
+		}
+
+		resetNextUpdate();
+
+		onPostExecute();
+	}
+
+	@Override
 	protected void onPostExecute() {
 		super.onPostExecute();
 		if (mAdapter.getCount() > 0) {
@@ -270,14 +304,21 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private void updateItemsTime() {
 
 		final Long currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
+		final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
+
+		DateTime itemDateTime;
 		int nextHorairePosition = -1;
+		int delay;
 
 		for (int i = 0; i < mAdapter.getCount(); i++) {
 			Horaire horaire = mAdapter.getItem(i);
 
-			DateTime itemDateTime = new DateTime(horaire.getDate()).withSecondOfMinute(0).withMillisOfSecond(0);
-			DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
-			int delay = Minutes.minutesBetween(now, itemDateTime).getMinutes();
+			if (horaire instanceof EmptyHoraire) {
+				continue;
+			}
+
+			itemDateTime = new DateTime(horaire.getDate()).withSecondOfMinute(0).withMillisOfSecond(0);
+			delay = Minutes.minutesBetween(now, itemDateTime).getMinutes();
 
 			if (delay > 0 && delay < 60) {
 				horaire.setDelai(getString(R.string.msg_depart_min, delay));

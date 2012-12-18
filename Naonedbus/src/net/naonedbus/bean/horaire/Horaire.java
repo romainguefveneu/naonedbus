@@ -94,6 +94,10 @@ public class Horaire implements IHoraire, SectionItem {
 		return date;
 	}
 
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
 	public String getDelai() {
 		return delai;
 	}

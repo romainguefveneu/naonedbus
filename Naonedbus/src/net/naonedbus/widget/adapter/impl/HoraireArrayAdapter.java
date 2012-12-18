@@ -4,13 +4,12 @@ import java.text.DateFormat;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.horaire.EmptyHoraire;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.utils.DrawableUtils;
 import net.naonedbus.widget.adapter.SectionAdapter;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +36,14 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Horaire item = getItem(position);
 
+		if (item instanceof EmptyHoraire) {
+			bindEmptyView(holder, (EmptyHoraire) item);
+		} else {
+			bindHoraireView(holder, item);
+		}
+	}
+
+	private void bindHoraireView(ViewHolder holder, Horaire item) {
 		holder.itemTitle.setText(timeFormat.format(item.getDate()));
 
 		if (item.getTerminus() != null) {
@@ -67,6 +74,12 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 		}
 		DrawableUtils.drawClockBitmap(bitmap, color, mClockHandWidth, mClockHandHeight, item.getDate());
 		holder.itemIcon.setImageBitmap(bitmap);
+		holder.itemIcon.setVisibility(View.VISIBLE);
+	}
+
+	private void bindEmptyView(ViewHolder holder, EmptyHoraire item) {
+		holder.itemTitle.setText(item.getTextId());
+		holder.itemIcon.setVisibility(View.GONE);
 	}
 
 	@Override

@@ -186,6 +186,8 @@
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
+    <string name="msg_webservice_error">Oups ! Une erreur s\'est produite.\n\nMerci de réessayer dans quelques instants !</string>
+    <string name="msg_connection_error">Ça a coupé !\n\nNous avons perdu la connexion.</string>
     <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <!-- Warning -->
     <string name="msg_warning_send_comment">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>
@@ -200,11 +202,12 @@
     <string name="msg_aucun_depart_24h">dans longtemps</string>
     <string name="msg_depart_min">dans %d min</string>
     <string name="msg_depart_heure">dans %d h</string>
+    <string name="msg_nothing_horaires">Aucun horaire n\'a été trouvé</string>
 
     <!-- Info trafic -->
     <string name="lignes_concernees">Lignes concernées</string>
     <string name="description">Description</string>
-    
+
     <!--  -->
     <!-- Hint -->
     <string name="hint_ajouter_commentaire">Que se passe-t-il sur le réseau Tan ?</string>
