@@ -186,7 +186,7 @@
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
-    <string name="msg_webservice_error">Oups ! Une erreur s\'est produite.\n\nMerci de réessayer dans quelques instants !</string>
+    <string name="msg_webservice_error">Merci de réessayer dans quelques instants !</string>
     <string name="msg_connection_error">Ça a coupé !\n\nNous avons perdu la connexion.</string>
     <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <!-- Warning -->

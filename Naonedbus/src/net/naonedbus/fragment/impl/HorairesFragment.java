@@ -253,11 +253,16 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 		try {
 
-			List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), arret, mLastDayLoaded,
+			final List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), arret, mLastDayLoaded,
 					mLastDateTimeLoaded);
 
 			if (data.size() == 0) {
-				mHoraires.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDate()));
+				// Si le précédent chargement à déjà charger la totalité du jour
+				// actuel (ligne de nuit par exemple) ne pas réafficher le jour.
+				if (((mLastDayLoaded == null || mLastDateTimeLoaded == null) || !mLastDayLoaded
+						.equals(mLastDateTimeLoaded.toDateMidnight()))) {
+					mHoraires.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDate()));
+				}
 			} else {
 				mHoraires.addAll(data);
 
@@ -289,6 +294,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			final int errorMessageRes = (exception instanceof IOException) ? R.string.msg_connection_error
 					: R.string.msg_webservice_error;
 			showError(R.string.error_title_network, errorMessageRes);
+			Log.e(LOG_TAG, "Erreur", exception);
 		}
 
 		resetNextUpdate();
@@ -303,6 +309,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		mAdapter.notifyDataSetChanged();
 		updateItemsTime();
 
+		Log.d(LOG_TAG, "\tloadContent end " + mLastDayLoaded.toString());
 		mIsLoading.set(false);
 	}
 
