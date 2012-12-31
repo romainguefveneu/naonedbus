@@ -22,7 +22,8 @@
         android:id="@id/itemDescription"
         style="@style/ItemSecondaryText.SingleLine"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/itemIcon" />
+        android:layout_toRightOf="@id/itemIcon"
+        android:visibility="gone" />
 
     <TextView
         android:id="@id/itemTime"

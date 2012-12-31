@@ -102,8 +102,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		getActivity().registerReceiver(intentReceiver, intentFilter);
-
 		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
 		mAdapter.setIndexer(new HoraireIndexer());
 
@@ -111,6 +109,12 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		mArret = mArretManager.getSingle(getActivity().getContentResolver(), idArret);
 
 		loadContent();
+	}
+
+	@Override
+	public void onStart() {
+		getActivity().registerReceiver(intentReceiver, intentFilter);
+		super.onStart();
 	}
 
 	@Override
@@ -255,6 +259,10 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 			final List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), arret, mLastDayLoaded,
 					mLastDateTimeLoaded);
+
+			for (Horaire horaire : data) {
+				Log.d(LOG_TAG, new DateTime(horaire.getTimestamp()).toLocalDateTime().toString());
+			}
 
 			if (data.size() == 0) {
 				// Si le précédent chargement à déjà charger la totalité du jour

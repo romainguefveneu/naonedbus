@@ -125,6 +125,7 @@ public class SlidingMenuHelper {
 			indexer.buildIndex(activity, adapter);
 			adapter.setIndexer(indexer);
 		}
+		adapter.setCurrentClass(activity.getClass());
 		menuListView.setAdapter(adapter);
 
 		if (savedPosition >= 0) { // initialized to -1

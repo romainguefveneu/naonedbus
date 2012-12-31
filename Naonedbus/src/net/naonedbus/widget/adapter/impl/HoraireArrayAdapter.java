@@ -11,6 +11,7 @@ import net.naonedbus.widget.adapter.SectionAdapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +33,14 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 	}
 
 	@Override
+	public boolean isEnabled(int position) {
+		final Horaire item = getItem(position);
+		if (item instanceof EmptyHoraire)
+			return false;
+		return super.isEnabled(position);
+	}
+
+	@Override
 	public void bindView(View view, Context context, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Horaire item = getItem(position);
@@ -45,6 +54,8 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 
 	private void bindHoraireView(ViewHolder holder, Horaire item) {
 		holder.itemTitle.setText(mTimeFormat.format(item.getDate()));
+		holder.itemTitle.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+		holder.itemTitle.setEnabled(true);
 
 		if (item.getTerminus() != null) {
 			holder.itemDescription.setText(item.getTerminus());
@@ -79,6 +90,8 @@ public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
 
 	private void bindEmptyView(ViewHolder holder, EmptyHoraire item) {
 		holder.itemTitle.setText(item.getTextId());
+		holder.itemTitle.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+		holder.itemTitle.setEnabled(false);
 		holder.itemIcon.setVisibility(View.GONE);
 	}
 
