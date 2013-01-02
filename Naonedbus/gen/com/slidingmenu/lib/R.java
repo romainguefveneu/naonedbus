@@ -22,11 +22,11 @@ public final class R {
 		public static final int holo_blue_bright = 0x7f090011;
 	}
 	public static final class layout {
-		public static final int slidingmenumain = 0x7f030059;
+		public static final int slidingmenumain = 0x7f03005a;
 		public static final int list = 0x7f030035;
-		public static final int slidingmenurow = 0x7f03005b;
-		public static final int slidingmenumainlist = 0x7f03005a;
-		public static final int shadow = 0x7f030056;
+		public static final int slidingmenurow = 0x7f03005c;
+		public static final int slidingmenumainlist = 0x7f03005b;
+		public static final int shadow = 0x7f030057;
 	}
 	public static final class styleable {
 		public static final int SlidingMenu_mode = 0;

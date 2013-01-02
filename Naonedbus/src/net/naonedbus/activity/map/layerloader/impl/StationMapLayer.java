@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.ParcoursActivity;
 import net.naonedbus.activity.map.layerloader.EquipementMapLayer;
 import net.naonedbus.activity.map.layerloader.ItemSelectedInfo;
 import net.naonedbus.activity.map.overlay.BasicItemizedOverlay;
@@ -114,10 +115,9 @@ public class StationMapLayer extends EquipementMapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-//				final ParamIntent intent = new ParamIntent(context, ParcoursActivity.class);
-//				intent.putExtra(ParcoursActivity.Param.idStation, item.getId());
-//				return intent;
-				return null;
+				final ParamIntent intent = new ParamIntent(context, ParcoursActivity.class);
+				intent.putExtra(ParcoursActivity.Param.idStation, item.getId());
+				return intent;
 			}
 
 			@Override

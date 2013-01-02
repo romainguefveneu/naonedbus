@@ -79,7 +79,10 @@
         <activity
             android:name=".activity.impl.TutorialActivity"
             android:label="@string/emptyString" />
-
+        <activity
+            android:name=".activity.impl.ParcoursActivity"
+            android:label="@string/emptyString" />
+        
         <provider
             android:name=".provider.impl.LigneProvider"
             android:authorities="net.naonedbus.provider.LigneProvider"
@@ -123,6 +126,11 @@
         <provider
             android:name=".provider.impl.HoraireProvider"
             android:authorities="net.naonedbus.provider.HoraireProvider"
+            android:exported="false"
+            android:multiprocess="true" />
+        <provider
+            android:name=".provider.impl.ParcoursProvider"
+            android:authorities="net.naonedbus.provider.ParcoursProvider"
             android:exported="false"
             android:multiprocess="true" />
 

@@ -9,7 +9,9 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
+import net.naonedbus.activity.impl.ParcoursActivity;
 import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.EquipementDistanceComparator;
 import net.naonedbus.fragment.CustomFragmentActions;
@@ -157,10 +159,18 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
-		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-		intent.putExtra(MapActivity.Param.itemId, equipement.getId());
-		intent.putExtra(MapActivity.Param.itemType, equipement.getType().getId());
+
+		final ParamIntent intent;
+		if (equipement.getType().equals(Type.TYPE_ARRET)) {
+			intent = new ParamIntent(getActivity(), ParcoursActivity.class);
+			intent.putExtra(ParcoursActivity.Param.idStation, equipement.getId());
+		} else {
+			intent = new ParamIntent(getActivity(), MapActivity.class);
+			intent.putExtra(MapActivity.Param.itemId, equipement.getId());
+			intent.putExtra(MapActivity.Param.itemType, equipement.getType().getId());
+		}
 		startActivity(intent);
+
 	}
 
 	/**

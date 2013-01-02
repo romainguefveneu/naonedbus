@@ -108,6 +108,7 @@
     <string name="title_fragment_sens">Sens</string>
     <string name="title_fragment_horaires">Horaires</string>
     <string name="title_fragment_plan">Plan</string>
+    <string name="title_fragment_parcours">Parcours</string>
     <string name="title_activity_plan">Ligne %1$s &#8226; %2$s</string>
     <!-- Infos trafic -->
     <string name="title_fragment_tan_actu">Tan Actu</string>

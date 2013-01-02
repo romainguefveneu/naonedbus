@@ -52,8 +52,6 @@ public class SensArrayAdapter extends ArrayAdapter<Sens> {
 			holder.itemTitle.setTextColor(textColor);
 		if (typeface != null)
 			holder.itemTitle.setTypeface(typeface);
-
-		Log.d("SensArrayAdapter", "Color : " + textColor);
 	}
 
 	protected void bindViewHolder(View view) {

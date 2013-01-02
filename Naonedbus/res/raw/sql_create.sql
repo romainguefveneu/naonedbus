@@ -91,3 +91,17 @@ CREATE TABLE IF NOT EXISTS favoris (
 	codeArret TEXT NOT NULL, 
 	nomFavori TEXT);
 CREATE INDEX IF NOT EXISTS favoris_id ON favoris (_id);
+
+-- Décrire GROUPES
+CREATE TABLE IF NOT EXISTS groupes (
+	_id INTEGER, 
+	nom TEXT NOT NULL, 
+	visibilty INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS groupes_id ON groupes (_id);
+
+-- Décrire FAVORISGROUPES
+CREATE TABLE IF NOT EXISTS favorisGroupes (
+	idFavori INTEGER NOT NULL, 
+	idGroupe  INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS favorisGroupes_idFavori ON favorisGroupes (idFavori);
+CREATE INDEX IF NOT EXISTS favorisGroupes_idGroupe ON favorisGroupes (idGroupe);
