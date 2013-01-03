@@ -4,8 +4,8 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
-import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.impl.SearchActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.bean.async.AsyncResult;
@@ -26,7 +26,9 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class LignesFragment extends CustomListFragment implements CustomFragmentActions {
@@ -45,6 +47,11 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu) {
+		final SherlockFragmentActivity activity = getSherlockActivity();
+		if (activity != null) {
+			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
+			menuInflater.inflate(R.menu.fragment_lignes, menu);
+		}
 	}
 
 	@Override
@@ -80,8 +87,8 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_edit:
-			startActivity(new Intent(getActivity(), CommentaireActivity.class));
+		case R.id.menu_search:
+			startActivity(new Intent(getActivity(), SearchActivity.class));
 			break;
 		}
 		return false;

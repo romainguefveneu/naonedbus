@@ -82,7 +82,10 @@
         <activity
             android:name=".activity.impl.ParcoursActivity"
             android:label="@string/emptyString" />
-        
+        <activity
+            android:name=".activity.impl.SearchActivity"
+            android:label="@string/emptyString" />
+
         <provider
             android:name=".provider.impl.LigneProvider"
             android:authorities="net.naonedbus.provider.LigneProvider"

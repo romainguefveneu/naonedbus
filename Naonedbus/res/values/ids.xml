@@ -54,6 +54,7 @@
     <item name="aboutTwitter" type="id"/>
     <item name="aboutFacebook" type="id"/>
     <item name="aboutGooglePlus" type="id"/>
+    <item name="aboutMail" type="id"/>
     <item name="aboutLicenceLibs" type="id"/>
     <item name="aboutLicenceIcons" type="id"/>
 

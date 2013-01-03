@@ -26,6 +26,7 @@ public class AboutFragment extends CustomFragment {
 		URLS.append(R.id.aboutTwitter, "http://twitter.com/naonedbus");
 		URLS.append(R.id.aboutFacebook, "http://www.facebook.com/naonedbus");
 		URLS.append(R.id.aboutGooglePlus, "http://plus.google.com/106014045430708857945");
+		URLS.append(R.id.aboutMail, "mailto:naonedbus@gmail.com?subject=Naonedbus&body=Bonjour,%0d%0a");
 	}
 
 	private static final SparseIntArray LICENCES_ID = new SparseIntArray();
@@ -70,6 +71,7 @@ public class AboutFragment extends CustomFragment {
 		view.findViewById(R.id.aboutTwitter).setOnClickListener(mLinkOnClickListener);
 		view.findViewById(R.id.aboutFacebook).setOnClickListener(mLinkOnClickListener);
 		view.findViewById(R.id.aboutGooglePlus).setOnClickListener(mLinkOnClickListener);
+		view.findViewById(R.id.aboutMail).setOnClickListener(mLinkOnClickListener);
 
 		view.findViewById(R.id.aboutLicenceLibs).setOnClickListener(mLicencesOnClickListener);
 		view.findViewById(R.id.aboutLicenceIcons).setOnClickListener(mLicencesOnClickListener);

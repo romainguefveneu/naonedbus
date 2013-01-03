@@ -41,6 +41,7 @@
     <string name="menu_itineraires">Itineraires</string>
     <string name="menu_parkings">Parkings</string>
     <string name="menu_equipements">Equipements</string>
+    <string name="menu_recherche">Recherche</string>
     <string name="menu_carte">Carte</string>
     <string name="menu_parametres">Paramètres</string>
     <string name="menu_don">Faire un don</string>
@@ -71,6 +72,7 @@
     <string name="action_change_sens">Autre sens</string>
     <string name="action_show_on_map">Voir sur le plan</string>
     <string name="action_favori">Favori</string>
+    <string name="action_search">Rechercher</string>
     <string name="action_list_location_center">Centrer au plus proche</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
@@ -97,6 +99,7 @@
     <string name="about_com_twitter">Twitter</string>
     <string name="about_com_facebook">Facebook</string>
     <string name="about_com_google_plus">Google+</string>
+    <string name="about_com_mail">E-mail</string>
     <string name="about_info_title">Informations</string>
     <string name="about_info_content">Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.\n\nLes données sont celles disponibles sur les sites www.tan.fr et data.nantes.fr</string>
     <string name="about_thanks_title">Remerciements</string>
@@ -169,6 +172,9 @@
     <string name="map_calque_satellite">Vue satellite</string>
     <string name="map_calque_covoiturage">Station de co-voiturage</string>
     <string name="map_calque_lila">Arrêt Lila</string>
+    
+    <!-- Search -->
+	<string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
 
     <!-- Sections -->
     <string name="section_distance_none">Aucune information de distance</string>

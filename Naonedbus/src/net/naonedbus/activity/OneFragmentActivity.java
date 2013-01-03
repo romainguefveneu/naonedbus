@@ -29,6 +29,8 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 
 	private Fragment mFragment;
 
+	private SlidingMenuHelper mSlidingMenuHelper;
+
 	/** Sert à la détection du changement de thème. */
 	private int currentTheme = NBApplication.THEME;
 
@@ -38,12 +40,12 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(NBApplication.THEME);
+		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
 
-		final SlidingMenuHelper slidingMenuHelper = new SlidingMenuHelper(this);
-		slidingMenuHelper.setupActionBar(getSupportActionBar());
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ic_launcher);
@@ -185,6 +187,10 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	 */
 	protected Object getParamValue(IIntentParamKey key) {
 		return getIntent().getSerializableExtra(key.toString());
+	}
+
+	protected SlidingMenuHelper getSlidingMenuHelper() {
+		return mSlidingMenuHelper;
 	}
 
 }

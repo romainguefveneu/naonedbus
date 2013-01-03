@@ -1,12 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@id/menu_feedback"
-        android:icon="@drawable/ic_action_new_email"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/action_feedback"/>
-    <item
         android:id="@id/menu_rate"
         android:icon="@drawable/ic_action_good"
         android:orderInCategory="100"

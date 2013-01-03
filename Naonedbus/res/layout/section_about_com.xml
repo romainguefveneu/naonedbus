@@ -41,5 +41,17 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/plus_account"
         android:text="@string/about_com_google_plus" />
+    
+    <View
+        android:id="@id/headerDivider"
+        style="@style/Divider" />
+
+    <TextView
+        android:id="@id/aboutMail"
+        style="@style/SectionContentItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/gmail"
+        android:text="@string/about_com_mail" />
 
 </LinearLayout>

@@ -138,13 +138,7 @@ public class MapActivity extends SherlockMapActivity {
 		}
 	};
 
-	/**
-	 * Gestion du menu latéral.
-	 */
-	private SlidingMenuHelper slidingMenuHelper;
-
 	public MapActivity() {
-		this.slidingMenuHelper = new SlidingMenuHelper(this);
 		this.myLocationProvider = NBApplication.getLocationProvider();
 	}
 

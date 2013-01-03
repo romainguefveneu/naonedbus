@@ -40,9 +40,6 @@ public class AboutActivity extends SlidingMenuActivity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_feedback:
-			compose();
-			break;
 		case R.id.menu_rate:
 			rateMe();
 			break;
@@ -51,21 +48,6 @@ public class AboutActivity extends SlidingMenuActivity {
 			break;
 		}
 		return true;
-	}
-
-	/**
-	 * Démarrer la rédaction d'un mail.
-	 */
-	private void compose() {
-		final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-		final String[] recipients = new String[] { "naonedbus@gmail.com" };
-		emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, recipients);
-		emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Naonedbus ");
-		emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Bonjour, ");
-		emailIntent.setType("plain/text");
-		emailIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		startActivity(emailIntent);
-
 	}
 
 	/**
