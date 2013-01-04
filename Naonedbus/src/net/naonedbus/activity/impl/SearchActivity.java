@@ -8,13 +8,13 @@ import android.os.Bundle;
 
 public class SearchActivity extends OneFragmentActivity {
 
-	public SearchActivity(int layoutId) {
+	public SearchActivity() {
 		super(R.layout.activity_main);
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
+		setTheme(NBApplication.THEMES_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 
 		if (savedInstanceState == null) {
