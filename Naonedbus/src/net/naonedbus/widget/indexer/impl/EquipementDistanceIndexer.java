@@ -2,10 +2,10 @@ package net.naonedbus.widget.indexer.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Equipement;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 
-public class EquipementDistanceIndexer extends CustomSectionIndexer<Equipement> {
+public class EquipementDistanceIndexer extends ArraySectionIndexer<Equipement> {
 
 	@Override
 	protected String getSectionLabel(Context context, Equipement item) {

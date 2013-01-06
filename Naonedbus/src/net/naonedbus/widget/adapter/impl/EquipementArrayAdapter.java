@@ -19,7 +19,7 @@ import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.utils.ParkingUtils;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -32,7 +32,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class EquipementArrayAdapter extends SectionAdapter<Equipement> {
+public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 
 	private static final String LOG_TAG = EquipementArrayAdapter.class.getSimpleName();
 

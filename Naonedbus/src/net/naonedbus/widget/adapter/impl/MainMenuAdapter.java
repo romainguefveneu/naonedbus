@@ -1,7 +1,7 @@
 package net.naonedbus.widget.adapter.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import net.naonedbus.widget.indexer.impl.MainMenuIndexer;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainMenuAdapter extends SectionAdapter<MainMenuItem> {
+public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 
 	private Class<?> mCurrentClass;
 

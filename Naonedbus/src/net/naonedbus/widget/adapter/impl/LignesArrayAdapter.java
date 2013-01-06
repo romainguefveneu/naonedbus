@@ -24,7 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
@@ -35,7 +35,7 @@ import android.widget.TextView;
  * 
  * @author romain
  */
-public class LignesArrayAdapter extends SectionAdapter<Ligne> {
+public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 
 	private static class ViewHolder {
 		TextView icon;

@@ -2,10 +2,10 @@ package net.naonedbus.widget.indexer.impl;
 
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.bean.Ligne;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 
-public class InfoTraficIndexer extends CustomSectionIndexer<InfoTrafic> {
+public class InfoTraficIndexer extends ArraySectionIndexer<InfoTrafic> {
 
 	@Override
 	protected String getSectionLabel(Context context, InfoTrafic item) {

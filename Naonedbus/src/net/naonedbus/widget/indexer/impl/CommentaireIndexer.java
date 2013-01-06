@@ -2,11 +2,11 @@ package net.naonedbus.widget.indexer.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Commentaire;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 import android.util.SparseArray;
 
-public class CommentaireIndexer extends CustomSectionIndexer<Commentaire> {
+public class CommentaireIndexer extends ArraySectionIndexer<Commentaire> {
 
 	public static final Integer SECTION_FUTURE = 0;
 	public static final Integer SECTION_NOW = 1;

@@ -4,11 +4,11 @@ import java.util.List;
 
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 import android.util.SparseArray;
 
-public class LigneIndexer extends CustomSectionIndexer<Ligne> {
+public class LigneIndexer extends ArraySectionIndexer<Ligne> {
 
 	private SparseArray<String> typesLignes;
 

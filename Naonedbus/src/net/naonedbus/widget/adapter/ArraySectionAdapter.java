@@ -23,7 +23,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.widget.PinnedHeaderListView;
 import net.naonedbus.widget.PinnedHeaderListView.PinnedHeaderAdapter;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import net.naonedbus.widget.item.SectionItem;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -40,20 +40,20 @@ import android.widget.TextView;
  * @author romain
  * 
  */
-public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter<T> implements OnScrollListener,
+public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAdapter<T> implements OnScrollListener,
 		PinnedHeaderAdapter {
 
-	protected CustomSectionIndexer<T> mIndexer;
+	protected ArraySectionIndexer<T> mIndexer;
 	protected LayoutInflater mLayoutInflater;
 
 	private int mLayoutId;
 
-	public SectionAdapter(Context context, int layoutId) {
+	public ArraySectionAdapter(Context context, int layoutId) {
 		super(context, layoutId);
 		init(context, layoutId);
 	}
 
-	public SectionAdapter(Context context, int layoutId, List<T> objects) {
+	public ArraySectionAdapter(Context context, int layoutId, List<T> objects) {
 		super(context, layoutId, objects);
 		init(context, layoutId);
 	}
@@ -63,7 +63,7 @@ public abstract class SectionAdapter<T extends SectionItem> extends ArrayAdapter
 		mLayoutId = layoutId;
 	}
 
-	public void setIndexer(CustomSectionIndexer<T> indexer) {
+	public void setIndexer(ArraySectionIndexer<T> indexer) {
 		this.mIndexer = indexer;
 		if (indexer != null) {
 			this.mIndexer.buildIndex(getContext(), this);

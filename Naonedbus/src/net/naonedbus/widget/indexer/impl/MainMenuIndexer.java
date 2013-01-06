@@ -1,11 +1,11 @@
 package net.naonedbus.widget.indexer.impl;
 
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.content.Context;
 import android.util.SparseArray;
 
-public class MainMenuIndexer extends CustomSectionIndexer<MainMenuItem> {
+public class MainMenuIndexer extends ArraySectionIndexer<MainMenuItem> {
 
 	private static SparseArray<String> SECTION_TITLES;
 	static {

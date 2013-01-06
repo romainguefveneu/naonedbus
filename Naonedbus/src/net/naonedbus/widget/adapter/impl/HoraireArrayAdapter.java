@@ -7,7 +7,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.horaire.EmptyHoraire;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.utils.DrawableUtils;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class HoraireArrayAdapter extends SectionAdapter<Horaire> {
+public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 
 	final DateFormat mTimeFormat;
 	final float mClockHandWidth;

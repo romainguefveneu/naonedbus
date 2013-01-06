@@ -17,7 +17,7 @@ import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.InfoTraficManager;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import net.naonedbus.widget.adapter.impl.InfoTraficLigneArrayAdapter;
 import net.naonedbus.widget.indexer.impl.InfoTraficIndexer;
 import android.content.Context;
@@ -95,7 +95,7 @@ public class TanActuFragment extends CustomListFragment {
 				}
 			}
 
-			final SectionAdapter<InfoTrafic> adapter = new InfoTraficLigneArrayAdapter(context, infoTraficDetails);
+			final ArraySectionAdapter<InfoTrafic> adapter = new InfoTraficLigneArrayAdapter(context, infoTraficDetails);
 			adapter.setIndexer(new InfoTraficIndexer());
 			result.setResult(adapter);
 		} catch (IOException e) {

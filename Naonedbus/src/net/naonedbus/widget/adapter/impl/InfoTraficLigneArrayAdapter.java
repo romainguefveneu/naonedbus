@@ -25,12 +25,12 @@ import net.naonedbus.bean.EmptyInfoTrafic;
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-public class InfoTraficLigneArrayAdapter extends SectionAdapter<InfoTrafic> {
+public class InfoTraficLigneArrayAdapter extends ArraySectionAdapter<InfoTrafic> {
 
 	static class ViewHolder {
 		TextView itemTitle;

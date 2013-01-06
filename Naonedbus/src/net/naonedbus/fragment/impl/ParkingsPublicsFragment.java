@@ -20,7 +20,7 @@ import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.ParkingPublicArrayAdapter;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import net.naonedbus.widget.indexer.impl.ParkingDistanceIndexer;
 import net.naonedbus.widget.indexer.impl.ParkingNomIndexer;
 import net.naonedbus.widget.indexer.impl.ParkingPlaceIndexer;
@@ -49,7 +49,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		comparators.append(SORT_DISTANCE, new ParkingDistanceComparator());
 		comparators.append(SORT_PLACES, new ParkingPlacesComparator());
 	}
-	private final static SparseArray<CustomSectionIndexer<ParkingPublic>> indexers = new SparseArray<CustomSectionIndexer<ParkingPublic>>();
+	private final static SparseArray<ArraySectionIndexer<ParkingPublic>> indexers = new SparseArray<ArraySectionIndexer<ParkingPublic>>();
 	static {
 		indexers.append(SORT_NOM, new ParkingNomIndexer());
 		indexers.append(SORT_DISTANCE, new ParkingDistanceIndexer());
@@ -222,7 +222,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	 */
 	private void sort(ParkingPublicArrayAdapter adapter) {
 		final Comparator<ParkingPublic> comparator;
-		final CustomSectionIndexer<ParkingPublic> indexer;
+		final ArraySectionIndexer<ParkingPublic> indexer;
 
 		if (currentSortPreference == SORT_DISTANCE && !myLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation

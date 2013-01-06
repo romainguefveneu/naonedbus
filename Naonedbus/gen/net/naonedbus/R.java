@@ -2061,18 +2061,19 @@ containing a value of this type.
         public static final int main=0x7f030052;
         public static final int menu=0x7f030053;
         public static final int menu_header=0x7f030054;
-        public static final int section_about_auteurs=0x7f030055;
-        public static final int section_about_com=0x7f030056;
-        public static final int shadow=0x7f030057;
-        public static final int sherlock_spinner_dropdown_item=0x7f030058;
-        public static final int sherlock_spinner_item=0x7f030059;
-        public static final int slidingmenumain=0x7f03005a;
-        public static final int slidingmenumainlist=0x7f03005b;
-        public static final int slidingmenurow=0x7f03005c;
-        public static final int spinner_item_icon=0x7f03005d;
-        public static final int spinner_item_symbole=0x7f03005e;
-        public static final int tutorial_view=0x7f03005f;
-        public static final int tutorial_view_welcome=0x7f030060;
+        public static final int search_view=0x7f030055;
+        public static final int section_about_auteurs=0x7f030056;
+        public static final int section_about_com=0x7f030057;
+        public static final int shadow=0x7f030058;
+        public static final int sherlock_spinner_dropdown_item=0x7f030059;
+        public static final int sherlock_spinner_item=0x7f03005a;
+        public static final int slidingmenumain=0x7f03005b;
+        public static final int slidingmenumainlist=0x7f03005c;
+        public static final int slidingmenurow=0x7f03005d;
+        public static final int spinner_item_icon=0x7f03005e;
+        public static final int spinner_item_symbole=0x7f03005f;
+        public static final int tutorial_view=0x7f030060;
+        public static final int tutorial_view_welcome=0x7f030061;
     }
     public static final class menu {
         public static final int activity_about=0x7f100000;

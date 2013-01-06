@@ -27,7 +27,7 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import net.naonedbus.widget.adapter.impl.CommentaireArrayAdapter.ViewHolder;
 import android.content.Context;
 import android.graphics.Color;
@@ -37,7 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-public class CommentaireArrayAdapter extends SectionAdapter<Commentaire> {
+public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 
 	private static final Map<String, CommentaireAdapter> adapterMap = new HashMap<String, CommentaireAdapter>();
 	static {

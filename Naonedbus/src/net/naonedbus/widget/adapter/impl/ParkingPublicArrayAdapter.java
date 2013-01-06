@@ -8,13 +8,13 @@ import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.utils.ParkingUtils;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ParkingPublicArrayAdapter extends SectionAdapter<ParkingPublic> {
+public class ParkingPublicArrayAdapter extends ArraySectionAdapter<ParkingPublic> {
 
 	static class ViewHolder {
 		TextView nom;

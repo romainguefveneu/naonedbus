@@ -5,14 +5,14 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Sens;
-import net.naonedbus.widget.adapter.SectionAdapter;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import net.naonedbus.widget.item.SectionItem;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LigneDialogAdapter extends SectionAdapter<SectionItem> {
+public class LigneDialogAdapter extends ArraySectionAdapter<SectionItem> {
 
 	public LigneDialogAdapter(Context context, List<Sens> sens) {
 		super(context, R.layout.list_item_icon_section, merge(sens));

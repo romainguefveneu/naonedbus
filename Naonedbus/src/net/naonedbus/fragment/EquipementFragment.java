@@ -17,7 +17,7 @@ import net.naonedbus.manager.impl.EquipementManager.SousType;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import net.naonedbus.widget.indexer.impl.EquipementDistanceIndexer;
 import net.naonedbus.widget.indexer.impl.EquipementNomIndexer;
 import android.content.Context;
@@ -43,7 +43,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	private static int COUNT = 0;
 
 	protected final SparseArray<Comparator<Equipement>> comparators;
-	protected final SparseArray<CustomSectionIndexer<Equipement>> indexers;
+	protected final SparseArray<ArraySectionIndexer<Equipement>> indexers;
 
 	protected MyLocationProvider myLocationProvider;
 	protected int currentSortPreference = SORT_NOM;
@@ -60,7 +60,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 		this.type = type;
 		this.myLocationProvider = NBApplication.getLocationProvider();
 
-		this.indexers = new SparseArray<CustomSectionIndexer<Equipement>>();
+		this.indexers = new SparseArray<ArraySectionIndexer<Equipement>>();
 		this.indexers.append(SORT_NOM, new EquipementNomIndexer());
 		this.indexers.append(SORT_DISTANCE, new EquipementDistanceIndexer());
 
@@ -278,7 +278,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	 */
 	private void setIndexerAndComparator(EquipementArrayAdapter adapter) {
 		final Comparator<Equipement> comparator;
-		final CustomSectionIndexer<Equipement> indexer;
+		final ArraySectionIndexer<Equipement> indexer;
 
 		if (currentSortPreference == SORT_DISTANCE && !myLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation
@@ -309,7 +309,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	 * @param key
 	 * @param indexer
 	 */
-	protected void addIndexer(int key, CustomSectionIndexer<Equipement> indexer) {
+	protected void addIndexer(int key, ArraySectionIndexer<Equipement> indexer) {
 		indexers.put(key, indexer);
 	}
 

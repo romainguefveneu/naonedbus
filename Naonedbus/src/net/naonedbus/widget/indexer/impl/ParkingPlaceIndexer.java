@@ -4,11 +4,11 @@ import net.naonedbus.R;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.utils.ParkingUtils;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 import android.util.SparseArray;
 
-public class ParkingPlaceIndexer extends CustomSectionIndexer<ParkingPublic> {
+public class ParkingPlaceIndexer extends ArraySectionIndexer<ParkingPublic> {
 
 	private static final int SECTION_PLEIN = R.color.parking_state_red;
 	private static final int SECTION_LIMITE = R.color.parking_state_orange;

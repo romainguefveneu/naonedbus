@@ -4,10 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import net.naonedbus.bean.horaire.Horaire;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 
-public class HoraireIndexer extends CustomSectionIndexer<Horaire> {
+public class HoraireIndexer extends ArraySectionIndexer<Horaire> {
 
 	private DateFormat dateFormat = SimpleDateFormat.getDateInstance(SimpleDateFormat.FULL);
 

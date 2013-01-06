@@ -2,10 +2,10 @@ package net.naonedbus.widget.indexer.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
-import net.naonedbus.widget.indexer.CustomSectionIndexer;
+import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 
-public class ParkingDistanceIndexer extends CustomSectionIndexer<ParkingPublic> {
+public class ParkingDistanceIndexer extends ArraySectionIndexer<ParkingPublic> {
 
 	@Override
 	protected String getSectionLabel(Context context, ParkingPublic item) {

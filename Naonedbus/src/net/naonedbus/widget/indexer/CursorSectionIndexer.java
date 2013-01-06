@@ -1,62 +1,68 @@
-/*
- * Copyright (C) 2010 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package net.naonedbus.widget.indexer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import net.naonedbus.widget.item.SectionItem;
-import android.content.Context;
-import android.widget.ArrayAdapter;
+import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.widget.SectionIndexer;
 
-/**
- * A section indexer that is configured with precomputed section titles and
- * their respective counts.
- */
-public abstract class CustomSectionIndexer<T extends SectionItem> implements SectionIndexer {
+public abstract class CursorSectionIndexer extends DataSetObserver implements SectionIndexer {
 
+	/** Cursor à sectionner. */
+	protected Cursor mDataCursor;
+	/** Liste des sections. */
 	private String[] mSections;
+	/** Positions des sections. */
 	private int[] mPositions;
+	/** Nom de la colonne servant à indexer le contenu. */
+	private final String mColumnSectionName;
+	/** Index de la colonne servant à identifier la section */
+	protected int mColumnSection;
+
 	private int mCount;
 
 	/**
-	 * @param sections
-	 *            a non-null array
-	 * @param counts
-	 *            a non-null array of the same size as <code>sections</code>
+	 * Constructs the indexer.
+	 * 
+	 * @param cursor
+	 *            the cursor containing the data set
+	 * @param columnSection
 	 */
-	public void buildIndex(Context context, ArrayAdapter<T> adapter) {
+	public CursorSectionIndexer(Cursor cursor, String columnSectionName, int sectionsCount) {
+		mDataCursor = cursor;
+		mColumnSectionName = columnSectionName;
+
+		changeCursor(cursor);
+	}
+
+	public void changeCursor(Cursor cursor) {
+		if (cursor != null) {
+			mDataCursor = cursor;
+			cursor.registerDataSetObserver(this);
+			mColumnSection = cursor.getColumnIndex(mColumnSectionName);
+
+			buildIndex();
+		}
+	}
+
+	private void buildIndex() {
 		final ArrayList<String> sectionsText = new ArrayList<String>();
 		final ArrayList<Integer> sectionsCount = new ArrayList<Integer>();
 		int lastSectionPosition;
 		int lastSectionSize;
-		Object lastSection = null;
+		int lastSection = -1;
 
-		for (int i = 0; i < adapter.getCount(); i++) {
-			final T item = adapter.getItem(i);
-			prepareSection(item);
-
-			if (lastSection == null || !lastSection.equals(item.getSection())) {
+		int currentSection;
+		mDataCursor.moveToFirst();
+		do {
+			currentSection = mDataCursor.getInt(mColumnSection);
+			if (lastSection == -1 || lastSection != currentSection) {
 				// Nouvelle section
 
-				lastSection = item.getSection();
+				lastSection = currentSection;
 				sectionsCount.add(1);
-				sectionsText.add(getSectionLabel(context, item));
+				sectionsText.add(getSectionLabel(currentSection));
 
 			} else {
 				// Mettre à jour le nombre d'élément de la section courante
@@ -71,7 +77,7 @@ public abstract class CustomSectionIndexer<T extends SectionItem> implements Sec
 				sectionsCount.set(lastSectionPosition, lastSectionSize + 1);
 
 			}
-		}
+		} while (mDataCursor.moveToNext());
 
 		this.mSections = new String[sectionsText.size()];
 		sectionsText.toArray(this.mSections);
@@ -90,20 +96,11 @@ public abstract class CustomSectionIndexer<T extends SectionItem> implements Sec
 	}
 
 	/**
-	 * Affecter la section à un élément.
-	 */
-	protected abstract void prepareSection(T item);
-
-	/**
-	 * @param item
+	 * @param section
+	 *            L'index de la section
 	 * @return Le libellé de la section.
 	 */
-	protected abstract String getSectionLabel(Context context, T item);
-
-	@Override
-	public Object[] getSections() {
-		return mSections;
-	}
+	protected abstract String getSectionLabel(int section);
 
 	@Override
 	public int getPositionForSection(int section) {
@@ -132,4 +129,10 @@ public abstract class CustomSectionIndexer<T extends SectionItem> implements Sec
 		 */
 		return index >= 0 ? index : -index - 2;
 	}
+
+	@Override
+	public Object[] getSections() {
+		return mSections;
+	}
+
 }
