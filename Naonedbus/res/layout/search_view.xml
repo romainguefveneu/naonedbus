@@ -9,22 +9,12 @@
     android:background="?attr/searchViewTextField"
     android:orientation="horizontal" >
 
-    <ImageView
-        android:id="@+id/abs__search_mag_icon"
-        android:layout_width="@dimen/abs__dropdownitem_icon_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/abs__dropdownitem_text_padding_left"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_action_search"
-        android:visibility="visible" />
-
     <EditText
         android:id="@+id/abs__search_src_text"
         android:layout_width="match_parent"
         android:layout_height="36dip"
         android:layout_gravity="bottom"
-        android:background="@null"
+        android:background="@drawable/search_hint_background"
         android:contentDescription="@string/abs__searchview_description_query"
         android:ellipsize="end"
         android:hint="@string/search_hint"

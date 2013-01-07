@@ -172,9 +172,9 @@
     <string name="map_calque_satellite">Vue satellite</string>
     <string name="map_calque_covoiturage">Station de co-voiturage</string>
     <string name="map_calque_lila">Arrêt Lila</string>
-    
+
     <!-- Search -->
-	<string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
+    <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
 
     <!-- Sections -->
     <string name="section_distance_none">Aucune information de distance</string>
