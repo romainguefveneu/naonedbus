@@ -23,12 +23,14 @@
         android:dropDownHorizontalOffset="0dip"
         android:dropDownVerticalOffset="0dip"
         android:ellipsize="end"
+        android:hint="@string/search_hint"
         android:imeOptions="actionSearch"
         android:inputType="text|textAutoComplete|textNoSuggestions"
         android:minWidth="@dimen/abs__search_view_text_min_width"
         android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
         android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:textColorHint="#ffffff" />
 
     <ImageView
         android:id="@+id/searchViewClose"

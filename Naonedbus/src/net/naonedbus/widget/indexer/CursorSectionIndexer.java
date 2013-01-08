@@ -37,8 +37,11 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 	}
 
 	public void changeCursor(Cursor cursor) {
+		if (mDataCursor != null) {
+			mDataCursor.unregisterDataSetObserver(this);
+		}
+		mDataCursor = cursor;
 		if (cursor != null) {
-			mDataCursor = cursor;
 			cursor.registerDataSetObserver(this);
 			mColumnSection = cursor.getColumnIndex(mColumnSectionName);
 

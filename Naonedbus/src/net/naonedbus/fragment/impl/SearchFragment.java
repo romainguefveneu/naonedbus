@@ -5,15 +5,13 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.TypeEquipement;
-import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.manager.impl.TypeEquipementManager;
 import net.naonedbus.provider.impl.EquipementProvider;
 import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.widget.PinnedHeaderListView;
+import net.naonedbus.widget.SearchView.OnQueryTextListener;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import net.naonedbus.widget.indexer.impl.EquipementCursorIndexer;
-import android.app.SearchManager;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -26,14 +24,11 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.widget.SearchView;
 
-public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor>, CustomFragmentActions {
+public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor>, OnQueryTextListener {
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
@@ -83,22 +78,6 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-//		final SherlockFragmentActivity activity = getSherlockActivity();
-//		if (activity != null) {
-//			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-//			menuInflater.inflate(R.menu.fragment_search, menu);
-//
-//			// Get the SearchView and set the searchable configuration
-//			final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-//			searchView.setFocusable(true);
-//			searchView.setIconified(false);
-//			searchView.requestFocusFromTouch();
-//		}
-
-	}
-
-	@Override
 	public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 		final CursorLoader cursorLoader = new CursorLoader(getActivity(), EquipementProvider.CONTENT_URI, null, null,
 				null, null);
@@ -141,8 +120,8 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 	}
 
 	@Override
-	public int getTitleId() {
-		return 0;
+	public void onQueryTextChange(String newText) {
+		Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
 	}
 
 }

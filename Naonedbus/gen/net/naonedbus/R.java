@@ -1806,8 +1806,8 @@ containing a value of this type.
         public static final int alignBounds=0x7f070000;
         public static final int alignMargins=0x7f070001;
         public static final int arret=0x7f0700b5;
-        public static final int avatarBenoit=0x7f0700c0;
-        public static final int avatarRomain=0x7f0700be;
+        public static final int avatarBenoit=0x7f0700c2;
+        public static final int avatarRomain=0x7f0700c0;
         public static final int balloon_close=0x7f07004c;
         public static final int balloon_inner_layout=0x7f07004b;
         public static final int balloon_main_layout=0x7f0700ad;
@@ -1899,7 +1899,7 @@ containing a value of this type.
         public static final int menu_place=0x7f070063;
         public static final int menu_rate=0x7f070077;
         public static final int menu_refresh=0x7f070065;
-        public static final int menu_search=0x7f0700c7;
+        public static final int menu_search=0x7f0700c9;
         public static final int menu_send=0x7f070074;
         public static final int menu_sens=0x7f070064;
         /**  Menus 
@@ -1913,7 +1913,7 @@ containing a value of this type.
         public static final int menu_sort_parking_places=0x7f070070;
         public static final int message=0x7f0700aa;
         public static final int moreAction=0x7f0700ae;
-        public static final int my_animation=0x7f0700c6;
+        public static final int my_animation=0x7f0700c8;
         public static final int none=0x7f070002;
         public static final int normal=0x7f07000e;
         public static final int pageSubTitle=0x7f07003f;
@@ -1924,6 +1924,8 @@ containing a value of this type.
         public static final int placesTotales=0x7f0700a7;
         public static final int planView=0x7f07004f;
         public static final int right=0x7f070009;
+        public static final int searchViewClose=0x7f0700bf;
+        public static final int searchViewText=0x7f0700be;
         public static final int secondLine=0x7f0700ba;
         public static final int sectionSensA=0x7f070045;
         public static final int sectionSensB=0x7f070047;
@@ -1941,18 +1943,18 @@ containing a value of this type.
         public static final int showTitle=0x7f070014;
         public static final int showcase=0x7f07009e;
         public static final int showcase_button=0x7f070007;
-        public static final int slidingmenulayout=0x7f0700c3;
-        public static final int slidingmenumain=0x7f0700c2;
-        public static final int slidingmenurowicon=0x7f0700c4;
-        public static final int slidingmenurowtitle=0x7f0700c5;
+        public static final int slidingmenulayout=0x7f0700c5;
+        public static final int slidingmenumain=0x7f0700c4;
+        public static final int slidingmenurowicon=0x7f0700c6;
+        public static final int slidingmenurowtitle=0x7f0700c7;
         public static final int star=0x7f070040;
         public static final int tabMode=0x7f070010;
         public static final int text=0x7f0700ac;
         public static final int textView=0x7f07009f;
         public static final int textView1=0x7f0700a0;
         public static final int title=0x7f0700b0;
-        public static final int titleBenoit=0x7f0700c1;
-        public static final int titleRomain=0x7f0700bf;
+        public static final int titleBenoit=0x7f0700c3;
+        public static final int titleRomain=0x7f0700c1;
         public static final int top=0x7f070006;
         public static final int triangle=0x7f070003;
         /**  Tutorial 
@@ -2092,6 +2094,7 @@ containing a value of this type.
         public static final int fragment_lignes_contextual=0x7f10000c;
         public static final int fragment_parkings_publics=0x7f10000d;
         public static final int fragment_proximite=0x7f10000e;
+        public static final int fragment_search=0x7f10000f;
     }
     public static final class plurals {
         public static final int parking_places_disponibles=0x7f0f0000;
