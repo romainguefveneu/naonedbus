@@ -24,9 +24,6 @@ public class SearchActivity extends OneFragmentActivity {
 			actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			actionBar.setDisplayShowHomeEnabled(true);
-
-			// final View searchView =
-			// LayoutInflater.from(this).inflate(R.layout.search_view, null);
 			actionBar.setCustomView(R.layout.search_view);
 		}
 	}
