@@ -2,6 +2,7 @@ package net.naonedbus.activity;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.SearchActivity;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;

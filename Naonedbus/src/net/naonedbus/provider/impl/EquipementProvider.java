@@ -148,7 +148,8 @@ public class EquipementProvider extends ReadOnlyContentProvider {
 			break;
 
 		case EQUIPEMENTS:
-			// no filter
+			sortOrder = EquipementTable.TABLE_NAME + "." + EquipementTable.ID_TYPE + "," + EquipementTable.TABLE_NAME
+					+ "." + EquipementTable.NORMALIZED_NOM;
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI : " + uri);

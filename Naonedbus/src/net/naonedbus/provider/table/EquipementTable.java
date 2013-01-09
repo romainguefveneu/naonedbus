@@ -44,6 +44,7 @@ public interface EquipementTable extends BaseColumns {
 
 	public static final String[] PROJECTION = new String[] { TABLE_NAME + "." + _ID + " as _id",
 			TABLE_NAME + "." + ID_TYPE, TABLE_NAME + "." + ID_SOUS_TYPE, TABLE_NAME + "." + NOM,
-			TABLE_NAME + "." + NORMALIZED_NOM, TABLE_NAME + "." + ADRESSE, TABLE_NAME + "." + TELEPHONE,
-			TABLE_NAME + "." + URL, TABLE_NAME + "." + LATITUDE, TABLE_NAME + "." + LONGITUDE };
+			TABLE_NAME + "." + NORMALIZED_NOM, TABLE_NAME + "." + ADRESSE, TABLE_NAME + "." + DETAILS,
+			TABLE_NAME + "." + TELEPHONE, TABLE_NAME + "." + URL, TABLE_NAME + "." + LATITUDE,
+			TABLE_NAME + "." + LONGITUDE };
 }

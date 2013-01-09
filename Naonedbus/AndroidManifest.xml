@@ -84,7 +84,17 @@
             android:label="@string/emptyString" />
         <activity
             android:name=".activity.impl.SearchActivity"
-            android:label="@string/emptyString" />
+            android:label="@string/emptyString" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
 
         <provider
             android:name=".provider.impl.LigneProvider"
@@ -109,7 +119,7 @@
         <provider
             android:name=".provider.impl.EquipementProvider"
             android:authorities="net.naonedbus.provider.EquipementProvider"
-            android:exported="false"
+            android:exported="true"
             android:multiprocess="true" />
         <provider
             android:name=".provider.impl.UpdaterProvider"

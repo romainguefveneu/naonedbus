@@ -19,7 +19,7 @@ public final class R {
 		public static final int app_name = 0x7f0d0000;
 	}
 	public static final class layout {
-		public static final int main = 0x7f030052;
+		public static final int main = 0x7f030053;
 	}
 	public static final class styleable {
 		public static final int ShowcaseView_backgroundColor = 0;
