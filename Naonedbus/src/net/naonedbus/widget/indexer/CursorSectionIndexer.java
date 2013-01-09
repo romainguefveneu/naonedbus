@@ -50,6 +50,7 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 	}
 
 	private void buildIndex() {
+
 		final ArrayList<String> sectionsText = new ArrayList<String>();
 		final ArrayList<Integer> sectionsCount = new ArrayList<Integer>();
 		int lastSectionPosition;
@@ -57,30 +58,31 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 		int lastSection = -1;
 
 		int currentSection;
-		mDataCursor.moveToFirst();
-		do {
-			currentSection = mDataCursor.getInt(mColumnSection);
-			if (lastSection == -1 || lastSection != currentSection) {
-				// Nouvelle section
+		if (mDataCursor.moveToFirst()) {
+			do {
+				currentSection = mDataCursor.getInt(mColumnSection);
+				if (lastSection == -1 || lastSection != currentSection) {
+					// Nouvelle section
 
-				lastSection = currentSection;
-				sectionsCount.add(1);
-				sectionsText.add(getSectionLabel(currentSection));
+					lastSection = currentSection;
+					sectionsCount.add(1);
+					sectionsText.add(getSectionLabel(currentSection));
 
-			} else {
-				// Mettre à jour le nombre d'élément de la section courante
-
-				if (sectionsCount.size() == 0) {
-					lastSectionPosition = 0;
-					lastSectionSize = 0;
 				} else {
-					lastSectionPosition = sectionsCount.size() - 1;
-					lastSectionSize = sectionsCount.get(lastSectionPosition);
-				}
-				sectionsCount.set(lastSectionPosition, lastSectionSize + 1);
+					// Mettre à jour le nombre d'élément de la section courante
 
-			}
-		} while (mDataCursor.moveToNext());
+					if (sectionsCount.size() == 0) {
+						lastSectionPosition = 0;
+						lastSectionSize = 0;
+					} else {
+						lastSectionPosition = sectionsCount.size() - 1;
+						lastSectionSize = sectionsCount.get(lastSectionPosition);
+					}
+					sectionsCount.set(lastSectionPosition, lastSectionSize + 1);
+
+				}
+			} while (mDataCursor.moveToNext());
+		}
 
 		this.mSections = new String[sectionsText.size()];
 		sectionsText.toArray(this.mSections);

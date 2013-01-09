@@ -206,7 +206,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param name
 	 * @return Les équipements dont le nom correspond
 	 */
-	public List<Equipement> getEquipementsByName(ContentResolver contentResolver, Type type, String name) {
+	public Cursor getEquipementsCursorByName(ContentResolver contentResolver, Type type, String name) {
 		String selection = null;
 		String[] selectionArgs = null;
 
@@ -219,7 +219,20 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 			selectionArgs = new String[] { String.valueOf(type.getId()) };
 		}
 
-		Cursor c = contentResolver.query(builder.build(), null, selection, selectionArgs, null);
+		return contentResolver.query(builder.build(), null, selection, selectionArgs, null);
+	}
+
+	/**
+	 * Récupérer les équipements à partir d'un nom.
+	 * 
+	 * @param contentResolver
+	 * @param type
+	 *            Peut être null.
+	 * @param name
+	 * @return Les équipements dont le nom correspond
+	 */
+	public List<Equipement> getEquipementsByName(ContentResolver contentResolver, Type type, String name) {
+		final Cursor c = getEquipementsCursorByName(contentResolver, type, name);
 		return getFromCursor(c);
 	}
 

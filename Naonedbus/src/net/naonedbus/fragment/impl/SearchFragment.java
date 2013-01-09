@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.TypeEquipement;
+import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.manager.impl.TypeEquipementManager;
 import net.naonedbus.provider.impl.EquipementProvider;
 import net.naonedbus.provider.table.EquipementTable;
@@ -23,18 +24,19 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor>, OnQueryTextListener {
+public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor>, OnQueryTextListener,
+		FilterQueryProvider {
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
 
 	private EquipementCursorAdapter mAdapter;
-
+	private EquipementManager mEquipementManager;
 	protected ViewGroup fragmentView;
 
 	@Override
@@ -48,8 +50,11 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 			equipements.add(typeEquipement.nom);
 		}
 
+		mEquipementManager = EquipementManager.getInstance();
+
 		mAdapter = new EquipementCursorAdapter(getActivity(), null);
 		mAdapter.setIndexer(new EquipementCursorIndexer(null, equipements, EquipementTable.ID_TYPE));
+		mAdapter.setFilterQueryProvider(this);
 
 		// Associate the (now empty) adapter with the ListView.
 		setListAdapter(mAdapter);
@@ -121,7 +126,13 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 
 	@Override
 	public void onQueryTextChange(String newText) {
-		Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+		mAdapter.getFilter().filter(newText);
+	}
+
+	@Override
+	public Cursor runQuery(CharSequence constraint) {
+		return mEquipementManager.getEquipementsCursorByName(getActivity().getContentResolver(), null,
+				constraint.toString());
 	}
 
 }

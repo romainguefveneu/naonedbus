@@ -88,7 +88,9 @@ public class MainActivity extends SlidingMenuActivity {
 		if (progressDialog != null) {
 			progressDialog.dismiss();
 		}
+
 		addFragments(titles, classes);
+
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 		final int count = favoriManager.getAll(getContentResolver()).size();
 		if (count > 0) {

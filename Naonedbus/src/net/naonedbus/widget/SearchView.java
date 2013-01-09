@@ -69,12 +69,13 @@ public class SearchView extends LinearLayout implements TextWatcher {
 	}
 
 	private CharSequence getDecoratedHint(CharSequence hintText) {
-		SpannableStringBuilder ssb = new SpannableStringBuilder("   "); // for
-																		// the
-																		// icon
+		final SpannableStringBuilder ssb = new SpannableStringBuilder("   "); // for
+																				// the
+																				// icon
 		ssb.append(hintText);
-		Drawable searchIcon = getContext().getResources().getDrawable(R.drawable.ic_action_search);
-		int textSize = (int) (mQueryTextView.getTextSize() * 1.25);
+
+		final Drawable searchIcon = getContext().getResources().getDrawable(R.drawable.ic_action_search);
+		final int textSize = (int) (mQueryTextView.getTextSize() * 1.25);
 		searchIcon.setBounds(0, 0, textSize, textSize);
 		ssb.setSpan(new ImageSpan(searchIcon), 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return ssb;
