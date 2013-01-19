@@ -299,9 +299,11 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			showContent();
 		} else {
 			final Exception exception = result.getException();
-			final int errorMessageRes = (exception instanceof IOException) ? R.string.msg_connection_error
-					: R.string.msg_webservice_error;
-			showError(R.string.error_title_network, errorMessageRes);
+			if (exception instanceof IOException) {
+				showError(R.string.error_title_network, R.string.error_summary_network);
+			} else {
+				showError(R.string.error_title_webservice, R.string.error_summary_webservice);
+			}
 			Log.e(LOG_TAG, "Erreur", exception);
 		}
 

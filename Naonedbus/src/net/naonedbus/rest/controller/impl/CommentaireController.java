@@ -19,16 +19,18 @@
 package net.naonedbus.rest.controller.impl;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
-import net.naonedbus.rest.container.CommentaireContainer;
 import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
 
 import org.apache.http.HttpException;
 import org.joda.time.base.BaseDateTime;
+
+import com.google.gson.reflect.TypeToken;
 
 /**
  * Classe d'envoi des commentaires au WebService
@@ -36,7 +38,7 @@ import org.joda.time.base.BaseDateTime;
  * @author romain.guefveneu
  * 
  */
-public class CommentaireController extends RestController<CommentaireContainer> {
+public class CommentaireController extends RestController<List<Commentaire>> {
 
 	private static final int LIMIT = 20;
 	private static final String PATH = "commentaire";
@@ -58,7 +60,10 @@ public class CommentaireController extends RestController<CommentaireContainer> 
 	public List<Commentaire> getAll(String codeLigne, String codeSens, String codeArret, BaseDateTime date)
 			throws IOException {
 		final UrlBuilder url = new UrlBuilder(RestConfiguration.PATH, PATH);
-		CommentaireContainer result;
+		final Type collectionType = new TypeToken<List<Commentaire>>() {
+		}.getType();
+
+		List<Commentaire> result;
 
 		url.addQueryParameter("codeLigne", codeLigne);
 		url.addQueryParameter("codeSens", codeSens);
@@ -66,9 +71,9 @@ public class CommentaireController extends RestController<CommentaireContainer> 
 		url.addQueryParameter("timestamp", String.valueOf(date.getMillis()));
 		url.addQueryParameter("limit", String.valueOf(LIMIT));
 
-		result = parseJson(url, CommentaireContainer.class);
+		result = parseJson(url, collectionType);
 
-		return (result != null) ? result.commentaire : null;
+		return result;
 	}
 
 }

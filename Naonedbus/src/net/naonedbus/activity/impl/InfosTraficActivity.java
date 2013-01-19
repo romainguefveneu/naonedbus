@@ -18,7 +18,7 @@ public class InfosTraficActivity extends SlidingMenuActivity {
 	private static Class<?>[] classes = new Class<?>[] { CommentairesFragment.class, TanActuFragment.class };
 
 	public InfosTraficActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_tabs);
 	}
 
 	@Override

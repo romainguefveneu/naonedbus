@@ -122,11 +122,16 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		public void onReceive(Context context, Intent intent) {
 			Log.d(LOG_TAG, "onReceive : " + intent);
 			final int id = intent.getIntExtra("id", -1);
-			if (id != -1) {
+			final Throwable throwable = (Throwable) intent.getSerializableExtra("throwable");
+
+			if (throwable != null) {
+				markeFavoriHoraireError(id);
+			} else if (id != -1) {
 				forceLoadHorairesFavoris(id);
 			} else {
 				loadHorairesFavoris();
 			}
+
 		}
 	};
 
@@ -163,6 +168,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mListView = getListView();
 		mListView.setOnItemLongClickListener(this);
 
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
 		loadContent();
 	}
 
@@ -537,6 +547,21 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.d(LOG_TAG, "LoadHoraires end");
 		}
 
+	}
+
+	/**
+	 * Indiquer que le chargement des horaires de ce favori à posé problème.
+	 * 
+	 * @param position
+	 *            La position du favori.
+	 */
+	private void markeFavoriHoraireError(int position) {
+		FavoriArrayAdapter adapter;
+		if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null) {
+			final Favori favori = (Favori) getListAdapter().getItem(position);
+			favori.delay = getString(R.string.msg_horaire_erreur);
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	@Override

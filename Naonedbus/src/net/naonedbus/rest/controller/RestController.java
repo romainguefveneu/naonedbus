@@ -40,6 +40,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 
 /**
@@ -77,7 +78,7 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 */
 	protected T parseJson(URL url, Class<T> clazz) throws IOException {
-		final Gson gson = new Gson();
+		final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		Reader comReader;
 		T result;
 
@@ -112,7 +113,7 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 */
 	protected T parseJson(URL url, Type type) throws IOException {
-		final Gson gson = new Gson();
+		final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		Reader comReader;
 		T result;
 

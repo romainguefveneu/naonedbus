@@ -14,7 +14,7 @@ public class ParkingsActivity extends SlidingMenuActivity {
 	private static Class<?>[] classes = new Class<?>[] { ParkingsPublicsFragment.class, ParkingsRelaisFragment.class };
 
 	public ParkingsActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_tabs);
 	}
 
 	@Override

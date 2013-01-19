@@ -17,7 +17,7 @@ public class EquipementsActivity extends SlidingMenuActivity {
 			CoVoituragesFragment.class, LilasFragment.class };
 
 	public EquipementsActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_tabs);
 	}
 
 	@Override

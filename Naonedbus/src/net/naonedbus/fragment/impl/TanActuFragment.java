@@ -1,11 +1,7 @@
 package net.naonedbus.fragment.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.InfoTraficDetailActivity;
@@ -25,6 +21,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public class TanActuFragment extends CustomListFragment {
 
@@ -98,7 +97,7 @@ public class TanActuFragment extends CustomListFragment {
 			final ArraySectionAdapter<InfoTrafic> adapter = new InfoTraficLigneArrayAdapter(context, infoTraficDetails);
 			adapter.setIndexer(new InfoTraficIndexer());
 			result.setResult(adapter);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			result.setException(e);
 		}
 		return result;

@@ -442,7 +442,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	@Override
 	public void onLoaderReset(Loader<AsyncResult<ListAdapter>> arg0) {
-
 	}
 
 	/**

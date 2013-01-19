@@ -335,17 +335,22 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			try {
 				getNextHoraires(task.getContext().getContentResolver(), task.getArret(), new DateMidnight(),
 						task.getLimit());
-
-				onPostLoad(task);
-			} catch (IOException e) {
+			} catch (Exception e) {
+				task.setThrowable(e);
 				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 			}
 
+			onPostLoad(task);
 		}
 
 		private void onPostLoad(final NextHoraireTask task) {
 			final Intent intent = new Intent(task.getActionCallback());
 			intent.putExtra("id", task.getId());
+
+			if (task.getThrowable() != null) {
+				intent.putExtra("throwable", task.getThrowable());
+			}
+
 			task.getContext().sendBroadcast(intent);
 		}
 

@@ -6,11 +6,13 @@ import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
-import android.inputmethodservice.KeyboardView;
-import android.media.ExifInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -23,40 +25,53 @@ import com.slidingmenu.lib.SlidingMenu;
 
 public abstract class SlidingMenuActivity extends SherlockFragmentActivity implements TabListener {
 
+	private static final String LOG_TAG = "SlidingMenuActivity";
+
 	private static String BUNDLE_TABS_CURRENT = "tabsCurrent";
 	private static String BUNDLE_TABS_TITLES = "tabsTitles";
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 
-	private int layoutId;
+	/** Layout de l'activitée courante. */
+	private int mLayoutId;
+	/** Sert à la détection du changement de thème. */
+	private int mCurrentTheme = NBApplication.THEME;
 
-	/**
-	 * Liste des fragments
-	 */
-	private int[] titles;
-	private String[] classes;
-	private Bundle[] bundles;
+	/** Titres des fragments. */
+	private int[] mTitles;
+	/** Classes des fragments */
+	private String[] mClasses;
+	/** Bundles des fragments. */
+	private Bundle[] mBundles;
+	/** Fragmnets. */
+	private Fragment[] mFragments;
 
-	/**
-	 * Sert à la détection du changement de thème.
-	 */
-	private int currentTheme = NBApplication.THEME;
-
-	/**
-	 * Gestion du menu latéral.
-	 */
+	/** Gestion du menu latéral. */
 	private SlidingMenu mSlidingMenu;
+	/** Gestion du menu latéral. */
 	private SlidingMenuHelper mSlidingMenuHelper;
 
-	public SlidingMenuActivity(int layoutId) {
-		this.layoutId = layoutId;
+	/** The {@link ViewPager} that will host the section contents. */
+	private ViewPager mViewPager;
 
+	/**
+	 * The {@link android.support.v4.view.PagerAdapter} that will provide
+	 * fragments for each of the sections. We use a
+	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
+	 * will keep every loaded fragment in memory. If this becomes too memory
+	 * intensive, it may be best to switch to a
+	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
+	 */
+	private SectionsPagerAdapter mSectionsPagerAdapter;
+
+	public SlidingMenuActivity(int layoutId) {
+		this.mLayoutId = layoutId;
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
-		setContentView(layoutId);
+		setContentView(mLayoutId);
 
 		mSlidingMenu = new SlidingMenu(this);
 		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
@@ -64,6 +79,23 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 		mSlidingMenuHelper.setupSlidingMenu(mSlidingMenu);
+
+		// Create the adapter that will return a fragment for each of the three
+		// primary sections of the app.
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+		// Set up the ViewPager with the sections adapter.
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+
+		// When swiping between different sections, select the corresponding
+		// tab. We can also use ActionBar.Tab#select() to do this if we have
+		// a reference to the Tab.
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				getSupportActionBar().setSelectedNavigationItem(position);
+			}
+		});
 	}
 
 	@Override
@@ -119,8 +151,8 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(BUNDLE_TABS_CURRENT, getSupportActionBar().getSelectedNavigationIndex());
-		outState.putIntArray(BUNDLE_TABS_TITLES, titles);
-		outState.putStringArray(BUNDLE_TABS_CLASSES, classes);
+		outState.putIntArray(BUNDLE_TABS_TITLES, mTitles);
+		outState.putStringArray(BUNDLE_TABS_CLASSES, mClasses);
 		mSlidingMenuHelper.onSaveInstanceState(outState);
 	}
 
@@ -143,7 +175,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		super.onWindowFocusChanged(hasFocus);
 
 		// Gérer le changement de thème;
-		if (hasFocus && (currentTheme != NBApplication.THEME)) {
+		if (hasFocus && (mCurrentTheme != NBApplication.THEME)) {
 			final Intent intent = new Intent(this, this.getClass());
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			overridePendingTransition(0, 0);
@@ -166,29 +198,40 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		return super.onKeyDown(keyCode, event);
 	}
 
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
+
+		mViewPager.setCurrentItem(tab.getPosition());
+		invalidateOptionsMenu();
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
+	}
+
 	protected void addFragments(int[] titles, String[] classes) {
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		this.classes = classes;
-		this.titles = titles;
-
-		final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-		for (int i = 0; i < titles.length; i++) {
-			final Fragment fragment = Fragment.instantiate(this, this.classes[i]);
-			transaction.add(fragment, this.classes[i]);
-			transaction.detach(fragment);
-		}
-		transaction.commit();
-		getSupportFragmentManager().executePendingTransactions();
+		mClasses = classes;
+		mTitles = titles;
+		mFragments = new Fragment[classes.length];
 
 		for (int i = 0; i < titles.length; i++) {
 			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
 		}
 
+		mViewPager.setAdapter(mSectionsPagerAdapter);
 	}
 
 	/**
-	 * Ajouter les information de fragments.
+	 * Ajouter les informations de fragments.
 	 * 
 	 * @param titles
 	 *            Les titres (ressources).
@@ -196,41 +239,15 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 *            Les classes des fragments.
 	 */
 	protected void addFragments(int[] titles, Class<?>[] classes) {
-		this.classes = new String[classes.length];
+		mClasses = new String[classes.length];
 		for (int i = 0; i < classes.length; i++) {
-			this.classes[i] = classes[i].getName();
+			mClasses[i] = classes[i].getName();
 		}
-		addFragments(titles, this.classes);
+		addFragments(titles, mClasses);
 	}
 
 	protected void setSelectedTab(int position) {
 		getSupportActionBar().setSelectedNavigationItem(position);
-	}
-
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		final int position = tab.getPosition();
-		final Fragment fragment = getSupportFragmentManager().findFragmentByTag(this.classes[position]);
-
-		if (fragment.isAdded()) {
-			ft.show(fragment);
-		} else {
-			ft.attach(fragment);
-			ft.add(R.id.fragmentContent, fragment);
-		}
-
-		invalidateOptionsMenu();
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		final int position = tab.getPosition();
-		final Fragment fragment = getSupportFragmentManager().findFragmentByTag(this.classes[position]);
-		ft.hide(fragment);
-	}
-
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 	}
 
 	/**
@@ -241,7 +258,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	private Fragment getCurrentFragment() {
 		final Tab tab = getSupportActionBar().getSelectedTab();
 		if (tab != null) {
-			return getSupportFragmentManager().findFragmentByTag(this.classes[tab.getPosition()]);
+			return mFragments[tab.getPosition()];
 		}
 		return null;
 	}
@@ -254,6 +271,34 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 */
 	protected Object getParamValue(IIntentParamKey key) {
 		return getIntent().getSerializableExtra(key.toString());
+	}
+
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+		public SectionsPagerAdapter(FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) {
+			final Fragment fragment = Fragment.instantiate(SlidingMenuActivity.this, mClasses[position]);
+			mFragments[position] = fragment;
+			return fragment;
+		}
+
+		@Override
+		public int getCount() {
+			return mClasses.length;
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return getString(mTitles[position]);
+		}
 	}
 
 }

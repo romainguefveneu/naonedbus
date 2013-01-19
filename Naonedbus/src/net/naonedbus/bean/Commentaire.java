@@ -7,156 +7,167 @@ import org.joda.time.DateTime;
 
 import android.graphics.drawable.Drawable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Commentaire implements ICommentaire, SectionItem {
 	private static final long serialVersionUID = -7332209663235356830L;
-	private Integer id;
-	private String codeLigne;
-	private String codeSens;
-	private String codeArret;
-	private String message;
-	private String source;
-	private long timestamp;
-	private Object section;
 
-	private String delay;
-	private DateTime dateTime;
-	private transient Drawable background;
-	private Ligne ligne;
-	private Sens sens;
-	private Arret arret;
+	@SerializedName("id")
+	private Integer mId;
+	@SerializedName("codeLigne")
+	private String mCodeLigne;
+	@SerializedName("codeSens")
+	private String mCodeSens;
+	@SerializedName("codeArret")
+	private String mCodeArret;
+	@SerializedName("message")
+	private String mMessage;
+	@SerializedName("source")
+	private String mSource;
+	@SerializedName("timestamp")
+	private long mTimestamp;
+
+	private Object mSection;
+	private String mDelay;
+	private DateTime mDateTime;
+	private transient Drawable mBackground;
+	private Ligne mLigne;
+	private Sens mSens;
+	private Arret mArret;
 
 	@Override
 	public Integer getId() {
-		return id;
+		return mId;
 	}
 
 	@Override
 	public void setId(Integer id) {
-		this.id = id;
+		this.mId = id;
 	}
 
 	@Override
 	public String getCodeLigne() {
-		return codeLigne;
+		return mCodeLigne;
 	}
 
 	@Override
 	public void setCodeLigne(String codeLigne) {
-		this.codeLigne = codeLigne;
+		this.mCodeLigne = codeLigne;
 	}
 
 	@Override
 	public String getCodeSens() {
-		return codeSens;
+		return mCodeSens;
 	}
 
 	@Override
 	public void setCodeSens(String codeSens) {
-		this.codeSens = codeSens;
+		this.mCodeSens = codeSens;
 	}
 
 	@Override
 	public String getCodeArret() {
-		return codeArret;
+		return mCodeArret;
 	}
 
 	@Override
 	public void setCodeArret(String codeArret) {
-		this.codeArret = codeArret;
+		this.mCodeArret = codeArret;
 	}
 
 	@Override
 	public String getMessage() {
-		return message;
+		return mMessage;
 	}
 
 	@Override
 	public void setMessage(String message) {
-		this.message = message;
+		this.mMessage = message;
 	}
 
 	@Override
 	public Long getTimestamp() {
-		return this.timestamp;
+		return this.mTimestamp;
 	}
 
 	@Override
 	public void setTimestamp(Long timestamp) {
-		this.timestamp = timestamp;
+		this.mTimestamp = timestamp;
 	}
 
 	@Override
 	public void setSource(String source) {
-		this.source = source;
+		this.mSource = source;
 	}
 
 	@Override
 	public String getSource() {
-		return this.source;
+		return this.mSource;
 	}
 
 	public void setSection(Object section) {
-		this.section = section;
+		this.mSection = section;
 	}
 
 	@Override
 	public Object getSection() {
-		return this.section;
+		return this.mSection;
 	}
 
 	public String getDelay() {
-		return delay;
+		return mDelay;
 	}
 
 	public void setDelay(String delay) {
-		this.delay = delay;
+		this.mDelay = delay;
 	}
 
 	public DateTime getDateTime() {
-		return dateTime;
+		return mDateTime;
 	}
 
 	public void setDateTime(DateTime dateTime) {
-		this.dateTime = dateTime;
+		this.mDateTime = dateTime;
 	}
 
 	public Drawable getBackground() {
-		return background;
+		return mBackground;
 	}
 
 	public void setBackground(Drawable background) {
-		this.background = background;
+		this.mBackground = background;
 	}
 
 	public void setLigne(Ligne ligne) {
-		this.ligne = ligne;
+		this.mLigne = ligne;
 	}
 
 	public Ligne getLigne() {
-		return ligne;
+		return mLigne;
 	}
 
 	public void setSens(Sens sens) {
-		this.sens = sens;
+		this.mSens = sens;
 	}
 
 	public Sens getSens() {
-		return sens;
+		return mSens;
 	}
 
 	public void setArret(Arret arret) {
-		this.arret = arret;
+		this.mArret = arret;
 	}
 
 	public Arret getArret() {
-		return arret;
+		return mArret;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(codeLigne).append(" | ").append(codeSens).append(" | ").append(codeArret).append(" | ")
-				.append(source).append(" | ").append(message);
+		builder.append(mCodeLigne).append(" | ").append(mCodeSens).append(" | ").append(mCodeArret).append(" | ")
+				.append(mSource).append(" | ").append(mMessage);
 		return builder.toString();
 	}
 }

@@ -81,13 +81,14 @@ public class CommentaireManager {
 
 	public List<Commentaire> getFromWeb(Context context, String codeLigne, String codeSens, String codeArret,
 			BaseDateTime date) throws IOException {
-		CommentaireController commentaireController = new CommentaireController();
-		List<Commentaire> data = commentaireController.getAll(codeLigne, codeSens, codeArret, date);
+		final CommentaireController commentaireController = new CommentaireController();
+		final List<Commentaire> data = commentaireController.getAll(codeLigne, codeSens, codeArret, date);
 
-		if (data.size() > 0) {
+		if (data != null && data.size() > 0) {
 			final String key = genKey(codeLigne, codeSens, codeArret);
 			saveToCache(context, key, data);
 		}
+
 		return data;
 	}
 

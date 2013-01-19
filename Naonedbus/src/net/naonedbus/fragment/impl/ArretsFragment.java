@@ -235,7 +235,9 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	 */
 	private void sort(ArretArrayAdapter adapter) {
 		final Comparator<Arret> comparator = mComparators.get(mCurrentSortPreference);
-		adapter.sort(comparator);
+		if (comparator != null) {
+			adapter.sort(comparator);
+		}
 	}
 
 	@Override

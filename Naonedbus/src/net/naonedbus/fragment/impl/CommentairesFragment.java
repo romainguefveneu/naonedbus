@@ -33,7 +33,7 @@ public class CommentairesFragment extends CustomListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		loadContent();
+//		loadContent();
 	}
 
 	@Override
@@ -68,7 +68,9 @@ public class CommentairesFragment extends CustomListFragment {
 
 			final CommentaireFomatter fomatter = new CommentaireFomatter(context);
 			final CommentaireArrayAdapter adapter = new CommentaireArrayAdapter(context);
-			fomatter.appendToAdapter(adapter, infoTraficLignes);
+			if (infoTraficLignes != null) {
+				fomatter.appendToAdapter(adapter, infoTraficLignes);
+			}
 			adapter.setIndexer(new CommentaireIndexer());
 			result.setResult(adapter);
 		} catch (Exception e) {

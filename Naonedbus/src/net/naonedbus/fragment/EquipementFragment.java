@@ -57,6 +57,8 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 
 	public EquipementFragment(final int titleId, final int layoutId, final Equipement.Type type) {
 		super(titleId, layoutId);
+		Log.d(getClass().getSimpleName(), "Creation");
+
 		this.type = type;
 		this.myLocationProvider = NBApplication.getLocationProvider();
 
@@ -90,8 +92,8 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public void onStart() {
+		super.onStart();
 		loadContent();
 	}
 

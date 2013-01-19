@@ -57,7 +57,7 @@ public class MainActivity extends SlidingMenuActivity {
 	};
 
 	public MainActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_tabs);
 	}
 
 	@Override

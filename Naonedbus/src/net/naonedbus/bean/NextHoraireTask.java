@@ -26,59 +26,68 @@ import android.content.Context;
  */
 public class NextHoraireTask {
 
-	private Context context;
-	private int id;
-	private Arret arret;
-	private int limit;
-	private String actionCallback;
+	private Context mContext;
+	private int mId;
+	private Arret mArret;
+	private int mLimit;
+	private String mActionCallback;
+	private Throwable mThrowable;
 
 	public Context getContext() {
-		return context;
+		return mContext;
 	}
 
 	public NextHoraireTask setContext(Context context) {
-		this.context = context;
+		this.mContext = context;
 		return this;
 	}
 
 	public int getId() {
-		return id;
+		return mId;
 	}
 
 	public NextHoraireTask setId(int id) {
-		this.id = id;
+		this.mId = id;
 		return this;
 	}
 
 	public Arret getArret() {
-		return arret;
+		return mArret;
 	}
 
 	public NextHoraireTask setArret(Arret arret) {
-		this.arret = arret;
+		this.mArret = arret;
 		return this;
 	}
 
 	public int getLimit() {
-		return limit;
+		return mLimit;
 	}
 
 	public NextHoraireTask setLimit(int limit) {
-		this.limit = limit;
+		this.mLimit = limit;
 		return this;
 	}
 
 	public String getActionCallback() {
-		return actionCallback;
+		return mActionCallback;
 	}
 
 	public NextHoraireTask setActionCallback(String actionCallback) {
-		this.actionCallback = actionCallback;
+		this.mActionCallback = actionCallback;
 		return this;
 	}
-	
-	public String toString(){
-		return String.format("%d|%s|%d|%s", this.id, this.arret.codeArret, this.limit, this.actionCallback);  
+
+	public void setThrowable(Throwable t) {
+		mThrowable = t;
+	}
+
+	public Throwable getThrowable() {
+		return mThrowable;
+	}
+
+	public String toString() {
+		return String.format("%d|%s|%d|%s", this.mId, this.mArret.codeArret, this.mLimit, this.mActionCallback);
 	}
 
 }
