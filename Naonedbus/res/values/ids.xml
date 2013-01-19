@@ -82,6 +82,7 @@
     <item name="webView" type="id"/>
     <item name="planView" type="id"/>
     <item name="contentView" type="id"/>
+    <item name="pager" type="id"/>
 
     <!-- Fragments -->
     <item name="fragmentLoading" type="id"/>

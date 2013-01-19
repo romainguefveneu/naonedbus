@@ -76,11 +76,13 @@
     <string name="action_list_location_center">Centrer au plus proche</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
+    <string name="error_title_webservice">Le service Tan est indisponible</string>
     <string name="error_title_network">Une erreur réseau est survenue</string>
     <string name="error_title_empty">Aucune donnée n\'est disponible</string>
     <string name="error_title_empty_favori">Aucun favori</string>
     <string name="error_summary">Merci de réessayer !</string>
     <string name="error_summary_network">Vérifiez votre connexion et réessayez</string>
+    <string name="error_summary_webservice">Merci de réessayer dans quelques instants</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
     <string name="error_summary_empty_favori">Glissez vers l\'écran de gauche pour naviguer entre les lignes.\n\n&#8592;</string>
     <!-- Accueil -->
@@ -194,8 +196,6 @@
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
-    <string name="msg_webservice_error">Merci de réessayer dans quelques instants !</string>
-    <string name="msg_connection_error">Ça a coupé !\n\nNous avons perdu la connexion.</string>
     <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <!-- Warning -->
     <string name="msg_warning_send_comment">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>
@@ -208,6 +208,7 @@
     <!-- - - Horaires -->
     <string name="msg_depart_proche">départ proche</string>
     <string name="msg_aucun_depart_24h">dans longtemps</string>
+    <string name="msg_horaire_erreur">indisponible</string>
     <string name="msg_depart_min">dans %d min</string>
     <string name="msg_depart_heure">dans %d h</string>
     <string name="msg_nothing_horaires">Aucun horaire n\'a été trouvé</string>
