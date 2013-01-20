@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 
 import android.graphics.drawable.Drawable;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Commentaire implements ICommentaire, SectionItem {

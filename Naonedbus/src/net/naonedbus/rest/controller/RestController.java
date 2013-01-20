@@ -78,7 +78,7 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 */
 	protected T parseJson(URL url, Class<T> clazz) throws IOException {
-		final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		final Gson gson = new Gson();
 		Reader comReader;
 		T result;
 
@@ -113,7 +113,7 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 */
 	protected T parseJson(URL url, Type type) throws IOException {
-		final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		final Gson gson = new Gson();
 		Reader comReader;
 		T result;
 

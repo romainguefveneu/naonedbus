@@ -16,7 +16,6 @@ import net.naonedbus.widget.indexer.impl.CommentaireIndexer;
 import org.joda.time.DateTime;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -31,9 +30,9 @@ public class CommentairesFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-//		loadContent();
+	public void onStart() {
+		super.onStart();
+		loadContent();
 	}
 
 	@Override

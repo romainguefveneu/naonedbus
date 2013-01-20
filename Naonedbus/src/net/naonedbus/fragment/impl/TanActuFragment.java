@@ -35,7 +35,11 @@ public class TanActuFragment extends CustomListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
+	}
 
+	@Override
+	public void onStart() {
+		super.onStart();
 		loadContent();
 	}
 

@@ -19,7 +19,7 @@ public class AboutActivity extends SlidingMenuActivity {
 	private static Class<?>[] classes = new Class<?>[] { AboutFragment.class, VersionsFragment.class };
 
 	public AboutActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_tabs);
 	}
 
 	@Override

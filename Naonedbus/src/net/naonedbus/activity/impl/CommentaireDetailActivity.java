@@ -87,6 +87,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 			mHeaderHelper.setTitleIcon(R.drawable.ic_launcher);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_message_service));
+			mHeaderHelper.setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header));
 
 		} else {

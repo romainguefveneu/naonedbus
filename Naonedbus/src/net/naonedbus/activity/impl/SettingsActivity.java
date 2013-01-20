@@ -47,7 +47,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		theme = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_THEME);
-		initTheme(preferences);
+//		initTheme(preferences);
 	}
 
 	@Override

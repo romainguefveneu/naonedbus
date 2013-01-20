@@ -92,18 +92,28 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
+	public void onStart() {
+		super.onStart();
+		myLocationProvider.addListener(this);
+		myLocationProvider.start();
+		if (myLocationProvider.isProviderEnabled() == false) {
+			onLocationDisabled();
+		} else {
+			loadContent();
+		}
+
+		loadAddress();
+	}
+
+	@Override
 	public void onStop() {
 		super.onStop();
+
+		myLocationProvider.removeListener(this);
 
 		if (mAddressResolverTask != null) {
 			mAddressResolverTask.cancel(false);
 		}
-	}
-
-	@Override
-	public void onDestroy() {
-		myLocationProvider.removeListener(this);
-		super.onDestroy();
 	}
 
 	@Override

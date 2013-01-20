@@ -57,7 +57,7 @@
             android:label="@string/title_activity_parkings" />
         <activity
             android:name=".activity.impl.CommentaireDetailActivity"
-            android:label="@string/title_activity_commentaire" />
+            android:label="@string/emptyString" />
         <activity
             android:name=".activity.impl.InfoTraficDetailActivity"
             android:label="@string/title_activity_actu" />

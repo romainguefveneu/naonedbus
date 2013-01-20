@@ -48,14 +48,14 @@ public class SlidingMenuHelper {
 		menuItems = new ArrayList<MainMenuItem>();
 		menuItems.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_menu_home, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_menu_notifications, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_itineraires, AboutActivity.class, R.drawable.ic_menu_directions, 0));
+//		menuItems.add(new MainMenuItem(R.string.menu_itineraires, AboutActivity.class, R.drawable.ic_menu_directions, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_menu_parking, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_menu_goto, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_menu_mapmode, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_menu_manage, 1));
 		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_menu_info_details, 1));
 		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_menu_star, 1));
-		menuItems.add(new LinkMainMenuItem(R.string.menu_bug, "mailto:naonedbus@gmail.com?subject=Bug&body=Bonjour,", R.drawable.ic_menu_emoticons, 1));
+//		menuItems.add(new LinkMainMenuItem(R.string.menu_bug, "mailto:naonedbus@gmail.com?subject=Bug&body=Bonjour,", R.drawable.ic_menu_emoticons, 1));
 		// @formatter:on
 	}
 
