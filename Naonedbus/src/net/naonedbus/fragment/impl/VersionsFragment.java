@@ -29,6 +29,7 @@ public class VersionsFragment extends CustomFragment {
 	protected void bindView(View view, Bundle savedInstanceState) {
 		try {
 			final WebView wv = (WebView) view.findViewById(R.id.webView);
+			wv.setBackgroundColor(getResources().getColor(R.color.activity_background_light));
 			final String content = IOUtils.toString(getResources().openRawResource(R.raw.version), ENCODING);
 			// Problème d'encodage avec le loadData.
 			wv.loadDataWithBaseURL("fake://not/needed", content, "text/html", ENCODING, "");
