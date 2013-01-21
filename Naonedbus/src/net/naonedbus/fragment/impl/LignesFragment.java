@@ -2,6 +2,7 @@ package net.naonedbus.fragment.impl;
 
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.PlanActivity;
@@ -18,8 +19,12 @@ import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
 import net.naonedbus.widget.indexer.impl.LigneIndexer;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,20 +38,45 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class LignesFragment extends CustomListFragment implements CustomFragmentActions {
 
+	private static final String LOG_TAG = "LignesFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
+
 	public LignesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
+		if (DBG)
+			Log.i(LOG_TAG, "LignesFragment()");
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (DBG)
+			Log.d(LOG_TAG, "onActivityCreated");
+
 		registerForContextMenu(getListView());
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateView");
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
+		if (DBG)
+			Log.d(LOG_TAG, "onStart");
+
 		loadContent();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (DBG)
+			Log.d(LOG_TAG, "onResume");
 	}
 
 	@Override

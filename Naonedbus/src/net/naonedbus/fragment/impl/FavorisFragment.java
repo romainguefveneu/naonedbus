@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.FavorisImportActivity;
@@ -38,13 +39,16 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
@@ -62,6 +66,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		MyLocationListener, ActionMode.Callback {
 
 	private static final String LOG_TAG = "FavorisFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 	private static final Integer MIN_HOUR = 60;
@@ -97,19 +102,24 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private OnActionListener onImportListener = new OnActionListener() {
 		@Override
 		public void onImport() {
-			Log.d(LOG_TAG, "onImport");
+			if (DBG)
+				Log.d(LOG_TAG, "onImport");
 
 			if (isVisible())
 				refreshContent();
 		}
 
 		public void onAdd(Arret item) {
-			Log.d(LOG_TAG, "onAdd : " + item);
+			if (DBG)
+				Log.d(LOG_TAG, "onAdd : " + item);
+
 			mContentHasChanged = true;
 		};
 
 		public void onRemove(int id) {
-			Log.d(LOG_TAG, "onRemove : " + id);
+			if (DBG)
+				Log.d(LOG_TAG, "onRemove : " + id);
+
 			mContentHasChanged = true;
 		};
 	};
@@ -120,7 +130,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			Log.d(LOG_TAG, "onReceive : " + intent);
+			if (DBG)
+				Log.d(LOG_TAG, "onReceive : " + intent);
+
 			final int id = intent.getIntExtra("id", -1);
 			final Throwable throwable = (Throwable) intent.getSerializableExtra("throwable");
 
@@ -140,6 +152,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	public FavorisFragment() {
 		super(R.string.title_fragment_favoris, R.layout.fragment_favoris);
+		if (DBG)
+			Log.i(LOG_TAG, "FavorisFragment()");
+
 		mFavoriManager = FavoriManager.getInstance();
 		mLocationProvider = NBApplication.getLocationProvider();
 	}
@@ -147,6 +162,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (DBG)
+			Log.d(LOG_TAG, "onCreate");
+
 		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
 
 		mFavoriManager.setActionListener(onImportListener);
@@ -161,24 +179,32 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d(LOG_TAG, "onActivityCreated");
-
 		super.onActivityCreated(savedInstanceState);
-
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateView");
 		mListView = getListView();
 		mListView.setOnItemLongClickListener(this);
+	}
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateView");
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
+		if (DBG)
+			Log.d(LOG_TAG, "onStart");
 		loadContent();
 	}
 
 	@Override
 	public void onDestroy() {
-		Log.d(LOG_TAG, "onDestroy");
+		if (DBG)
+			Log.d(LOG_TAG, "onDestroy");
 
 		mFavoriManager.unsetActionListener();
 		super.onDestroy();
@@ -186,7 +212,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onStop() {
-		Log.d(LOG_TAG, "onStop");
+		if (DBG)
+			Log.d(LOG_TAG, "onStop");
 
 		mStateHelper.setSortType(this, mCurrentSort);
 
@@ -196,7 +223,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onResume() {
-		Log.d(LOG_TAG, "onResume");
+		if (DBG)
+			Log.d(LOG_TAG, "onResume");
 		super.onResume();
 
 		getActivity().registerReceiver(intentReceiver, intentFilter);
@@ -211,7 +239,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onPause() {
-		Log.d(LOG_TAG, "onPause");
+		if (DBG)
+			Log.d(LOG_TAG, "onPause");
 
 		mContentHasChanged = false;
 		getActivity().unregisterReceiver(intentReceiver);
@@ -401,7 +430,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
-		Log.d(LOG_TAG, "loadContent");
+		if (DBG)
+			Log.d(LOG_TAG, "loadContent");
 
 		final HoraireManager horaireManager = HoraireManager.getInstance();
 		final DateMidnight today = new DateMidnight();
@@ -432,7 +462,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	protected void onPostExecute() {
-		Log.d(LOG_TAG, "onPostExecute");
+		if (DBG)
+			Log.d(LOG_TAG, "onPostExecute");
 
 		loadHorairesFavoris();
 	}
@@ -469,7 +500,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		@Override
 		protected void onPreExecute() {
-			Log.d(LOG_TAG, "LoadHoraires start");
+			if (DBG)
+				Log.d(LOG_TAG, "LoadHoraires start");
 			super.onPreExecute();
 		}
 

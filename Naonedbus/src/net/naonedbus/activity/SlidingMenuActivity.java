@@ -1,5 +1,6 @@
 package net.naonedbus.activity;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.fragment.CustomFragmentActions;
@@ -26,6 +27,7 @@ import com.slidingmenu.lib.SlidingMenu;
 public abstract class SlidingMenuActivity extends SherlockFragmentActivity implements TabListener {
 
 	private static final String LOG_TAG = "SlidingMenuActivity";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static String BUNDLE_TABS_CURRENT = "tabsCurrent";
 	private static String BUNDLE_TABS_TITLES = "tabsTitles";
@@ -200,7 +202,8 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
+		if (DBG)
+			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
 
 		mViewPager.setCurrentItem(tab.getPosition());
 		invalidateOptionsMenu();
@@ -208,12 +211,14 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
-		Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
+		if (DBG)
+			Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
 	}
 
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
-		Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
+		if (DBG)
+			Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
 	}
 
 	protected void addFragments(int[] titles, String[] classes) {
@@ -279,12 +284,16 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+		private static final String LOG_TAG = SlidingMenuActivity.LOG_TAG + "$SectionsPagerAdapter";
+
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
 		@Override
 		public Fragment getItem(int position) {
+			if (DBG)
+				Log.d(LOG_TAG, "getItem " + position);
 			final Fragment fragment = Fragment.instantiate(SlidingMenuActivity.this, mClasses[position]);
 			mFragments[position] = fragment;
 			return fragment;
@@ -292,13 +301,20 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 		@Override
 		public int getCount() {
+			if (DBG)
+				Log.d(LOG_TAG, "getCount");
+
 			return mClasses.length;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
+			if (DBG)
+				Log.d(LOG_TAG, "getPageTitle " + position);
+
 			return getString(mTitles[position]);
 		}
+
 	}
 
 }

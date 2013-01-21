@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
@@ -30,8 +31,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -44,6 +48,9 @@ import com.actionbarsherlock.view.SubMenu;
 
 public class ProximiteFragment extends CustomListFragment implements CustomFragmentActions, MyLocationListener,
 		AddressTaskListener {
+
+	private static final String LOG_TAG = "ProximiteFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int MAX_EQUIPEMENTS = 25;
 	private static final int MENU_GROUP_TYPES = 1;
@@ -60,6 +67,8 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 	public ProximiteFragment() {
 		super(R.string.title_fragment_proximite, R.layout.fragment_proximite);
+		if (DBG)
+			Log.i(LOG_TAG, "ProximiteFragment()");
 
 		myLocationProvider = NBApplication.getLocationProvider();
 		preferences = NBApplication.getPreferences();
@@ -74,26 +83,23 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateView");
 
-		headerTextView = (TextView) getView().findViewById(R.id.text);
-		imageView = (ImageView) getView().findViewById(R.id.icon);
+		final View view = super.onCreateView(inflater, container, savedInstanceState);
+		headerTextView = (TextView) view.findViewById(R.id.text);
+		imageView = (ImageView) view.findViewById(R.id.icon);
 
-		myLocationProvider.addListener(this);
-		myLocationProvider.start();
-		if (myLocationProvider.isProviderEnabled() == false) {
-			onLocationDisabled();
-		} else {
-			loadContent();
-		}
-
-		loadAddress();
+		return view;
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
+		if (DBG)
+			Log.d(LOG_TAG, "onStart");
+
 		myLocationProvider.addListener(this);
 		myLocationProvider.start();
 		if (myLocationProvider.isProviderEnabled() == false) {
@@ -108,12 +114,21 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	@Override
 	public void onStop() {
 		super.onStop();
+		if (DBG)
+			Log.d(LOG_TAG, "onStop");
 
 		myLocationProvider.removeListener(this);
 
 		if (mAddressResolverTask != null) {
 			mAddressResolverTask.cancel(false);
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (DBG)
+			Log.d(LOG_TAG, "onResume");
 	}
 
 	@Override
