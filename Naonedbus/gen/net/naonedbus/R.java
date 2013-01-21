@@ -1863,14 +1863,14 @@ containing a value of this type.
         public static final int itemDate=0x7f0700a2;
         public static final int itemDescription=0x7f070024;
         public static final int itemDistance=0x7f070026;
-        public static final int itemFavori=0x7f0700bc;
+        public static final int itemFavori=0x7f0700bb;
         public static final int itemHeader=0x7f07001e;
         /**  Items 
          */
         public static final int itemHeaderStub=0x7f07001d;
         public static final int itemIcon=0x7f070020;
         public static final int itemLignes=0x7f070027;
-        public static final int itemMetroPoint=0x7f0700bb;
+        public static final int itemMetroPoint=0x7f0700ba;
         public static final int itemPerturbation=0x7f070028;
         public static final int itemSource=0x7f0700a3;
         public static final int itemSubTitle=0x7f070023;
@@ -1886,8 +1886,8 @@ containing a value of this type.
         public static final int lignes=0x7f0700b0;
         public static final int listMode=0x7f07000f;
         public static final int loader=0x7f0700a5;
-        public static final int loading=0x7f0700ba;
-        public static final int mainContent=0x7f0700bd;
+        public static final int loading=0x7f0700b9;
+        public static final int mainContent=0x7f0700bc;
         public static final int majDate=0x7f0700a9;
         public static final int map_view=0x7f0700a4;
         public static final int margin=0x7f07000a;
@@ -1938,7 +1938,7 @@ containing a value of this type.
         public static final int right=0x7f070009;
         public static final int searchViewClose=0x7f0700c1;
         public static final int searchViewText=0x7f0700c0;
-        public static final int secondLine=0x7f0700be;
+        public static final int secondLine=0x7f0700bd;
         public static final int sectionSensA=0x7f070045;
         public static final int sectionSensB=0x7f070047;
         public static final int selected_view=0x7f07000c;
@@ -1977,7 +1977,7 @@ containing a value of this type.
         public static final int viewPagerIndicator=0x7f07005f;
         public static final int webView=0x7f07004e;
         public static final int wrap_content=0x7f07000d;
-        public static final int zoneTitle=0x7f0700b9;
+        public static final int zoneTitle=0x7f0700be;
     }
     public static final class integer {
         public static final int abs__max_action_buttons=0x7f0b0005;

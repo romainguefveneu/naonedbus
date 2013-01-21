@@ -27,7 +27,7 @@ import net.naonedbus.R;
 public class HoraireWidgetLargeProvider extends HoraireWidgetProvider {
 
 	public HoraireWidgetLargeProvider() {
-		super(R.layout.horaire_widget_large_layout, 5);
+		super(R.layout.horaire_widget_small_layout, 5);
 	}
 
 }
