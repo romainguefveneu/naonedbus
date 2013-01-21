@@ -147,6 +147,58 @@
             android:exported="false"
             android:multiprocess="true" />
 
+        <activity
+            android:name=".activity.widgetconfigure.WidgetLargeConfigureActivity"
+            android:configChanges="orientation"
+            android:theme="@style/Theme.WidgetDialog" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.widgetconfigure.WidgetSmallConfigureActivity"
+            android:configChanges="orientation"
+            android:theme="@style/Theme.WidgetDialog" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".appwidget.HoraireWidgetLargeProvider"
+            android:label="Horaires (large)" >
+            <intent-filter>
+                <action android:name="net.naonedbus.action.APPWIDGET_UPDATE" />
+                <action android:name="net.naonedbus.action.APPWIDGET_ON_CLICK" />
+                <action android:name="net.naonedbus.action.HORAIRE_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/horaire_widget_large_provider" />
+        </receiver>
+        <receiver
+            android:name=".appwidget.HoraireWidgetSmallProvider"
+            android:label="Horaires (petit)" >
+            <intent-filter>
+                <action android:name="net.naonedbus.action.APPWIDGET_UPDATE" />
+                <action android:name="net.naonedbus.action.APPWIDGET_ON_CLICK" />
+                <action android:name="net.naonedbus.action.HORAIRE_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
+                <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/horaire_widget_small_provider" />
+        </receiver>
+
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAI1W-U7aKOZOpeCcnTwm5xsgLCT5EcPwslJj06rQ" />

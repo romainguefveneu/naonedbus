@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/horaireWidget"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="left|center_vertical"
+    android:layout_margin="@dimen/widget_margin"
+    android:background="@drawable/appwidget_dark_bg_clickable"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/zoneTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:padding="@dimen/widget_padding" >
+
+        <TextView
+            android:id="@id/itemSymbole"
+            style="@style/ItemSymbole.Tiny" />
+
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/ItemPrimaryText.Widget.Small"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/itemSymbole"
+            android:paddingLeft="5dip"
+            android:text="@string/loading" />
+
+        <TextView
+            android:id="@id/itemDescription"
+            style="@style/ItemSecondaryText.Widget"
+            android:layout_below="@id/itemTitle"
+            android:layout_toRightOf="@id/itemSymbole"
+            android:paddingLeft="5dip" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="10dip" >
+
+        <!-- Fix 2.2 issues with progressbar -->
+
+        <LinearLayout
+            android:id="@+id/loading"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:gravity="center"
+            android:visibility="gone" >
+
+            <ProgressBar
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:indeterminate="true" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@id/itemTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_vertical"
+            android:gravity="center"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+</LinearLayout>
