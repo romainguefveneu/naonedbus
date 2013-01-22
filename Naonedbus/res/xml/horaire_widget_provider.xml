@@ -20,8 +20,10 @@
  */
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="net.naonedbus.activity.widgetconfigure.WidgetLargeConfigureActivity"
-    android:initialLayout="@layout/horaire_widget_large_layout"
+    android:configure="net.naonedbus.activity.widgetconfigure.WidgetSmallConfigureActivity"
+    android:initialLayout="@layout/widget_horaire_layout"
     android:minHeight="56dp"
-    android:minWidth="272dp"
-    android:previewImage="@drawable/widget_large" />
+    android:minWidth="110dp"
+    android:previewImage="@drawable/widget_small"
+    android:resizeMode="horizontal"
+    android:widgetCategory="home_screen|keyguard" />

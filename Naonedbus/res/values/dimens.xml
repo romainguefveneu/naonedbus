@@ -24,7 +24,7 @@
     <dimen name="actionbar_height">48dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
     <dimen name="sliding_menu_width">310dp</dimen>
-    <dimen name="widget_margin">0dp</dimen>
+    <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_padding">8dp</dimen>
     <!-- Dimensions for PagerHeaders -->
     <dimen name="pager_header_height">32dp</dimen>

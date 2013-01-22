@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HoraireActivity;
 import net.naonedbus.activity.widgetconfigure.WidgetConfigureActivity;
@@ -35,6 +36,7 @@ import net.naonedbus.manager.impl.HoraireManager;
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -43,6 +45,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -55,9 +58,11 @@ import com.bugsense.trace.BugSenseHandler;
  */
 public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
+	private static final String LOG_TAG = "HoraireWidgetProvider";
+	private static final boolean DBG = BuildConfig.DEBUG;
+
 	private static final String ACTION_APPWIDGET_UPDATE = "net.naonedbus.action.APPWIDGET_UPDATE";
 	private static final String ACTION_APPWIDGET_ON_CLICK = "net.naonedbus.action.APPWIDGET_ON_CLICK";
-	private static final String LOG_TAG = "HoraireWidgetProvider";
 
 	protected static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 	private static FavoriManager favoriManager;
@@ -88,6 +93,17 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			}
 		});
 		update.start();
+	}
+
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	@Override
+	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId,
+			Bundle newOptions) {
+		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+
+		int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+		this.horaireLimit = minWidth / 66;
+		updateAppWidget(context, appWidgetManager, appWidgetId);
 	}
 
 	/**
@@ -191,7 +207,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		// Uniquement pour 2.2 et sup
 		if (Build.VERSION.SDK_INT > 7) {
 			views.setTextColor(R.id.itemSymbole, favori.couleurTexte);
-			views.setInt(R.id.itemSymbole, "setBackgroundColor", favori.couleurBackground);
+			views.setTextColor(R.id.itemTitle, favori.couleurTexte);
+			views.setTextColor(R.id.itemDescription, favori.couleurTexte);
+			views.setInt(R.id.itemHeader, "setBackgroundColor", favori.couleurBackground);
 		}
 
 		if (favori.nomFavori == null) {
