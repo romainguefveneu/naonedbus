@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.horaire.Horaire;
@@ -54,7 +55,8 @@ import com.google.gson.JsonSyntaxException;
  */
 public class HoraireManager extends SQLiteManager<Horaire> {
 
-	private static final String LOG_TAG = HoraireManager.class.getSimpleName();
+	private static final String LOG_TAG = "HoraireManager";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int DAYS_IN_CACHE = 3;
 
@@ -248,6 +250,9 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 */
 	public List<Horaire> getNextHoraires(ContentResolver contentResolver, Arret arret, DateMidnight date, int limit)
 			throws IOException, JsonSyntaxException {
+		if (DBG)
+			Log.d(LOG_TAG, "getNextHoraires " + arret + " : " + date + "\t" + limit);
+
 		List<Horaire> horaires;
 		final long now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
 		final List<Horaire> nextHoraires = new ArrayList<Horaire>();
@@ -299,7 +304,9 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * signal TimeService.ACTION_APPWIDGET_UPDATE est envoyé.
 	 */
 	public synchronized void schedule(final NextHoraireTask task) {
-		Log.i(LOG_TAG, "Plannification de la tâche " + task);
+		if (DBG)
+			Log.i(LOG_TAG, "Plannification de la tâche " + task);
+
 		horairesTasksQueue.add(task);
 		if (loadThread == null || !loadThread.isAlive()) {
 			loadThread = new Thread(loadHoraireTask);
@@ -313,7 +320,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 */
 	private Runnable loadHoraireTask = new Runnable() {
 
-		private String LOG_TAG = HoraireManager.class.getSimpleName() + "$loadHoraireTask";
+		private String LOG_TAG = "HoraireManager$loadHoraireTask";
 
 		@Override
 		public void run() {

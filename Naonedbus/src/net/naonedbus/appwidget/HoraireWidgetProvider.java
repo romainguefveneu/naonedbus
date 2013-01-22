@@ -32,6 +32,8 @@ import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.SymbolesUtils;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -44,6 +46,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,20 +69,22 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	private static final String ACTION_APPWIDGET_UPDATE = "net.naonedbus.action.APPWIDGET_UPDATE";
 	private static final String ACTION_APPWIDGET_ON_CLICK = "net.naonedbus.action.APPWIDGET_ON_CLICK";
 
-	protected static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-	private static FavoriManager favoriManager;
-	private int layoutId;
-	private int horaireLimit;
-	private static PendingIntent pendingIntent;
-	private static long nextTimestamp = Long.MAX_VALUE;
+	private static final int HORAIRE_WIDTH_RATIO = 66;
 
+	private static FavoriManager sFavoriManager;
 	static {
-		HoraireWidgetProvider.favoriManager = FavoriManager.getInstance();
+		sFavoriManager = FavoriManager.getInstance();
 	}
+	private static PendingIntent sPendingIntent;
+	private static long sNextTimestamp = Long.MAX_VALUE;
+	private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("HH:mm");
+
+	private int mLayoutId;
+	private int mHoraireLimit;
 
 	protected HoraireWidgetProvider(int layoutId, int horaireLimit) {
-		this.layoutId = layoutId;
-		this.horaireLimit = horaireLimit;
+		mLayoutId = layoutId;
+		mHoraireLimit = horaireLimit;
 	}
 
 	@Override
@@ -100,9 +107,6 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId,
 			Bundle newOptions) {
 		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
-
-		int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-		this.horaireLimit = minWidth / 66;
 		updateAppWidget(context, appWidgetManager, appWidgetId);
 	}
 
@@ -116,21 +120,23 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		final long now = new DateTime().getMillis();
 		final long triggerTimestamp = new DateTime(timestamp).plusMinutes(1).getMillis();
 
-		if (nextTimestamp < now || triggerTimestamp < nextTimestamp) {
-
-			nextTimestamp = triggerTimestamp;
+		if (sNextTimestamp < now || triggerTimestamp < sNextTimestamp) {
+			sNextTimestamp = triggerTimestamp;
 
 			final AlarmManager m = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-			if (pendingIntent != null) {
-				m.cancel(pendingIntent);
-				Log.i(LOG_TAG, "\tAnnulation de la précédente alarme.");
+			if (sPendingIntent != null) {
+				m.cancel(sPendingIntent);
+
+				if (DBG)
+					Log.i(LOG_TAG, "\tAnnulation de la précédente alarme.");
 			}
 
 			final Intent intent = new Intent(ACTION_APPWIDGET_UPDATE);
-			pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-			m.set(AlarmManager.RTC, nextTimestamp, pendingIntent);
+			sPendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+			m.set(AlarmManager.RTC, sNextTimestamp, sPendingIntent);
 
-			Log.i(LOG_TAG, "Programmation de l'alarme à : " + new DateTime(nextTimestamp).toString());
+			if (DBG)
+				Log.i(LOG_TAG, "Programmation de l'alarme à : " + new DateTime(sNextTimestamp).toString());
 		}
 
 	}
@@ -138,10 +144,16 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	/**
 	 * Update the widget
 	 */
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-		final RemoteViews views = new RemoteViews(context.getPackageName(), this.layoutId);
+		final RemoteViews views = new RemoteViews(context.getPackageName(), this.mLayoutId);
 		final int idFavori = WidgetConfigureActivity.getFavoriIdFromWidget(context, appWidgetId);
-		final Favori favori = favoriManager.getSingle(context.getContentResolver(), idFavori);
+		final Favori favori = sFavoriManager.getSingle(context.getContentResolver(), idFavori);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			final Bundle bundle = appWidgetManager.getAppWidgetOptions(appWidgetId);
+			mHoraireLimit = getHorairesCount(bundle);
+		}
 
 		if (favori != null) {
 			prepareWidgetView(context, views, favori, appWidgetId);
@@ -152,7 +164,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	/**
-	 * Préparer le widget, le mettre à jour si nécessaire
+	 * Préparer le widget, le mettre à jour si nécessaire.
 	 */
 	protected void prepareWidgetView(Context context, RemoteViews views, Favori favori, Integer appWidgetId) {
 		final HoraireManager horaireManager = HoraireManager.getInstance();
@@ -166,7 +178,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			if (horaireManager.isInDB(context.getContentResolver(), favori, today)) {
 				// Les horaires sont en cache
 				final List<Horaire> horaires = horaireManager.getNextHoraires(context.getContentResolver(), favori,
-						today, this.horaireLimit);
+						today, mHoraireLimit);
 				prepareWidgetViewHoraires(context, views, favori, horaires);
 			} else {
 				// Charger les prochains horaires
@@ -179,15 +191,14 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	/**
-	 * Lancer le chargement des horaires
+	 * Lancer le chargement des horaires.
 	 */
 	protected void prepareWidgetAndloadHoraires(Context context, RemoteViews views, Favori favori, Integer appWidgetId) {
-
 		final NextHoraireTask horaireTask = new NextHoraireTask();
 		horaireTask.setContext(context);
 		horaireTask.setArret(favori);
 		horaireTask.setId(appWidgetId);
-		horaireTask.setLimit(this.horaireLimit);
+		horaireTask.setLimit(mHoraireLimit);
 		horaireTask.setActionCallback(ACTION_APPWIDGET_UPDATE);
 
 		// Lancer le chargement des horaires
@@ -209,21 +220,28 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			views.setTextColor(R.id.itemSymbole, favori.couleurTexte);
 			views.setTextColor(R.id.itemTitle, favori.couleurTexte);
 			views.setTextColor(R.id.itemDescription, favori.couleurTexte);
-			views.setInt(R.id.itemHeader, "setBackgroundColor", favori.couleurBackground);
+
+			final GradientDrawable gradientDrawable = ColorUtils.getGradiant(favori.couleurBackground);
+			final Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+			final Canvas canvas = new Canvas(bitmap);
+			gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+			gradientDrawable.draw(canvas);
+			views.setImageViewBitmap(R.id.widgetHeaderBackground, bitmap);
 		}
 
 		if (favori.nomFavori == null) {
 			views.setTextViewText(R.id.itemTitle, favori.nomArret);
-			views.setTextViewText(R.id.itemDescription, "\u2192 " + favori.nomSens);
+			views.setTextViewText(R.id.itemDescription, SymbolesUtils.formatSens(favori.nomSens));
 		} else {
 			views.setTextViewText(R.id.itemTitle, favori.nomFavori);
-			views.setTextViewText(R.id.itemDescription, favori.nomArret + " \u2192 " + favori.nomSens);
+			views.setTextViewText(R.id.itemDescription, SymbolesUtils.formatArretSens(favori.nomArret, favori.nomSens));
 		}
 
+		views.setViewVisibility(R.id.widgetLoading, View.GONE);
 	}
 
 	/**
-	 * Set pending intent in remote views
+	 * Set pending intent in remote views.
 	 * 
 	 * @param context
 	 * @param views
@@ -241,7 +259,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	/**
-	 * Préparer le widget avec les horaires
+	 * Préparer le widget avec les horaires.
 	 * 
 	 * @param views
 	 * @param favori
@@ -257,7 +275,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			scheduleUpdate(context, nextHoraires.get(0).getTimestamp());
 
 			for (Horaire horaire : nextHoraires) {
-				builder.append(dateFormat.format(horaire.getTimestamp()));
+				builder.append(sDateFormat.format(horaire.getTimestamp()));
 				if (++count < nextHoraires.size()) {
 					builder.append(" \u2022 ");
 				}
@@ -273,7 +291,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	/**
-	 * Supprimer la configuration du widget
+	 * Supprimer la configuration du widget.
 	 */
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
@@ -284,18 +302,19 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	/**
-	 * Gérer le signal de rafraichissement
+	 * Gérer le signal de rafraichissement.
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		final String action = intent.getAction();
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
 		if (ACTION_APPWIDGET_UPDATE.equals(action)) {
 			int idExtra = intent.getIntExtra("id", -1);
 			int[] ids;
 
-			Log.i(LOG_TAG, "Réception de l'ordre de rafraichissement des widgets.");
+			if (DBG)
+				Log.i(LOG_TAG, "Réception de l'ordre de rafraichissement des widgets.");
 
 			if (idExtra == -1) {
 				ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, this.getClass()));
@@ -317,4 +336,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		super.onReceive(context, intent);
 	}
 
+	private int getHorairesCount(Bundle bundle) {
+		int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+		return minWidth / HORAIRE_WIDTH_RATIO;
+	}
 }

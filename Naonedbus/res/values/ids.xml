@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -101,6 +101,11 @@
     <item name="commentaireArret" type="id"/>
     <item name="viewPager" type="id"/>
     <item name="viewPagerIndicator" type="id"/>
+
+    <!-- Widget -->
+    <item name="widgetHeader" type="id"/>
+    <item name="widgetHeaderBackground" type="id"/>
+    <item name="widgetLoading" type="id"/>
 
     <!-- Menus -->
     <item name="menu_share" type="id"/>

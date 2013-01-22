@@ -18,9 +18,12 @@
  */
 package net.naonedbus;
 
+import net.naonedbus.appwidget.HoraireWidgetLargeProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 public class NBApplication extends Application {

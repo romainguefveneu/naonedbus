@@ -11,7 +11,9 @@ import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
