@@ -81,6 +81,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_info_trafic));
+			mHeaderHelper.setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(commentaire.getSource())) {

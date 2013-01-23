@@ -25,5 +25,4 @@
     android:minHeight="56dp"
     android:minWidth="110dp"
     android:previewImage="@drawable/widget_small"
-    android:resizeMode="horizontal"
     android:widgetCategory="home_screen|keyguard" />

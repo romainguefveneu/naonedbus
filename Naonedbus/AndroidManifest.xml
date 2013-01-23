@@ -167,7 +167,7 @@
         <receiver
             android:name=".appwidget.HoraireWidgetLargeProvider"
             android:enabled="@bool/showLargeWidget"
-            android:label="Horaires (large)" >
+            android:label="Horaires naonedbus (large)" >
             <intent-filter>
                 <action android:name="net.naonedbus.action.APPWIDGET_UPDATE" />
                 <action android:name="net.naonedbus.action.APPWIDGET_ON_CLICK" />
@@ -184,7 +184,7 @@
         </receiver>
         <receiver
             android:name=".appwidget.HoraireWidgetSmallProvider"
-            android:label="Horaires" >
+            android:label="Horaires naonedbus" >
             <intent-filter>
                 <action android:name="net.naonedbus.action.APPWIDGET_UPDATE" />
                 <action android:name="net.naonedbus.action.APPWIDGET_ON_CLICK" />

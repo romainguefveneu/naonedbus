@@ -80,11 +80,12 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("HH:mm");
 
 	private int mLayoutId;
-	private int mHoraireLimit;
+	private int mHoraireLimit = -1;
+	private int mHoraireLimitRes;
 
-	protected HoraireWidgetProvider(int layoutId, int horaireLimit) {
+	protected HoraireWidgetProvider(int layoutId, int horaireLimitRes) {
 		mLayoutId = layoutId;
-		mHoraireLimit = horaireLimit;
+		mHoraireLimitRes = horaireLimitRes;
 	}
 
 	@Override
@@ -150,9 +151,14 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		final int idFavori = WidgetConfigureActivity.getFavoriIdFromWidget(context, appWidgetId);
 		final Favori favori = sFavoriManager.getSingle(context.getContentResolver(), idFavori);
 
+		// Initialisation du nombre d'horaires
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			final Bundle bundle = appWidgetManager.getAppWidgetOptions(appWidgetId);
 			mHoraireLimit = getHorairesCount(bundle);
+		} else {
+			if (mHoraireLimit == -1) {
+				mHoraireLimit = context.getResources().getInteger(mHoraireLimitRes);
+			}
 		}
 
 		if (favori != null) {
@@ -180,6 +186,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				final List<Horaire> horaires = horaireManager.getNextHoraires(context.getContentResolver(), favori,
 						today, mHoraireLimit);
 				prepareWidgetViewHoraires(context, views, favori, horaires);
+
+				if (DBG)
+					Log.i(LOG_TAG, "getNextHoraires " + mHoraireLimit);
 			} else {
 				// Charger les prochains horaires
 				prepareWidgetAndloadHoraires(context, views, favori, appWidgetId);

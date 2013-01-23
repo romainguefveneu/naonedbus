@@ -3,4 +3,7 @@
 
     <bool name="showLargeWidget">true</bool>
 
+    <item name="widgetLargeHoraireLimit" type="integer">4</item>
+    <item name="widgetSmallHoraireLimit" type="integer">2</item>
+
 </resources>

@@ -1992,6 +1992,8 @@ containing a value of this type.
         public static final int default_title_indicator_line_position=0x7f0b0002;
         public static final int default_underline_indicator_fade_delay=0x7f0b0003;
         public static final int default_underline_indicator_fade_length=0x7f0b0004;
+        public static final int widgetLargeHoraireLimit=0x7f0b0006;
+        public static final int widgetSmallHoraireLimit=0x7f0b0007;
     }
     public static final class layout {
         public static final int abs__action_bar_home=0x7f030000;

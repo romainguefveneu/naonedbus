@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 /**
  *  Copyright (C) 2011 Romain Guefveneu
  *  
@@ -16,17 +18,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.rest.controller;
-
-import net.naonedbus.security.NaonedbusClient;
-
-/**
- * @author romain
- * 
- */
-public class RestConfiguration {
-
-	public static final String ID_CLIENT = NaonedbusClient.NAONEDBUS.name();
-	public final static String PATH = "http://naonedbus.netapsys.fr/naonedbus-server/";
-
-}
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="net.naonedbus.activity.widgetconfigure.WidgetSmallConfigureActivity"
+    android:initialLayout="@layout/widget_horaire_layout"
+    android:minHeight="56dp"
+    android:minWidth="110dp"
+    android:previewImage="@drawable/widget_small"
+    android:resizeMode="horizontal"
+    android:widgetCategory="home_screen|keyguard" />
