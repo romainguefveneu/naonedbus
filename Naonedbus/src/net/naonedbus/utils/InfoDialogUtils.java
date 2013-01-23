@@ -64,23 +64,11 @@ public abstract class InfoDialogUtils {
 	 * @return La dialogue.
 	 */
 	public static AlertDialog getDialog(Context context, int titleId, int messageId) {
-		final TextView textView = new TextView(context);
-		final ScrollView scrollView = new ScrollView(context);
-
-		textView.setAutoLinkMask(Linkify.ALL);
-		textView.setTextSize(TypedValue.TYPE_DIMENSION, 2.5f);
-		textView.setPadding(25, 25, 25, 25);
-		textView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-		textView.setScrollbarFadingEnabled(true);
-		textView.setText(Html.fromHtml(context.getString(messageId)));
-		textView.setTextColor(context.getResources().getColor(R.color.item_primary_text_dark));
-		textView.setGravity(Gravity.CENTER_VERTICAL);
-		scrollView.addView(textView);
 
 		final AlertDialog.Builder moreDetailsDialog = new AlertDialog.Builder(context);
 		moreDetailsDialog.setIcon(android.R.drawable.ic_dialog_info);
 		moreDetailsDialog.setTitle(context.getString(titleId));
-		moreDetailsDialog.setView(scrollView);
+		moreDetailsDialog.setMessage(context.getString(messageId));
 		moreDetailsDialog.setPositiveButton(android.R.string.ok, null);
 
 		return moreDetailsDialog.create();

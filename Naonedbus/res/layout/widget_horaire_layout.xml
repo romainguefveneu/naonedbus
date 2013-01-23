@@ -35,29 +35,12 @@
         <TextView
             android:id="@id/itemDescription"
             style="@style/ItemSecondaryText.Widget"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/itemTitle"
             android:layout_toRightOf="@id/itemSymbole"
             android:paddingRight="@dimen/padding_tiny" />
     </RelativeLayout>
-
-    <!-- Fix 2.2 issues with progressbar -->
-
-    <LinearLayout
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/widgetHeader"
-        android:layout_gravity="center|center_vertical"
-        android:gravity="center"
-        android:visibility="gone" >
-
-        <ProgressBar
-            android:layout_width="20dip"
-            android:layout_height="20dip"
-            android:indeterminate="true" />
-    </LinearLayout>
 
     <TextView
         android:id="@id/itemTime"
@@ -66,7 +49,7 @@
         android:layout_below="@id/widgetHeader"
         android:layout_marginLeft="@dimen/padding_tiny"
         android:layout_marginRight="@dimen/padding_tiny"
-        android:background="#80000000"
+        android:background="@drawable/appwidget_background"
         android:ellipsize="marquee"
         android:gravity="center"
         android:singleLine="true"
@@ -82,5 +65,22 @@
         android:text="@string/loading"
         android:textAppearance="@android:style/TextAppearance.Small"
         android:textColor="#ffffff" />
+
+    <!-- Fix 2.2 issues with progressbar -->
+
+    <LinearLayout
+        android:id="@id/widgetProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/widgetHeader"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:indeterminate="true" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -39,7 +39,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -385,7 +384,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			comparator = comparators.get(SORT_NOM);
 			// indexer = indexers.get(SORT_NOM);
 		} else {
-			comparator = comparators.get(mCurrentSort);
+			comparator = getCurrentComparator();
 			// indexer = indexers.get(currentSortPreference);
 		}
 
@@ -438,7 +437,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		final List<Favori> favoris = mFavoriManager.getAll(context.getContentResolver());
-		Collections.sort(favoris, comparators.get(mCurrentSort));
+		Collections.sort(favoris, getCurrentComparator());
 
 		int position = 0;
 		for (Favori favori : favoris) {
@@ -676,4 +675,14 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 	}
 
+	/**
+	 * Retourne le comparateur en cours, ou le comparateur par nom si non
+	 * trouvé.
+	 * 
+	 * @return le comparateur en cours, ou le comparateur par nom si non trouvé.
+	 */
+	private Comparator<Favori> getCurrentComparator() {
+		final Comparator<Favori> comparator = comparators.get(mCurrentSort);
+		return (comparator == null) ? comparators.get(SORT_NOM) : comparator;
+	}
 }

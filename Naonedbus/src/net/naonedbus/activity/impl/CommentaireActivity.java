@@ -156,6 +156,12 @@ public class CommentaireActivity extends SherlockActivity {
 				if (arret != null)
 					setArret(arret);
 			}
+		} else {
+			final Integer idLigne = (Integer) getIntent().getSerializableExtra(Param.idLigne.toString());
+			final Integer idSens = (Integer) getIntent().getSerializableExtra(Param.idSens.toString());
+			final Integer idArret = (Integer) getIntent().getSerializableExtra(Param.idArret.toString());
+
+			setLigneSensArret(idLigne, idSens, idArret);
 		}
 
 	}
@@ -353,6 +359,31 @@ public class CommentaireActivity extends SherlockActivity {
 	private void setArret(final Arret arret) {
 		this.arret = arret;
 		textArret.setText(arret.nomArret);
+	}
+
+	/**
+	 * Gérer l'affichage de l'information sur la ligne, sens et arrêt
+	 * 
+	 * @param idLigne
+	 * @param idSens
+	 * @param idArret
+	 */
+	private void setLigneSensArret(Integer idLigne, Integer idSens, Integer idArret) {
+
+		final Ligne ligne = (idLigne != null) ? ligneManager.getSingle(getContentResolver(), idLigne) : null;
+		final Sens sens = (idSens != null) ? sensManager.getSingle(getContentResolver(), idSens) : null;
+		final Arret arret = (idArret != null) ? arretManager.getSingle(getContentResolver(), idArret) : null;
+
+		if (ligne != null) {
+			setLigne(ligne);
+		}
+		if (sens != null) {
+			setSens(sens);
+		}
+		if (arret != null) {
+			setArret(arret);
+		}
+
 	}
 
 	/**

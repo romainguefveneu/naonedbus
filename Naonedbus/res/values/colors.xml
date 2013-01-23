@@ -34,7 +34,6 @@
     <color name="holo_blue_light">#ff2F93C5</color>
     <color name="holo_blue_dark">#ff70AFCE</color>
     <color name="holo_blue_selected">#ff2fa9d2</color>
-    
     <color name="message_service_header">#2F93C5</color>
     <color name="message_tan_header">#358243</color>
 
@@ -51,6 +50,7 @@
     <color name="parking_state_closed">#ffe53238</color>
     <color name="parking_state_undefined">#333333</color>
     <color name="parking_state_subscriber">#ff9c71a9</color>
+
     <!-- Map -->
     <color name="map_pin_arret">#2D9B48</color>
     <color name="map_pin_parking">#ff0079bc</color> <!-- #1D72F9 -->
@@ -59,4 +59,7 @@
     <color name="map_pin_covoiturage">#34B1DB</color>
     <color name="map_pin_lila">#024F93</color>
 
+    <!-- Widget -->
+    <color name="widget_background">#80000000</color>
+    <color name="widget_background_focused">#802F93C5</color>
 </resources>

@@ -214,7 +214,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		final HoraireManager horaireManager = HoraireManager.getInstance();
 		horaireManager.schedule(horaireTask);
 
-		views.setViewVisibility(R.id.loading, View.VISIBLE);
+		views.setViewVisibility(R.id.widgetProgress, View.VISIBLE);
 		views.setViewVisibility(R.id.itemTime, View.GONE);
 	}
 
@@ -262,8 +262,10 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		final Intent intent = new Intent(context, this.getClass());
 		intent.setAction(ACTION_APPWIDGET_ON_CLICK);
 		intent.putExtra("idFavori", favori._id);
+
 		final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, favori._id, intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
+
 		views.setOnClickPendingIntent(R.id.horaireWidget, pendingIntent);
 	}
 
@@ -294,9 +296,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			builder.append(context.getString(R.string.msg_aucun_depart_24h));
 		}
 
-		views.setTextViewText(R.id.itemTime, builder.toString());
-		views.setViewVisibility(R.id.itemTime, View.VISIBLE);
-		views.setViewVisibility(R.id.loading, View.GONE);
+		 views.setTextViewText(R.id.itemTime, builder.toString());
+		 views.setViewVisibility(R.id.itemTime, View.VISIBLE);
+		 views.setViewVisibility(R.id.widgetProgress, View.GONE);
 	}
 
 	/**

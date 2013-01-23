@@ -12,6 +12,8 @@ import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
+import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Sens;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.bean.horaire.EmptyHoraire;
 import net.naonedbus.bean.horaire.Horaire;
@@ -20,6 +22,8 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.widget.adapter.impl.HoraireArrayAdapter;
 import net.naonedbus.widget.indexer.impl.HoraireIndexer;
 
@@ -72,10 +76,14 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private final HoraireManager mHoraireManager;
 	private final ArretManager mArretManager;
+	private final SensManager mSensManager;
+	private final LigneManager mLigneManager;
 	private final FavoriManager mFavoriManager;
 	private HoraireArrayAdapter mAdapter;
 	private List<Horaire> mHoraires;
 
+	private Ligne mLigne;
+	private Sens mSens;
 	private Arret mArret;
 	private boolean mIsFirstLoad = true;
 	private AtomicBoolean mIsLoading = new AtomicBoolean(false);
@@ -94,6 +102,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		mHoraireManager = HoraireManager.getInstance();
 		mFavoriManager = FavoriManager.getInstance();
 		mArretManager = ArretManager.getInstance();
+		mSensManager = SensManager.getInstance();
+		mLigneManager = LigneManager.getInstance();
 
 		mHoraires = new ArrayList<Horaire>();
 		mLastDayLoaded = new DateMidnight();
@@ -107,6 +117,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
 		mArret = mArretManager.getSingle(getActivity().getContentResolver(), idArret);
+		mLigne = mLigneManager.getSingle(getActivity().getContentResolver(), mArret.codeLigne);
+		mSens = mSensManager.getSingle(getActivity().getContentResolver(), mArret.codeLigne, mArret.codeSens);
 
 		loadContent();
 	}
@@ -220,6 +232,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private void menuComment() {
 		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
+		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
 		intent.putExtra(CommentaireActivity.Param.idArret, mArret._id);
 		startActivity(intent);
 	}
