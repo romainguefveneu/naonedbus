@@ -3,6 +3,7 @@ package net.naonedbus.fragment.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParcoursActivity;
@@ -38,6 +39,9 @@ import com.actionbarsherlock.app.SherlockListFragment;
 
 public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor>, OnQueryTextListener,
 		FilterQueryProvider {
+
+	private static final String LOG_TAG = "SearchFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int LOADER_INIT = 0;
 
@@ -102,13 +106,6 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 	}
 
 	@Override
-	public void onPause() {
-		super.onPause();
-		final Cursor c = mAdapter.swapCursor(null);
-		c.close();
-	}
-
-	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		final ParamIntent intent;
 		final CursorWrapper equipement = (CursorWrapper) getListAdapter().getItem(position);
@@ -139,7 +136,7 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
-
+		mAdapter.swapCursor(null);
 	}
 
 	@Override
