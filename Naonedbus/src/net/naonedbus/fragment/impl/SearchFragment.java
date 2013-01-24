@@ -15,7 +15,7 @@ import net.naonedbus.manager.impl.TypeEquipementManager;
 import net.naonedbus.provider.impl.EquipementProvider;
 import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.widget.PinnedHeaderListView;
-import net.naonedbus.widget.SearchView.OnQueryTextListener;
+import net.naonedbus.widget.ModaleSearchView.OnQueryTextListener;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import net.naonedbus.widget.indexer.impl.EquipementCursorIndexer;
 import android.database.Cursor;

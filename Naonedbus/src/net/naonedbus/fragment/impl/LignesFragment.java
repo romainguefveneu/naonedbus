@@ -6,7 +6,6 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.PlanActivity;
-import net.naonedbus.activity.impl.SearchActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.bean.async.AsyncResult;
@@ -18,25 +17,25 @@ import net.naonedbus.manager.impl.TypeLigneManager;
 import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
 import net.naonedbus.widget.indexer.impl.LigneIndexer;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
-public class LignesFragment extends CustomListFragment implements CustomFragmentActions {
+public class LignesFragment extends CustomListFragment implements CustomFragmentActions, OnQueryTextListener {
 
 	private static final String LOG_TAG = "LignesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -85,6 +84,9 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 		if (activity != null) {
 			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 			menuInflater.inflate(R.menu.fragment_lignes, menu);
+
+			final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+			searchView.setOnQueryTextListener(this);
 		}
 	}
 
@@ -119,16 +121,6 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.menu_search:
-			startActivity(new Intent(getActivity(), SearchActivity.class));
-			break;
-		}
-		return false;
-	}
-
-	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
@@ -160,6 +152,17 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 			result.setException(e);
 		}
 		return result;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
+		return false;
 	}
 
 }

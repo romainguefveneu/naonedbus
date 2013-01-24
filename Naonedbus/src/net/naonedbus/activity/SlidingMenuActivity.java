@@ -44,7 +44,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	private String[] mClasses;
 	/** Bundles des fragments. */
 	private Bundle[] mBundles;
-	/** Fragmnets. */
+	/** Fragments. */
 	private Fragment[] mFragments;
 
 	/** Gestion du menu latéral. */
@@ -121,6 +121,9 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		final Fragment fragment = getCurrentFragment();
+
+		if (DBG)
+			Log.d(LOG_TAG, "onPrepareOptionsMenu " + fragment);
 
 		if (fragment instanceof CustomFragmentActions) {
 			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
