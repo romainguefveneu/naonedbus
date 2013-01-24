@@ -45,7 +45,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setTheme(NBApplication.THEMES_RES[NBApplication.THEME]);
+		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
 
