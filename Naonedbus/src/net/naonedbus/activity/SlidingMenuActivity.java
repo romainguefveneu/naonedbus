@@ -6,6 +6,7 @@ import net.naonedbus.R;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
+import net.simonvt.menudrawer.MenuDrawer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +23,6 @@ import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.slidingmenu.lib.SlidingMenu;
 
 public abstract class SlidingMenuActivity extends SherlockFragmentActivity implements TabListener {
 
@@ -48,7 +48,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	private Fragment[] mFragments;
 
 	/** Gestion du menu latéral. */
-	private SlidingMenu mSlidingMenu;
+	private MenuDrawer mMenuDrawer;
 	/** Gestion du menu latéral. */
 	private SlidingMenuHelper mSlidingMenuHelper;
 
@@ -75,12 +75,11 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		super.onCreate(savedInstanceState);
 		setContentView(mLayoutId);
 
-		mSlidingMenu = new SlidingMenu(this);
-		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
 
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
-		mSlidingMenuHelper.setupSlidingMenu(mSlidingMenu);
+		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
@@ -103,7 +102,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		mSlidingMenuHelper.onPostCreate(getIntent(), mSlidingMenu, savedInstanceState);
+		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
 	}
 
 	@Override
@@ -140,7 +139,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			mSlidingMenu.toggle();
+			mMenuDrawer.toggleMenu();
 			return true;
 		default:
 			final Fragment fragment = getCurrentFragment();
@@ -188,7 +187,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 			finish();
 		}
 
-		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
+		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
 	}
 
 	/**
@@ -196,8 +195,8 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU || (mSlidingMenu.isMenuShowing() && keyCode == KeyEvent.KEYCODE_BACK)) {
-			mSlidingMenu.toggle();
+		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
+			mMenuDrawer.toggleMenu();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

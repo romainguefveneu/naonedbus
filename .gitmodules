@@ -16,3 +16,6 @@
 [submodule "Gesture-ImageView"]
 	path = Gesture-ImageView
 	url = https://github.com/jasonpolites/gesture-imageview.git
+[submodule "android-menudrawer"]
+	path = android-menudrawer
+	url = https://github.com/SimonVT/android-menudrawer.git

@@ -3,6 +3,7 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.helper.SlidingMenuHelper;
+import net.simonvt.menudrawer.MenuDrawer;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -15,7 +16,6 @@ import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.slidingmenu.lib.SlidingMenu;
 
 public class SettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
 
@@ -24,7 +24,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	/**
 	 * Gestion du menu latéral.
 	 */
-	private SlidingMenu mSlidingMenu;
+	private MenuDrawer mMenuDrawer;
 	private SlidingMenuHelper mSlidingMenuHelper;
 
 	@Override
@@ -33,12 +33,11 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 
 		super.onCreate(savedInstanceState);
 
-		mSlidingMenu = new SlidingMenu(this);
-		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
 
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
-		mSlidingMenuHelper.setupSlidingMenu(mSlidingMenu);
+		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
 
 		addPreferencesFromResource(R.xml.preferences);
 
@@ -47,13 +46,13 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		theme = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_THEME);
-//		initTheme(preferences);
+		// initTheme(preferences);
 	}
 
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		mSlidingMenuHelper.onPostCreate(getIntent(), mSlidingMenu, savedInstanceState);
+		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
 	}
 
 	@Override
@@ -65,7 +64,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
+		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			mSlidingMenu.toggle();
+			mMenuDrawer.toggleMenu();
 			return true;
 		default:
 		}
@@ -87,8 +86,8 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU || (mSlidingMenu.isMenuShowing() && keyCode == KeyEvent.KEYCODE_BACK)) {
-			mSlidingMenu.toggle();
+		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
+			mMenuDrawer.toggleMenu();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

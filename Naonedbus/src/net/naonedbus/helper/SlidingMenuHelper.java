@@ -17,6 +17,7 @@ import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.indexer.impl.MainMenuIndexer;
 import net.naonedbus.widget.item.impl.LinkMainMenuItem;
 import net.naonedbus.widget.item.impl.MainMenuItem;
+import net.simonvt.menudrawer.MenuDrawer;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -29,7 +30,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.slidingmenu.lib.SlidingMenu;
 
 public class SlidingMenuHelper {
 	/**
@@ -67,17 +67,17 @@ public class SlidingMenuHelper {
 		this.activity = activity;
 	}
 
-	public void onPostCreate(final Intent intent, final SlidingMenu slidingMenu, final Bundle savedInstanceState) {
+	public void onPostCreate(final Intent intent, final MenuDrawer slidingMenu, final Bundle savedInstanceState) {
 		if (intent.getBooleanExtra("fromMenu", false)
 				&& (savedInstanceState == null || !savedInstanceState.containsKey("menuConsumed"))) {
 			// Afficher le menu au démarrage, pour la transition.
-			slidingMenu.showMenu();
+			slidingMenu.openMenu(false);
 
 			// Masquer le menu.
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					slidingMenu.showContent();
+					slidingMenu.closeMenu();
 				}
 			}, 350);
 
@@ -91,29 +91,20 @@ public class SlidingMenuHelper {
 		outState.putBoolean("menuConsumed", true);
 	}
 
-	public void onWindowFocusChanged(boolean hasFocus, final SlidingMenu slidingMenu) {
+	public void onWindowFocusChanged(boolean hasFocus, final MenuDrawer slidingMenu) {
 		// Gérer le masquage de menu
-		if (hasFocus == false && slidingMenu.isMenuShowing()) {
+		if (hasFocus == false && slidingMenu.isMenuVisible()) {
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					slidingMenu.showContent(false);
+					slidingMenu.closeMenu(false);
 				}
 			}, 500);
 		}
 	}
 
-	public void setupSlidingMenu(final SlidingMenu slidingMenu) {
-		Display display = this.activity.getWindowManager().getDefaultDisplay();
-		int width = display.getWidth(); // deprecated
-
-		slidingMenu.setBehindWidth(Math.min(width - DpiUtils.getDpiFromPx(activity, 48),
-				DpiUtils.getDpiFromPx(activity, 380)));
-		slidingMenu.setBehindScrollScale(0.3f);
-		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-		slidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-		slidingMenu.setShadowDrawable(R.drawable.shadow);
-		slidingMenu.setMenu(R.layout.menu);
+	public void setupSlidingMenu(final MenuDrawer slidingMenu) {
+		slidingMenu.setMenuView(R.layout.menu);
 
 		menuListView = (ListView) slidingMenu.findViewById(android.R.id.list);
 		if (adapter == null) {
@@ -153,7 +144,7 @@ public class SlidingMenuHelper {
 				} else {
 					if (activity.getClass().equals(item.getIntentClass())) {
 						// Même activité
-						slidingMenu.showContent();
+						slidingMenu.closeMenu();
 						menuListView.setClickable(true);
 					} else {
 						// Nouvelle activité

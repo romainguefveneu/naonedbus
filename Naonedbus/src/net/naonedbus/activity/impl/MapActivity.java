@@ -29,6 +29,7 @@ import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.utils.DpiUtils;
 import net.naonedbus.utils.GeoPointUtils;
 import net.naonedbus.widget.BalloonOverlayView;
+import net.simonvt.menudrawer.MenuDrawer;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.DialogInterface;
@@ -59,7 +60,6 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
-import com.slidingmenu.lib.SlidingMenu;
 
 public class MapActivity extends SherlockMapActivity {
 
@@ -99,7 +99,7 @@ public class MapActivity extends SherlockMapActivity {
 	/**
 	 * Gestion du menu latéral.
 	 */
-	private SlidingMenu mSlidingMenu;
+	private MenuDrawer mMenuDrawer;
 	private SlidingMenuHelper mSlidingMenuHelper;
 
 	private MyLocationProvider myLocationProvider;
@@ -148,12 +148,11 @@ public class MapActivity extends SherlockMapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 
-		mSlidingMenu = new SlidingMenu(this);
-		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
 
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
-		mSlidingMenuHelper.setupSlidingMenu(mSlidingMenu);
+		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
 
 		final Location location = myLocationProvider.getLastKnownLocation();
 
@@ -218,7 +217,7 @@ public class MapActivity extends SherlockMapActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			mSlidingMenu.toggle();
+			mMenuDrawer.toggleMenu();
 			break;
 		case ACTION_LAYERS:
 			showOptions();
@@ -242,7 +241,7 @@ public class MapActivity extends SherlockMapActivity {
 	@Override
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		mSlidingMenuHelper.onPostCreate(getIntent(), mSlidingMenu, savedInstanceState);
+		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
 	}
 
 	@Override
@@ -254,7 +253,7 @@ public class MapActivity extends SherlockMapActivity {
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mSlidingMenu);
+		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
 	}
 
 	@Override
@@ -280,8 +279,8 @@ public class MapActivity extends SherlockMapActivity {
 	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU || (mSlidingMenu.isMenuShowing() && keyCode == KeyEvent.KEYCODE_BACK)) {
-			mSlidingMenu.toggle();
+		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
+			mMenuDrawer.toggleMenu();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
