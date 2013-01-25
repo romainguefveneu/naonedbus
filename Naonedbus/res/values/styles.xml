@@ -391,7 +391,8 @@
     </style>
 
     <style name="TutorialTitle">
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:gravity">center</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_marginBottom">8dip</item>
     </style>

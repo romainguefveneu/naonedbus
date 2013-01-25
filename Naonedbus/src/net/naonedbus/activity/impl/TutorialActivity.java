@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Locale;
 
 import net.naonedbus.R;
+import net.naonedbus.utils.FontUtils;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -46,10 +48,11 @@ public class TutorialActivity extends Activity {
 				R.string.tuto_0_summary, R.drawable.logo_large));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_beta_title, R.string.tuto_beta_summary,
 				R.drawable.ic_action_good));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_1_title, R.string.tuto_1_summary,
-				R.drawable.tuto_1));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_2_title, R.string.tuto_2_summary,
-				R.drawable.tuto_2));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_1_title, R.string.tuto_1_summary, 0));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_2_title, R.string.tuto_2_summary, 0));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_3_title, R.string.tuto_3_summary, 0));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_4_title, R.string.tuto_4_summary, 0));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_5_title, R.string.tuto_5_summary, 0));
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 		viewPager.setAdapter(mTutorialPagerAdapter);
@@ -63,11 +66,13 @@ public class TutorialActivity extends Activity {
 		private Context mContext;
 		private List<TutorialView> mTutorialViews;
 		private LayoutInflater mLayoutInflater;
+		private Typeface mRoboto;
 
 		public TutorialPagerAdapter(Context context) {
 			mContext = context;
 			mTutorialViews = new ArrayList<TutorialActivity.TutorialView>();
 			mLayoutInflater = LayoutInflater.from(context);
+			mRoboto = FontUtils.getRobotoLight(context);
 		}
 
 		public void addView(TutorialView view) {
@@ -86,12 +91,15 @@ public class TutorialActivity extends Activity {
 
 			final TextView title = (TextView) layout.findViewById(android.R.id.title);
 			title.setText(mContext.getString(tutorialView.titleResId).toUpperCase(Locale.getDefault()));
+			title.setTypeface(mRoboto);
 
 			final TextView summary = (TextView) layout.findViewById(android.R.id.summary);
 			summary.setText(Html.fromHtml(mContext.getString(tutorialView.summaryResId).toString()));
 
-			final ImageView icon = (ImageView) layout.findViewById(android.R.id.icon);
-			icon.setImageResource(tutorialView.imageResId);
+			if (tutorialView.imageResId != 0) {
+				final ImageView icon = (ImageView) layout.findViewById(android.R.id.icon);
+				icon.setImageResource(tutorialView.imageResId);
+			}
 
 			((ViewPager) collection).addView(layout);
 

@@ -30,7 +30,7 @@
         android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
         android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
         android:singleLine="true"
-        android:textColorHint="#ffffff" />
+        android:textColorHint="@color/query_hint_color" />
 
     <ImageView
         android:id="@+id/searchViewClose"

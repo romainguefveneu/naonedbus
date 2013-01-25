@@ -11,9 +11,7 @@ import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
 import android.app.ProgressDialog;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -78,6 +76,7 @@ public class MainActivity extends SlidingMenuActivity {
 			loadContent();
 		}
 		super.onResume();
+
 	}
 
 	@Override
@@ -89,6 +88,7 @@ public class MainActivity extends SlidingMenuActivity {
 	private void loadContent() {
 		if (progressDialog != null) {
 			progressDialog.dismiss();
+			peekSlidingMenu();
 		}
 
 		addFragments(titles, classes);

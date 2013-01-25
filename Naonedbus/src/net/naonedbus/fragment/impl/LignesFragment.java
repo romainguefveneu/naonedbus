@@ -17,6 +17,7 @@ import net.naonedbus.manager.impl.TypeLigneManager;
 import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
 import net.naonedbus.widget.indexer.impl.LigneIndexer;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -25,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -87,6 +89,11 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 
 			final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
 			searchView.setOnQueryTextListener(this);
+			searchView.setQueryHint(getString(R.string.search_lignes_hint));
+
+			final AutoCompleteTextView searchText = (AutoCompleteTextView) searchView
+					.findViewById(R.id.abs__search_src_text);
+			searchText.setHintTextColor(getResources().getColor(R.color.query_hint_color));
 		}
 	}
 

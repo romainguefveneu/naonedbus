@@ -12,7 +12,6 @@ import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParkingsActivity;
 import net.naonedbus.activity.impl.SearchActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
-import net.naonedbus.utils.DpiUtils;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.indexer.impl.MainMenuIndexer;
 import net.naonedbus.widget.item.impl.LinkMainMenuItem;
@@ -23,7 +22,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Display;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -32,13 +30,13 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.ActionBar;
 
 public class SlidingMenuHelper {
-	/**
-	 * Menu général.
-	 */
-	private ListView menuListView;
-	private static MainMenuAdapter adapter;
-	private static int savedPosition = -1;
-	private static int savedListTop;
+
+	private static MainMenuAdapter sAdapter;
+	private static int sSavedPosition = -1;
+	private static int sSavedListTop;
+
+	/** Menu général. */
+	private ListView mMenuListView;
 
 	/**
 	 * Contenu du menu général.
@@ -57,7 +55,6 @@ public class SlidingMenuHelper {
 		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_menu_manage, 1));
 		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_menu_info_details, 1));
 		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_menu_star, 1));
-//		menuItems.add(new LinkMainMenuItem(R.string.menu_bug, "mailto:naonedbus@gmail.com?subject=Bug&body=Bonjour,", R.drawable.ic_menu_emoticons, 1));
 		// @formatter:on
 	}
 
@@ -105,36 +102,37 @@ public class SlidingMenuHelper {
 
 	public void setupSlidingMenu(final MenuDrawer slidingMenu) {
 		slidingMenu.setMenuView(R.layout.menu);
+		slidingMenu.setDropShadow(R.drawable.shadow);
 
-		menuListView = (ListView) slidingMenu.findViewById(android.R.id.list);
-		if (adapter == null) {
-			adapter = new MainMenuAdapter(activity);
+		mMenuListView = (ListView) slidingMenu.findViewById(android.R.id.list);
+		if (sAdapter == null) {
+			sAdapter = new MainMenuAdapter(activity);
 			for (MainMenuItem item : menuItems) {
-				adapter.add(item);
+				sAdapter.add(item);
 			}
 			final MainMenuIndexer indexer = new MainMenuIndexer();
-			indexer.buildIndex(activity, adapter);
-			adapter.setIndexer(indexer);
+			indexer.buildIndex(activity, sAdapter);
+			sAdapter.setIndexer(indexer);
 		}
-		adapter.setCurrentClass(activity.getClass());
-		menuListView.setAdapter(adapter);
+		sAdapter.setCurrentClass(activity.getClass());
+		mMenuListView.setAdapter(sAdapter);
 
-		if (savedPosition >= 0) { // initialized to -1
-			menuListView.setSelectionFromTop(savedPosition, savedListTop);
+		if (sSavedPosition >= 0) { // initialized to -1
+			mMenuListView.setSelectionFromTop(sSavedPosition, sSavedListTop);
 		}
 
-		menuListView.setOnItemClickListener(new OnItemClickListener() {
+		mMenuListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				// Ne pas permettre à l'utilisateur de cliquer n'importe où...
-				menuListView.setClickable(false);
+				mMenuListView.setClickable(false);
 
 				// Sauvegarder l'état de la listview
-				savedPosition = menuListView.getFirstVisiblePosition();
-				final View firstVisibleView = menuListView.getChildAt(0);
-				savedListTop = (firstVisibleView == null) ? 0 : firstVisibleView.getTop();
+				sSavedPosition = mMenuListView.getFirstVisiblePosition();
+				final View firstVisibleView = mMenuListView.getChildAt(0);
+				sSavedListTop = (firstVisibleView == null) ? 0 : firstVisibleView.getTop();
 
-				final MainMenuItem item = (MainMenuItem) menuListView.getItemAtPosition(position);
+				final MainMenuItem item = (MainMenuItem) mMenuListView.getItemAtPosition(position);
 
 				if (item instanceof LinkMainMenuItem) {
 					final LinkMainMenuItem linkItem = (LinkMainMenuItem) item;
@@ -145,7 +143,7 @@ public class SlidingMenuHelper {
 					if (activity.getClass().equals(item.getIntentClass())) {
 						// Même activité
 						slidingMenu.closeMenu();
-						menuListView.setClickable(true);
+						mMenuListView.setClickable(true);
 					} else {
 						// Nouvelle activité
 						final Intent intent = new Intent(activity, item.getIntentClass());

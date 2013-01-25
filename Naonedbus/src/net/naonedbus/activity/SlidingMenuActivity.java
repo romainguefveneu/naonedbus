@@ -29,6 +29,18 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	private static final String LOG_TAG = "SlidingMenuActivity";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
+	/**
+	 * Default delay from {@link #peekDrawer()} is called until first animation
+	 * is run.
+	 */
+	private static final long DEFAULT_PEEK_START_DELAY = 1000;
+
+	/**
+	 * Default delay between each subsequent animation, after
+	 * {@link #peekDrawer()} has been called.
+	 */
+	private static final long DEFAULT_PEEK_DELAY = 8000;
+
 	private static String BUNDLE_TABS_CURRENT = "tabsCurrent";
 	private static String BUNDLE_TABS_TITLES = "tabsTitles";
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
@@ -191,6 +203,13 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	}
 
 	/**
+	 * Animates the sliding menu slightly open.
+	 */
+	protected void peekSlidingMenu() {
+		mMenuDrawer.peekDrawer(DEFAULT_PEEK_START_DELAY, DEFAULT_PEEK_DELAY);
+	}
+
+	/**
 	 * Show the menu when menu button pressed, hide it when back is pressed
 	 */
 	@Override
@@ -235,6 +254,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		}
 
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		invalidateOptionsMenu();
 	}
 
 	/**

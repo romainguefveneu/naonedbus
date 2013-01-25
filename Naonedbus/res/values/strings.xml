@@ -17,10 +17,16 @@
     <!-- Tuto -->
     <string name="tuto_0_title">Bienvenue dans</string>
     <string name="tuto_0_summary"><![CDATA[Prenez quelques instants pour découvrir l\'application.<br /><big>&rarr;</big>]]></string>
-    <string name="tuto_1_title">Menu principal</string>
-    <string name="tuto_1_summary">Affichez le menu en cliquant sur l\'îcone.</string>
-    <string name="tuto_2_title">Navigation</string>
-    <string name="tuto_2_summary">Accedez à toutes les fonctionnalitées de naonedbus via ce menu.</string>
+    <string name="tuto_1_title">Lignes</string>
+    <string name="tuto_1_summary"></string>
+    <string name="tuto_2_title">Favoris</string>
+    <string name="tuto_2_summary"></string>
+    <string name="tuto_3_title">Info trafic</string>
+    <string name="tuto_3_summary"></string>
+    <string name="tuto_4_title">Info trafic participatif</string>
+    <string name="tuto_4_summary"></string>
+    <string name="tuto_5_title">Equipements</string>
+    <string name="tuto_5_summary"></string>
     <string name="tuto_beta_title">Version bêta</string>
     <string name="tuto_beta_summary"><![CDATA[Vous utilisez une version Bêta de naonedbus.<br />Merci de nous signaler tout problème : <br /><br /> <font color="#ffffff">naonedbus@gmail.com</font>]]></string>
     <!-- Activities -->
@@ -177,6 +183,7 @@
 
     <!-- Search -->
     <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
+    <string name="search_lignes_hint">Numéro ou terminus</string>
     <string name="search_empty">Aucun équipement ne correspond à votre recherche</string>
     
     <!-- Sections -->
