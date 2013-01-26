@@ -98,8 +98,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 		fragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
 		final View view = inflater.inflate(this.layoutId, container, false);
-		view.setId(R.id.fragmentContent);
-
 		bindView(view, savedInstanceState);
 
 		fragmentView.addView(view);
@@ -205,7 +203,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * Afficher l'indicateur de chargement.
 	 */
 	protected void showLoader() {
-		fragmentView.findViewById(R.id.fragmentContent).setVisibility(View.GONE);
+		fragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
 		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
 			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
 		}
@@ -217,10 +215,12 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 */
 	protected void showContent() {
 		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
+
 		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
 			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
 		}
-		final View content = fragmentView.findViewById(R.id.fragmentContent);
+
+		final View content = fragmentView.findViewById(android.R.id.list);
 		if (content.getVisibility() != View.VISIBLE) {
 			content.setVisibility(View.VISIBLE);
 			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
@@ -276,7 +276,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 *            L'identifiant du symbole.
 	 */
 	protected void showMessage(String title, String description, int drawableRes) {
-		fragmentView.findViewById(R.id.fragmentContent).setVisibility(View.GONE);
+		fragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
 		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
 		View message = fragmentView.findViewById(R.id.fragmentMessage);

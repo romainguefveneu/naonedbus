@@ -19,16 +19,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <net.naonedbus.widget.PinnedHeaderListView
-        android:id="@id/android:list"
-        style="@style/Listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp" />
-
-</FrameLayout>
+<net.naonedbus.widget.PinnedHeaderListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/android:list"
+    style="@style/Listview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@android:color/transparent"
+    android:dividerHeight="0dp" />

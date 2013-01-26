@@ -27,6 +27,7 @@
     <color name="pinned_header_menu_text">#90ffffff</color>
     <color name="menu_divider">#25ffffff</color>
     <color name="menu_background">#006699</color>
+    <color name="action_bar_background">#006699</color>
     <color name="menu_current">#1683bc</color>
     <color name="menu_shadow">#00537e</color>
     <color name="divider_light">#cccccc</color>

@@ -6,6 +6,7 @@ import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.simonvt.menudrawer.MenuDrawer;
+import net.simonvt.menudrawer.MenuDrawer.OnDrawerStateChangeListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,8 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivity {
+public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivity implements
+		OnDrawerStateChangeListener {
 
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 	private static String BUNDLE_TABS_BUNDLES = "tabsBundles";
@@ -50,6 +52,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 		setContentView(layoutId);
 
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
+		mMenuDrawer.setOnDrawerStateChangeListener(this);
 
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
@@ -221,6 +224,11 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 
 	protected SlidingMenuHelper getSlidingMenuHelper() {
 		return mSlidingMenuHelper;
+	}
+
+	@Override
+	public void onDrawerStateChange(int oldState, int newState) {
+
 	}
 
 }

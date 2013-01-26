@@ -43,6 +43,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	private final static int SORT_NOM = R.id.menu_sort_name;
 	private final static int SORT_DISTANCE = R.id.menu_sort_distance;
 	private final static int SORT_PLACES = R.id.menu_sort_parking_places;
+
 	private final static SparseArray<Comparator<ParkingPublic>> comparators = new SparseArray<Comparator<ParkingPublic>>();
 	static {
 		comparators.append(SORT_NOM, new ParkingComparator());
@@ -59,7 +60,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	private StateHelper mStateHelper;
 	private MyLocationProvider myLocationProvider;
 	private ParkingDistance loaderDistance;
-	private int currentSortPreference = SORT_NOM;
+	private int mCurrentSort = SORT_NOM;
 
 	public ParkingsPublicsFragment() {
 		super(R.string.title_fragment_parkings_publics, R.layout.fragment_listview_section);
@@ -75,7 +76,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		locationListener.onLocationChanged(myLocationProvider.getLastKnownLocation());
 
 		mStateHelper = new StateHelper(getActivity());
-		currentSortPreference = mStateHelper.getSortType(this, SORT_NOM);
+		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 	@Override
 	public void onStop() {
-		mStateHelper.setSortType(this, currentSortPreference);
+		mStateHelper.setSortType(this, mCurrentSort);
 		super.onStop();
 	}
 
@@ -101,7 +102,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	public void onCreateOptionsMenu(Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_parkings_publics, menu);
-		menu.findItem(currentSortPreference).setChecked(true);
+		menu.findItem(mCurrentSort).setChecked(true);
 	}
 
 	@Override
@@ -110,15 +111,15 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 		switch (item.getItemId()) {
 		case R.id.menu_sort_name:
-			currentSortPreference = SORT_NOM;
+			mCurrentSort = SORT_NOM;
 			sort();
 			break;
 		case R.id.menu_sort_distance:
-			currentSortPreference = SORT_DISTANCE;
+			mCurrentSort = SORT_DISTANCE;
 			sort();
 			break;
 		case R.id.menu_sort_parking_places:
-			currentSortPreference = SORT_PLACES;
+			mCurrentSort = SORT_PLACES;
 			sort();
 			break;
 		}
@@ -149,9 +150,9 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 			final ParkingPublicManager parkingPublicManager = ParkingPublicManager.getInstance();
 			final List<ParkingPublic> parkings = parkingPublicManager.getAll(context.getContentResolver());
-			Collections.sort(parkings, comparators.get(currentSortPreference));
+			Collections.sort(parkings, comparators.get(mCurrentSort));
 			final ParkingPublicArrayAdapter adapter = new ParkingPublicArrayAdapter(context, parkings);
-			adapter.setIndexer(indexers.get(currentSortPreference));
+			adapter.setIndexer(indexers.get(mCurrentSort));
 
 			result.setResult(adapter);
 		} catch (Exception exception) {
@@ -224,13 +225,13 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		final Comparator<ParkingPublic> comparator;
 		final ArraySectionIndexer<ParkingPublic> indexer;
 
-		if (currentSortPreference == SORT_DISTANCE && !myLocationProvider.isProviderEnabled()) {
+		if (mCurrentSort == SORT_DISTANCE && !myLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation
 			comparator = comparators.get(SORT_NOM);
 			indexer = indexers.get(SORT_NOM);
 		} else {
-			comparator = comparators.get(currentSortPreference);
-			indexer = indexers.get(currentSortPreference);
+			comparator = comparators.get(mCurrentSort);
+			indexer = indexers.get(mCurrentSort);
 		}
 
 		adapter.sort(comparator);
@@ -246,7 +247,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 			final ParkingDistanceComparator comparator = (ParkingDistanceComparator) comparators.get(SORT_DISTANCE);
 			comparator.setReferentiel(location);
 
-			if (currentSortPreference == SORT_DISTANCE) {
+			if (mCurrentSort == SORT_DISTANCE) {
 				refreshDistance();
 			}
 		}
@@ -255,28 +256,22 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		public void onLocationDisabled() {
 			final ParkingDistanceComparator comparator = (ParkingDistanceComparator) comparators.get(SORT_DISTANCE);
 			comparator.setReferentiel(null);
-			if (currentSortPreference == SORT_DISTANCE) {
-				currentSortPreference = SORT_NOM;
+			if (mCurrentSort == SORT_DISTANCE) {
+				mCurrentSort = SORT_NOM;
 				sort();
 			}
 		}
 	};
 
 	/**
-	 * Listener ce changement de paramètres
+	 * Retourne le comparateur en cours, ou le comparateur par nom si non
+	 * trouvé.
+	 * 
+	 * @return le comparateur en cours, ou le comparateur par nom si non trouvé.
 	 */
-	// private OnSharedPreferenceChangeListener onSharedPreferenceChangeListener
-	// = new OnSharedPreferenceChangeListener() {
-	// @Override
-	// public void onSharedPreferenceChanged(SharedPreferences
-	// sharedPreferences, String key) {
-	// if (NBApplication.PREF_PARKINGS_SORT.equals(key)) {
-	// currentSortPreference =
-	// Integer.valueOf(preferences.getString(NBApplication.PREF_PARKINGS_SORT,
-	// "0"));
-	// sort();
-	// }
-	// }
-	// };
+	private Comparator<ParkingPublic> getCurrentComparator() {
+		final Comparator<ParkingPublic> comparator = comparators.get(mCurrentSort);
+		return (comparator == null) ? comparators.get(SORT_NOM) : comparator;
+	}
 
 }

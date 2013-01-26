@@ -84,6 +84,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
+		getWindow().setBackgroundDrawable(null);
 		super.onCreate(savedInstanceState);
 		setContentView(mLayoutId);
 

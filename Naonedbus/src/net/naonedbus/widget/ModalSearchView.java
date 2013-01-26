@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class ModaleSearchView extends LinearLayout implements TextWatcher {
+public class ModalSearchView extends LinearLayout implements TextWatcher {
 
 	/**
 	 * Callbacks for changes to the query text.
@@ -40,7 +40,7 @@ public class ModaleSearchView extends LinearLayout implements TextWatcher {
 	private ImageView mCloseButton;
 	private OnQueryTextListener mOnQueryTextListener;
 
-	public ModaleSearchView(Context context, AttributeSet attrs) {
+	public ModalSearchView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 	}

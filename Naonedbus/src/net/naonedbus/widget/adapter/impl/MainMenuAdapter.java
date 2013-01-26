@@ -1,11 +1,13 @@
 package net.naonedbus.widget.adapter.impl;
 
 import net.naonedbus.R;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import net.naonedbus.widget.indexer.impl.MainMenuIndexer;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,10 +15,12 @@ import android.widget.TextView;
 public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 
 	private Class<?> mCurrentClass;
+	private Typeface mRoboto;
 
 	public MainMenuAdapter(Context context) {
 		super(context, R.layout.list_item_menu);
 		setIndexer(new MainMenuIndexer());
+		mRoboto = FontUtils.getRobotoLight(context);
 	}
 
 	public void setCurrentClass(Class<?> currentClass) {
@@ -45,6 +49,7 @@ public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 		holder.view = view.findViewById(R.id.itemContent);
 		holder.icon = (ImageView) view.findViewById(R.id.itemIcon);
 		holder.title = (TextView) view.findViewById(R.id.itemTitle);
+		holder.title.setTypeface(mRoboto);
 
 		view.setTag(holder);
 	}

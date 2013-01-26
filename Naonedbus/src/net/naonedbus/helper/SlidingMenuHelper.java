@@ -45,16 +45,16 @@ public class SlidingMenuHelper {
 	static {
 		// @formatter:off
 		menuItems = new ArrayList<MainMenuItem>();
-		menuItems.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_menu_home, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_menu_notifications, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_itineraires, AboutActivity.class, R.drawable.ic_menu_directions, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_menu_parking, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_menu_goto, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_menu_search, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_menu_mapmode, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_menu_manage, 1));
-		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_menu_info_details, 1));
-		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_menu_star, 1));
+		menuItems.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_itineraires, AboutActivity.class, R.drawable.ic_action_direction, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_action_forward, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_action_good, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_place, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_action_settings, 1));
+		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_action_info, 1));
+		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));
 		// @formatter:on
 	}
 
@@ -76,7 +76,7 @@ public class SlidingMenuHelper {
 				public void run() {
 					slidingMenu.closeMenu();
 				}
-			}, 350);
+			}, 500);
 
 			// Consommer l'affichage du menu pour ne pas réafficher en cas de
 			// rotation.
@@ -96,7 +96,7 @@ public class SlidingMenuHelper {
 				public void run() {
 					slidingMenu.closeMenu(false);
 				}
-			}, 500);
+			}, 800);
 		}
 	}
 
@@ -159,7 +159,7 @@ public class SlidingMenuHelper {
 	}
 
 	public void setupActionBar(ActionBar actionBar) {
-		actionBar.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.actionbar_back));
+		// actionBar.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.actionbar_back));
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 }

@@ -3,12 +3,17 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentSlidingActivity;
 import net.naonedbus.fragment.impl.SearchFragment;
-import net.naonedbus.widget.ModaleSearchView;
+import net.naonedbus.widget.ModalSearchView;
+import net.simonvt.menudrawer.MenuDrawer;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 
 import com.actionbarsherlock.app.ActionBar;
 
 public class SearchActivity extends OneFragmentSlidingActivity {
+
+	private ModalSearchView mModalSearchView;
 
 	public SearchActivity() {
 		super(R.layout.activity_main);
@@ -29,8 +34,17 @@ public class SearchActivity extends OneFragmentSlidingActivity {
 		actionBar.setDisplayShowHomeEnabled(true);
 		actionBar.setCustomView(R.layout.search_view);
 
-		final ModaleSearchView searchViewLayout = (ModaleSearchView) actionBar.getCustomView();
-		searchViewLayout.setOnQueryTextListener(searchFragment);
+		mModalSearchView = (ModalSearchView) actionBar.getCustomView();
+		mModalSearchView.setOnQueryTextListener(searchFragment);
+	}
+
+	@Override
+	public void onDrawerStateChange(int oldState, int newState) {
+		if (newState == MenuDrawer.STATE_CLOSED) {
+			mModalSearchView.requestFocus();
+			final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+		}
 	}
 
 }
