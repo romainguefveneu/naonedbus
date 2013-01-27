@@ -8,11 +8,11 @@ import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 import android.util.SparseArray;
 
-public class LigneIndexer extends ArraySectionIndexer<Ligne> {
+public class LigneArrayIndexer extends ArraySectionIndexer<Ligne> {
 
 	private SparseArray<String> typesLignes;
 
-	public LigneIndexer(final List<TypeLigne> typesLignes) {
+	public LigneArrayIndexer(final List<TypeLigne> typesLignes) {
 		this.typesLignes = new SparseArray<String>();
 		for (final TypeLigne typeLigne : typesLignes) {
 			this.typesLignes.put(typeLigne._id, typeLigne.nom);

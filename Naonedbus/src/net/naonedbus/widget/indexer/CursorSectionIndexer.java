@@ -84,7 +84,7 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 			} while (mDataCursor.moveToNext());
 		}
 
-		this.mSections = new String[sectionsText.size()];
+		mSections = new String[sectionsText.size()];
 		sectionsText.toArray(this.mSections);
 
 		mPositions = new int[sectionsCount.size()];

@@ -75,6 +75,20 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		return getFromCursor(c);
 	}
 
+	/**
+	 * Récupérer les lignes selon un mot clé.
+	 * 
+	 * @param contentResolver
+	 * @param keyword
+	 * @return Les lignes correspondants au mot clé
+	 */
+	public Cursor getLignesSearch(ContentResolver contentResolver, String keyword) {
+		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
+		builder.appendPath(keyword);
+
+		return contentResolver.query(builder.build(), null, null, null, null);
+	}
+
 	@Override
 	protected Ligne getSingleFromCursor(Cursor c) {
 		Ligne ligneItem = new Ligne();

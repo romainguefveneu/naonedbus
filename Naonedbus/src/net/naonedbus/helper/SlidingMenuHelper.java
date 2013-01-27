@@ -48,7 +48,7 @@ public class SlidingMenuHelper {
 		menuItems.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_itineraires, AboutActivity.class, R.drawable.ic_action_direction, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_action_forward, 0));
+		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_action_good, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_place, 0));

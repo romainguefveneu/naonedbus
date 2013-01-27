@@ -1,5 +1,6 @@
 package net.naonedbus.fragment.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
@@ -8,28 +9,28 @@ import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
-import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.fragment.CustomFragmentActions;
-import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.TypeLigneManager;
-import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
-import net.naonedbus.widget.indexer.impl.LigneIndexer;
+import net.naonedbus.provider.impl.LigneProvider;
+import net.naonedbus.provider.table.LigneTable;
+import net.naonedbus.widget.adapter.impl.LigneCursorAdapter;
+import net.naonedbus.widget.indexer.impl.LigneCursorIndexer;
 import android.content.Context;
-import android.graphics.Color;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.ListAdapter;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -37,47 +38,23 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
-public class LignesFragment extends CustomListFragment implements CustomFragmentActions, OnQueryTextListener {
+public class LignesFragment extends CustomCursorFragment implements CustomFragmentActions, OnQueryTextListener,
+		FilterQueryProvider {
 
 	private static final String LOG_TAG = "LignesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
+	private LigneCursorAdapter mAdapter;
+	private LigneManager mLigneManager;
+
 	public LignesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
-		if (DBG)
-			Log.i(LOG_TAG, "LignesFragment()");
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (DBG)
-			Log.d(LOG_TAG, "onActivityCreated");
-
 		registerForContextMenu(getListView());
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateView");
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		if (DBG)
-			Log.d(LOG_TAG, "onStart");
-
-		loadContent();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		if (DBG)
-			Log.d(LOG_TAG, "onResume");
 	}
 
 	@Override
@@ -144,21 +121,16 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
-		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		try {
-			final TypeLigneManager typeLigneManager = TypeLigneManager.getInstance();
-			final LigneManager ligneManager = LigneManager.getInstance();
-			final List<TypeLigne> typesLignes = typeLigneManager.getAll(context.getContentResolver(), null, null);
-			final List<Ligne> items = ligneManager.getAll(context.getContentResolver(), null, null);
-			final LignesArrayAdapter adapter = new LignesArrayAdapter(context, items);
-			adapter.setIndexer(new LigneIndexer(typesLignes));
+	public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
+		final CursorLoader cursorLoader = new CursorLoader(getActivity(), LigneProvider.CONTENT_URI, null, null, null,
+				null);
+		return cursorLoader;
+	}
 
-			result.setResult(adapter);
-		} catch (Exception e) {
-			result.setException(e);
-		}
-		return result;
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		mAdapter.getFilter().filter(newText);
+		return true;
 	}
 
 	@Override
@@ -167,9 +139,27 @@ public class LignesFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public boolean onQueryTextChange(String newText) {
-		Toast.makeText(getActivity(), newText, Toast.LENGTH_SHORT).show();
-		return false;
+	public Cursor runQuery(CharSequence constraint) {
+		return mLigneManager.getLignesSearch(getActivity().getContentResolver(), constraint.toString());
+	}
+
+	@Override
+	protected CursorAdapter getCursorAdapter(Context context) {
+		mAdapter = new LigneCursorAdapter(getActivity(), null);
+		mAdapter.setFilterQueryProvider(this);
+
+		mLigneManager = LigneManager.getInstance();
+
+		final TypeLigneManager typeLigneManager = TypeLigneManager.getInstance();
+		final List<TypeLigne> typesLignes = typeLigneManager.getAll(getActivity().getContentResolver());
+		final List<String> types = new ArrayList<String>();
+		for (TypeLigne type : typesLignes) {
+			types.add(type.nom);
+		}
+
+		mAdapter.setIndexer(new LigneCursorIndexer(null, types, LigneTable.TYPE));
+
+		return mAdapter;
 	}
 
 }

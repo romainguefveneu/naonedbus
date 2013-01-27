@@ -1,11 +1,10 @@
 package net.naonedbus.fragment;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
 
 import org.joda.time.DateTime;
@@ -15,10 +14,8 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +32,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 public abstract class CustomCursorFragment extends SherlockListFragment implements CustomFragmentActions,
-		LoaderCallbacks<AsyncResult<Cursor>> {
+		LoaderCallbacks<Cursor> {
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
@@ -43,14 +40,14 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	private static final String STATE_POSITION = "position";
 	private static final String STATE_TOP = "top";
 
-	int messageEmptyTitleId = R.string.error_title_empty;
-	int messageEmptySummaryId = R.string.error_summary_empty;
-	int messageEmptyDrawableId = R.drawable.sad_face;
+	int mMessageEmptyTitleId = R.string.error_title_empty;
+	int mMessageEmptySummaryId = R.string.error_summary_empty;
+	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
-	protected int titleId;
-	protected int layoutId;
-	protected int layoutListHeaderId = R.layout.list_item_header;
-	protected ViewGroup fragmentView;
+	protected int mTitleId;
+	protected int mLayoutId;
+	protected int mLayoutListHeaderId = R.layout.list_item_header;
+	protected ViewGroup mFragmentView;
 
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
@@ -70,13 +67,13 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	private int timeToLive = 5;
 
 	public CustomCursorFragment(final int titleId, final int layoutId) {
-		this.titleId = titleId;
-		this.layoutId = layoutId;
+		mTitleId = titleId;
+		mLayoutId = layoutId;
 	}
 
 	public CustomCursorFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
 		this(titleId, layoutId);
-		this.layoutListHeaderId = layoutListHeaderId;
+		mLayoutListHeaderId = layoutListHeaderId;
 	}
 
 	@Override
@@ -85,10 +82,9 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		setRetainInstance(true);
 
 		mCursorAdapter = getCursorAdapter(getActivity());
+		setListAdapter(mCursorAdapter);
 
-		if (getListAdapter() == null) {
-			getLoaderManager().initLoader(LOADER_INIT, null, this);
-		}
+		getLoaderManager().initLoader(LOADER_INIT, null, this);
 	}
 
 	@Override
@@ -104,17 +100,15 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 			mListViewStateTop = 0;
 		}
 
-		fragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
-		final View view = inflater.inflate(this.layoutId, container, false);
-		view.setId(R.id.fragmentContent);
-
+		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
+		final View view = inflater.inflate(this.mLayoutId, container, false);
 		bindView(view, savedInstanceState);
 
-		fragmentView.addView(view);
+		mFragmentView.addView(view);
 
-		setupListView(inflater, fragmentView);
+		setupListView(inflater, mFragmentView);
 
-		return fragmentView;
+		return mFragmentView;
 	}
 
 	@Override
@@ -133,7 +127,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	}
 
 	private void setupListView(LayoutInflater inflater, View view) {
-		final ListView listView = (ListView) fragmentView.findViewById(android.R.id.list);
+		final ListView listView = (ListView) mFragmentView.findViewById(android.R.id.list);
 
 		listView.setOnScrollListener(new OnScrollListener() {
 			@Override
@@ -148,7 +142,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 
 		if (listView instanceof PinnedHeaderListView) {
 			final PinnedHeaderListView pinnedListView = (PinnedHeaderListView) listView;
-			pinnedListView.setPinnedHeaderView(inflater.inflate(layoutListHeaderId, pinnedListView, false));
+			pinnedListView.setPinnedHeaderView(inflater.inflate(mLayoutListHeaderId, pinnedListView, false));
 			addOnScrollListener(new OnScrollListener() {
 
 				@Override
@@ -169,7 +163,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	}
 
 	public int getTitleId() {
-		return titleId;
+		return mTitleId;
 	}
 
 	public void refreshContent() {
@@ -203,31 +197,31 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 *            L'identifiant du drawable.
 	 */
 	protected void setEmptyMessageValues(int titleId, int summaryId, int drawableId) {
-		this.messageEmptyTitleId = titleId;
-		this.messageEmptySummaryId = summaryId;
-		this.messageEmptyDrawableId = drawableId;
+		mMessageEmptyTitleId = titleId;
+		mMessageEmptySummaryId = summaryId;
+		mMessageEmptyDrawableId = drawableId;
 	}
 
 	/**
 	 * Afficher l'indicateur de chargement.
 	 */
 	protected void showLoader() {
-		fragmentView.findViewById(R.id.fragmentContent).setVisibility(View.GONE);
-		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
-			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
+		mFragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
+		if (mFragmentView.findViewById(R.id.fragmentMessage) != null) {
+			mFragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
 		}
-		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.VISIBLE);
+		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.VISIBLE);
 	}
 
 	/**
 	 * Afficher le contenu.
 	 */
 	protected void showContent() {
-		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
-		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
-			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
+		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
+		if (mFragmentView.findViewById(R.id.fragmentMessage) != null) {
+			mFragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
 		}
-		final View content = fragmentView.findViewById(R.id.fragmentContent);
+		final View content = mFragmentView.findViewById(android.R.id.list);
 		if (content.getVisibility() != View.VISIBLE) {
 			content.setVisibility(View.VISIBLE);
 			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
@@ -283,14 +277,14 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 *            L'identifiant du symbole.
 	 */
 	protected void showMessage(String title, String description, int drawableRes) {
-		fragmentView.findViewById(R.id.fragmentContent).setVisibility(View.GONE);
-		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
+		mFragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
+		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
-		View message = fragmentView.findViewById(R.id.fragmentMessage);
+		View message = mFragmentView.findViewById(R.id.fragmentMessage);
 		if (message == null) {
-			final ViewStub messageStrub = (ViewStub) fragmentView.findViewById(R.id.fragmentMessageStub);
+			final ViewStub messageStrub = (ViewStub) mFragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
-			final Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
 			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
 		}
 
@@ -330,7 +324,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 *            Son action.
 	 */
 	protected void setMessageButton(String title, OnClickListener onClickListener) {
-		final View message = fragmentView.findViewById(R.id.fragmentMessage);
+		final View message = mFragmentView.findViewById(R.id.fragmentMessage);
 		if (message != null) {
 			final Button button = (Button) message.findViewById(android.R.id.button1);
 			button.setText(title);
@@ -378,71 +372,40 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	protected abstract CursorAdapter getCursorAdapter(final Context context);
 
 	/**
-	 * Charger le contenu en background.
-	 * 
-	 * @return AsyncResult du resultat.
-	 */
-	protected abstract AsyncResult<Cursor> loadContent(final Context context);
-
-	/**
 	 * Après le chargement.
 	 */
 	protected void onPostExecute() {
 	}
 
 	@Override
-	public Loader<AsyncResult<Cursor>> onCreateLoader(int arg0, Bundle arg1) {
-		final Loader<AsyncResult<Cursor>> loader = new AsyncTaskLoader<AsyncResult<Cursor>>(getActivity()) {
-			@Override
-			public AsyncResult<Cursor> loadInBackground() {
-				return loadContent(getActivity());
-			}
-		};
-		showLoader();
-		loader.forceLoad();
-
-		return loader;
-	}
+	public abstract Loader<Cursor> onCreateLoader(int arg0, Bundle arg1);
 
 	@Override
-	public void onLoadFinished(Loader<AsyncResult<Cursor>> loader, AsyncResult<Cursor> result) {
+	public void onLoadFinished(Loader<Cursor> loader, Cursor result) {
 
 		if (result == null) {
-			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
+			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			return;
 		}
 
-		final Exception exception = result.getException();
-
-		if (exception == null) {
-			if (result.getResult() == null || result.getResult().getCount() == 0) {
-				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
-			} else {
-				mCursorAdapter.swapCursor(result.getResult());
-				if (mListViewStatePosition != -1 && isAdded()) {
-					getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
-					mListViewStatePosition = -1;
-				}
-				showContent();
-				resetNextUpdate();
-			}
+		if (result == null || result.getCount() == 0) {
+			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 		} else {
-			Log.e(getClass().getSimpleName(), "Erreur de chargement.", exception);
-
-			// Erreur réseau ou interne ?
-			if (exception instanceof IOException) {
-				showMessage(R.string.error_title_network, R.string.error_summary_network, R.drawable.orage);
-			} else {
-				showError(R.string.error_title, R.string.error_summary);
+			mCursorAdapter.changeCursor(result);
+			if (mListViewStatePosition != -1 && isAdded()) {
+				getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
+				mListViewStatePosition = -1;
 			}
+			showContent();
+			resetNextUpdate();
 		}
 
 		onPostExecute();
 	}
 
 	@Override
-	public void onLoaderReset(Loader<AsyncResult<Cursor>> arg0) {
-
+	public void onLoaderReset(Loader<Cursor> arg0) {
+		mCursorAdapter.swapCursor(null);
 	}
 
 }

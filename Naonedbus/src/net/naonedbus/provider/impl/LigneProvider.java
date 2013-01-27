@@ -29,6 +29,11 @@ import android.net.Uri;
 public class LigneProvider extends ReadOnlyContentProvider {
 
 	/**
+	 * Recherche.
+	 */
+	public static final int SEARCH = 10;
+
+	/**
 	 * Toutes les lignes.
 	 */
 	public static final int LIGNES = 100;
@@ -64,6 +69,7 @@ public class LigneProvider extends ReadOnlyContentProvider {
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		URI_MATCHER.addURI(AUTHORITY, LIGNE_URI_PATH_QUERY, LIGNES);
+		URI_MATCHER.addURI(AUTHORITY, LIGNE_URI_PATH_QUERY + "/*", SEARCH);
 		URI_MATCHER.addURI(AUTHORITY, LIGNE_URI_PATH_QUERY + "/#", LIGNE_ID);
 		URI_MATCHER.addURI(AUTHORITY, LIGNE_CODE_URI_PATH_QUERY, LIGNE_CODE);
 		URI_MATCHER.addURI(AUTHORITY, LIGNE_STATION_URI_PATH_QUERY, LIGNE_STATION);
@@ -81,6 +87,18 @@ public class LigneProvider extends ReadOnlyContentProvider {
 
 		int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
+		case SEARCH:
+			final String keyword = uri.getLastPathSegment();
+			queryBuilder.appendWhere(LigneTable.LETTRE + " LIKE ");
+			queryBuilder.appendWhereEscapeString("%" + keyword + "%");
+			queryBuilder.appendWhere(" OR ");
+			queryBuilder.appendWhere(LigneTable.DEPUIS + " LIKE ");
+			queryBuilder.appendWhereEscapeString("%" + keyword + "%");
+			queryBuilder.appendWhere(" OR ");
+			queryBuilder.appendWhere(LigneTable.VERS + " LIKE ");
+			queryBuilder.appendWhereEscapeString("%" + keyword + "%");
+			break;
+
 		case LIGNE_ID:
 			queryBuilder.appendWhere(LigneTable._ID + "=" + uri.getLastPathSegment());
 			break;
@@ -97,6 +115,7 @@ public class LigneProvider extends ReadOnlyContentProvider {
 
 		case LIGNE_TYPE:
 			queryBuilder.appendWhere(LigneTable.TYPE + "=" + uri.getLastPathSegment());
+			break;
 
 		case LIGNES:
 			// no filter
