@@ -42,6 +42,15 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 		}
 	}
 
+	@Override
+	public Cursor swapCursor(Cursor newCursor) {
+		final Cursor oldCursor = super.swapCursor(newCursor);
+		if (newCursor != null) {
+			initColumns(newCursor);
+		}
+		return oldCursor;
+	}
+
 	private void initColumns(Cursor c) {
 		COL_LETTRE = c.getColumnIndex(LigneTable.LETTRE);
 		COL_COLOR = c.getColumnIndex(LigneTable.COULEUR);

@@ -48,11 +48,18 @@ public class TutorialActivity extends Activity {
 				R.string.tuto_0_summary, R.drawable.logo_large));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_beta_title, R.string.tuto_beta_summary,
 				R.drawable.ic_action_good));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_1_title, R.string.tuto_1_summary, 0));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_2_title, R.string.tuto_2_summary, 0));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_3_title, R.string.tuto_3_summary, 0));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_4_title, R.string.tuto_4_summary, 0));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_5_title, R.string.tuto_5_summary, 0));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_1_title, R.string.tuto_1_summary,
+				R.drawable.tuto_lignes));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_2_title, R.string.tuto_2_summary,
+				R.drawable.tuto_favoris));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_3_title, R.string.tuto_3_summary,
+				R.drawable.tuto_parkings));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_4_title, R.string.tuto_4_summary,
+				R.drawable.tuto_parkings));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_5_title, R.string.tuto_5_summary,
+				R.drawable.tuto_parkings));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_6_title, R.string.tuto_6_summary,
+				R.drawable.tuto_bicloos));
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 		viewPager.setAdapter(mTutorialPagerAdapter);

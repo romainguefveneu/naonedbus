@@ -33,7 +33,7 @@
         android:id="@id/fragmentMessageStub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:layout_margin="20dp"
         android:inflatedId="@id/fragmentMessage"
         android:layout="@layout/fragment_message" />

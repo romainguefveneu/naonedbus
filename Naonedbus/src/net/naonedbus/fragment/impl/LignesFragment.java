@@ -37,6 +37,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView.OnCloseListener;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
 public class LignesFragment extends CustomCursorFragment implements CustomFragmentActions, OnQueryTextListener,
@@ -47,6 +48,8 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	private LigneCursorAdapter mAdapter;
 	private LigneManager mLigneManager;
+	private boolean mFilterFavoris;
+	private String mFilterConstraint;
 
 	public LignesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
@@ -74,10 +77,22 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 			final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
 			searchView.setOnQueryTextListener(this);
 			searchView.setQueryHint(getString(R.string.search_lignes_hint));
+			searchView.setOnCloseListener(new OnCloseListener() {
+				@Override
+				public boolean onClose() {
+					mFilterConstraint = null;
+					return false;
+				}
+			});
 
 			final AutoCompleteTextView searchText = (AutoCompleteTextView) searchView
 					.findViewById(R.id.abs__search_src_text);
 			searchText.setHintTextColor(getResources().getColor(R.color.query_hint_color));
+
+			if (mFilterConstraint != null) {
+				searchView.setQuery(mFilterConstraint, false);
+				searchView.setIconifiedByDefault(false);
+			}
 		}
 	}
 
@@ -120,9 +135,9 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
 		if (DBG)
 			Log.d(LOG_TAG, "onListItemClick");
-		super.onListItemClick(l, v, position, id);
 		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(position);
 		final String codeLigne = ligne.getString(ligne.getColumnIndex(LigneTable.CODE));
 
@@ -155,6 +170,7 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 		if (DBG)
 			Log.d(LOG_TAG, "onQueryTextChange");
 
+		mFilterConstraint = newText;
 		mAdapter.getFilter().filter(newText);
 		return true;
 	}

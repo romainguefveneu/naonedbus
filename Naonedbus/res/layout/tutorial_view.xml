@@ -24,6 +24,9 @@
         android:id="@android:id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo_large" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:scaleType="fitEnd"
+        android:src="@drawable/tuto_lignes" />
 
 </LinearLayout>

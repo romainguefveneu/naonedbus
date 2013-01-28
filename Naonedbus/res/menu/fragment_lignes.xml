@@ -14,6 +14,19 @@
         android:icon="@drawable/ic_action_labels"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_favori"/>
+        android:title="@string/action_favori">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@id/menu_filter_all"
+                    android:orderInCategory="100"
+                    android:title="@string/action_filter_lignes_none"/>
+                <item
+                    android:id="@id/menu_filter_favoris"
+                    android:orderInCategory="200"
+                    android:title="@string/action_filter_lignes_favoris"/>
+            </group>
+        </menu>
+    </item>
 
 </menu>

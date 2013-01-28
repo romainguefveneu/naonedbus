@@ -18,15 +18,17 @@
     <string name="tuto_0_title">Bienvenue dans</string>
     <string name="tuto_0_summary"><![CDATA[Prenez quelques instants pour découvrir l\'application.<br /><big>&rarr;</big>]]></string>
     <string name="tuto_1_title">Lignes</string>
-    <string name="tuto_1_summary"></string>
+    <string name="tuto_1_summary">Accèdez aux lignes en un clin d\'oeil</string>
     <string name="tuto_2_title">Favoris</string>
-    <string name="tuto_2_summary"></string>
+    <string name="tuto_2_summary">Marquez vos arrêts préférés pour y avoir accès à tout moment</string>
     <string name="tuto_3_title">Info trafic</string>
-    <string name="tuto_3_summary"></string>
+    <string name="tuto_3_summary">Des travaux ? Une manifestation prévu ? Gardez un oeil sur l\'info trafic !</string>
     <string name="tuto_4_title">Info trafic participatif</string>
-    <string name="tuto_4_summary"></string>
-    <string name="tuto_5_title">Equipements</string>
-    <string name="tuto_5_summary"></string>
+    <string name="tuto_4_summary">Accidents, retards : restez informés en temps réel grâce à l\'info trafic participatif</string>
+    <string name="tuto_5_title">Parkings</string>
+    <string name="tuto_5_summary">Consultez la liste des parkings nantais ainsi que leur disponibilité en temps réel</string>
+    <string name="tuto_6_title">Equipements</string>
+    <string name="tuto_6_summary">Où est le bicloo le plus proche ? Mais également les stations Marguerite, co-voiturage et Lila</string>
     <string name="tuto_beta_title">Version bêta</string>
     <string name="tuto_beta_summary"><![CDATA[Vous utilisez une version Bêta de naonedbus.<br />Merci de nous signaler tout problème : <br /><br /> <font color="#ffffff">naonedbus@gmail.com</font>]]></string>
     <!-- Activities -->
@@ -67,6 +69,8 @@
     <string name="action_sort_distance">Trier par distance</string>
     <string name="action_sort_ordre">Trier par position</string>
     <string name="action_sort_parking_places">Trier par places disponibles</string>
+    <string name="action_filter_lignes_none">Toutes les lignes</string>
+    <string name="action_filter_lignes_favoris">Lignes avec favoris</string>
     <string name="action_filter">Filtrer</string>
     <string name="action_send">Envoyer</string>
     <string name="action_feedback">Envoyer un retour</string>
@@ -185,7 +189,7 @@
     <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
     <string name="search_lignes_hint">Numéro ou terminus</string>
     <string name="search_empty">Aucun équipement ne correspond à votre recherche</string>
-    
+
     <!-- Sections -->
     <string name="section_distance_none">Aucune information de distance</string>
     <string name="section_distance_100000">Beaucoup trop loin !</string>

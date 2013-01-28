@@ -246,6 +246,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	protected void addFragments(int[] titles, String[] classes) {
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
 		mClasses = classes;
 		mTitles = titles;
 		mFragments = new Fragment[classes.length];
@@ -254,6 +255,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
 		}
 
+		mViewPager.setOffscreenPageLimit(classes.length);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		invalidateOptionsMenu();
 	}
@@ -324,8 +326,8 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 		@Override
 		public int getCount() {
-//			if (DBG)
-//				Log.d(LOG_TAG, "getCount");
+			// if (DBG)
+			// Log.d(LOG_TAG, "getCount");
 
 			return mClasses.length;
 		}

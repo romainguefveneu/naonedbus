@@ -130,6 +130,8 @@
     <item name="menu_sort_distance" type="id"/>
     <item name="menu_sort_ordre" type="id"/>
     <item name="menu_filter" type="id"/>
+    <item name="menu_filter_favoris" type="id"/>
+    <item name="menu_filter_all" type="id"/>
     <item name="menu_send" type="id"/>
     <item name="menu_feedback" type="id"/>
     <item name="menu_feedback_bug" type="id"/>
