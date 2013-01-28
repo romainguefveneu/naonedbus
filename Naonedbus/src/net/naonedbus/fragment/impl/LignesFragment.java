@@ -7,7 +7,6 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.PlanActivity;
-import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.fragment.CustomFragmentActions;
@@ -20,10 +19,12 @@ import net.naonedbus.widget.adapter.impl.LigneCursorAdapter;
 import net.naonedbus.widget.indexer.impl.LigneCursorIndexer;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -49,16 +50,22 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	public LignesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
+		mLigneManager = LigneManager.getInstance();
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (DBG)
+			Log.d(LOG_TAG, "onActivityCreated");
 		registerForContextMenu(getListView());
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateOptionsMenu");
+
 		final SherlockFragmentActivity activity = getSherlockActivity();
 		if (activity != null) {
 			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
@@ -76,26 +83,33 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateContextMenu");
+
 		super.onCreateContextMenu(menu, v, menuInfo);
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
-		final ListView listview = getListView();
-		final Ligne ligne = (Ligne) listview.getItemAtPosition(cmi.position);
+		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(cmi.position);
+		final String lettreLigne = ligne.getString(ligne.getColumnIndex(LigneTable.LETTRE));
 
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.fragment_lignes_contextual, menu);
 
-		menu.setHeaderTitle(getString(R.string.dialog_title_menu_lignes, ligne.lettre));
+		menu.setHeaderTitle(getString(R.string.dialog_title_menu_lignes, lettreLigne));
 	}
 
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
+		if (DBG)
+			Log.d(LOG_TAG, "onContextItemSelected");
+
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		final Ligne ligne = (Ligne) getListView().getItemAtPosition(cmi.position);
+		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(cmi.position);
+		final String codeLigne = ligne.getString(ligne.getColumnIndex(LigneTable.CODE));
 
 		switch (item.getItemId()) {
 		case R.id.menu_show_plan:
-			menuShowPlan(ligne);
+			menuShowPlan(codeLigne);
 			break;
 		default:
 			break;
@@ -106,22 +120,31 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		if (DBG)
+			Log.d(LOG_TAG, "onListItemClick");
 		super.onListItemClick(l, v, position, id);
+		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(position);
+		final String codeLigne = ligne.getString(ligne.getColumnIndex(LigneTable.CODE));
 
-		final Ligne ligne = (Ligne) l.getItemAtPosition(position);
 		final ParamIntent intent = new ParamIntent(getActivity(), ArretsActivity.class);
-		intent.putExtra(ArretsActivity.Param.codeLigne, ligne.code);
+		intent.putExtra(ArretsActivity.Param.codeLigne, codeLigne);
 		getActivity().startActivity(intent);
 	}
 
-	private void menuShowPlan(final Ligne ligne) {
+	private void menuShowPlan(final String codeLigne) {
+		if (DBG)
+			Log.d(LOG_TAG, "menuShowPlan");
+
 		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.Param.codeLigne, ligne.code);
+		intent.putExtra(PlanActivity.Param.codeLigne, codeLigne);
 		startActivity(intent);
 	}
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateLoader");
+
 		final CursorLoader cursorLoader = new CursorLoader(getActivity(), LigneProvider.CONTENT_URI, null, null, null,
 				null);
 		return cursorLoader;
@@ -129,26 +152,33 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	public boolean onQueryTextChange(String newText) {
+		if (DBG)
+			Log.d(LOG_TAG, "onQueryTextChange");
+
 		mAdapter.getFilter().filter(newText);
 		return true;
 	}
 
 	@Override
 	public boolean onQueryTextSubmit(String query) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public Cursor runQuery(CharSequence constraint) {
+		if (DBG)
+			Log.d(LOG_TAG, "runQuery");
+
 		return mLigneManager.getLignesSearch(getActivity().getContentResolver(), constraint.toString());
 	}
 
 	@Override
 	protected CursorAdapter getCursorAdapter(Context context) {
+		if (DBG)
+			Log.d(LOG_TAG, "getCursorAdapter");
+
 		mAdapter = new LigneCursorAdapter(getActivity(), null);
 		mAdapter.setFilterQueryProvider(this);
-
-		mLigneManager = LigneManager.getInstance();
 
 		final TypeLigneManager typeLigneManager = TypeLigneManager.getInstance();
 		final List<TypeLigne> typesLignes = typeLigneManager.getAll(getActivity().getContentResolver());

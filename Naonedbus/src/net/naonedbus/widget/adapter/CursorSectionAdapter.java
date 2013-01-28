@@ -41,6 +41,15 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	}
 
 	@Override
+	public Cursor swapCursor(Cursor newCursor) {
+		final Cursor oldCursor = super.swapCursor(newCursor);
+		if (mIndexer != null) {
+			mIndexer.changeCursor(newCursor);
+		}
+		return oldCursor;
+	}
+
+	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
 		final View v = mLayoutInflater.inflate(mLayoutId, null);
 		bindViewHolder(v);

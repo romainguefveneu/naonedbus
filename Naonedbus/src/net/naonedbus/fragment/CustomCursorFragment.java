@@ -3,6 +3,7 @@ package net.naonedbus.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +35,9 @@ import com.actionbarsherlock.app.SherlockListFragment;
 
 public abstract class CustomCursorFragment extends SherlockListFragment implements CustomFragmentActions,
 		LoaderCallbacks<Cursor> {
+
+	private static final String LOG_TAG = "CustomCursorFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
@@ -79,6 +84,8 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (DBG)
+			Log.d(LOG_TAG, "onActivityCreated");
 		setRetainInstance(true);
 
 		mCursorAdapter = getCursorAdapter(getActivity());
@@ -382,7 +389,9 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor result) {
-
+		if (DBG)
+			Log.d(LOG_TAG, "onLoadFinished");
+		
 		if (result == null) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			return;
@@ -391,7 +400,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		if (result == null || result.getCount() == 0) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 		} else {
-			mCursorAdapter.changeCursor(result);
+			mCursorAdapter.swapCursor(result);
 			if (mListViewStatePosition != -1 && isAdded()) {
 				getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
 				mListViewStatePosition = -1;
@@ -405,6 +414,8 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> arg0) {
+		if (DBG)
+			Log.d(LOG_TAG, "onLoaderReset");
 		mCursorAdapter.swapCursor(null);
 	}
 

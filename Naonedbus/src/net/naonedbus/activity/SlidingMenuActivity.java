@@ -324,8 +324,8 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 		@Override
 		public int getCount() {
-			if (DBG)
-				Log.d(LOG_TAG, "getCount");
+//			if (DBG)
+//				Log.d(LOG_TAG, "getCount");
 
 			return mClasses.length;
 		}
