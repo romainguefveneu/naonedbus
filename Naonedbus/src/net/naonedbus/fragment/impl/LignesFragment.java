@@ -3,15 +3,14 @@ package net.naonedbus.fragment.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.fragment.CustomFragmentActions;
+import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.TypeLigneManager;
 import net.naonedbus.provider.impl.LigneProvider;
 import net.naonedbus.provider.table.LigneTable;
@@ -20,88 +19,78 @@ import net.naonedbus.widget.indexer.impl.LigneCursorIndexer;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
-import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.widget.SearchView;
-import com.actionbarsherlock.widget.SearchView.OnCloseListener;
-import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
+import com.actionbarsherlock.view.MenuItem;
 
-public class LignesFragment extends CustomCursorFragment implements CustomFragmentActions, OnQueryTextListener,
-		FilterQueryProvider {
+public class LignesFragment extends CustomCursorFragment implements CustomFragmentActions {
 
-	private static final String LOG_TAG = "LignesFragment";
-	private static final boolean DBG = BuildConfig.DEBUG;
+	// private static final String LOG_TAG = "LignesFragment";
+	// private static final boolean DBG = BuildConfig.DEBUG;
 
+	private final static int FILTER_ALL = 0;;
+	private final static int FILTER_FAVORIS = 1;
+	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
+	static {
+		MENU_MAPPING.append(FILTER_ALL, R.id.menu_filter_all);
+		MENU_MAPPING.append(FILTER_FAVORIS, R.id.menu_filter_favoris);
+	}
+
+	private StateHelper mStateHelper;
 	private LigneCursorAdapter mAdapter;
-	private LigneManager mLigneManager;
-	private boolean mFilterFavoris;
-	private String mFilterConstraint;
+	private int mCurrentFilter = FILTER_ALL;
 
 	public LignesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
-		mLigneManager = LigneManager.getInstance();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Gestion du tri par défaut
+		mStateHelper = new StateHelper(getActivity());
+		mCurrentFilter = mStateHelper.getSortType(this, FILTER_ALL);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		if (DBG)
-			Log.d(LOG_TAG, "onActivityCreated");
 		registerForContextMenu(getListView());
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateOptionsMenu");
+	public void onPause() {
+		mStateHelper.setSortType(this, mCurrentFilter);
+		super.onPause();
+	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu) {
 		final SherlockFragmentActivity activity = getSherlockActivity();
 		if (activity != null) {
 			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 			menuInflater.inflate(R.menu.fragment_lignes, menu);
-
-			final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-			searchView.setOnQueryTextListener(this);
-			searchView.setQueryHint(getString(R.string.search_lignes_hint));
-			searchView.setOnCloseListener(new OnCloseListener() {
-				@Override
-				public boolean onClose() {
-					mFilterConstraint = null;
-					return false;
-				}
-			});
-
-			final AutoCompleteTextView searchText = (AutoCompleteTextView) searchView
-					.findViewById(R.id.abs__search_src_text);
-			searchText.setHintTextColor(getResources().getColor(R.color.query_hint_color));
-
-			if (mFilterConstraint != null) {
-				searchView.setQuery(mFilterConstraint, false);
-				searchView.setIconifiedByDefault(false);
-			}
+			menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
 		}
 	}
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateContextMenu");
-
 		super.onCreateContextMenu(menu, v, menuInfo);
+
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
 		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(cmi.position);
@@ -115,9 +104,6 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
-		if (DBG)
-			Log.d(LOG_TAG, "onContextItemSelected");
-
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(cmi.position);
 		final String codeLigne = ligne.getString(ligne.getColumnIndex(LigneTable.CODE));
@@ -134,10 +120,29 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case R.id.menu_filter_all:
+			item.setChecked(true);
+			mCurrentFilter = FILTER_ALL;
+			refreshContent();
+			break;
+		case R.id.menu_filter_favoris:
+			item.setChecked(true);
+			mCurrentFilter = FILTER_FAVORIS;
+			refreshContent();
+			break;
+		default:
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		if (DBG)
-			Log.d(LOG_TAG, "onListItemClick");
 		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(position);
 		final String codeLigne = ligne.getString(ligne.getColumnIndex(LigneTable.CODE));
 
@@ -147,9 +152,6 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 	}
 
 	private void menuShowPlan(final String codeLigne) {
-		if (DBG)
-			Log.d(LOG_TAG, "menuShowPlan");
-
 		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
 		intent.putExtra(PlanActivity.Param.codeLigne, codeLigne);
 		startActivity(intent);
@@ -157,44 +159,18 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateLoader");
+		Uri uri = LigneProvider.CONTENT_URI;
+		if (mCurrentFilter == FILTER_FAVORIS) {
+			uri = uri.buildUpon().path(LigneProvider.LIGNE_FAVORIS_URI_PATH_QUERY).build();
+		}
 
-		final CursorLoader cursorLoader = new CursorLoader(getActivity(), LigneProvider.CONTENT_URI, null, null, null,
-				null);
+		final CursorLoader cursorLoader = new CursorLoader(getActivity(), uri, null, null, null, null);
 		return cursorLoader;
 	}
 
 	@Override
-	public boolean onQueryTextChange(String newText) {
-		if (DBG)
-			Log.d(LOG_TAG, "onQueryTextChange");
-
-		mFilterConstraint = newText;
-		mAdapter.getFilter().filter(newText);
-		return true;
-	}
-
-	@Override
-	public boolean onQueryTextSubmit(String query) {
-		return true;
-	}
-
-	@Override
-	public Cursor runQuery(CharSequence constraint) {
-		if (DBG)
-			Log.d(LOG_TAG, "runQuery");
-
-		return mLigneManager.getLignesSearch(getActivity().getContentResolver(), constraint.toString());
-	}
-
-	@Override
 	protected CursorAdapter getCursorAdapter(Context context) {
-		if (DBG)
-			Log.d(LOG_TAG, "getCursorAdapter");
-
 		mAdapter = new LigneCursorAdapter(getActivity(), null);
-		mAdapter.setFilterQueryProvider(this);
 
 		final TypeLigneManager typeLigneManager = TypeLigneManager.getInstance();
 		final List<TypeLigne> typesLignes = typeLigneManager.getAll(getActivity().getContentResolver());

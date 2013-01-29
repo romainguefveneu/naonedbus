@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -37,8 +38,13 @@ import com.actionbarsherlock.view.MenuItem;
 
 public abstract class EquipementFragment extends CustomListFragment implements CustomFragmentActions {
 
-	private final static int SORT_NOM = R.id.menu_sort_name;
-	private final static int SORT_DISTANCE = R.id.menu_sort_distance;
+	private final static int SORT_NOM = 0;;
+	private final static int SORT_DISTANCE = 1;
+	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
+	static {
+		MENU_MAPPING.append(SORT_NOM, R.id.menu_sort_name);
+		MENU_MAPPING.append(SORT_DISTANCE, R.id.menu_sort_distance);
+	}
 
 	private static int COUNT = 0;
 
@@ -122,7 +128,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	public void onCreateOptionsMenu(Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_equipements, menu);
-		menu.findItem(currentSortPreference).setChecked(true);
+		menu.findItem(MENU_MAPPING.get(currentSortPreference)).setChecked(true);
 	}
 
 	@Override

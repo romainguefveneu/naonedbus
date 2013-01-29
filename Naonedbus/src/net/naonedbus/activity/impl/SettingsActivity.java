@@ -30,7 +30,6 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
-
 		super.onCreate(savedInstanceState);
 
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);

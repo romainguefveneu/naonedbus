@@ -20,6 +20,7 @@ package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.ReadOnlyContentProvider;
 import net.naonedbus.provider.table.ArretTable;
+import net.naonedbus.provider.table.FavoriTable;
 import net.naonedbus.provider.table.LigneTable;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -62,6 +63,12 @@ public class LigneProvider extends ReadOnlyContentProvider {
 	public static final int LIGNE_TYPE = 300;
 	public static final String LIGNE_TYPE_URI_PATH_QUERY = "type";
 
+	/**
+	 * Lignes ayant des favoris.
+	 */
+	public static final int LIGNE_FAVORIS = 400;
+	public static final String LIGNE_FAVORIS_URI_PATH_QUERY = "favoris";
+
 	private static final String AUTHORITY = "net.naonedbus.provider.LigneProvider";
 	private static final String LIGNES_BASE_PATH = "lignes";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LIGNES_BASE_PATH);
@@ -74,6 +81,7 @@ public class LigneProvider extends ReadOnlyContentProvider {
 		URI_MATCHER.addURI(AUTHORITY, LIGNE_CODE_URI_PATH_QUERY, LIGNE_CODE);
 		URI_MATCHER.addURI(AUTHORITY, LIGNE_STATION_URI_PATH_QUERY, LIGNE_STATION);
 		URI_MATCHER.addURI(AUTHORITY, LIGNE_TYPE_URI_PATH_QUERY + "/#", LIGNE_TYPE);
+		URI_MATCHER.addURI(AUTHORITY, LIGNE_FAVORIS_URI_PATH_QUERY, LIGNE_FAVORIS);
 	}
 
 	@Override
@@ -117,6 +125,10 @@ public class LigneProvider extends ReadOnlyContentProvider {
 			queryBuilder.appendWhere(LigneTable.TYPE + "=" + uri.getLastPathSegment());
 			break;
 
+		case LIGNE_FAVORIS:
+			queryBuilder.appendWhere(LigneFavorisQuery.WHERE);
+			break;
+
 		case LIGNES:
 			// no filter
 			break;
@@ -137,6 +149,16 @@ public class LigneProvider extends ReadOnlyContentProvider {
 		public static final String WHERE = LigneTable.CODE + "  IN (SELECT distinct(" + ArretTable.CODE_LIGNE
 				+ " ) FROM " + ArretTable.TABLE_NAME + " WHERE " + ArretTable.ID_STATION + "= %s)";
 		public static final String ORDER_BY = LigneTable.TYPE + ", CAST(" + LigneTable.LETTRE + " as numeric) ";
+
+	}
+
+	/**
+	 * Composants de la requête de sélection des lignes ayant au moins un
+	 * favori.
+	 */
+	private static interface LigneFavorisQuery {
+		public static final String WHERE = LigneTable.CODE + "  IN (SELECT distinct(" + FavoriTable.CODE_LIGNE
+				+ " ) FROM " + FavoriTable.TABLE_NAME + ")";
 
 	}
 

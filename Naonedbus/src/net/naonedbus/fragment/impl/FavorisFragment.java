@@ -45,6 +45,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,8 +72,13 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private static final Integer MIN_HOUR = 60;
 	private static final Integer MIN_DURATION = 0;
 
-	private final static int SORT_NOM = R.id.menu_sort_name;
-	private final static int SORT_DISTANCE = R.id.menu_sort_distance;
+	private final static int SORT_NOM = 0;
+	private final static int SORT_DISTANCE = 1;
+	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
+	static {
+		MENU_MAPPING.append(SORT_NOM, R.id.menu_sort_name);
+		MENU_MAPPING.append(SORT_DISTANCE, R.id.menu_sort_distance);
+	}
 
 	private final static IntentFilter intentFilter;
 	static {
@@ -252,7 +258,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		if (activity != null) {
 			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 			menuInflater.inflate(R.menu.fragment_favoris, menu);
-			menu.findItem(mCurrentSort).setChecked(true);
+			menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 		}
 	}
 
@@ -384,7 +390,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			comparator = comparators.get(SORT_NOM);
 			// indexer = indexers.get(SORT_NOM);
 		} else {
-			comparator = getCurrentComparator();
+			comparator = comparators.get(mCurrentSort);
 			// indexer = indexers.get(currentSortPreference);
 		}
 
@@ -437,7 +443,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		final List<Favori> favoris = mFavoriManager.getAll(context.getContentResolver());
-		Collections.sort(favoris, getCurrentComparator());
+		Collections.sort(favoris, comparators.get(mCurrentSort));
 
 		int position = 0;
 		for (Favori favori : favoris) {
@@ -675,14 +681,4 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 	}
 
-	/**
-	 * Retourne le comparateur en cours, ou le comparateur par nom si non
-	 * trouvé.
-	 * 
-	 * @return le comparateur en cours, ou le comparateur par nom si non trouvé.
-	 */
-	private Comparator<Favori> getCurrentComparator() {
-		final Comparator<Favori> comparator = comparators.get(mCurrentSort);
-		return (comparator == null) ? comparators.get(SORT_NOM) : comparator;
-	}
 }
