@@ -21,6 +21,7 @@ package net.naonedbus.manager.impl;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncTaskInfo;
 import net.naonedbus.bean.async.LignesTaskInfo;
@@ -39,7 +40,8 @@ import android.util.Log;
 
 public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<LignesTaskInfo> {
 
-	private static final String LOG_TAG = LigneManager.class.getSimpleName();
+	private static final String LOG_TAG = "LigneManager";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static LigneManager instance;
 
@@ -126,7 +128,9 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	public LignesTaskInfo scheduleGetLignesFromStation(final ContentResolver contentResolver, final int idStation,
 			final Handler callback) {
 		final LignesTaskInfo task = new LignesTaskInfo(contentResolver, idStation, callback);
-		Log.d(LOG_TAG, "schedule :\t" + task);
+		if (DBG)
+			Log.d(LOG_TAG, "schedule :\t" + task);
+
 		lignesTasks.add(task);
 
 		if (lignesLoader == null || !lignesLoader.isAlive()) {
@@ -143,7 +147,8 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 
 	@Override
 	public void unschedule(LignesTaskInfo task) {
-		Log.d(LOG_TAG, "unschedule :\t" + task);
+		if (DBG)
+			Log.d(LOG_TAG, "unschedule :\t" + task);
 		lignesTasks.remove(task);
 	}
 

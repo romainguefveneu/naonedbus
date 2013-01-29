@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.SQLiteManager;
@@ -41,6 +42,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
 import com.google.gson.Gson;
@@ -49,6 +51,9 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
 public class FavoriManager extends SQLiteManager<Favori> {
+
+	private static final String LOG_TAG = "FavoriManager";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private OnActionListener actionListener = null;
 	private boolean isImporting = false;
@@ -252,10 +257,10 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param json
 	 */
 	public void fromJson(ContentResolver contentResolver, String json) {
-		Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
+		final Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
 		}.getType();
-		Gson gson = new Gson();
-		ArrayList<HashMap<String, String>> favoris = gson.fromJson(json, type);
+		final Gson gson = new Gson();
+		final ArrayList<HashMap<String, String>> favoris = gson.fromJson(json, type);
 
 		fromList(contentResolver, favoris);
 	}
@@ -267,10 +272,13 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param json
 	 */
 	public void fromJson(final SQLiteDatabase db, final String json) {
-		Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
+		if (DBG)
+			Log.d(LOG_TAG, "fromJson : " + json);
+
+		final Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
 		}.getType();
-		Gson gson = new Gson();
-		ArrayList<HashMap<String, String>> favoris = gson.fromJson(json, type);
+		final Gson gson = new Gson();
+		final ArrayList<HashMap<String, String>> favoris = gson.fromJson(json, type);
 
 		fromList(db, favoris);
 	}
@@ -282,8 +290,11 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param favoris
 	 */
 	private void fromList(final SQLiteDatabase db, final List<HashMap<String, String>> favoris) {
+		if (DBG)
+			Log.d(LOG_TAG, "fromList");
+
 		Integer itemId;
-		ArretManager arretManager = ArretManager.getInstance();
+		final ArretManager arretManager = ArretManager.getInstance();
 
 		// Delete old items
 		db.delete(FavoriTable.TABLE_NAME, null, null);
@@ -308,7 +319,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	private void fromList(ContentResolver contentResolver, List<HashMap<String, String>> favoris) {
 		Integer itemId;
-		ArretManager arretManager = ArretManager.getInstance();
+		final ArretManager arretManager = ArretManager.getInstance();
 
 		// Delete old items
 		contentResolver.delete(FavoriProvider.CONTENT_URI, null, null);
@@ -333,7 +344,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	private void fromListFavoris(ContentResolver contentResolver, List<Favori> favoris) {
 		Integer itemId;
-		ArretManager arretManager = ArretManager.getInstance();
+		final ArretManager arretManager = ArretManager.getInstance();
 
 		// Delete old items
 		contentResolver.delete(FavoriProvider.CONTENT_URI, null, null);

@@ -2,6 +2,7 @@ package net.naonedbus.backup;
 
 import java.io.IOException;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.manager.impl.FavoriManager;
 import android.annotation.TargetApi;
 import android.app.backup.BackupAgent;
@@ -14,16 +15,21 @@ import android.util.Log;
 public class NaoBackupAgent extends BackupAgent {
 
 	private static final String LOG_TAG = "NaoBackupAgent";
+	private static final boolean DBG = BuildConfig.DEBUG;
+
 	private static final String BACKUP_KEY = "favoris";
 
 	@Override
 	public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data, ParcelFileDescriptor newState)
 			throws IOException {
-		Log.i(LOG_TAG, "Backup en cours...");
+		if (DBG)
+			Log.i(LOG_TAG, "Backup en cours...");
+
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 		final String favoriJson = favoriManager.toJson(getContentResolver());
 
-		Log.i(LOG_TAG, "\t " + favoriJson);
+		if (DBG)
+			Log.i(LOG_TAG, "\t " + favoriJson);
 
 		final byte[] favoriBytes = favoriJson.getBytes();
 		data.writeEntityHeader(BACKUP_KEY, favoriBytes.length);
@@ -32,7 +38,9 @@ public class NaoBackupAgent extends BackupAgent {
 
 	@Override
 	public void onRestore(BackupDataInput data, int appVersionCode, ParcelFileDescriptor newState) throws IOException {
-		Log.i(LOG_TAG, "Restauration en cours...");
+		if (DBG)
+			Log.i(LOG_TAG, "Restauration en cours...");
+
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 
 		while (data.readNextHeader()) {
@@ -43,7 +51,9 @@ public class NaoBackupAgent extends BackupAgent {
 
 				final String favoriJson = new String(buffer);
 				favoriManager.fromJson(getContentResolver(), favoriJson);
-				Log.i(LOG_TAG, "\t" + favoriJson);
+
+				if (DBG)
+					Log.i(LOG_TAG, "\t" + favoriJson);
 			}
 		}
 
