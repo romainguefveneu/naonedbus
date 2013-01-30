@@ -8,7 +8,6 @@ import net.naonedbus.activity.impl.AboutActivity;
 import net.naonedbus.activity.impl.EquipementsActivity;
 import net.naonedbus.activity.impl.InfosTraficActivity;
 import net.naonedbus.activity.impl.MainActivity;
-import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParkingsActivity;
 import net.naonedbus.activity.impl.SearchActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
@@ -51,7 +50,7 @@ public class SlidingMenuHelper {
 		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_action_good, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_place, 0));
+//		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_place, 0));
 		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_action_settings, 1));
 		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_action_info, 1));
 		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));

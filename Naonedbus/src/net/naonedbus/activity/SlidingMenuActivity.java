@@ -183,7 +183,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 			addFragments(titles, classes);
 
-			getSupportActionBar().setSelectedNavigationItem(selectedPosition);
+			getSupportActionBar().setSelectedNavigationItem(selectedPosition > -1 ? selectedPosition : 0);
 		}
 		super.onRestoreInstanceState(savedInstanceState);
 	}
@@ -278,6 +278,18 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 			mClasses[i] = classes[i].getName();
 		}
 		addFragments(titles, mClasses);
+	}
+
+	protected void addDelayedFragments(int[] titles, Class<?>[] classes) {
+		mClasses = new String[classes.length];
+		for (int i = 0; i < classes.length; i++) {
+			mClasses[i] = classes[i].getName();
+		}
+		mTitles = titles;
+	}
+
+	protected void loadDelayedFragments() {
+		addFragments(mTitles, mClasses);
 	}
 
 	protected void setSelectedTab(int position) {

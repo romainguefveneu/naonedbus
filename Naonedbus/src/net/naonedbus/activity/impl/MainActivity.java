@@ -48,9 +48,6 @@ public class MainActivity extends SlidingMenuActivity {
 				@Override
 				public void run() {
 					startActivity(new Intent(MainActivity.this, TutorialActivity.class));
-					progressDialog = new ProgressDialog(MainActivity.this);
-					progressDialog.setMessage(getString(R.string.setup));
-					progressDialog.show();
 				}
 			});
 		}
@@ -66,6 +63,7 @@ public class MainActivity extends SlidingMenuActivity {
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();
 		}
+		addDelayedFragments(titles, classes);
 	}
 
 	@Override
@@ -90,7 +88,7 @@ public class MainActivity extends SlidingMenuActivity {
 			peekSlidingMenu();
 		}
 
-		addFragments(titles, classes);
+		loadDelayedFragments();
 
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 		final int count = favoriManager.getAll(getContentResolver()).size();

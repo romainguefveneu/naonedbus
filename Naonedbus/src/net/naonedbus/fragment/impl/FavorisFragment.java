@@ -34,6 +34,8 @@ import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 
 import org.joda.time.DateMidnight;
 
+import android.annotation.TargetApi;
+import android.app.backup.BackupManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -41,6 +43,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
@@ -62,6 +65,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 import com.google.gson.JsonSyntaxException;
 
+@TargetApi(Build.VERSION_CODES.FROYO)
 public class FavorisFragment extends CustomListFragment implements CustomFragmentActions, OnItemLongClickListener,
 		MyLocationListener, ActionMode.Callback {
 
@@ -98,6 +102,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	protected MyLocationProvider mLocationProvider;
 	private ActionMode mActionMode;
 	private ListView mListView;
+	private BackupManager mBackupManager;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
 
@@ -114,17 +119,23 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 				refreshContent();
 		}
 
+		@TargetApi(Build.VERSION_CODES.FROYO)
 		public void onAdd(Arret item) {
 			if (DBG)
 				Log.d(LOG_TAG, "onAdd : " + item);
 
+			if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
+				mBackupManager.dataChanged();
 			mContentHasChanged = true;
 		};
 
+		@TargetApi(Build.VERSION_CODES.FROYO)
 		public void onRemove(int id) {
 			if (DBG)
 				Log.d(LOG_TAG, "onRemove : " + id);
 
+			if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
+				mBackupManager.dataChanged();
 			mContentHasChanged = true;
 		};
 	};
@@ -164,6 +175,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mLocationProvider = NBApplication.getLocationProvider();
 	}
 
+	@TargetApi(Build.VERSION_CODES.FROYO)
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -171,6 +183,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.d(LOG_TAG, "onCreate");
 
 		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
+
+		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
+			mBackupManager = new BackupManager(getActivity());
 
 		mFavoriManager.setActionListener(onImportListener);
 		mLocationProvider.addListener(this);
