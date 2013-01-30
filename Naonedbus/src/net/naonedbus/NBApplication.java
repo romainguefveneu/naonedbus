@@ -18,12 +18,9 @@
  */
 package net.naonedbus;
 
-import net.naonedbus.appwidget.HoraireWidgetLargeProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 public class NBApplication extends Application {
@@ -47,8 +44,10 @@ public class NBApplication extends Application {
 	public static final String PREF_MAP_SATELLITE = "map.satellite";
 	public static final String PREF_PLAN_CACHE = "plan.cache";
 
-	private static MyLocationProvider myLocationProvider;
-	private static SharedPreferences preferences;
+	private static MyLocationProvider sMyLocationProvider;
+	private static SharedPreferences sPreferences;
+
+	private static boolean sIsSetup;
 
 	@Override
 	public void onCreate() {
@@ -57,24 +56,32 @@ public class NBApplication extends Application {
 		System.setProperty("org.joda.time.DateTimeZone.Provider",
 				"net.naonedbus.provider.impl.FastDateTimeZoneProvider");
 
-		if (myLocationProvider == null) {
-			myLocationProvider = new MyLocationProvider(getApplicationContext());
+		if (sMyLocationProvider == null) {
+			sMyLocationProvider = new MyLocationProvider(getApplicationContext());
 		}
 
-		if (preferences == null) {
-			preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		if (sPreferences == null) {
+			sPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		}
 
 		// Définir le thème
-		NBApplication.THEME = Integer.valueOf(preferences.getString(PREF_THEME, "0"));
+		NBApplication.THEME = Integer.valueOf(sPreferences.getString(PREF_THEME, "0"));
 	}
 
 	public static MyLocationProvider getLocationProvider() {
-		return myLocationProvider;
+		return sMyLocationProvider;
 	}
 
 	public static SharedPreferences getPreferences() {
-		return preferences;
+		return sPreferences;
+	}
+
+	public static void setSetup(boolean setup) {
+		sIsSetup = setup;
+	}
+
+	public static boolean isSetup() {
+		return sIsSetup;
 	}
 
 }

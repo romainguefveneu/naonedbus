@@ -274,10 +274,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			final List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), arret, mLastDayLoaded,
 					mLastDateTimeLoaded);
 
-			for (Horaire horaire : data) {
-				Log.d(LOG_TAG, new DateTime(horaire.getTimestamp()).toLocalDateTime().toString());
-			}
-
 			if (data.size() == 0) {
 				// Si le précédent chargement à déjà charger la totalité du jour
 				// actuel (ligne de nuit par exemple) ne pas réafficher le jour.

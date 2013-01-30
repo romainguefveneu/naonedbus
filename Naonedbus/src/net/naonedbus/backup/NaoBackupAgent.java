@@ -3,6 +3,7 @@ package net.naonedbus.backup;
 import java.io.IOException;
 
 import net.naonedbus.BuildConfig;
+import net.naonedbus.NBApplication;
 import net.naonedbus.manager.impl.FavoriManager;
 import android.annotation.TargetApi;
 import android.app.backup.BackupAgent;
@@ -50,13 +51,12 @@ public class NaoBackupAgent extends BackupAgent {
 				data.readEntityData(buffer, 0, dataSize);
 
 				final String favoriJson = new String(buffer);
-				favoriManager.fromJson(getContentResolver(), favoriJson);
+				favoriManager.setRestoredFavoris(favoriJson);
 
 				if (DBG)
 					Log.i(LOG_TAG, "\t" + favoriJson);
 			}
 		}
-
 	}
 
 }

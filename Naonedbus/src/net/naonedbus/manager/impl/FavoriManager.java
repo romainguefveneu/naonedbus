@@ -55,8 +55,9 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	private static final String LOG_TAG = "FavoriManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private OnActionListener actionListener = null;
-	private boolean isImporting = false;
+	private OnActionListener mActionListener = null;
+	private boolean mIsImporting = false;
+	private String mRestoredFavoris;
 
 	public static abstract class OnActionListener {
 		public void onImport() {
@@ -129,8 +130,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		final ContentValues values = getContentValues(item);
 		contentResolver.insert(FavoriProvider.CONTENT_URI, values);
 
-		if (actionListener != null && isImporting == false) {
-			actionListener.onAdd(item);
+		if (mActionListener != null && mIsImporting == false) {
+			mActionListener.onAdd(item);
 		}
 	}
 
@@ -138,8 +139,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		final ContentValues values = getContentValues(item);
 		contentResolver.insert(FavoriProvider.CONTENT_URI, values);
 
-		if (actionListener != null && isImporting == false) {
-			actionListener.onAdd(item);
+		if (mActionListener != null && mIsImporting == false) {
+			mActionListener.onAdd(item);
 		}
 	}
 
@@ -147,16 +148,16 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		final ContentValues values = getContentValues(item);
 		db.insert(FavoriTable.TABLE_NAME, null, values);
 
-		if (actionListener != null && isImporting == false) {
-			actionListener.onAdd(item);
+		if (mActionListener != null && mIsImporting == false) {
+			mActionListener.onAdd(item);
 		}
 	}
 
 	public void removeFavori(ContentResolver contentResolver, int id) {
 		contentResolver.delete(FavoriProvider.CONTENT_URI, FavoriTable._ID + "=?", new String[] { String.valueOf(id) });
 
-		if (actionListener != null && isImporting == false) {
-			actionListener.onRemove(id);
+		if (mActionListener != null && mIsImporting == false) {
+			mActionListener.onRemove(id);
 		}
 	}
 
@@ -376,21 +377,6 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	}
 
 	/**
-	 * Convertir une map d'éléments en Favori.
-	 * 
-	 * @param element
-	 * @return un Favori
-	 */
-	private Favori toFavori(final Favori favori) {
-		final Favori favoriItem = new Favori();
-		favoriItem.codeArret = favori.codeArret;
-		favoriItem.codeSens = favori.codeSens;
-		favoriItem.codeLigne = favori.codeLigne;
-		favoriItem.nomFavori = favori.nomFavori;
-		return favoriItem;
-	}
-
-	/**
 	 * Importer les favoris depuis le cloud
 	 * 
 	 * @throws IOException
@@ -401,23 +387,30 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		final FavoriController controller = new FavoriController();
 		final List<Favori> favoris = controller.get(id);
 
-		isImporting = true;
+		mIsImporting = true;
 
 		fromListFavoris(contentResolver, favoris);
 
-		isImporting = false;
+		mIsImporting = false;
 
-		if (actionListener != null) {
-			actionListener.onImport();
+		if (mActionListener != null) {
+			mActionListener.onImport();
 		}
 	}
 
 	public void setActionListener(OnActionListener l) {
-		actionListener = l;
+		mActionListener = l;
 	}
 
 	public void unsetActionListener() {
-		actionListener = null;
+		mActionListener = null;
 	}
 
+	public void setRestoredFavoris(String values) {
+		mRestoredFavoris = values;
+	}
+
+	public String getRestoredFavoris() {
+		return mRestoredFavoris;
+	}
 }

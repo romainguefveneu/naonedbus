@@ -10,10 +10,11 @@ import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends SlidingMenuActivity {
 
@@ -23,21 +24,20 @@ public class MainActivity extends SlidingMenuActivity {
 	private static Class<?>[] classes = new Class<?>[] { LignesFragment.class, FavorisFragment.class,
 			ProximiteFragment.class };
 
-	private ProgressDialog progressDialog;
 	private boolean mHasSetup = false;
 	private boolean mContentLoaded = false;
 	private boolean mIsFrontActivity = false;
+	private boolean mFirstLaunch = false;
 
-	private DatabaseActionListener listener = new DatabaseActionListener() {
+	private DatabaseActionListener mListener = new DatabaseActionListener() {
 
 		@Override
 		public void onUpgrade() {
 			MainActivity.this.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					progressDialog = new ProgressDialog(MainActivity.this);
-					progressDialog.setMessage(getString(R.string.updating));
-					progressDialog.show();
+					mFirstLaunch = true;
+					showSetupView(R.string.updating);
 				}
 			});
 		}
@@ -47,6 +47,8 @@ public class MainActivity extends SlidingMenuActivity {
 			MainActivity.this.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
+					mFirstLaunch = true;
+					showSetupView(R.string.setup);
 					startActivity(new Intent(MainActivity.this, TutorialActivity.class));
 				}
 			});
@@ -54,7 +56,7 @@ public class MainActivity extends SlidingMenuActivity {
 	};
 
 	public MainActivity() {
-		super(R.layout.activity_tabs);
+		super(R.layout.activity_main);
 	}
 
 	@Override
@@ -70,6 +72,7 @@ public class MainActivity extends SlidingMenuActivity {
 	protected void onResume() {
 		mIsFrontActivity = true;
 		if (mHasSetup && mContentLoaded == false) {
+			hideSetupView();
 			loadContent();
 		}
 		super.onResume();
@@ -83,8 +86,7 @@ public class MainActivity extends SlidingMenuActivity {
 	}
 
 	private void loadContent() {
-		if (progressDialog != null) {
-			progressDialog.dismiss();
+		if (mFirstLaunch) {
 			peekSlidingMenu();
 		}
 
@@ -112,7 +114,20 @@ public class MainActivity extends SlidingMenuActivity {
 	private void afterUpdate() {
 		mHasSetup = true;
 		if (mIsFrontActivity && mContentLoaded == false) {
+			hideSetupView();
 			loadContent();
+		}
+	}
+
+	private void showSetupView(int textResId) {
+		findViewById(R.id.setupViewStub).setVisibility(View.VISIBLE);
+		((TextView) findViewById(R.id.setupViewLabel)).setText(textResId);
+	}
+
+	private void hideSetupView() {
+		View view;
+		if ((view = findViewById(R.id.setupView)) != null) {
+			view.setVisibility(View.GONE);
 		}
 	}
 
@@ -133,10 +148,10 @@ public class MainActivity extends SlidingMenuActivity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-			CustomContentProvider.setDatabaseActionListener(listener);
+			CustomContentProvider.setDatabaseActionListener(mListener);
 
 			// Déclencher une éventuelle mise à jour
-			final UpdaterManager updaterManager = new UpdaterManager(getApplicationContext());
+			final UpdaterManager updaterManager = new UpdaterManager();
 			updaterManager.triggerUpdate(getContentResolver());
 
 			// Vider les anciens horaires

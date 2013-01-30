@@ -63,7 +63,7 @@ import com.google.android.maps.Overlay;
 
 public class MapActivity extends SherlockMapActivity {
 
-	private static final String LOG_TAG = MapActivity.class.getSimpleName();
+	private static final String LOG_TAG = "MapActivity";
 
 	public static enum Param implements IIntentParamKey {
 		itemId, itemType

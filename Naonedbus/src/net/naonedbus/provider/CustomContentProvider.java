@@ -21,9 +21,11 @@ package net.naonedbus.provider;
 import java.io.IOException;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.helper.BulkLoaderHelper.BulkQuery;
 import net.naonedbus.helper.CompressedQueriesHelper;
+import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.utils.TimeLogUtils;
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -80,49 +82,85 @@ public abstract class CustomContentProvider extends ContentProvider {
 	public abstract int update(Uri uri, ContentValues values, String selection, String[] selectionArgs);
 
 	protected static class CoreDatabase extends SQLiteOpenHelper {
-		private static final String LOG_TAG = CoreDatabase.class.getSimpleName();
+		private static final String LOG_TAG = "CoreDatabase";
+		private static final boolean DBG = BuildConfig.DEBUG;
 
-		private static final int DB_VERSION = 7;
+		private static final int DB_VERSION = 10;
 		private static final String DB_NAME = "data.db";
 
 		private CompressedQueriesHelper compressedQueriesHelper;
 
 		public CoreDatabase(Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
-			this.compressedQueriesHelper = new CompressedQueriesHelper(context);
+			compressedQueriesHelper = new CompressedQueriesHelper(context);
 		}
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
+			if (DBG)
+				Log.d(LOG_TAG, "Création de la base de données.");
+
+			TimeLogUtils timeLogUtils;
+
 			if (CustomContentProvider.databaseActionListener != null) {
 				CustomContentProvider.databaseActionListener.onCreate();
 			}
-			Log.d(LOG_TAG, "Création de la base de données.");
 
-			final TimeLogUtils timeLogUtils = new TimeLogUtils(LOG_TAG);
-			timeLogUtils.start();
+			if (DBG) {
+				timeLogUtils = new TimeLogUtils(LOG_TAG);
+				timeLogUtils.start();
+			}
 
 			execute(db, R.raw.sql_create);
 			executeBulk(db, R.raw.sql_data);
 
-			timeLogUtils.step("Fin d'installation");
+			restoreFavoris(db);
+
+			if (DBG) {
+				timeLogUtils.step("Fin d'installation");
+			}
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+			if (DBG)
+				Log.d(LOG_TAG, "Mise à jour de la base de données.");
+
+			TimeLogUtils timeLogUtils;
+
 			if (CustomContentProvider.databaseActionListener != null) {
 				CustomContentProvider.databaseActionListener.onUpgrade();
 			}
-			Log.d(LOG_TAG, "Mise à jour de la base de données.");
 
-			final TimeLogUtils timeLogUtils = new TimeLogUtils(LOG_TAG);
-			timeLogUtils.start();
-
+			if (DBG) {
+				timeLogUtils = new TimeLogUtils(LOG_TAG);
+				timeLogUtils.start();
+			}
 			execute(db, R.raw.sql_before_update, R.raw.sql_create);
 			executeBulk(db, R.raw.sql_data);
 			execute(db, R.raw.sql_after_update);
 
-			timeLogUtils.step("Fin de la mise à jour");
+			restoreFavoris(db);
+
+			if (DBG) {
+				timeLogUtils.step("Fin de la mise à jour");
+			}
+		}
+
+		/**
+		 * Restaurer les favoris.
+		 * 
+		 * @param db
+		 */
+		private void restoreFavoris(SQLiteDatabase db) {
+			if (DBG)
+				Log.d(LOG_TAG, "Restauration des favoris");
+
+			final FavoriManager favoriManager = FavoriManager.getInstance();
+			final String restoredFavoris = favoriManager.getRestoredFavoris();
+			if (restoredFavoris != null) {
+				favoriManager.fromJson(db, restoredFavoris);
+			}
 		}
 
 		/**
@@ -137,7 +175,8 @@ public abstract class CustomContentProvider extends ContentProvider {
 			try {
 				for (final int resId : resIds) {
 
-					Log.i(LOG_TAG, "Execution du script " + resId);
+					if (DBG)
+						Log.i(LOG_TAG, "Execution du script " + resId);
 
 					final String[] queries = this.compressedQueriesHelper.getQueries(resId);
 
@@ -168,7 +207,8 @@ public abstract class CustomContentProvider extends ContentProvider {
 			try {
 
 				for (final int resId : resIds) {
-					Log.i(LOG_TAG, "Execution du script " + resId);
+					if (DBG)
+						Log.i(LOG_TAG, "Execution du script " + resId);
 
 					bulkQueries = this.compressedQueriesHelper.getBulkQueries(resId);
 

@@ -20,8 +20,6 @@ package net.naonedbus.manager.impl;
 
 import net.naonedbus.provider.impl.UpdaterProvider;
 import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 
 /**
@@ -29,14 +27,6 @@ import android.database.Cursor;
  * 
  */
 public class UpdaterManager {
-
-	public static final String ACTION_ON_POST_EXECUTE = "UpdaterManager:OnPostExecute";
-
-	private final Context mContext;
-
-	public UpdaterManager(final Context context) {
-		mContext = context;
-	}
 
 	/**
 	 * Déclencher la mise à jour de la base de données si nécessaire.
@@ -48,7 +38,6 @@ public class UpdaterManager {
 		if (c != null) {
 			c.close();
 		}
-		mContext.sendBroadcast(new Intent(ACTION_ON_POST_EXECUTE));
 	}
 
 }
