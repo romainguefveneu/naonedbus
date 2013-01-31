@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultActivityContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/SectionTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:text="@string/itineraire_section_form" />
+
+    <AutoCompleteTextView
+        android:id="@id/itineraireFrom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:contentDescription="@string/abs__searchview_description_query"
+        android:drawableLeft="@drawable/ic_action_place_light"
+        android:drawablePadding="@dimen/padding_tiny"
+        android:dropDownHeight="wrap_content"
+        android:dropDownHorizontalOffset="0dip"
+        android:dropDownVerticalOffset="0dip"
+        android:ellipsize="end"
+        android:hint="@string/search_hint_itineraire_depart"
+        android:inputType="text|textAutoComplete|textNoSuggestions"
+        android:minWidth="@dimen/abs__search_view_text_min_width"
+        android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+        android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+        android:singleLine="true" />
+
+    <AutoCompleteTextView
+        android:id="@id/itineraireTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:contentDescription="@string/abs__searchview_description_query"
+        android:drawableLeft="@drawable/ic_action_place_light"
+        android:drawablePadding="@dimen/padding_tiny"
+        android:dropDownHeight="wrap_content"
+        android:dropDownHorizontalOffset="0dip"
+        android:dropDownVerticalOffset="0dip"
+        android:ellipsize="end"
+        android:hint="@string/search_hint_itineraire_arrivee"
+        android:inputType="text|textAutoComplete|textNoSuggestions"
+        android:minWidth="@dimen/abs__search_view_text_min_width"
+        android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+        android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+        android:singleLine="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Emmène-moi !" />
+
+</LinearLayout>

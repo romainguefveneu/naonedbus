@@ -3,7 +3,6 @@ package net.naonedbus.backup;
 import java.io.IOException;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.NBApplication;
 import net.naonedbus.manager.impl.FavoriManager;
 import android.annotation.TargetApi;
 import android.app.backup.BackupAgent;
