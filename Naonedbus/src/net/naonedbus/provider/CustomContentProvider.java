@@ -88,11 +88,11 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final int DB_VERSION = 10;
 		private static final String DB_NAME = "data.db";
 
-		private CompressedQueriesHelper compressedQueriesHelper;
+		private CompressedQueriesHelper mCompressedQueriesHelper;
 
 		public CoreDatabase(Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
-			compressedQueriesHelper = new CompressedQueriesHelper(context);
+			mCompressedQueriesHelper = new CompressedQueriesHelper(context);
 		}
 
 		@Override
@@ -142,9 +142,9 @@ public abstract class CustomContentProvider extends ContentProvider {
 
 			restoreFavoris(db);
 
-			if (DBG) {
+			if (DBG)
 				timeLogUtils.step("Fin de la mise à jour");
-			}
+
 		}
 
 		/**
@@ -154,7 +154,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		 */
 		private void restoreFavoris(SQLiteDatabase db) {
 			if (DBG)
-				Log.d(LOG_TAG, "Restauration des favoris");
+				Log.i(LOG_TAG, "Restauration des favoris");
 
 			final FavoriManager favoriManager = FavoriManager.getInstance();
 			final String restoredFavoris = favoriManager.getRestoredFavoris();
@@ -178,7 +178,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 					if (DBG)
 						Log.i(LOG_TAG, "Execution du script " + resId);
 
-					final String[] queries = this.compressedQueriesHelper.getQueries(resId);
+					final String[] queries = mCompressedQueriesHelper.getQueries(resId);
 
 					for (String query : queries) {
 						if (query.trim().length() > 0) {
@@ -210,7 +210,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 					if (DBG)
 						Log.i(LOG_TAG, "Execution du script " + resId);
 
-					bulkQueries = this.compressedQueriesHelper.getBulkQueries(resId);
+					bulkQueries = mCompressedQueriesHelper.getBulkQueries(resId);
 
 					for (final BulkQuery bulkQuery : bulkQueries) {
 						final List<String[]> statementValues = bulkQuery.getValues();

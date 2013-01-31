@@ -64,4 +64,5 @@ public class CompressedQueriesHelper {
 		final BulkLoaderHelper bulkLoaderHelper = new BulkLoaderHelper(inputStream);
 		return bulkLoaderHelper.getQueries();
 	}
+
 }

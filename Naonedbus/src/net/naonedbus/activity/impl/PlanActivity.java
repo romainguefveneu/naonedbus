@@ -11,7 +11,7 @@ import android.os.Bundle;
 public class PlanActivity extends OneFragmentActivity {
 
 	public PlanActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_one_fragment);
 	}
 
 	public static enum Param implements IIntentParamKey {

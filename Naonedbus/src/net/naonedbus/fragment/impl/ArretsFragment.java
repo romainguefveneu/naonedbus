@@ -34,6 +34,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -47,8 +48,13 @@ import com.actionbarsherlock.view.MenuItem;
 public class ArretsFragment extends CustomListFragment implements CustomFragmentActions, OnChangeSens,
 		MyLocationListener, AddressTaskListener {
 
-	private final static int SORT_NOM = R.id.menu_sort_name;
-	private final static int SORT_ORDRE = R.id.menu_sort_ordre;
+	private final static int SORT_NOM = 0;
+	private final static int SORT_ORDRE = 1;
+	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
+	static {
+		MENU_MAPPING.append(SORT_NOM, R.id.menu_sort_name);
+		MENU_MAPPING.append(SORT_ORDRE, R.id.menu_sort_ordre);
+	}
 
 	private interface DistanceTaskCallback {
 		void onNearestStationFound(Integer position);
@@ -141,7 +147,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		if (activity != null) {
 			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 			menuInflater.inflate(R.menu.fragment_arrets, menu);
-			menu.findItem(mCurrentSortPreference).setChecked(true);
+			menu.findItem(MENU_MAPPING.get(mCurrentSortPreference)).setChecked(true);
 		}
 	}
 

@@ -13,7 +13,7 @@ public class ParcoursActivity extends OneFragmentActivity {
 	};
 
 	public ParcoursActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_one_fragment);
 	}
 
 	@Override

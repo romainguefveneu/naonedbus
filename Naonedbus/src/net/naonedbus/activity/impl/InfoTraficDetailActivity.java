@@ -27,7 +27,7 @@ import android.os.Bundle;
 public class InfoTraficDetailActivity extends OneFragmentActivity {
 
 	public InfoTraficDetailActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_one_fragment);
 	}
 
 	public static enum Param implements IIntentParamKey {
