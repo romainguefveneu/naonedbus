@@ -85,6 +85,8 @@
     <item name="pager" type="id"/>
     <item name="setupView" type="id"/>
     <item name="setupViewLabel" type="id"/>
+    <item name="itineraireFrom" type="id"/>
+    <item name="itineraireTo" type="id"/>
 
     <!-- Fragments -->
     <item name="fragmentLoading" type="id"/>

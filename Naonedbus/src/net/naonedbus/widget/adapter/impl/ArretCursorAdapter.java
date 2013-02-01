@@ -29,14 +29,16 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ArretCursorAdapter extends CursorAdapter {
+public class ArretCursorAdapter extends CursorAdapter implements Filterable {
 
 	protected LayoutInflater layoutInflater;
 	private Cursor favoris;
-	private int layoutId = R.layout.list_item_equipement;
+	private int layoutId = R.layout.list_item_arret;
 	private Drawable iconBackgroundDrawable;
 
 	public ArretCursorAdapter(Context context, Cursor arrets, Cursor favoris) {
@@ -102,5 +104,22 @@ public class ArretCursorAdapter extends CursorAdapter {
 	public void setFavoris(Cursor favoris) {
 		this.favoris = favoris;
 	}
+
+	@Override
+	public Filter getFilter() {
+		return mFilter;
+	}
+
+	private Filter mFilter = new Filter() {
+		@Override
+		protected void publishResults(CharSequence constraint, FilterResults results) {
+
+		}
+
+		@Override
+		protected FilterResults performFiltering(CharSequence constraint) {
+			return null;
+		}
+	};
 
 }

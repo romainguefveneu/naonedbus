@@ -16,7 +16,7 @@ public class SearchActivity extends OneFragmentSlidingActivity {
 	private ModalSearchView mModalSearchView;
 
 	public SearchActivity() {
-		super(R.layout.activity_main);
+		super(R.layout.activity_one_fragment);
 	}
 
 	@Override
