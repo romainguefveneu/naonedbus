@@ -38,6 +38,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ListAdapter;
@@ -98,8 +99,6 @@ public class CommentaireActivity extends SherlockActivity {
 
 		final SlidingMenuHelper slidingMenuHelper = new SlidingMenuHelper(this);
 		slidingMenuHelper.setupActionBar(getSupportActionBar());
-
-		getSupportActionBar().setIcon(R.drawable.ic_launcher);
 
 		ligneManager = LigneManager.getInstance();
 		sensManager = SensManager.getInstance();

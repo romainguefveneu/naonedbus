@@ -10,6 +10,7 @@ import net.naonedbus.fragment.impl.CommentairesFragment;
 import net.naonedbus.fragment.impl.TanActuFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 
 public class InfosTraficActivity extends SlidingMenuActivity {
 
@@ -23,6 +24,10 @@ public class InfosTraficActivity extends SlidingMenuActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		// This has to be called before setContentView and you must use the
+		// class in com.actionbarsherlock.view and NOT android.view
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState == null) {
 			addFragments(titles, classes);

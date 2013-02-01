@@ -363,6 +363,13 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	/**
+	 * Avant le chargement.
+	 */
+	protected void onPreExecute() {
+
+	}
+
+	/**
 	 * Charger le contenu en background.
 	 * 
 	 * @return AsyncResult du resultat.
@@ -383,6 +390,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 				return loadContent(getActivity());
 			}
 		};
+		
+		onPreExecute();
 		showLoader();
 		loader.forceLoad();
 
