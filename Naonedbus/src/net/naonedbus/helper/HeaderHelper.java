@@ -7,6 +7,9 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 public class HeaderHelper {
@@ -78,4 +81,29 @@ public class HeaderHelper {
 		}
 	}
 
+	public void setSubTitleAnimated(final CharSequence subtitle) {
+		final Animation fadeOut = AnimationUtils.loadAnimation(mActivity, android.R.anim.fade_out);
+		final Animation fadeIn = AnimationUtils.loadAnimation(mActivity, android.R.anim.fade_in);
+
+		fadeOut.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				setSubTitle(subtitle);
+				mSubTitle.startAnimation(fadeIn);
+			}
+		});
+
+		mSubTitle.startAnimation(fadeOut);
+	}
 }

@@ -45,7 +45,7 @@ public class TutorialActivity extends Activity {
 
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_0_title,
-				R.string.tuto_0_summary, R.drawable.logo_large));
+				R.string.tuto_0_summary, R.drawable.logo));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_beta_title, R.string.tuto_beta_summary,
 				R.drawable.ic_action_good));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_1_title, R.string.tuto_1_summary,

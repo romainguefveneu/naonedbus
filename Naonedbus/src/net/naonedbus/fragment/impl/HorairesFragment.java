@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
@@ -51,9 +52,15 @@ import com.actionbarsherlock.view.MenuItem;
 public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private static final String LOG_TAG = "HorairesFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
+
 	public static final String PARAM_ID_ARRET = "idArret";
+
+	public static interface OnSensChangeListener {
+		void onSensChange(Sens newSens);
+	}
 
 	private final static IntentFilter intentFilter;
 	static {
@@ -79,6 +86,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private final SensManager mSensManager;
 	private final LigneManager mLigneManager;
 	private final FavoriManager mFavoriManager;
+	private OnSensChangeListener mOnSensChangeListener;
 	private HoraireArrayAdapter mAdapter;
 	private List<Horaire> mHoraires;
 
@@ -144,7 +152,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private void loadHoraires(DateMidnight date) {
 		if (mIsLoading.get() == false) {
-			Log.d(LOG_TAG, "loadHoraires " + date.toString() + "\t" + mIsLoading.get());
+			if (DBG)
+				Log.d(LOG_TAG, "loadHoraires " + date.toString() + "\t" + mIsLoading.get());
+
 			mLastDayLoaded = date;
 			refreshContent();
 		}
@@ -180,6 +190,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			break;
 		case R.id.menu_show_plan:
 			menuShowPlan();
+			break;
+		case R.id.menu_sens:
+			menuChangeSens();
 			break;
 		default:
 			break;
@@ -244,6 +257,41 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		startActivity(intent);
 	}
 
+	private void menuChangeSens() {
+		Sens autreSens = null;
+
+		// Inverser le sens
+		final List<Sens> sens = mSensManager.getAll(getActivity().getContentResolver(), mLigne.code);
+		for (Sens sensItem : sens) {
+			if (sensItem._id != mSens._id) {
+				autreSens = sensItem;
+				break;
+			}
+		}
+
+		// Chercher l'arrêt dans le nouveau sens
+		final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code, autreSens.code,
+				mArret.normalizedNom);
+
+		if (arret != null) {
+			mSens = autreSens;
+			mArret = arret;
+
+			mAdapter.clear();
+			mAdapter.notifyDataSetChanged();
+
+			changeDateToNow();
+
+			if (mOnSensChangeListener != null) {
+				mOnSensChangeListener.onSensChange(mSens);
+			}
+		} else {
+			Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT)
+					.show();
+		}
+
+	}
+
 	/**
 	 * Clear data and reload with a new date
 	 * 
@@ -264,15 +312,13 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 
-		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
-		final Arret arret = mArretManager.getSingle(context.getContentResolver(), idArret);
-
-		Log.d(LOG_TAG, "\tloadContent " + mLastDayLoaded.toString());
+		if (DBG)
+			Log.d(LOG_TAG, "\tloadContent " + mLastDayLoaded.toString());
 
 		try {
 
-			final List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), arret, mLastDayLoaded,
-					mLastDateTimeLoaded);
+			final List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), mArret,
+					mLastDayLoaded, mLastDateTimeLoaded);
 
 			if (data.size() == 0) {
 				// Si le précédent chargement à déjà charger la totalité du jour
@@ -314,7 +360,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			} else {
 				showError(R.string.error_title_webservice, R.string.error_summary_webservice);
 			}
-			Log.e(LOG_TAG, "Erreur", exception);
+			Log.w(LOG_TAG, "Erreur", exception);
 		}
 
 		resetNextUpdate();
@@ -329,7 +375,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		mAdapter.notifyDataSetChanged();
 		updateItemsTime();
 
-		Log.d(LOG_TAG, "\tloadContent end " + mLastDayLoaded.toString());
+		if (DBG)
+			Log.d(LOG_TAG, "\tloadContent end " + mLastDayLoaded.toString());
 		mIsLoading.set(false);
 	}
 
@@ -372,6 +419,11 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			}
 		}
 
+		// Si aucun prochain horaire n'est trouvé, sélectionner le dernier
+		if (nextHorairePosition == -1) {
+			nextHorairePosition = mAdapter.getCount() - 1;
+		}
+
 		mAdapter.notifyDataSetChanged();
 
 		if (nextHorairePosition != -1 && mIsFirstLoad) {
@@ -380,4 +432,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		}
 	}
 
+	public void setOnChangeSensListener(OnSensChangeListener l) {
+		mOnSensChangeListener = l;
+	}
 }

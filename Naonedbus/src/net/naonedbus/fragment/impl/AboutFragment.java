@@ -32,7 +32,6 @@ public class AboutFragment extends CustomFragment {
 	private static final SparseIntArray LICENCES_ID = new SparseIntArray();
 	static {
 		LICENCES_ID.append(R.id.aboutLicenceLibs, R.raw.licences_lib);
-		LICENCES_ID.append(R.id.aboutLicenceIcons, R.raw.licences_icons);
 	}
 
 	private final OnClickListener mLinkOnClickListener = new OnClickListener() {
@@ -74,7 +73,6 @@ public class AboutFragment extends CustomFragment {
 		view.findViewById(R.id.aboutMail).setOnClickListener(mLinkOnClickListener);
 
 		view.findViewById(R.id.aboutLicenceLibs).setOnClickListener(mLicencesOnClickListener);
-		view.findViewById(R.id.aboutLicenceIcons).setOnClickListener(mLicencesOnClickListener);
 	}
 
 	@Override

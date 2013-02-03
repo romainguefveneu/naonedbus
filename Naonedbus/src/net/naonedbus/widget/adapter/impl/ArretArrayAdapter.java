@@ -6,6 +6,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.utils.DistanceUtils;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,31 +45,41 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	public void bindView(View view, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Arret arret = getItem(position);
-		holder.itemTitle.setText(arret.nomArret);
-		// Définir la distance.
-		if (arret.distance == null) {
-			holder.itemDistance.setText("");
+
+		if (arret._id == -1) {
+			holder.itemTitle.setTypeface(null, Typeface.BOLD);
+			holder.itemIcon.setVisibility(View.INVISIBLE);
 		} else {
-			holder.itemDistance.setText(DistanceUtils.formatDist(arret.distance));
-		}
+			holder.itemTitle.setTypeface(null, Typeface.NORMAL);
+			holder.itemIcon.setVisibility(View.VISIBLE);
 
-		bindDotPosition(holder, position);
-
-		if (mViewType == ViewType.TYPE_METRO) {
-			if (position == 0) {
-				holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_first);
-			} else if (position == getCount() - 1) {
-				holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_last);
+			// Définir la distance.
+			if (arret.distance == null) {
+				holder.itemDistance.setText("");
 			} else {
-				holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_step);
+				holder.itemDistance.setText(DistanceUtils.formatDist(arret.distance));
 			}
 
-			holder.itemIcon.setVisibility(View.INVISIBLE);
-			holder.itemMetroPoint.setVisibility(View.VISIBLE);
-		} else {
-			holder.itemIcon.setVisibility(View.VISIBLE);
-			holder.itemMetroPoint.setVisibility(View.INVISIBLE);
+			bindDotPosition(holder, position);
+
+			if (mViewType == ViewType.TYPE_METRO) {
+				if (position == 0) {
+					holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_first);
+				} else if (position == getCount() - 1) {
+					holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_last);
+				} else {
+					holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_step);
+				}
+
+				holder.itemIcon.setVisibility(View.INVISIBLE);
+				holder.itemMetroPoint.setVisibility(View.VISIBLE);
+			} else {
+				holder.itemIcon.setVisibility(View.VISIBLE);
+				holder.itemMetroPoint.setVisibility(View.INVISIBLE);
+			}
 		}
+
+		holder.itemTitle.setText(arret.nomArret);
 
 	}
 

@@ -47,6 +47,17 @@ public class SensArrayAdapter extends ArrayAdapter<Sens> {
 	protected void bindView(View view, int position, Integer textColor, Typeface typeface) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Sens sens = getItem(position);
+
+		if (sens._id == -1) {
+			holder.itemTitle.setTypeface(null, Typeface.BOLD);
+			if (holder.itemIcon != null)
+				holder.itemIcon.setVisibility(View.INVISIBLE);
+		} else {
+			holder.itemTitle.setTypeface(null, Typeface.NORMAL);
+			if (holder.itemIcon != null)
+				holder.itemIcon.setVisibility(View.VISIBLE);
+		}
+
 		holder.itemTitle.setText(sens.text);
 		if (textColor != null)
 			holder.itemTitle.setTextColor(textColor);

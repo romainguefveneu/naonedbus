@@ -66,6 +66,24 @@ public class ArretManager extends SQLiteManager<Arret> {
 		return getFirstFromCursor(c);
 	}
 
+	/**
+	 * Récupérer un arrêt selon son code ligne et sens et du nom de l'arrêt.
+	 * 
+	 * @param contentResolver
+	 * @param codeLigne
+	 *            le code de la ligne
+	 * @param codeSens
+	 *            le code du sens
+	 * @param nomArret
+	 *            le code de l'arrêt
+	 * @return L'arrêt cherche, ou {@code null} si non trouvé.
+	 */
+	public Arret getSingle(ContentResolver contentResolver, String codeLigne, String codeSens, String nomArret) {
+		final Cursor c = getCursor(contentResolver, ArretTable.CODE_LIGNE + "=? AND " + ArretTable.CODE_SENS
+				+ "=? AND " + EquipementTable.NORMALIZED_NOM + "=?", new String[] { codeLigne, codeSens, nomArret });
+		return getFirstFromCursor(c);
+	}
+
 	public Cursor getCursor(ContentResolver contentResolver, String codeLigne, String codeSens) {
 		final Uri.Builder builder = ArretProvider.CONTENT_URI.buildUpon();
 		builder.path(ArretProvider.ARRET_CODESENS_CODELIGNE_URI_PATH_QUERY);
@@ -129,8 +147,8 @@ public class ArretManager extends SQLiteManager<Arret> {
 		Integer id = null;
 
 		final Cursor c = db.query(ArretTable.TABLE_NAME, new String[] { ArretTable._ID }, ArretTable.CODE + "=? AND "
-				+ ArretTable.CODE_SENS + "=? AND " + ArretTable.CODE_LIGNE + "=?",
-				new String[] { favori.codeArret, favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
+				+ ArretTable.CODE_SENS + "=? AND " + ArretTable.CODE_LIGNE + "=?", new String[] { favori.codeArret,
+				favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
 
 		if (c.getCount() > 0) {
 			c.moveToFirst();

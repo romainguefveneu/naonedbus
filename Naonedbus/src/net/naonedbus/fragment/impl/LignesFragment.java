@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
+import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.fragment.CustomCursorFragment;
@@ -107,10 +108,14 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(cmi.position);
 		final String codeLigne = ligne.getString(ligne.getColumnIndex(LigneTable.CODE));
+		final int id = ligne.getInt(ligne.getColumnIndex(LigneTable._ID));
 
 		switch (item.getItemId()) {
 		case R.id.menu_show_plan:
 			menuShowPlan(codeLigne);
+			break;
+		case R.id.menu_comment:
+			menuComment(id);
 			break;
 		default:
 			break;
@@ -154,6 +159,12 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 	private void menuShowPlan(final String codeLigne) {
 		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
 		intent.putExtra(PlanActivity.Param.codeLigne, codeLigne);
+		startActivity(intent);
+	}
+
+	private void menuComment(final int id) {
+		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.Param.idLigne, id);
 		startActivity(intent);
 	}
 

@@ -4,7 +4,7 @@
         android:id="@id/menu_send"
         android:icon="@drawable/ic_action_send"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        android:showAsAction="always|withText"
         android:title="@string/action_send"/>
 
 </menu>

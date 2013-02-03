@@ -98,18 +98,6 @@
             android:layout_height="wrap_content"
             android:linksClickable="true"
             android:text="@string/about_licences_libs" />
-
-        <View
-            android:id="@id/headerDivider"
-            style="@style/Divider" />
-
-        <TextView
-            android:id="@id/aboutLicenceIcons"
-            style="@style/SectionContentItem"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:linksClickable="true"
-            android:text="@string/about_licences_icons" />
     </LinearLayout>
 
 </ScrollView>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="8dip" >
+
+    <RelativeLayout
+        android:id="@id/colLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@android:id/title"
+            style="@style/TutorialTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dip"
+            android:text="@android:string/untitled" />
+
+        <ImageView
+            android:id="@android:id/icon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@android:id/title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/padding_medium"
+            android:src="@drawable/logo_large" />
+
+        <ImageView
+            android:id="@android:id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@android:id/icon1"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@android:id/summary"
+        style="@style/TutorialSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/padding_medium"
+        android:layout_toRightOf="@id/colLeft"
+        android:text="@android:string/untitled" />
+
+</RelativeLayout>

@@ -9,25 +9,32 @@
         android:id="@android:id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_marginRight="16dip"
         android:src="@drawable/logo_large" />
 
-    <TextView
-        android:id="@android:id/title"
-        style="@style/TutorialTitle"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_toRightOf="@android:id/icon"
-        android:text="@android:string/untitled" />
+        android:orientation="vertical" >
 
-    <TextView
-        android:id="@android:id/summary"
-        style="@style/TutorialSummary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@android:id/title"
-        android:layout_toRightOf="@android:id/icon"
-        android:gravity="left"
-        android:text="@android:string/untitled" />
+        <TextView
+            android:id="@android:id/title"
+            style="@style/TutorialTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@android:string/untitled" />
+
+        <TextView
+            android:id="@android:id/summary"
+            style="@style/TutorialSummary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@android:string/untitled" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -21,6 +21,8 @@ package net.naonedbus.manager;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.provider.table.ArretTable;
+import net.naonedbus.provider.table.EquipementTable;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -100,7 +102,7 @@ public abstract class SQLiteManager<T> {
 	 * @return un élément
 	 */
 	public T getSingle(ContentResolver contentResolver, int id) {
-		Cursor c = getCursor(contentResolver, "_id = ?", new String[] { String.valueOf(id) });
+		final Cursor c = getCursor(contentResolver, "_id = ?", new String[] { String.valueOf(id) });
 		return getFirstFromCursor(c);
 	}
 
@@ -112,7 +114,7 @@ public abstract class SQLiteManager<T> {
 	 * @return un élément
 	 */
 	public T getSingle(ContentResolver contentResolver, String code) {
-		Cursor c = getCursor(contentResolver, "code = ?", new String[] { code });
+		final Cursor c = getCursor(contentResolver, "code = ?", new String[] { code });
 		return getFirstFromCursor(c);
 	}
 

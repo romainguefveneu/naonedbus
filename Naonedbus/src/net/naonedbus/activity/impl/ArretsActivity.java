@@ -57,18 +57,22 @@ public class ArretsActivity extends OneFragmentActivity {
 		mStateHelper = new StateHelper(getApplicationContext());
 
 		mCodeLigne = (String) getParamValue(Param.codeLigne);
+
 		final List<Sens> sensList = sensManager.getAll(getContentResolver(), mCodeLigne);
 		final int idSens = mStateHelper.getSens(mCodeLigne, sensList.get(0)._id);
 
+		final Sens sens = sensManager.getSingle(this.getContentResolver(), idSens);
+		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), sens.codeLigne);
+
+		final Bundle bundle = new Bundle();
+		bundle.putInt(ArretsFragment.PARAM_ID_LIGNE, ligne._id);
+
 		if (savedInstanceState == null) {
-			addFragment(ArretsFragment.class);
+			addFragment(ArretsFragment.class, bundle);
 		}
 
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
-
-		final Sens sens = sensManager.getSingle(this.getContentResolver(), idSens);
-		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), sens.codeLigne);
 
 		final View header = findViewById(R.id.headerView);
 		header.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));

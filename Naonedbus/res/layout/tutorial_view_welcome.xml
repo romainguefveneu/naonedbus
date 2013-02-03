@@ -15,17 +15,23 @@
         android:text="@android:string/untitled" />
 
     <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_medium"
+        android:src="@drawable/logo_large" />
+
+    <ImageView
         android:id="@android:id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/logo_large" />
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@android:id/summary"
         style="@style/TutorialSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dip"
+        android:layout_marginTop="@dimen/padding_medium"
         android:text="@android:string/untitled" />
 
 </LinearLayout>

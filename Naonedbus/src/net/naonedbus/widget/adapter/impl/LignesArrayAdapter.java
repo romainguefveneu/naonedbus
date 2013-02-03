@@ -59,13 +59,23 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 	public void bindView(View view, Context context, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Ligne ligne = getItem(position);
+
 		holder.icon.setText(ligne.lettre);
 		holder.icon.setTextColor(ligne.couleurTexte);
-		if (ligne.couleurBackground == 0) {
-			holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
+
+		if (ligne._id == -1) {
+			holder.icon.setBackgroundDrawable(null);
+			holder.sens1.setTypeface(null, Typeface.BOLD);
 		} else {
-			holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
+			holder.sens1.setTypeface(null, Typeface.NORMAL);
+
+			if (ligne.couleurBackground == 0) {
+				holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
+			} else {
+				holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
+			}
 		}
+
 		if ((ligne.depuis == null || ligne.depuis.length() == 0 || ligne.depuis.equals(ligne.vers))) {
 			holder.sens1.setText(ligne.nom);
 			holder.sens2.setVisibility(View.GONE);

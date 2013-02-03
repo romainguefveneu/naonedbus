@@ -7,6 +7,7 @@ import java.util.List;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity.OnChangeSens;
+import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.HoraireActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.Arret;
@@ -56,6 +57,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		MENU_MAPPING.append(SORT_ORDRE, R.id.menu_sort_ordre);
 	}
 
+	public static final String PARAM_ID_LIGNE = "idLigne";
+
 	private interface DistanceTaskCallback {
 		void onNearestStationFound(Integer position);
 
@@ -75,6 +78,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	private List<Arret> mArrets;
 
+	private int mIdLigne;
 	private Sens mSens;
 
 	public ArretsFragment() {
@@ -91,6 +95,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		mIdLigne = getArguments().getInt(PARAM_ID_LIGNE);
+		
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSortPreference = mStateHelper.getSortType(this, SORT_NOM);
 
@@ -153,13 +159,14 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		item.setChecked(true);
 
 		switch (item.getItemId()) {
 		case R.id.menu_sort_name:
+			item.setChecked(true);
 			changeSortOrder(SORT_NOM, ViewType.TYPE_STANDARD);
 			break;
 		case R.id.menu_sort_ordre:
+			item.setChecked(true);
 			changeSortOrder(SORT_ORDRE, ViewType.TYPE_METRO);
 			break;
 		case R.id.menu_show_plan:
@@ -167,6 +174,9 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 			break;
 		case R.id.menu_location:
 			menuLocation();
+			break;
+		case R.id.menu_comment:
+			menuComment();
 			break;
 		}
 		return false;
@@ -184,6 +194,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	private void menuShowPlan() {
 		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
 		intent.putExtra(PlanActivity.Param.codeLigne, mSens.codeLigne);
+		startActivity(intent);
+	}
+
+	private void menuComment() {
+		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.Param.idLigne, mIdLigne);
+		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
 		startActivity(intent);
 	}
 
