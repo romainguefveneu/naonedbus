@@ -84,6 +84,9 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreate");
+
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		getWindow().setBackgroundDrawable(null);
 		super.onCreate(savedInstanceState);
@@ -121,6 +124,9 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateOptionsMenu");
+
 		final Fragment fragment = getCurrentFragment();
 
 		if (fragment instanceof CustomFragmentActions) {
@@ -255,13 +261,12 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		mTitles = titles;
 		mFragmentsTags = new String[classes.length];
 
+		mViewPager.setOffscreenPageLimit(classes.length);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+
 		for (int i = 0; i < titles.length; i++) {
 			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
 		}
-
-		mViewPager.setOffscreenPageLimit(classes.length);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-		invalidateOptionsMenu();
 	}
 
 	/**
@@ -335,6 +340,9 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
+			if (DBG)
+				Log.d(LOG_TAG, "instantiateItem " + position);
+
 			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
 			mFragmentsTags[position] = fragment.getTag();
 			return fragment;

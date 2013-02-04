@@ -8,6 +8,7 @@ import net.naonedbus.activity.impl.CommentaireDetailActivity;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.formatter.CommentaireFomatter;
+import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
@@ -29,21 +30,16 @@ import android.widget.ListView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class CommentairesFragment extends CustomListFragment {
+public class CommentairesFragment extends CustomListFragment implements CustomFragmentActions {
 
 	private static final String LOG_TAG = "HorairesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
+	private MenuItem mRefreshMenuItem;
 	private LoadTimeLineCache mLoaderCache;
 
 	public CommentairesFragment() {
 		super(R.string.title_fragment_en_direct, R.layout.fragment_listview_box);
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
 	}
 
 	@Override
@@ -64,9 +60,15 @@ public class CommentairesFragment extends CustomListFragment {
 	}
 
 	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_refresh:
+			mRefreshMenuItem = item;
 			refreshContent();
 			break;
 		}
@@ -83,12 +85,16 @@ public class CommentairesFragment extends CustomListFragment {
 
 	@Override
 	protected void onPreExecute() {
-		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setActionView(R.layout.action_item_refresh);
+		}
 	}
 
 	@Override
 	protected void onPostExecute() {
-		getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setActionView(null);
+		}
 	}
 
 	@Override
@@ -147,7 +153,6 @@ public class CommentairesFragment extends CustomListFragment {
 			super.onPreExecute();
 			if (DBG)
 				Log.d(LOG_TAG, "Chargement du cache...");
-			getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
 			showLoader();
 		}
 
