@@ -19,8 +19,6 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.actionbarsherlock.view.Menu;
-
 public class ParcoursFragment extends CustomListFragment {
 
 	public static final String PARAM_ID_STATION = "idStation";
@@ -34,6 +32,12 @@ public class ParcoursFragment extends CustomListFragment {
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
@@ -43,11 +47,6 @@ public class ParcoursFragment extends CustomListFragment {
 		getActivity().setTitle(mStation.getNom());
 
 		loadContent();
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package net.naonedbus.activity;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.support.v4.app.Fragment;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class OneFragmentActivity extends SherlockFragmentActivity {
@@ -51,30 +49,6 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		actionBar.setIcon(R.drawable.ic_launcher);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		final Fragment fragment = getCurrentFragment();
-
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			customListFragment.onCreateOptionsMenu(menu);
-		}
-
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		final Fragment fragment = getCurrentFragment();
-
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			customListFragment.onPrepareOptionsMenu(menu);
-		}
-
-		return super.onPrepareOptionsMenu(menu);
-	}
-
 	/**
 	 * Show the menu when home icon is clicked.
 	 */
@@ -82,12 +56,6 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
 			finish();
-		}
-
-		final Fragment fragment = getCurrentFragment();
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			return customListFragment.onOptionsItemSelected(item);
 		}
 		return super.onOptionsItemSelected(item);
 	}

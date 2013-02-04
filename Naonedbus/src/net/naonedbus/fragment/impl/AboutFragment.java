@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class AboutFragment extends CustomFragment {
@@ -73,16 +72,6 @@ public class AboutFragment extends CustomFragment {
 		view.findViewById(R.id.aboutMail).setOnClickListener(mLinkOnClickListener);
 
 		view.findViewById(R.id.aboutLicenceLibs).setOnClickListener(mLicencesOnClickListener);
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
 	}
 
 	@Override

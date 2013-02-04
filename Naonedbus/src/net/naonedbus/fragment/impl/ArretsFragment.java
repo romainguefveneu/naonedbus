@@ -41,7 +41,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -92,11 +91,17 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		mIdLigne = getArguments().getInt(PARAM_ID_LIGNE);
-		
+
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSortPreference = mStateHelper.getSortType(this, SORT_NOM);
 
@@ -148,13 +153,10 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final SherlockFragmentActivity activity = getSherlockActivity();
-		if (activity != null) {
-			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-			menuInflater.inflate(R.menu.fragment_arrets, menu);
-			menu.findItem(MENU_MAPPING.get(mCurrentSortPreference)).setChecked(true);
-		}
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_arrets, menu);
+		menu.findItem(MENU_MAPPING.get(mCurrentSortPreference)).setChecked(true);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override

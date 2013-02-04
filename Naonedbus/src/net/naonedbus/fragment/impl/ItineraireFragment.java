@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ItineraireFragment extends CustomFragment {
@@ -18,6 +17,12 @@ public class ItineraireFragment extends CustomFragment {
 
 	public ItineraireFragment() {
 		super(R.string.title_fragment_versions, R.layout.fragment_itineraire);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -31,16 +36,6 @@ public class ItineraireFragment extends CustomFragment {
 
 		mFromTextView.setAdapter(adapter);
 		mToTextView.setAdapter(adapter);
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
 	}
 
 	@Override

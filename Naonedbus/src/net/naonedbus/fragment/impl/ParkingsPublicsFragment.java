@@ -30,6 +30,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -43,6 +44,13 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	private final static int SORT_NOM = R.id.menu_sort_name;
 	private final static int SORT_DISTANCE = R.id.menu_sort_distance;
 	private final static int SORT_PLACES = R.id.menu_sort_parking_places;
+
+	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
+	static {
+		MENU_MAPPING.append(SORT_NOM, R.id.menu_sort_name);
+		MENU_MAPPING.append(SORT_DISTANCE, R.id.menu_sort_distance);
+		MENU_MAPPING.append(SORT_PLACES, R.id.menu_sort_parking_places);
+	}
 
 	private final static SparseArray<Comparator<ParkingPublic>> comparators = new SparseArray<Comparator<ParkingPublic>>();
 	static {
@@ -70,6 +78,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 		myLocationProvider.addListener(locationListener);
 
 		// Initaliser le comparator avec la position actuelle.
@@ -99,10 +108,10 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_parkings_publics, menu);
-		menu.findItem(mCurrentSort).setChecked(true);
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_parkings_publics, menu);
+		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
@@ -262,16 +271,5 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 			}
 		}
 	};
-
-	/**
-	 * Retourne le comparateur en cours, ou le comparateur par nom si non
-	 * trouvé.
-	 * 
-	 * @return le comparateur en cours, ou le comparateur par nom si non trouvé.
-	 */
-	private Comparator<ParkingPublic> getCurrentComparator() {
-		final Comparator<ParkingPublic> comparator = comparators.get(mCurrentSort);
-		return (comparator == null) ? comparators.get(SORT_NOM) : comparator;
-	}
 
 }

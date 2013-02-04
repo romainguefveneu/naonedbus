@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class TanActuFragment extends CustomListFragment {
@@ -51,10 +50,6 @@ public class TanActuFragment extends CustomListFragment {
 		final ParamIntent intent = new ParamIntent(getActivity(), InfoTraficDetailActivity.class);
 		intent.putExtra(InfoTraficDetailActivity.Param.codeInfoTrafic, item.getCode());
 		startActivity(intent);
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
 	}
 
 	@Override

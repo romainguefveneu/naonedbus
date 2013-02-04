@@ -55,11 +55,11 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	private static final String LOG_TAG = "FavoriManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private OnActionListener mActionListener = null;
+	private List<OnFavoriActionListener> mListeners = new ArrayList<OnFavoriActionListener>();
 	private boolean mIsImporting = false;
 	private String mRestoredFavoris;
 
-	public static abstract class OnActionListener {
+	public static abstract class OnFavoriActionListener {
 		public void onImport() {
 		};
 
@@ -67,6 +67,9 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		};
 
 		public void onRemove(int id) {
+		};
+
+		public void onUpdate() {
 		};
 	}
 
@@ -130,35 +133,31 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		final ContentValues values = getContentValues(item);
 		contentResolver.insert(FavoriProvider.CONTENT_URI, values);
 
-		if (mActionListener != null && mIsImporting == false) {
-			mActionListener.onAdd(item);
-		}
+		if (mIsImporting == false)
+			notifyOnAdd(item);
 	}
 
 	public void addFavori(final ContentResolver contentResolver, final Favori item) {
 		final ContentValues values = getContentValues(item);
 		contentResolver.insert(FavoriProvider.CONTENT_URI, values);
 
-		if (mActionListener != null && mIsImporting == false) {
-			mActionListener.onAdd(item);
-		}
+		if (mIsImporting == false)
+			notifyOnAdd(item);
 	}
 
 	public void addFavori(final SQLiteDatabase db, final Favori item) {
 		final ContentValues values = getContentValues(item);
 		db.insert(FavoriTable.TABLE_NAME, null, values);
 
-		if (mActionListener != null && mIsImporting == false) {
-			mActionListener.onAdd(item);
-		}
+		if (mIsImporting == false)
+			notifyOnAdd(item);
 	}
 
 	public void removeFavori(ContentResolver contentResolver, int id) {
 		contentResolver.delete(FavoriProvider.CONTENT_URI, FavoriTable._ID + "=?", new String[] { String.valueOf(id) });
 
-		if (mActionListener != null && mIsImporting == false) {
-			mActionListener.onRemove(id);
-		}
+		if (mIsImporting == false)
+			notifyOnRemove(id);
 	}
 
 	public void setFavori(ContentResolver contentResolver, Favori item) {
@@ -393,17 +392,15 @@ public class FavoriManager extends SQLiteManager<Favori> {
 
 		mIsImporting = false;
 
-		if (mActionListener != null) {
-			mActionListener.onImport();
-		}
+		notifyOnImport();
 	}
 
-	public void setActionListener(OnActionListener l) {
-		mActionListener = l;
+	public void addActionListener(OnFavoriActionListener l) {
+		mListeners.add(l);
 	}
 
-	public void unsetActionListener() {
-		mActionListener = null;
+	public void removeActionListener(OnFavoriActionListener l) {
+		mListeners.remove(l);
 	}
 
 	public void setRestoredFavoris(String values) {
@@ -412,5 +409,26 @@ public class FavoriManager extends SQLiteManager<Favori> {
 
 	public String getRestoredFavoris() {
 		return mRestoredFavoris;
+	}
+
+	private void notifyOnAdd(Arret item) {
+		for (OnFavoriActionListener l : mListeners) {
+			l.onAdd(item);
+			l.onUpdate();
+		}
+	}
+
+	private void notifyOnRemove(int id) {
+		for (OnFavoriActionListener l : mListeners) {
+			l.onRemove(id);
+			l.onUpdate();
+		}
+	}
+
+	private void notifyOnImport() {
+		for (OnFavoriActionListener l : mListeners) {
+			l.onImport();
+			l.onUpdate();
+		}
 	}
 }

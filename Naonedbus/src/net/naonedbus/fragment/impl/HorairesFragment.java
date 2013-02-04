@@ -118,15 +118,22 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
-		mAdapter.setIndexer(new HoraireIndexer());
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
 		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
 		mArret = mArretManager.getSingle(getActivity().getContentResolver(), idArret);
 		mLigne = mLigneManager.getSingle(getActivity().getContentResolver(), mArret.codeLigne);
 		mSens = mSensManager.getSingle(getActivity().getContentResolver(), mArret.codeLigne, mArret.codeSens);
+
+		setHasOptionsMenu(true);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
+		mAdapter.setIndexer(new HoraireIndexer());
 
 		loadContent();
 	}
@@ -161,13 +168,22 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_horaires, menu);
-
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_horaires, menu);
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
+
 		int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
 		menuFavori.setIcon(icon);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
+
+		int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		menuFavori.setIcon(icon);
+		super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override

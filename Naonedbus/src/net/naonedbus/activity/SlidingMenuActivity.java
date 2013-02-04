@@ -127,27 +127,29 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateOptionsMenu");
 
-		final Fragment fragment = getCurrentFragment();
-
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			customListFragment.onCreateOptionsMenu(menu);
-		}
+		// final Fragment fragment = getCurrentFragment();
+		//
+		// if (fragment instanceof CustomFragmentActions) {
+		// final CustomFragmentActions customListFragment =
+		// (CustomFragmentActions) fragment;
+		// customListFragment.onCreateOptionsMenu(menu);
+		// }
 
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		final Fragment fragment = getCurrentFragment();
+		// final Fragment fragment = getCurrentFragment();
 
 		if (DBG)
-			Log.d(LOG_TAG, "onPrepareOptionsMenu " + fragment);
-
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			customListFragment.onPrepareOptionsMenu(menu);
-		}
+			Log.d(LOG_TAG, "onPrepareOptionsMenu ");
+		//
+		// if (fragment instanceof CustomFragmentActions) {
+		// final CustomFragmentActions customListFragment =
+		// (CustomFragmentActions) fragment;
+		// customListFragment.onPrepareOptionsMenu(menu);
+		// }
 
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -235,7 +237,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
 
 		mViewPager.setCurrentItem(tab.getPosition());
-		invalidateOptionsMenu();
+//		invalidateOptionsMenu();
 	}
 
 	@Override

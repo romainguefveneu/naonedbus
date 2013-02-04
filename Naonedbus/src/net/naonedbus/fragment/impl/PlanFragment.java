@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 import com.polites.android.GestureImageView;
@@ -44,6 +43,12 @@ public class PlanFragment extends CustomFragment {
 
 	public PlanFragment() {
 		super(R.string.title_fragment_plan, R.layout.fragment_plan);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -204,16 +209,6 @@ public class PlanFragment extends CustomFragment {
 				onError(null);
 			}
 		}
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
 	}
 
 	@Override

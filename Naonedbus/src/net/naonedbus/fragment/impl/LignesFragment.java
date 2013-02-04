@@ -12,6 +12,8 @@ import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
+import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
 import net.naonedbus.manager.impl.TypeLigneManager;
 import net.naonedbus.provider.impl.LigneProvider;
 import net.naonedbus.provider.table.LigneTable;
@@ -32,7 +34,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -50,9 +51,22 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 		MENU_MAPPING.append(FILTER_FAVORIS, R.id.menu_filter_favoris);
 	}
 
+	private FavoriManager mFavoriManager;
+
 	private StateHelper mStateHelper;
 	private LigneCursorAdapter mAdapter;
 	private int mCurrentFilter = FILTER_ALL;
+
+	/**
+	 * Action sur les favoris.
+	 */
+	private OnFavoriActionListener mOnFavoriActionListener = new OnFavoriActionListener() {
+		public void onUpdate() {
+			if (mCurrentFilter == FILTER_FAVORIS) {
+				refreshContent();
+			}
+		};
+	};
 
 	public LignesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
@@ -61,9 +75,13 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 		// Gestion du tri par défaut
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentFilter = mStateHelper.getSortType(this, FILTER_ALL);
+
+		mFavoriManager = FavoriManager.getInstance();
+		mFavoriManager.addActionListener(mOnFavoriActionListener);
 	}
 
 	@Override
@@ -79,13 +97,16 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final SherlockFragmentActivity activity = getSherlockActivity();
-		if (activity != null) {
-			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-			menuInflater.inflate(R.menu.fragment_lignes, menu);
-			menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
-		}
+	public void onDestroy() {
+		mFavoriManager.removeActionListener(mOnFavoriActionListener);
+		super.onDestroy();
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_lignes, menu);
+		menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override

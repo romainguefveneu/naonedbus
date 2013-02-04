@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class VersionsFragment extends CustomFragment {
@@ -38,16 +37,6 @@ public class VersionsFragment extends CustomFragment {
 		} catch (IOException e) {
 			Log.e(LOG_TAG, "Erreur de chargement des notes de versions", e);
 		}
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
 	}
 
 	@Override

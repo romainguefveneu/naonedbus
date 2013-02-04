@@ -26,7 +26,7 @@ import net.naonedbus.helper.FavorisHelper.FavorisActionListener;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
-import net.naonedbus.manager.impl.FavoriManager.OnActionListener;
+import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
@@ -57,7 +57,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -109,7 +108,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	/**
 	 * Action sur les favoris.
 	 */
-	private OnActionListener onImportListener = new OnActionListener() {
+	private OnFavoriActionListener mOnFavoriActionListener = new OnFavoriActionListener() {
 		@Override
 		public void onImport() {
 			if (DBG)
@@ -182,12 +181,14 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
 
+		setHasOptionsMenu(true);
+
 		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
 
 		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
 			mBackupManager = new BackupManager(getActivity());
 
-		mFavoriManager.setActionListener(onImportListener);
+		mFavoriManager.addActionListener(mOnFavoriActionListener);
 		mLocationProvider.addListener(this);
 		// Initaliser le comparator avec la position actuelle.
 		onLocationChanged(mLocationProvider.getLastKnownLocation());
@@ -226,7 +227,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		if (DBG)
 			Log.d(LOG_TAG, "onDestroy");
 
-		mFavoriManager.unsetActionListener();
+		mFavoriManager.removeActionListener(mOnFavoriActionListener);
 		super.onDestroy();
 	}
 
@@ -268,13 +269,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final SherlockFragmentActivity activity = getSherlockActivity();
-		if (activity != null) {
-			final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-			menuInflater.inflate(R.menu.fragment_favoris, menu);
-			menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
-		}
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_favoris, menu);
+		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override

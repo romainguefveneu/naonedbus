@@ -14,7 +14,6 @@ import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivity implements
@@ -66,30 +65,6 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		final Fragment fragment = getCurrentFragment();
-
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			customListFragment.onCreateOptionsMenu(menu);
-		}
-
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		final Fragment fragment = getCurrentFragment();
-
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			customListFragment.onPrepareOptionsMenu(menu);
-		}
-
-		return super.onPrepareOptionsMenu(menu);
 	}
 
 	/**

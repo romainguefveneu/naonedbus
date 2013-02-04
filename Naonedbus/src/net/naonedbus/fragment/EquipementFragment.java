@@ -87,6 +87,8 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+
 		myLocationProvider.addListener(locationListener);
 
 		// Initaliser le comparator avec la position actuelle.
@@ -125,10 +127,10 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_equipements, menu);
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_equipements, menu);
 		menu.findItem(MENU_MAPPING.get(currentSortPreference)).setChecked(true);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override

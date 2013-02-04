@@ -22,7 +22,6 @@ import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.gridlayout.GridLayout;
 
@@ -43,6 +42,12 @@ public class InfoTraficDetailFragment extends CustomFragment {
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
@@ -56,16 +61,6 @@ public class InfoTraficDetailFragment extends CustomFragment {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
-
 	}
 
 	@Override

@@ -70,6 +70,8 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		if (DBG)
 			Log.i(LOG_TAG, "ProximiteFragment()");
 
+		setHasOptionsMenu(true);
+
 		myLocationProvider = NBApplication.getLocationProvider();
 		preferences = NBApplication.getPreferences();
 
@@ -80,6 +82,12 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 				selectedTypesEquipements.add(type);
 			}
 		}
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -132,10 +140,8 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_proximite, menu);
-
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_proximite, menu);
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_filter).getSubMenu();
 
 		final Equipement.Type[] types = Equipement.Type.values();
@@ -144,6 +150,8 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 			item.setCheckable(true);
 			item.setChecked((selectedTypesEquipements.contains(type)));
 		}
+
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override

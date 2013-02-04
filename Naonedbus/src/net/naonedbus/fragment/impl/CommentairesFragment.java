@@ -28,6 +28,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class CommentairesFragment extends CustomListFragment implements CustomFragmentActions {
@@ -40,6 +41,12 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 
 	public CommentairesFragment() {
 		super(R.string.title_fragment_en_direct, R.layout.fragment_listview_box);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -56,12 +63,9 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu) {
-	}
-
-	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
+		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
