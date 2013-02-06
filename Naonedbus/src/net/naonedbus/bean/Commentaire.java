@@ -164,7 +164,7 @@ public class Commentaire implements ICommentaire, SectionItem {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append(mCodeLigne).append(" | ").append(mCodeSens).append(" | ").append(mCodeArret).append(" | ")
 				.append(mSource).append(" | ").append(mMessage);
 		return builder.toString();

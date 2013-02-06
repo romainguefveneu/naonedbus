@@ -28,12 +28,7 @@ import net.naonedbus.bean.horaire.HoraireTan;
  * 
  */
 public class HoraireContainer {
-	public List<HoraireTan> horaires;
 
-	public HoraireContainer() {
-		horaires = new ArrayList<HoraireTan>();
-	}
-
-
+	public List<HoraireTan> horaires = new ArrayList<HoraireTan>();
 
 }

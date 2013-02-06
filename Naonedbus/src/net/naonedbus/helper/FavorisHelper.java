@@ -83,20 +83,15 @@ public class FavorisHelper {
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 
 		final Favori item = favoriManager.getSingle(context.getContentResolver(), favoriId);
-		LayoutInflater factory = LayoutInflater.from(context);
-
-		final View alertDialogView = factory.inflate(R.layout.dialog_input, null);
+		final View alertDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_input, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
 		input.setText(item.nomFavori);
 		input.selectAll();
 
-		final AlertDialog alert = new AlertDialog.Builder(context).create();
-		alert.setView(alertDialogView);
-		alert.setTitle("Renommer");
-		alert.setIcon(android.R.drawable.ic_dialog_info);
-		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
-		alert.setButton("OK", new DialogInterface.OnClickListener() {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		builder.setView(alertDialogView);
+		builder.setTitle(R.string.action_rename);
+		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				final String nom = input.getText().toString().trim();
 				item.nomFavori = (nom.length() == 0) ? null : nom;
@@ -107,8 +102,10 @@ public class FavorisHelper {
 				}
 			}
 		});
+		builder.setNegativeButton(android.R.string.cancel, null);
 
-		alert.setButton2("Annuler", (DialogInterface.OnClickListener) null);
+		final AlertDialog alert = builder.create();
+		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		alert.show();
 	}
 

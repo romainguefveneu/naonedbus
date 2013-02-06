@@ -47,23 +47,31 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		if (DBG)
+			Log.d(LOG_TAG, "onCreate");
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
+		if (DBG)
+			Log.d(LOG_TAG, "onStart");
 		mLoaderCache = (LoadTimeLineCache) new LoadTimeLineCache().execute();
 		loadContent();
 	}
 
 	@Override
 	public void onDestroy() {
+		if (DBG)
+			Log.d(LOG_TAG, "onDestroy");
 		mLoaderCache = null;
 		super.onDestroy();
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateOptionsMenu");
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -72,7 +80,6 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_refresh:
-			mRefreshMenuItem = item;
 			refreshContent();
 			break;
 		}
@@ -87,18 +94,30 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		startActivity(intent);
 	}
 
-	@Override
-	protected void onPreExecute() {
+	private void showResfrehMenuLoader() {
 		if (mRefreshMenuItem != null) {
 			mRefreshMenuItem.setActionView(R.layout.action_item_refresh);
 		}
 	}
 
-	@Override
-	protected void onPostExecute() {
+	private void hideResfrehMenuLoader() {
 		if (mRefreshMenuItem != null) {
 			mRefreshMenuItem.setActionView(null);
 		}
+	}
+
+	@Override
+	protected void onPreExecute() {
+		if (DBG)
+			Log.d(LOG_TAG, "onPreExecute");
+		showResfrehMenuLoader();
+	}
+
+	@Override
+	protected void onPostExecute() {
+		if (DBG)
+			Log.d(LOG_TAG, "onPostExecute");
+		hideResfrehMenuLoader();
 	}
 
 	@Override
@@ -158,6 +177,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			if (DBG)
 				Log.d(LOG_TAG, "Chargement du cache...");
 			showLoader();
+			showResfrehMenuLoader();
 		}
 
 		@Override
@@ -201,6 +221,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			if (result.getCount() > 0) {
 				setListAdapter(result);
 				showContent();
+				hideResfrehMenuLoader();
 
 				// // Le chargement depuis le web est en cours ?
 				// if (loader != null && loader.getStatus() !=

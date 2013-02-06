@@ -530,13 +530,15 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Boolean result = true;
 
 			try {
-				if (params.length == 0) {
-					for (int i = 0; i < getListAdapter().getCount(); i++) {
-						updateAdapter(i);
-					}
-				} else {
-					for (int i = 0; i < params.length; i++) {
-						updateAdapter(params[i]);
+				if (getActivity() != null) {
+					if (params.length == 0) {
+						for (int i = 0; i < getListAdapter().getCount(); i++) {
+							updateAdapter(i);
+						}
+					} else {
+						for (int i = 0; i < params.length; i++) {
+							updateAdapter(params[i]);
+						}
 					}
 				}
 			} catch (JsonSyntaxException e) {
