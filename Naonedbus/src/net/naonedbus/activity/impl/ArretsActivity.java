@@ -64,10 +64,9 @@ public class ArretsActivity extends OneFragmentActivity {
 		final Sens sens = sensManager.getSingle(this.getContentResolver(), idSens);
 		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), sens.codeLigne);
 
-		final Bundle bundle = new Bundle();
-		bundle.putInt(ArretsFragment.PARAM_ID_LIGNE, ligne._id);
-
 		if (savedInstanceState == null) {
+			final Bundle bundle = new Bundle();
+			bundle.putInt(ArretsFragment.PARAM_ID_LIGNE, ligne._id);
 			addFragment(ArretsFragment.class, bundle);
 		}
 
@@ -122,7 +121,8 @@ public class ArretsActivity extends OneFragmentActivity {
 
 	@Override
 	protected void onStop() {
-		mStateHelper.setSens(mCodeLigne, mCurrentSens._id);
+		if (mCurrentSens != null)
+			mStateHelper.setSens(mCodeLigne, mCurrentSens._id);
 		super.onStop();
 	}
 

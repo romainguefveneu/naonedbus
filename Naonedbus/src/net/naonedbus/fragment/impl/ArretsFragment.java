@@ -26,7 +26,6 @@ import net.naonedbus.task.AddressResolverTask;
 import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.location.Location;
@@ -112,7 +111,6 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		}
 
 		mDistanceTaskCallback = new DistanceTaskCallback() {
-			@SuppressLint("NewApi")
 			@Override
 			public void onNearestStationFound(Integer position) {
 				mNearestArretPosition = position;
@@ -291,8 +289,10 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	@Override
 	public void onChangeSens(Sens sens) {
-		mSens = sens;
-		refreshContent();
+		if (sens.equals(mSens) == false) {
+			mSens = sens;
+			refreshContent();
+		}
 	}
 
 	/**

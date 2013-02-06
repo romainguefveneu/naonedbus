@@ -61,8 +61,8 @@ public class MainActivity extends SlidingMenuActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		setTitle(R.string.title_activity_main);
+		super.onCreate(savedInstanceState);
 
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();

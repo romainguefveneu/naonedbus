@@ -7,6 +7,7 @@ import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -42,11 +43,11 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
 
-		mSlidingMenuHelper = new SlidingMenuHelper(this);
-		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
-
 		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setIcon(R.drawable.ic_launcher);
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(actionBar);
+
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 	}
 
 	/**
@@ -94,48 +95,46 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	}
 
 	protected void addFragment(String classe) {
-		final ActionBar actionBar = getSupportActionBar();
-		this.mClasse = classe;
+		mClasse = classe;
 
-		mFragment = Fragment.instantiate(this, this.mClasse);
-		mFragment.setRetainInstance(true);
-		getSupportFragmentManager().beginTransaction().add(R.id.fragmentContent, mFragment).commit();
-
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		final FragmentManager fragmentManager = getSupportFragmentManager();
+		if ((mFragment = fragmentManager.findFragmentByTag(classe)) == null) {
+			mFragment = Fragment.instantiate(this, mClasse);
+			mFragment.setRetainInstance(true);
+			fragmentManager.beginTransaction().add(R.id.fragmentContent, mFragment, classe).commit();
+		}
 	}
 
 	protected void addFragment(String classe, Bundle bundle) {
-		final ActionBar actionBar = getSupportActionBar();
-		this.mClasse = classe;
-		this.mBundle = bundle;
+		mClasse = classe;
+		mBundle = bundle;
 
-		mFragment = Fragment.instantiate(this, classe, bundle);
-		mFragment.setRetainInstance(true);
-		getSupportFragmentManager().beginTransaction().add(R.id.fragmentContent, mFragment).commit();
-
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		final FragmentManager fragmentManager = getSupportFragmentManager();
+		if ((mFragment = fragmentManager.findFragmentByTag(classe)) == null) {
+			mFragment = Fragment.instantiate(this, classe, bundle);
+			mFragment.setRetainInstance(true);
+			fragmentManager.beginTransaction().add(R.id.fragmentContent, mFragment, classe).commit();
+		}
 	}
 
 	/**
 	 * Ajouter les information de fragments.
 	 * 
-	 * @param classes
-	 *            Les classes des fragments.
+	 * @param clazz
+	 *            La classe du fragment.
 	 */
-	protected void addFragment(Class<?> classes) {
-		this.mClasse = classes.getName();
-		addFragment(this.mClasse);
+	protected void addFragment(final Class<?> classe) {
+		addFragment(classe.getName());
 	}
 
 	/**
 	 * Ajouter les information de fragments.
 	 * 
 	 * @param classe
-	 *            Les classes des fragments.
+	 *            La classe du fragment.
 	 */
-	protected void addFragment(Class<?> classe, Bundle bundle) {
-		this.mClasse = classe.getName();
-		addFragment(this.mClasse, bundle);
+	protected void addFragment(final Class<?> classe, final Bundle bundle) {
+		addFragment(classe.getName(), bundle);
 	}
 
 	/**
