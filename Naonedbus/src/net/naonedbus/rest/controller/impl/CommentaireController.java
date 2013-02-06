@@ -19,16 +19,25 @@
 package net.naonedbus.rest.controller.impl;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
+import java.util.Locale;
 
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
+import net.naonedbus.rest.adapter.CommentaireTypeAdapter;
 import net.naonedbus.rest.container.CommentaireContainer;
 import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
 
 import org.apache.http.HttpException;
 import org.joda.time.base.BaseDateTime;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Classe d'envoi des commentaires au WebService
@@ -38,7 +47,7 @@ import org.joda.time.base.BaseDateTime;
  */
 public class CommentaireController extends RestController<CommentaireContainer> {
 
-	private static final int LIMIT = 20;
+	private static final int LIMIT = 1;
 	private static final String PATH = "commentaire";
 
 	public void post(String codeLigne, String codeSens, String codeArret, String message, String hash)
@@ -67,9 +76,34 @@ public class CommentaireController extends RestController<CommentaireContainer> 
 		url.addQueryParameter("timestamp", String.valueOf(date.getMillis()));
 		url.addQueryParameter("limit", String.valueOf(LIMIT));
 
-		result = parseJson(url, CommentaireContainer.class);
+		result = parseJson(url.getUrl());
 
 		return (result == null) ? null : result.commentaire;
+	}
+
+	/**
+	 * Parser la réponse d'un webservice Rest json et récupérer une instance de
+	 * la classe passée en paramètre
+	 * 
+	 * @param url
+	 * @param clazz
+	 * @return
+	 * @throws IOException
+	 */
+	protected CommentaireContainer parseJson(URL url) throws IOException {
+		final Gson gson = new GsonBuilder().registerTypeAdapter(Commentaire.class, new CommentaireTypeAdapter())
+				.create();
+		Reader comReader;
+		CommentaireContainer result;
+
+		final URLConnection conn = url.openConnection();
+		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
+
+		comReader = new InputStreamReader(conn.getInputStream());
+		result = gson.fromJson(comReader, CommentaireContainer.class);
+		comReader.close();
+
+		return result;
 	}
 
 }
