@@ -113,6 +113,7 @@
     <item name="widgetProgress" type="id"/>
 
     <!-- Menus -->
+    <item name="menu_search" type="id"/>
     <item name="menu_share" type="id"/>
     <item name="menu_favori" type="id"/>
     <item name="menu_date" type="id"/>
@@ -143,5 +144,6 @@
     <item name="menu_show_plan" type="id"/>
     <item name="menu_comment" type="id"/>
     <item name="menu_location" type="id"/>
+    <item name="menu_layers" type="id"/>
 
 </resources>

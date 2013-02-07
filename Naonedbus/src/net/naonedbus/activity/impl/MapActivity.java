@@ -1,9 +1,11 @@
 package net.naonedbus.activity.impl;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
@@ -20,21 +22,16 @@ import net.naonedbus.activity.map.overlay.BasicItemizedOverlay.OnBasicItemTapLis
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.TypeEquipement;
+import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.EquipementManager;
-import net.naonedbus.manager.impl.TypeEquipementManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.utils.DpiUtils;
 import net.naonedbus.utils.GeoPointUtils;
 import net.naonedbus.widget.BalloonOverlayView;
 import net.simonvt.menudrawer.MenuDrawer;
-import android.app.AlertDialog;
 import android.app.SearchManager;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -53,7 +50,9 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockMapActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.bugsense.trace.BugSenseHandler;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -69,10 +68,7 @@ public class MapActivity extends SherlockMapActivity {
 		itemId, itemType
 	};
 
-	private static final int ACTION_LAYERS = 0;
-	private static final int ACTION_CENTER_MAP = 1;
-	private static final int ACTION_SEARCH = 2;
-
+	private static final int MENU_GROUP_TYPES = 1;
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
 	private static final Map<TypeOverlayItem, MapLayer> mapLayerLoaders = new LinkedHashMap<TypeOverlayItem, MapLayer>();
@@ -87,14 +83,13 @@ public class MapActivity extends SherlockMapActivity {
 
 	private final Map<TypeOverlayItem, BasicItemizedOverlay> mapOverlays = new HashMap<TypeOverlayItem, BasicItemizedOverlay>();
 
-	private String[] optionsLabels;
-	private boolean[] optionsValues;
-	private int optionsSatellitePosition;
+	private Set<Equipement.Type> mSelectedLayers;
+	private int mOptionsSatellitePosition;
 
-	private SharedPreferences preferences;
+	private SharedPreferences mPreferences;
 
-	private Integer selectedItemId;
-	private TypeOverlayItem selectedItemType;
+	private Integer mSelectedItemId;
+	private TypeOverlayItem mSelectedItemType;
 
 	/**
 	 * Gestion du menu latéral.
@@ -104,17 +99,17 @@ public class MapActivity extends SherlockMapActivity {
 
 	private MyLocationProvider myLocationProvider;
 
-	private LinearLayout loaderView;
-	private MapController mapController;
-	private MapView mapView;
-	private LoadLayers loadLayersTask;
-	private RefreshMoveableLayers refreshMoveableLayersTask;
-	private MyLocationOverlay myLocOverlay;
-	private BalloonOverlayView balloonOverlayView;
+	private LinearLayout mLoaderView;
+	private MapController mMapController;
+	private MapView mMapView;
+	private LoadLayers mLoadLayersTask;
+	private RefreshMoveableLayers mRefreshMoveableLayersTask;
+	private MyLocationOverlay mLocationOverlay;
+	private BalloonOverlayView mBalloonOverlayView;
 
-	private BasicOverlayItem selectedOverlayItem;
+	private BasicOverlayItem mSelectedOverlayItem;
 
-	private OnBasicItemTapListener onBasicItemTapListener = new OnBasicItemTapListener() {
+	private OnBasicItemTapListener mOnBasicItemTapListener = new OnBasicItemTapListener() {
 		@Override
 		public void onItemTap(BasicOverlayItem item) {
 
@@ -123,16 +118,16 @@ public class MapActivity extends SherlockMapActivity {
 
 				unselectItems(item);
 
-				if (item.equals(selectedOverlayItem) == false) {
+				if (item.equals(mSelectedOverlayItem) == false) {
 					// Centrer la carte
-					mapController.animateTo(item.getPoint());
+					mMapController.animateTo(item.getPoint());
 				}
 
 				// Afficher la description
 				final ItemSelectedInfo info = mapLayer.getItemInfo(MapActivity.this, item);
 				showBalloon(info);
 
-				selectedOverlayItem = item;
+				mSelectedOverlayItem = item;
 			}
 
 		}
@@ -156,22 +151,22 @@ public class MapActivity extends SherlockMapActivity {
 
 		final Location location = myLocationProvider.getLastKnownLocation();
 
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-		balloonOverlayView = new BalloonOverlayView(this, DpiUtils.getDpiFromPx(getApplicationContext(), 35));
+		mBalloonOverlayView = new BalloonOverlayView(this, DpiUtils.getDpiFromPx(getApplicationContext(), 35));
 
-		loaderView = (LinearLayout) findViewById(R.id.loader);
+		mLoaderView = (LinearLayout) findViewById(R.id.loader);
 
-		mapView = (MapView) findViewById(R.id.map_view);
-		mapView.setBuiltInZoomControls(true);
-		mapView.getOverlays().add(new MapTouchOverlay());
+		mMapView = (MapView) findViewById(R.id.map_view);
+		mMapView.setBuiltInZoomControls(true);
+		mMapView.getOverlays().add(new MapTouchOverlay());
 
-		myLocOverlay = new MyLocationOverlay(getApplicationContext(), mapView);
-		myLocOverlay.enableMyLocation();
-		mapView.getOverlays().add(myLocOverlay);
+		mLocationOverlay = new MyLocationOverlay(getApplicationContext(), mMapView);
+		mLocationOverlay.enableMyLocation();
+		mMapView.getOverlays().add(mLocationOverlay);
 
-		mapController = mapView.getController();
-		mapController.setZoom(17);
+		mMapController = mMapView.getController();
+		mMapController.setZoom(17);
 
 		setSelectedItem(getIntent());
 
@@ -179,35 +174,49 @@ public class MapActivity extends SherlockMapActivity {
 		if (myLocationProvider.isProviderEnabled() == false) {
 			showGpsDialog();
 
-			if (selectedItemId == null) {
+			if (mSelectedItemId == null) {
 				// Si le GPS n'est pas activé, sélectionner par défaut la
 				// station Commerce.
 				final EquipementManager equipementManager = EquipementManager.getInstance();
 				final Equipement commerce = equipementManager.getEquipementsByName(getContentResolver(),
 						Equipement.Type.TYPE_ARRET, "COMMERCE").get(0);
-				selectedItemId = commerce.getId();
-				selectedItemType = TypeOverlayItem.TYPE_STATION;
+				mSelectedItemId = commerce.getId();
+				mSelectedItemType = TypeOverlayItem.TYPE_STATION;
 			}
 
-		} else if (selectedItemId == null) {
+		} else if (mSelectedItemId == null) {
 			if (location != null) {
-				mapController.animateTo(GeoPointUtils.getGeoPoint(location));
+				mMapController.animateTo(GeoPointUtils.getGeoPoint(location));
 			}
 		}
 
-		initOptions();
+		mSelectedLayers = new HashSet<Equipement.Type>();
+		final Equipement.Type[] types = Equipement.Type.values();
+		for (Equipement.Type type : types) {
+			if (isLayerPreferenceEnabled(type.getId())) {
+				mSelectedLayers.add(type);
+			}
+		}
+
 		loadLayers(location);
 
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, ACTION_LAYERS, 0, "Calques").setIcon(R.drawable.ic_action_layers)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		final MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.activity_map, menu);
 
-		if (myLocationProvider.isProviderEnabled() == true) {
-			menu.add(0, ACTION_CENTER_MAP, 0, "Centrer").setIcon(R.drawable.ic_action_location_found)
-					.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		if (myLocationProvider.isProviderEnabled() == false) {
+			menu.findItem(R.id.menu_location).setVisible(false);
+		}
+
+		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
+		final Equipement.Type[] types = Equipement.Type.values();
+		for (Equipement.Type type : types) {
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
+			item.setCheckable(true);
+			item.setChecked(mSelectedLayers.contains(type));
 		}
 
 		return super.onCreateOptionsMenu(menu);
@@ -215,25 +224,40 @@ public class MapActivity extends SherlockMapActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			mMenuDrawer.toggleMenu();
-			break;
-		case ACTION_LAYERS:
-			showOptions();
-			break;
-		case ACTION_CENTER_MAP:
-			final Location location = myLocationProvider.getLastKnownLocation();
-			if (location != null) {
-				mapController.animateTo(GeoPointUtils.getGeoPoint(location));
-				refreshMoveableLayers(location);
+		if (item.getGroupId() == MENU_GROUP_TYPES) {
+
+			final Equipement.Type type = Equipement.Type.getTypeById(item.getItemId());
+
+			item.setChecked(!item.isChecked());
+			setLayerPreference(type.getId(), item.isChecked());
+
+			if (item.isChecked()) {
+				mSelectedLayers.add(type);
+			} else {
+				mSelectedLayers.remove(type);
 			}
-			break;
-		case ACTION_SEARCH:
-			onSearchRequested();
-			break;
-		default:
-			break;
+
+			loadLayers(null);
+
+		} else {
+
+			switch (item.getItemId()) {
+			case android.R.id.home:
+				mMenuDrawer.toggleMenu();
+				break;
+			case R.id.menu_location:
+				final Location location = myLocationProvider.getLastKnownLocation();
+				if (location != null) {
+					mMapController.animateTo(GeoPointUtils.getGeoPoint(location));
+					refreshMoveableLayers(location);
+				}
+				break;
+			case R.id.menu_search:
+				onSearchRequested();
+				break;
+			default:
+				break;
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -258,7 +282,7 @@ public class MapActivity extends SherlockMapActivity {
 
 	@Override
 	protected void onDestroy() {
-		myLocOverlay.disableMyLocation();
+		mLocationOverlay.disableMyLocation();
 		super.onDestroy();
 	}
 
@@ -325,15 +349,15 @@ public class MapActivity extends SherlockMapActivity {
 				Toast.makeText(getApplicationContext(), "Aucun équipement ne correspond à \"" + query + "\"",
 						Toast.LENGTH_LONG).show();
 			} else {
-				selectedItemId = Integer.valueOf(intent.getStringExtra(SearchManager.QUERY));
-				selectedItemType = TypeOverlayItem.getById(Integer.valueOf(intent
+				mSelectedItemId = Integer.valueOf(intent.getStringExtra(SearchManager.QUERY));
+				mSelectedItemType = TypeOverlayItem.getById(Integer.valueOf(intent
 						.getStringExtra(SearchManager.EXTRA_DATA_KEY)));
 			}
 		} else {
 			// Définir l'élément sélectionné par défaut
 			if (getIntent().hasExtra(Param.itemId.toString()) && getIntent().hasExtra(Param.itemType.toString())) {
-				selectedItemId = (Integer) getIntent().getSerializableExtra(Param.itemId.toString());
-				selectedItemType = TypeOverlayItem.getById((Integer) getIntent().getSerializableExtra(
+				mSelectedItemId = (Integer) getIntent().getSerializableExtra(Param.itemId.toString());
+				mSelectedItemType = TypeOverlayItem.getById((Integer) getIntent().getSerializableExtra(
 						Param.itemType.toString()));
 			}
 		}
@@ -347,8 +371,8 @@ public class MapActivity extends SherlockMapActivity {
 	 * @param intent
 	 */
 	private void changeSelectedItem(Intent intent) {
-		selectedItemId = Integer.valueOf(intent.getStringExtra(SearchManager.QUERY));
-		selectedItemType = TypeOverlayItem
+		mSelectedItemId = Integer.valueOf(intent.getStringExtra(SearchManager.QUERY));
+		mSelectedItemType = TypeOverlayItem
 				.getById(Integer.valueOf(intent.getStringExtra(SearchManager.EXTRA_DATA_KEY)));
 
 		selectedDefaultItem();
@@ -358,26 +382,26 @@ public class MapActivity extends SherlockMapActivity {
 	 * Sélectionné l'élément passé en extra d'Intent.
 	 */
 	private void selectedDefaultItem() {
-		if (selectedItemType != null) {
-			if (mapOverlays.containsKey(selectedItemType) == false) {
+		if (mSelectedItemType != null) {
+			if (mapOverlays.containsKey(mSelectedItemType) == false) {
 				// Charger le claque correspondant au type de l'élément.
-				optionsValues[selectedItemType.getId()] = true;
+				mSelectedLayers.add(Type.getTypeById(mSelectedItemType.getId()));
 				loadLayers(getMapCenterLocation());
 			} else {
-				final MapLayer mapLayer = mapLayerLoaders.get(selectedItemType);
-				BasicItemizedOverlay mapOverlay = mapOverlays.get(selectedItemType);
-				BasicOverlayItem item = mapOverlay.getItemById(selectedItemId);
+				final MapLayer mapLayer = mapLayerLoaders.get(mSelectedItemType);
+				BasicItemizedOverlay mapOverlay = mapOverlays.get(mSelectedItemType);
+				BasicOverlayItem item = mapOverlay.getItemById(mSelectedItemId);
 
 				if (item == null) {
 					// Si besoin, recharger le layer en précisant l'élément
 					// recherché
-					final MapLayer layerLoader = mapLayerLoaders.get(selectedItemType);
-					mapOverlay = layerLoader.getOverlay(getApplicationContext(), selectedItemId);
-					mapView.getOverlays().remove(mapOverlays.get(selectedItemType));
-					mapView.getOverlays().add(mapOverlay);
-					mapOverlays.put(selectedItemType, mapOverlay);
+					final MapLayer layerLoader = mapLayerLoaders.get(mSelectedItemType);
+					mapOverlay = layerLoader.getOverlay(getApplicationContext(), mSelectedItemId);
+					mMapView.getOverlays().remove(mapOverlays.get(mSelectedItemType));
+					mMapView.getOverlays().add(mapOverlay);
+					mapOverlays.put(mSelectedItemType, mapOverlay);
 
-					item = mapOverlay.getItemById(selectedItemId);
+					item = mapOverlay.getItemById(mSelectedItemId);
 
 					// Dernier recours si l'élément n'est toujours pas trouvé
 					if (item == null) {
@@ -387,7 +411,7 @@ public class MapActivity extends SherlockMapActivity {
 					}
 				}
 				// Centrer la carte
-				mapController.animateTo(item.getPoint());
+				mMapController.animateTo(item.getPoint());
 
 				// Afficher la description
 				final ItemSelectedInfo info = mapLayer.getItemInfo(MapActivity.this, item);
@@ -418,31 +442,6 @@ public class MapActivity extends SherlockMapActivity {
 	}
 
 	/**
-	 * Charger les options
-	 */
-	private void initOptions() {
-		final TypeEquipementManager typeEquipementManager = TypeEquipementManager.getInstance();
-
-		optionsLabels = new String[mapLayerLoaders.size() + 1];
-		optionsValues = new boolean[optionsLabels.length];
-		optionsSatellitePosition = optionsLabels.length - 1;
-
-		// Satellite
-		optionsLabels[optionsSatellitePosition] = getString(R.string.map_calque_satellite);
-		optionsValues[optionsSatellitePosition] = (mapView.isSatellite() || preferences.getBoolean(
-				NBApplication.PREF_MAP_SATELLITE, false));
-
-		// Options
-		int i = 0;
-		for (final TypeOverlayItem typeOverlay : mapLayerLoaders.keySet()) {
-			final TypeEquipement type = typeEquipementManager.getSingle(getContentResolver(), typeOverlay.getId());
-			optionsLabels[i++] = type.nom;
-			optionsValues[typeOverlay.getId()] = (mapOverlays.containsKey(typeOverlay) || isLayerPreferenceEnabled(typeOverlay
-					.getId()));
-		}
-	}
-
-	/**
 	 * Indique si le calque est activé ou non dans les préférences.
 	 * 
 	 * @param id
@@ -450,9 +449,9 @@ public class MapActivity extends SherlockMapActivity {
 	 */
 	private boolean isLayerPreferenceEnabled(Integer id) {
 		if (id == TypeOverlayItem.TYPE_STATION.getId()) {
-			return preferences.getBoolean(PREF_MAP_LAYER + id, true);
+			return mPreferences.getBoolean(PREF_MAP_LAYER + id, true);
 		} else {
-			return preferences.getBoolean(PREF_MAP_LAYER + id, false);
+			return mPreferences.getBoolean(PREF_MAP_LAYER + id, false);
 		}
 	}
 
@@ -463,31 +462,7 @@ public class MapActivity extends SherlockMapActivity {
 	 * @param enabled
 	 */
 	private void setLayerPreference(final Integer id, final boolean enabled) {
-		preferences.edit().putBoolean(PREF_MAP_LAYER + id, enabled).commit();
-	}
-
-	/**
-	 * Afficher le menu d'options
-	 */
-	private void showOptions() {
-
-		final AlertDialog dialog = new AlertDialog.Builder(this).setIcon(R.drawable.da_ic_dialog_menu_generic)
-				.setTitle(R.string.map_calques)
-				.setMultiChoiceItems(optionsLabels, optionsValues, new OnMultiChoiceClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-					}
-				}).setPositiveButton(android.R.string.ok, new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// Vue satellite ?
-						if (mapView.isSatellite() != optionsValues[optionsSatellitePosition]) {
-							mapView.setSatellite(optionsValues[optionsSatellitePosition]);
-						}
-						loadLayers(null);
-					}
-				}).setNegativeButton(android.R.string.cancel, null).create();
-		dialog.show();
+		mPreferences.edit().putBoolean(PREF_MAP_LAYER + id, enabled).commit();
 	}
 
 	/**
@@ -496,7 +471,7 @@ public class MapActivity extends SherlockMapActivity {
 	 * @return Location du centre de la map
 	 */
 	private Location getMapCenterLocation() {
-		final GeoPoint geoPoint = mapView.getMapCenter();
+		final GeoPoint geoPoint = mMapView.getMapCenter();
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
 		location.setLatitude(geoPoint.getLatitudeE6() / 1E6);
 		location.setLongitude(geoPoint.getLongitudeE6() / 1E6);
@@ -510,10 +485,10 @@ public class MapActivity extends SherlockMapActivity {
 	 */
 	private void showBalloon(ItemSelectedInfo info) {
 
-		balloonOverlayView.setData(info);
-		balloonOverlayView.setVisibility(View.VISIBLE);
-		mapView.removeView(balloonOverlayView);
-		mapView.addView(balloonOverlayView, new MapView.LayoutParams(LayoutParams.WRAP_CONTENT,
+		mBalloonOverlayView.setData(info);
+		mBalloonOverlayView.setVisibility(View.VISIBLE);
+		mMapView.removeView(mBalloonOverlayView);
+		mMapView.addView(mBalloonOverlayView, new MapView.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, info.getGeoPoint(), MapView.LayoutParams.BOTTOM_CENTER));
 
 	}
@@ -522,11 +497,11 @@ public class MapActivity extends SherlockMapActivity {
 	 * Masquer l'infobulle et déselectionner l'élément courant.
 	 */
 	private void hideBalloon() {
-		mapView.removeView(balloonOverlayView);
+		mMapView.removeView(mBalloonOverlayView);
 		unselectItems(null);
-		selectedOverlayItem = null;
-		selectedItemId = null;
-		selectedItemType = null;
+		mSelectedOverlayItem = null;
+		mSelectedItemId = null;
+		mSelectedItemType = null;
 	}
 
 	/**
@@ -537,7 +512,7 @@ public class MapActivity extends SherlockMapActivity {
 	 *            null.
 	 */
 	private void unselectItems(BasicOverlayItem current) {
-		for (final Overlay overlay : mapView.getOverlays()) {
+		for (final Overlay overlay : mMapView.getOverlays()) {
 			if (overlay instanceof BasicItemizedOverlay) {
 				final BasicItemizedOverlay basicOverlay = (BasicItemizedOverlay) overlay;
 				if (current == null || current.getType().equals(basicOverlay.getType()) == false) {
@@ -551,22 +526,23 @@ public class MapActivity extends SherlockMapActivity {
 	 * Charger les nouveaux calques et effacer les anciens.
 	 */
 	private void loadLayers(final Location location) {
-		if (loadLayersTask != null) {
-			loadLayersTask.cancel(true);
+		if (mLoadLayersTask != null) {
+			mLoadLayersTask.cancel(true);
 		}
-		loadLayersTask = (LoadLayers) new LoadLayers().execute(location);
+		mLoadLayersTask = (LoadLayers) new LoadLayers().execute(location);
 	}
 
 	/**
 	 * @return Vrai si la tache de chargement est en cours.
 	 */
 	private boolean isLayersLoading() {
-		return (loadLayersTask != null && loadLayersTask.getStatus() != AsyncTask.Status.FINISHED && loadLayersTask
+		return (mLoadLayersTask != null && mLoadLayersTask.getStatus() != AsyncTask.Status.FINISHED && mLoadLayersTask
 				.getStatus() == AsyncTask.Status.FINISHED);
 	}
 
 	private class LoaderInfo {
-		TypeOverlayItem type;
+		Type layerType;
+		TypeOverlayItem overlayType;
 		BasicItemizedOverlay overlay;
 	}
 
@@ -579,7 +555,7 @@ public class MapActivity extends SherlockMapActivity {
 
 		@Override
 		protected void onPreExecute() {
-			loaderView.setVisibility(View.VISIBLE);
+			mLoaderView.setVisibility(View.VISIBLE);
 			super.onPreExecute();
 		}
 
@@ -594,22 +570,23 @@ public class MapActivity extends SherlockMapActivity {
 				TypeOverlayItem type = null;
 
 				// Gestion des calques
-				for (int typeId = 0; typeId < optionsValues.length - 1; typeId++) {
+				for (Type layerType : Type.values()) {
 
-					type = TypeOverlayItem.getById(typeId);
+					type = TypeOverlayItem.getById(layerType.getId());
 					layerLoader = mapLayerLoaders.get(type);
 
-					if (optionsValues[typeId]) {
-						if (selectedItemId == null || !selectedItemType.equals(type)) {
+					if (mSelectedLayers.contains(layerType)) {
+						if (mSelectedItemId == null || !mSelectedItemType.equals(type)) {
 							overlay = layerLoader.getOverlay(MapActivity.this, location);
 						} else {
-							overlay = layerLoader.getOverlay(MapActivity.this, selectedItemId);
+							overlay = layerLoader.getOverlay(MapActivity.this, mSelectedItemId);
 						}
-						overlay.setOnBasicItemTapListener(onBasicItemTapListener);
+						overlay.setOnBasicItemTapListener(mOnBasicItemTapListener);
 					}
 
 					final LoaderInfo info = new LoaderInfo();
-					info.type = type;
+					info.layerType = layerType;
+					info.overlayType = type;
 					info.overlay = overlay;
 					publishProgress(info);
 
@@ -625,24 +602,26 @@ public class MapActivity extends SherlockMapActivity {
 		@Override
 		protected void onProgressUpdate(LoaderInfo... values) {
 			super.onProgressUpdate(values);
-			TypeOverlayItem type;
+			Type layerType;
+			TypeOverlayItem overlayType;
 			BasicItemizedOverlay overlay;
 
 			for (LoaderInfo loaderInfo : values) {
-				type = loaderInfo.type;
+				layerType = loaderInfo.layerType;
+				overlayType = loaderInfo.overlayType;
 				overlay = loaderInfo.overlay;
 
 				// Changer les préférences
-				setLayerPreference(type.getId(), optionsValues[type.getId()]);
+				setLayerPreference(overlayType.getId(), mSelectedLayers.contains(layerType));
 
-				if (mapOverlays.containsKey(type) && optionsValues[type.getId()] == false) {
+				if (mapOverlays.containsKey(overlayType) && !mSelectedLayers.contains(layerType)) {
 					// Effacer les couches
-					mapView.getOverlays().remove(mapOverlays.get(type));
-					mapOverlays.remove(type);
-				} else if (mapOverlays.containsKey(type) == false && optionsValues[type.getId()]) {
+					mMapView.getOverlays().remove(mapOverlays.get(overlayType));
+					mapOverlays.remove(overlayType);
+				} else if (mapOverlays.containsKey(overlayType) == false && mSelectedLayers.contains(layerType)) {
 					// Redessiner les couches
-					mapOverlays.put(type, overlay);
-					mapView.getOverlays().add(overlay);
+					mapOverlays.put(overlayType, overlay);
+					mMapView.getOverlays().add(overlay);
 				}
 			}
 		}
@@ -650,14 +629,14 @@ public class MapActivity extends SherlockMapActivity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			mapView.postInvalidate();
-			loaderView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out));
-			loaderView.setVisibility(View.GONE);
+			mMapView.postInvalidate();
+			mLoaderView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out));
+			mLoaderView.setVisibility(View.GONE);
 
 			// Masquer la description si l'élément sélectionné ne fait plus
 			// partie de la carte
-			if (selectedOverlayItem != null && !mapOverlays.containsKey(selectedOverlayItem.getType())) {
-				mapView.removeView(balloonOverlayView);
+			if (mSelectedOverlayItem != null && !mapOverlays.containsKey(mSelectedOverlayItem.getType())) {
+				mMapView.removeView(mBalloonOverlayView);
 			} else {
 				selectedDefaultItem();
 			}
@@ -668,10 +647,10 @@ public class MapActivity extends SherlockMapActivity {
 	 * Charger les nouveaux calques et effacer les anciens.
 	 */
 	private void refreshMoveableLayers(final Location location) {
-		if (refreshMoveableLayersTask != null) {
-			refreshMoveableLayersTask.cancel(true);
+		if (mRefreshMoveableLayersTask != null) {
+			mRefreshMoveableLayersTask.cancel(true);
 		}
-		refreshMoveableLayersTask = (RefreshMoveableLayers) new RefreshMoveableLayers().execute(location);
+		mRefreshMoveableLayersTask = (RefreshMoveableLayers) new RefreshMoveableLayers().execute(location);
 	}
 
 	/**
@@ -698,10 +677,10 @@ public class MapActivity extends SherlockMapActivity {
 
 							final BasicItemizedOverlay overlay = layerLoader.getOverlay(MapActivity.this,
 									currentLocation);
-							overlay.setOnBasicItemTapListener(onBasicItemTapListener);
+							overlay.setOnBasicItemTapListener(mOnBasicItemTapListener);
 
 							final LoaderInfo info = new LoaderInfo();
-							info.type = type;
+							info.overlayType = type;
 							info.overlay = overlay;
 							publishProgress(info);
 
@@ -722,24 +701,24 @@ public class MapActivity extends SherlockMapActivity {
 			BasicItemizedOverlay overlay;
 
 			for (LoaderInfo loaderInfo : values) {
-				type = loaderInfo.type;
+				type = loaderInfo.overlayType;
 				overlay = loaderInfo.overlay;
 
-				mapView.getOverlays().remove(mapOverlays.get(type));
-				mapView.getOverlays().add(overlay);
+				mMapView.getOverlays().remove(mapOverlays.get(type));
+				mMapView.getOverlays().add(overlay);
 				mapOverlays.put(type, overlay);
 
 				// Gérer la sélection
-				if (selectedOverlayItem != null && selectedOverlayItem.getType().equals(overlay.getType())) {
-					if (overlay.getItemById(selectedOverlayItem.getId()) == null) {
-						balloonOverlayView.setVisibility(View.GONE);
+				if (mSelectedOverlayItem != null && mSelectedOverlayItem.getType().equals(overlay.getType())) {
+					if (overlay.getItemById(mSelectedOverlayItem.getId()) == null) {
+						mBalloonOverlayView.setVisibility(View.GONE);
 					} else {
-						balloonOverlayView.setVisibility(View.VISIBLE);
-						overlay.setFocus(selectedOverlayItem);
+						mBalloonOverlayView.setVisibility(View.VISIBLE);
+						overlay.setFocus(mSelectedOverlayItem);
 					}
 				}
 			}
-			mapView.postInvalidate();
+			mMapView.postInvalidate();
 		}
 	}
 

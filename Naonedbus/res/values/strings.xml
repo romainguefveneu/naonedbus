@@ -34,7 +34,7 @@
     <!-- Activities -->
     <string name="title_activity_main">Accueil</string>
     <string name="title_activity_infos_trafic">Infos Trafic</string>
-    <string name="title_activity_map">Sur la carte</string>
+    <string name="title_activity_map">Carte</string>
     <string name="title_activity_itineraire">Itinéraire</string>
     <string name="title_activity_equipements">Equipements</string>
     <string name="title_activity_parkings">Parkings</string>
@@ -83,6 +83,7 @@
     <string name="action_show_on_map">Voir sur le plan</string>
     <string name="action_favori">Favori</string>
     <string name="action_search">Rechercher</string>
+    <string name="action_location_center">Centrer sur ma position</string>
     <string name="action_list_location_center">Centrer au plus proche</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
@@ -189,7 +190,6 @@
 
     <!-- Search -->
     <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
-    <string name="search_lignes_hint">Numéro ou terminus</string>
     <string name="search_empty">Aucun équipement ne correspond à votre recherche</string>
     <string name="search_hint_itineraire_depart">Arrêt de départ</string>
     <string name="search_hint_itineraire_arrivee">Arrêt d\'arrivée</string>

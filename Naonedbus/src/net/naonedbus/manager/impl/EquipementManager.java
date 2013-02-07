@@ -320,7 +320,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * d'un point.
 	 * 
 	 * @param contentResolver
-	 * @param type
+	 * @param overlayType
 	 *            Peut être null.
 	 * @param location
 	 * @param limit
