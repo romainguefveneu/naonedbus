@@ -69,6 +69,8 @@
     <string name="action_sort_distance">Trier par distance</string>
     <string name="action_sort_ordre">Trier par position</string>
     <string name="action_sort_parking_places">Trier par places disponibles</string>
+    <string name="action_filter_arrets_none">Tous les arrêt</string>
+    <string name="action_filter_arrets_favoris">Arrêt favoris</string>
     <string name="action_filter_lignes_none">Toutes les lignes</string>
     <string name="action_filter_lignes_favoris">Lignes avec favoris</string>
     <string name="action_filter">Filtrer</string>

@@ -22,7 +22,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public abstract class SlidingMenuActivity extends SherlockFragmentActivity implements TabListener {
@@ -89,7 +88,9 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		getWindow().setBackgroundDrawable(null);
+
 		super.onCreate(savedInstanceState);
+
 		setContentView(mLayoutId);
 
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
@@ -120,38 +121,6 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	public void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateOptionsMenu");
-
-		// final Fragment fragment = getCurrentFragment();
-		//
-		// if (fragment instanceof CustomFragmentActions) {
-		// final CustomFragmentActions customListFragment =
-		// (CustomFragmentActions) fragment;
-		// customListFragment.onCreateOptionsMenu(menu);
-		// }
-
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// final Fragment fragment = getCurrentFragment();
-
-		if (DBG)
-			Log.d(LOG_TAG, "onPrepareOptionsMenu ");
-		//
-		// if (fragment instanceof CustomFragmentActions) {
-		// final CustomFragmentActions customListFragment =
-		// (CustomFragmentActions) fragment;
-		// customListFragment.onPrepareOptionsMenu(menu);
-		// }
-
-		return super.onPrepareOptionsMenu(menu);
 	}
 
 	/**
@@ -237,7 +206,6 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
 
 		mViewPager.setCurrentItem(tab.getPosition());
-//		invalidateOptionsMenu();
 	}
 
 	@Override

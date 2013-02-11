@@ -43,6 +43,7 @@
                 android:id="@id/itemTitle"
                 style="@style/ItemPrimaryText"
                 android:layout_height="25dip"
+                android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/itemTime" />
 
             <ProgressBar

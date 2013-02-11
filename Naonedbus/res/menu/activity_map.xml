@@ -3,23 +3,20 @@
     <item
         android:id="@id/menu_search"
         android:icon="@drawable/ic_action_search"
-        android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_search"/>
     <item
+        android:id="@id/menu_location"
+        android:icon="@drawable/ic_action_location_found"
+        android:showAsAction="always"
+        android:title="@string/action_location_center"/>
+    <item
         android:id="@id/menu_layers"
         android:icon="@drawable/ic_action_labels"
-        android:orderInCategory="200"
         android:showAsAction="always"
         android:title="@string/map_calques">
         <menu>
         </menu>
     </item>
-    <item
-        android:id="@id/menu_location"
-        android:icon="@drawable/ic_action_location_found"
-        android:orderInCategory="300"
-        android:showAsAction="always"
-        android:title="@string/action_location_center"/>
 
 </menu>

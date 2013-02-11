@@ -166,7 +166,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private StateHelper mStateHelper;
 
 	public FavorisFragment() {
-		super(R.string.title_fragment_favoris, R.layout.fragment_favoris);
+		super(R.string.title_fragment_favoris, R.layout.fragment_listview);
 		if (DBG)
 			Log.i(LOG_TAG, "FavorisFragment()");
 

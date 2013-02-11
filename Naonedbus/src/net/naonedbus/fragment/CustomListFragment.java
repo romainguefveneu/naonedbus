@@ -390,7 +390,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 				return loadContent(getActivity());
 			}
 		};
-		
+
 		onPreExecute();
 		showLoader();
 		loader.forceLoad();

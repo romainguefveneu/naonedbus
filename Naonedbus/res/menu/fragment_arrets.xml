@@ -1,9 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@id/menu_location"
+        android:icon="@drawable/ic_action_location_found"
+        android:showAsAction="always"
+        android:title="@string/action_list_location_center"/>
+    <item
         android:id="@id/menu_sort"
         android:icon="@drawable/ic_action_sort_by_size"
-        android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_sort">
         <menu>
@@ -23,22 +27,32 @@
         </menu>
     </item>
     <item
-        android:id="@id/menu_show_plan"
-        android:icon="@drawable/ic_action_plan"
-        android:orderInCategory="200"
+        android:id="@id/menu_filter"
+        android:icon="@drawable/ic_action_labels"
         android:showAsAction="always"
-        android:title="@string/action_show_plan"/>
-    <item
-        android:id="@id/menu_location"
-        android:icon="@drawable/ic_action_location_found"
-        android:orderInCategory="300"
-        android:showAsAction="always"
-        android:title="@string/action_list_location_center"/>
+        android:title="@string/action_favori">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@id/menu_filter_all"
+                    android:orderInCategory="100"
+                    android:title="@string/action_filter_arrets_none"/>
+                <item
+                    android:id="@id/menu_filter_favoris"
+                    android:orderInCategory="200"
+                    android:title="@string/action_filter_arrets_favoris"/>
+            </group>
+        </menu>
+    </item>
     <item
         android:id="@id/menu_comment"
         android:icon="@drawable/ic_action_new_event"
-        android:orderInCategory="400"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/action_comment"/>
+    <item
+        android:id="@id/menu_show_plan"
+        android:icon="@drawable/ic_action_plan"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_show_plan"/>
 
 </menu>

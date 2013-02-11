@@ -158,6 +158,12 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+		menu.findItem(R.id.menu_location).setVisible(mLocationProvider.isProviderEnabled());
+		super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
@@ -217,7 +223,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 				listView.smoothScrollToPositionFromTop(mNearestArretPosition, (listViewHeight - itemHeight) / 2);
 			}
 
-			loadAddress();
+			// loadAddress();
 		}
 	}
 

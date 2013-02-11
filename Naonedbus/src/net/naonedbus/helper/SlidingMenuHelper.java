@@ -75,7 +75,7 @@ public class SlidingMenuHelper {
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					slidingMenu.closeMenu();
+					slidingMenu.closeMenu(true);
 				}
 			}, 500);
 

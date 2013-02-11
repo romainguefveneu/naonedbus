@@ -42,11 +42,12 @@
                 android:id="@id/itemTitle"
                 style="@style/ItemPrimaryText"
                 android:layout_height="25dip"
+                android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/itemTime" />
 
             <ProgressBar
                 android:id="@+id/loading"
-                style="@android:style/Widget.Holo.ProgressBar.Small"
+                style="@android:style/Widget.ProgressBar.Small"
                 android:layout_width="20dip"
                 android:layout_height="20dip"
                 android:layout_alignParentRight="true"
