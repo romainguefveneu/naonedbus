@@ -22,7 +22,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/headerView"
     android:layout_width="match_parent"
-    android:layout_height="60dip"
+    android:layout_height="@dimen/headeractivity_height"
     android:background="#ccc"
     android:gravity="center_vertical" >
 
@@ -31,9 +31,8 @@
         style="@style/BigCode"
         android:gravity="center_horizontal"
         android:paddingLeft="@dimen/padding_large"
-        android:paddingRight="@dimen/padding_large"
-        android:text="00"
-        android:textSize="40sp" />
+        android:paddingRight="@dimen/padding_small"
+        android:text="00" />
 
     <TextView
         android:id="@id/headerTitle"
@@ -44,9 +43,8 @@
 
     <TextView
         android:id="@id/headerSubTitle"
-        style="@style/BigSens"
+        style="@style/BigSubTitle"
         android:layout_marginLeft="@dimen/padding_small"
-        android:layout_marginTop="3dip"
         android:paddingRight="3dip"
         android:text="François" />
 

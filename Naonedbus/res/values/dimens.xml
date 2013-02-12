@@ -26,6 +26,14 @@
     <dimen name="sliding_menu_width">310dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_padding">8dp</dimen>
+    <!-- Activity Header -->
+    <dimen name="headeractivity_height">60dp</dimen>
+    <dimen name="bigcode_text_size">40sp</dimen>
+    <dimen name="bigtitle_text_size">24sp</dimen>
+    <dimen name="bigsens_text_size">12sp</dimen>
+    <dimen name="bigsubtitle_text_size">16sp</dimen>
+    <dimen name="bigsubtitle_height">28dp</dimen>
+    <dimen name="bigsubtitlesmall_text_size">10sp</dimen>
     <!-- Dimensions for PagerHeaders -->
     <dimen name="pager_header_height">32dp</dimen>
     <dimen name="list_section_divider_min_height">32dip</dimen>

@@ -1419,13 +1419,19 @@ containing a value of this type.
         public static final int action_button_min_width=0x7f08001e;
         public static final int actionbar_height=0x7f080024;
         public static final int actionbar_home_width=0x7f080023;
-        public static final int clock_hand_height=0x7f08002d;
+        public static final int bigcode_text_size=0x7f08002a;
+        public static final int bigsens_text_size=0x7f08002c;
+        public static final int bigsubtitle_height=0x7f08002e;
+        public static final int bigsubtitle_text_size=0x7f08002d;
+        public static final int bigsubtitlesmall_text_size=0x7f08002f;
+        public static final int bigtitle_text_size=0x7f08002b;
+        public static final int clock_hand_height=0x7f080034;
         /**  Clock 
          */
-        public static final int clock_hand_width=0x7f08002c;
+        public static final int clock_hand_width=0x7f080033;
         /**  Clock 
          */
-        public static final int clock_icon_size=0x7f08002b;
+        public static final int clock_icon_size=0x7f080032;
         public static final int default_circle_indicator_radius=0x7f080001;
         public static final int default_circle_indicator_stroke_width=0x7f080002;
         /**  The default gap between components in a layout. 
@@ -1442,14 +1448,19 @@ containing a value of this type.
         public static final int default_title_indicator_text_size=0x7f08000b;
         public static final int default_title_indicator_title_padding=0x7f08000c;
         public static final int default_title_indicator_top_padding=0x7f08000d;
-        public static final int list_section_divider_min_height=0x7f08002a;
+        /**  Activity Header 
+ Activity Header 
+ Activity Header 
+         */
+        public static final int headeractivity_height=0x7f080029;
+        public static final int list_section_divider_min_height=0x7f080031;
         public static final int padding_large=0x7f080022;
         public static final int padding_medium=0x7f080021;
         public static final int padding_small=0x7f080020;
         public static final int padding_tiny=0x7f08001f;
         /**  Dimensions for PagerHeaders 
          */
-        public static final int pager_header_height=0x7f080029;
+        public static final int pager_header_height=0x7f080030;
         public static final int shadow_width=0x7f080025;
         public static final int sliding_menu_width=0x7f080026;
         public static final int widget_margin=0x7f080027;
@@ -2479,65 +2490,64 @@ containing a value of this type.
         public static final int yesterday=0x7f0d001a;
     }
     public static final class style {
-        public static final int AcapulcoActionBar=0x7f0c009f;
+        public static final int AcapulcoActionBar=0x7f0c009e;
         /**  <item name="android:background">?android:attr/selectableItemBackground</item> 
          */
         public static final int ActionIcon=0x7f0c0097;
-        public static final int BigArret=0x7f0c0092;
-        public static final int BigCode=0x7f0c0091;
+        public static final int BigCode=0x7f0c0092;
         public static final int BigSens=0x7f0c0093;
-        public static final int BigSubTitle=0x7f0c008f;
-        public static final int BigSubTitle_Small=0x7f0c0090;
-        public static final int BigTitle=0x7f0c008d;
-        public static final int BigTitle_Blue=0x7f0c008e;
-        public static final int ButtonBar=0x7f0c0072;
-        public static final int CommentDetail=0x7f0c008a;
-        public static final int DefaultActivity=0x7f0c0061;
-        public static final int DefaultActivityContent=0x7f0c0062;
-        public static final int DefaultActivityContent_Inner=0x7f0c0063;
-        public static final int DefaultFragment=0x7f0c0064;
-        public static final int DefaultLine=0x7f0c006d;
-        public static final int DefaultLine_Content=0x7f0c006f;
-        public static final int DefaultLine_Content_Fixed=0x7f0c0071;
-        public static final int DefaultLine_Content_Space=0x7f0c0070;
-        public static final int DefaultLine_Single=0x7f0c006e;
+        public static final int BigSubTitle=0x7f0c0090;
+        public static final int BigSubTitle_Small=0x7f0c0091;
+        public static final int BigTitle=0x7f0c008e;
+        public static final int BigTitle_Blue=0x7f0c008f;
+        public static final int ButtonBar=0x7f0c0073;
+        public static final int CommentDetail=0x7f0c008b;
+        public static final int DefaultActivity=0x7f0c0062;
+        public static final int DefaultActivityContent=0x7f0c0063;
+        public static final int DefaultActivityContent_Inner=0x7f0c0064;
+        public static final int DefaultFragment=0x7f0c0065;
+        public static final int DefaultLine=0x7f0c006e;
+        public static final int DefaultLine_Content=0x7f0c0070;
+        public static final int DefaultLine_Content_Fixed=0x7f0c0072;
+        public static final int DefaultLine_Content_Space=0x7f0c0071;
+        public static final int DefaultLine_Single=0x7f0c006f;
         public static final int DialogWindowTitle_Sherlock=0x7f0c003e;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0c003f;
-        public static final int Divider=0x7f0c0066;
-        public static final int Header=0x7f0c0065;
-        public static final int ItemMenuTitle=0x7f0c007d;
-        public static final int ItemParkingDescription=0x7f0c0087;
-        public static final int ItemPrimaryText=0x7f0c0077;
-        public static final int ItemPrimaryText_Bold=0x7f0c007b;
-        public static final int ItemPrimaryText_Medium=0x7f0c0079;
-        public static final int ItemPrimaryText_SingleLine=0x7f0c0078;
-        public static final int ItemPrimaryText_SingleLine_Small=0x7f0c0080;
-        public static final int ItemPrimaryText_Small=0x7f0c007a;
-        public static final int ItemPrimaryText_Widget=0x7f0c007e;
-        public static final int ItemPrimaryText_Widget_Small=0x7f0c007f;
-        public static final int ItemSecondaryText=0x7f0c0081;
-        public static final int ItemSecondaryText_SingleLine=0x7f0c0082;
-        public static final int ItemSecondaryText_SingleLine_Small=0x7f0c0084;
-        public static final int ItemSecondaryText_SingleLine_Tiny=0x7f0c0085;
-        public static final int ItemSecondaryText_Small=0x7f0c0083;
-        public static final int ItemSecondaryText_Widget=0x7f0c0086;
-        public static final int ItemSymbole=0x7f0c0074;
-        public static final int ItemSymbole_Small=0x7f0c0075;
-        public static final int ItemSymbole_Tiny=0x7f0c0076;
-        public static final int ItemTime=0x7f0c0088;
-        public static final int ItemTime_Secondary=0x7f0c0089;
-        public static final int ItemTraficTitle=0x7f0c007c;
+        public static final int Divider=0x7f0c0067;
+        public static final int Header=0x7f0c0066;
+        public static final int ItemMenuTitle=0x7f0c007e;
+        public static final int ItemParkingDescription=0x7f0c0088;
+        public static final int ItemPrimaryText=0x7f0c0078;
+        public static final int ItemPrimaryText_Bold=0x7f0c007c;
+        public static final int ItemPrimaryText_Medium=0x7f0c007a;
+        public static final int ItemPrimaryText_SingleLine=0x7f0c0079;
+        public static final int ItemPrimaryText_SingleLine_Small=0x7f0c0081;
+        public static final int ItemPrimaryText_Small=0x7f0c007b;
+        public static final int ItemPrimaryText_Widget=0x7f0c007f;
+        public static final int ItemPrimaryText_Widget_Small=0x7f0c0080;
+        public static final int ItemSecondaryText=0x7f0c0082;
+        public static final int ItemSecondaryText_SingleLine=0x7f0c0083;
+        public static final int ItemSecondaryText_SingleLine_Small=0x7f0c0085;
+        public static final int ItemSecondaryText_SingleLine_Tiny=0x7f0c0086;
+        public static final int ItemSecondaryText_Small=0x7f0c0084;
+        public static final int ItemSecondaryText_Widget=0x7f0c0087;
+        public static final int ItemSymbole=0x7f0c0075;
+        public static final int ItemSymbole_Small=0x7f0c0076;
+        public static final int ItemSymbole_Tiny=0x7f0c0077;
+        public static final int ItemTime=0x7f0c0089;
+        public static final int ItemTime_Secondary=0x7f0c008a;
+        public static final int ItemTraficTitle=0x7f0c007d;
         public static final int Listview=0x7f0c0095;
         public static final int Listview_Holo=0x7f0c0096;
-        public static final int PageSubTitle=0x7f0c008c;
-        public static final int PageTitle=0x7f0c008b;
+        public static final int PageSubTitle=0x7f0c008d;
+        public static final int PageTitle=0x7f0c008c;
         public static final int PerturbationHeader=0x7f0c0094;
-        public static final int SectionContent=0x7f0c006b;
-        public static final int SectionContentItem=0x7f0c006c;
-        public static final int SectionTitle=0x7f0c0067;
-        public static final int SectionTitle_Center=0x7f0c0068;
-        public static final int SectionTitle_Menu=0x7f0c006a;
-        public static final int SectionTitle_Small=0x7f0c0069;
+        public static final int SectionContent=0x7f0c006c;
+        public static final int SectionContentItem=0x7f0c006d;
+        public static final int SectionTitle=0x7f0c0068;
+        public static final int SectionTitle_Center=0x7f0c0069;
+        public static final int SectionTitle_Menu=0x7f0c006b;
+        public static final int SectionTitle_Small=0x7f0c006a;
         public static final int Sherlock___TextAppearance_Small=0x7f0c0052;
         public static final int Sherlock___Theme=0x7f0c0056;
         public static final int Sherlock___Theme_DarkActionBar=0x7f0c0058;
@@ -2587,10 +2597,10 @@ containing a value of this type.
         public static final int Theme_Sherlock_Light_Dialog=0x7f0c0060;
         public static final int Theme_Sherlock_Light_NoActionBar=0x7f0c005e;
         public static final int Theme_Sherlock_NoActionBar=0x7f0c005d;
-        public static final int Theme_WidgetDialog=0x7f0c009e;
+        public static final int Theme_WidgetDialog=0x7f0c0061;
         public static final int TutorialSummary=0x7f0c0099;
         public static final int TutorialTitle=0x7f0c0098;
-        public static final int TwoListItem=0x7f0c0073;
+        public static final int TwoListItem=0x7f0c0074;
         public static final int Widget=0x7f0c0001;
         public static final int Widget_IconPageIndicator=0x7f0c0004;
         /**  Base theme for the menu drawer. 

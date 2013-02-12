@@ -19,15 +19,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine.Content"
-    android:paddingLeft="0dip"
-    android:paddingTop="0dip" >
 
-    <TextView
-        android:id="@id/itemTitle"
-        style="@style/BigTitle"
-        android:layout_centerVertical="true"
-        android:paddingLeft="10dip" />
-
-</RelativeLayout>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/itemTitle"
+    style="@style/BigTitle"
+    android:layout_centerVertical="true"
+    android:paddingBottom="8dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="8dp" />

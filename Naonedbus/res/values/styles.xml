@@ -305,7 +305,7 @@
     <style name="BigTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">32dip</item>
+        <item name="android:textSize">@dimen/bigtitle_text_size</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:textColor">?attr/primaryColor</item>
@@ -316,26 +316,22 @@
     </style>
 
     <style name="BigSubTitle" parent="BigTitle">
-        <item name="android:textSize">18dip</item>
+        <item name="android:textSize">@dimen/bigsubtitle_text_size</item>
     </style>
 
     <style name="BigSubTitle.Small" parent="BigTitle">
-        <item name="android:textSize">16dip</item>
+        <item name="android:textSize">@dimen/bigsubtitlesmall_text_size</item>
     </style>
 
     <style name="BigCode">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">78dip</item>
+        <item name="android:textSize">@dimen/bigcode_text_size</item>
         <item name="android:textColor">?attr/primaryColor</item>
     </style>
 
-    <style name="BigArret" parent="BigTitle">
-        <item name="android:textSize">28dip</item>
-    </style>
-
     <style name="BigSens" parent="BigTitle">
-        <item name="android:textSize">18dip</item>
+        <item name="android:textSize">@dimen/bigsens_text_size</item>
     </style>
 
     <style name="PerturbationHeader">
