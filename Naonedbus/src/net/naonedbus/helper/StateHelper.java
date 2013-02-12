@@ -8,6 +8,9 @@ public class StateHelper {
 
 	private static final String FILENAME = "state";
 
+	private static final String SORT = ":sort";
+	private static final String FILTER = ":filter";
+
 	private SharedPreferences mSharedPreferences;
 
 	public StateHelper(Context context) {
@@ -15,11 +18,19 @@ public class StateHelper {
 	}
 
 	public int getSortType(Fragment fragment, int defaultType) {
-		return mSharedPreferences.getInt(fragment.getClass().getSimpleName(), defaultType);
+		return mSharedPreferences.getInt(fragment.getClass().getSimpleName() + SORT, defaultType);
 	}
 
 	public void setSortType(Fragment fragment, int sortType) {
-		mSharedPreferences.edit().putInt(fragment.getClass().getSimpleName(), sortType).commit();
+		mSharedPreferences.edit().putInt(fragment.getClass().getSimpleName() + SORT, sortType).commit();
+	}
+
+	public int getFilterType(Fragment fragment, int defaultType) {
+		return mSharedPreferences.getInt(fragment.getClass().getSimpleName() + FILTER, defaultType);
+	}
+
+	public void setFilterType(Fragment fragment, int filterType) {
+		mSharedPreferences.edit().putInt(fragment.getClass().getSimpleName() + FILTER, filterType).commit();
 	}
 
 	public int getSens(String codeLigne, int defaultSens) {

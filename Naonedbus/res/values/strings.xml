@@ -69,7 +69,7 @@
     <string name="action_sort_distance">Trier par distance</string>
     <string name="action_sort_ordre">Trier par position</string>
     <string name="action_sort_parking_places">Trier par places disponibles</string>
-    <string name="action_filter_arrets_none">Tous les arrêt</string>
+    <string name="action_filter_arrets_none">Tous les arrêts</string>
     <string name="action_filter_arrets_favoris">Arrêt favoris</string>
     <string name="action_filter_lignes_none">Toutes les lignes</string>
     <string name="action_filter_lignes_favoris">Lignes avec favoris</string>
@@ -98,6 +98,7 @@
     <string name="error_summary_webservice">Merci de réessayer dans quelques instants</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
     <string name="error_summary_empty_favori">Glissez vers l\'écran de gauche pour naviguer entre les lignes.\n\n&#8592;</string>
+    <string name="error_summary_empty_arrets_favoris">Vous avez sélectionné le filtre \"Arrêts favoris\" mais aucun favori n\'est défini pour ce sens.</string>
     <!-- Accueil -->
     <string name="title_fragment_lignes">Lignes</string>
     <string name="title_fragment_favoris">Favoris</string>

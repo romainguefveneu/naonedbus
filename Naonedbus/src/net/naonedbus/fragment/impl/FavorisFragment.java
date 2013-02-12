@@ -205,6 +205,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.d(LOG_TAG, "onCreateView");
 		mListView = getListView();
 		mListView.setOnItemLongClickListener(this);
+		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
 
 	@Override

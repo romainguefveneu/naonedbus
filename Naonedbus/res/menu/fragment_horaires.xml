@@ -22,25 +22,25 @@
         android:id="@id/menu_comment"
         android:icon="@drawable/ic_action_new_event"
         android:orderInCategory="350"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/action_comment"/>
     <item
         android:id="@id/menu_date"
         android:icon="@drawable/ic_action_change_date"
         android:orderInCategory="400"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/action_change_date"/>
     <item
         android:id="@id/menu_date_maintenant"
         android:icon="@drawable/ic_action_go_to_today"
         android:orderInCategory="500"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/action_change_date_now"/>
     <item
         android:id="@id/menu_sens"
         android:icon="@drawable/ic_action_repeat"
         android:orderInCategory="600"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/action_change_sens"/>
     <item
         android:id="@id/menu_feedback_bug"

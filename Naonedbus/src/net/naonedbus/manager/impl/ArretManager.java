@@ -26,6 +26,7 @@ import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.ArretProvider;
 import net.naonedbus.provider.table.ArretTable;
 import net.naonedbus.provider.table.EquipementTable;
+import net.naonedbus.provider.table.FavoriTable;
 import net.naonedbus.provider.table.LigneTable;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -82,6 +83,24 @@ public class ArretManager extends SQLiteManager<Arret> {
 		final Cursor c = getCursor(contentResolver, ArretTable.CODE_LIGNE + "=? AND " + ArretTable.CODE_SENS
 				+ "=? AND " + EquipementTable.NORMALIZED_NOM + "=?", new String[] { codeLigne, codeSens, nomArret });
 		return getFirstFromCursor(c);
+	}
+
+	/**
+	 * Récupérer les arrêts favoris selon son code ligne et sens.
+	 * 
+	 * @param contentResolver
+	 * @param codeLigne
+	 *            le code de la ligne
+	 * @param codeSens
+	 *            le code du sens
+	 * @return La liste des arrêts favoris de la ligne et du sens donné
+	 */
+	public List<Arret> getArretsFavoris(ContentResolver contentResolver, String codeLigne, String codeSens) {
+		final Cursor c = getCursor(contentResolver, ArretTable.CODE_LIGNE + "=? AND " + ArretTable.CODE_SENS
+				+ "=? AND EXISTS (SELECT 1 FROM " + FavoriTable.TABLE_NAME + " WHERE " + FavoriTable.TABLE_NAME + "."
+				+ FavoriTable._ID + "=" + ArretTable.TABLE_NAME + "." + ArretTable._ID + ")", new String[] { codeLigne,
+				codeSens });
+		return getFromCursor(c);
 	}
 
 	public Cursor getCursor(ContentResolver contentResolver, String codeLigne, String codeSens) {

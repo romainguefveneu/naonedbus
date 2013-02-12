@@ -78,7 +78,7 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 		setHasOptionsMenu(true);
 		// Gestion du tri par défaut
 		mStateHelper = new StateHelper(getActivity());
-		mCurrentFilter = mStateHelper.getSortType(this, FILTER_ALL);
+		mCurrentFilter = mStateHelper.getFilterType(this, FILTER_ALL);
 
 		mFavoriManager = FavoriManager.getInstance();
 		mFavoriManager.addActionListener(mOnFavoriActionListener);
@@ -92,7 +92,7 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	public void onPause() {
-		mStateHelper.setSortType(this, mCurrentFilter);
+		mStateHelper.setFilterType(this, mCurrentFilter);
 		super.onPause();
 	}
 

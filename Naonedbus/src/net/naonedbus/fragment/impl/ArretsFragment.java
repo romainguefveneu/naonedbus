@@ -22,8 +22,6 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
-import net.naonedbus.task.AddressResolverTask;
-import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
 import android.annotation.TargetApi;
@@ -38,21 +36,24 @@ import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class ArretsFragment extends CustomListFragment implements CustomFragmentActions, OnChangeSens,
-		MyLocationListener, AddressTaskListener {
+		MyLocationListener {
 
 	private final static int SORT_NOM = 0;
 	private final static int SORT_ORDRE = 1;
+	private final static int FILTER_ALL = 2;
+	private final static int FILTER_FAVORIS = 3;
 	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
 	static {
 		MENU_MAPPING.append(SORT_NOM, R.id.menu_sort_name);
 		MENU_MAPPING.append(SORT_ORDRE, R.id.menu_sort_ordre);
+		MENU_MAPPING.append(FILTER_ALL, R.id.menu_filter_all);
+		MENU_MAPPING.append(FILTER_FAVORIS, R.id.menu_filter_favoris);
 	}
 
 	public static final String PARAM_ID_LIGNE = "idLigne";
@@ -64,15 +65,15 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	protected final SparseArray<Comparator<Arret>> mComparators;
-	protected int mCurrentSortPreference;
+	protected int mCurrentSort;
 
 	private StateHelper mStateHelper;
 	private MyLocationProvider mLocationProvider;
 	private DistanceTask mDistanceTask;
 	private DistanceTaskCallback mDistanceTaskCallback;
-	private AddressResolverTask mAddressResolverTask;
 	private Integer mNearestArretPosition;
 	private ArretArrayAdapter mAdapter;
+	private int mCurrentFilter = FILTER_ALL;
 
 	private List<Arret> mArrets;
 
@@ -102,11 +103,12 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		mIdLigne = getArguments().getInt(PARAM_ID_LIGNE);
 
 		mStateHelper = new StateHelper(getActivity());
-		mCurrentSortPreference = mStateHelper.getSortType(this, SORT_NOM);
+		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
+		setCurrentFilter(mStateHelper.getFilterType(this, FILTER_ALL));
 
 		mArrets = new ArrayList<Arret>();
 		mAdapter = new ArretArrayAdapter(getActivity(), mArrets);
-		if (mCurrentSortPreference == SORT_ORDRE) {
+		if (mCurrentSort == SORT_ORDRE) {
 			mAdapter.setViewType(ViewType.TYPE_METRO);
 		}
 
@@ -142,7 +144,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		super.onStop();
 
 		// Save state
-		mStateHelper.setSortType(this, mCurrentSortPreference);
+		mStateHelper.setSortType(this, mCurrentSort);
+		mStateHelper.setFilterType(this, mCurrentFilter);
 
 		mLocationProvider.stop();
 		if (mDistanceTask != null) {
@@ -153,7 +156,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_arrets, menu);
-		menu.findItem(MENU_MAPPING.get(mCurrentSortPreference)).setChecked(true);
+		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
+		menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -174,6 +178,20 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		case R.id.menu_sort_ordre:
 			item.setChecked(true);
 			changeSortOrder(SORT_ORDRE, ViewType.TYPE_METRO);
+			break;
+		case R.id.menu_filter_all:
+			if (mCurrentFilter != FILTER_ALL) {
+				item.setChecked(true);
+				setCurrentFilter(FILTER_ALL);
+				refreshContent();
+			}
+			break;
+		case R.id.menu_filter_favoris:
+			if (mCurrentFilter != FILTER_FAVORIS) {
+				item.setChecked(true);
+				setCurrentFilter(FILTER_FAVORIS);
+				refreshContent();
+			}
 			break;
 		case R.id.menu_show_plan:
 			menuShowPlan();
@@ -222,8 +240,22 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 			} else {
 				listView.smoothScrollToPositionFromTop(mNearestArretPosition, (listViewHeight - itemHeight) / 2);
 			}
+		}
+	}
 
-			// loadAddress();
+	/**
+	 * Définir le filtre courant.
+	 * 
+	 * @param filter
+	 */
+	private void setCurrentFilter(int filter) {
+		mCurrentFilter = filter;
+
+		if (mCurrentFilter == FILTER_ALL) {
+			setEmptyMessageValues(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.sad_face);
+		} else {
+			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_arrets_favoris,
+					R.drawable.favori);
 		}
 	}
 
@@ -237,7 +269,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	 */
 	private void changeSortOrder(int sortOrder, ViewType viewType) {
 		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
-		mCurrentSortPreference = sortOrder;
+		mCurrentSort = sortOrder;
 
 		adapter.setViewType(viewType);
 		getListView().setSelection(0);
@@ -263,7 +295,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	 * @param adapter
 	 */
 	private void sort(ArretArrayAdapter adapter) {
-		final Comparator<Arret> comparator = mComparators.get(mCurrentSortPreference);
+		final Comparator<Arret> comparator = mComparators.get(mCurrentSort);
 		if (comparator != null) {
 			adapter.sort(comparator);
 		}
@@ -274,7 +306,12 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 			final ArretManager arretManager = ArretManager.getInstance();
-			final List<Arret> arrets = arretManager.getAll(context.getContentResolver(), mSens.codeLigne, mSens.code);
+			final List<Arret> arrets;
+			if (mCurrentFilter == FILTER_ALL) {
+				arrets = arretManager.getAll(context.getContentResolver(), mSens.codeLigne, mSens.code);
+			} else {
+				arrets = arretManager.getArretsFavoris(context.getContentResolver(), mSens.codeLigne, mSens.code);
+			}
 
 			mArrets.clear();
 			mArrets.addAll(arrets);
@@ -299,18 +336,6 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 			mSens = sens;
 			refreshContent();
 		}
-	}
-
-	/**
-	 * Lance la récupération de l'adresse courante.
-	 * 
-	 * @param location
-	 */
-	private void loadAddress() {
-		if (mAddressResolverTask != null) {
-			mAddressResolverTask.cancel(true);
-		}
-		mAddressResolverTask = (AddressResolverTask) new AddressResolverTask(this).execute();
 	}
 
 	/**
@@ -398,17 +423,6 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public void onLocationDisabled() {
 
-	}
-
-	@Override
-	public void onAddressTaskPreExecute() {
-	}
-
-	@Override
-	public void onAddressTaskResult(String address) {
-		if (getActivity() != null && address != null && address.length() > 0) {
-			Toast.makeText(getActivity(), address, Toast.LENGTH_LONG).show();
-		}
 	}
 
 }
