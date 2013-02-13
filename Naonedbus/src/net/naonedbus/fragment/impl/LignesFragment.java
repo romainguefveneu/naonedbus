@@ -7,12 +7,14 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
 import net.naonedbus.manager.impl.TypeLigneManager;
 import net.naonedbus.provider.impl.LigneProvider;
@@ -169,11 +171,13 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(position);
-		final String codeLigne = ligne.getString(ligne.getColumnIndex(LigneTable.CODE));
+		final CursorWrapper cursorWrapper = (CursorWrapper) getListAdapter().getItem(position);
+
+		final LigneManager ligneManager = LigneManager.getInstance();
+		final Ligne ligne = ligneManager.getSingleFromCursor(cursorWrapper);
 
 		final ParamIntent intent = new ParamIntent(getActivity(), ArretsActivity.class);
-		intent.putExtra(ArretsActivity.Param.codeLigne, codeLigne);
+		intent.putExtra(ArretsActivity.PARAM_LIGNE, ligne);
 		getActivity().startActivity(intent);
 	}
 

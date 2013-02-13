@@ -57,7 +57,7 @@ public class ParcoursManager extends SQLiteManager<Parcours> {
 		return getFromCursor(getParcours(contentResolver, normalizedNom));
 	}
 
-	protected Parcours getSingleFromCursor(Cursor c) {
+	public Parcours getSingleFromCursor(Cursor c) {
 		Parcours item = new Parcours();
 		item._id = c.getInt(c.getColumnIndex(ParcoursTable._ID));
 		item.couleur = c.getInt(c.getColumnIndex(ParcoursTable.COULEUR));

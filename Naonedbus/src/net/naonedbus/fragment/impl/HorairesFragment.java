@@ -23,7 +23,6 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
-import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.widget.adapter.impl.HoraireArrayAdapter;
 import net.naonedbus.widget.indexer.impl.HoraireIndexer;
@@ -56,7 +55,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 
-	public static final String PARAM_ID_ARRET = "idArret";
+	public static final String PARAM_LIGNE = "ligne";
+	public static final String PARAM_SENS = "sens";
+	public static final String PARAM_ARRET = "arret";
 
 	public static interface OnSensChangeListener {
 		void onSensChange(Sens newSens);
@@ -84,7 +85,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private final HoraireManager mHoraireManager;
 	private final ArretManager mArretManager;
 	private final SensManager mSensManager;
-	private final LigneManager mLigneManager;
 	private final FavoriManager mFavoriManager;
 	private OnSensChangeListener mOnSensChangeListener;
 	private HoraireArrayAdapter mAdapter;
@@ -111,7 +111,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		mFavoriManager = FavoriManager.getInstance();
 		mArretManager = ArretManager.getInstance();
 		mSensManager = SensManager.getInstance();
-		mLigneManager = LigneManager.getInstance();
 
 		mHoraires = new ArrayList<Horaire>();
 		mLastDayLoaded = new DateMidnight();
@@ -121,10 +120,9 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		final int idArret = getArguments().getInt(PARAM_ID_ARRET);
-		mArret = mArretManager.getSingle(getActivity().getContentResolver(), idArret);
-		mLigne = mLigneManager.getSingle(getActivity().getContentResolver(), mArret.codeLigne);
-		mSens = mSensManager.getSingle(getActivity().getContentResolver(), mArret.codeLigne, mArret.codeSens);
+		mLigne = getArguments().getParcelable(PARAM_LIGNE);
+		mSens = getArguments().getParcelable(PARAM_SENS);
+		mArret = getArguments().getParcelable(PARAM_ARRET);
 
 		setHasOptionsMenu(true);
 	}

@@ -18,13 +18,12 @@
  */
 package net.naonedbus.bean;
 
-import java.io.Serializable;
-
 import net.naonedbus.widget.item.SectionItem;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Sens implements SectionItem, Serializable {
+public class Sens implements SectionItem, Parcelable {
 
-	private static final long serialVersionUID = 1604101176510697928L;
 	public static Object section = new Object();
 
 	public int _id;
@@ -38,6 +37,13 @@ public class Sens implements SectionItem, Serializable {
 	public Sens(final int id, final String nom) {
 		this._id = id;
 		this.text = nom;
+	}
+
+	protected Sens(Parcel in) {
+		_id = in.readInt();
+		code = in.readString();
+		codeLigne = in.readString();
+		text = in.readString();
 	}
 
 	@Override
@@ -55,4 +61,24 @@ public class Sens implements SectionItem, Serializable {
 		return section;
 	}
 
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(_id);
+		dest.writeString(code);
+		dest.writeString(codeLigne);
+		dest.writeString(text);
+	}
+
+	public static final Parcelable.Creator<Sens> CREATOR = new Parcelable.Creator<Sens>() {
+		public Sens createFromParcel(Parcel in) {
+			return new Sens(in);
+		}
+
+		public Sens[] newArray(int size) {
+			return new Sens[size];
+		}
+	};
 }

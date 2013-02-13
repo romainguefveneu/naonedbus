@@ -140,17 +140,17 @@ public class CommentaireActivity extends SherlockActivity {
 
 		if (savedInstanceState != null) {
 			if (savedInstanceState.containsKey(BUNDLE_KEY_LIGNE)) {
-				ligne = (Ligne) savedInstanceState.getSerializable(BUNDLE_KEY_LIGNE);
+				ligne = (Ligne) savedInstanceState.getParcelable(BUNDLE_KEY_LIGNE);
 				if (ligne != null)
 					setLigne(ligne);
 			}
 			if (savedInstanceState.containsKey(BUNDLE_KEY_SENS)) {
-				sens = (Sens) savedInstanceState.getSerializable(BUNDLE_KEY_SENS);
+				sens = (Sens) savedInstanceState.getParcelable(BUNDLE_KEY_SENS);
 				if (sens != null)
 					setSens(sens);
 			}
 			if (savedInstanceState.containsKey(BUNDLE_KEY_ARRET)) {
-				arret = (Arret) savedInstanceState.getSerializable(BUNDLE_KEY_ARRET);
+				arret = (Arret) savedInstanceState.getParcelable(BUNDLE_KEY_ARRET);
 				if (arret != null)
 					setArret(arret);
 			}
@@ -175,9 +175,9 @@ public class CommentaireActivity extends SherlockActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putSerializable(BUNDLE_KEY_LIGNE, ligne);
-		outState.putSerializable(BUNDLE_KEY_SENS, sens);
-		outState.putSerializable(BUNDLE_KEY_ARRET, arret);
+		outState.putParcelable(BUNDLE_KEY_LIGNE, ligne);
+		outState.putParcelable(BUNDLE_KEY_SENS, sens);
+		outState.putParcelable(BUNDLE_KEY_ARRET, arret);
 	}
 
 	@Override

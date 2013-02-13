@@ -9,7 +9,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.FavorisImportActivity;
-import net.naonedbus.activity.impl.HoraireActivity;
+import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
@@ -432,8 +432,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		if (mActionMode == null) {
 			mListView.setItemChecked(position, false);
 			final Favori item = (Favori) l.getItemAtPosition(position);
-			final ParamIntent intent = new ParamIntent(getActivity(), HoraireActivity.class);
-			intent.putExtra(HoraireActivity.Param.idArret, item._id);
+
+			final Intent intent = new Intent(getActivity(), HorairesActivity.class);
+			intent.putExtra(HorairesActivity.PARAM_ARRET, item);
+
 			startActivity(intent);
 		} else {
 			onItemSelected();

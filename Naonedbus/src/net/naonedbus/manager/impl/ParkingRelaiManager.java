@@ -60,7 +60,7 @@ public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 	}
 
 	@Override
-	protected ParkingRelai getSingleFromCursor(Cursor c) {
+	public ParkingRelai getSingleFromCursor(Cursor c) {
 		final ParkingRelai parking = new ParkingRelai();
 		parking.setId(c.getInt(c.getColumnIndex(EquipementTable._ID)));
 		parking.setNom(c.getString(c.getColumnIndex(EquipementTable.NOM)));

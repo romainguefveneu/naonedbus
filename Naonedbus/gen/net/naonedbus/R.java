@@ -1451,6 +1451,7 @@ containing a value of this type.
         /**  Activity Header 
  Activity Header 
  Activity Header 
+ Activity Header 
          */
         public static final int headeractivity_height=0x7f080029;
         public static final int list_section_divider_min_height=0x7f080031;

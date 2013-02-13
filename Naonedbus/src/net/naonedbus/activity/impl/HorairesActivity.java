@@ -8,22 +8,20 @@ import net.naonedbus.bean.Sens;
 import net.naonedbus.fragment.impl.HorairesFragment;
 import net.naonedbus.fragment.impl.HorairesFragment.OnSensChangeListener;
 import net.naonedbus.helper.HeaderHelper;
-import net.naonedbus.intent.IIntentParamKey;
-import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.SymbolesUtils;
 import android.os.Bundle;
 
-public class HoraireActivity extends OneFragmentActivity implements OnSensChangeListener {
+public class HorairesActivity extends OneFragmentActivity implements OnSensChangeListener {
 
-	public static enum Param implements IIntentParamKey {
-		idArret
-	};
+	public static final String PARAM_LIGNE = "ligne";
+	public static final String PARAM_SENS = "sens";
+	public static final String PARAM_ARRET = "arret";
 
 	private HeaderHelper mHeaderHelper;
 
-	public HoraireActivity() {
+	public HorairesActivity() {
 		super(R.layout.activity_horaires);
 	}
 
@@ -32,23 +30,28 @@ public class HoraireActivity extends OneFragmentActivity implements OnSensChange
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-		int idArret = (Integer) getParamValue(Param.idArret);
+		final Arret arret = getIntent().getParcelableExtra(PARAM_ARRET);
+		Ligne ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
+		Sens sens = getIntent().getParcelableExtra(PARAM_SENS);
 
-		final Bundle bundle = new Bundle();
-		bundle.putInt(HorairesFragment.PARAM_ID_ARRET, idArret);
+		if (ligne == null) {
+			final LigneManager ligneManager = LigneManager.getInstance();
+			ligne = ligneManager.getSingle(getContentResolver(), arret.codeLigne);
+		}
+		if (sens == null) {
+			final SensManager sensManager = SensManager.getInstance();
+			sens = sensManager.getSingle(getContentResolver(), arret.codeLigne, arret.codeSens);
+		}
 
 		if (savedInstanceState == null) {
+			final Bundle bundle = new Bundle();
+			bundle.putParcelable(HorairesFragment.PARAM_LIGNE, ligne);
+			bundle.putParcelable(HorairesFragment.PARAM_SENS, sens);
+			bundle.putParcelable(HorairesFragment.PARAM_ARRET, arret);
+
 			addFragment(HorairesFragment.class, bundle);
 			((HorairesFragment) getCurrentFragment()).setOnChangeSensListener(this);
 		}
-
-		final SensManager sensManager = SensManager.getInstance();
-		final LigneManager ligneManager = LigneManager.getInstance();
-		final ArretManager arretManager = ArretManager.getInstance();
-
-		final Arret arret = arretManager.getSingle(this.getContentResolver(), idArret);
-		final Sens sens = sensManager.getSingle(this.getContentResolver(), arret.codeLigne, arret.codeSens);
-		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), arret.codeLigne);
 
 		mHeaderHelper = new HeaderHelper(this);
 		mHeaderHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);

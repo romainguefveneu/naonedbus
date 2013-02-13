@@ -161,6 +161,6 @@ public abstract class SQLiteManager<T> {
 	 *            le curseur
 	 * @return un élément
 	 */
-	protected abstract T getSingleFromCursor(Cursor c);
+	public abstract T getSingleFromCursor(Cursor c);
 
 }

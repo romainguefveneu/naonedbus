@@ -85,7 +85,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	@Override
-	protected Horaire getSingleFromCursor(Cursor c) {
+	public Horaire getSingleFromCursor(Cursor c) {
 		final Horaire item = new Horaire();
 		item.setId(c.getInt(c.getColumnIndex(HoraireTable._ID)));
 		item.setTimestamp(c.getLong(c.getColumnIndex(HoraireTable.TIMESTAMP)));

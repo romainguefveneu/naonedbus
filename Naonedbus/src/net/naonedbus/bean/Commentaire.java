@@ -31,9 +31,9 @@ public class Commentaire implements ICommentaire, SectionItem {
 	private String mDelay;
 	private DateTime mDateTime;
 	private transient Drawable mBackground;
-	private Ligne mLigne;
-	private Sens mSens;
-	private Arret mArret;
+	private transient Ligne mLigne;
+	private transient Sens mSens;
+	private transient Arret mArret;
 
 	@Override
 	public Integer getId() {

@@ -8,8 +8,6 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.fragment.impl.ArretsFragment;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.intent.IIntentParamKey;
-import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
@@ -28,9 +26,7 @@ import com.espian.showcaseview.ShowcaseView;
 
 public class ArretsActivity extends OneFragmentActivity {
 
-	public static enum Param implements IIntentParamKey {
-		codeLigne
-	};
+	public static final String PARAM_LIGNE = "ligne";
 
 	public static interface OnChangeSens {
 		void onChangeSens(Sens sens);
@@ -38,7 +34,7 @@ public class ArretsActivity extends OneFragmentActivity {
 
 	private StateHelper mStateHelper;
 	private OnChangeSens mOnChangeSens;
-	private String mCodeLigne;
+	private Ligne mLigne;
 	private Sens mCurrentSens;
 
 	public ArretsActivity() {
@@ -52,21 +48,18 @@ public class ArretsActivity extends OneFragmentActivity {
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 		final SensManager sensManager = SensManager.getInstance();
-		final LigneManager ligneManager = LigneManager.getInstance();
 
 		mStateHelper = new StateHelper(getApplicationContext());
 
-		mCodeLigne = (String) getParamValue(Param.codeLigne);
+		mLigne = getIntent().getParcelableExtra(PARAM_LIGNE);
 
-		final List<Sens> sensList = sensManager.getAll(getContentResolver(), mCodeLigne);
-		final int idSens = mStateHelper.getSens(mCodeLigne, sensList.get(0)._id);
-
-		final Sens sens = sensManager.getSingle(this.getContentResolver(), idSens);
-		final Ligne ligne = ligneManager.getSingle(this.getContentResolver(), sens.codeLigne);
+		final List<Sens> sensList = sensManager.getAll(getContentResolver(), mLigne.code);
+		final int idSens = mStateHelper.getSens(mLigne.code, sensList.get(0)._id);
 
 		if (savedInstanceState == null) {
 			final Bundle bundle = new Bundle();
-			bundle.putInt(ArretsFragment.PARAM_ID_LIGNE, ligne._id);
+			bundle.putParcelable(ArretsFragment.PARAM_LIGNE, mLigne);
+
 			addFragment(ArretsFragment.class, bundle);
 		}
 
@@ -74,15 +67,15 @@ public class ArretsActivity extends OneFragmentActivity {
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 
 		final View header = findViewById(R.id.headerView);
-		header.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
+		header.setBackgroundDrawable(ColorUtils.getGradiant(mLigne.couleurBackground));
 
 		final TextView code = (TextView) findViewById(R.id.itemCode);
-		code.setText(ligne.lettre);
-		code.setTextColor(ligne.couleurTexte);
+		code.setText(mLigne.lettre);
+		code.setTextColor(mLigne.couleurTexte);
 		code.setTypeface(robotoMedium);
 
 		final Spinner sensTitle = (Spinner) findViewById(R.id.itemTitle);
-		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, ligne.couleurTexte, robotoLight));
+		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.couleurTexte, robotoLight));
 		sensTitle.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -122,7 +115,7 @@ public class ArretsActivity extends OneFragmentActivity {
 	@Override
 	protected void onStop() {
 		if (mCurrentSens != null)
-			mStateHelper.setSens(mCodeLigne, mCurrentSens._id);
+			mStateHelper.setSens(mLigne.code, mCurrentSens._id);
 		super.onStop();
 	}
 

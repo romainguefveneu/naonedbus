@@ -92,8 +92,8 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	}
 
 	@Override
-	protected Ligne getSingleFromCursor(Cursor c) {
-		Ligne ligneItem = new Ligne();
+	public Ligne getSingleFromCursor(Cursor c) {
+		final Ligne ligneItem = new Ligne();
 		ligneItem._id = c.getInt(c.getColumnIndex(LigneTable._ID));
 		ligneItem.code = c.getString(c.getColumnIndex(LigneTable.CODE));
 		ligneItem.depuis = c.getString(c.getColumnIndex(LigneTable.DEPUIS));
@@ -107,10 +107,10 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	}
 
 	public List<Ligne> getLignesFromStation(ContentResolver contentResolver, int idStation) {
-		Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
+		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
 		builder.path(LigneProvider.LIGNE_STATION_URI_PATH_QUERY);
 		builder.appendQueryParameter("idStation", String.valueOf(idStation));
-		Cursor cursor = contentResolver.query(builder.build(), null, null, null, null);
+		final Cursor cursor = contentResolver.query(builder.build(), null, null, null, null);
 
 		return getFromCursor(cursor);
 	}

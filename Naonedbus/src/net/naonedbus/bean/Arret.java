@@ -18,11 +18,10 @@
  */
 package net.naonedbus.bean;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Arret implements Serializable {
-
-	private static final long serialVersionUID = 6371968112229796931L;
+public class Arret implements Parcelable {
 
 	public int _id;
 	public String codeLigne;
@@ -47,6 +46,21 @@ public class Arret implements Serializable {
 		this.nomArret = nom;
 	}
 
+	protected Arret(Parcel in) {
+		_id = in.readInt();
+		codeLigne = in.readString();
+		lettre = in.readString();
+		codeSens = in.readString();
+		codeArret = in.readString();
+		codeEquipement = in.readString();
+		normalizedNom = in.readString();
+		latitude = in.readFloat();
+		longitude = in.readFloat();
+		idStation = in.readInt();
+		ordre = in.readInt();
+		nomArret = in.readString();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Arret)) {
@@ -54,10 +68,6 @@ public class Arret implements Serializable {
 		}
 		final Arret autreArret = (Arret) o;
 		return autreArret._id == _id;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public int get_id() {
@@ -108,4 +118,32 @@ public class Arret implements Serializable {
 		return ordre;
 	}
 
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(_id);
+		dest.writeString(codeLigne);
+		dest.writeString(lettre);
+		dest.writeString(codeSens);
+		dest.writeString(codeArret);
+		dest.writeString(codeEquipement);
+		dest.writeString(normalizedNom);
+		dest.writeFloat(latitude);
+		dest.writeFloat(longitude);
+		dest.writeInt(idStation);
+		dest.writeInt(ordre);
+		dest.writeString(nomArret);
+	}
+
+	public static final Parcelable.Creator<Arret> CREATOR = new Parcelable.Creator<Arret>() {
+		public Arret createFromParcel(Parcel in) {
+			return new Arret(in);
+		}
+
+		public Arret[] newArray(int size) {
+			return new Arret[size];
+		}
+	};
 }

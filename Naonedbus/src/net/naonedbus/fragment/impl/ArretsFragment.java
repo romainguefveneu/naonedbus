@@ -8,9 +8,10 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity.OnChangeSens;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.activity.impl.HoraireActivity;
+import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.ArretComparator;
@@ -26,6 +27,7 @@ import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
@@ -44,6 +46,8 @@ import com.actionbarsherlock.view.MenuItem;
 public class ArretsFragment extends CustomListFragment implements CustomFragmentActions, OnChangeSens,
 		MyLocationListener {
 
+	public static final String PARAM_LIGNE = "ligne";
+
 	private final static int SORT_NOM = 0;
 	private final static int SORT_ORDRE = 1;
 	private final static int FILTER_ALL = 2;
@@ -55,8 +59,6 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		MENU_MAPPING.append(FILTER_ALL, R.id.menu_filter_all);
 		MENU_MAPPING.append(FILTER_FAVORIS, R.id.menu_filter_favoris);
 	}
-
-	public static final String PARAM_ID_LIGNE = "idLigne";
 
 	private interface DistanceTaskCallback {
 		void onNearestStationFound(Integer position);
@@ -77,7 +79,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	private List<Arret> mArrets;
 
-	private int mIdLigne;
+	private Ligne mLigne;
 	private Sens mSens;
 
 	public ArretsFragment() {
@@ -100,7 +102,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mIdLigne = getArguments().getInt(PARAM_ID_LIGNE);
+		mLigne = getArguments().getParcelable(PARAM_LIGNE);
 
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
@@ -209,9 +211,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		final Arret item = (Arret) l.getItemAtPosition(position);
-		final ParamIntent intent = new ParamIntent(getActivity(), HoraireActivity.class);
-		intent.putExtra(HoraireActivity.Param.idArret, item._id);
+		final Arret arret = (Arret) l.getItemAtPosition(position);
+
+		final Intent intent = new Intent(getActivity(), HorairesActivity.class);
+		intent.putExtra(HorairesActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(HorairesActivity.PARAM_SENS, mSens);
+		intent.putExtra(HorairesActivity.PARAM_ARRET, arret);
+
 		startActivity(intent);
 	}
 
@@ -223,7 +229,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	private void menuComment() {
 		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
-		intent.putExtra(CommentaireActivity.Param.idLigne, mIdLigne);
+		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
 		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
 		startActivity(intent);
 	}

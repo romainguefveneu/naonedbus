@@ -24,7 +24,7 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.HoraireActivity;
+import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.widgetconfigure.WidgetConfigureActivity;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.NextHoraireTask;
@@ -296,9 +296,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			builder.append(context.getString(R.string.msg_aucun_depart_24h));
 		}
 
-		 views.setTextViewText(R.id.itemTime, builder.toString());
-		 views.setViewVisibility(R.id.itemTime, View.VISIBLE);
-		 views.setViewVisibility(R.id.widgetProgress, View.GONE);
+		views.setTextViewText(R.id.itemTime, builder.toString());
+		views.setViewVisibility(R.id.itemTime, View.VISIBLE);
+		views.setViewVisibility(R.id.widgetProgress, View.GONE);
 	}
 
 	/**
@@ -335,10 +335,10 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 			onUpdate(context, appWidgetManager, ids);
 		} else if (HoraireWidgetProvider.ACTION_APPWIDGET_ON_CLICK.equals(action)) {
-			int idFavori = intent.getIntExtra("idFavori", -1);
-			if (idFavori != -1) {
-				final ParamIntent startIntent = new ParamIntent(context, HoraireActivity.class);
-				startIntent.putExtra(HoraireActivity.Param.idArret, idFavori);
+			final Favori favori = intent.getParcelableExtra("favori");
+			if (favori != null) {
+				final ParamIntent startIntent = new ParamIntent(context, HorairesActivity.class);
+				startIntent.putExtra(HorairesActivity.PARAM_ARRET, favori);
 				startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(startIntent);
 			}

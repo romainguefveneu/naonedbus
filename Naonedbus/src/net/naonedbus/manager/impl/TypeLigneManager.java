@@ -45,8 +45,8 @@ public class TypeLigneManager extends SQLiteManager<TypeLigne> {
 	}
 
 	@Override
-	protected TypeLigne getSingleFromCursor(Cursor c) {
-		TypeLigne item = new TypeLigne();
+	public TypeLigne getSingleFromCursor(Cursor c) {
+		final TypeLigne item = new TypeLigne();
 		item._id = c.getInt(c.getColumnIndex(TypeLigneTable._ID));
 		item.nom = c.getString(c.getColumnIndex(TypeLigneTable.NOM));
 		return item;

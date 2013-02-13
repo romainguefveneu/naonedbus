@@ -54,17 +54,6 @@ public class SensManager extends SQLiteManager<Sens> {
 		return getFromCursor(c);
 	}
 
-	// public List<SensSpinnerItem> getAllForSpinner(ContentResolver
-	// contentResolver, String codeLigne) {
-	// List<Sens> items = getAll(contentResolver, codeLigne);
-	// List<SensSpinnerItem> spinnerItems = new ArrayList<SensSpinnerItem>();
-	//
-	// for (Sens item : items) {
-	// spinnerItems.add(new SensSpinnerItem(item));
-	// }
-	// return spinnerItems;
-	// }
-
 	/**
 	 * Récupérer un cursor contenant les sens de la ligne sépcifiée
 	 * 
@@ -87,7 +76,8 @@ public class SensManager extends SQLiteManager<Sens> {
 		return getFirstFromCursor(c);
 	}
 
-	protected Sens getSingleFromCursor(Cursor c) {
+	@Override
+	public Sens getSingleFromCursor(Cursor c) {
 		Sens item = new Sens();
 		item._id = c.getInt(c.getColumnIndex(SensTable._ID));
 		item.code = c.getString(c.getColumnIndex(SensTable.CODE));

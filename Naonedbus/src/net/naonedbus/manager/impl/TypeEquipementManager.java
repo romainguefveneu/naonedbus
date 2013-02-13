@@ -45,8 +45,8 @@ public class TypeEquipementManager extends SQLiteManager<TypeEquipement> {
 	}
 
 	@Override
-	protected TypeEquipement getSingleFromCursor(Cursor c) {
-		TypeEquipement item = new TypeEquipement();
+	public TypeEquipement getSingleFromCursor(Cursor c) {
+		final TypeEquipement item = new TypeEquipement();
 		item._id = c.getInt(c.getColumnIndex(TypeEquipementTable._ID));
 		item.nom = c.getString(c.getColumnIndex(TypeEquipementTable.NOM));
 		return item;

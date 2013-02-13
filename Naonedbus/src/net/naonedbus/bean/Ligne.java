@@ -18,13 +18,12 @@
  */
 package net.naonedbus.bean;
 
-import java.io.Serializable;
-
 import net.naonedbus.widget.item.SectionItem;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Ligne implements SectionItem, Serializable {
-	private static final long serialVersionUID = -3011831995969644561L;
+public class Ligne implements SectionItem, Parcelable {
 
 	public int _id;
 	public String code;
@@ -50,6 +49,17 @@ public class Ligne implements SectionItem, Serializable {
 		this.lettre = lettre;
 	}
 
+	protected Ligne(Parcel in) {
+		_id = in.readInt();
+		code = in.readString();
+		lettre = in.readString();
+		depuis = in.readString();
+		vers = in.readString();
+		nom = in.readString();
+		couleurBackground = in.readInt();
+		couleurTexte = in.readInt();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof Ligne))
@@ -70,4 +80,28 @@ public class Ligne implements SectionItem, Serializable {
 				.append(vers).append("]").toString();
 	}
 
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(_id);
+		dest.writeString(code);
+		dest.writeString(lettre);
+		dest.writeString(depuis);
+		dest.writeString(vers);
+		dest.writeString(nom);
+		dest.writeInt(couleurBackground);
+		dest.writeInt(couleurTexte);
+	}
+
+	public static final Parcelable.Creator<Ligne> CREATOR = new Parcelable.Creator<Ligne>() {
+		public Ligne createFromParcel(Parcel in) {
+			return new Ligne(in);
+		}
+
+		public Ligne[] newArray(int size) {
+			return new Ligne[size];
+		}
+	};
 }

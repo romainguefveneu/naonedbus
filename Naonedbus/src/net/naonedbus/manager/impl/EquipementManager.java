@@ -447,7 +447,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	}
 
 	@Override
-	protected Equipement getSingleFromCursor(Cursor c) {
+	public Equipement getSingleFromCursor(Cursor c) {
 		Equipement item = new Equipement();
 		item.setId(c.getInt(c.getColumnIndex(EquipementTable._ID)));
 		item.setType(c.getInt(c.getColumnIndex(EquipementTable.ID_TYPE)));
