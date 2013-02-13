@@ -122,6 +122,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 
 		if (c.getColumnIndex(EquipementTable.NOM) != -1) {
 			item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
+			item.normalizedNom = c.getString(c.getColumnIndex(EquipementTable.NORMALIZED_NOM));
 			item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
 			item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
 		}

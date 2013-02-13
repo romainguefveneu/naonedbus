@@ -37,6 +37,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.widget.DatePicker;
@@ -299,6 +300,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			if (mOnSensChangeListener != null) {
 				mOnSensChangeListener.onSensChange(mSens);
 			}
+
+			getSherlockActivity().invalidateOptionsMenu();
 		} else {
 			Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT)
 					.show();

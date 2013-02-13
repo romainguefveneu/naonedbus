@@ -22,8 +22,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/headerView"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/headeractivity_height"
-    android:background="#ccc" >
+    android:layout_height="@dimen/headeractivity_height" >
 
     <TextView
         android:id="@id/headerCode"
@@ -41,11 +40,11 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/headerCode"
         android:ellipsize="end"
-        android:paddingLeft="@dimen/padding_small"
+        android:paddingLeft="@dimen/padding_medium"
         android:paddingRight="@dimen/padding_small"
         android:singleLine="true"
         android:text="@android:string/untitled"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@id/headerTitle"
@@ -59,7 +58,6 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/padding_small"
-        android:singleLine="true"
-        android:text="@android:string/untitled" />
+        android:singleLine="true" />
 
 </RelativeLayout>

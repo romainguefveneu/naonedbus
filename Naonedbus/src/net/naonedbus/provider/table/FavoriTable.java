@@ -39,9 +39,9 @@ public interface FavoriTable extends BaseColumns {
 
 	public static final String[] FULL_PROJECTION = new String[] { "f." + FavoriTable._ID,
 			"f." + FavoriTable.CODE_LIGNE, "f." + FavoriTable.CODE_SENS, "f." + FavoriTable.CODE_ARRET,
-			"f." + FavoriTable.NOM, EquipementTable.NOM, EquipementTable.CODE, ArretTable.ID_STATION,
-			EquipementTable.LATITUDE, EquipementTable.LONGITUDE, "s." + SensTable.NOM, "l." + LigneTable.COULEUR,
-			"l." + LigneTable.LETTRE };
+			"f." + FavoriTable.NOM, EquipementTable.NOM, EquipementTable.NORMALIZED_NOM, EquipementTable.CODE,
+			ArretTable.ID_STATION, EquipementTable.LATITUDE, EquipementTable.LONGITUDE, "s." + SensTable.NOM,
+			"l." + LigneTable.COULEUR, "l." + LigneTable.LETTRE };
 
 	public static final String FULL_ORDER = " l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
 			+ " as numeric)," + FavoriTable.NOM + ", " + EquipementTable.NOM;

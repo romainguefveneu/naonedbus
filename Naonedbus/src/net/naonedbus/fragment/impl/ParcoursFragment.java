@@ -4,11 +4,13 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HorairesActivity;
+import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.Parcours;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
+import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.manager.impl.ParcoursManager;
 import net.naonedbus.widget.adapter.impl.ParcoursAdapter;
@@ -54,8 +56,11 @@ public class ParcoursFragment extends CustomListFragment {
 		super.onListItemClick(l, v, position, id);
 		final Parcours item = (Parcours) l.getItemAtPosition(position);
 
+		final ArretManager arretManager = ArretManager.getInstance();
+		final Arret arret = arretManager.getSingle(getActivity().getContentResolver(), item._id);
+
 		final Intent intent = new Intent(getActivity(), HorairesActivity.class);
-		intent.putExtra(HorairesActivity.PARAM_ARRET, item._id);
+		intent.putExtra(HorairesActivity.PARAM_ARRET, arret);
 
 		startActivity(intent);
 	}

@@ -31,9 +31,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class CommentaireDetailActivity extends SherlockActivity {
 
-	public static enum Param implements IIntentParamKey {
-		commentaire
-	};
+	public static final String PARAM_COMMENTAIRE = "commentaire";
 
 	private static final Map<String, Integer> sourceTitle = new HashMap<String, Integer>();
 	static {
@@ -70,7 +68,8 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		itemDate = (TextView) findViewById(R.id.itemDate);
 		itemSource = (TextView) findViewById(R.id.itemSource);
 
-		commentaire = (Commentaire) getIntent().getSerializableExtra(Param.commentaire.toString());
+		commentaire = getIntent().getParcelableExtra(PARAM_COMMENTAIRE);
+
 		itemDescription.setText(simSmileyParser.addSmileySpans(commentaire.getMessage()));
 		itemDate.setText(dateFormat.format(commentaire.getTimestamp()) + " "
 				+ timeFormat.format(commentaire.getTimestamp()));

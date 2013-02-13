@@ -10,7 +10,6 @@ import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
 import net.naonedbus.widget.adapter.impl.CommentaireArrayAdapter;
 import net.naonedbus.widget.indexer.impl.CommentaireIndexer;
@@ -18,8 +17,10 @@ import net.naonedbus.widget.indexer.impl.CommentaireIndexer;
 import org.joda.time.DateTime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
@@ -89,8 +90,8 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		final Commentaire commentaire = (Commentaire) l.getItemAtPosition(position);
-		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireDetailActivity.class);
-		intent.putExtraSerializable(CommentaireDetailActivity.Param.commentaire, commentaire);
+		final Intent intent = new Intent(getActivity(), CommentaireDetailActivity.class);
+		intent.putExtra(CommentaireDetailActivity.PARAM_COMMENTAIRE, (Parcelable) commentaire);
 		startActivity(intent);
 	}
 
