@@ -32,12 +32,14 @@ public class MainActivity extends SlidingMenuActivity {
 	private DatabaseActionListener mListener = new DatabaseActionListener() {
 
 		@Override
-		public void onUpgrade() {
+		public void onUpgrade(final int oldVersion) {
 			MainActivity.this.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
 					mFirstLaunch = true;
 					showSetupView(R.string.updating);
+					if (oldVersion < 10)
+						startActivity(new Intent(MainActivity.this, TutorialActivity.class));
 				}
 			});
 		}

@@ -32,6 +32,6 @@ public interface DatabaseActionListener {
 	/**
 	 * Indique que la base est en cour de mise à jour.
 	 */
-	void onUpgrade();
+	void onUpgrade(int oldVersion);
 
 }

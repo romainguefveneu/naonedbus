@@ -129,7 +129,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 			TimeLogUtils timeLogUtils;
 
 			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.onUpgrade();
+				CustomContentProvider.databaseActionListener.onUpgrade(oldVersion);
 			}
 
 			if (DBG) {
