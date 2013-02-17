@@ -47,7 +47,7 @@ import com.google.gson.GsonBuilder;
  */
 public class CommentaireController extends RestController<CommentaireContainer> {
 
-	private static final int LIMIT = 1;
+	private static final int LIMIT = 25;
 	private static final String PATH = "commentaire";
 
 	public void post(String codeLigne, String codeSens, String codeArret, String message, String hash)

@@ -9,7 +9,9 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity.OnChangeSens;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.HorairesActivity;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
@@ -21,6 +23,7 @@ import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
+import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
@@ -35,9 +38,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -69,6 +76,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	protected final SparseArray<Comparator<Arret>> mComparators;
 	protected int mCurrentSort;
 
+	private FavoriManager mFavoriManager;
 	private StateHelper mStateHelper;
 	private MyLocationProvider mLocationProvider;
 	private DistanceTask mDistanceTask;
@@ -90,6 +98,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		mComparators = new SparseArray<Comparator<Arret>>();
 		mComparators.append(SORT_NOM, new ArretComparator());
 		mComparators.append(SORT_ORDRE, new ArretOrdreComparator());
+
+		mFavoriManager = FavoriManager.getInstance();
 	}
 
 	@Override
@@ -101,6 +111,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		registerForContextMenu(getListView());
 
 		mLigne = getArguments().getParcelable(PARAM_LIGNE);
 
@@ -209,6 +221,52 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		final Arret arret = (Arret) getListView().getItemAtPosition(cmi.position);
+
+		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
+		inflater.inflate(R.menu.fragment_arrets_contextual, menu);
+
+		menu.setHeaderTitle(arret.nomArret);
+
+		final android.view.MenuItem menuFavori = menu.findItem(R.id.menu_favori);
+		if (mFavoriManager.isFavori(getActivity().getContentResolver(), arret._id)) {
+			menuFavori.setTitle(R.string.action_favori_remove);
+		} else {
+			menuFavori.setTitle(R.string.action_favori_add);
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(android.view.MenuItem item) {
+		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final Arret arret = (Arret) getListView().getItemAtPosition(cmi.position);
+
+		switch (item.getItemId()) {
+		case R.id.menu_show_plan:
+			menuShowMap(arret);
+			break;
+		case R.id.menu_favori:
+			if (mFavoriManager.isFavori(getActivity().getContentResolver(), arret._id)) {
+				removeFromFavoris(arret);
+			} else {
+				addToFavoris(arret);
+			}
+			break;
+		case R.id.menu_comment:
+			menuComment(arret);
+			break;
+		default:
+			break;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		final Arret arret = (Arret) l.getItemAtPosition(position);
@@ -231,6 +289,31 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
 		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
 		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
+		startActivity(intent);
+	}
+
+	private void menuComment(final Arret arret) {
+		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
+		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
+		intent.putExtra(CommentaireActivity.Param.idArret, arret._id);
+		startActivity(intent);
+	}
+
+	private void addToFavoris(final Arret arret) {
+		mFavoriManager.addFavori(getActivity().getContentResolver(), arret);
+		Toast.makeText(getActivity(), R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
+	}
+
+	private void removeFromFavoris(final Arret arret) {
+		mFavoriManager.removeFavori(getActivity().getContentResolver(), arret._id);
+		Toast.makeText(getActivity(), R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
+	}
+
+	private void menuShowMap(final Arret arret) {
+		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+		intent.putExtra(MapActivity.Param.itemId, arret.idStation);
+		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
 		startActivity(intent);
 	}
 

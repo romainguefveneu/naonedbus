@@ -84,6 +84,8 @@
     <string name="action_change_sens">Autre sens</string>
     <string name="action_show_on_map">Voir sur le plan</string>
     <string name="action_favori">Favori</string>
+    <string name="action_favori_add">Ajouter en favori</string>
+    <string name="action_favori_remove">Retirer des favoris</string>
     <string name="action_search">Rechercher</string>
     <string name="action_location_center">Centrer sur ma position</string>
     <string name="action_list_location_center">Centrer au plus proche</string>
