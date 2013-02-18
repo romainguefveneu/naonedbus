@@ -211,9 +211,11 @@
     <string name="section_distance_0">Moins de 500 m</string>
     <!-- Messages -->
     <!-- - - Erreurs -->
+    <string name="msg_error_title">Oups&#8230;</string>
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
+    <string name="msg_error_export_favoris_key">Cette clé n\'est pas valide ou votre connexion a quelques problème.\nVous pouvez retenter votre chance dans quelques instants.</string>
     <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <!-- Warning -->
     <string name="msg_warning_send_comment">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>

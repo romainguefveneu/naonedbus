@@ -34,7 +34,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class CommentairesFragment extends CustomListFragment implements CustomFragmentActions {
 
-	private static final String LOG_TAG = "HorairesFragment";
+	private static final String LOG_TAG = "CommentairesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private MenuItem mRefreshMenuItem;
@@ -53,10 +53,12 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
 		if (DBG)
-			Log.d(LOG_TAG, "onStart");
+			Log.d(LOG_TAG, "onActivityCreated");
+
 		mLoaderCache = (LoadTimeLineCache) new LoadTimeLineCache().execute();
 		loadContent();
 	}

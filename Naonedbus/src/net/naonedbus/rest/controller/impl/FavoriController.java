@@ -53,9 +53,7 @@ public class FavoriController extends RestController<List<Favori>> {
 		}.getType();
 		url.addQueryParameter("identifiant", cle);
 
-		List<Favori> favoris = parseJson(url, collectionType);
-
-		return favoris;
+		return parseJson(url, collectionType);
 	}
 
 }

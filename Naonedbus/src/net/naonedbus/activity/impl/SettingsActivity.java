@@ -2,6 +2,7 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.fragment.impl.SettingsFragments;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.simonvt.menudrawer.MenuDrawer;
 import android.content.Intent;
@@ -11,7 +12,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.PreferenceManager;
+import android.preference.PreferenceActivity;
 import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
@@ -30,6 +31,8 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
+		getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsFragments.class.getName());
+		getIntent().putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
 		super.onCreate(savedInstanceState);
 
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
@@ -37,15 +40,6 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
-
-		addPreferencesFromResource(R.xml.preferences);
-
-		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-		theme = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_THEME);
-		// initTheme(preferences);
 	}
 
 	@Override
@@ -90,12 +84,6 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	protected void onDestroy() {
-		getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-		super.onDestroy();
 	}
 
 	private void initTheme(SharedPreferences preferences) {

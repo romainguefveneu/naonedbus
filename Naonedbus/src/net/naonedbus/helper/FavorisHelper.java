@@ -18,12 +18,17 @@
  */
 package net.naonedbus.helper;
 
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.utils.InfoDialogUtils;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -61,17 +66,18 @@ public class FavorisHelper {
 		};
 	}
 
-	private Context context;
+	private ImportTask mImportTask;
+	private Context mContext;
 
-	private FavorisActionListener favorisActionListener;
+	private FavorisActionListener mFavorisActionListener;
 
 	public FavorisHelper(Context context) {
-		this.context = context;
+		mContext = context;
 	}
 
 	public FavorisHelper(Context context, FavorisActionListener favorisActionListener) {
-		this.context = context;
-		this.favorisActionListener = favorisActionListener;
+		mContext = context;
+		mFavorisActionListener = favorisActionListener;
 	}
 
 	/**
@@ -82,13 +88,13 @@ public class FavorisHelper {
 	public void renameFavori(int favoriId) {
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 
-		final Favori item = favoriManager.getSingle(context.getContentResolver(), favoriId);
-		final View alertDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_input, null);
+		final Favori item = favoriManager.getSingle(mContext.getContentResolver(), favoriId);
+		final View alertDialogView = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
 		input.setText(item.nomFavori);
 		input.selectAll();
 
-		final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setView(alertDialogView);
 		builder.setTitle(R.string.action_rename);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -96,9 +102,9 @@ public class FavorisHelper {
 				final String nom = input.getText().toString().trim();
 				item.nomFavori = (nom.length() == 0) ? null : nom;
 
-				favoriManager.setFavori(context.getContentResolver(), item);
-				if (favorisActionListener != null) {
-					favorisActionListener.onFavoriRenamed(item);
+				favoriManager.setFavori(mContext.getContentResolver(), item);
+				if (mFavorisActionListener != null) {
+					mFavorisActionListener.onFavoriRenamed(item);
 				}
 			}
 		});
@@ -107,6 +113,89 @@ public class FavorisHelper {
 		final AlertDialog alert = builder.create();
 		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		alert.show();
+	}
+
+	/**
+	 * Importer les favoris depuis les could
+	 */
+	public void importFavoris() {
+
+		LayoutInflater factory = LayoutInflater.from(mContext);
+		final View alertDialogView = factory.inflate(R.layout.dialog_input, null);
+		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
+
+		AlertDialog alert = new AlertDialog.Builder(mContext).setIcon(android.R.drawable.ic_dialog_info)
+				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						final String id = input.getText().toString().trim();
+						if (id.trim().length() == 0) {
+							showErrorKeyNoValid();
+						} else {
+							onImport(id);
+						}
+					}
+				}).setView(alertDialogView).setNegativeButton(android.R.string.cancel, null).create();
+
+		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+
+		alert.show();
+
+	}
+
+	private void showErrorKeyNoValid() {
+		InfoDialogUtils.show(mContext, R.string.msg_error_title, R.string.msg_error_export_favoris_key);
+	}
+
+	private void onImport(String id) {
+		if (mImportTask == null || mImportTask.getStatus() == AsyncTask.Status.FINISHED) {
+			mImportTask = (ImportTask) new ImportTask().execute(id);
+		}
+	}
+
+	/**
+	 * Classe d'import des favoris
+	 * 
+	 * @author romain
+	 */
+	private class ImportTask extends AsyncTask<String, Void, Void> {
+		protected ProgressDialog progressDialog;
+		private Exception exception = null;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(mContext, "", "Communication en cours...", true);
+			progressDialog.show();
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			FavoriManager favoriManager = FavoriManager.getInstance();
+
+			try {
+				favoriManager.importFavoris(mContext.getContentResolver(), params[0]);
+			} catch (Exception e) {
+				exception = e;
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			progressDialog.dismiss();
+
+			if (exception == null) {
+				if (mFavorisActionListener != null) {
+					mFavorisActionListener.onFavorisImport();
+				}
+			} else {
+				showErrorKeyNoValid();
+				Log.w(NBApplication.LOG_TAG, "Erreur lors de l'import des favoris", exception);
+			}
+		}
+
 	}
 
 }
