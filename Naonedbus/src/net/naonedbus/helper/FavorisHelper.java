@@ -28,6 +28,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,21 +124,25 @@ public class FavorisHelper {
 		LayoutInflater factory = LayoutInflater.from(mContext);
 		final View alertDialogView = factory.inflate(R.layout.dialog_input, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
+		input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 
-		AlertDialog alert = new AlertDialog.Builder(mContext).setIcon(android.R.drawable.ic_dialog_info)
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						final String id = input.getText().toString().trim();
-						if (id.trim().length() == 0) {
-							showErrorKeyNoValid();
-						} else {
-							onImport(id);
-						}
-					}
-				}).setView(alertDialogView).setNegativeButton(android.R.string.cancel, null).create();
+		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(R.string.dialog_title_favoris_import);
+		builder.setNegativeButton(android.R.string.cancel, null);
+		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				final String id = input.getText().toString().trim();
+				if (id.trim().length() == 0) {
+					showErrorKeyNoValid();
+				} else {
+					onImport(id);
+				}
+			}
+		});
+		builder.setView(alertDialogView);
 
+		final AlertDialog alert = builder.create();
 		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
 		alert.show();
 
 	}
@@ -164,7 +169,8 @@ public class FavorisHelper {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(mContext, "", "Communication en cours...", true);
+			progressDialog = ProgressDialog.show(mContext, null, mContext.getString(R.string.msg_importing_favoris),
+					true);
 			progressDialog.show();
 		}
 

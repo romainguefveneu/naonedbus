@@ -84,6 +84,8 @@
     <string name="action_change_sens">Autre sens</string>
     <string name="action_show_on_map">Voir sur le plan</string>
     <string name="action_favori">Favori</string>
+    <string name="action_favori_add">Ajouter en favori</string>
+    <string name="action_favori_remove">Retirer des favoris</string>
     <string name="action_search">Rechercher</string>
     <string name="action_location_center">Centrer sur ma position</string>
     <string name="action_list_location_center">Centrer au plus proche</string>
@@ -222,9 +224,15 @@
     <!-- - - Vide -->
     <string name="msg_nothing_telephone">Pas de téléphone</string>
     <string name="msg_element_not_localized">Cet élément ne peut pas être localisé.</string>
+    <string name="msg_vide">Vide</string>
     <!-- - - Divers -->
     <string name="msg_loading_address">Récupération de l\'adresse en cours&#8230;</string>
+    <string name="msg_favoris_import">Favoris importés avec succès !</string>
+    <string name="msg_cache_size">Taille du cache : %s</string>
+    <string name="msg_calendar_select">Sélectionnez un calendrier par défaut.</string>
+    <string name="msg_cache_horaire_clear">Les horaires ont été vidés</string>
     <string name="btn_geolocation_service">Services de localisation</string>
+    <string name="msg_importing_favoris">Import des favoris en cours&#8230;</string>
     <!-- - - Horaires -->
     <string name="msg_depart_proche">départ proche</string>
     <string name="msg_aucun_depart_24h">dans longtemps</string>
@@ -248,6 +256,7 @@
     <string name="dialog_content_comment_sending_error">Une erreur s\'est produite pendant l\'envoi du message, merci de réessayer plus tard…</string>
     <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
     <string name="dialog_title_menu_lignes">Ligne %1$s</string>
+    <string name="dialog_title_favoris_import">Votre clé :</string>
     <!-- Showcase -->
     <string name="showcase_arrets_title">Changez facilement de sens</string>
     <string name="showcase_arrets_content">Cliquez sur le sens pour en changer.</string>

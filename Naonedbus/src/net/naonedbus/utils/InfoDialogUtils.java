@@ -17,10 +17,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
-import android.text.Html;
-import android.text.util.Linkify;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -66,7 +62,6 @@ public abstract class InfoDialogUtils {
 	public static AlertDialog getDialog(Context context, int titleId, int messageId) {
 
 		final AlertDialog.Builder moreDetailsDialog = new AlertDialog.Builder(context);
-		moreDetailsDialog.setIcon(android.R.drawable.ic_dialog_info);
 		moreDetailsDialog.setTitle(context.getString(titleId));
 		moreDetailsDialog.setMessage(context.getString(messageId));
 		moreDetailsDialog.setPositiveButton(android.R.string.ok, null);

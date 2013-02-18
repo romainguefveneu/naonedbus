@@ -33,6 +33,9 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsFragments.class.getName());
 		getIntent().putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
+
+		setContentView(R.layout.fragment_listview);
+
 		super.onCreate(savedInstanceState);
 
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);

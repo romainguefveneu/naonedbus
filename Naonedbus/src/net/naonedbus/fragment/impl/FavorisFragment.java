@@ -114,8 +114,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (DBG)
 				Log.d(LOG_TAG, "onImport");
 
-			if (isVisible())
-				refreshContent();
+			if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
+				mBackupManager.dataChanged();
+			mContentHasChanged = true;
 		}
 
 		@TargetApi(Build.VERSION_CODES.FROYO)

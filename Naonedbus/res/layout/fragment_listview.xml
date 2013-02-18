@@ -20,7 +20,7 @@
  */
 -->
 <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/android:list"
+    android:id="@android:id/list"
     style="@style/Listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

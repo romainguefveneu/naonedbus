@@ -167,6 +167,10 @@ public class FavoriManager extends SQLiteManager<Favori> {
 				new String[] { String.valueOf(item._id) });
 	}
 
+	public boolean isFavori(ContentResolver contentResolver, int arretId) {
+		return getSingle(contentResolver, arretId) != null;
+	}
+
 	/**
 	 * getContentValues for Favori
 	 * 
