@@ -34,11 +34,17 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class CommentairesFragment extends CustomListFragment implements CustomFragmentActions {
 
+	public static final String PARAM_CODE_LIGNE = "codeLigne";
+	public static final String PARAM_CODE_SENS = "codeSens";
+	public static final String PARAM_CODE_ARRET = "codeArret";
+
 	private static final String LOG_TAG = "CommentairesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private MenuItem mRefreshMenuItem;
-	private LoadTimeLineCache mLoaderCache;
+	private String mCodeLigne;
+	private String mCodeSens;
+	private String mCodeArret;
 
 	public CommentairesFragment() {
 		super(R.string.title_fragment_en_direct, R.layout.fragment_listview_box);
@@ -59,16 +65,12 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		if (DBG)
 			Log.d(LOG_TAG, "onActivityCreated");
 
-		mLoaderCache = (LoadTimeLineCache) new LoadTimeLineCache().execute();
-		loadContent();
-	}
+		mCodeLigne = getArguments().getString(PARAM_CODE_LIGNE);
+		mCodeSens = getArguments().getString(PARAM_CODE_SENS);
+		mCodeArret = getArguments().getString(PARAM_CODE_ARRET);
 
-	@Override
-	public void onDestroy() {
-		if (DBG)
-			Log.d(LOG_TAG, "onDestroy");
-		mLoaderCache = null;
-		super.onDestroy();
+		new LoadTimeLineCache().execute(mCodeLigne, mCodeSens, mCodeArret);
+		loadContent();
 	}
 
 	@Override
@@ -146,7 +148,8 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 
 		try {
 			final CommentaireManager manager = CommentaireManager.getInstance();
-			final List<Commentaire> infoTraficLignes = manager.getFromWeb(context, null, null, null, new DateTime(0));
+			final List<Commentaire> infoTraficLignes = manager.getFromWeb(context, mCodeLigne, mCodeSens, mCodeArret,
+					new DateTime(0));
 
 			final CommentaireFomatter fomatter = new CommentaireFomatter(context);
 			final CommentaireArrayAdapter adapter = new CommentaireArrayAdapter(context);
@@ -224,15 +227,12 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			if (result.getCount() > 0) {
 				setListAdapter(result);
 				showContent();
-				hideResfrehMenuLoader();
 
 				// // Le chargement depuis le web est en cours ?
-				// if (loader != null && loader.getStatus() !=
-				// AsyncTask.Status.FINISHED) {
-				// addLoadingItem(adapter);
-				// }
+				if (getLoaderManager().hasRunningLoaders() == false) {
+					hideResfrehMenuLoader();
+				}
 
-				// setListAdapter(adapter);
 			}
 		}
 	}

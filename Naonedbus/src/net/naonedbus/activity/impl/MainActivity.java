@@ -70,6 +70,7 @@ public class MainActivity extends SlidingMenuActivity {
 			new UpdateAndCleanTask().execute();
 		}
 		addDelayedFragments(titles, classes);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 
 	@Override
@@ -121,6 +122,7 @@ public class MainActivity extends SlidingMenuActivity {
 			hideSetupView();
 			loadContent();
 		}
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void showSetupView(int textResId) {

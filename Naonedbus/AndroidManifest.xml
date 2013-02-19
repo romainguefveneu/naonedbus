@@ -45,9 +45,7 @@
             android:label="@string/title_activity_infos_trafic" />
         <activity android:name=".activity.impl.SensActivity" />
         <activity android:name=".activity.impl.ArretsActivity" />
-        <activity
-            android:name=".activity.impl.HorairesActivity"
-            android:uiOptions="splitActionBarWhenNarrow" />
+        <activity android:name=".activity.impl.HorairesActivity" />
         <activity
             android:name=".activity.impl.CommentaireActivity"
             android:label="@string/emptyString"

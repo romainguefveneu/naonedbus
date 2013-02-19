@@ -2122,20 +2122,21 @@ containing a value of this type.
         public static final int activity_commentaire=0x7f100001;
         public static final int activity_commentaire_detail=0x7f100002;
         public static final int activity_en_direct=0x7f100003;
-        public static final int activity_map=0x7f100004;
-        public static final int activity_parking_detail=0x7f100005;
-        public static final int activity_search=0x7f100006;
-        public static final int fragment_arrets=0x7f100007;
-        public static final int fragment_arrets_contextual=0x7f100008;
-        public static final int fragment_equipements=0x7f100009;
-        public static final int fragment_favoris=0x7f10000a;
-        public static final int fragment_favoris_contextual=0x7f10000b;
-        public static final int fragment_horaires=0x7f10000c;
-        public static final int fragment_lignes=0x7f10000d;
-        public static final int fragment_lignes_contextual=0x7f10000e;
-        public static final int fragment_parkings_publics=0x7f10000f;
-        public static final int fragment_proximite=0x7f100010;
-        public static final int fragment_search=0x7f100011;
+        public static final int activity_horaires=0x7f100004;
+        public static final int activity_map=0x7f100005;
+        public static final int activity_parking_detail=0x7f100006;
+        public static final int activity_search=0x7f100007;
+        public static final int fragment_arrets=0x7f100008;
+        public static final int fragment_arrets_contextual=0x7f100009;
+        public static final int fragment_equipements=0x7f10000a;
+        public static final int fragment_favoris=0x7f10000b;
+        public static final int fragment_favoris_contextual=0x7f10000c;
+        public static final int fragment_horaires=0x7f10000d;
+        public static final int fragment_lignes=0x7f10000e;
+        public static final int fragment_lignes_contextual=0x7f10000f;
+        public static final int fragment_parkings_publics=0x7f100010;
+        public static final int fragment_proximite=0x7f100011;
+        public static final int fragment_search=0x7f100012;
     }
     public static final class plurals {
         public static final int parking_places_disponibles=0x7f0f0000;
