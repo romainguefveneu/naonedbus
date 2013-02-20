@@ -65,11 +65,13 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		if (DBG)
 			Log.d(LOG_TAG, "onActivityCreated");
 
-		mCodeLigne = getArguments().getString(PARAM_CODE_LIGNE);
-		mCodeSens = getArguments().getString(PARAM_CODE_SENS);
-		mCodeArret = getArguments().getString(PARAM_CODE_ARRET);
+		if (getArguments() != null) {
+			mCodeLigne = getArguments().getString(PARAM_CODE_LIGNE);
+			mCodeSens = getArguments().getString(PARAM_CODE_SENS);
+			mCodeArret = getArguments().getString(PARAM_CODE_ARRET);
+		}
 
-		new LoadTimeLineCache().execute(mCodeLigne, mCodeSens, mCodeArret);
+		// new LoadTimeLineCache().execute(mCodeLigne, mCodeSens, mCodeArret);
 		loadContent();
 	}
 
@@ -115,6 +117,9 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	protected void onPreExecute() {
 		if (DBG)
 			Log.d(LOG_TAG, "onPreExecute");
+		if (getListAdapter() == null) {
+			showLoader();
+		}
 		showResfrehMenuLoader();
 	}
 
@@ -123,6 +128,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		if (DBG)
 			Log.d(LOG_TAG, "onPostExecute");
 		hideResfrehMenuLoader();
+		showContent();
 	}
 
 	@Override
@@ -182,7 +188,6 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			super.onPreExecute();
 			if (DBG)
 				Log.d(LOG_TAG, "Chargement du cache...");
-			showLoader();
 			showResfrehMenuLoader();
 		}
 

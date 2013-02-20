@@ -20,24 +20,24 @@ package net.naonedbus.rest.controller.impl;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
-import net.naonedbus.rest.adapter.CommentaireTypeAdapter;
 import net.naonedbus.rest.container.CommentaireContainer;
 import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpException;
 import org.joda.time.base.BaseDateTime;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Classe d'envoi des commentaires au WebService
@@ -49,6 +49,16 @@ public class CommentaireController extends RestController<CommentaireContainer> 
 
 	private static final int LIMIT = 25;
 	private static final String PATH = "commentaire";
+
+	// JSON Node names
+	private static final String TAG_COMMENTAIRE = "commentaire";
+	private static final String TAG_ID = "id";
+	private static final String TAG_CODE_ARRET = "codeArret";
+	private static final String TAG_CODE_LIGNE = "codeLigne";
+	private static final String TAG_CODE_SENS = "codeSens";
+	private static final String TAG_MESSAGE = "message";
+	private static final String TAG_SOURCE = "source";
+	private static final String TAG_TIMESTAMP = "timestamp";
 
 	public void post(String codeLigne, String codeSens, String codeArret, String message, String hash)
 			throws IOException, HttpException {
@@ -91,19 +101,50 @@ public class CommentaireController extends RestController<CommentaireContainer> 
 	 * @throws IOException
 	 */
 	protected CommentaireContainer parseJson(URL url) throws IOException {
-		final Gson gson = new GsonBuilder().registerTypeAdapter(Commentaire.class, new CommentaireTypeAdapter())
-				.create();
-		Reader comReader;
-		CommentaireContainer result;
+		CommentaireContainer result = null;
+		final List<Commentaire> commentaires = new ArrayList<Commentaire>();
 
 		final URLConnection conn = url.openConnection();
 		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
 
-		comReader = new InputStreamReader(conn.getInputStream());
-		result = gson.fromJson(comReader, CommentaireContainer.class);
-		comReader.close();
+		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
+		final String source = IOUtils.toString(comReader);
+		IOUtils.closeQuietly(comReader);
+
+		try {
+			final JSONObject json = new JSONObject(source);
+			final JSONArray jsonArray = json.getJSONArray(TAG_COMMENTAIRE);
+
+			Commentaire commentaire;
+			JSONObject c;
+			// looping through All Contacts
+			for (int i = 0; i < jsonArray.length(); i++) {
+				c = jsonArray.getJSONObject(i);
+				commentaire = new Commentaire();
+
+				commentaire.setId(c.getInt(TAG_ID));
+				if (c.has(TAG_CODE_LIGNE))
+					commentaire.setCodeLigne(c.getString(TAG_CODE_LIGNE));
+				if (c.has(TAG_CODE_SENS))
+					commentaire.setCodeSens(c.getString(TAG_CODE_SENS));
+				if (c.has(TAG_CODE_ARRET))
+					commentaire.setCodeArret(c.getString(TAG_CODE_ARRET));
+				if (c.has(TAG_MESSAGE))
+					commentaire.setMessage(c.getString(TAG_MESSAGE));
+				if (c.has(TAG_SOURCE))
+					commentaire.setSource(c.getString(TAG_SOURCE));
+				if (c.has(TAG_TIMESTAMP))
+					commentaire.setTimestamp(c.getLong(TAG_TIMESTAMP));
+
+				commentaires.add(commentaire);
+			}
+
+			result = new CommentaireContainer();
+			result.commentaire = commentaires;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 
 		return result;
 	}
-
 }

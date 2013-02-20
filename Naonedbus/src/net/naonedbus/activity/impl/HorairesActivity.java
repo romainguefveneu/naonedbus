@@ -86,7 +86,10 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 			bundleCommentaires.putString(CommentairesFragment.PARAM_CODE_LIGNE, mLigne.code);
 			bundleCommentaires.putString(CommentairesFragment.PARAM_CODE_SENS, mSens.code);
 
-			final Bundle[] bundles = new Bundle[] { bundleHoraires, bundleHoraires, bundleCommentaires };
+			final Bundle bundleTanActu = new Bundle();
+			bundleTanActu.putString(TanActuFragment.PARAM_CODE_LIGNE, mLigne.code);
+
+			final Bundle[] bundles = new Bundle[] { bundleTanActu, bundleHoraires, bundleCommentaires };
 
 			addFragments(titles, classes, bundles);
 			setSelectedTab(1);

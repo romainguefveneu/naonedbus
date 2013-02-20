@@ -84,10 +84,10 @@ public class CommentaireManager {
 		final CommentaireController commentaireController = new CommentaireController();
 		final List<Commentaire> data = commentaireController.getAll(codeLigne, codeSens, codeArret, date);
 
-		if (data != null && data.size() > 0) {
-			final String key = genKey(codeLigne, codeSens, codeArret);
-			saveToCache(context, key, data);
-		}
+//		if (data != null && data.size() > 0) {
+//			final String key = genKey(codeLigne, codeSens, codeArret);
+//			saveToCache(context, key, data);
+//		}
 
 		return data;
 	}

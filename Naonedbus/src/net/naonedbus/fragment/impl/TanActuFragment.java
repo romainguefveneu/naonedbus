@@ -26,6 +26,10 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class TanActuFragment extends CustomListFragment {
 
+	public static final String PARAM_CODE_LIGNE = "codeLigne";
+
+	private String mCodeLigne;
+
 	public TanActuFragment() {
 		super(R.string.title_fragment_tan_actu, R.layout.fragment_listview_box);
 	}
@@ -33,6 +37,11 @@ public class TanActuFragment extends CustomListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
+		if (getArguments() != null) {
+			mCodeLigne = getArguments().getString(PARAM_CODE_LIGNE);
+		}
+
 		loadContent();
 	}
 
@@ -65,12 +74,34 @@ public class TanActuFragment extends CustomListFragment {
 
 			final InfoTraficManager infoTraficManager = InfoTraficManager.getInstance();
 			final LigneManager ligneManager = LigneManager.getInstance();
-			final List<Ligne> lignes = ligneManager.getAll(context.getContentResolver());
 
 			List<InfoTrafic> infoTrafics;
 			InfoTrafic infoTraficClone;
-			for (Ligne ligne : lignes) {
-				infoTrafics = infoTraficManager.getByLigneCode(context, ligne.code);
+
+			//TODO : Faire plus propre
+			if (mCodeLigne == null) {
+				final List<Ligne> lignes = ligneManager.getAll(context.getContentResolver());
+
+				for (Ligne ligne : lignes) {
+					infoTrafics = infoTraficManager.getByLigneCode(context, ligne.code);
+
+					if (infoTrafics.size() == 0) {
+						// Gérer les lignes sans travaux.
+						final InfoTrafic emptyDetail = new EmptyInfoTrafic();
+						emptyDetail.setSection(ligne);
+
+						infoTraficDetails.add(emptyDetail);
+					} else {
+						for (InfoTrafic infoTrafic : infoTrafics) {
+							infoTraficClone = infoTrafic.clone();
+							infoTraficClone.setSection(ligne);
+							infoTraficDetails.add(infoTraficClone);
+						}
+					}
+				}
+			} else {
+				final Ligne ligne = ligneManager.getSingle(context.getContentResolver(), mCodeLigne);
+				infoTrafics = infoTraficManager.getByLigneCode(context, mCodeLigne);
 
 				if (infoTrafics.size() == 0) {
 					// Gérer les lignes sans travaux.
