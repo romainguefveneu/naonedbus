@@ -73,6 +73,8 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 
 		setContentView(mLayoutId);
 
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
