@@ -70,7 +70,6 @@ public class MainActivity extends SlidingMenuActivity {
 			new UpdateAndCleanTask().execute();
 		}
 		addDelayedFragments(titles, classes);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 
 	@Override
@@ -110,7 +109,7 @@ public class MainActivity extends SlidingMenuActivity {
 	 * Effectuer les actions avant de déclencher la mise à jour.
 	 */
 	private void beforeUpdate() {
-
+		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 	}
 
 	/**
