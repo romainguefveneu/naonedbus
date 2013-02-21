@@ -6,6 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.rest.controller.NodRestController;
@@ -13,21 +16,16 @@ import android.util.SparseArray;
 
 import com.google.gson.reflect.TypeToken;
 
-public class ParkingPublicsController extends NodRestController<List<ParkingPublic>> {
+public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 	private static final String API = "getDisponibiliteParkingsPublics";
 	private SparseArray<ParkingPublicStatut> statuts;
 
 	public ParkingPublicsController() {
+		super("Groupe_Parking");
 		statuts = new SparseArray<ParkingPublicStatut>();
 		for (ParkingPublicStatut statut : ParkingPublicStatut.values()) {
 			statuts.put(statut.getValue(), statut);
 		}
-	}
-
-	@Override
-	protected Type getCollectionType() {
-		return new TypeToken<List<ParkingPublic>>() {
-		}.getType();
 	}
 
 	public List<ParkingPublic> getAll() throws IOException {
@@ -44,6 +42,11 @@ public class ParkingPublicsController extends NodRestController<List<ParkingPubl
 		}
 
 		return parkings;
+	}
+
+	@Override
+	protected ParkingPublic parseJsonObject(JSONObject object) throws JSONException {
+		return null;
 	}
 
 }

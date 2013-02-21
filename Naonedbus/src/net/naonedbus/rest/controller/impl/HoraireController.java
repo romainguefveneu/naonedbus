@@ -28,12 +28,16 @@ import java.util.TimeZone;
 
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.horaire.Horaire;
-import net.naonedbus.bean.horaire.HoraireTan;
 import net.naonedbus.rest.UrlBuilder;
 import net.naonedbus.rest.container.HoraireContainer;
+import net.naonedbus.rest.container.HoraireContainer.HoraireNode;
+import net.naonedbus.rest.container.HoraireContainer.NoteNode;
 import net.naonedbus.rest.controller.RestController;
 
 import org.joda.time.DateMidnight;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.util.Log;
 
@@ -45,11 +49,24 @@ public class HoraireController extends RestController<HoraireContainer> {
 
 	private static final String LOG_TAG = HoraireController.class.getSimpleName();
 
+	private static final String TAG_CODE_COULEUR = "codeCouleur";
+	private static final String TAG_PLAGE_SERVICE = "plageDeService";
+	private static final String TAG_NOTES = "notes";
+	private static final String TAG_NOTES_CODE = "code";
+	private static final String TAG_NOTES_LIBELLE = "libelle";
+	private static final String TAG_HORAIRES = "horaires";
+	private static final String TAG_HORAIRES_HEURE = "heure";
+	private static final String TAG_HORAIRES_PASSAGE = "passage";
+
 	private static final String PATH = "https://open.tan.fr/ewp/horairesarret.json";
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private static final SimpleDateFormat dateDecode = new SimpleDateFormat("H'h'mm");
 	static {
 		dateDecode.setTimeZone(TimeZone.getTimeZone("GMT"));
+	}
+
+	public HoraireController() {
+		super("horaires");
 	}
 
 	/**
@@ -62,20 +79,20 @@ public class HoraireController extends RestController<HoraireContainer> {
 		final UrlBuilder url = new UrlBuilder(PATH);
 		long timeOffset = date.getMillis();
 		final List<Horaire> result = new ArrayList<Horaire>();
-		final List<HoraireTan> horaires;
+		final List<HoraireNode> horaires;
 
 		url.addSegment(arret.codeArret);
 		url.addSegment(arret.codeLigne);
 		url.addSegment(arret.codeSens);
 		url.addSegment(dateFormat.format(date.toDate()));
-		HoraireContainer content = parseJson(url, HoraireContainer.class);
+		HoraireContainer content = parseJsonObject(url.getUrl());
 
 		if (content != null) {
 			horaires = content.horaires;
 			// Transformation des horaires TAN en horaire naonedbus.
 			Horaire horaire;
 			String heure;
-			for (HoraireTan horaireTan : horaires) {
+			for (HoraireNode horaireTan : horaires) {
 				heure = horaireTan.heure;
 				// Changement de jour
 				if (heure.equals("0h")) {
@@ -96,6 +113,61 @@ public class HoraireController extends RestController<HoraireContainer> {
 		}
 
 		return result;
+	}
+
+	@Override
+	protected HoraireContainer parseJsonObject(final JSONObject object) throws JSONException {
+		final HoraireContainer container = new HoraireContainer();
+
+		container.plageDeService = object.getString(TAG_PLAGE_SERVICE);
+		container.codeCouleur = object.getString(TAG_CODE_COULEUR);
+		container.notes = parseNotes(object.getJSONArray(TAG_NOTES));
+		container.horaires = parseHoraires(object.getJSONArray(TAG_HORAIRES));
+
+		return container;
+	}
+
+	private List<HoraireContainer.NoteNode> parseNotes(final JSONArray array) throws JSONException {
+		final List<HoraireContainer.NoteNode> notes = new ArrayList<HoraireContainer.NoteNode>();
+		JSONObject object;
+
+		for (int i = 0; i < array.length(); i++) {
+			object = array.getJSONObject(i);
+
+			final NoteNode note = new NoteNode();
+			note.code = object.getString(TAG_NOTES_CODE);
+			note.libelle = object.getString(TAG_NOTES_LIBELLE);
+
+			notes.add(note);
+		}
+
+		return notes;
+	}
+
+	private List<HoraireNode> parseHoraires(final JSONArray array) throws JSONException {
+		final List<HoraireNode> horaires = new ArrayList<HoraireNode>();
+		JSONObject object;
+
+		for (int i = 0; i < array.length(); i++) {
+			object = array.getJSONObject(i);
+
+			final HoraireNode horaire = new HoraireNode();
+			horaire.heure = object.getString(TAG_HORAIRES_HEURE);
+			horaire.passages = parsePassages(object.getJSONArray(TAG_HORAIRES_PASSAGE));
+
+			horaires.add(horaire);
+		}
+
+		return horaires;
+	}
+
+	private List<String> parsePassages(final JSONArray passagesArray) throws JSONException {
+		final List<String> passages = new ArrayList<String>();
+		for (int i = 0; i < passagesArray.length(); i++) {
+			passages.add(passagesArray.getString(i));
+		}
+
+		return passages;
 	}
 
 }

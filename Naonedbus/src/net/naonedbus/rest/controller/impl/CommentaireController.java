@@ -19,23 +19,15 @@
 package net.naonedbus.rest.controller.impl;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
-import net.naonedbus.rest.container.CommentaireContainer;
 import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpException;
 import org.joda.time.base.BaseDateTime;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,7 +37,7 @@ import org.json.JSONObject;
  * @author romain.guefveneu
  * 
  */
-public class CommentaireController extends RestController<CommentaireContainer> {
+public class CommentaireController extends RestController<Commentaire> {
 
 	private static final int LIMIT = 25;
 	private static final String PATH = "commentaire";
@@ -59,6 +51,10 @@ public class CommentaireController extends RestController<CommentaireContainer> 
 	private static final String TAG_MESSAGE = "message";
 	private static final String TAG_SOURCE = "source";
 	private static final String TAG_TIMESTAMP = "timestamp";
+
+	public CommentaireController() {
+		super(TAG_COMMENTAIRE);
+	}
 
 	public void post(String codeLigne, String codeSens, String codeArret, String message, String hash)
 			throws IOException, HttpException {
@@ -78,73 +74,32 @@ public class CommentaireController extends RestController<CommentaireContainer> 
 			throws IOException {
 		final UrlBuilder url = new UrlBuilder(RestConfiguration.PATH, PATH);
 
-		CommentaireContainer result;
-
 		url.addQueryParameter("codeLigne", codeLigne);
 		url.addQueryParameter("codeSens", codeSens);
 		url.addQueryParameter("codeArret", codeArret);
 		url.addQueryParameter("timestamp", String.valueOf(date.getMillis()));
 		url.addQueryParameter("limit", String.valueOf(LIMIT));
 
-		result = parseJson(url.getUrl());
-
-		return (result == null) ? null : result.commentaire;
+		return parseJson(url.getUrl());
 	}
 
-	/**
-	 * Parser la réponse d'un webservice Rest json et récupérer une instance de
-	 * la classe passée en paramètre
-	 * 
-	 * @param url
-	 * @param clazz
-	 * @return
-	 * @throws IOException
-	 */
-	protected CommentaireContainer parseJson(URL url) throws IOException {
-		CommentaireContainer result = null;
-		final List<Commentaire> commentaires = new ArrayList<Commentaire>();
+	@Override
+	protected Commentaire parseJsonObject(JSONObject object) throws JSONException {
+		final Commentaire commentaire = new Commentaire();
 
-		final URLConnection conn = url.openConnection();
-		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
-
-		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
-		final String source = IOUtils.toString(comReader);
-		IOUtils.closeQuietly(comReader);
-
-		try {
-			final JSONObject json = new JSONObject(source);
-			final JSONArray jsonArray = json.getJSONArray(TAG_COMMENTAIRE);
-
-			Commentaire commentaire;
-			JSONObject c;
-			// looping through All Contacts
-			for (int i = 0; i < jsonArray.length(); i++) {
-				c = jsonArray.getJSONObject(i);
-				commentaire = new Commentaire();
-
-				commentaire.setId(c.getInt(TAG_ID));
-				if (c.has(TAG_CODE_LIGNE))
-					commentaire.setCodeLigne(c.getString(TAG_CODE_LIGNE));
-				if (c.has(TAG_CODE_SENS))
-					commentaire.setCodeSens(c.getString(TAG_CODE_SENS));
-				if (c.has(TAG_CODE_ARRET))
-					commentaire.setCodeArret(c.getString(TAG_CODE_ARRET));
-				if (c.has(TAG_MESSAGE))
-					commentaire.setMessage(c.getString(TAG_MESSAGE));
-				if (c.has(TAG_SOURCE))
-					commentaire.setSource(c.getString(TAG_SOURCE));
-				if (c.has(TAG_TIMESTAMP))
-					commentaire.setTimestamp(c.getLong(TAG_TIMESTAMP));
-
-				commentaires.add(commentaire);
-			}
-
-			result = new CommentaireContainer();
-			result.commentaire = commentaires;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return result;
+		commentaire.setId(object.getInt(TAG_ID));
+		if (object.has(TAG_CODE_LIGNE))
+			commentaire.setCodeLigne(object.getString(TAG_CODE_LIGNE));
+		if (object.has(TAG_CODE_SENS))
+			commentaire.setCodeSens(object.getString(TAG_CODE_SENS));
+		if (object.has(TAG_CODE_ARRET))
+			commentaire.setCodeArret(object.getString(TAG_CODE_ARRET));
+		if (object.has(TAG_MESSAGE))
+			commentaire.setMessage(object.getString(TAG_MESSAGE));
+		if (object.has(TAG_SOURCE))
+			commentaire.setSource(object.getString(TAG_SOURCE));
+		if (object.has(TAG_TIMESTAMP))
+			commentaire.setTimestamp(object.getLong(TAG_TIMESTAMP));
+		return commentaire;
 	}
 }

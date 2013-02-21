@@ -19,24 +19,35 @@
 package net.naonedbus.rest.controller.impl;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.rest.controller.NodRestController;
 
-import com.google.gson.reflect.TypeToken;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class InfoTraficController extends NodRestController<List<InfoTrafic>> {
+public class InfoTraficController extends NodRestController<InfoTrafic> {
+
+	public InfoTraficController() {
+		super("INFOTRAFIC");
+	}
+
 	private static final String API_PREVISIONNEL = "getInfoTraficTANPrevisionnel";
 	private static final String API_REEL = "getInfoTraficTANTempsReel";
 
-	@Override
-	protected Type getCollectionType() {
-		return new TypeToken<List<InfoTrafic>>() {
-		}.getType();
-	}
+	private static final String TAG_CODE = "CODE";
+	private static final String TAG_LANGUE = "LANGUE";
+	private static final String TAG_INTITULE = "INTITULE";
+	private static final String TAG_RESUME = "RESUME";
+	private static final String TAG_TEXTE_VOCALE = "TEXTE_VOCAL";
+	private static final String TAG_DATE_DEBUT = "DATE_DEBUT";
+	private static final String TAG_DATE_FIN = "DATE_FIN";
+	private static final String TAG_HEURE_DEBUT = "HEURE_DEBUT";
+	private static final String TAG_HEURE_FIN = "HEURE_FIN";
+	private static final String TAG_PERTURBATION_TERMINEE = "PERTURBATION_TERMINEE";
+	private static final String TAG_TRONCONS = "TRONCONS";
 
 	public List<InfoTrafic> getAll() throws IOException {
 		final List<InfoTrafic> infosTrafics = new ArrayList<InfoTrafic>();
@@ -51,5 +62,12 @@ public class InfoTraficController extends NodRestController<List<InfoTrafic>> {
 			infosTrafics.addAll(infosPrevisionnel);
 		}
 		return infosTrafics;
+	}
+
+	@Override
+	protected InfoTrafic parseJsonObject(final JSONObject object) throws JSONException {
+		final InfoTrafic infoTrafic = new InfoTrafic();
+
+		return null;
 	}
 }

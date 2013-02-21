@@ -21,14 +21,25 @@ package net.naonedbus.rest.container;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.bean.horaire.HoraireTan;
-
 /**
  * @author romain.guefveneu
  * 
  */
 public class HoraireContainer {
 
-	public List<HoraireTan> horaires = new ArrayList<HoraireTan>();
+	public String codeCouleur;
+	public String plageDeService;
+	public List<NoteNode> notes = new ArrayList<NoteNode>();
+	public List<HoraireNode> horaires = new ArrayList<HoraireNode>();
+
+	public static class NoteNode {
+		public String code;
+		public String libelle;
+	}
+
+	public static class HoraireNode {
+		public String heure;
+		public List<String> passages;
+	}
 
 }

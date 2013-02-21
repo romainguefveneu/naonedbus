@@ -25,10 +25,14 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
@@ -38,6 +42,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -59,48 +66,10 @@ public abstract class RestController<T> {
 	 */
 	private static int HTTP_ERROR_CODE_START = 400;
 
-	/**
-	 * {@link RestController#parseJson(URL, Class)}
-	 * 
-	 * @see RestController#parseJson(URL, Class)
-	 */
-	protected T parseJson(UrlBuilder url, Class<T> clazz) throws IOException {
-		return parseJson(url.getUrl(), clazz);
-	}
+	private String mRootNode;
 
-	/**
-	 * Parser la réponse d'un webservice Rest json et récupérer une instance de
-	 * la classe passée en paramètre
-	 * 
-	 * @param url
-	 * @param clazz
-	 * @return
-	 * @throws IOException
-	 */
-	protected T parseJson(URL url, Class<T> clazz) throws IOException {
-		final Gson gson = new Gson();
-		Reader comReader;
-		T result;
-
-		final URLConnection conn = url.openConnection();
-		conn.setConnectTimeout(TIMEOUT);
-		conn.setReadTimeout(TIMEOUT);
-		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
-
-		comReader = new InputStreamReader(conn.getInputStream());
-		result = gson.fromJson(comReader, clazz);
-		comReader.close();
-
-		return result;
-	}
-
-	/**
-	 * {@link RestController#parseJson(URL, Type)}
-	 * 
-	 * @see RestController#parseJson(URL, Type)
-	 */
-	protected T parseJson(UrlBuilder url, Type type) throws IOException {
-		return parseJson(url.getUrl(), type);
+	public RestController(final String rootNode) {
+		mRootNode = rootNode;
 	}
 
 	/**
@@ -108,40 +77,81 @@ public abstract class RestController<T> {
 	 * type passé en paramètre
 	 * 
 	 * @param url
-	 * @param type
 	 * @return
 	 * @throws IOException
 	 */
-	protected T parseJson(URL url, Type type) throws IOException {
-		final Gson gson = new Gson();
-		Reader comReader;
-		T result;
+	protected T parseJsonObject(URL url) throws IOException {
+		T result = null;
 
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);
 		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
 
-		comReader = new InputStreamReader(conn.getInputStream());
-		result = gson.fromJson(comReader, type);
-		comReader.close();
+		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
+		final String source = IOUtils.toString(comReader);
+		IOUtils.closeQuietly(comReader);
+
+		try {
+			result = parseJsonObject(new JSONObject(source));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 
 		return result;
 	}
 
 	/**
-	 * Parser un élément JsonElement.F
+	 * Parser la réponse d'un webservice Rest json et récupérer une instance du
+	 * type passé en paramètre
 	 * 
-	 * @param element
-	 * @param type
+	 * @param url
 	 * @return
+	 * @throws IOException
 	 */
-	protected T parseJson(JsonElement element, Type type) {
-		final Gson gson = new Gson();
-		T result;
-		result = gson.fromJson(element, type);
+	protected List<T> parseJson(URL url) throws IOException {
+		List<T> result = null;
+
+		final URLConnection conn = url.openConnection();
+		conn.setConnectTimeout(TIMEOUT);
+		conn.setReadTimeout(TIMEOUT);
+		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
+
+		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
+		final String source = IOUtils.toString(comReader);
+		IOUtils.closeQuietly(comReader);
+
+		try {
+			final JSONObject json = new JSONObject(source);
+			result = parseJsonArray(json);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 		return result;
 	}
+
+	protected List<T> parseJsonArray(JSONObject json) throws JSONException {
+		final JSONArray jsonArray = json.getJSONArray(mRootNode);
+		final List<T> result = new ArrayList<T>();
+		JSONObject c;
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			c = jsonArray.getJSONObject(i);
+			result.add(parseJsonObject(c));
+		}
+
+		return result;
+	}
+
+	/**
+	 * Parser un object JsonElement.F
+	 * 
+	 * @param object
+	 *            L'objet à parser
+	 * @return L'objet reconstruit
+	 */
+	protected abstract T parseJsonObject(JSONObject object) throws JSONException;
 
 	/**
 	 * @see RestController#post(URL)
