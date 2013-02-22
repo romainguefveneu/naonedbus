@@ -47,7 +47,6 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.google.gson.JsonSyntaxException;
 
 /**
  * @author romain
@@ -182,7 +181,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * @throws IOException
 	 */
 	public synchronized List<Horaire> getHoraires(final ContentResolver contentResolver, final Arret arret,
-			final DateMidnight date) throws IOException, JsonSyntaxException {
+			final DateMidnight date) throws IOException {
 		return getHoraires(contentResolver, arret, date, null);
 	}
 
@@ -192,7 +191,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * @throws IOException
 	 */
 	public synchronized List<Horaire> getHoraires(final ContentResolver contentResolver, final Arret arret,
-			final DateMidnight date, final DateTime after) throws IOException, JsonSyntaxException {
+			final DateMidnight date, final DateTime after) throws IOException {
 		// Le cache ne doit stocker que les horaires du jour et du lendemain.
 		final DateMidnight dateMax = new DateMidnight().plusDays(DAYS_IN_CACHE);
 		final DateMidnight currentDay = new DateMidnight();
@@ -249,7 +248,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * @throws IOException
 	 */
 	public List<Horaire> getNextHoraires(ContentResolver contentResolver, Arret arret, DateMidnight date, int limit)
-			throws IOException, JsonSyntaxException {
+			throws IOException {
 		if (DBG)
 			Log.d(LOG_TAG, "getNextHoraires " + arret + " : " + date + "\t" + limit);
 
@@ -281,8 +280,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public Integer getMinutesToNextHoraire(final ContentResolver contentResolver, final Arret arret)
-			throws IOException, JsonSyntaxException {
+	public Integer getMinutesToNextHoraire(final ContentResolver contentResolver, final Arret arret) throws IOException {
 
 		final List<Horaire> nextHoraires = getNextHoraires(contentResolver, arret, new DateMidnight(), 1);
 		Integer result = null;

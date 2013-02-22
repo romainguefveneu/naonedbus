@@ -31,14 +31,13 @@ import org.json.JSONObject;
 public class InfoTraficController extends NodRestController<InfoTrafic> {
 
 	public InfoTraficController() {
-		super("INFOTRAFIC");
+		super("opendata", "answer", "data", "ROOT", "LISTE_INFOTRAFICS", "INFOTRAFIC");
 	}
 
 	private static final String API_PREVISIONNEL = "getInfoTraficTANPrevisionnel";
 	private static final String API_REEL = "getInfoTraficTANTempsReel";
 
 	private static final String TAG_CODE = "CODE";
-	private static final String TAG_LANGUE = "LANGUE";
 	private static final String TAG_INTITULE = "INTITULE";
 	private static final String TAG_RESUME = "RESUME";
 	private static final String TAG_TEXTE_VOCALE = "TEXTE_VOCAL";
@@ -52,12 +51,11 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 	public List<InfoTrafic> getAll() throws IOException {
 		final List<InfoTrafic> infosTrafics = new ArrayList<InfoTrafic>();
 
-		final List<InfoTrafic> infosReel = super.getAll(API_REEL, "ROOT", "LISTE_INFOTRAFICS", "INFOTRAFIC");
+		final List<InfoTrafic> infosReel = super.getAll(API_REEL);
 		if (infosReel != null) {
 			infosTrafics.addAll(infosReel);
 		}
-		final List<InfoTrafic> infosPrevisionnel = super.getAll(API_PREVISIONNEL, "ROOT", "LISTE_INFOTRAFICS",
-				"INFOTRAFIC");
+		final List<InfoTrafic> infosPrevisionnel = super.getAll(API_PREVISIONNEL);
 		if (infosPrevisionnel != null) {
 			infosTrafics.addAll(infosPrevisionnel);
 		}
@@ -68,6 +66,17 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 	protected InfoTrafic parseJsonObject(final JSONObject object) throws JSONException {
 		final InfoTrafic infoTrafic = new InfoTrafic();
 
-		return null;
+		infoTrafic.setCode(object.getString(TAG_CODE));
+		infoTrafic.setIntitule(object.getString(TAG_INTITULE));
+		infoTrafic.setResume(object.getString(TAG_RESUME));
+		infoTrafic.setTexteVocal(object.getString(TAG_TEXTE_VOCALE));
+		infoTrafic.setDateDebutString(object.getString(TAG_DATE_DEBUT));
+		infoTrafic.setDateFinString(object.getString(TAG_DATE_FIN));
+		infoTrafic.setHeureDebutString(object.getString(TAG_HEURE_DEBUT));
+		infoTrafic.setHeureFinString(object.getString(TAG_HEURE_FIN));
+		infoTrafic.setPerturbationTerminee("1".equals(object.getString(TAG_PERTURBATION_TERMINEE)));
+		infoTrafic.setTroncons(object.getString(TAG_TRONCONS));
+
+		return infoTrafic;
 	}
 }

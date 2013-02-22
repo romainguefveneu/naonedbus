@@ -42,13 +42,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.util.JsonWriter;
 import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonWriter;
 
 public class FavoriManager extends SQLiteManager<Favori> {
 
@@ -387,7 +384,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public void importFavoris(ContentResolver contentResolver, String id) throws JsonParseException, IOException {
+	public void importFavoris(ContentResolver contentResolver, String id) throws IOException {
 		final FavoriController controller = new FavoriController();
 		final List<Favori> favoris = controller.get(id);
 

@@ -10,8 +10,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.google.gson.annotations.SerializedName;
-
 public class InfoTrafic implements Serializable, SectionItem {
 
 	private static final long serialVersionUID = -2516041836875800927L;
@@ -19,25 +17,15 @@ public class InfoTrafic implements Serializable, SectionItem {
 	private static final DateTimeFormatter simpleDateParser = DateTimeFormat.forPattern("MM/yyyy").withZoneUTC();
 	private static final DateTimeFormatter timeParser = DateTimeFormat.forPattern("HH:mm").withZoneUTC();
 
-	@SerializedName("CODE")
 	private String code;
-	@SerializedName("INTITULE")
 	private String intitule;
-	@SerializedName("RESUME")
 	private String resume;
-	@SerializedName("TEXTE_VOCAL")
 	private String texteVocal;
-	@SerializedName("DATE_DEBUT")
 	private String dateDebutString;
-	@SerializedName("DATE_FIN")
 	private String dateFinString;
-	@SerializedName("HEURE_DEBUT")
 	private String heureDebutString;
-	@SerializedName("HEURE_FIN")
 	private String heureFinString;
-	@SerializedName("PERTURBATION_TERMINEE")
 	private boolean perturbationTerminee;
-	@SerializedName("TRONCONS")
 	private String troncons;
 
 	private Set<String> lignes = new TreeSet<String>();
@@ -108,6 +96,54 @@ public class InfoTrafic implements Serializable, SectionItem {
 
 	public void setSection(Object section) {
 		this.section = section;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public void setIntitule(String intitule) {
+		this.intitule = intitule;
+	}
+
+	public void setTexteVocal(String texteVocal) {
+		this.texteVocal = texteVocal;
+	}
+
+	public void setDateDebutString(String dateDebutString) {
+		this.dateDebutString = dateDebutString;
+	}
+
+	public void setDateFinString(String dateFinString) {
+		this.dateFinString = dateFinString;
+	}
+
+	public void setHeureDebutString(String heureDebutString) {
+		this.heureDebutString = heureDebutString;
+	}
+
+	public void setHeureFinString(String heureFinString) {
+		this.heureFinString = heureFinString;
+	}
+
+	public void setPerturbationTerminee(boolean perturbationTerminee) {
+		this.perturbationTerminee = perturbationTerminee;
+	}
+
+	public void setTroncons(String troncons) {
+		this.troncons = troncons;
+	}
+
+	public void setLignes(Set<String> lignes) {
+		this.lignes = lignes;
+	}
+
+	public void setDateDebut(DateTime dateDebut) {
+		this.dateDebut = dateDebut;
+	}
+
+	public void setDateFin(DateTime dateFin) {
+		this.dateFin = dateFin;
 	}
 
 	@Override

@@ -36,9 +36,6 @@ import org.joda.time.base.BaseDateTime;
 import android.content.Context;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 public class CommentaireManager {
 	private static CommentaireManager instance;
@@ -84,10 +81,10 @@ public class CommentaireManager {
 		final CommentaireController commentaireController = new CommentaireController();
 		final List<Commentaire> data = commentaireController.getAll(codeLigne, codeSens, codeArret, date);
 
-//		if (data != null && data.size() > 0) {
-//			final String key = genKey(codeLigne, codeSens, codeArret);
-//			saveToCache(context, key, data);
-//		}
+		// if (data != null && data.size() > 0) {
+		// final String key = genKey(codeLigne, codeSens, codeArret);
+		// saveToCache(context, key, data);
+		// }
 
 		return data;
 	}

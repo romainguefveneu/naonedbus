@@ -62,7 +62,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
-import com.google.gson.JsonSyntaxException;
 
 @TargetApi(Build.VERSION_CODES.FROYO)
 public class FavorisFragment extends CustomListFragment implements CustomFragmentActions, OnItemLongClickListener,
@@ -545,9 +544,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 						}
 					}
 				}
-			} catch (JsonSyntaxException e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
-				result = false;
 			} catch (IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 				result = false;

@@ -5,8 +5,6 @@ import java.util.Date;
 import net.naonedbus.bean.parking.Parking;
 import android.graphics.drawable.Drawable;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Description d'un parking de la ville de Nantes.
  * 
@@ -17,20 +15,14 @@ public class ParkingPublic implements Parking {
 
 	private static final long serialVersionUID = 8972295085025346469L;
 
-	@SerializedName("IdObj")
 	private Integer id;
-	@SerializedName("Grp_nom")
 	private String nom;
-	@SerializedName("Grp_statut")
 	private int statutValue;
-	@SerializedName("Grp_disponible")
 	private int placesDisponibles;
-	@SerializedName("Grp_exploitation")
 	private int placesTotales;
-	@SerializedName("Grp_complet")
 	private int seuilComplet;
-	@SerializedName("Grp_horodatage")
 	private String horodatage;
+
 	private ParkingPublicStatut statut;
 
 	private Double latitude;
@@ -111,6 +103,10 @@ public class ParkingPublic implements Parking {
 
 	public int getStatutValue() {
 		return statutValue;
+	}
+
+	public void setStatutValue(int value) {
+		statutValue = value;
 	}
 
 	public ParkingPublicStatut getStatut() {

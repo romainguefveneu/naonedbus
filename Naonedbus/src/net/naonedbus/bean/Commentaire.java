@@ -9,25 +9,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
-
 public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 
 	private static final long serialVersionUID = -9031229899288954850L;
 
-	@SerializedName("id")
 	private int mId;
-	@SerializedName("codeLigne")
 	private String mCodeLigne;
-	@SerializedName("codeSens")
 	private String mCodeSens;
-	@SerializedName("codeArret")
 	private String mCodeArret;
-	@SerializedName("message")
 	private String mMessage;
-	@SerializedName("source")
 	private String mSource;
-	@SerializedName("timestamp")
 	private long mTimestamp;
 
 	private Object mSection;

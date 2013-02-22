@@ -21,15 +21,12 @@ package net.naonedbus.rest.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
 
 import org.apache.commons.io.IOUtils;
@@ -45,10 +42,7 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import org.json.JSONTokener;
 
 /**
  * @author romain.guefveneu
@@ -66,10 +60,10 @@ public abstract class RestController<T> {
 	 */
 	private static int HTTP_ERROR_CODE_START = 400;
 
-	private String mRootNode;
+	private String[] mRootNodes;
 
-	public RestController(final String rootNode) {
-		mRootNode = rootNode;
+	public RestController(final String... rootNode) {
+		mRootNodes = rootNode;
 	}
 
 	/**
@@ -131,8 +125,17 @@ public abstract class RestController<T> {
 		return result;
 	}
 
+	protected JSONArray getRootNode(final JSONObject json) throws JSONException {
+		JSONObject object = json;
+		for (String node : mRootNodes) {
+			if (object.get(node) instanceof JSONObject)
+				object = object.getJSONObject(node);
+		}
+		return (JSONArray) object.getJSONArray(mRootNodes[mRootNodes.length - 1]);
+	}
+
 	protected List<T> parseJsonArray(JSONObject json) throws JSONException {
-		final JSONArray jsonArray = json.getJSONArray(mRootNode);
+		final JSONArray jsonArray = getRootNode(json);
 		final List<T> result = new ArrayList<T>();
 		JSONObject c;
 
