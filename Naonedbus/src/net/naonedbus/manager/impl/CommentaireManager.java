@@ -22,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,20 +52,14 @@ public class CommentaireManager {
 		List<Commentaire> data = new ArrayList<Commentaire>();
 
 		if (cacheFile.exists()) {
-			BufferedReader br = null;
-			final Gson gson = new Gson();
+			final BufferedReader br = null;
+			final CommentaireController controller = new CommentaireController();
 
 			try {
-				br = new BufferedReader(new FileReader(cacheFile));
-
-				final Type type = new TypeToken<List<Commentaire>>() {
-				}.getType();
-
-				data = gson.fromJson(br, type);
+				final String json = IOUtils.toString(new FileReader(cacheFile));
+				data = controller.parseJsonArray(json);
 			} catch (IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la lecture du cache timeline.", null, e);
-				cacheFile.delete();
-			} catch (JsonSyntaxException e) {
 				cacheFile.delete();
 			} finally {
 				IOUtils.closeQuietly(br);
@@ -81,19 +74,19 @@ public class CommentaireManager {
 		final CommentaireController commentaireController = new CommentaireController();
 		final List<Commentaire> data = commentaireController.getAll(codeLigne, codeSens, codeArret, date);
 
-		// if (data != null && data.size() > 0) {
-		// final String key = genKey(codeLigne, codeSens, codeArret);
-		// saveToCache(context, key, data);
-		// }
+		if (data != null && data.size() > 0) {
+			final String key = genKey(codeLigne, codeSens, codeArret);
+			saveToCache(context, key, data);
+		}
 
 		return data;
 	}
 
 	private void saveToCache(Context context, String key, List<Commentaire> data) {
 		final File cacheFile = new File(context.getCacheDir(), key + ".timeline");
-		final Gson gson = new Gson();
+		final CommentaireController controller = new CommentaireController();
 		try {
-			final String json = gson.toJson(data);
+			final String json = controller.toJson(data);
 			FileUtils.writeStringToFile(cacheFile, json, "UTF-8");
 		} catch (IOException e) {
 			BugSenseHandler.sendExceptionMessage("Erreur lors de l'écriture du cache timeline.", null, e);

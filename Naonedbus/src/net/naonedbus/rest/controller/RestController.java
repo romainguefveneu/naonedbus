@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.rest.UrlBuilder;
 
 import org.apache.commons.io.IOUtils;
@@ -44,11 +45,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import android.util.Log;
+
 /**
  * @author romain.guefveneu
  * 
  */
 public abstract class RestController<T> {
+
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	/**
 	 * Timeout en millisecondes
@@ -67,29 +72,45 @@ public abstract class RestController<T> {
 	}
 
 	/**
-	 * Parser la réponse d'un webservice Rest json et récupérer une instance du
-	 * type passé en paramètre
+	 * Parser une chaîne Json.
 	 * 
-	 * @param url
-	 * @return
-	 * @throws IOException
+	 * @param source
+	 *            La chaîne Json
+	 * @return L'objet correspondant
 	 */
-	protected T parseJsonObject(URL url) throws IOException {
+	public T parseJsonObject(final String source) {
 		T result = null;
-
-		final URLConnection conn = url.openConnection();
-		conn.setConnectTimeout(TIMEOUT);
-		conn.setReadTimeout(TIMEOUT);
-		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
-
-		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
-		final String source = IOUtils.toString(comReader);
-		IOUtils.closeQuietly(comReader);
-
 		try {
 			result = parseJsonObject(new JSONObject(source));
 		} catch (JSONException e) {
-			e.printStackTrace();
+			if (DBG)
+				Log.e(getClass().getSimpleName(), e.getMessage());
+		}
+
+		return result;
+	}
+
+	/**
+	 * Parser une chaîne Json.
+	 * 
+	 * @param source
+	 *            La chaîne Json
+	 * @return L'objet correspondant
+	 */
+	public List<T> parseJsonArray(final String source) {
+		List<T> result = null;
+
+		try {
+			final JSONTokener tokener = new JSONTokener(source);
+			final Object object = tokener.nextValue();
+			if (object instanceof JSONArray) {
+				result = parseJsonArray(new JSONArray(source));
+			} else if (object instanceof JSONObject) {
+				result = parseJsonArray(new JSONObject(source));
+			}
+		} catch (JSONException e) {
+			if (DBG)
+				Log.e(getClass().getSimpleName(), e.getMessage(), e);
 		}
 
 		return result;
@@ -103,9 +124,7 @@ public abstract class RestController<T> {
 	 * @return
 	 * @throws IOException
 	 */
-	protected List<T> parseJson(URL url) throws IOException {
-		List<T> result = null;
-
+	protected T parseJsonObject(URL url) throws IOException {
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);
@@ -115,14 +134,28 @@ public abstract class RestController<T> {
 		final String source = IOUtils.toString(comReader);
 		IOUtils.closeQuietly(comReader);
 
-		try {
-			final JSONObject json = new JSONObject(source);
-			result = parseJsonArray(json);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		return parseJsonObject(source);
+	}
 
-		return result;
+	/**
+	 * Parser la réponse d'un webservice Rest json et récupérer une instance du
+	 * type passé en paramètre
+	 * 
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	protected List<T> parseJson(URL url) throws IOException {
+		final URLConnection conn = url.openConnection();
+		conn.setConnectTimeout(TIMEOUT);
+		conn.setReadTimeout(TIMEOUT);
+		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
+
+		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
+		final String source = IOUtils.toString(comReader);
+		IOUtils.closeQuietly(comReader);
+
+		return parseJsonArray(source);
 	}
 
 	protected JSONArray getRootNode(final JSONObject json) throws JSONException {
@@ -136,6 +169,10 @@ public abstract class RestController<T> {
 
 	protected List<T> parseJsonArray(JSONObject json) throws JSONException {
 		final JSONArray jsonArray = getRootNode(json);
+		return parseJsonArray(jsonArray);
+	}
+
+	protected List<T> parseJsonArray(JSONArray jsonArray) throws JSONException {
 		final List<T> result = new ArrayList<T>();
 		JSONObject c;
 
@@ -147,6 +184,21 @@ public abstract class RestController<T> {
 		return result;
 	}
 
+	public String toJson(List<T> items) {
+		final JSONArray list = new JSONArray();
+		JSONObject object;
+		for (final T item : items) {
+			try {
+				object = toJson(item);
+				list.put(object);
+			} catch (JSONException e) {
+				if (DBG)
+					Log.e(getClass().getSimpleName(), e.getMessage());
+			}
+		}
+		return list.toString();
+	}
+
 	/**
 	 * Parser un object JsonElement.F
 	 * 
@@ -155,6 +207,15 @@ public abstract class RestController<T> {
 	 * @return L'objet reconstruit
 	 */
 	protected abstract T parseJsonObject(JSONObject object) throws JSONException;
+
+	/**
+	 * Convertir un élément en élément json.
+	 * 
+	 * @param item
+	 *            L'élément à convertir
+	 * @return L'object Json
+	 */
+	protected abstract JSONObject toJson(T item) throws JSONException;
 
 	/**
 	 * @see RestController#post(URL)

@@ -8,7 +8,6 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.FavorisImportActivity;
 import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
@@ -115,7 +114,18 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 			if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
 				mBackupManager.dataChanged();
-			mContentHasChanged = true;
+
+			if (isVisible()) {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						refreshContent();
+					}
+				});
+			} else {
+				mContentHasChanged = true;
+			}
+
 		}
 
 		@TargetApi(Build.VERSION_CODES.FROYO)
@@ -281,7 +291,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		switch (item.getItemId()) {
 		case R.id.menu_import:
-			startActivity(new Intent(getActivity(), FavorisImportActivity.class));
+			final FavorisHelper helper = new FavorisHelper(getActivity());
+			helper.importFavoris();
+			break;
+		case R.id.menu_export:
 			break;
 		case R.id.menu_sort_distance:
 			item.setChecked(true);
@@ -303,7 +316,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		if (item != null) {
 			final FavorisHelper favorisUtils = new FavorisHelper(getActivity(), new FavorisActionListener() {
 				@Override
-				public void onFavoriRenamed(Favori newItem) {
+				public void onFavoriRenamed(final Favori newItem) {
 					final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
 					item.nomFavori = newItem.nomFavori;
 					adapter.notifyDataSetChanged();
@@ -558,7 +571,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		 * @throws IOException
 		 */
 		private void updateAdapter(int position) throws IOException {
-			if (position >= getListAdapter().getCount())
+			if (position >= getListAdapter().getCount() || isDetached())
 				return;
 
 			final Favori favori = (Favori) getListAdapter().getItem(position);
@@ -574,6 +587,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		 * Mettre à jour les informations de délais d'un favori
 		 */
 		private void updateItemTime(Favori favori, Integer delay) {
+			if (isDetached())
+				return;
+
 			if (delay != null) {
 				if (delay >= MIN_DURATION) {
 					if (delay == MIN_DURATION) {

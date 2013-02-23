@@ -19,8 +19,6 @@
 package net.naonedbus.manager.impl;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,10 +40,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.util.JsonWriter;
 import android.util.Log;
-
-import com.bugsense.trace.BugSenseHandler;
 
 public class FavoriManager extends SQLiteManager<Favori> {
 
@@ -208,7 +203,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	public String toJson(final ContentResolver contentResolver) {
 		final List<Favori> favoris = getAll(contentResolver, null, null);
-		return toJson(favoris);
+		final FavoriController controller = new FavoriController();
+		return controller.toJson(favoris);
 	}
 
 	/**
@@ -220,36 +216,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	public String toJsonSimple(final ContentResolver contentResolver) {
 		final Cursor c = contentResolver.query(FavoriProvider.CONTENT_URI, FavoriTable.PROJECTION, null, null, null);
 		final List<Favori> favoris = getFromCursor(c);
-		return toJson(favoris);
-	}
-
-	/**
-	 * Renvoyer la liste des favoris au format Json.
-	 * 
-	 * @param favoris
-	 * @return la liste des favoris au format Json
-	 */
-	public String toJson(final List<Favori> favoris) {
-		final StringWriter stringWriter = new StringWriter();
-		final JsonWriter writer = new JsonWriter(stringWriter);
-
-		try {
-			writer.beginArray();
-			for (Favori favoriItem : favoris) {
-				writer.beginObject();
-				writer.name("codeArret").value(favoriItem.codeArret);
-				writer.name("codeSens").value(favoriItem.codeSens);
-				writer.name("codeLigne").value(favoriItem.codeLigne);
-				writer.name("nomFavori").value(favoriItem.nomFavori);
-				writer.endObject();
-			}
-			writer.endArray();
-			writer.close();
-		} catch (IOException e) {
-			BugSenseHandler.sendExceptionMessage("Erreur lors de la conversion Json des favoris", null, e);
-		}
-
-		return stringWriter.toString();
+		final FavoriController controller = new FavoriController();
+		return controller.toJson(favoris);
 	}
 
 	/**
@@ -259,11 +227,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param json
 	 */
 	public void fromJson(ContentResolver contentResolver, String json) {
-		final Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
-		}.getType();
-		final Gson gson = new Gson();
-		final ArrayList<HashMap<String, String>> favoris = gson.fromJson(json, type);
-
+		final FavoriController controller = new FavoriController();
+		final List<Favori> favoris = controller.parseJsonArray(json);
 		fromList(contentResolver, favoris);
 	}
 
@@ -277,10 +242,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		if (DBG)
 			Log.d(LOG_TAG, "fromJson : " + json);
 
-		final Type type = new TypeToken<ArrayList<HashMap<String, String>>>() {
-		}.getType();
-		final Gson gson = new Gson();
-		final ArrayList<HashMap<String, String>> favoris = gson.fromJson(json, type);
+		final FavoriController controller = new FavoriController();
+		final List<Favori> favoris = controller.parseJsonArray(json);
 
 		fromList(db, favoris);
 	}
@@ -291,7 +254,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param contentResolver
 	 * @param favoris
 	 */
-	private void fromList(final SQLiteDatabase db, final List<HashMap<String, String>> favoris) {
+	private void fromList(final SQLiteDatabase db, final List<Favori> favoris) {
 		if (DBG)
 			Log.d(LOG_TAG, "fromList");
 
@@ -302,13 +265,11 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		db.delete(FavoriTable.TABLE_NAME, null, null);
 
 		// Add new items
-		for (HashMap<String, String> element : favoris) {
-			final Favori favoriItem = toFavori(element);
-
-			itemId = arretManager.getIdByFavori(db, favoriItem);
+		for (Favori favori : favoris) {
+			itemId = arretManager.getIdByFavori(db, favori);
 			if (itemId != null) {
-				favoriItem._id = itemId;
-				addFavori(db, favoriItem);
+				favori._id = itemId;
+				addFavori(db, favori);
 			}
 		}
 	}
@@ -319,7 +280,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param contentResolver
 	 * @param favoris
 	 */
-	private void fromList(ContentResolver contentResolver, List<HashMap<String, String>> favoris) {
+	private void fromList(ContentResolver contentResolver, List<Favori> favoris) {
 		Integer itemId;
 		final ArretManager arretManager = ArretManager.getInstance();
 
@@ -327,13 +288,11 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		contentResolver.delete(FavoriProvider.CONTENT_URI, null, null);
 
 		// Add new items
-		for (HashMap<String, String> element : favoris) {
-			final Favori favoriItem = toFavori(element);
-
-			itemId = arretManager.getIdByFavori(contentResolver, favoriItem);
+		for (Favori favori : favoris) {
+			itemId = arretManager.getIdByFavori(contentResolver, favori);
 			if (itemId != null) {
-				favoriItem._id = itemId;
-				addFavori(contentResolver, favoriItem);
+				favori._id = itemId;
+				addFavori(contentResolver, favori);
 			}
 		}
 	}
@@ -360,21 +319,6 @@ public class FavoriManager extends SQLiteManager<Favori> {
 				addFavori(contentResolver, favori);
 			}
 		}
-	}
-
-	/**
-	 * Convertir une map d'éléments en Favori.
-	 * 
-	 * @param element
-	 * @return un Favori
-	 */
-	private Favori toFavori(final HashMap<String, String> element) {
-		final Favori favoriItem = new Favori();
-		favoriItem.codeArret = element.get("codeArret");
-		favoriItem.codeSens = element.get("codeSens");
-		favoriItem.codeLigne = element.get("codeLigne");
-		favoriItem.nomFavori = element.get("nomFavori");
-		return favoriItem;
 	}
 
 	/**

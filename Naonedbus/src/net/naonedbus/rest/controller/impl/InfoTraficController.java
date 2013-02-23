@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.bean.InfoTrafic;
+import net.naonedbus.rest.container.HoraireContainer;
 import net.naonedbus.rest.controller.NodRestController;
 
 import org.json.JSONException;
@@ -78,5 +79,10 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 		infoTrafic.setTroncons(object.getString(TAG_TRONCONS));
 
 		return infoTrafic;
+	}
+
+	@Override
+	protected JSONObject toJson(InfoTrafic item) throws JSONException {
+		return null;
 	}
 }

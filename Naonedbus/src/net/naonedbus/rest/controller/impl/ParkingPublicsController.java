@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.rest.controller.NodRestController;
@@ -63,6 +64,11 @@ public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 		parking.setSeuilComplet(object.getInt(TAG_COMPLET));
 		parking.setHorodatage(object.getString(TAG_HORODATAGE));
 		return parking;
+	}
+
+	@Override
+	protected JSONObject toJson(final ParkingPublic item) throws JSONException {
+		return null;
 	}
 
 }

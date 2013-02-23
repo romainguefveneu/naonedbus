@@ -129,7 +129,7 @@ public class FavorisHelper {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(R.string.dialog_title_favoris_import);
 		builder.setNegativeButton(android.R.string.cancel, null);
-		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(R.string.action_import, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				final String id = input.getText().toString().trim();
 				if (id.trim().length() == 0) {

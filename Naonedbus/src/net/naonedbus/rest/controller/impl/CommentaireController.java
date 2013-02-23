@@ -23,6 +23,7 @@ import java.util.List;
 
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
+import net.naonedbus.rest.container.HoraireContainer;
 import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
 
@@ -101,5 +102,18 @@ public class CommentaireController extends RestController<Commentaire> {
 		if (object.has(TAG_TIMESTAMP))
 			commentaire.setTimestamp(object.getLong(TAG_TIMESTAMP));
 		return commentaire;
+	}
+
+	@Override
+	protected JSONObject toJson(final Commentaire item) throws JSONException {
+		final JSONObject object = new JSONObject();
+		object.put(TAG_ID, item.getId());
+		object.put(TAG_CODE_LIGNE, item.getCodeLigne());
+		object.put(TAG_CODE_SENS, item.getCodeSens());
+		object.put(TAG_CODE_ARRET, item.getCodeArret());
+		object.put(TAG_MESSAGE, item.getMessage());
+		object.put(TAG_SOURCE, item.getSource());
+		object.put(TAG_TIMESTAMP, item.getTimestamp());
+		return object;
 	}
 }

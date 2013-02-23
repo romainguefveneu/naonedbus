@@ -71,7 +71,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			mCodeArret = getArguments().getString(PARAM_CODE_ARRET);
 		}
 
-		// new LoadTimeLineCache().execute(mCodeLigne, mCodeSens, mCodeArret);
+		new LoadTimeLineCache().execute(mCodeLigne, mCodeSens, mCodeArret);
 		loadContent();
 	}
 
@@ -80,6 +80,10 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateOptionsMenu");
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
+
+		if (getLoaderManager().hasRunningLoaders())
+			showResfrehMenuLoader();
+
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 

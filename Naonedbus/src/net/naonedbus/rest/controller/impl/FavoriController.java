@@ -46,7 +46,7 @@ public class FavoriController extends RestController<Favori> {
 	private static final String TAG_NOM_FAVORI = "nomFavori";
 
 	public FavoriController() {
-		super(null);
+		super();
 	}
 
 	public String post(final String content) throws IOException, HttpException {
@@ -76,6 +76,16 @@ public class FavoriController extends RestController<Favori> {
 			favori.nomFavori = object.getString(TAG_NOM_FAVORI);
 
 		return favori;
+	}
+
+	@Override
+	protected JSONObject toJson(final Favori item) throws JSONException {
+		final JSONObject object = new JSONObject();
+		object.put(TAG_CODE_LIGNE, item.codeLigne);
+		object.put(TAG_CODE_SENS, item.codeSens);
+		object.put(TAG_CODE_ARRET, item.codeArret);
+		object.put(TAG_NOM_FAVORI, item.nomArret);
+		return object;
 	}
 
 }

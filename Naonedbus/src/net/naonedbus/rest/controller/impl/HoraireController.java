@@ -56,7 +56,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	private static final String TAG_NOTES_LIBELLE = "libelle";
 	private static final String TAG_HORAIRES = "horaires";
 	private static final String TAG_HORAIRES_HEURE = "heure";
-	private static final String TAG_HORAIRES_PASSAGE = "passage";
+	private static final String TAG_HORAIRES_PASSAGE = "passages";
 
 	private static final String PATH = "https://open.tan.fr/ewp/horairesarret.json";
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -119,10 +119,14 @@ public class HoraireController extends RestController<HoraireContainer> {
 	protected HoraireContainer parseJsonObject(final JSONObject object) throws JSONException {
 		final HoraireContainer container = new HoraireContainer();
 
-		container.plageDeService = object.getString(TAG_PLAGE_SERVICE);
-		container.codeCouleur = object.getString(TAG_CODE_COULEUR);
-		container.notes = parseNotes(object.getJSONArray(TAG_NOTES));
-		container.horaires = parseHoraires(object.getJSONArray(TAG_HORAIRES));
+		if (object.has(TAG_PLAGE_SERVICE))
+			container.plageDeService = object.getString(TAG_PLAGE_SERVICE);
+		if (object.has(TAG_CODE_COULEUR))
+			container.codeCouleur = object.getString(TAG_CODE_COULEUR);
+		if (object.has(TAG_NOTES))
+			container.notes = parseNotes(object.getJSONArray(TAG_NOTES));
+		if (object.has(TAG_HORAIRES))
+			container.horaires = parseHoraires(object.getJSONArray(TAG_HORAIRES));
 
 		return container;
 	}
@@ -135,8 +139,10 @@ public class HoraireController extends RestController<HoraireContainer> {
 			object = array.getJSONObject(i);
 
 			final NoteNode note = new NoteNode();
-			note.code = object.getString(TAG_NOTES_CODE);
-			note.libelle = object.getString(TAG_NOTES_LIBELLE);
+			if (object.has(TAG_NOTES_CODE))
+				note.code = object.getString(TAG_NOTES_CODE);
+			if (object.has(TAG_NOTES_LIBELLE))
+				note.libelle = object.getString(TAG_NOTES_LIBELLE);
 
 			notes.add(note);
 		}
@@ -152,8 +158,10 @@ public class HoraireController extends RestController<HoraireContainer> {
 			object = array.getJSONObject(i);
 
 			final HoraireNode horaire = new HoraireNode();
-			horaire.heure = object.getString(TAG_HORAIRES_HEURE);
-			horaire.passages = parsePassages(object.getJSONArray(TAG_HORAIRES_PASSAGE));
+			if (object.has(TAG_HORAIRES_HEURE))
+				horaire.heure = object.getString(TAG_HORAIRES_HEURE);
+			if (object.has(TAG_HORAIRES_PASSAGE))
+				horaire.passages = parsePassages(object.getJSONArray(TAG_HORAIRES_PASSAGE));
 
 			horaires.add(horaire);
 		}
@@ -168,6 +176,11 @@ public class HoraireController extends RestController<HoraireContainer> {
 		}
 
 		return passages;
+	}
+
+	@Override
+	protected JSONObject toJson(HoraireContainer item) throws JSONException {
+		return null;
 	}
 
 }
