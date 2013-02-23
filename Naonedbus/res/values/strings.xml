@@ -36,7 +36,7 @@
     <string name="title_activity_infos_trafic">Infos Trafic</string>
     <string name="title_activity_map">Carte</string>
     <string name="title_activity_itineraire">Itinéraire</string>
-    <string name="title_activity_equipements">Equipements</string>
+    <string name="title_activity_equipements">Mobilité</string>
     <string name="title_activity_parkings">Parkings</string>
     <string name="title_activity_commentaire">Commentaire</string>
     <string name="title_activity_actu">Actualité</string>
@@ -48,7 +48,7 @@
     <string name="menu_info_trafic">Infos trafic</string>
     <string name="menu_itineraires">Itineraires</string>
     <string name="menu_parkings">Parkings</string>
-    <string name="menu_equipements">Equipements</string>
+    <string name="menu_equipements">Mobilité</string>
     <string name="menu_recherche">Recherche</string>
     <string name="menu_carte">Carte</string>
     <string name="menu_parametres">Paramètres</string>
