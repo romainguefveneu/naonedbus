@@ -26,6 +26,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.widgetconfigure.WidgetConfigureActivity;
+import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.horaire.Horaire;
@@ -258,10 +259,10 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 * @param viewId
 	 *            The view listening to click
 	 */
-	private void setOnClickListener(Context context, RemoteViews views, Favori favori) {
+	private void setOnClickListener(final Context context, final RemoteViews views, final Favori favori) {
 		final Intent intent = new Intent(context, this.getClass());
 		intent.setAction(ACTION_APPWIDGET_ON_CLICK);
-		intent.putExtra("idFavori", favori._id);
+		intent.putExtra("favori", favori);
 
 		final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, favori._id, intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
@@ -321,6 +322,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
 		if (ACTION_APPWIDGET_UPDATE.equals(action)) {
+
 			int idExtra = intent.getIntExtra("id", -1);
 			int[] ids;
 
@@ -334,14 +336,17 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			}
 
 			onUpdate(context, appWidgetManager, ids);
+
 		} else if (HoraireWidgetProvider.ACTION_APPWIDGET_ON_CLICK.equals(action)) {
-			final Favori favori = intent.getParcelableExtra("favori");
-			if (favori != null) {
+
+			final Arret arret = intent.getParcelableExtra("favori");
+			if (arret != null) {
 				final ParamIntent startIntent = new ParamIntent(context, HorairesActivity.class);
-				startIntent.putExtra(HorairesActivity.PARAM_ARRET, favori);
+				startIntent.putExtra(HorairesActivity.PARAM_ARRET, arret);
 				startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				context.startActivity(startIntent);
 			}
+
 		}
 
 		super.onReceive(context, intent);

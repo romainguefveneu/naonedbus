@@ -14,13 +14,16 @@ import android.widget.TextView;
 
 public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 
+	private final Typeface mRoboto;
+	private final int mSelectedColor;
+
 	private Class<?> mCurrentClass;
-	private Typeface mRoboto;
 
 	public MainMenuAdapter(Context context) {
 		super(context, R.layout.list_item_menu);
 		setIndexer(new MainMenuIndexer());
 		mRoboto = FontUtils.getRobotoLight(context);
+		mSelectedColor = context.getResources().getColor(R.color.menu_current);
 	}
 
 	public void setCurrentClass(Class<?> currentClass) {
@@ -37,7 +40,7 @@ public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 
 		final Class<?> intentClass = item.getIntentClass();
 		if (intentClass != null && intentClass.equals(mCurrentClass)) {
-			holder.view.setBackgroundResource(R.color.menu_current);
+			holder.view.setBackgroundColor(mSelectedColor);
 		} else {
 			holder.view.setBackgroundColor(Color.TRANSPARENT);
 		}

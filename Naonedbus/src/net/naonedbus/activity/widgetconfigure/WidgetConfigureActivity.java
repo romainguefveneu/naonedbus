@@ -83,7 +83,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 * @param context
 	 */
 	public void configureWidget(Context context) {
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		getWidgetProvider().updateAppWidget(context, appWidgetManager, appWidgetId);
 	}
 
@@ -92,15 +92,15 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 
 		// Récupérer l'id du favori sélectionné
-		Favori item = (Favori) l.getItemAtPosition(position);
+		final Favori item = (Favori) l.getItemAtPosition(position);
 
 		// Stocker dans les préférences l'id du favori associé à l'id du widget
-		SharedPreferences.Editor prefs = this.getSharedPreferences(PREFS_NAME, 0).edit();
+		final SharedPreferences.Editor prefs = this.getSharedPreferences(PREFS_NAME, 0).edit();
 		prefs.putInt(PREF_PREFIX_KEY + appWidgetId, item._id);
 		prefs.commit();
 
 		// Valider la création du widget
-		Intent resultValue = new Intent();
+		final Intent resultValue = new Intent();
 		resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 		setResult(RESULT_OK, resultValue);
 
@@ -162,8 +162,8 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 * @return
 	 */
 	public static int getFavoriIdFromWidget(Context context, int appWidgetId) {
-		SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-		int id = prefs.getInt(PREF_PREFIX_KEY + appWidgetId, -1);
+		final SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+		final int id = prefs.getInt(PREF_PREFIX_KEY + appWidgetId, -1);
 		return id;
 	}
 
@@ -175,7 +175,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 */
 	public static void removeWidgetId(Context context, int appWidgetId) {
 		Log.d(NBApplication.LOG_TAG, "removeWidgetId(" + appWidgetId + ")");
-		SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+		final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
 		prefs.remove(PREF_PREFIX_KEY + appWidgetId);
 		prefs.commit();
 	}

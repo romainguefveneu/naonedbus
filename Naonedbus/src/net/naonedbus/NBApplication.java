@@ -33,7 +33,7 @@ public class NBApplication extends Application {
 	public static final int[] THEMES_MENU_RES = new int[] { R.style.Theme_Acapulco_Light_HomeAsMenu,
 			R.style.Theme_Acapulco_Dark_HomeAsMenu };
 
-	public static int THEME = R.style.Theme_Acapulco_Light_HomeAsMenu;
+	public static int THEME = THEME_LIGHT;
 
 	public static final String PREF_THEME = "theme";
 	public static final String PREF_PARKINGS_SORT = "parkings.sort";

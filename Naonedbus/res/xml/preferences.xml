@@ -11,11 +11,12 @@
     <!-- android:persistent="true" -->
     <!-- android:title="Thème de l&apos;application" /> -->
     <!-- </PreferenceCategory> -->
-    <PreferenceCategory android:title="Favoris" >
-        <Preference
-            android:key="favoris.import"
-            android:title="Importer mes anciens favoris avec ma clé" />
-    </PreferenceCategory>
+    <!-- <PreferenceCategory android:title="Favoris" > -->
+    <!-- <Preference -->
+    <!-- android:key="favoris.import" -->
+    <!-- android:title="Importer mes anciens favoris avec ma clé" /> -->
+    <!-- </PreferenceCategory> -->
+
     <PreferenceCategory android:title="Plan des lignes" >
         <CheckBoxPreference
             android:defaultValue="true"

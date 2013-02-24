@@ -17,20 +17,24 @@
     <!-- Tuto -->
     <string name="tuto_0_title">Bienvenue dans</string>
     <string name="tuto_0_summary"><![CDATA[Prenez quelques instants pour découvrir l\'application.<br /><big>&rarr;</big>]]></string>
-    <string name="tuto_1_title">Lignes</string>
-    <string name="tuto_1_summary">Accèdez aux lignes en un clin d\'oeil</string>
-    <string name="tuto_2_title">Favoris</string>
-    <string name="tuto_2_summary">Marquez vos arrêts préférés pour y avoir accès à tout moment</string>
-    <string name="tuto_3_title">Info trafic</string>
-    <string name="tuto_3_summary">Des travaux ? Une manifestation prévu ? Gardez un oeil sur l\'info trafic !</string>
-    <string name="tuto_4_title">Info trafic participatif</string>
-    <string name="tuto_4_summary">Accidents, retards : restez informés en temps réel grâce à l\'info trafic participatif</string>
-    <string name="tuto_5_title">Parkings</string>
-    <string name="tuto_5_summary">Consultez la liste des parkings nantais ainsi que leur disponibilité en temps réel</string>
-    <string name="tuto_6_title">Equipements</string>
-    <string name="tuto_6_summary">Où est le bicloo le plus proche ? Mais également les stations Marguerite, co-voiturage et Lila</string>
+    <string name="tuto_menu_title">Menu principal</string>
+    <string name="tuto_menu_summary">Accédez aux sections via le menu : soit via l\'icône principale, soit en glissant depuis l\'extrémité gauche de l\'écran</string>
+    <string name="tuto_lignes_title">Lignes</string>
+    <string name="tuto_lignes_summary">Naviguez entre les lignes en un clin d\'oeil</string>
+    <string name="tuto_favoris_title">Favoris</string>
+    <string name="tuto_favoris_summary"><![CDATA[Marquez vos arrêts <font color="#ffffff"><b>préférés</b></font> pour y avoir accès à tout moment]]></string>
+    <string name="tuto_trafic_title">Info trafic</string>
+    <string name="tuto_trafic_summary">Des travaux ? Une manifestation prévu ? Gardez un oeil sur l\'info trafic !</string>
+    <string name="tuto_commentaires_title">Info trafic participatif</string>
+    <string name="tuto_commentaires_summary"><![CDATA[Accidents, retards : <font color="#ffffff"><b>informez</b></font> et restez informés en <font color="#ffffff"><b>temps réel</b></font> grâce à l\'info trafic participatif]]></string>
+    <string name="tuto_parkings_title">Parkings</string>
+    <string name="tuto_parkings_summary">Consultez la liste des parkings nantais ainsi que leur disponibilité en temps réel</string>
+    <string name="tuto_mobilite_title">Mobilité</string>
+    <string name="tuto_mobilite_summary">Où est le bicloo le plus proche ? Mais également les stations Marguerite, co-voiturage et Lila</string>
+    <string name="tuto_widgets_title">Widgets</string>
+    <string name="tuto_widgets_summary">Placez vos arrêts favoris en widgets !</string>
     <string name="tuto_beta_title">Version bêta</string>
-    <string name="tuto_beta_summary"><![CDATA[Vous utilisez une version Bêta de naonedbus.<br />Merci de nous signaler tout problème : <br /><br /> <font color="#ffffff">naonedbus@gmail.com</font>]]></string>
+    <string name="tuto_beta_summary"><![CDATA[Vous utilisez une version Bêta de naonedbus.<br />Merci de nous signaler tout problème : <br /><font color="#ffffff">naonedbus@gmail.com</font>]]></string>
     <!-- Activities -->
     <string name="title_activity_main">Accueil</string>
     <string name="title_activity_infos_trafic">Infos Trafic</string>

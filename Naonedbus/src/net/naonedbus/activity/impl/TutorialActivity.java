@@ -9,6 +9,7 @@ import net.naonedbus.utils.FontUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -48,18 +49,25 @@ public class TutorialActivity extends Activity {
 				R.string.tuto_0_summary, R.drawable.logo));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_beta_title, R.string.tuto_beta_summary,
 				R.drawable.ic_action_good));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_1_title, R.string.tuto_1_summary,
+
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
+			mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_menu_title, R.string.tuto_menu_summary,
+					R.drawable.tuto_menu));
+		}
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_lignes_title, R.string.tuto_lignes_summary,
 				R.drawable.tuto_lignes));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_2_title, R.string.tuto_2_summary,
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_favoris_title, R.string.tuto_favoris_summary,
 				R.drawable.tuto_favoris));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_3_title, R.string.tuto_3_summary,
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_trafic_title, R.string.tuto_trafic_summary,
+				R.drawable.tuto_tanactu));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_commentaires_title,
+				R.string.tuto_commentaires_summary, R.drawable.tuto_infotrafic));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_parkings_title, R.string.tuto_parkings_summary,
 				R.drawable.tuto_parkings));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_4_title, R.string.tuto_4_summary,
-				R.drawable.tuto_parkings));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_5_title, R.string.tuto_5_summary,
-				R.drawable.tuto_parkings));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_6_title, R.string.tuto_6_summary,
-				R.drawable.tuto_bicloos));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_mobilite_title, R.string.tuto_mobilite_summary,
+				R.drawable.tuto_mobilite));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_widgets_title, R.string.tuto_widgets_summary,
+				R.drawable.tuto_widgets));
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 		viewPager.setAdapter(mTutorialPagerAdapter);

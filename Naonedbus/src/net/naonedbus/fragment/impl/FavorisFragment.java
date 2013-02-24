@@ -546,15 +546,14 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Boolean result = true;
 
 			try {
-				if (getActivity() != null) {
-					if (params.length == 0) {
-						for (int i = 0; i < getListAdapter().getCount(); i++) {
-							updateAdapter(i);
-						}
-					} else {
-						for (int i = 0; i < params.length; i++) {
-							updateAdapter(params[i]);
-						}
+
+				if (params.length == 0) {
+					for (int i = 0; i < getListAdapter().getCount(); i++) {
+						updateAdapter(i);
+					}
+				} else {
+					for (int i = 0; i < params.length; i++) {
+						updateAdapter(params[i]);
 					}
 				}
 			} catch (IOException e) {
@@ -571,7 +570,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		 * @throws IOException
 		 */
 		private void updateAdapter(int position) throws IOException {
-			if (position >= getListAdapter().getCount() || isDetached())
+			if (position >= getListAdapter().getCount() || isDetached() || getActivity() == null)
 				return;
 
 			final Favori favori = (Favori) getListAdapter().getItem(position);
@@ -587,7 +586,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		 * Mettre à jour les informations de délais d'un favori
 		 */
 		private void updateItemTime(Favori favori, Integer delay) {
-			if (isDetached())
+			if (isDetached() || getActivity() == null)
 				return;
 
 			if (delay != null) {

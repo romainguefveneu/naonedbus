@@ -21,8 +21,11 @@ import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.SymbolesUtils;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
@@ -148,7 +151,7 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 		default:
 			break;
 		}
-		return false;
+		return super.onOptionsItemSelected(item);
 	}
 
 	private boolean isFavori() {

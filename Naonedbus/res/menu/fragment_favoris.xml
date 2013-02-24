@@ -28,7 +28,8 @@
                 android:title="@string/action_import"/>
             <item
                 android:id="@id/menu_export"
-                android:title="@string/action_export"/>
+                android:title="@string/action_export"
+                android:visible="false"/>
         </menu>
     </item>
     <item

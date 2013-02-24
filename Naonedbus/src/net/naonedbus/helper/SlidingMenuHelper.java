@@ -41,27 +41,27 @@ public class SlidingMenuHelper {
 	/**
 	 * Contenu du menu général.
 	 */
-	private static List<MainMenuItem> menuItems;
+	private static final List<MainMenuItem> MENU_ITEMS;
 	static {
 		// @formatter:off
-		menuItems = new ArrayList<MainMenuItem>();
-		menuItems.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
+		MENU_ITEMS = new ArrayList<MainMenuItem>();
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
 //		menuItems.add(new MainMenuItem(R.string.menu_itineraires, ItineraireActivity.class, R.drawable.ic_action_direction, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_map, 0));
-		menuItems.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_action_settings, 1));
-		menuItems.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_action_info, 1));
-		menuItems.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_map, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_action_settings, 1));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_action_info, 1));
+		MENU_ITEMS.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));
 		// @formatter:on
 	}
 
-	private Activity activity;
+	private Activity mActivity;
 
-	public SlidingMenuHelper(Activity activity) {
-		this.activity = activity;
+	public SlidingMenuHelper(final Activity activity) {
+		mActivity = activity;
 	}
 
 	public void onPostCreate(final Intent intent, final MenuDrawer slidingMenu, final Bundle savedInstanceState) {
@@ -70,13 +70,13 @@ public class SlidingMenuHelper {
 			// Afficher le menu au démarrage, pour la transition.
 			slidingMenu.openMenu(false);
 
-			// Masquer le menu.
+			// // Masquer le menu.
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
 					slidingMenu.closeMenu(true);
 				}
-			}, 500);
+			}, 400);
 
 			// Consommer l'affichage du menu pour ne pas réafficher en cas de
 			// rotation.
@@ -98,6 +98,13 @@ public class SlidingMenuHelper {
 				}
 			}, 800);
 		}
+
+		if (hasFocus) {
+			// Nouvelle activité
+			sAdapter.setCurrentClass(mActivity.getClass());
+			sAdapter.notifyDataSetChanged();
+		}
+
 	}
 
 	public void setupSlidingMenu(final MenuDrawer slidingMenu) {
@@ -106,15 +113,16 @@ public class SlidingMenuHelper {
 
 		mMenuListView = (ListView) slidingMenu.findViewById(android.R.id.list);
 		if (sAdapter == null) {
-			sAdapter = new MainMenuAdapter(activity);
-			for (MainMenuItem item : menuItems) {
+			sAdapter = new MainMenuAdapter(mActivity);
+			for (MainMenuItem item : MENU_ITEMS) {
 				sAdapter.add(item);
 			}
 			final MainMenuIndexer indexer = new MainMenuIndexer();
-			indexer.buildIndex(activity, sAdapter);
+			indexer.buildIndex(mActivity, sAdapter);
 			sAdapter.setIndexer(indexer);
 		}
-		sAdapter.setCurrentClass(activity.getClass());
+
+		sAdapter.setCurrentClass(mActivity.getClass());
 		mMenuListView.setAdapter(sAdapter);
 
 		if (sSavedPosition >= 0) { // initialized to -1
@@ -135,23 +143,30 @@ public class SlidingMenuHelper {
 				final MainMenuItem item = (MainMenuItem) mMenuListView.getItemAtPosition(position);
 
 				if (item instanceof LinkMainMenuItem) {
+
 					final LinkMainMenuItem linkItem = (LinkMainMenuItem) item;
 					final Intent intent = new Intent(Intent.ACTION_VIEW);
 					intent.setData(Uri.parse(linkItem.getUrl()));
-					activity.startActivity(intent);
+					mActivity.startActivity(intent);
+
 				} else {
-					if (activity.getClass().equals(item.getIntentClass())) {
+
+					if (mActivity.getClass().equals(item.getIntentClass())) {
 						// Même activité
 						slidingMenu.closeMenu();
 						mMenuListView.setClickable(true);
 					} else {
 						// Nouvelle activité
-						final Intent intent = new Intent(activity, item.getIntentClass());
+						sAdapter.setCurrentClass(item.getIntentClass());
+						sAdapter.notifyDataSetChanged();
+
+						final Intent intent = new Intent(mActivity, item.getIntentClass());
 						intent.putExtra("fromMenu", true);
 						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						activity.startActivity(intent);
-						activity.overridePendingTransition(0, 0);
+						mActivity.startActivity(intent);
+						mActivity.overridePendingTransition(0, 0);
 					}
+
 				}
 
 			}
@@ -159,8 +174,7 @@ public class SlidingMenuHelper {
 
 	}
 
-	public void setupActionBar(ActionBar actionBar) {
-		// actionBar.setBackgroundDrawable(this.activity.getResources().getDrawable(R.drawable.actionbar_back));
+	public void setupActionBar(final ActionBar actionBar) {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 }

@@ -57,7 +57,7 @@ public class SettingsFragments extends PreferenceFragment {
 		clearCachePlan = getPreferenceScreen().findPreference("plan.cache.clear");
 		clearCacheHoraires = getPreferenceScreen().findPreference("horaires.cache.clear");
 
-		initFavoris(preferences);
+		// initFavoris(preferences);
 		initCalendar(preferences);
 		initClearCache(preferences);
 	}

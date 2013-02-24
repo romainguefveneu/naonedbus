@@ -3,7 +3,7 @@ package net.naonedbus.activity;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.fragment.CustomFragmentActions;
+import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -66,7 +68,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
 
-		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
+		setTheme(NBApplication.THEMES_RES[NBApplication.THEME]);
 		getWindow().setBackgroundDrawable(null);
 
 		super.onCreate(savedInstanceState);
@@ -74,7 +76,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		setContentView(mLayoutId);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -94,14 +96,13 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	}
 
 	/**
-	 * Show the menu when home icon is clicked.
+	 * Gérer les click sur les menus.
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		final Fragment fragment = getCurrentFragment();
-		if (fragment instanceof CustomFragmentActions) {
-			final CustomFragmentActions customListFragment = (CustomFragmentActions) fragment;
-			return customListFragment.onOptionsItemSelected(item);
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -223,7 +224,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	 * 
 	 * @return the current Fragment, or <code>null</code> if we can't find it.
 	 */
-	private Fragment getCurrentFragment() {
+	public Fragment getCurrentFragment() {
 		final Tab tab = getSupportActionBar().getSelectedTab();
 		if (tab != null) {
 			return getSupportFragmentManager().findFragmentByTag(mFragmentsTags[tab.getPosition()]);
@@ -267,7 +268,8 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		public Fragment getItem(int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "getItem " + position);
-			return Fragment.instantiate(FragmentsActivity.this, mClasses[position], (mBundles != null) ? mBundles[position] : null);
+			return Fragment.instantiate(FragmentsActivity.this, mClasses[position],
+					(mBundles != null) ? mBundles[position] : null);
 		}
 
 		@Override

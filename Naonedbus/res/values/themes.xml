@@ -5,7 +5,6 @@
         <item name="actionBarStyle">@style/AcapulcoActionBar</item>
         <item name="android:actionBarStyle">@style/AcapulcoActionBar</item>
         <item name="activityBackground">@color/activity_background_light</item>
-        <item name="actionBarItemBackground">@drawable/action_bar_background</item>
         <item name="primaryColor">@android:color/primary_text_light</item>
         <item name="secondaryColor">@android:color/tertiary_text_light</item>
         <item name="dividerColor">@color/divider_light</item>
@@ -27,6 +26,7 @@
     </style>
 
     <style name="Theme.Acapulco.Dark" parent="@style/Theme.Sherlock">
+        <item name="actionBarStyle">@style/AcapulcoActionBar</item>
         <item name="activityBackground">@android:color/background_dark</item>
         <item name="primaryColor">@android:color/primary_text_dark</item>
         <item name="secondaryColor">@android:color/secondary_text_dark</item>
