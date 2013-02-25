@@ -109,7 +109,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 			Log.d(LOG_TAG, "onStart");
 
 		myLocationProvider.addListener(this);
-		myLocationProvider.start();
+
 		if (myLocationProvider.isProviderEnabled() == false) {
 			onLocationDisabled();
 		} else {

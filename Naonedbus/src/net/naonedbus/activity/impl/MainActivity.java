@@ -1,5 +1,6 @@
 package net.naonedbus.activity.impl;
 
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.FavorisFragment;
@@ -10,6 +11,7 @@ import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
+import net.naonedbus.provider.impl.MyLocationProvider;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ public class MainActivity extends SlidingMenuActivity {
 	private boolean mContentLoaded = false;
 	private boolean mIsFrontActivity = false;
 	private boolean mFirstLaunch = false;
+	private MyLocationProvider mMyLocationProvider;
 
 	private DatabaseActionListener mListener = new DatabaseActionListener() {
 
@@ -59,6 +62,7 @@ public class MainActivity extends SlidingMenuActivity {
 
 	public MainActivity() {
 		super(R.layout.activity_main);
+		mMyLocationProvider = NBApplication.getLocationProvider();
 	}
 
 	@Override
@@ -75,17 +79,18 @@ public class MainActivity extends SlidingMenuActivity {
 	@Override
 	protected void onResume() {
 		mIsFrontActivity = true;
+		mMyLocationProvider.start();
 		if (mHasSetup && mContentLoaded == false) {
 			hideSetupView();
 			loadContent();
 		}
 		super.onResume();
-
 	}
 
 	@Override
 	protected void onStop() {
 		mIsFrontActivity = false;
+		mMyLocationProvider.stop();
 		super.onStop();
 	}
 
