@@ -96,7 +96,7 @@ CREATE INDEX IF NOT EXISTS favoris_id ON favoris (_id);
 CREATE TABLE IF NOT EXISTS groupes (
 	_id INTEGER, 
 	nom TEXT NOT NULL, 
-	visibilty INTEGER NOT NULL);
+	visibilite INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS groupes_id ON groupes (_id);
 
 -- Décrire FAVORISGROUPES

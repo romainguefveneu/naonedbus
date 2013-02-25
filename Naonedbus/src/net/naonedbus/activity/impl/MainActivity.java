@@ -4,6 +4,7 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.FavorisFragment;
+import net.naonedbus.fragment.impl.GroupesFragment;
 import net.naonedbus.fragment.impl.LignesFragment;
 import net.naonedbus.fragment.impl.ProximiteFragment;
 import net.naonedbus.manager.impl.FavoriManager;
@@ -21,10 +22,10 @@ import android.widget.TextView;
 public class MainActivity extends SlidingMenuActivity {
 
 	private static int[] titles = new int[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
-			R.string.title_fragment_proximite };
+			R.string.title_fragment_proximite, R.string.title_fragment_proximite };
 
 	private static Class<?>[] classes = new Class<?>[] { LignesFragment.class, FavorisFragment.class,
-			ProximiteFragment.class };
+			ProximiteFragment.class, GroupesFragment.class };
 
 	private boolean mHasSetup = false;
 	private boolean mContentLoaded = false;

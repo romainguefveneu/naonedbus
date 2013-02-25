@@ -30,8 +30,16 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		final Groupe groupe = new Groupe();
 		groupe.setId(c.getLong(c.getColumnIndex(GroupeTable._ID)));
 		groupe.setNom(c.getString(c.getColumnIndex(GroupeTable.NOM)));
-		groupe.setVisibility(c.getInt(c.getColumnIndex(GroupeTable.VISIBILTE)));
+		groupe.setVisibility(c.getInt(c.getColumnIndex(GroupeTable.VISIBILITE)));
 		return groupe;
+	}
+
+	public void add(final ContentResolver contentResolver, final Groupe groupe) {
+		final ContentValues contentValues = new ContentValues();
+		contentValues.put(GroupeTable.NOM, groupe.getNom());
+		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
+
+		contentResolver.insert(GroupeProvider.CONTENT_URI, contentValues);
 	}
 
 	public void addFavoriToGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {

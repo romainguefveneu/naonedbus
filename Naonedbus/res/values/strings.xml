@@ -93,6 +93,7 @@
     <string name="action_search">Rechercher</string>
     <string name="action_location_center">Centrer sur ma position</string>
     <string name="action_list_location_center">Centrer au plus proche</string>
+    <string name="action_groupes_add">Ajouter un groupe</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
     <string name="error_title_webservice">Le service Tan est indisponible</string>

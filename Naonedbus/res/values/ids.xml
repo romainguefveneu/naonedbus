@@ -145,5 +145,6 @@
     <item name="menu_comment" type="id"/>
     <item name="menu_location" type="id"/>
     <item name="menu_layers" type="id"/>
+    <item name="menu_add" type="id"/>
 
 </resources>
