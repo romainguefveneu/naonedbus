@@ -9,15 +9,11 @@
     <TextView
         android:id="@android:id/title"
         style="@style/TutorialTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="74sp"
         android:text="@android:string/untitled" />
 
     <TextView
         android:id="@android:id/summary"
         style="@style/TutorialSummary"
-        android:layout_width="wrap_content"
-        android:layout_height="60sp"
         android:text="@android:string/untitled" />
 
     <ImageView

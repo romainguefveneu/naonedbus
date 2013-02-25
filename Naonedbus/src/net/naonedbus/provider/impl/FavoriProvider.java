@@ -20,7 +20,6 @@ package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.table.FavoriTable;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -40,9 +39,6 @@ public class FavoriProvider extends CustomContentProvider {
 	private static final String ARRETS_BASE_PATH = "favoris";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + ARRETS_BASE_PATH);
 
-	public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/mt-tutorial";
-	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/mt-tutorial";
-
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH, FAVORIS);
@@ -51,7 +47,7 @@ public class FavoriProvider extends CustomContentProvider {
 
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		SQLiteDatabase db = getWritableDatabase();
+		final SQLiteDatabase db = getWritableDatabase();
 
 		int count;
 		switch (URI_MATCHER.match(uri)) {
@@ -91,10 +87,10 @@ public class FavoriProvider extends CustomContentProvider {
 			throw new IllegalArgumentException("Unknown URI " + uri + " (" + URI_MATCHER.match(uri) + ")");
 		}
 
-		SQLiteDatabase db = getWritableDatabase();
+		final SQLiteDatabase db = getWritableDatabase();
 		final long rowId = db.insert(FavoriTable.TABLE_NAME, null, values);
 		if (rowId > 0) {
-			Uri insertUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
+			final Uri insertUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
 			getContext().getContentResolver().notifyChange(uri, null);
 			return insertUri;
 		}

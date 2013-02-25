@@ -372,13 +372,17 @@
     </style>
 
     <style name="TutorialTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">74sp</item>
         <item name="android:textSize">28sp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">center|bottom</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_marginBottom">8dip</item>
     </style>
 
     <style name="TutorialSummary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">60sp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@android:color/secondary_text_dark</item>
         <item name="android:gravity">center</item>

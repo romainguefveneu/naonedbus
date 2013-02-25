@@ -26,12 +26,11 @@ import android.graphics.drawable.Drawable;
  */
 public class Favori extends Arret {
 
-	private static final long serialVersionUID = -9006334622713944691L;
-
 	public String nomFavori;
 	public String nomSens;
 	public int couleurBackground;
 	public int couleurTexte;
+	public int idGroupe;
 
 	public Drawable background;
 	public String delay;

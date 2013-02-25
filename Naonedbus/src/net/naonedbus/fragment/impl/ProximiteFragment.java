@@ -133,13 +133,6 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		if (DBG)
-			Log.d(LOG_TAG, "onResume");
-	}
-
-	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_proximite, menu);
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_filter).getSubMenu();
@@ -267,13 +260,19 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onLocationChanged(Location location) {
+	public void onLocationChanged(final Location location) {
+		if (DBG)
+			Log.d(LOG_TAG, "onLocationChanged " + location);
+
 		loadAddress();
 		refreshContent();
 	}
 
 	@Override
 	public void onLocationDisabled() {
+		if (DBG)
+			Log.d(LOG_TAG, "onLocationDisabled");
+
 		showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
 		setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
 			@Override
