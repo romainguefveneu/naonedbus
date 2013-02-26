@@ -148,9 +148,11 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	private void deleteCheckedItems() {
 		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checked.size(); i++) {
-			final int position = checked.keyAt(i);
-			final int idGroupe = (int) mListView.getItemIdAtPosition(position);
-			mGroupeManager.delete(getActivity().getContentResolver(), idGroupe);
+			if (checked.valueAt(i)) {
+				final int position = checked.keyAt(i);
+				final int idGroupe = (int) mListView.getItemIdAtPosition(position);
+				mGroupeManager.delete(getActivity().getContentResolver(), idGroupe);
+			}
 		}
 	}
 
@@ -159,7 +161,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		if (hasItemChecked()) {
 			if (mActionMode == null) {
 				getSherlockActivity().startActionMode(GroupesFragment.this);
-			}else{
+			} else {
 				mActionMode.invalidate();
 			}
 		} else {
