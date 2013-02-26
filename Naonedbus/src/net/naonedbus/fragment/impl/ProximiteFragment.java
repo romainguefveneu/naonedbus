@@ -57,9 +57,9 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 	private static final String PREF_PROXIMITE_LAYER = "proximite.layer.";
 
-	private SharedPreferences preferences;
-	private MyLocationProvider myLocationProvider;
-	private Set<Equipement.Type> selectedTypesEquipements;
+	private SharedPreferences mPreferences;
+	private MyLocationProvider mLocationProvider;
+	private Set<Equipement.Type> mSelectedTypesEquipements;
 	private AddressResolverTask mAddressResolverTask;
 
 	private TextView headerTextView;
@@ -72,14 +72,14 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 		setHasOptionsMenu(true);
 
-		myLocationProvider = NBApplication.getLocationProvider();
-		preferences = NBApplication.getPreferences();
+		mLocationProvider = NBApplication.getLocationProvider();
+		mPreferences = NBApplication.getPreferences();
 
-		selectedTypesEquipements = new HashSet<Equipement.Type>();
+		mSelectedTypesEquipements = new HashSet<Equipement.Type>();
 		final Equipement.Type[] types = Equipement.Type.values();
 		for (Equipement.Type type : types) {
 			if (isLayerPreferenceEnabled(type.getId())) {
-				selectedTypesEquipements.add(type);
+				mSelectedTypesEquipements.add(type);
 			}
 		}
 	}
@@ -108,9 +108,9 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		if (DBG)
 			Log.d(LOG_TAG, "onStart");
 
-		myLocationProvider.addListener(this);
+		mLocationProvider.addListener(this);
 
-		if (myLocationProvider.isProviderEnabled() == false) {
+		if (mLocationProvider.isProviderEnabled() == false) {
 			onLocationDisabled();
 		} else {
 			loadContent();
@@ -125,7 +125,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		if (DBG)
 			Log.d(LOG_TAG, "onStop");
 
-		myLocationProvider.removeListener(this);
+		mLocationProvider.removeListener(this);
 
 		if (mAddressResolverTask != null) {
 			mAddressResolverTask.cancel(false);
@@ -141,7 +141,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		for (Equipement.Type type : types) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
 			item.setCheckable(true);
-			item.setChecked((selectedTypesEquipements.contains(type)));
+			item.setChecked((mSelectedTypesEquipements.contains(type)));
 		}
 
 		super.onCreateOptionsMenu(menu, inflater);
@@ -162,9 +162,9 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 			setLayerPreference(type.getId(), item.isChecked());
 
 			if (item.isChecked()) {
-				selectedTypesEquipements.add(type);
+				mSelectedTypesEquipements.add(type);
 			} else {
-				selectedTypesEquipements.remove(type);
+				mSelectedTypesEquipements.remove(type);
 			}
 
 			refreshContent();
@@ -218,13 +218,13 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 		try {
 
-			if (selectedTypesEquipements.size() > 0) {
+			if (mSelectedTypesEquipements.size() > 0) {
 				final EquipementManager equipementManager = EquipementManager.getInstance();
-				final Location location = myLocationProvider.getLastKnownLocation();
+				final Location location = mLocationProvider.getLastKnownLocation();
 
 				if (location != null) {
 					final List<Equipement> list = equipementManager.getEquipementsByLocation(
-							context.getContentResolver(), selectedTypesEquipements, location, MAX_EQUIPEMENTS);
+							context.getContentResolver(), mSelectedTypesEquipements, location, MAX_EQUIPEMENTS);
 
 					setDistances(list);
 					Collections.sort(list, new EquipementDistanceComparator<Equipement>());
@@ -244,7 +244,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 	protected void setDistances(List<Equipement> equipements) {
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
-		final Location currentLocation = myLocationProvider.getLastKnownLocation();
+		final Location currentLocation = mLocationProvider.getLastKnownLocation();
 
 		if (currentLocation != null) {
 			for (final Equipement item : equipements) {
@@ -292,9 +292,9 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	 */
 	private boolean isLayerPreferenceEnabled(final int id) {
 		if (id == Equipement.Type.TYPE_ARRET.getId()) {
-			return preferences.getBoolean(PREF_PROXIMITE_LAYER + id, true);
+			return mPreferences.getBoolean(PREF_PROXIMITE_LAYER + id, true);
 		} else {
-			return preferences.getBoolean(PREF_PROXIMITE_LAYER + id, false);
+			return mPreferences.getBoolean(PREF_PROXIMITE_LAYER + id, false);
 		}
 	}
 
@@ -305,7 +305,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	 * @param enabled
 	 */
 	private void setLayerPreference(final Integer id, final boolean enabled) {
-		preferences.edit().putBoolean(PREF_PROXIMITE_LAYER + id, enabled).commit();
+		mPreferences.edit().putBoolean(PREF_PROXIMITE_LAYER + id, enabled).commit();
 	}
 
 	@Override

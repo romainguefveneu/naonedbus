@@ -36,6 +36,12 @@
         android:id="@id/menu_group"
         android:icon="@drawable/ic_action_labels"
         android:showAsAction="always"
-        android:title="@string/action_groups"/>
+        android:title="@string/action_groups">
+        <menu>
+            <item
+                android:id="@id/menu_group_manage"
+                android:title="@string/action_groupes_manage"/>
+        </menu>
+    </item>
 
 </menu>

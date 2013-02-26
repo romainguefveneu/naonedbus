@@ -123,6 +123,7 @@
     <item name="menu_refresh" type="id"/>
     <item name="menu_edit" type="id"/>
     <item name="menu_group" type="id"/>
+    <item name="menu_group_manage" type="id"/>
     <item name="menu_delete" type="id"/>
     <item name="menu_import_export" type="id"/>
     <item name="menu_import" type="id"/>

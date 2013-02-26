@@ -47,6 +47,7 @@
     <string name="title_activity_parametres">Paramètres</string>
     <string name="title_activity_horaires">Horaires</string>
     <string name="title_activity_about">A propos</string>
+    <string name="title_activity_groupes">Gestion des groupes</string>
     <!-- Slide menu -->
     <string name="menu_accueil">Accueil</string>
     <string name="menu_info_trafic">Infos trafic</string>
@@ -94,6 +95,7 @@
     <string name="action_location_center">Centrer sur ma position</string>
     <string name="action_list_location_center">Centrer au plus proche</string>
     <string name="action_groupes_add">Ajouter un groupe</string>
+    <string name="action_groupes_manage">Gérer les groupes</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
     <string name="error_title_webservice">Le service Tan est indisponible</string>

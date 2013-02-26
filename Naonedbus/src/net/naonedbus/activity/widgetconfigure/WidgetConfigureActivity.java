@@ -96,7 +96,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 
 		// Stocker dans les préférences l'id du favori associé à l'id du widget
 		final SharedPreferences.Editor prefs = this.getSharedPreferences(PREFS_NAME, 0).edit();
-		prefs.putInt(PREF_PREFIX_KEY + appWidgetId, item._id);
+		prefs.putLong(PREF_PREFIX_KEY + appWidgetId, item._id);
 		prefs.commit();
 
 		// Valider la création du widget

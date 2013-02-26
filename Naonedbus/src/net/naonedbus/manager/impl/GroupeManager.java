@@ -28,7 +28,7 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 	@Override
 	public Groupe getSingleFromCursor(final Cursor c) {
 		final Groupe groupe = new Groupe();
-		groupe.setId(c.getLong(c.getColumnIndex(GroupeTable._ID)));
+		groupe.setId(c.getInt(c.getColumnIndex(GroupeTable._ID)));
 		groupe.setNom(c.getString(c.getColumnIndex(GroupeTable.NOM)));
 		groupe.setVisibility(c.getInt(c.getColumnIndex(GroupeTable.VISIBILITE)));
 		return groupe;
@@ -40,6 +40,13 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
 
 		contentResolver.insert(GroupeProvider.CONTENT_URI, contentValues);
+	}
+
+	public void delete(final ContentResolver contentResolver, final int idGroupe) {
+		final Uri.Builder builder = GroupeProvider.CONTENT_URI.buildUpon();
+		builder.appendPath(String.valueOf(idGroupe));
+
+		contentResolver.delete(builder.build(), null, null);
 	}
 
 	public void addFavoriToGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {

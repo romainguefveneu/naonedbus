@@ -102,7 +102,7 @@ public class GroupeProvider extends CustomContentProvider {
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(GroupeTable.TABLE_NAME);
 
 		int uriType = URI_MATCHER.match(uri);

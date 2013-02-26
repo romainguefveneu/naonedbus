@@ -16,25 +16,45 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ListView;
 
+import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class GroupesFragment extends CustomCursorFragment {
+public class GroupesFragment extends CustomCursorFragment implements ActionMode.Callback, OnItemClickListener {
+
+	private ActionMode mActionMode;
+	private ListView mListView;
+
+	private final GroupeManager mGroupeManager;
 
 	public GroupesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview);
+		mGroupeManager = GroupeManager.getInstance();
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		mListView = getListView();
+		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+		mListView.setOnItemClickListener(this);
 	}
 
 	@Override
@@ -47,8 +67,6 @@ public class GroupesFragment extends CustomCursorFragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == R.id.menu_add) {
-			final GroupeManager groupeManager = GroupeManager.getInstance();
-
 			final View alertDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_input, null);
 			final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
 			input.selectAll();
@@ -60,7 +78,7 @@ public class GroupesFragment extends CustomCursorFragment {
 				public void onClick(DialogInterface dialog, int which) {
 					final Groupe groupe = new Groupe();
 					groupe.setNom(input.getText().toString().trim());
-					groupeManager.add(getActivity().getContentResolver(), groupe);
+					mGroupeManager.add(getActivity().getContentResolver(), groupe);
 				}
 			});
 			builder.setNegativeButton(android.R.string.cancel, null);
@@ -77,9 +95,7 @@ public class GroupesFragment extends CustomCursorFragment {
 
 	@Override
 	protected CursorAdapter getCursorAdapter(final Context context) {
-
-		final GroupeManager manager = GroupeManager.getInstance();
-		final Cursor c = manager.getCursor(context.getContentResolver());
+		final Cursor c = mGroupeManager.getCursor(context.getContentResolver());
 
 		final String[] from = new String[] { GroupeTable.NOM };
 		final int[] to = new int[] { android.R.id.text1 };
@@ -95,6 +111,82 @@ public class GroupesFragment extends CustomCursorFragment {
 		final Uri uri = GroupeProvider.CONTENT_URI;
 		final CursorLoader cursorLoader = new CursorLoader(getActivity(), uri, null, null, null, null);
 		return cursorLoader;
+	}
+
+	@Override
+	public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
+		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
+		menuInflater.inflate(R.menu.fragment_groupes_contextual, menu);
+
+		mActionMode = mode;
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareActionMode(final ActionMode mode, final Menu menu) {
+		final int checkedItems = getCheckedItemsCount();
+		mActionMode.setTitle(getResources().getQuantityString(R.plurals.selected_items, checkedItems, checkedItems));
+		return true;
+	}
+
+	@Override
+	public boolean onActionItemClicked(final ActionMode mode, final MenuItem item) {
+		if (item.getItemId() == R.id.menu_delete) {
+			deleteCheckedItems();
+			mActionMode.finish();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void onDestroyActionMode(final ActionMode mode) {
+		mActionMode = null;
+		mListView.clearChoices();
+	}
+
+	private void deleteCheckedItems() {
+		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
+		for (int i = 0; i < checked.size(); i++) {
+			final int position = checked.keyAt(i);
+			final int idGroupe = (int) mListView.getItemIdAtPosition(position);
+			mGroupeManager.delete(getActivity().getContentResolver(), idGroupe);
+		}
+	}
+
+	@Override
+	public void onItemClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
+		if (hasItemChecked()) {
+			if (mActionMode == null) {
+				getSherlockActivity().startActionMode(GroupesFragment.this);
+			}else{
+				mActionMode.invalidate();
+			}
+		} else {
+			if (mActionMode != null) {
+				mActionMode.finish();
+			}
+		}
+	}
+
+	private int getCheckedItemsCount() {
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
+		int count = 0;
+		for (int i = 0; i < checkedPositions.size(); i++) {
+			if (checkedPositions.valueAt(i)) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	private boolean hasItemChecked() {
+		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
+		for (int i = 0; i < checked.size(); i++) {
+			if (checked.valueAt(i))
+				return true;
+		}
+		return false;
 	}
 
 }

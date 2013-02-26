@@ -8,12 +8,14 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.GroupesActivity;
 import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
+import net.naonedbus.bean.Groupe;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.FavoriComparator;
@@ -26,6 +28,7 @@ import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
+import net.naonedbus.manager.impl.GroupeManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
@@ -60,6 +63,7 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 import com.bugsense.trace.BugSenseHandler;
 
 @TargetApi(Build.VERSION_CODES.FROYO)
@@ -72,6 +76,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
 	private static final Integer MIN_HOUR = 60;
 	private static final Integer MIN_DURATION = 0;
+
+	private static final int MENU_GROUP_GROUPES = 1;
 
 	private final static int SORT_NOM = 0;
 	private final static int SORT_DISTANCE = 1;
@@ -100,6 +106,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private ActionMode mActionMode;
 	private ListView mListView;
 	private BackupManager mBackupManager;
+	private GroupeManager mGroupeManager;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
 
@@ -182,6 +189,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		mFavoriManager = FavoriManager.getInstance();
 		mLocationProvider = NBApplication.getLocationProvider();
+		mGroupeManager = GroupeManager.getInstance();
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
@@ -283,6 +291,15 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_favoris, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
+
+		final SubMenu filterSubMenu = menu.findItem(R.id.menu_group).getSubMenu();
+
+		final List<Groupe> groupes = mGroupeManager.getAll(getActivity().getContentResolver());
+		for (Groupe groupe : groupes) {
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
+			item.setCheckable(true);
+		}
+
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -303,6 +320,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		case R.id.menu_sort_name:
 			item.setChecked(true);
 			menuSort(SORT_NOM);
+			break;
+		case R.id.menu_group_manage:
+			getActivity().startActivity(new Intent(getActivity(), GroupesActivity.class));
 			break;
 		default:
 			return false;
@@ -385,7 +405,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	private boolean hasItemChecked() {
 		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
-		for (int i = 0; i < checked.size() - 1; i++) {
+		for (int i = 0; i < checked.size(); i++) {
 			if (checked.valueAt(i))
 				return true;
 		}
