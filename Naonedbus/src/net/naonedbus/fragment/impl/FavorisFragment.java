@@ -310,13 +310,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		inflater.inflate(R.menu.fragment_favoris, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 
-		final SubMenu filterSubMenu = menu.findItem(R.id.menu_group).getSubMenu();
-
-		final List<Groupe> groupes = mGroupeManager.getAll(getActivity().getContentResolver());
-		for (Groupe groupe : groupes) {
-			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
-			item.setCheckable(true);
-		}
+		final SubMenu groupesSubMenu = menu.findItem(R.id.menu_group).getSubMenu();
+		fillGroupesMenu(groupesSubMenu);
 
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -400,6 +395,19 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		sort();
 	}
 
+	private void menuGroupeFavori(final int idGroupe) {
+		Favori item;
+		final ContentResolver contentResolver = getActivity().getContentResolver();
+		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+
+		for (int i = mListView.getCount() - 1; i > -1; i--) {
+			if (mListView.isItemChecked(i)) {
+				item = adapter.getItem(i);
+				mGroupeManager.addFavoriToGroup(contentResolver, idGroupe, item._id);
+			}
+		}
+	}
+
 	private Favori getFirstSelectedItem() {
 		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checkedPositions.size(); i++) {
@@ -428,6 +436,14 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 				return true;
 		}
 		return false;
+	}
+
+	private void fillGroupesMenu(SubMenu filterSubMenu) {
+		final List<Groupe> groupes = mGroupeManager.getAll(getActivity().getContentResolver());
+		for (Groupe groupe : groupes) {
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
+			item.setCheckable(true);
+		}
 	}
 
 	/**
@@ -673,6 +689,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_favoris_contextual, menu);
+
+		final SubMenu groupesSubMenu = menu.findItem(R.id.menu_group).getSubMenu();
+		fillGroupesMenu(groupesSubMenu);
+
 		return true;
 	}
 
@@ -699,24 +719,35 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+	public boolean onActionItemClicked(final ActionMode mode, final MenuItem item) {
+
+		if (item.getGroupId() == MENU_GROUP_GROUPES) {
+			menuGroupeFavori(item.getItemId());
+			mode.finish();
+			return true;
+		}
+
 		switch (item.getItemId()) {
 		case R.id.menu_edit:
 			menuEdit();
+			mode.finish();
 			break;
 		case R.id.menu_delete:
 			menuDelete();
+			mode.finish();
 			break;
 		case R.id.menu_place:
 			menuPlace();
+			mode.finish();
 			break;
 		case R.id.menu_show_plan:
 			menuShowPlan();
+			mode.finish();
 			break;
 		default:
 			return false;
 		}
-		mode.finish();
+
 		return true;
 	}
 
