@@ -54,6 +54,8 @@ public class GroupeProvider extends CustomContentProvider {
 			final String idFavori = uri.getLastPathSegment();
 			count = db.delete(FavorisGroupesTable.TABLE_NAME, FavorisGroupesTable.ID_GROUPE + "=" + segment + " AND "
 					+ FavorisGroupesTable.ID_FAVORI + "=" + idFavori, null);
+
+			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI (" + URI_MATCHER.match(uri) + ") " + uri);
 		}
@@ -104,6 +106,9 @@ public class GroupeProvider extends CustomContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(GroupeTable.TABLE_NAME);
+		if (sortOrder == null) {
+			sortOrder = GroupeTable.NOM;
+		}
 
 		int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {

@@ -30,6 +30,7 @@ import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
 import net.naonedbus.manager.impl.GroupeManager;
 import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
@@ -43,10 +44,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -179,6 +183,16 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 	};
 
+	private final ContentObserver mGroupesContentObserver = new ContentObserver(new Handler()) {
+		@Override
+		public void onChange(final boolean selfChange, final Uri uri) {
+			if (DBG)
+				Log.d(LOG_TAG, "GroupesContentObserver onChange");
+
+			getSherlockActivity().invalidateOptionsMenu();
+		}
+	};
+
 	private FavoriManager mFavoriManager;
 	private StateHelper mStateHelper;
 
@@ -224,6 +238,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mListView = getListView();
 		mListView.setOnItemLongClickListener(this);
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+		getActivity().getContentResolver().registerContentObserver(GroupeProvider.CONTENT_URI, true,
+				mGroupesContentObserver);
 	}
 
 	@Override
@@ -247,6 +264,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.d(LOG_TAG, "onDestroy");
 
 		mFavoriManager.removeActionListener(mOnFavoriActionListener);
+		getActivity().getContentResolver().unregisterContentObserver(mGroupesContentObserver);
 		super.onDestroy();
 	}
 

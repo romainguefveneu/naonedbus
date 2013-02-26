@@ -49,6 +49,15 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		contentResolver.delete(builder.build(), null, null);
 	}
 
+	public void update(final ContentResolver contentResolver, final Groupe groupe) {
+		final ContentValues contentValues = new ContentValues();
+		contentValues.put(GroupeTable.NOM, groupe.getNom());
+		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
+
+		contentResolver.update(GroupeProvider.CONTENT_URI, contentValues, GroupeTable._ID + "=?",
+				new String[] { String.valueOf(groupe.getId()) });
+	}
+
 	public void addFavoriToGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {
 		final Uri.Builder builder = GroupeProvider.CONTENT_URI.buildUpon();
 		builder.path(GroupeProvider.FAVORIS_GROUPES_URI_PATH_QUERY);

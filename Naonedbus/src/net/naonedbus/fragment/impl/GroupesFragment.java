@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -30,12 +32,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class GroupesFragment extends CustomCursorFragment implements ActionMode.Callback, OnItemClickListener {
+public class GroupesFragment extends CustomCursorFragment implements ActionMode.Callback, OnItemClickListener,
+		OnItemLongClickListener {
+
+	private final GroupeManager mGroupeManager;
 
 	private ActionMode mActionMode;
 	private ListView mListView;
-
-	private final GroupeManager mGroupeManager;
 
 	public GroupesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview);
@@ -55,6 +58,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		mListView = getListView();
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		mListView.setOnItemClickListener(this);
+		mListView.setOnItemLongClickListener(this);
 	}
 
 	@Override
@@ -67,26 +71,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == R.id.menu_add) {
-			final View alertDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_input, null);
-			final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
-			input.selectAll();
-
-			final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			builder.setView(alertDialogView);
-			builder.setTitle(R.string.action_groupes_add);
-			builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					final Groupe groupe = new Groupe();
-					groupe.setNom(input.getText().toString().trim());
-					mGroupeManager.add(getActivity().getContentResolver(), groupe);
-				}
-			});
-			builder.setNegativeButton(android.R.string.cancel, null);
-
-			final AlertDialog alert = builder.create();
-			alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-			alert.show();
-
+			menuAdd();
 			return true;
 		}
 
@@ -125,16 +110,27 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	@Override
 	public boolean onPrepareActionMode(final ActionMode mode, final Menu menu) {
 		final int checkedItems = getCheckedItemsCount();
+
+		final MenuItem menuEdit = menu.findItem(R.id.menu_edit);
+		menuEdit.setVisible(checkedItems == 1);
+
 		mActionMode.setTitle(getResources().getQuantityString(R.plurals.selected_items, checkedItems, checkedItems));
 		return true;
 	}
 
 	@Override
 	public boolean onActionItemClicked(final ActionMode mode, final MenuItem item) {
-		if (item.getItemId() == R.id.menu_delete) {
+		switch (item.getItemId()) {
+		case R.id.menu_delete:
 			deleteCheckedItems();
 			mActionMode.finish();
 			return true;
+		case R.id.menu_edit:
+			editCheckedItem();
+			mActionMode.finish();
+			return true;
+		default:
+			break;
 		}
 		return false;
 	}
@@ -143,6 +139,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	public void onDestroyActionMode(final ActionMode mode) {
 		mActionMode = null;
 		mListView.clearChoices();
+		mListView.invalidateViews();
 	}
 
 	private void deleteCheckedItems() {
@@ -156,8 +153,47 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		}
 	}
 
+	private void editCheckedItem() {
+		final int checkedItem = getFirstSelectedItemPosition();
+		final CursorWrapper wrapper = (CursorWrapper) mListView.getItemAtPosition(checkedItem);
+		final Groupe groupe = mGroupeManager.getSingleFromCursor(wrapper);
+
+		final View alertDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_input, null);
+		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
+		input.setText(groupe.getNom());
+		input.selectAll();
+
+		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setView(alertDialogView);
+		builder.setTitle(R.string.action_rename);
+		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				final String nom = input.getText().toString().trim();
+				groupe.setNom((nom.length() == 0) ? null : nom);
+
+				mGroupeManager.update(getActivity().getContentResolver(), groupe);
+			}
+		});
+		builder.setNegativeButton(android.R.string.cancel, null);
+
+		final AlertDialog alert = builder.create();
+		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		alert.show();
+	}
+
 	@Override
 	public void onItemClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
+		onItemChecked();
+	}
+
+	@Override
+	public boolean onItemLongClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
+		mListView.setItemChecked(position, true);
+		onItemChecked();
+		return true;
+	}
+
+	private void onItemChecked() {
 		if (hasItemChecked()) {
 			if (mActionMode == null) {
 				getSherlockActivity().startActionMode(GroupesFragment.this);
@@ -169,6 +205,16 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 				mActionMode.finish();
 			}
 		}
+	}
+
+	private int getFirstSelectedItemPosition() {
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
+		for (int i = 0; i < checkedPositions.size(); i++) {
+			if (checkedPositions.valueAt(i)) {
+				return checkedPositions.keyAt(i);
+			}
+		}
+		return -1;
 	}
 
 	private int getCheckedItemsCount() {
@@ -189,6 +235,28 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 				return true;
 		}
 		return false;
+	}
+
+	private void menuAdd() {
+		final View alertDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_input, null);
+		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
+		input.selectAll();
+
+		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setView(alertDialogView);
+		builder.setTitle(R.string.action_groupes_add);
+		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				final Groupe groupe = new Groupe();
+				groupe.setNom(input.getText().toString().trim());
+				mGroupeManager.add(getActivity().getContentResolver(), groupe);
+			}
+		});
+		builder.setNegativeButton(android.R.string.cancel, null);
+
+		final AlertDialog alert = builder.create();
+		alert.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		alert.show();
 	}
 
 }
