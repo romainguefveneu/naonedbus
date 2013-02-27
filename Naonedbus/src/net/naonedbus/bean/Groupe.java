@@ -2,15 +2,15 @@ package net.naonedbus.bean;
 
 public class Groupe {
 
-	private long mId;
+	private int mId;
 	private String mNom;
 	private int mVisibility;
 
-	public long getId() {
+	public int getId() {
 		return mId;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		mId = id;
 	}
 

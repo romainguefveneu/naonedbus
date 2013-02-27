@@ -2,6 +2,7 @@ package net.naonedbus.manager.impl;
 
 import net.naonedbus.bean.Groupe;
 import net.naonedbus.manager.SQLiteManager;
+import net.naonedbus.provider.impl.FavoriGroupeProvider;
 import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.table.FavorisGroupesTable;
 import net.naonedbus.provider.table.GroupeTable;
@@ -34,6 +35,14 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		return groupe;
 	}
 
+	public Cursor getCursor(final ContentResolver contentResolver, int idFavori) {
+		final Uri.Builder builder = FavoriGroupeProvider.CONTENT_URI.buildUpon();
+		builder.path(FavoriGroupeProvider.FAVORI_ID_BASE_PATH);
+		builder.appendPath(String.valueOf(idFavori));
+
+		return contentResolver.query(builder.build(), null, null, null, null);
+	}
+
 	public void add(final ContentResolver contentResolver, final Groupe groupe) {
 		final ContentValues contentValues = new ContentValues();
 		contentValues.put(GroupeTable.NOM, groupe.getNom());
@@ -58,19 +67,28 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 				new String[] { String.valueOf(groupe.getId()) });
 	}
 
-	public void addFavoriToGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {
-		final Uri.Builder builder = GroupeProvider.CONTENT_URI.buildUpon();
-		builder.path(GroupeProvider.FAVORIS_GROUPES_URI_PATH_QUERY);
+	public boolean isFavoriAssociated(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {
+		boolean result;
 
+		final Cursor c = contentResolver.query(FavoriGroupeProvider.CONTENT_URI, null, FavorisGroupesTable.ID_GROUPE
+				+ "=? AND " + FavorisGroupesTable.ID_FAVORI + "=?",
+				new String[] { String.valueOf(idGroupe), String.valueOf(idFavori) }, null);
+		result = c.getCount() > 0;
+		c.close();
+
+		return result;
+	}
+
+	public void addFavoriToGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {
 		final ContentValues contentValues = new ContentValues();
 		contentValues.put(FavorisGroupesTable.ID_GROUPE, String.valueOf(idGroupe));
 		contentValues.put(FavorisGroupesTable.ID_FAVORI, String.valueOf(idFavori));
 
-		contentResolver.insert(builder.build(), contentValues);
+		contentResolver.insert(FavoriGroupeProvider.CONTENT_URI, contentValues);
 	}
 
-	public void removeFavoriToGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {
-		final Uri.Builder builder = GroupeProvider.CONTENT_URI.buildUpon();
+	public void removeFavoriFromGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {
+		final Uri.Builder builder = FavoriGroupeProvider.CONTENT_URI.buildUpon();
 		builder.appendPath(String.valueOf(idGroupe));
 		builder.appendPath(String.valueOf(idFavori));
 		contentResolver.delete(builder.build(), null, null);

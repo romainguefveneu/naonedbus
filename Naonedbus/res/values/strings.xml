@@ -264,6 +264,7 @@
     <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
     <string name="dialog_title_menu_lignes">Ligne %1$s</string>
     <string name="dialog_title_favoris_import">Votre clé :</string>
+    <string name="dialog_title_groupes">Groupes</string>
     <!-- Showcase -->
     <string name="showcase_arrets_title">Changez facilement de sens</string>
     <string name="showcase_arrets_content">Cliquez sur le sens pour en changer.</string>

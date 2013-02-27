@@ -11,50 +11,37 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.text.TextUtils;
 
-public class GroupeProvider extends CustomContentProvider {
+public class FavoriGroupeProvider extends CustomContentProvider {
 
 	public static final int GROUPES = 100;
 	public static final int GROUPE_ID = 110;
+	public static final int FAVORI_ID = 200;
 
-	public static final int FAVORIS_GROUPES = 200;
-	public static final String FAVORIS_GROUPES_URI_PATH_QUERY = "favorisGroupes";
+	private static final String AUTHORITY = "net.naonedbus.provider.FavoriGroupeProvider";
+	private static final String GROUPES_BASE_PATH = "favorisGroupes";
+	public static final String FAVORI_ID_BASE_PATH = GROUPES_BASE_PATH + "/favori";
 
-	private static final String AUTHORITY = "net.naonedbus.provider.GroupeProvider";
-	private static final String GROUPES_BASE_PATH = "groupes";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + GROUPES_BASE_PATH);
 
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 		URI_MATCHER.addURI(AUTHORITY, GROUPES_BASE_PATH, GROUPES);
 		URI_MATCHER.addURI(AUTHORITY, GROUPES_BASE_PATH + "/#", GROUPE_ID);
-		URI_MATCHER.addURI(AUTHORITY, GROUPES_BASE_PATH + "/#/#", FAVORIS_GROUPES);
-		URI_MATCHER.addURI(AUTHORITY, FAVORIS_GROUPES_URI_PATH_QUERY, FAVORIS_GROUPES);
+		URI_MATCHER.addURI(AUTHORITY, FAVORI_ID_BASE_PATH + "/#", FAVORI_ID);
 	}
 
 	@Override
 	public int delete(final Uri uri, final String selection, final String[] selectionArgs) {
 		final SQLiteDatabase db = getWritableDatabase();
-		final String segment;
 
 		int count;
 		switch (URI_MATCHER.match(uri)) {
 		case GROUPES:
-			count = db.delete(GroupeTable.TABLE_NAME, selection, selectionArgs);
-			break;
-		case GROUPE_ID:
-			segment = uri.getLastPathSegment();
-			count = db.delete(GroupeTable.TABLE_NAME, GroupeTable._ID + "=" + segment
-					+ (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
-			break;
-
-		case FAVORIS_GROUPES:
-			segment = uri.getPathSegments().get(1);
+			final String idGroupe = uri.getPathSegments().get(1);
 			final String idFavori = uri.getLastPathSegment();
-			count = db.delete(FavorisGroupesTable.TABLE_NAME, FavorisGroupesTable.ID_GROUPE + "=" + segment + " AND "
+			count = db.delete(FavorisGroupesTable.TABLE_NAME, FavorisGroupesTable.ID_GROUPE + "=" + idGroupe + " AND "
 					+ FavorisGroupesTable.ID_FAVORI + "=" + idFavori, null);
-
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI (" + URI_MATCHER.match(uri) + ") " + uri);
@@ -84,9 +71,6 @@ public class GroupeProvider extends CustomContentProvider {
 
 		switch (URI_MATCHER.match(uri)) {
 		case GROUPES:
-			rowId = db.insert(GroupeTable.TABLE_NAME, null, values);
-			break;
-		case FAVORIS_GROUPES:
 			rowId = db.insert(FavorisGroupesTable.TABLE_NAME, null, values);
 			break;
 		default:
@@ -105,20 +89,17 @@ public class GroupeProvider extends CustomContentProvider {
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-		queryBuilder.setTables(GroupeTable.TABLE_NAME);
-		if (sortOrder == null) {
-			sortOrder = GroupeTable.NOM;
-		}
+		queryBuilder.setTables(FavorisGroupesTable.TABLE_NAME);
 
 		int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
-		case GROUPE_ID:
-			queryBuilder.appendWhere(GroupeTable._ID + "=" + uri.getLastPathSegment());
-			break;
+		case FAVORI_ID:
+			final String favoriId = uri.getLastPathSegment();
+			final String query = String.format(LinkQuery.SELECT, favoriId);
 
-		case FAVORIS_GROUPES:
-			queryBuilder.setTables(FavorisGroupesTable.TABLE_NAME);
-			sortOrder = null;
+			return getReadableDatabase().rawQuery(query, null);
+		case GROUPE_ID:
+			queryBuilder.appendWhere(FavorisGroupesTable.ID_GROUPE + "=" + uri.getLastPathSegment());
 			break;
 
 		case GROUPES:
@@ -137,11 +118,28 @@ public class GroupeProvider extends CustomContentProvider {
 	@Override
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		final SQLiteDatabase db = getWritableDatabase();
-		final int rowCount = db.update(GroupeTable.TABLE_NAME, values, selection, selectionArgs);
+		final int rowCount = db.update(FavorisGroupesTable.TABLE_NAME, values, selection, selectionArgs);
 		if (rowCount > 0) {
 			getContext().getContentResolver().notifyChange(uri, null);
 		}
 		return rowCount;
+	}
+
+	/**
+	 * Composants de la requête de sélection des groupes avec l'association à un
+	 * favori.
+	 * 
+	 * @author romain.guefveneu
+	 * 
+	 */
+	private static interface LinkQuery {
+		final String GROUPE_COUNT = "SELECT COUNT(1) FROM " + FavorisGroupesTable.TABLE_NAME + " fgt WHERE fgt."
+				+ FavorisGroupesTable.ID_GROUPE + "=" + GroupeTable.TABLE_NAME + "." + GroupeTable._ID + " AND fgt."
+				+ FavorisGroupesTable.ID_FAVORI + "=%s";
+
+		public static final String SELECT = "SELECT " + GroupeTable._ID + ", " + GroupeTable.NOM + ", "
+				+ GroupeTable.VISIBILITE + ", (" + GROUPE_COUNT + ") as " + FavorisGroupesTable.LINKED + " FROM "
+				+ GroupeTable.TABLE_NAME;
 	}
 
 }

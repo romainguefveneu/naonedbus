@@ -2278,6 +2278,7 @@ containing a value of this type.
         public static final int dialog_content_key_error=0x7f0d00f6;
         public static final int dialog_title_comment_sending_error=0x7f0d00f4;
         public static final int dialog_title_favoris_import=0x7f0d00f8;
+        public static final int dialog_title_groupes=0x7f0d00f9;
         /**  Dialogs 
          */
         public static final int dialog_title_information=0x7f0d00f1;
@@ -2389,11 +2390,11 @@ containing a value of this type.
         public static final int parking_titre_places_disponibles=0x7f0d00b8;
         public static final int parking_titre_places_totales=0x7f0d00b9;
         public static final int parking_titre_telephone=0x7f0d00bb;
-        public static final int prompt_arret=0x7f0d0104;
+        public static final int prompt_arret=0x7f0d0105;
         /**  Prompt 
          */
-        public static final int prompt_ligne=0x7f0d0102;
-        public static final int prompt_sens=0x7f0d0103;
+        public static final int prompt_ligne=0x7f0d0103;
+        public static final int prompt_sens=0x7f0d0104;
         public static final int read_more=0x7f0d0018;
         public static final int search_empty=0x7f0d00c9;
         /**  Search 
@@ -2415,25 +2416,25 @@ containing a value of this type.
          */
         public static final int section_distance_none=0x7f0d00cc;
         public static final int setup=0x7f0d0021;
-        public static final int showcase_arrets_content=0x7f0d00fa;
+        public static final int showcase_arrets_content=0x7f0d00fb;
         /**  Showcase 
          */
-        public static final int showcase_arrets_title=0x7f0d00f9;
+        public static final int showcase_arrets_title=0x7f0d00fa;
         public static final int source=0x7f0d00a8;
         public static final int source_naonedbus=0x7f0d00aa;
         public static final int source_naonedbus_service=0x7f0d00ad;
         public static final int source_simpletan=0x7f0d00ac;
         public static final int source_twitter=0x7f0d00ab;
         public static final int source_unknown=0x7f0d00a9;
-        public static final int target_arret=0x7f0d00fd;
+        public static final int target_arret=0x7f0d00fe;
         /**  Target 
          */
-        public static final int target_ligne=0x7f0d00fb;
-        public static final int target_sens=0x7f0d00fc;
-        public static final int target_tous_arrets=0x7f0d0101;
-        public static final int target_tous_sens=0x7f0d0100;
-        public static final int target_toutes_lignes=0x7f0d00ff;
-        public static final int target_toutes_lignes_symbole=0x7f0d00fe;
+        public static final int target_ligne=0x7f0d00fc;
+        public static final int target_sens=0x7f0d00fd;
+        public static final int target_tous_arrets=0x7f0d0102;
+        public static final int target_tous_sens=0x7f0d0101;
+        public static final int target_toutes_lignes=0x7f0d0100;
+        public static final int target_toutes_lignes_symbole=0x7f0d00ff;
         public static final int time_line_after=0x7f0d00a5;
         public static final int time_line_before=0x7f0d00a7;
         public static final int time_line_now=0x7f0d00a6;
@@ -2484,14 +2485,14 @@ containing a value of this type.
         public static final int title_fragment_versions=0x7f0d007f;
         /**  Toasts 
          */
-        public static final int toast_favori_ajout=0x7f0d0105;
-        public static final int toast_favori_retire=0x7f0d0106;
+        public static final int toast_favori_ajout=0x7f0d0106;
+        public static final int toast_favori_retire=0x7f0d0107;
         public static final int today=0x7f0d0019;
         public static final int tomorrow=0x7f0d001b;
-        public static final int trafic_a_venir=0x7f0d0108;
+        public static final int trafic_a_venir=0x7f0d0109;
         /**  Trafic 
          */
-        public static final int trafic_en_cours=0x7f0d0107;
+        public static final int trafic_en_cours=0x7f0d0108;
         public static final int tuto_0_summary=0x7f0d0023;
         /**  Tuto 
          */

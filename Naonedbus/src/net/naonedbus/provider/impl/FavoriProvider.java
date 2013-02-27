@@ -19,6 +19,7 @@
 package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.CustomContentProvider;
+import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.provider.table.FavoriTable;
 import android.content.ContentUris;
 import android.content.ContentValues;
