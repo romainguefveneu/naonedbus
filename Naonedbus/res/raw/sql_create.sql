@@ -102,6 +102,8 @@ CREATE INDEX IF NOT EXISTS groupes_id ON groupes (_id);
 -- Décrire FAVORISGROUPES
 CREATE TABLE IF NOT EXISTS favorisGroupes (
 	idFavori INTEGER NOT NULL, 
-	idGroupe  INTEGER NOT NULL);
+	idGroupe  INTEGER NOT NULL,
+	CONSTRAINT uc_ids UNIQUE (idFavori, idGroupe));
+
 CREATE INDEX IF NOT EXISTS favorisGroupes_idFavori ON favorisGroupes (idFavori);
 CREATE INDEX IF NOT EXISTS favorisGroupes_idGroupe ON favorisGroupes (idGroupe);

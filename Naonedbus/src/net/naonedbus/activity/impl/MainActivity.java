@@ -45,7 +45,7 @@ public class MainActivity extends SlidingMenuActivity {
 					mFirstLaunch = true;
 					showSetupView(R.string.updating);
 					if (oldVersion < 11)
-						startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+						showTutorial();
 				}
 			});
 		}
@@ -57,7 +57,7 @@ public class MainActivity extends SlidingMenuActivity {
 				public void run() {
 					mFirstLaunch = true;
 					showSetupView(R.string.setup);
-					startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+					showTutorial();
 				}
 			});
 		}
@@ -143,6 +143,11 @@ public class MainActivity extends SlidingMenuActivity {
 		if ((view = findViewById(R.id.setupView)) != null) {
 			view.setVisibility(View.GONE);
 		}
+	}
+
+	private void showTutorial() {
+		startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+		overridePendingTransition(0, 0);
 	}
 
 	/**

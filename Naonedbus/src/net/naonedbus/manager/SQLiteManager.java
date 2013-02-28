@@ -21,8 +21,6 @@ package net.naonedbus.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.provider.table.ArretTable;
-import net.naonedbus.provider.table.EquipementTable;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;

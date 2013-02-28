@@ -1,9 +1,12 @@
 package net.naonedbus.fragment.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
@@ -24,6 +27,7 @@ import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.helper.FavorisHelper.FavorisActionListener;
+import net.naonedbus.helper.GroupesHelper;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
@@ -37,6 +41,7 @@ import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 
 import org.joda.time.DateMidnight;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.backup.BackupManager;
 import android.content.BroadcastReceiver;
@@ -111,6 +116,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private ListView mListView;
 	private BackupManager mBackupManager;
 	private GroupeManager mGroupeManager;
+	private final Set<Groupe> mSelectedGroupes;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
 
@@ -184,6 +190,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	};
 
 	private final ContentObserver mGroupesContentObserver = new ContentObserver(new Handler()) {
+		@SuppressLint("NewApi")
 		@Override
 		public void onChange(final boolean selfChange, final Uri uri) {
 			if (DBG)
@@ -204,6 +211,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mFavoriManager = FavoriManager.getInstance();
 		mLocationProvider = NBApplication.getLocationProvider();
 		mGroupeManager = GroupeManager.getInstance();
+		mSelectedGroupes = new HashSet<Groupe>();
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
@@ -401,9 +409,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
 
 		for (int i = mListView.getCount() - 1; i > -1; i--) {
+			item = adapter.getItem(i);
 			if (mListView.isItemChecked(i)) {
-				item = adapter.getItem(i);
 				mGroupeManager.addFavoriToGroup(contentResolver, idGroupe, item._id);
+			} else {
+				mGroupeManager.removeFavoriFromGroup(contentResolver, idGroupe, item._id);
 			}
 		}
 	}
@@ -438,7 +448,20 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		return false;
 	}
 
-	private void fillGroupesMenu(SubMenu filterSubMenu) {
+	private List<Integer> getCheckedItemsIds() {
+		List<Integer> ids = new ArrayList<Integer>();
+		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
+		for (int i = 0; i < checked.size(); i++) {
+			if (checked.valueAt(i)) {
+				final Favori item = (Favori) mListView.getItemAtPosition(checked.keyAt(i));
+				ids.add(item._id);
+			}
+		}
+
+		return ids;
+	}
+
+	private void fillGroupesMenu(final SubMenu filterSubMenu) {
 		final List<Groupe> groupes = mGroupeManager.getAll(getActivity().getContentResolver());
 		for (Groupe groupe : groupes) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
@@ -689,10 +712,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_favoris_contextual, menu);
-
-		final SubMenu groupesSubMenu = menu.findItem(R.id.menu_group).getSubMenu();
-		fillGroupesMenu(groupesSubMenu);
-
 		return true;
 	}
 
@@ -721,12 +740,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public boolean onActionItemClicked(final ActionMode mode, final MenuItem item) {
 
-		if (item.getGroupId() == MENU_GROUP_GROUPES) {
-			menuGroupeFavori(item.getItemId());
-			mode.finish();
-			return true;
-		}
-
 		switch (item.getItemId()) {
 		case R.id.menu_edit:
 			menuEdit();
@@ -743,6 +756,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		case R.id.menu_show_plan:
 			menuShowPlan();
 			mode.finish();
+			break;
+		case R.id.menu_group:
+			final GroupesHelper helper = new GroupesHelper(getActivity());
+			helper.linkFavori(getCheckedItemsIds());
 			break;
 		default:
 			return false;
