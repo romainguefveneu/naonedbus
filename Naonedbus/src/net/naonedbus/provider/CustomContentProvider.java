@@ -85,7 +85,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final String LOG_TAG = "CoreDatabase";
 		private static final boolean DBG = BuildConfig.DEBUG;
 
-		private static final int DB_VERSION = 10;
+		private static final int DB_VERSION = 11;
 		private static final String DB_NAME = "data.db";
 
 		private CompressedQueriesHelper mCompressedQueriesHelper;

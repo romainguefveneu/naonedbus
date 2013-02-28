@@ -2522,7 +2522,8 @@ containing a value of this type.
         public static final int yesterday=0x7f0d001a;
     }
     public static final class style {
-        public static final int AcapulcoActionBar=0x7f0c009e;
+        public static final int AcapulcoActionBar=0x7f0c009f;
+        public static final int ActionBarLigneCode=0x7f0c009a;
         /**  <item name="android:background">?android:attr/selectableItemBackground</item> 
          */
         public static final int ActionIcon=0x7f0c0097;
@@ -2617,10 +2618,10 @@ containing a value of this type.
         public static final int TextAppearance_Sherlock_Widget_PopupMenu_Small=0x7f0c004c;
         public static final int TextAppearance_Sherlock_Widget_TextView_SpinnerItem=0x7f0c004e;
         public static final int TextAppearance_TabPageIndicator=0x7f0c0003;
-        public static final int Theme_Acapulco_Dark=0x7f0c009c;
-        public static final int Theme_Acapulco_Dark_HomeAsMenu=0x7f0c009d;
-        public static final int Theme_Acapulco_Light=0x7f0c009a;
-        public static final int Theme_Acapulco_Light_HomeAsMenu=0x7f0c009b;
+        public static final int Theme_Acapulco_Dark=0x7f0c009d;
+        public static final int Theme_Acapulco_Dark_HomeAsMenu=0x7f0c009e;
+        public static final int Theme_Acapulco_Light=0x7f0c009b;
+        public static final int Theme_Acapulco_Light_HomeAsMenu=0x7f0c009c;
         public static final int Theme_PageIndicatorDefaults=0x7f0c0000;
         public static final int Theme_Sherlock=0x7f0c005a;
         public static final int Theme_Sherlock_Dialog=0x7f0c005f;

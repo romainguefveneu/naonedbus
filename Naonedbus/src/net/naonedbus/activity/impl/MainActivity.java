@@ -15,6 +15,9 @@ import net.naonedbus.provider.impl.MyLocationProvider;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,7 +44,7 @@ public class MainActivity extends SlidingMenuActivity {
 				public void run() {
 					mFirstLaunch = true;
 					showSetupView(R.string.updating);
-					if (oldVersion < 10)
+					if (oldVersion < 11)
 						startActivity(new Intent(MainActivity.this, TutorialActivity.class));
 				}
 			});
@@ -68,6 +71,7 @@ public class MainActivity extends SlidingMenuActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setTitle(R.string.title_activity_main);
+
 		super.onCreate(savedInstanceState);
 
 		if (savedInstanceState == null) {

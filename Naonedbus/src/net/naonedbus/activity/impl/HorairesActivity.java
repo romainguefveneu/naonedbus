@@ -23,6 +23,9 @@ import net.naonedbus.utils.SymbolesUtils;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.TextAppearanceSpan;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
@@ -100,6 +103,7 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 		mHeaderHelper.setCode(mLigne.lettre);
 		mHeaderHelper.setTitle(mArret.nomArret);
 		mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(mSens.text));
+
 	}
 
 	@Override
