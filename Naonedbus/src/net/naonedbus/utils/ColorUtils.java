@@ -18,7 +18,9 @@
  */
 package net.naonedbus.utils;
 
+import net.simonvt.menudrawer.ColorDrawable;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
 public abstract class ColorUtils {
@@ -29,7 +31,7 @@ public abstract class ColorUtils {
 		// Get darker color
 		float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
-		hsv[2] *= 0.7f; // value component
+		hsv[2] *= 0.9f; // value component
 		darkerColor = Color.HSVToColor(hsv);
 
 		colors = new int[2];
@@ -50,6 +52,14 @@ public abstract class ColorUtils {
 		return Color.HSVToColor(hsv);
 	}
 
+	public static synchronized int getStackedBackgroundColor(int color) {
+		// Get darker color
+		float[] hsv = new float[3];
+		Color.colorToHSV(color, hsv);
+		hsv[2] *= 0.2f;
+		return Color.HSVToColor(hsv);
+	}
+
 	public static synchronized int getLighterColor(int color) {
 		// Get lighter color
 		float[] hsv = new float[3];
@@ -63,6 +73,11 @@ public abstract class ColorUtils {
 	public static synchronized GradientDrawable getRoundedGradiant(int color) {
 		GradientDrawable d = getGradiant(color);
 		d.setCornerRadius(3);
+		return d;
+	}
+
+	public static synchronized Drawable getRoundedDrawable(int color) {
+		ColorDrawable d = new ColorDrawable(color);
 		return d;
 	}
 

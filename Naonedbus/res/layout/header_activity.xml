@@ -22,6 +22,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/headerView"
     android:layout_width="match_parent"
+    android:visibility="gone"
     android:layout_height="@dimen/headeractivity_height" >
 
     <TextView

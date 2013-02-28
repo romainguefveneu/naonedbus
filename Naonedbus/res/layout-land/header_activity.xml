@@ -21,6 +21,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/headerView"
+    android:visibility="gone"
     android:layout_width="match_parent"
     android:layout_height="@dimen/headeractivity_height"
     android:gravity="center_vertical" >

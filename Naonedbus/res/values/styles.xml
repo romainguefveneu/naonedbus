@@ -389,11 +389,31 @@
         <item name="android:layout_marginBottom">16dip</item>
     </style>
 
-    <style name="ActionBarLigneCode">
+    <style name="ActionBarCode">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">24sp</item>
-        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ActionBarCode.Light">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="ActionBarArret">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ActionBarArret.Light">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="ActionBarSens">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="ActionBarSens.Light">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
 </resources>

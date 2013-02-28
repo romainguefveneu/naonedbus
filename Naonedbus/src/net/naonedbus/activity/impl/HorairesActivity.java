@@ -19,8 +19,13 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.SymbolesUtils;
+import net.simonvt.menudrawer.ColorDrawable;
 import android.annotation.TargetApi;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -64,7 +69,6 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 		mArret = getIntent().getParcelableExtra(PARAM_ARRET);
 		mLigne = getIntent().getParcelableExtra(PARAM_LIGNE);
@@ -104,6 +108,35 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 		mHeaderHelper.setTitle(mArret.nomArret);
 		mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(mSens.text));
 
+		getSupportActionBar().setBackgroundDrawable(ColorUtils.getGradiant(mLigne.couleurBackground));
+
+		final GradientDrawable gradientDrawable = ColorUtils.getGradiant(mLigne.couleurTexte);
+		final Bitmap bitmap = Bitmap.createBitmap(48, 48, Bitmap.Config.ARGB_8888);
+		final Canvas canvas = new Canvas(bitmap);
+		gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+		gradientDrawable.draw(canvas);
+
+		getSupportActionBar().setIcon(gradientDrawable);
+
+		final boolean isLight = ColorUtils.isLightColor(mLigne.couleurBackground);
+
+		final int styleCode = isLight ? R.style.ActionBarCode_Light : R.style.ActionBarCode;
+		final int styleArret = isLight ? R.style.ActionBarArret_Light : R.style.ActionBarArret;
+		final int styleSens = isLight ? R.style.ActionBarSens_Light : R.style.ActionBarSens;
+
+		final SpannableString text = new SpannableString(SymbolesUtils.formatTitle(mLigne.lettre, mArret.nomArret,
+				mSens.text));
+		text.setSpan(new TextAppearanceSpan(this, styleCode), 0, mLigne.lettre.length(),
+				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		text.setSpan(new TextAppearanceSpan(this, styleArret), mLigne.lettre.length() + 3, mLigne.lettre.length() + 3
+				+ mArret.nomArret.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		text.setSpan(new TextAppearanceSpan(this, styleSens), mLigne.lettre.length() + mArret.nomArret.length() + 6,
+				mLigne.lettre.length() + mArret.nomArret.length() + 6 + mSens.text.length(),
+				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		setTitle(text);
+
+		getSupportActionBar().setStackedBackgroundDrawable(
+				new ColorDrawable(ColorUtils.getStackedBackgroundColor(mLigne.couleurBackground)));
 	}
 
 	@Override

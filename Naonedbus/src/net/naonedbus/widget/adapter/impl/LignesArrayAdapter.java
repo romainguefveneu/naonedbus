@@ -72,7 +72,7 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 			if (ligne.couleurBackground == 0) {
 				holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			} else {
-				holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
+				holder.icon.setBackgroundColor(ligne.couleurBackground);
 			}
 		}
 
