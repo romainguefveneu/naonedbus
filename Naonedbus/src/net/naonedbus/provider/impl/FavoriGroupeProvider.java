@@ -18,17 +18,19 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 	public static final int GROUPE_ID = 110;
 	public static final int FAVORI_ID = 200;
 
-	private static final String AUTHORITY = "net.naonedbus.provider.FavoriGroupeProvider";
-	private static final String GROUPES_BASE_PATH = "favorisGroupes";
-	public static final String FAVORI_ID_BASE_PATH = GROUPES_BASE_PATH + "/favori";
+	public static final String QUERY_PARAMETER_IDS = "ids";
 
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + GROUPES_BASE_PATH);
+	private static final String AUTHORITY = "net.naonedbus.provider.FavoriGroupeProvider";
+	public static final String FAVORI_ID_BASE_PATH = "favori";
+
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
-		URI_MATCHER.addURI(AUTHORITY, GROUPES_BASE_PATH, GROUPES);
-		URI_MATCHER.addURI(AUTHORITY, GROUPES_BASE_PATH + "/#", GROUPE_ID);
-		URI_MATCHER.addURI(AUTHORITY, FAVORI_ID_BASE_PATH + "/#", FAVORI_ID);
+		URI_MATCHER.addURI(AUTHORITY, null, GROUPES);
+		URI_MATCHER.addURI(AUTHORITY, "#/#", GROUPES);
+		URI_MATCHER.addURI(AUTHORITY, "#", GROUPE_ID);
+		URI_MATCHER.addURI(AUTHORITY, FAVORI_ID_BASE_PATH, FAVORI_ID);
 	}
 
 	@Override
@@ -38,7 +40,7 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 		int count;
 		switch (URI_MATCHER.match(uri)) {
 		case GROUPES:
-			final String idGroupe = uri.getPathSegments().get(1);
+			final String idGroupe = uri.getPathSegments().get(0);
 			final String idFavori = uri.getLastPathSegment();
 			count = db.delete(FavorisGroupesTable.TABLE_NAME, FavorisGroupesTable.ID_GROUPE + "=" + idGroupe + " AND "
 					+ FavorisGroupesTable.ID_FAVORI + "=" + idFavori, null);
@@ -47,7 +49,9 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 			throw new IllegalArgumentException("Unknown URI (" + URI_MATCHER.match(uri) + ") " + uri);
 		}
 
-		getContext().getContentResolver().notifyChange(uri, null);
+		if (count > 0) {
+			getContext().getContentResolver().notifyChange(uri, null);
+		}
 
 		return count;
 	}
@@ -94,17 +98,17 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 		int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
 		case FAVORI_ID:
-			final String favoriId = uri.getLastPathSegment();
+			final String favoriId = uri.getQueryParameter(FavoriGroupeProvider.QUERY_PARAMETER_IDS);
 			final String query = String.format(LinkQuery.SELECT, favoriId);
-
 			return getReadableDatabase().rawQuery(query, null);
+
 		case GROUPE_ID:
 			queryBuilder.appendWhere(FavorisGroupesTable.ID_GROUPE + "=" + uri.getLastPathSegment());
 			break;
 
 		case GROUPES:
-
 			break;
+
 		default:
 			throw new IllegalArgumentException("Unknown URI (" + uri + ")");
 		}
@@ -133,9 +137,9 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 	 * 
 	 */
 	private static interface LinkQuery {
-		final String GROUPE_COUNT = "SELECT COUNT(1) FROM " + FavorisGroupesTable.TABLE_NAME + " fgt WHERE fgt."
+		final String GROUPE_COUNT = "SELECT MIN(COUNT(1),1) FROM " + FavorisGroupesTable.TABLE_NAME + " fgt WHERE fgt."
 				+ FavorisGroupesTable.ID_GROUPE + "=" + GroupeTable.TABLE_NAME + "." + GroupeTable._ID + " AND fgt."
-				+ FavorisGroupesTable.ID_FAVORI + "=%s";
+				+ FavorisGroupesTable.ID_FAVORI + " IN %s";
 
 		public static final String SELECT = "SELECT " + GroupeTable._ID + ", " + GroupeTable.NOM + ", "
 				+ GroupeTable.VISIBILITE + ", (" + GROUPE_COUNT + ") as " + FavorisGroupesTable.LINKED + " FROM "

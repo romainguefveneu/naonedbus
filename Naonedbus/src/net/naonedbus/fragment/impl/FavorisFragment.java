@@ -759,7 +759,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			break;
 		case R.id.menu_group:
 			final GroupesHelper helper = new GroupesHelper(getActivity());
-			helper.linkFavori(getFirstSelectedItem());
+			helper.linkFavori(getCheckedItemsIds());
 			break;
 		default:
 			return false;

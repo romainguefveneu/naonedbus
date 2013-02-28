@@ -1,11 +1,14 @@
 package net.naonedbus.manager.impl;
 
+import java.util.List;
+
 import net.naonedbus.bean.Groupe;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.FavoriGroupeProvider;
 import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.table.FavorisGroupesTable;
 import net.naonedbus.provider.table.GroupeTable;
+import net.naonedbus.utils.QueryUtils;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -35,10 +38,10 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		return groupe;
 	}
 
-	public Cursor getCursor(final ContentResolver contentResolver, int idFavori) {
+	public Cursor getCursor(final ContentResolver contentResolver, final List<Integer> idFavoris) {
 		final Uri.Builder builder = FavoriGroupeProvider.CONTENT_URI.buildUpon();
 		builder.path(FavoriGroupeProvider.FAVORI_ID_BASE_PATH);
-		builder.appendPath(String.valueOf(idFavori));
+		builder.appendQueryParameter(FavoriGroupeProvider.QUERY_PARAMETER_IDS, QueryUtils.listToInStatement(idFavoris));
 
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
