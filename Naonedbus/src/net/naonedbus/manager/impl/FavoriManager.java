@@ -34,11 +34,13 @@ import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.provider.table.SensTable;
 import net.naonedbus.rest.controller.impl.FavoriController;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.QueryUtils;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 
 public class FavoriManager extends SQLiteManager<Favori> {
@@ -75,6 +77,21 @@ public class FavoriManager extends SQLiteManager<Favori> {
 
 	private FavoriManager() {
 		super(FavoriProvider.CONTENT_URI);
+	}
+
+	/**
+	 * Récupérer tous les favoris d'un ensemble de groupe.
+	 * 
+	 * @param contentResolver
+	 * @return la liste de tous les favoris appartenant à un des groupes
+	 */
+	public List<Favori> getAll(final ContentResolver contentResolver, final List<Integer> idGroupes) {
+		final Uri.Builder builder = FavoriProvider.CONTENT_URI.buildUpon();
+		builder.path(FavoriProvider.FAVORIS_GROUPES_URI_PATH_QUERY);
+		builder.appendQueryParameter(FavoriProvider.QUERY_PARAMETER_GROUPES_IDS,
+				QueryUtils.listToInStatement(idGroupes));
+
+		return getFromCursor(contentResolver.query(builder.build(), null, null, null, null));
 	}
 
 	@Override

@@ -28,11 +28,14 @@ public interface FavoriTable extends BaseColumns {
 	public static final String CODE_LIGNE = "codeLigne";
 	public static final String NOM = "nomFavori";
 
+	//@formatter:off
 	public static final String JOIN = TABLE_NAME + " f " + " LEFT JOIN " + ArretTable.TABLE_NAME
-			+ " a ON f._id = a._id" + " LEFT JOIN " + EquipementTable.TABLE_NAME
-			+ " st ON st.idType = 0 AND st._id = a.idStation " + " LEFT JOIN " + LigneTable.TABLE_NAME
-			+ " l ON l.code = f.codeLigne" + " LEFT JOIN " + SensTable.TABLE_NAME
-			+ " s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens";
+			+ " a ON f._id = a._id" + 
+			" LEFT JOIN " + EquipementTable.TABLE_NAME + " st ON st.idType = 0 AND st._id = a.idStation " + 
+			" LEFT JOIN " + LigneTable.TABLE_NAME+ " l ON l.code = f.codeLigne" + 
+			" LEFT JOIN " + SensTable.TABLE_NAME + " s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens" + 
+			" LEFT JOIN " + FavorisGroupesTable.TABLE_NAME + " ON f._id = " + FavorisGroupesTable.TABLE_NAME + "." + FavorisGroupesTable.ID_FAVORI;
+	//@formatter:on
 
 	public static final String[] PROJECTION = new String[] { FavoriTable._ID, FavoriTable.NOM, FavoriTable.CODE_ARRET,
 			FavoriTable.CODE_SENS, FavoriTable.CODE_LIGNE };
@@ -45,4 +48,6 @@ public interface FavoriTable extends BaseColumns {
 
 	public static final String FULL_ORDER = " l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
 			+ " as numeric)," + FavoriTable.NOM + ", " + EquipementTable.NOM;
+
+	public static final String WHERE = FavorisGroupesTable.ID_GROUPE + "  IN %s";
 }

@@ -7,7 +7,6 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
@@ -75,7 +74,8 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 
 		switch (URI_MATCHER.match(uri)) {
 		case GROUPES:
-			rowId = db.insert(FavorisGroupesTable.TABLE_NAME, null, values);
+			rowId = db.insertWithOnConflict(FavorisGroupesTable.TABLE_NAME, null, values,
+					SQLiteDatabase.CONFLICT_IGNORE);
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI " + uri + " (" + URI_MATCHER.match(uri) + ")");
@@ -87,7 +87,7 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 			return insertUri;
 		}
 
-		throw new SQLException("Failed to insert row into " + uri);
+		return null;
 	}
 
 	@Override

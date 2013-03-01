@@ -19,7 +19,6 @@
 package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.CustomContentProvider;
-import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.provider.table.FavoriTable;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -30,11 +29,19 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class FavoriProvider extends CustomContentProvider {
 
 	public static final int FAVORIS = 100;
 	public static final int FAVORI_ID = 110;
+
+	/**
+	 * Récupérer les favoris selon une liste de groupes.
+	 */
+	public static final int FAVORI_GROUPES = 200;
+	public static final String FAVORIS_GROUPES_URI_PATH_QUERY = "groupes";
+	public static final String QUERY_PARAMETER_GROUPES_IDS = "groupes";
 
 	private static final String AUTHORITY = "net.naonedbus.provider.FavoriProvider";
 	private static final String ARRETS_BASE_PATH = "favoris";
@@ -44,6 +51,7 @@ public class FavoriProvider extends CustomContentProvider {
 	static {
 		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH, FAVORIS);
 		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH + "/#", FAVORI_ID);
+		URI_MATCHER.addURI(AUTHORITY, FAVORIS_GROUPES_URI_PATH_QUERY, FAVORI_GROUPES);
 	}
 
 	@Override
@@ -118,6 +126,11 @@ public class FavoriProvider extends CustomContentProvider {
 		case FAVORI_ID:
 			queryBuilder.appendWhere(FavoriTable._ID + "=" + uri.getLastPathSegment());
 			break;
+		case FAVORI_GROUPES:
+			final String where = String.format(FavoriTable.WHERE, uri.getQueryParameter(QUERY_PARAMETER_GROUPES_IDS));
+			queryBuilder.appendWhere(where);
+
+			break;
 		case FAVORIS:
 
 			break;
@@ -125,8 +138,8 @@ public class FavoriProvider extends CustomContentProvider {
 			throw new IllegalArgumentException("Unknown URI (" + uri + ")");
 		}
 
-		Cursor cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, null, null,
-				sortOrder);
+		final Cursor cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, null,
+				null, sortOrder);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		return cursor;
 	}

@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
@@ -49,6 +47,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.location.Location;
 import android.net.Uri;
@@ -86,6 +85,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private static final Integer MIN_HOUR = 60;
 	private static final Integer MIN_DURATION = 0;
 
+	private static final String PREF_GROUPES = "favoris.groupes.";
+
 	private static final int MENU_GROUP_GROUPES = 1;
 
 	private final static int SORT_NOM = 0;
@@ -116,7 +117,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private ListView mListView;
 	private BackupManager mBackupManager;
 	private GroupeManager mGroupeManager;
-	private final Set<Groupe> mSelectedGroupes;
+	private SharedPreferences mPreferences;
+	private List<Groupe> mGroupes;
+	private final List<Integer> mSelectedGroupes;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
 
@@ -211,7 +214,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mFavoriManager = FavoriManager.getInstance();
 		mLocationProvider = NBApplication.getLocationProvider();
 		mGroupeManager = GroupeManager.getInstance();
-		mSelectedGroupes = new HashSet<Groupe>();
+
+		mPreferences = NBApplication.getPreferences();
+
+		mSelectedGroupes = new ArrayList<Integer>();
 	}
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
@@ -236,6 +242,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		// Gestion du tri par défaut
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
+
+		mGroupes = mGroupeManager.getAll(getActivity().getContentResolver());
 	}
 
 	@Override
@@ -327,6 +335,18 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
+		if (item.getGroupId() == MENU_GROUP_GROUPES) {
+			item.setChecked(!item.isChecked());
+			mPreferences.edit().putBoolean(PREF_GROUPES + item.getItemId(), item.isChecked()).commit();
+			if (item.isChecked()) {
+				mSelectedGroupes.add(item.getItemId());
+			} else {
+				mSelectedGroupes.remove((Object) item.getItemId());
+			}
+			refreshContent();
+			return true;
+		}
+
 		switch (item.getItemId()) {
 		case R.id.menu_import:
 			final FavorisHelper helper = new FavorisHelper(getActivity());
@@ -403,21 +423,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		sort();
 	}
 
-	private void menuGroupeFavori(final int idGroupe) {
-		Favori item;
-		final ContentResolver contentResolver = getActivity().getContentResolver();
-		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
-
-		for (int i = mListView.getCount() - 1; i > -1; i--) {
-			item = adapter.getItem(i);
-			if (mListView.isItemChecked(i)) {
-				mGroupeManager.addFavoriToGroup(contentResolver, idGroupe, item._id);
-			} else {
-				mGroupeManager.removeFavoriFromGroup(contentResolver, idGroupe, item._id);
-			}
-		}
-	}
-
 	private Favori getFirstSelectedItem() {
 		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checkedPositions.size(); i++) {
@@ -462,10 +467,17 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	private void fillGroupesMenu(final SubMenu filterSubMenu) {
-		final List<Groupe> groupes = mGroupeManager.getAll(getActivity().getContentResolver());
-		for (Groupe groupe : groupes) {
+		boolean checked;
+		for (Groupe groupe : mGroupes) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
+			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
+
 			item.setCheckable(true);
+			item.setChecked(checked);
+
+			if (checked) {
+				mSelectedGroupes.add(groupe.getId());
+			}
 		}
 	}
 
@@ -548,7 +560,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final DateMidnight today = new DateMidnight();
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		final List<Favori> favoris = mFavoriManager.getAll(context.getContentResolver());
+		final List<Favori> favoris = mFavoriManager.getAll(context.getContentResolver(), mSelectedGroupes);
 		Collections.sort(favoris, comparators.get(mCurrentSort));
 
 		int position = 0;
