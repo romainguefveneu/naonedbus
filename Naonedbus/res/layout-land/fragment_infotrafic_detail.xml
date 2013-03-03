@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@id/itemTitle"
-            style="@style/BigTitle"
+            style="@style/BigTitle.Blue"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"
@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@id/itemTime"
-            style="@style/BigSubTitle.Small"
+            style="@style/BigSubTitle.Time"
             android:text="Subtitle" />
     </LinearLayout>
 
@@ -35,12 +35,8 @@
         android:layout_toLeftOf="@id/colRight"
         android:orientation="vertical" >
 
-        <TextView
-            style="@style/SectionTitle"
-            android:layout_marginBottom="@dimen/padding_small"
-            android:text="@string/description" />
-
         <ScrollView
+            style="@style/Box"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/padding_medium"
@@ -65,20 +61,16 @@
         android:layout_below="@id/headerView"
         android:orientation="vertical" >
 
-        <TextView
-            style="@style/SectionTitle"
-            android:layout_marginBottom="@dimen/padding_small"
-            android:text="@string/lignes_concernees" />
-
         <com.gridlayout.GridLayout
             xmlns:gridlayout="http://schemas.android.com/apk/res-auto"
             android:id="@+id/lignes"
+            style="@style/Box"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/padding_small"
             android:paddingRight="@dimen/padding_small"
             gridlayout:alignmentMode="alignBounds"
-            gridlayout:columnCount="6"
+            gridlayout:columnCount="4"
             gridlayout:columnOrderPreserved="true"
             gridlayout:useDefaultMargins="false" />
     </LinearLayout>

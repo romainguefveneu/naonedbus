@@ -1,6 +1,5 @@
 package net.naonedbus.fragment.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,9 +9,9 @@ import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.comparator.LigneLettreComparator;
 import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.manager.impl.InfoTraficManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
@@ -27,9 +26,7 @@ import com.gridlayout.GridLayout;
 
 public class InfoTraficDetailFragment extends CustomFragment {
 
-	public static final String PARAM_ID_INFO_TRAFIC = "idInfoTrafic";
-
-	private String mCodeInfoTrafic;
+	public static final String PARAM_INFO_TRAFIC = "infoTrafic";
 
 	private TextView itemTitle;
 	private TextView itemDescription;
@@ -51,16 +48,8 @@ public class InfoTraficDetailFragment extends CustomFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mCodeInfoTrafic = getArguments().getString(PARAM_ID_INFO_TRAFIC);
-
-		final InfoTraficManager infoTraficManager = InfoTraficManager.getInstance();
-		try {
-			loadInfotrafic(infoTraficManager.getById(getActivity(), Integer.valueOf(mCodeInfoTrafic)));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		final InfoTrafic infoTrafic = getArguments().getParcelable(PARAM_INFO_TRAFIC);
+		loadInfotrafic(infoTrafic);
 	}
 
 	@Override
@@ -70,15 +59,21 @@ public class InfoTraficDetailFragment extends CustomFragment {
 
 	@Override
 	protected void bindView(View view, Bundle savedInstanceState) {
-		final Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+		final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
+		final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
+		final Typeface robotoMedium = FontUtils.getRobotoMedium(getActivity());
 
 		fragmentView = view;
 
 		itemTitle = (TextView) view.findViewById(R.id.itemTitle);
-		itemTitle.setTypeface(robotoLight);
+		itemTitle.setTypeface(robotoCondensed);
+
 		itemDescription = (TextView) view.findViewById(R.id.itemDescription);
+		itemDescription.setTypeface(robotoLight);
+
 		itemTime = (TextView) view.findViewById(R.id.itemTime);
-		itemTime.setTypeface(robotoLight);
+		itemTime.setTypeface(robotoMedium);
+
 		lignes = (GridLayout) view.findViewById(R.id.lignes);
 	}
 
@@ -101,7 +96,7 @@ public class InfoTraficDetailFragment extends CustomFragment {
 		}
 		Collections.sort(listLignes, new LigneLettreComparator());
 		for (Ligne l : listLignes) {
-			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, lignes, false);
+			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item_medium, lignes, false);
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.couleurBackground));
 			textView.setText(l.lettre);
 			textView.setTextColor(l.couleurTexte);

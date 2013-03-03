@@ -15,7 +15,7 @@
         android:drawableTop="@drawable/warning"
         android:gravity="center"
         android:text="@android:string/untitled"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@android:id/summary"

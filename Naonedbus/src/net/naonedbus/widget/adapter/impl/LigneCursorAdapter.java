@@ -19,12 +19,12 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 	private int COL_SENS1;
 	private int COL_SENS2;
 
-	private final Typeface mRobotoMedium;
+	private final Typeface mRoboto;
 	private boolean mHideDivider;
 
 	public LigneCursorAdapter(Context context, Cursor c) {
 		super(context, c, R.layout.list_item_ligne);
-		mRobotoMedium = FontUtils.getRobotoMedium(context);
+		mRoboto = FontUtils.getRobotoBoldCondensed(context);
 		if (c != null) {
 			initColumns(c);
 		}
@@ -97,7 +97,7 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
 		holder.sens2 = (TextView) view.findViewById(R.id.ligneTo);
-		holder.icon.setTypeface(mRobotoMedium);
+		holder.icon.setTypeface(mRoboto);
 
 		view.setTag(holder);
 	}

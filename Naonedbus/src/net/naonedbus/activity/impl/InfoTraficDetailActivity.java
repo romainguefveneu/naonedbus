@@ -20,30 +20,28 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
+import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.fragment.impl.InfoTraficDetailFragment;
-import net.naonedbus.intent.IIntentParamKey;
 import android.os.Bundle;
 
 public class InfoTraficDetailActivity extends OneFragmentActivity {
+
+	public static final String PARAM_INFO_TRAFIC = "infoTrafic";
 
 	public InfoTraficDetailActivity() {
 		super(R.layout.activity_one_fragment);
 	}
 
-	public static enum Param implements IIntentParamKey {
-		codeInfoTrafic
-	};
-
-	private String mIdInfoTrafic;
+	private InfoTrafic mInfoTrafic;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mIdInfoTrafic = (String) getParamValue(Param.codeInfoTrafic);
+		mInfoTrafic = getIntent().getParcelableExtra(PARAM_INFO_TRAFIC);
 
 		final Bundle bundle = new Bundle();
-		bundle.putString(InfoTraficDetailFragment.PARAM_ID_INFO_TRAFIC, mIdInfoTrafic);
+		bundle.putParcelable(InfoTraficDetailFragment.PARAM_INFO_TRAFIC, mInfoTrafic);
 
 		if (savedInstanceState == null) {
 			addFragment(InfoTraficDetailFragment.class, bundle);

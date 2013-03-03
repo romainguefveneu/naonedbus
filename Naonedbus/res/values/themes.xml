@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.Acapulco.Light" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+    <style name="Theme.Acapulco.Light" parent="Theme.acapulco">
         <item name="actionBarStyle">@style/AcapulcoActionBar</item>
         <item name="android:actionBarStyle">@style/AcapulcoActionBar</item>
         <item name="activityBackground">@color/activity_background_light</item>
+        <item name="android:windowBackground">@color/activity_background_light</item>
         <item name="primaryColor">@android:color/primary_text_light</item>
         <item name="secondaryColor">@android:color/tertiary_text_light</item>
         <item name="dividerColor">@color/divider_light</item>
         <item name="sectionColor">@color/holo_blue_light</item>
         <item name="blockBackground">@drawable/block_light</item>
         <item name="sectionBackground">@drawable/list_section_underline_light</item>
+        <!--  -->
+        <item name="actionBarItemBackground">@drawable/selectable_background_acapulco</item>
+        <item name="popupMenuStyle">@style/acapulco_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/acapulco_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/acapulco_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/acapulco_DropDownNav</item>
+        <item name="actionBarStyle">@style/acapulco_solid_ActionBar</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_acapulco</item>
+        <item name="android:popupMenuStyle">@style/acapulco_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/acapulco_DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/acapulco_ActionBarTabStyle</item>
+        <item name="android:actionDropDownStyle">@style/acapulco_DropDownNav</item>
+        <item name="android:actionBarStyle">@style/acapulco_solid_ActionBar</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_acapulco</item>
+
+        <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.acapulco.widget</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.acapulco.widget</item>
     </style>
 
     <style name="Theme.Acapulco.Light.HomeAsMenu">

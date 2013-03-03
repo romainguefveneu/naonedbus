@@ -13,6 +13,14 @@
         android:padding="@dimen/padding_medium" >
 
         <TextView
+            android:id="@+id/itemDate"
+            style="@style/BigSubTitle.Time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@android:string/untitled" />
+
+        <TextView
             android:id="@+id/itemDescription"
             style="@style/CommentDetail"
             android:layout_width="fill_parent"
@@ -22,22 +30,9 @@
             android:linksClickable="true"
             android:text="@android:string/untitled" />
 
-        <View
-            android:id="@id/headerDivider"
-            style="@style/Divider"
-            android:layout_marginBottom="10dp" />
-
-        <TextView
-            android:id="@+id/itemDate"
-            style="@style/ItemSecondaryText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="@android:string/untitled" />
-
         <TextView
             android:id="@+id/itemSource"
-            style="@style/ItemSecondaryText.Small"
+            style="@style/ItemSecondaryText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@android:string/untitled" />

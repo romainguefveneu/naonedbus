@@ -3,51 +3,35 @@ package net.naonedbus.activity.impl;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.FragmentsActivity;
+import net.naonedbus.activity.OneFragmentActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
-import net.naonedbus.fragment.impl.CommentairesFragment;
 import net.naonedbus.fragment.impl.HorairesFragment;
 import net.naonedbus.fragment.impl.HorairesFragment.OnSensChangeListener;
-import net.naonedbus.fragment.impl.TanActuFragment;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
-import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.SymbolesUtils;
-import net.simonvt.menudrawer.ColorDrawable;
 import android.annotation.TargetApi;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HorairesActivity extends FragmentsActivity implements OnSensChangeListener {
+public class HorairesActivity extends OneFragmentActivity implements OnSensChangeListener {
 
 	public static final String PARAM_LIGNE = "ligne";
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
-
-	private static int[] titles = new int[] { R.string.title_fragment_tan_actu, R.string.title_fragment_horaires,
-			R.string.title_fragment_en_direct, };
-
-	private static Class<?>[] classes = new Class<?>[] { TanActuFragment.class, HorairesFragment.class,
-			CommentairesFragment.class };
 
 	private HeaderHelper mHeaderHelper;
 	private final ArretManager mArretManager;
@@ -70,6 +54,8 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 		mArret = getIntent().getParcelableExtra(PARAM_ARRET);
 		mLigne = getIntent().getParcelableExtra(PARAM_LIGNE);
 		mSens = getIntent().getParcelableExtra(PARAM_SENS);
@@ -89,17 +75,7 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 			bundleHoraires.putParcelable(HorairesFragment.PARAM_SENS, mSens);
 			bundleHoraires.putParcelable(HorairesFragment.PARAM_ARRET, mArret);
 
-			final Bundle bundleCommentaires = new Bundle();
-			bundleCommentaires.putString(CommentairesFragment.PARAM_CODE_LIGNE, mLigne.code);
-			bundleCommentaires.putString(CommentairesFragment.PARAM_CODE_SENS, mSens.code);
-
-			final Bundle bundleTanActu = new Bundle();
-			bundleTanActu.putString(TanActuFragment.PARAM_CODE_LIGNE, mLigne.code);
-
-			final Bundle[] bundles = new Bundle[] { bundleTanActu, bundleHoraires, bundleCommentaires };
-
-			addFragments(titles, classes, bundles);
-			setSelectedTab(1);
+			addFragment(HorairesFragment.class, bundleHoraires);
 		}
 
 		mHeaderHelper = new HeaderHelper(this);
@@ -107,36 +83,6 @@ public class HorairesActivity extends FragmentsActivity implements OnSensChangeL
 		mHeaderHelper.setCode(mLigne.lettre);
 		mHeaderHelper.setTitle(mArret.nomArret);
 		mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(mSens.text));
-
-		getSupportActionBar().setBackgroundDrawable(ColorUtils.getGradiant(mLigne.couleurBackground));
-
-		final GradientDrawable gradientDrawable = ColorUtils.getGradiant(mLigne.couleurTexte);
-		final Bitmap bitmap = Bitmap.createBitmap(48, 48, Bitmap.Config.ARGB_8888);
-		final Canvas canvas = new Canvas(bitmap);
-		gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-		gradientDrawable.draw(canvas);
-
-		getSupportActionBar().setIcon(gradientDrawable);
-
-		final boolean isLight = ColorUtils.isLightColor(mLigne.couleurBackground);
-
-		final int styleCode = isLight ? R.style.ActionBarCode_Light : R.style.ActionBarCode;
-		final int styleArret = isLight ? R.style.ActionBarArret_Light : R.style.ActionBarArret;
-		final int styleSens = isLight ? R.style.ActionBarSens_Light : R.style.ActionBarSens;
-
-		final SpannableString text = new SpannableString(SymbolesUtils.formatTitle(mLigne.lettre, mArret.nomArret,
-				mSens.text));
-		text.setSpan(new TextAppearanceSpan(this, styleCode), 0, mLigne.lettre.length(),
-				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		text.setSpan(new TextAppearanceSpan(this, styleArret), mLigne.lettre.length() + 3, mLigne.lettre.length() + 3
-				+ mArret.nomArret.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		text.setSpan(new TextAppearanceSpan(this, styleSens), mLigne.lettre.length() + mArret.nomArret.length() + 6,
-				mLigne.lettre.length() + mArret.nomArret.length() + 6 + mSens.text.length(),
-				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		setTitle(text);
-
-		getSupportActionBar().setStackedBackgroundDrawable(
-				new ColorDrawable(ColorUtils.getStackedBackgroundColor(mLigne.couleurBackground)));
 	}
 
 	@Override

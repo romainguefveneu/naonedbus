@@ -12,4 +12,8 @@ public abstract class FontUtils {
 	public static Typeface getRobotoMedium(final Context context) {
 		return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Medium.ttf");
 	}
+
+	public static Typeface getRobotoBoldCondensed(final Context context) {
+		return Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-BoldCondensed.ttf");
+	}
 }

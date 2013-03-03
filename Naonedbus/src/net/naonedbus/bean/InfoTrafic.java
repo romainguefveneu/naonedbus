@@ -1,8 +1,8 @@
 package net.naonedbus.bean;
 
 import java.io.Serializable;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.naonedbus.widget.item.SectionItem;
 
@@ -10,7 +10,10 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-public class InfoTrafic implements Serializable, SectionItem {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 
 	private static final long serialVersionUID = -2516041836875800927L;
 	private static final DateTimeFormatter fullDateParser = DateTimeFormat.forPattern("dd/MM/yyyy").withZoneUTC();
@@ -28,13 +31,32 @@ public class InfoTrafic implements Serializable, SectionItem {
 	private boolean perturbationTerminee;
 	private String troncons;
 
-	private Set<String> lignes = new TreeSet<String>();
+	private List<String> lignes = new ArrayList<String>();
 
 	private Object section;
 
 	private DateTime dateDebut;
 	private DateTime dateFin;
 	private String dateFormated;
+
+	public InfoTrafic() {
+
+	}
+
+	public InfoTrafic(final Parcel in) {
+		code = in.readString();
+		dateDebutString = in.readString();
+		dateFinString = in.readString();
+		dateFormated = in.readString();
+		heureDebutString = in.readString();
+		heureFinString = in.readString();
+		intitule = in.readString();
+		perturbationTerminee = in.readInt() == 1;
+		resume = in.readString();
+		texteVocal = in.readString();
+		troncons = in.readString();
+		in.readList(lignes, Ligne.class.getClassLoader());
+	}
 
 	public String getCode() {
 		return code;
@@ -90,7 +112,7 @@ public class InfoTrafic implements Serializable, SectionItem {
 		this.lignes.add(ligne);
 	}
 
-	public Set<String> getLignes() {
+	public List<String> getLignes() {
 		return lignes;
 	}
 
@@ -134,7 +156,7 @@ public class InfoTrafic implements Serializable, SectionItem {
 		this.troncons = troncons;
 	}
 
-	public void setLignes(Set<String> lignes) {
+	public void setLignes(List<String> lignes) {
 		this.lignes = lignes;
 	}
 
@@ -196,5 +218,35 @@ public class InfoTrafic implements Serializable, SectionItem {
 		}
 		return dateTime;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(code);
+		dest.writeString(dateDebutString);
+		dest.writeString(dateFinString);
+		dest.writeString(dateFormated);
+		dest.writeString(heureDebutString);
+		dest.writeString(heureFinString);
+		dest.writeString(intitule);
+		dest.writeInt(perturbationTerminee ? 1 : 0);
+		dest.writeString(resume);
+		dest.writeString(texteVocal);
+		dest.writeString(troncons);
+		dest.writeList(lignes);
+	}
+
+	public static final Parcelable.Creator<InfoTrafic> CREATOR = new Parcelable.Creator<InfoTrafic>() {
+		public InfoTrafic createFromParcel(Parcel in) {
+			return new InfoTrafic(in);
+		}
+
+		public InfoTrafic[] newArray(int size) {
+			return new InfoTrafic[size];
+		}
+	};
 
 }

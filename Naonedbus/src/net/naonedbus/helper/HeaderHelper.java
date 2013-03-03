@@ -28,8 +28,8 @@ public class HeaderHelper {
 
 	private void init() {
 		final View view = mActivity.getWindow().getDecorView();
-		final Typeface robotoLight = FontUtils.getRobotoLight(mActivity);
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(mActivity);
+		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(mActivity);
 
 		mHeader = view.findViewById(R.id.headerView);
 
@@ -37,9 +37,9 @@ public class HeaderHelper {
 		mSubTitle = (TextView) view.findViewById(R.id.headerSubTitle);
 		mLigneCode = (TextView) view.findViewById(R.id.headerCode);
 
-		mTitle.setTypeface(robotoLight);
-		mSubTitle.setTypeface(robotoLight);
-		mLigneCode.setTypeface(robotoMedium);
+		mTitle.setTypeface(robotoBold);
+		mSubTitle.setTypeface(robotoMedium);
+		mLigneCode.setTypeface(robotoBold);
 	}
 
 	public void setBackgroundColor(int color) {

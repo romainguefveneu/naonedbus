@@ -163,7 +163,7 @@
     <string name="source_unknown">quelque chose, mais je sais pas trop quoi</string>
     <string name="source_naonedbus">naonedbus</string>
     <string name="source_twitter">Twitter</string>
-    <string name="source_simpletan">Simpletan</string>
+    <string name="source_taninfos">TanInfos</string>
     <string name="source_naonedbus_service">Discovery One</string>
     <!-- Parkings -->
     <string name="parking_section_disponible">Beaucoup de places</string>

@@ -11,9 +11,7 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.helper.SlidingMenuHelper;
-import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.security.NaonedbusClient;
-import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.SmileyParser;
 import net.naonedbus.utils.SymbolesUtils;
@@ -21,7 +19,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -36,8 +33,9 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	private static final Map<String, Integer> sourceTitle = new HashMap<String, Integer>();
 	static {
 		sourceTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
-		sourceTitle.put(NaonedbusClient.SIMPLETAN.name(), R.string.source_simpletan);
 		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_twitter);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_twitter);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.source_taninfos);
 		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
 	}
 
@@ -62,6 +60,9 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		SmileyParser.init(getApplicationContext());
 		final SmileyParser simSmileyParser = SmileyParser.getInstance();
 
+		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
+		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
+
 		mHeaderHelper = new HeaderHelper(this);
 
 		itemDescription = (TextView) findViewById(R.id.itemDescription);
@@ -70,7 +71,10 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		commentaire = getIntent().getParcelableExtra(PARAM_COMMENTAIRE);
 
+		itemDescription.setTypeface(robotoLight);
 		itemDescription.setText(simSmileyParser.addSmileySpans(commentaire.getMessage()));
+
+		itemDate.setTypeface(robotoMedium);
 		itemDate.setText(dateFormat.format(commentaire.getTimestamp()) + " "
 				+ timeFormat.format(commentaire.getTimestamp()));
 

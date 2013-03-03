@@ -63,8 +63,7 @@ public class ArretsActivity extends OneFragmentActivity {
 			addFragment(ArretsFragment.class, bundle);
 		}
 
-		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
-		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
+		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
 
 		final View header = findViewById(R.id.headerView);
 		header.setBackgroundDrawable(ColorUtils.getGradiant(mLigne.couleurBackground));
@@ -72,10 +71,10 @@ public class ArretsActivity extends OneFragmentActivity {
 		final TextView code = (TextView) findViewById(R.id.itemCode);
 		code.setText(mLigne.lettre);
 		code.setTextColor(mLigne.couleurTexte);
-		code.setTypeface(robotoMedium);
+		code.setTypeface(robotoBold);
 
 		final Spinner sensTitle = (Spinner) findViewById(R.id.itemTitle);
-		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.couleurTexte, robotoLight));
+		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.couleurTexte, robotoBold));
 		sensTitle.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override

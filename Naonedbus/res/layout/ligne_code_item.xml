@@ -19,14 +19,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<TextView
-  	xmlns:android="http://schemas.android.com/apk/res/android"
-  	android:layout_width="25dip"
-  	android:layout_height="20dip"
-  	android:textSize="12dip"
-	android:layout_marginRight="1px"
-	android:paddingLeft="3dp"
-	android:paddingRight="3dp"
-	android:gravity="center_horizontal|center_vertical"
-  />
-    
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="25dip"
+    android:layout_height="20dip"
+    android:layout_marginRight="1dp"
+    android:gravity="center_horizontal|center_vertical"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
+    android:textSize="12sp" />

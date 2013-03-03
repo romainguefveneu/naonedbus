@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
 
 import org.joda.time.DateTime;
@@ -283,8 +284,10 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (message == null) {
 			final ViewStub messageStrub = (ViewStub) fragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
-			final Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
+			final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
 			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
+			((TextView) message.findViewById(android.R.id.title)).setTypeface(robotoCondensed);
 		}
 
 		message.setVisibility(View.VISIBLE);

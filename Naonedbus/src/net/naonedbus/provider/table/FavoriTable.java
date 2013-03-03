@@ -49,5 +49,5 @@ public interface FavoriTable extends BaseColumns {
 	public static final String FULL_ORDER = " l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
 			+ " as numeric)," + FavoriTable.NOM + ", " + EquipementTable.NOM;
 
-	public static final String WHERE = FavorisGroupesTable.ID_GROUPE + "  IN %s";
+	public static final String WHERE = FavorisGroupesTable.ID_GROUPE + "  IN (%s)";
 }

@@ -103,7 +103,11 @@ CREATE INDEX IF NOT EXISTS groupes_id ON groupes (_id);
 CREATE TABLE IF NOT EXISTS favorisGroupes (
 	idFavori INTEGER NOT NULL, 
 	idGroupe  INTEGER NOT NULL,
+	FOREIGN KEY(idGroupe) REFERENCES groupes(_id) ON DELETE CASCADE,
+	FOREIGN KEY(idGroupe) REFERENCES favoris(_id) ON DELETE CASCADE,
 	CONSTRAINT uc_ids UNIQUE (idFavori, idGroupe));
 
 CREATE INDEX IF NOT EXISTS favorisGroupes_idFavori ON favorisGroupes (idFavori);
 CREATE INDEX IF NOT EXISTS favorisGroupes_idGroupe ON favorisGroupes (idGroupe);
+
+PRAGMA foreign_keys = ON;

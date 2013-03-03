@@ -62,7 +62,7 @@ public class FavoriCursorAdapter extends CursorAdapter {
 
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup root) {
-		final View view = mLayoutInflater.inflate(R.layout.list_item_favori, root);
+		final View view = mLayoutInflater.inflate(R.layout.list_item_favori, root, false);
 
 		final ViewHolder holder = new ViewHolder();
 		holder.ligneCode = (TextView) view.findViewById(R.id.itemSymbole);

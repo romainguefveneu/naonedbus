@@ -22,13 +22,13 @@ import android.widget.TextView;
 
 public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 
-	private final Typeface robotoMedium;
+	private final Typeface robotoBold;
 
 	private SparseBooleanArray checkedItemPositions = new SparseBooleanArray();
 
 	public FavoriArrayAdapter(Context context, List<Favori> objects) {
 		super(context, 0, objects);
-		robotoMedium = FontUtils.getRobotoMedium(context);
+		robotoBold = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.progressBar = (ProgressBar) view.findViewById(R.id.loading);
 		holder.nextHoraire = (TextView) view.findViewById(R.id.itemTime);
-		holder.ligneCode.setTypeface(robotoMedium);
+		holder.ligneCode.setTypeface(robotoBold);
 
 		view.setTag(holder);
 	}

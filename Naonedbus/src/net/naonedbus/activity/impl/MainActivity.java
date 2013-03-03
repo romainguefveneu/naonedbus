@@ -29,10 +29,11 @@ public class MainActivity extends SlidingMenuActivity {
 	private static Class<?>[] classes = new Class<?>[] { LignesFragment.class, FavorisFragment.class,
 			ProximiteFragment.class };
 
-	private boolean mHasSetup = false;
-	private boolean mContentLoaded = false;
-	private boolean mIsFrontActivity = false;
-	private boolean mFirstLaunch = false;
+	private boolean mHasSetup;
+	private boolean mHasBeenUpdated;
+	private boolean mContentLoaded;
+	private boolean mIsFrontActivity;
+	private boolean mFirstLaunch;
 	private MyLocationProvider mMyLocationProvider;
 
 	private DatabaseActionListener mListener = new DatabaseActionListener() {

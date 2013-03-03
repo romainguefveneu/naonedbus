@@ -16,14 +16,14 @@ public abstract class QueryUtils {
 	 *         un IN de requête SQL.
 	 */
 	public static String listToInStatement(List<?> items) {
-		final StringBuilder sb = new StringBuilder("(");
+		final StringBuilder sb = new StringBuilder();
 		final String sep = ",";
 		for (int i = 0; i < items.size(); i++) {
 			sb.append(items.get(i));
 			if (i < items.size() - 1)
 				sb.append(sep);
 		}
-		sb.append(")").toString();
+		sb.toString();
 
 		return sb.toString();
 	}

@@ -30,8 +30,9 @@ public class CommentaireFomatter {
 	private static final Map<String, Integer> sourceTitle = new HashMap<String, Integer>();
 	static {
 		sourceTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
-		sourceTitle.put(NaonedbusClient.SIMPLETAN.name(), R.string.source_simpletan);
 		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_twitter);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_twitter);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.source_taninfos);
 		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
 	}
 

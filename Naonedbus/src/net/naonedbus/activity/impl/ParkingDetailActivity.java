@@ -33,6 +33,7 @@ import net.naonedbus.bean.parking.relai.ParkingRelai;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.ParkingUtils;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -93,7 +94,8 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parking_detail);
 
-		final Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf");
+		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
+		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 
 		slidingMenuHelper = new SlidingMenuHelper(this);
 		slidingMenuHelper.setupActionBar(getSupportActionBar());
@@ -109,7 +111,11 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		majDate = (TextView) findViewById(R.id.majDate);
 		message = (TextView) findViewById(R.id.message);
 
-		parkingTitle.setTypeface(robotoLight);
+		parkingTitle.setTypeface(robotoBold);
+		placesDisponibles.setTypeface(robotoLight);
+		placesTotales.setTypeface(robotoLight);
+		majDate.setTypeface(robotoLight);
+		itemTelephone.setTypeface(robotoLight);
 
 		mapView = (MapView) findViewById(R.id.map_view);
 		mapView.setBuiltInZoomControls(true);

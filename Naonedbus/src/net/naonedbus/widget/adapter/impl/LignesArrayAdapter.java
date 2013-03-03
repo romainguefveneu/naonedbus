@@ -48,7 +48,7 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 
 	public LignesArrayAdapter(Context context, List<Ligne> lignes) {
 		super(context, R.layout.list_item_ligne, lignes);
-		robotoMedium = FontUtils.getRobotoMedium(context);
+		robotoMedium = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	public void setHideDivider(boolean hide) {

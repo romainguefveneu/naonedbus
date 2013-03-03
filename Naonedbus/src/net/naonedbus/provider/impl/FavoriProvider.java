@@ -29,7 +29,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 
 public class FavoriProvider extends CustomContentProvider {
 
@@ -127,9 +126,11 @@ public class FavoriProvider extends CustomContentProvider {
 			queryBuilder.appendWhere(FavoriTable._ID + "=" + uri.getLastPathSegment());
 			break;
 		case FAVORI_GROUPES:
-			final String where = String.format(FavoriTable.WHERE, uri.getQueryParameter(QUERY_PARAMETER_GROUPES_IDS));
-			queryBuilder.appendWhere(where);
-
+			final String idGroupes = uri.getQueryParameter(QUERY_PARAMETER_GROUPES_IDS);
+			if (!TextUtils.isEmpty(idGroupes)) {
+				final String where = String.format(FavoriTable.WHERE, idGroupes);
+				queryBuilder.appendWhere(where);
+			}
 			break;
 		case FAVORIS:
 

@@ -139,7 +139,7 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 	private static interface LinkQuery {
 		final String GROUPE_COUNT = "SELECT MIN(COUNT(1),1) FROM " + FavorisGroupesTable.TABLE_NAME + " fgt WHERE fgt."
 				+ FavorisGroupesTable.ID_GROUPE + "=" + GroupeTable.TABLE_NAME + "." + GroupeTable._ID + " AND fgt."
-				+ FavorisGroupesTable.ID_FAVORI + " IN %s";
+				+ FavorisGroupesTable.ID_FAVORI + " IN (%s)";
 
 		public static final String SELECT = "SELECT " + GroupeTable._ID + ", " + GroupeTable.NOM + ", "
 				+ GroupeTable.VISIBILITE + ", (" + GROUPE_COUNT + ") as " + FavorisGroupesTable.LINKED + " FROM "

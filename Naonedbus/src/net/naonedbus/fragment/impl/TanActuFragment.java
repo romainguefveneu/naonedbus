@@ -18,6 +18,7 @@ import net.naonedbus.widget.adapter.impl.InfoTraficLigneArrayAdapter;
 import net.naonedbus.widget.indexer.impl.InfoTraficIndexer;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -51,7 +52,7 @@ public class TanActuFragment extends CustomListFragment {
 		final InfoTrafic item = (InfoTrafic) getListAdapter().getItem(position);
 
 		final ParamIntent intent = new ParamIntent(getActivity(), InfoTraficDetailActivity.class);
-		intent.putExtra(InfoTraficDetailActivity.Param.codeInfoTrafic, item.getCode());
+		intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, (Parcelable) item);
 		startActivity(intent);
 	}
 
@@ -78,7 +79,7 @@ public class TanActuFragment extends CustomListFragment {
 			List<InfoTrafic> infoTrafics;
 			InfoTrafic infoTraficClone;
 
-			//TODO : Faire plus propre
+			// TODO : Faire plus propre
 			if (mCodeLigne == null) {
 				final List<Ligne> lignes = ligneManager.getAll(context.getContentResolver());
 
