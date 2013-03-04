@@ -292,7 +292,9 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 			final ViewStub messageStrub = (ViewStub) mFragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
 			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
+			final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
 			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
+			((TextView) message.findViewById(android.R.id.title)).setTypeface(robotoCondensed);
 		}
 
 		message.setVisibility(View.VISIBLE);
@@ -391,7 +393,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	public void onLoadFinished(Loader<Cursor> loader, Cursor result) {
 		if (DBG)
 			Log.d(LOG_TAG, "onLoadFinished");
-		
+
 		if (result == null) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			return;

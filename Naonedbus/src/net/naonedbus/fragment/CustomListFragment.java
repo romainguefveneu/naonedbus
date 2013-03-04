@@ -44,14 +44,14 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private static final String STATE_POSITION = "position";
 	private static final String STATE_TOP = "top";
 
-	int messageEmptyTitleId = R.string.error_title_empty;
-	int messageEmptySummaryId = R.string.error_summary_empty;
-	int messageEmptyDrawableId = R.drawable.sad_face;
+	int mMessageEmptyTitleId = R.string.error_title_empty;
+	int mMessageEmptySummaryId = R.string.error_summary_empty;
+	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
-	protected int titleId;
-	protected int layoutId;
-	protected int layoutListHeaderId = R.layout.list_item_header;
-	protected ViewGroup fragmentView;
+	protected int mTitleId;
+	protected int MLayoutId;
+	protected int mLayoutListHeaderId = R.layout.list_item_header;
+	protected ViewGroup mFragmentView;
 
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
@@ -69,13 +69,13 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private int timeToLive = 5;
 
 	public CustomListFragment(final int titleId, final int layoutId) {
-		this.titleId = titleId;
-		this.layoutId = layoutId;
+		this.mTitleId = titleId;
+		this.MLayoutId = layoutId;
 	}
 
 	public CustomListFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
 		this(titleId, layoutId);
-		this.layoutListHeaderId = layoutListHeaderId;
+		this.mLayoutListHeaderId = layoutListHeaderId;
 	}
 
 	@Override
@@ -97,15 +97,15 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			mListViewStateTop = 0;
 		}
 
-		fragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
-		final View view = inflater.inflate(this.layoutId, container, false);
+		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
+		final View view = inflater.inflate(this.MLayoutId, container, false);
 		bindView(view, savedInstanceState);
 
-		fragmentView.addView(view);
+		mFragmentView.addView(view);
 
-		setupListView(inflater, fragmentView);
+		setupListView(inflater, mFragmentView);
 
-		return fragmentView;
+		return mFragmentView;
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	private void setupListView(LayoutInflater inflater, View view) {
-		final ListView listView = (ListView) fragmentView.findViewById(android.R.id.list);
+		final ListView listView = (ListView) mFragmentView.findViewById(android.R.id.list);
 
 		listView.setOnScrollListener(new OnScrollListener() {
 			@Override
@@ -139,7 +139,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 		if (listView instanceof PinnedHeaderListView) {
 			final PinnedHeaderListView pinnedListView = (PinnedHeaderListView) listView;
-			pinnedListView.setPinnedHeaderView(inflater.inflate(layoutListHeaderId, pinnedListView, false));
+			pinnedListView.setPinnedHeaderView(inflater.inflate(mLayoutListHeaderId, pinnedListView, false));
 			addOnScrollListener(new OnScrollListener() {
 
 				@Override
@@ -160,7 +160,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	public int getTitleId() {
-		return titleId;
+		return mTitleId;
 	}
 
 	public void loadContent() {
@@ -195,33 +195,33 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 *            L'identifiant du drawable.
 	 */
 	protected void setEmptyMessageValues(int titleId, int summaryId, int drawableId) {
-		this.messageEmptyTitleId = titleId;
-		this.messageEmptySummaryId = summaryId;
-		this.messageEmptyDrawableId = drawableId;
+		this.mMessageEmptyTitleId = titleId;
+		this.mMessageEmptySummaryId = summaryId;
+		this.mMessageEmptyDrawableId = drawableId;
 	}
 
 	/**
 	 * Afficher l'indicateur de chargement.
 	 */
 	protected void showLoader() {
-		fragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
-		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
-			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
+		mFragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
+		if (mFragmentView.findViewById(R.id.fragmentMessage) != null) {
+			mFragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
 		}
-		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.VISIBLE);
+		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.VISIBLE);
 	}
 
 	/**
 	 * Afficher le contenu.
 	 */
 	protected void showContent() {
-		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
+		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
-		if (fragmentView.findViewById(R.id.fragmentMessage) != null) {
-			fragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
+		if (mFragmentView.findViewById(R.id.fragmentMessage) != null) {
+			mFragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
 		}
 
-		final View content = fragmentView.findViewById(android.R.id.list);
+		final View content = mFragmentView.findViewById(android.R.id.list);
 		if (content.getVisibility() != View.VISIBLE) {
 			content.setVisibility(View.VISIBLE);
 			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
@@ -277,12 +277,12 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 *            L'identifiant du symbole.
 	 */
 	protected void showMessage(String title, String description, int drawableRes) {
-		fragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
-		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
+		mFragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
+		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
-		View message = fragmentView.findViewById(R.id.fragmentMessage);
+		View message = mFragmentView.findViewById(R.id.fragmentMessage);
 		if (message == null) {
-			final ViewStub messageStrub = (ViewStub) fragmentView.findViewById(R.id.fragmentMessageStub);
+			final ViewStub messageStrub = (ViewStub) mFragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
 			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
 			final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
@@ -326,7 +326,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 *            Son action.
 	 */
 	protected void setMessageButton(String title, OnClickListener onClickListener) {
-		final View message = fragmentView.findViewById(R.id.fragmentMessage);
+		final View message = mFragmentView.findViewById(R.id.fragmentMessage);
 		if (message != null) {
 			final Button button = (Button) message.findViewById(android.R.id.button1);
 			button.setText(title);
@@ -405,7 +405,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
 
 		if (result == null) {
-			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
+			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			return;
 		}
 
@@ -414,8 +414,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (exception == null) {
 
 			final ListAdapter adapter = result.getResult();
-			if (adapter == null || adapter.getCount() == 0) {
-				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
+			if (adapter == null) {
+				showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			} else {
 
 				adapter.registerDataSetObserver(new DataSetObserver() {
@@ -435,7 +435,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 				showContent();
 				resetNextUpdate();
-
 			}
 
 		} else {
@@ -464,7 +463,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 */
 	public void onListAdapterChange(ListAdapter adapter) {
 		if (adapter == null || adapter.getCount() == 0) {
-			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
+			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 		} else {
 			showContent();
 		}

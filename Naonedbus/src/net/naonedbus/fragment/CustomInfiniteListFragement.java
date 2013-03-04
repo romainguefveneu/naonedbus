@@ -71,7 +71,7 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
 
 		if (result == null) {
-			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
+			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			return;
 		}
 
@@ -79,7 +79,7 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 
 		if (exception == null) {
 			if (result.getResult() == null || result.getResult().getCount() == 0) {
-				showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
+				showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			} else {
 				if (getListAdapter() == null) {
 					setListAdapter(result.getResult());

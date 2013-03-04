@@ -6,6 +6,17 @@
          Version Control Systems. -->
     <property file="local.properties" />
 
+    <filelist id="normal-projects" dir=".">
+        <!-- You want to add your own projects here -->
+        <file name="../ActionBarSherlock/library/build.xml" />
+        <file name="../android-menudrawer/library/build.xml" />
+        <file name="../Android-ViewPagerIndicator/library/build.xml" />
+        <file name="../Gesture-ImageView/library/build.xml" />
+        <file name="../GridLayout/library/build.xml" />
+        <file name="../ShowcaseView/library/build.xml" />
+    </filelist>
+
+
     <!-- The ant.properties file can be created by you. It is only edited by the
          'android' tool to add properties to it.
          This is the place to change some Ant specific build properties.

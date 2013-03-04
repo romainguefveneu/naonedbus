@@ -184,7 +184,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (throwable != null) {
 				markeFavoriHoraireError(id);
 			} else if (id != -1) {
-				forceLoadHorairesFavoris(id);
+				loadHorairesFavoris(id);
 			} else {
 				loadHorairesFavoris();
 			}
@@ -199,6 +199,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (DBG)
 				Log.d(LOG_TAG, "GroupesContentObserver onChange");
 
+			mGroupes = mGroupeManager.getAll(getActivity().getContentResolver());
 			getSherlockActivity().invalidateOptionsMenu();
 		}
 	};
@@ -468,6 +469,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	private void fillGroupesMenu(final SubMenu filterSubMenu) {
 		boolean checked;
+
+		mSelectedGroupes.clear();
 		for (Groupe groupe : mGroupes) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
 			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
@@ -563,16 +566,21 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final List<Favori> favoris = mFavoriManager.getAll(context.getContentResolver(), mSelectedGroupes);
 		Collections.sort(favoris, comparators.get(mCurrentSort));
 
+		Log.d(LOG_TAG, "\t Favoris : " + favoris.size());
+
 		int position = 0;
-		for (Favori favori : favoris) {
+		for (final Favori favori : favoris) {
+			Log.d(LOG_TAG, "\t" + favori.lettre + " " + favori.nomArret);
+
 			if (!horaireManager.isInDB(context.getContentResolver(), favori, today)) {
 				final NextHoraireTask horaireTask = new NextHoraireTask();
-				horaireTask.setContext(context).setArret(favori).setId(position).setLimit(1)
-						.setActionCallback(ACTION_UPDATE_DELAYS);
+				horaireTask.setContext(context);
+				horaireTask.setArret(favori);
+				horaireTask.setId(position);
+				horaireTask.setLimit(1);
+				horaireTask.setActionCallback(ACTION_UPDATE_DELAYS);
 
 				horaireManager.schedule(horaireTask);
-			} else {
-				loadHorairesFavoris(position);
 			}
 			position++;
 		}
@@ -592,7 +600,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	/**
-	 * Lancer le chargement des tous les horaires
+	 * Lancer le chargement des tous les horaires.
 	 */
 	private void loadHorairesFavoris(Integer... params) {
 		if (getListAdapter() != null) {
@@ -601,20 +609,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	/**
-	 * Lancer le chargement des tous les horaires, même si un thread est déjà en
-	 * cours
-	 */
-	private void forceLoadHorairesFavoris(Integer... params) {
-		if (getListAdapter() != null) {
-			new LoadHoraires().execute(params);
-		}
-	}
-
-	/**
-	 * Classe de chargement des horaires
-	 * 
-	 * @author romain.guefveneu
-	 * 
+	 * Classe de chargement des horaires.
 	 */
 	private class LoadHoraires extends AsyncTask<Integer, Void, Boolean> {
 
@@ -630,8 +625,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		@Override
 		protected Boolean doInBackground(Integer... params) {
-			Thread.currentThread().setName("LoadHoraires");
-			Thread.currentThread().setPriority(Thread.NORM_PRIORITY);
 			Boolean result = true;
 
 			try {
@@ -658,7 +651,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		 * 
 		 * @throws IOException
 		 */
-		private void updateAdapter(int position) throws IOException {
+		private void updateAdapter(final int position) throws IOException {
 			if (position >= getListAdapter().getCount() || isDetached() || getActivity() == null)
 				return;
 
@@ -674,7 +667,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		/**
 		 * Mettre à jour les informations de délais d'un favori
 		 */
-		private void updateItemTime(Favori favori, Integer delay) {
+		private void updateItemTime(final Favori favori, final Integer delay) {
 			if (isDetached() || getActivity() == null)
 				return;
 

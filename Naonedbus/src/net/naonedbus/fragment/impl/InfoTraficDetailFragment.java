@@ -60,7 +60,6 @@ public class InfoTraficDetailFragment extends CustomFragment {
 	@Override
 	protected void bindView(View view, Bundle savedInstanceState) {
 		final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
-		final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getActivity());
 
 		fragmentView = view;
@@ -69,7 +68,6 @@ public class InfoTraficDetailFragment extends CustomFragment {
 		itemTitle.setTypeface(robotoCondensed);
 
 		itemDescription = (TextView) view.findViewById(R.id.itemDescription);
-		itemDescription.setTypeface(robotoLight);
 
 		itemTime = (TextView) view.findViewById(R.id.itemTime);
 		itemTime.setTypeface(robotoMedium);

@@ -60,7 +60,6 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		SmileyParser.init(getApplicationContext());
 		final SmileyParser simSmileyParser = SmileyParser.getInstance();
 
-		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 
 		mHeaderHelper = new HeaderHelper(this);
@@ -71,7 +70,6 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		commentaire = getIntent().getParcelableExtra(PARAM_COMMENTAIRE);
 
-		itemDescription.setTypeface(robotoLight);
 		itemDescription.setText(simSmileyParser.addSmileySpans(commentaire.getMessage()));
 
 		itemDate.setTypeface(robotoMedium);

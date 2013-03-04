@@ -102,11 +102,13 @@
     <string name="error_title_network">Une erreur réseau est survenue</string>
     <string name="error_title_empty">Aucune donnée n\'est disponible</string>
     <string name="error_title_empty_favori">Aucun favori</string>
+    <string name="error_title_empty_groupe">Aucun groupe</string>
     <string name="error_summary">Merci de réessayer !</string>
     <string name="error_summary_network">Vérifiez votre connexion et réessayez</string>
     <string name="error_summary_webservice">Merci de réessayer dans quelques instants</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
     <string name="error_summary_empty_favori">Glissez vers l\'écran de gauche pour naviguer entre les lignes.\n\n&#8592;</string>
+    <string name="error_summary_empty_groupe">Ajouter vos groupes en cliquant sur l\'icône “+”</string>
     <string name="error_summary_empty_arrets_favoris">Vous avez sélectionné le filtre \"Arrêts favoris\" mais aucun favori n\'est défini pour ce sens.</string>
     <!-- Accueil -->
     <string name="title_fragment_lignes">Lignes</string>

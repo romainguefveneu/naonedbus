@@ -49,6 +49,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+		setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_empty_groupe, R.drawable.groupe);
 	}
 
 	@Override
