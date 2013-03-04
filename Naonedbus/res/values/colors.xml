@@ -39,6 +39,7 @@
     <color name="message_service_header">#2F93C5</color>
     <color name="message_tan_header">#358243</color>
     <color name="query_hint_color">#9bc9e1</color>
+    <color name="adressbar_color">#ff147cad</color>
 
     <!-- PagerHeader -->
     <color name="pager_header_background_color">#ff333333</color>

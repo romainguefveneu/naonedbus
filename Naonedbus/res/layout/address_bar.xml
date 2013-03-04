@@ -23,7 +23,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#666666"
+    android:background="@color/adressbar_color"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="horizontal"
     android:padding="5dip" >

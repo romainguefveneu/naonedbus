@@ -34,20 +34,35 @@ public interface FavoriTable extends BaseColumns {
 			" LEFT JOIN " + EquipementTable.TABLE_NAME + " st ON st.idType = 0 AND st._id = a.idStation " + 
 			" LEFT JOIN " + LigneTable.TABLE_NAME+ " l ON l.code = f.codeLigne" + 
 			" LEFT JOIN " + SensTable.TABLE_NAME + " s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens" + 
-			" LEFT JOIN " + FavorisGroupesTable.TABLE_NAME + " ON f._id = " + FavorisGroupesTable.TABLE_NAME + "." + FavorisGroupesTable.ID_FAVORI;
-	//@formatter:on
+			" LEFT JOIN " + FavorisGroupesTable.TABLE_NAME + " fg ON f._id = fg." + FavorisGroupesTable.ID_FAVORI;
 
-	public static final String[] PROJECTION = new String[] { FavoriTable._ID, FavoriTable.NOM, FavoriTable.CODE_ARRET,
-			FavoriTable.CODE_SENS, FavoriTable.CODE_LIGNE };
+	public static final String[] PROJECTION = new String[] { 
+		FavoriTable._ID, 
+		FavoriTable.NOM, 
+		FavoriTable.CODE_ARRET,
+		FavoriTable.CODE_SENS,
+		FavoriTable.CODE_LIGNE };
 
-	public static final String[] FULL_PROJECTION = new String[] { "f." + FavoriTable._ID,
-			"f." + FavoriTable.CODE_LIGNE, "f." + FavoriTable.CODE_SENS, "f." + FavoriTable.CODE_ARRET,
-			"f." + FavoriTable.NOM, EquipementTable.NOM, EquipementTable.NORMALIZED_NOM, EquipementTable.CODE,
-			ArretTable.ID_STATION, EquipementTable.LATITUDE, EquipementTable.LONGITUDE, "s." + SensTable.NOM,
-			"l." + LigneTable.COULEUR, "l." + LigneTable.LETTRE };
+	public static final String[] FULL_PROJECTION = new String[] { 
+			"f." + FavoriTable._ID,
+			"f." + FavoriTable.CODE_LIGNE, 
+			"f." + FavoriTable.CODE_SENS, 
+			"f." + FavoriTable.CODE_ARRET,
+			"f." + FavoriTable.NOM, 
+			EquipementTable.NOM, 
+			EquipementTable.NORMALIZED_NOM, 
+			EquipementTable.CODE,
+			ArretTable.ID_STATION, 
+			EquipementTable.LATITUDE, 
+			EquipementTable.LONGITUDE, 
+			"s." + SensTable.NOM,
+			"l." + LigneTable.COULEUR, 
+			"l." + LigneTable.LETTRE };
 
 	public static final String FULL_ORDER = " l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
 			+ " as numeric)," + FavoriTable.NOM + ", " + EquipementTable.NOM;
 
-	public static final String WHERE = FavorisGroupesTable.ID_GROUPE + "  IN (%s)";
+	public static final String WHERE = FavorisGroupesTable.ID_GROUPE + " IN (%s) OR NOT EXISTS (SELECT 1 FROM "
+			+ FavorisGroupesTable.TABLE_NAME + " WHERE " + FavorisGroupesTable.ID_FAVORI + " = f._id)";
+	//@formatter:on
 }

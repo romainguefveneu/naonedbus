@@ -39,7 +39,6 @@ import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 
 import org.joda.time.DateMidnight;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.backup.BackupManager;
 import android.content.BroadcastReceiver;
@@ -50,7 +49,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.location.Location;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -193,15 +191,13 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	};
 
 	private final ContentObserver mGroupesContentObserver = new ContentObserver(new Handler()) {
-		@SuppressLint("NewApi")
-		@Override
-		public void onChange(final boolean selfChange, final Uri uri) {
+		public void onChange(boolean selfChange) {
 			if (DBG)
-				Log.d(LOG_TAG, "GroupesContentObserver onChange");
+				Log.d(LOG_TAG, "GroupesContentObserver onChange selfChange : " + selfChange);
 
 			mGroupes = mGroupeManager.getAll(getActivity().getContentResolver());
 			getSherlockActivity().invalidateOptionsMenu();
-		}
+		};
 	};
 
 	private FavoriManager mFavoriManager;

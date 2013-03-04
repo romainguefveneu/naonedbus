@@ -414,7 +414,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (exception == null) {
 
 			final ListAdapter adapter = result.getResult();
-			if (adapter == null) {
+			if (adapter == null || adapter.getCount() == 0) {
 				showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			} else {
 

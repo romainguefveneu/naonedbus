@@ -1224,12 +1224,13 @@ containing a value of this type.
         public static final int abs__bright_foreground_inverse_holo_dark=0x7f090018;
         public static final int abs__bright_foreground_inverse_holo_light=0x7f090019;
         public static final int abs__holo_blue_light=0x7f09001a;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f090040;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f090041;
-        public static final int abs__primary_text_holo_dark=0x7f090042;
-        public static final int abs__primary_text_holo_light=0x7f090043;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f090041;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f090042;
+        public static final int abs__primary_text_holo_dark=0x7f090043;
+        public static final int abs__primary_text_holo_light=0x7f090044;
         public static final int action_bar_background=0x7f090021;
         public static final int activity_background_light=0x7f09001c;
+        public static final int adressbar_color=0x7f09002d;
         public static final int backgroundColor=0x7f09001b;
         public static final int default_circle_indicator_fill_color=0x7f090008;
         public static final int default_circle_indicator_page_color=0x7f090009;
@@ -1245,23 +1246,23 @@ containing a value of this type.
         public static final int holo_blue_dark=0x7f090028;
         public static final int holo_blue_light=0x7f090027;
         public static final int holo_blue_selected=0x7f090029;
-        public static final int item_disabled_text_dark=0x7f090044;
-        public static final int item_disabled_text_light=0x7f090045;
-        public static final int item_primary_text_dark=0x7f090046;
-        public static final int item_primary_text_light=0x7f090047;
-        public static final int item_secondary_text_dark=0x7f090048;
-        public static final int item_secondary_text_light=0x7f090049;
+        public static final int item_disabled_text_dark=0x7f090045;
+        public static final int item_disabled_text_light=0x7f090046;
+        public static final int item_primary_text_dark=0x7f090047;
+        public static final int item_primary_text_light=0x7f090048;
+        public static final int item_secondary_text_dark=0x7f090049;
+        public static final int item_secondary_text_light=0x7f09004a;
         public static final int map_pane_text_color=0x7f090026;
         /**  Map 
          */
-        public static final int map_pin_arret=0x7f090037;
+        public static final int map_pin_arret=0x7f090038;
         /**  #1D72F9 
          */
-        public static final int map_pin_bicloo=0x7f090039;
-        public static final int map_pin_covoiturage=0x7f09003b;
-        public static final int map_pin_lila=0x7f09003c;
-        public static final int map_pin_marguerite=0x7f09003a;
-        public static final int map_pin_parking=0x7f090038;
+        public static final int map_pin_bicloo=0x7f09003a;
+        public static final int map_pin_covoiturage=0x7f09003c;
+        public static final int map_pin_lila=0x7f09003d;
+        public static final int map_pin_marguerite=0x7f09003b;
+        public static final int map_pin_parking=0x7f090039;
         /**  The default background of the menu. 
          */
         public static final int md__defaultBackground=0x7f090011;
@@ -1271,23 +1272,23 @@ containing a value of this type.
         public static final int menu_shadow=0x7f090023;
         public static final int message_service_header=0x7f09002a;
         public static final int message_tan_header=0x7f09002b;
-        public static final int pager_header_active_text_color=0x7f09002e;
+        public static final int pager_header_active_text_color=0x7f09002f;
         /**  PagerHeader 
          */
-        public static final int pager_header_background_color=0x7f09002d;
-        public static final int pager_header_inactive_text_color=0x7f09002f;
-        public static final int pager_header_line_color=0x7f090030;
+        public static final int pager_header_background_color=0x7f09002e;
+        public static final int pager_header_inactive_text_color=0x7f090030;
+        public static final int pager_header_line_color=0x7f090031;
         /**  Parkings 
          */
-        public static final int parking_state_blue=0x7f090031;
-        public static final int parking_state_closed=0x7f090034;
-        public static final int parking_state_orange=0x7f090032;
-        public static final int parking_state_red=0x7f090033;
-        public static final int parking_state_subscriber=0x7f090036;
-        public static final int parking_state_undefined=0x7f090035;
+        public static final int parking_state_blue=0x7f090032;
+        public static final int parking_state_closed=0x7f090035;
+        public static final int parking_state_orange=0x7f090033;
+        public static final int parking_state_red=0x7f090034;
+        public static final int parking_state_subscriber=0x7f090037;
+        public static final int parking_state_undefined=0x7f090036;
         public static final int pinned_header_menu_background=0x7f09001d;
         public static final int pinned_header_menu_text=0x7f09001e;
-        public static final int pressed_acapulco=0x7f09003f;
+        public static final int pressed_acapulco=0x7f090040;
         public static final int query_hint_color=0x7f09002c;
         public static final int vpi__background_holo_dark=0x7f090000;
         public static final int vpi__background_holo_light=0x7f090001;
@@ -1297,12 +1298,12 @@ containing a value of this type.
         public static final int vpi__bright_foreground_holo_light=0x7f090003;
         public static final int vpi__bright_foreground_inverse_holo_dark=0x7f090006;
         public static final int vpi__bright_foreground_inverse_holo_light=0x7f090007;
-        public static final int vpi__dark_theme=0x7f09004a;
-        public static final int vpi__light_theme=0x7f09004b;
+        public static final int vpi__dark_theme=0x7f09004b;
+        public static final int vpi__light_theme=0x7f09004c;
         /**  Widget 
          */
-        public static final int widget_background=0x7f09003d;
-        public static final int widget_background_focused=0x7f09003e;
+        public static final int widget_background=0x7f09003e;
+        public static final int widget_background_focused=0x7f09003f;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
