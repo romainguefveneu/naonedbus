@@ -72,7 +72,6 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		}
 
 		new LoadTimeLineCache().execute(mCodeLigne, mCodeSens, mCodeArret);
-		loadContent();
 	}
 
 	@Override
@@ -236,13 +235,10 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			if (result.getCount() > 0) {
 				setListAdapter(result);
 				showContent();
-
-				// // Le chargement depuis le web est en cours ?
-				if (getLoaderManager().hasRunningLoaders() == false) {
-					hideResfrehMenuLoader();
-				}
-
 			}
+
+			// Démarrer la récupérer depuis le web
+			refreshContent();
 		}
 	}
 

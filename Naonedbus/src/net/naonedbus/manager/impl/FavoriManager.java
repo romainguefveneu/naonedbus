@@ -30,6 +30,7 @@ import net.naonedbus.provider.impl.FavoriProvider;
 import net.naonedbus.provider.table.ArretTable;
 import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.provider.table.FavoriTable;
+import net.naonedbus.provider.table.GroupeTable;
 import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.provider.table.SensTable;
 import net.naonedbus.rest.controller.impl.FavoriController;
@@ -133,6 +134,10 @@ public class FavoriManager extends SQLiteManager<Favori> {
 			item.normalizedNom = c.getString(c.getColumnIndex(EquipementTable.NORMALIZED_NOM));
 			item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
 			item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
+		}
+
+		if (c.getColumnIndex(GroupeTable.NOM) != -1) {
+			item.section = c.getString(c.getColumnIndex(GroupeTable.NOM));
 		}
 
 		return item;

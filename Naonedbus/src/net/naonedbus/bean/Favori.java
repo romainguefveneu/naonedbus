@@ -18,13 +18,10 @@
  */
 package net.naonedbus.bean;
 
+import net.naonedbus.widget.item.SectionItem;
 import android.graphics.drawable.Drawable;
 
-/**
- * @author romain
- * 
- */
-public class Favori extends Arret {
+public class Favori extends Arret implements SectionItem {
 
 	public String nomFavori;
 	public String nomSens;
@@ -34,5 +31,12 @@ public class Favori extends Arret {
 
 	public Drawable background;
 	public String delay;
+
+	public String section;
+
+	@Override
+	public Object getSection() {
+		return section;
+	}
 
 }

@@ -7,41 +7,30 @@ import net.naonedbus.bean.Favori;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.util.SparseBooleanArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
+public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 
 	private final Typeface robotoBold;
 
 	private SparseBooleanArray checkedItemPositions = new SparseBooleanArray();
 
 	public FavoriArrayAdapter(Context context, List<Favori> objects) {
-		super(context, 0, objects);
+		super(context, R.layout.list_item_favori, objects);
 		robotoBold = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_favori, null);
-			bindViewHolder(convertView);
-		}
-		bindView(convertView, position);
-		return convertView;
-	}
-
-	private void bindView(View view, int position) {
+	public void bindView(View view, Context context, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Favori item = (Favori) getItem(position);
 
@@ -82,7 +71,8 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 		}
 	}
 
-	private void bindViewHolder(View view) {
+	@Override
+	public void bindViewHolder(View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.ligneCode = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -109,4 +99,5 @@ public class FavoriArrayAdapter extends ArrayAdapter<Favori> {
 		ProgressBar progressBar;
 		TextView nextHoraire;
 	}
+
 }

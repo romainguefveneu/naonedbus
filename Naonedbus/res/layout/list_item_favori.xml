@@ -19,56 +19,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine.Content"
-    android:layout_height="?android:attr/listPreferredItemHeight" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultLine" >
 
-    <TextView
-        android:id="@id/itemSymbole"
-        style="@style/ItemSymbole" />
+    <include layout="@layout/list_item_header" />
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/itemSymbole" >
+    <include layout="@layout/list_item_content_favori" />
 
-        <RelativeLayout
-            android:id="@+id/zoneTitle"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dip" >
-
-            <TextView
-                android:id="@id/itemTitle"
-                style="@style/ItemPrimaryText"
-                android:layout_height="25dip"
-                android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/itemTime" />
-
-            <ProgressBar
-                android:id="@+id/loading"
-                style="@android:style/Widget.ProgressBar.Small"
-                android:layout_width="20dip"
-                android:layout_height="20dip"
-                android:layout_alignParentRight="true"
-                android:layout_alignRight="@id/zoneTitle"
-                android:layout_centerVertical="true"
-                android:indeterminate="true"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@id/itemTime"
-                style="@style/ItemTime"
-                android:visibility="visible" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@id/itemDescription"
-            style="@style/ItemSecondaryText.SingleLine"
-            android:layout_alignParentTop="false"
-            android:layout_below="@id/zoneTitle"
-            android:layout_toRightOf="@id/itemSymbole"
-            android:paddingLeft="10dip" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

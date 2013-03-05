@@ -36,9 +36,11 @@ import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
+import net.naonedbus.widget.indexer.impl.FavoriArrayIndexer;
 
 import org.joda.time.DateMidnight;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.backup.BackupManager;
 import android.content.BroadcastReceiver;
@@ -191,6 +193,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	};
 
 	private final ContentObserver mGroupesContentObserver = new ContentObserver(new Handler()) {
+		@SuppressLint("NewApi")
 		public void onChange(boolean selfChange) {
 			if (DBG)
 				Log.d(LOG_TAG, "GroupesContentObserver onChange selfChange : " + selfChange);
@@ -204,7 +207,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private StateHelper mStateHelper;
 
 	public FavorisFragment() {
-		super(R.string.title_fragment_favoris, R.layout.fragment_listview);
+		super(R.string.title_fragment_favoris, R.layout.fragment_listview_section);
+
 		if (DBG)
 			Log.i(LOG_TAG, "FavorisFragment()");
 
@@ -241,6 +245,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
 
 		mGroupes = mGroupeManager.getAll(getActivity().getContentResolver());
+		initGroupes();
 	}
 
 	@Override
@@ -466,14 +471,21 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private void fillGroupesMenu(final SubMenu filterSubMenu) {
 		boolean checked;
 
-		mSelectedGroupes.clear();
 		for (Groupe groupe : mGroupes) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
-			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
+			checked = mSelectedGroupes.contains(groupe.getId());
 
 			item.setCheckable(true);
 			item.setChecked(checked);
+		}
+	}
 
+	private void initGroupes() {
+		boolean checked;
+
+		mSelectedGroupes.clear();
+		for (Groupe groupe : mGroupes) {
+			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
 			if (checked) {
 				mSelectedGroupes.add(groupe.getId());
 			}
@@ -582,6 +594,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 
 		final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, favoris);
+		adapter.setIndexer(new FavoriArrayIndexer());
+
 		result.setResult(adapter);
 
 		return result;
