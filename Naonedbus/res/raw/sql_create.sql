@@ -85,29 +85,56 @@ CREATE INDEX IF NOT EXISTS horaires_idArret_dayTrip_timestamp ON horaires (idArr
 
 -- Décrire FAVORIS
 CREATE TABLE IF NOT EXISTS favoris (
-	_id INTEGER, 
+	_id INTEGER PRIMARY KEY, 
 	codeLigne TEXT NOT NULL, 
 	codeSens TEXT NOT NULL, 
 	codeArret TEXT NOT NULL, 
-	nomFavori TEXT);
+	nom TEXT);
 CREATE INDEX IF NOT EXISTS favoris_id ON favoris (_id);
 
 -- Décrire GROUPES
 CREATE TABLE IF NOT EXISTS groupes (
 	_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	nomGroupe TEXT NOT NULL, 
+	nom TEXT NOT NULL, 
 	visibilite INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS groupes_id ON groupes (_id);
 
 -- Décrire FAVORISGROUPES
 CREATE TABLE IF NOT EXISTS favorisGroupes (
-	idFavori INTEGER NOT NULL, 
-	idGroupe  INTEGER NOT NULL,
-	FOREIGN KEY(idGroupe) REFERENCES groupes(_id) ON DELETE CASCADE,
-	FOREIGN KEY(idGroupe) REFERENCES favoris(_id) ON DELETE CASCADE,
+	idFavori INTEGER NOT NULL REFERENCES favoris(_id) ON DELETE CASCADE, 
+	idGroupe  INTEGER NOT NULL REFERENCES groupes(_id) ON DELETE CASCADE,
 	CONSTRAINT uc_ids UNIQUE (idFavori, idGroupe));
 
 CREATE INDEX IF NOT EXISTS favorisGroupes_idFavori ON favorisGroupes (idFavori);
 CREATE INDEX IF NOT EXISTS favorisGroupes_idGroupe ON favorisGroupes (idGroupe);
+
+-- Décrire FAVORISVIEW
+CREATE VIEW IF NOT EXISTS favorisView AS
+SELECT
+    f._id,
+    f.codeLigne, 
+    f.codeSens, 
+    f.codeArret,
+    f.nom AS nomFavori, 
+    st.nom AS nomArret, 
+    st.normalizedNom, 
+    st.codeEquipement,
+    a.idStation, 
+    st.latitude, 
+    st.longitude, 
+    s.nomSens,
+    l.type AS ligneType,
+    l.couleur AS ligneCouleur, 
+    l.lettre AS ligneLettre,
+    g.nom AS nomGroupe,
+    g._id AS idGroupe
+FROM
+    favoris f 
+    LEFT JOIN arrets a ON f._id = a._id
+    LEFT JOIN equipements st ON st.idType = 0 AND st._id = a.idStation 
+    LEFT JOIN lignes l ON l.code = f.codeLigne
+    LEFT JOIN sens s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens
+    LEFT JOIN favorisGroupes fg ON f._id = fg.idFavori
+    LEFT JOIN groupes g ON g._id = fg.idGroupe;
 
 PRAGMA foreign_keys = ON;

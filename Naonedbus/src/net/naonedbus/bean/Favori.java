@@ -32,7 +32,7 @@ public class Favori extends Arret implements SectionItem {
 	public Drawable background;
 	public String delay;
 
-	public String section;
+	public Integer section;
 
 	@Override
 	public Object getSection() {

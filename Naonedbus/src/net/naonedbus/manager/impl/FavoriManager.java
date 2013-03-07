@@ -27,21 +27,12 @@ import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.FavoriProvider;
-import net.naonedbus.provider.table.ArretTable;
-import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.provider.table.FavoriTable;
-import net.naonedbus.provider.table.GroupeTable;
-import net.naonedbus.provider.table.LigneTable;
-import net.naonedbus.provider.table.SensTable;
 import net.naonedbus.rest.controller.impl.FavoriController;
-import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.QueryUtils;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
-import android.net.Uri;
 import android.util.Log;
 
 public class FavoriManager extends SQLiteManager<Favori> {
@@ -49,7 +40,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	private static final String LOG_TAG = "FavoriManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private List<OnFavoriActionListener> mListeners = new ArrayList<OnFavoriActionListener>();
+	private final List<OnFavoriActionListener> mListeners = new ArrayList<OnFavoriActionListener>();
 	private boolean mIsImporting = false;
 	private String mRestoredFavoris;
 
@@ -57,10 +48,10 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		public void onImport() {
 		};
 
-		public void onAdd(Arret item) {
+		public void onAdd(final Arret item) {
 		};
 
-		public void onRemove(int id) {
+		public void onRemove(final int id) {
 		};
 
 		public void onUpdate() {
@@ -76,70 +67,18 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		return instance;
 	}
 
-	private FavoriManager() {
+	protected FavoriManager() {
 		super(FavoriProvider.CONTENT_URI);
 	}
 
-	/**
-	 * Récupérer tous les favoris d'un ensemble de groupe.
-	 * 
-	 * @param contentResolver
-	 * @return la liste de tous les favoris appartenant à un des groupes
-	 */
-	public List<Favori> getAll(final ContentResolver contentResolver, final List<Integer> idGroupes) {
-		final Uri.Builder builder = FavoriProvider.CONTENT_URI.buildUpon();
-		builder.path(FavoriProvider.FAVORIS_GROUPES_URI_PATH_QUERY);
-		builder.appendQueryParameter(FavoriProvider.QUERY_PARAMETER_GROUPES_IDS,
-				QueryUtils.listToInStatement(idGroupes));
-
-		return getFromCursor(contentResolver.query(builder.build(), null, null, null, null));
-	}
-
 	@Override
-	public Favori getSingle(ContentResolver contentResolver, int id) {
-		final Cursor c = getCursor(contentResolver, "f." + FavoriTable._ID + " = ?",
-				new String[] { String.valueOf(id) });
-		try {
-			if (c.getCount() > 0) {
-				c.moveToFirst();
-				return getSingleFromCursor(c);
-			} else {
-				return null;
-			}
-		} finally {
-			c.close();
-		}
-	}
-
-	@Override
-	public Favori getSingleFromCursor(Cursor c) {
+	public Favori getSingleFromCursor(final Cursor c) {
 		final Favori item = new Favori();
 		item._id = c.getInt(c.getColumnIndex(FavoriTable._ID));
 		item.codeLigne = c.getString(c.getColumnIndex(FavoriTable.CODE_LIGNE));
-		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
 		item.codeSens = c.getString(c.getColumnIndex(FavoriTable.CODE_SENS));
 		item.codeArret = c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET));
 		item.nomFavori = c.getString(c.getColumnIndex(FavoriTable.NOM));
-
-		if (c.getColumnIndex(SensTable.NOM) != -1) {
-			item.nomSens = c.getString(c.getColumnIndex(SensTable.NOM));
-			item.idStation = c.getInt(c.getColumnIndex(ArretTable.ID_STATION));
-			item.couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR));
-			item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
-			item.couleurTexte = (ColorUtils.isLightColor(item.couleurBackground)) ? Color.BLACK : Color.WHITE;
-		}
-
-		if (c.getColumnIndex(EquipementTable.NOM) != -1) {
-			item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
-			item.normalizedNom = c.getString(c.getColumnIndex(EquipementTable.NORMALIZED_NOM));
-			item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
-			item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
-		}
-
-		if (c.getColumnIndex(GroupeTable.NOM) != -1) {
-			item.section = c.getString(c.getColumnIndex(GroupeTable.NOM));
-		}
-
 		return item;
 	}
 
@@ -167,20 +106,20 @@ public class FavoriManager extends SQLiteManager<Favori> {
 			notifyOnAdd(item);
 	}
 
-	public void removeFavori(ContentResolver contentResolver, int id) {
+	public void removeFavori(final ContentResolver contentResolver, final int id) {
 		contentResolver.delete(FavoriProvider.CONTENT_URI, FavoriTable._ID + "=?", new String[] { String.valueOf(id) });
 
 		if (mIsImporting == false)
 			notifyOnRemove(id);
 	}
 
-	public void setFavori(ContentResolver contentResolver, Favori item) {
+	public void setFavori(final ContentResolver contentResolver, final Favori item) {
 		final ContentValues values = getContentValues(item);
 		contentResolver.update(FavoriProvider.CONTENT_URI, values, FavoriTable._ID + "=?",
 				new String[] { String.valueOf(item._id) });
 	}
 
-	public boolean isFavori(ContentResolver contentResolver, int arretId) {
+	public boolean isFavori(final ContentResolver contentResolver, final int arretId) {
 		return getSingle(contentResolver, arretId) != null;
 	}
 
@@ -190,8 +129,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param item
 	 * @return a ContentValue filled with Favori values
 	 */
-	private ContentValues getContentValues(Favori item) {
-		ContentValues values = new ContentValues();
+	private ContentValues getContentValues(final Favori item) {
+		final ContentValues values = new ContentValues();
 		values.put(FavoriTable._ID, item._id);
 		values.put(FavoriTable.CODE_LIGNE, item.codeLigne);
 		values.put(FavoriTable.CODE_SENS, item.codeSens);
@@ -208,8 +147,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @return a ContentValue filled with ArretItem values, for a FavoriTable
 	 *         structure
 	 */
-	private ContentValues getContentValues(Arret item) {
-		ContentValues values = new ContentValues();
+	private ContentValues getContentValues(final Arret item) {
+		final ContentValues values = new ContentValues();
 		values.put(FavoriTable._ID, item._id);
 		values.put(FavoriTable.CODE_LIGNE, item.codeLigne);
 		values.put(FavoriTable.CODE_SENS, item.codeSens);
@@ -247,7 +186,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param contentResolver
 	 * @param json
 	 */
-	public void fromJson(ContentResolver contentResolver, String json) {
+	public void fromJson(final ContentResolver contentResolver, final String json) {
 		final FavoriController controller = new FavoriController();
 		final List<Favori> favoris = controller.parseJsonArray(json);
 		fromList(contentResolver, favoris);
@@ -286,7 +225,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		db.delete(FavoriTable.TABLE_NAME, null, null);
 
 		// Add new items
-		for (Favori favori : favoris) {
+		for (final Favori favori : favoris) {
 			itemId = arretManager.getIdByFavori(db, favori);
 			if (itemId != null) {
 				favori._id = itemId;
@@ -301,7 +240,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param contentResolver
 	 * @param favoris
 	 */
-	private void fromList(ContentResolver contentResolver, List<Favori> favoris) {
+	private void fromList(final ContentResolver contentResolver, final List<Favori> favoris) {
 		Integer itemId;
 		final ArretManager arretManager = ArretManager.getInstance();
 
@@ -309,7 +248,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		contentResolver.delete(FavoriProvider.CONTENT_URI, null, null);
 
 		// Add new items
-		for (Favori favori : favoris) {
+		for (final Favori favori : favoris) {
 			itemId = arretManager.getIdByFavori(contentResolver, favori);
 			if (itemId != null) {
 				favori._id = itemId;
@@ -324,7 +263,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @param contentResolver
 	 * @param favoris
 	 */
-	private void fromListFavoris(ContentResolver contentResolver, List<Favori> favoris) {
+	private void fromListFavoris(final ContentResolver contentResolver, final List<Favori> favoris) {
 		Integer itemId;
 		final ArretManager arretManager = ArretManager.getInstance();
 
@@ -349,7 +288,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public void importFavoris(ContentResolver contentResolver, String id) throws IOException {
+	public void importFavoris(final ContentResolver contentResolver, final String id) throws IOException {
 		final FavoriController controller = new FavoriController();
 		final List<Favori> favoris = controller.get(id);
 
@@ -362,15 +301,15 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		notifyOnImport();
 	}
 
-	public void addActionListener(OnFavoriActionListener l) {
+	public void addActionListener(final OnFavoriActionListener l) {
 		mListeners.add(l);
 	}
 
-	public void removeActionListener(OnFavoriActionListener l) {
+	public void removeActionListener(final OnFavoriActionListener l) {
 		mListeners.remove(l);
 	}
 
-	public void setRestoredFavoris(String values) {
+	public void setRestoredFavoris(final String values) {
 		mRestoredFavoris = values;
 	}
 
@@ -378,22 +317,22 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		return mRestoredFavoris;
 	}
 
-	private void notifyOnAdd(Arret item) {
-		for (OnFavoriActionListener l : mListeners) {
+	private void notifyOnAdd(final Arret item) {
+		for (final OnFavoriActionListener l : mListeners) {
 			l.onAdd(item);
 			l.onUpdate();
 		}
 	}
 
-	private void notifyOnRemove(int id) {
-		for (OnFavoriActionListener l : mListeners) {
+	private void notifyOnRemove(final int id) {
+		for (final OnFavoriActionListener l : mListeners) {
 			l.onRemove(id);
 			l.onUpdate();
 		}
 	}
 
 	private void notifyOnImport() {
-		for (OnFavoriActionListener l : mListeners) {
+		for (final OnFavoriActionListener l : mListeners) {
 			l.onImport();
 			l.onUpdate();
 		}

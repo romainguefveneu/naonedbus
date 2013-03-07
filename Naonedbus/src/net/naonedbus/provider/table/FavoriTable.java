@@ -26,7 +26,7 @@ public interface FavoriTable extends BaseColumns {
 	public static final String CODE_ARRET = "codeArret";
 	public static final String CODE_SENS = "codeSens";
 	public static final String CODE_LIGNE = "codeLigne";
-	public static final String NOM = "nomFavori";
+	public static final String NOM = "nom";
 
 	//@formatter:off
 	public static final String JOIN = TABLE_NAME + " f " + " LEFT JOIN " + ArretTable.TABLE_NAME
@@ -59,9 +59,10 @@ public interface FavoriTable extends BaseColumns {
 			"s." + SensTable.NOM,
 			"l." + LigneTable.COULEUR, 
 			"l." + LigneTable.LETTRE,
-			"g." + GroupeTable.NOM};
+			"g." + GroupeTable.NOM,
+			"g." + GroupeTable._ID};
 
-	public static final String FULL_ORDER = " l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
+	public static final String FULL_ORDER = "g." + GroupeTable.NOM +", l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
 			+ " as numeric)," + FavoriTable.NOM + ", st." + EquipementTable.NOM;
 
 	public static final String WHERE = FavorisGroupesTable.ID_GROUPE + " IN (%s) OR NOT EXISTS (SELECT 1 FROM "

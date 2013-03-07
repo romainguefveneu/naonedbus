@@ -63,20 +63,20 @@ public class FavorisHelper {
 		/**
 		 * Un favori a été renommé
 		 */
-		public void onFavoriRenamed(Favori item) {
+		public void onFavoriRenamed(final Favori item) {
 		};
 	}
 
 	private ImportTask mImportTask;
-	private Context mContext;
+	private final Context mContext;
 
 	private FavorisActionListener mFavorisActionListener;
 
-	public FavorisHelper(Context context) {
+	public FavorisHelper(final Context context) {
 		mContext = context;
 	}
 
-	public FavorisHelper(Context context, FavorisActionListener favorisActionListener) {
+	public FavorisHelper(final Context context, final FavorisActionListener favorisActionListener) {
 		mContext = context;
 		mFavorisActionListener = favorisActionListener;
 	}
@@ -86,7 +86,7 @@ public class FavorisHelper {
 	 * 
 	 * @param idFavori
 	 */
-	public void renameFavori(int favoriId) {
+	public void renameFavori(final int favoriId) {
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 
 		final Favori item = favoriManager.getSingle(mContext.getContentResolver(), favoriId);
@@ -99,7 +99,8 @@ public class FavorisHelper {
 		builder.setView(alertDialogView);
 		builder.setTitle(R.string.action_rename);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
 				final String nom = input.getText().toString().trim();
 				item.nomFavori = (nom.length() == 0) ? null : nom;
 
@@ -121,7 +122,7 @@ public class FavorisHelper {
 	 */
 	public void importFavoris() {
 
-		LayoutInflater factory = LayoutInflater.from(mContext);
+		final LayoutInflater factory = LayoutInflater.from(mContext);
 		final View alertDialogView = factory.inflate(R.layout.dialog_input, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
 		input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
@@ -130,7 +131,8 @@ public class FavorisHelper {
 		builder.setTitle(R.string.dialog_title_favoris_import);
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.setPositiveButton(R.string.action_import, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
 				final String id = input.getText().toString().trim();
 				if (id.trim().length() == 0) {
 					showErrorKeyNoValid();
@@ -151,7 +153,7 @@ public class FavorisHelper {
 		InfoDialogUtils.show(mContext, R.string.msg_error_title, R.string.msg_error_export_favoris_key);
 	}
 
-	private void onImport(String id) {
+	private void onImport(final String id) {
 		if (mImportTask == null || mImportTask.getStatus() == AsyncTask.Status.FINISHED) {
 			mImportTask = (ImportTask) new ImportTask().execute(id);
 		}
@@ -175,12 +177,12 @@ public class FavorisHelper {
 		}
 
 		@Override
-		protected Void doInBackground(String... params) {
-			FavoriManager favoriManager = FavoriManager.getInstance();
+		protected Void doInBackground(final String... params) {
+			final FavoriManager favoriManager = FavoriManager.getInstance();
 
 			try {
 				favoriManager.importFavoris(mContext.getContentResolver(), params[0]);
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				exception = e;
 			}
 
@@ -188,7 +190,7 @@ public class FavorisHelper {
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(final Void result) {
 			super.onPostExecute(result);
 			progressDialog.dismiss();
 

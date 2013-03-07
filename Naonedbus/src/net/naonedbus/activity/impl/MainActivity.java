@@ -15,9 +15,6 @@ import net.naonedbus.provider.impl.MyLocationProvider;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,9 +31,9 @@ public class MainActivity extends SlidingMenuActivity {
 	private boolean mContentLoaded;
 	private boolean mIsFrontActivity;
 	private boolean mFirstLaunch;
-	private MyLocationProvider mMyLocationProvider;
+	private final MyLocationProvider mMyLocationProvider;
 
-	private DatabaseActionListener mListener = new DatabaseActionListener() {
+	private final DatabaseActionListener mListener = new DatabaseActionListener() {
 
 		@Override
 		public void onUpgrade(final int oldVersion) {
@@ -70,7 +67,7 @@ public class MainActivity extends SlidingMenuActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		setTitle(R.string.title_activity_main);
 
 		super.onCreate(savedInstanceState);
@@ -134,7 +131,7 @@ public class MainActivity extends SlidingMenuActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
-	private void showSetupView(int textResId) {
+	private void showSetupView(final int textResId) {
 		findViewById(R.id.setupViewStub).setVisibility(View.VISIBLE);
 		((TextView) findViewById(R.id.setupViewLabel)).setText(textResId);
 	}
@@ -166,7 +163,7 @@ public class MainActivity extends SlidingMenuActivity {
 		}
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Void doInBackground(final Void... params) {
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 			CustomContentProvider.setDatabaseActionListener(mListener);
 
@@ -183,7 +180,7 @@ public class MainActivity extends SlidingMenuActivity {
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(final Void result) {
 			afterUpdate();
 		}
 

@@ -220,6 +220,7 @@
     <string name="section_distance_1000">Moins de 5 Km</string>
     <string name="section_distance_500">Moins de 1 Km</string>
     <string name="section_distance_0">Moins de 500 m</string>
+    <string name="section_groupe_aucun">Aucun groupe</string>
     <!-- Messages -->
     <!-- - - Erreurs -->
     <string name="msg_error_title">Oups&#8230;</string>

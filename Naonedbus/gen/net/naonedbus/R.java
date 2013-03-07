@@ -2294,7 +2294,7 @@ containing a value of this type.
         public static final int action_sort_ordre=0x7f0d0058;
         public static final int action_sort_parking_places=0x7f0d0059;
         public static final int app_name=0x7f0d0000;
-        public static final int btn_geolocation_service=0x7f0d00e8;
+        public static final int btn_geolocation_service=0x7f0d00e9;
         public static final int bugsense=0x7f0d0013;
         /**  Commentaires 
          */
@@ -2302,18 +2302,18 @@ containing a value of this type.
         public static final int commentaire_message_service=0x7f0d00a5;
         public static final int commentaire_tan_info_trafic=0x7f0d00a3;
         public static final int commentaire_tout=0x7f0d00a4;
-        public static final int description=0x7f0d00f1;
-        public static final int dialog_content_comment_sending_error=0x7f0d00f7;
-        public static final int dialog_content_key_error=0x7f0d00f8;
-        public static final int dialog_title_comment_sending_error=0x7f0d00f6;
-        public static final int dialog_title_favoris_import=0x7f0d00fa;
-        public static final int dialog_title_groupes=0x7f0d00fb;
+        public static final int description=0x7f0d00f2;
+        public static final int dialog_content_comment_sending_error=0x7f0d00f8;
+        public static final int dialog_content_key_error=0x7f0d00f9;
+        public static final int dialog_title_comment_sending_error=0x7f0d00f7;
+        public static final int dialog_title_favoris_import=0x7f0d00fb;
+        public static final int dialog_title_groupes=0x7f0d00fc;
         /**  Dialogs 
          */
-        public static final int dialog_title_information=0x7f0d00f3;
-        public static final int dialog_title_invalid_comment=0x7f0d00f5;
-        public static final int dialog_title_menu_lignes=0x7f0d00f9;
-        public static final int dialog_title_warning=0x7f0d00f4;
+        public static final int dialog_title_information=0x7f0d00f4;
+        public static final int dialog_title_invalid_comment=0x7f0d00f6;
+        public static final int dialog_title_menu_lignes=0x7f0d00fa;
+        public static final int dialog_title_warning=0x7f0d00f5;
         public static final int emptyString=0x7f0d001f;
         public static final int error_summary=0x7f0d0076;
         public static final int error_summary_empty=0x7f0d0079;
@@ -2335,13 +2335,13 @@ containing a value of this type.
         /**   
  Hint 
          */
-        public static final int hint_ajouter_commentaire=0x7f0d00f2;
+        public static final int hint_ajouter_commentaire=0x7f0d00f3;
         /**  Itinéraires 
          */
         public static final int itineraire_section_form=0x7f0d00c0;
         /**  Info trafic 
          */
-        public static final int lignes_concernees=0x7f0d00f0;
+        public static final int lignes_concernees=0x7f0d00f1;
         public static final int loading=0x7f0d001c;
         public static final int loading_layers=0x7f0d001d;
         public static final int map_calque_arret=0x7f0d00c2;
@@ -2370,39 +2370,39 @@ containing a value of this type.
         public static final int menu_recherche=0x7f0d0047;
         public static final int menu_settings=0x7f0d0017;
         public static final int mod=0x7f0d0011;
-        public static final int msg_aucun_depart_24h=0x7f0d00eb;
-        public static final int msg_cache_horaire_clear=0x7f0d00e7;
-        public static final int msg_cache_size=0x7f0d00e5;
-        public static final int msg_calendar_select=0x7f0d00e6;
-        public static final int msg_depart_heure=0x7f0d00ee;
-        public static final int msg_depart_min=0x7f0d00ed;
+        public static final int msg_aucun_depart_24h=0x7f0d00ec;
+        public static final int msg_cache_horaire_clear=0x7f0d00e8;
+        public static final int msg_cache_size=0x7f0d00e6;
+        public static final int msg_calendar_select=0x7f0d00e7;
+        public static final int msg_depart_heure=0x7f0d00ef;
+        public static final int msg_depart_min=0x7f0d00ee;
         /**  - - Horaires 
          */
-        public static final int msg_depart_proche=0x7f0d00ea;
-        public static final int msg_element_not_localized=0x7f0d00e1;
-        public static final int msg_error_export_favoris_key=0x7f0d00dd;
-        public static final int msg_error_location_desc=0x7f0d00dc;
-        public static final int msg_error_location_title=0x7f0d00db;
-        public static final int msg_error_navigation=0x7f0d00da;
+        public static final int msg_depart_proche=0x7f0d00eb;
+        public static final int msg_element_not_localized=0x7f0d00e2;
+        public static final int msg_error_export_favoris_key=0x7f0d00de;
+        public static final int msg_error_location_desc=0x7f0d00dd;
+        public static final int msg_error_location_title=0x7f0d00dc;
+        public static final int msg_error_navigation=0x7f0d00db;
         /**  Messages 
  - - Erreurs 
          */
-        public static final int msg_error_title=0x7f0d00d9;
-        public static final int msg_favoris_import=0x7f0d00e4;
-        public static final int msg_horaire_erreur=0x7f0d00ec;
-        public static final int msg_importing_favoris=0x7f0d00e9;
+        public static final int msg_error_title=0x7f0d00da;
+        public static final int msg_favoris_import=0x7f0d00e5;
+        public static final int msg_horaire_erreur=0x7f0d00ed;
+        public static final int msg_importing_favoris=0x7f0d00ea;
         /**  - - Divers 
          */
-        public static final int msg_loading_address=0x7f0d00e3;
-        public static final int msg_nothing_horaires=0x7f0d00ef;
+        public static final int msg_loading_address=0x7f0d00e4;
+        public static final int msg_nothing_horaires=0x7f0d00f0;
         /**  - - Vide 
          */
-        public static final int msg_nothing_telephone=0x7f0d00e0;
-        public static final int msg_plan_not_found=0x7f0d00de;
-        public static final int msg_vide=0x7f0d00e2;
+        public static final int msg_nothing_telephone=0x7f0d00e1;
+        public static final int msg_plan_not_found=0x7f0d00df;
+        public static final int msg_vide=0x7f0d00e3;
         /**  Warning 
          */
-        public static final int msg_warning_send_comment=0x7f0d00df;
+        public static final int msg_warning_send_comment=0x7f0d00e0;
         public static final int parking=0x7f0d00b4;
         public static final int parking_abonne=0x7f0d00b7;
         public static final int parking_ferme=0x7f0d00b6;
@@ -2421,11 +2421,11 @@ containing a value of this type.
         public static final int parking_titre_places_disponibles=0x7f0d00ba;
         public static final int parking_titre_places_totales=0x7f0d00bb;
         public static final int parking_titre_telephone=0x7f0d00bd;
-        public static final int prompt_arret=0x7f0d0107;
+        public static final int prompt_arret=0x7f0d0108;
         /**  Prompt 
          */
-        public static final int prompt_ligne=0x7f0d0105;
-        public static final int prompt_sens=0x7f0d0106;
+        public static final int prompt_ligne=0x7f0d0106;
+        public static final int prompt_sens=0x7f0d0107;
         public static final int read_more=0x7f0d0018;
         public static final int search_empty=0x7f0d00cb;
         /**  Search 
@@ -2446,26 +2446,27 @@ containing a value of this type.
         /**  Sections 
          */
         public static final int section_distance_none=0x7f0d00ce;
+        public static final int section_groupe_aucun=0x7f0d00d9;
         public static final int setup=0x7f0d0021;
-        public static final int showcase_arrets_content=0x7f0d00fd;
+        public static final int showcase_arrets_content=0x7f0d00fe;
         /**  Showcase 
          */
-        public static final int showcase_arrets_title=0x7f0d00fc;
+        public static final int showcase_arrets_title=0x7f0d00fd;
         public static final int source=0x7f0d00aa;
         public static final int source_naonedbus=0x7f0d00ac;
         public static final int source_naonedbus_service=0x7f0d00af;
         public static final int source_taninfos=0x7f0d00ae;
         public static final int source_twitter=0x7f0d00ad;
         public static final int source_unknown=0x7f0d00ab;
-        public static final int target_arret=0x7f0d0100;
+        public static final int target_arret=0x7f0d0101;
         /**  Target 
          */
-        public static final int target_ligne=0x7f0d00fe;
-        public static final int target_sens=0x7f0d00ff;
-        public static final int target_tous_arrets=0x7f0d0104;
-        public static final int target_tous_sens=0x7f0d0103;
-        public static final int target_toutes_lignes=0x7f0d0102;
-        public static final int target_toutes_lignes_symbole=0x7f0d0101;
+        public static final int target_ligne=0x7f0d00ff;
+        public static final int target_sens=0x7f0d0100;
+        public static final int target_tous_arrets=0x7f0d0105;
+        public static final int target_tous_sens=0x7f0d0104;
+        public static final int target_toutes_lignes=0x7f0d0103;
+        public static final int target_toutes_lignes_symbole=0x7f0d0102;
         public static final int time_line_after=0x7f0d00a7;
         public static final int time_line_before=0x7f0d00a9;
         public static final int time_line_now=0x7f0d00a8;
@@ -2516,14 +2517,14 @@ containing a value of this type.
         public static final int title_fragment_versions=0x7f0d0081;
         /**  Toasts 
          */
-        public static final int toast_favori_ajout=0x7f0d0108;
-        public static final int toast_favori_retire=0x7f0d0109;
+        public static final int toast_favori_ajout=0x7f0d0109;
+        public static final int toast_favori_retire=0x7f0d010a;
         public static final int today=0x7f0d0019;
         public static final int tomorrow=0x7f0d001b;
-        public static final int trafic_a_venir=0x7f0d010b;
+        public static final int trafic_a_venir=0x7f0d010c;
         /**  Trafic 
          */
-        public static final int trafic_en_cours=0x7f0d010a;
+        public static final int trafic_en_cours=0x7f0d010b;
         public static final int tuto_0_summary=0x7f0d0023;
         /**  Tuto 
          */

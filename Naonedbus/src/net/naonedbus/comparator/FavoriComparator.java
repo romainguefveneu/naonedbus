@@ -33,6 +33,12 @@ public class FavoriComparator implements Comparator<Favori> {
 		if (favori1 == null || favori2 == null)
 			return 0;
 
+		if (favori1.section != null && favori2.section != null) {
+			if (!favori1.section.equals(favori2.section)) {
+				return favori1.section.compareTo(favori2.section);
+			}
+		}
+
 		if (favori1.codeLigne.equals(favori2.codeLigne)) {
 			final String nom1 = (favori1.nomFavori == null) ? favori1.nomArret : favori1.nomFavori;
 			final String nom2 = (favori2.nomFavori == null) ? favori2.nomArret : favori2.nomFavori;
@@ -43,7 +49,6 @@ public class FavoriComparator implements Comparator<Favori> {
 		} else {
 			return favori1.codeLigne.compareTo(favori2.codeLigne);
 		}
-
 	}
 
 }

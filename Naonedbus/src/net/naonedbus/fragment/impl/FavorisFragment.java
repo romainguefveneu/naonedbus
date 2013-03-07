@@ -30,8 +30,10 @@ import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
+import net.naonedbus.manager.impl.FavorisViewManager;
 import net.naonedbus.manager.impl.GroupeManager;
 import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.provider.impl.FavoriGroupeProvider;
 import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
@@ -116,8 +118,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private ActionMode mActionMode;
 	private ListView mListView;
 	private BackupManager mBackupManager;
-	private GroupeManager mGroupeManager;
-	private SharedPreferences mPreferences;
+	private final GroupeManager mGroupeManager;
+	private final FavoriManager mFavoriManager;
+	private final FavorisViewManager mFavorisViewManager;
+	private StateHelper mStateHelper;
+	private final SharedPreferences mPreferences;
 	private List<Groupe> mGroupes;
 	private final List<Integer> mSelectedGroupes;
 	private int mCurrentSort = SORT_NOM;
@@ -126,7 +131,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	/**
 	 * Action sur les favoris.
 	 */
-	private OnFavoriActionListener mOnFavoriActionListener = new OnFavoriActionListener() {
+	private final OnFavoriActionListener mOnFavoriActionListener = new OnFavoriActionListener() {
 		@Override
 		public void onImport() {
 			if (DBG)
@@ -148,8 +153,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		}
 
+		@Override
 		@TargetApi(Build.VERSION_CODES.FROYO)
-		public void onAdd(Arret item) {
+		public void onAdd(final Arret item) {
 			if (DBG)
 				Log.d(LOG_TAG, "onAdd : " + item);
 
@@ -158,8 +164,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			mContentHasChanged = true;
 		};
 
+		@Override
 		@TargetApi(Build.VERSION_CODES.FROYO)
-		public void onRemove(int id) {
+		public void onRemove(final int id) {
 			if (DBG)
 				Log.d(LOG_TAG, "onRemove : " + id);
 
@@ -174,7 +181,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	 */
 	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 		@Override
-		public void onReceive(Context context, Intent intent) {
+		public void onReceive(final Context context, final Intent intent) {
 			if (DBG)
 				Log.d(LOG_TAG, "onReceive : " + intent);
 
@@ -193,8 +200,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	};
 
 	private final ContentObserver mGroupesContentObserver = new ContentObserver(new Handler()) {
+		@Override
 		@SuppressLint("NewApi")
-		public void onChange(boolean selfChange) {
+		public void onChange(final boolean selfChange) {
 			if (DBG)
 				Log.d(LOG_TAG, "GroupesContentObserver onChange selfChange : " + selfChange);
 
@@ -203,8 +211,16 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		};
 	};
 
-	private FavoriManager mFavoriManager;
-	private StateHelper mStateHelper;
+	private final ContentObserver mFavorisGroupesContentObserver = new ContentObserver(new Handler()) {
+		@Override
+		@SuppressLint("NewApi")
+		public void onChange(final boolean selfChange) {
+			if (DBG)
+				Log.d(LOG_TAG, "mFavorisGroupesContentObserver onChange selfChange : " + selfChange);
+
+			refreshContent();
+		};
+	};
 
 	public FavorisFragment() {
 		super(R.string.title_fragment_favoris, R.layout.fragment_listview_section);
@@ -213,6 +229,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.i(LOG_TAG, "FavorisFragment()");
 
 		mFavoriManager = FavoriManager.getInstance();
+		mFavorisViewManager = FavorisViewManager.getInstance();
 		mLocationProvider = NBApplication.getLocationProvider();
 		mGroupeManager = GroupeManager.getInstance();
 
@@ -223,7 +240,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@TargetApi(Build.VERSION_CODES.FROYO)
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
@@ -249,7 +266,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateView");
@@ -257,12 +274,13 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mListView.setOnItemLongClickListener(this);
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-		getActivity().getContentResolver().registerContentObserver(GroupeProvider.CONTENT_URI, true,
-				mGroupesContentObserver);
+		final ContentResolver contentResolver = getActivity().getContentResolver();
+		contentResolver.registerContentObserver(GroupeProvider.CONTENT_URI, true, mGroupesContentObserver);
+		contentResolver.registerContentObserver(FavoriGroupeProvider.CONTENT_URI, true, mFavorisGroupesContentObserver);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateView");
 		return super.onCreateView(inflater, container, savedInstanceState);
@@ -282,7 +300,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.d(LOG_TAG, "onDestroy");
 
 		mFavoriManager.removeActionListener(mOnFavoriActionListener);
-		getActivity().getContentResolver().unregisterContentObserver(mGroupesContentObserver);
+		final ContentResolver contentResolver = getActivity().getContentResolver();
+		contentResolver.unregisterContentObserver(mGroupesContentObserver);
+		contentResolver.unregisterContentObserver(mFavorisGroupesContentObserver);
 		super.onDestroy();
 	}
 
@@ -324,7 +344,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_favoris, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 
@@ -335,7 +355,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 
 		if (item.getGroupId() == MENU_GROUP_GROUPES) {
 			item.setChecked(!item.isChecked());
@@ -420,7 +440,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		startActivity(intent);
 	}
 
-	private void menuSort(int sortOrder) {
+	private void menuSort(final int sortOrder) {
 		mCurrentSort = sortOrder;
 		sort();
 	}
@@ -456,7 +476,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	private List<Integer> getCheckedItemsIds() {
-		List<Integer> ids = new ArrayList<Integer>();
+		final List<Integer> ids = new ArrayList<Integer>();
 		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checked.size(); i++) {
 			if (checked.valueAt(i)) {
@@ -471,8 +491,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private void fillGroupesMenu(final SubMenu filterSubMenu) {
 		boolean checked;
 
-		for (Groupe groupe : mGroupes) {
-			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, (int) groupe.getId(), 0, groupe.getNom());
+		for (final Groupe groupe : mGroupes) {
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, groupe.getId(), 0, groupe.getNom());
 			checked = mSelectedGroupes.contains(groupe.getId());
 
 			item.setCheckable(true);
@@ -484,7 +504,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		boolean checked;
 
 		mSelectedGroupes.clear();
-		for (Groupe groupe : mGroupes) {
+		for (final Groupe groupe : mGroupes) {
 			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
 			if (checked) {
 				mSelectedGroupes.add(groupe.getId());
@@ -508,7 +528,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	 * 
 	 * @param adapter
 	 */
-	private void sort(FavoriArrayAdapter adapter) {
+	private void sort(final FavoriArrayAdapter adapter) {
 		final Comparator<Favori> comparator;
 		// final CustomSectionIndexer<Equipement> indexer;
 
@@ -540,7 +560,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		Log.d(LOG_TAG, "onListItemClick " + mActionMode);
 		if (mActionMode == null) {
 			mListView.setItemChecked(position, false);
@@ -556,7 +576,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> adapter, View view, int position, long id) {
+	public boolean onItemLongClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
 		mListView.setItemChecked(position, !mListView.isItemChecked(position));
 		onItemSelected();
 		return true;
@@ -571,7 +591,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final DateMidnight today = new DateMidnight();
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		final List<Favori> favoris = mFavoriManager.getAll(context.getContentResolver(), mSelectedGroupes);
+		final List<Favori> favoris = mFavorisViewManager.getAll(context.getContentResolver(), mSelectedGroupes);
 		Collections.sort(favoris, comparators.get(mCurrentSort));
 
 		Log.d(LOG_TAG, "\t Favoris : " + favoris.size());
@@ -593,8 +613,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			position++;
 		}
 
+		final SparseArray<String> groupes = new SparseArray<String>();
+		for (final Groupe groupe : mGroupes) {
+			groupes.append(groupe.getId(), groupe.getNom());
+		}
 		final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, favoris);
-		adapter.setIndexer(new FavoriArrayIndexer());
+		adapter.setIndexer(new FavoriArrayIndexer(groupes));
 
 		result.setResult(adapter);
 
@@ -612,7 +636,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	/**
 	 * Lancer le chargement des tous les horaires.
 	 */
-	private void loadHorairesFavoris(Integer... params) {
+	private void loadHorairesFavoris(final Integer... params) {
 		if (getListAdapter() != null) {
 			new LoadHoraires().execute(params);
 		}
@@ -634,7 +658,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 
 		@Override
-		protected Boolean doInBackground(Integer... params) {
+		protected Boolean doInBackground(final Integer... params) {
 			Boolean result = true;
 
 			try {
@@ -648,7 +672,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 						updateAdapter(params[i]);
 					}
 				}
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 				result = false;
 			}
@@ -697,12 +721,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 
 		@Override
-		protected void onProgressUpdate(Void... values) {
+		protected void onProgressUpdate(final Void... values) {
 			((FavoriArrayAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 
 		@Override
-		protected void onPostExecute(Boolean result) {
+		protected void onPostExecute(final Boolean result) {
 			Log.d(LOG_TAG, "LoadHoraires end");
 		}
 
@@ -714,7 +738,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	 * @param position
 	 *            La position du favori.
 	 */
-	private void markeFavoriHoraireError(int position) {
+	private void markeFavoriHoraireError(final int position) {
 		FavoriArrayAdapter adapter;
 		if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null) {
 			final Favori favori = (Favori) getListAdapter().getItem(position);
@@ -724,14 +748,14 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+	public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_favoris_contextual, menu);
 		return true;
 	}
 
 	@Override
-	public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+	public boolean onPrepareActionMode(final ActionMode mode, final Menu menu) {
 		mActionMode = mode;
 		final MenuItem menuEdit = menu.findItem(R.id.menu_edit);
 		final MenuItem menuPlace = menu.findItem(R.id.menu_place);
@@ -784,7 +808,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onDestroyActionMode(ActionMode mode) {
+	public void onDestroyActionMode(final ActionMode mode) {
 		mActionMode = null;
 		mListView.clearChoices();
 
@@ -794,7 +818,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onLocationChanged(Location location) {
+	public void onLocationChanged(final Location location) {
 		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators.get(SORT_DISTANCE);
 		comparator.setReferentiel(location);
 		if (mCurrentSort == SORT_DISTANCE) {

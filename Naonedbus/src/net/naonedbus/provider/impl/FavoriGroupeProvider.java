@@ -56,7 +56,7 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public String getType(Uri uri) {
+	public String getType(final Uri uri) {
 		return null;
 	}
 
@@ -91,11 +91,11 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs, final String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(FavorisGroupesTable.TABLE_NAME);
 
-		int uriType = URI_MATCHER.match(uri);
+		final int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
 		case FAVORI_ID:
 			final String favoriId = uri.getQueryParameter(FavoriGroupeProvider.QUERY_PARAMETER_IDS);
@@ -120,7 +120,7 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+	public int update(final Uri uri, final ContentValues values, final String selection, final String[] selectionArgs) {
 		final SQLiteDatabase db = getWritableDatabase();
 		final int rowCount = db.update(FavorisGroupesTable.TABLE_NAME, values, selection, selectionArgs);
 		if (rowCount > 0) {

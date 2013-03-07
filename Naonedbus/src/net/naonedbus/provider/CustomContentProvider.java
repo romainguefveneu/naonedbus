@@ -74,7 +74,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		return mDB.getWritableDatabase();
 	}
 
-	public static synchronized void setDatabaseActionListener(DatabaseActionListener listener) {
+	public static synchronized void setDatabaseActionListener(final DatabaseActionListener listener) {
 		CustomContentProvider.databaseActionListener = listener;
 	}
 
@@ -88,15 +88,24 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final int DB_VERSION = 11;
 		private static final String DB_NAME = "data.db";
 
-		private CompressedQueriesHelper mCompressedQueriesHelper;
+		private final CompressedQueriesHelper mCompressedQueriesHelper;
 
-		public CoreDatabase(Context context) {
+		public CoreDatabase(final Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
 			mCompressedQueriesHelper = new CompressedQueriesHelper(context);
 		}
 
 		@Override
-		public void onCreate(SQLiteDatabase db) {
+		public void onOpen(final SQLiteDatabase db) {
+			super.onOpen(db);
+			if (!db.isReadOnly()) {
+				// Enable foreign key constraints
+				db.execSQL("PRAGMA foreign_keys=ON;");
+			}
+		}
+
+		@Override
+		public void onCreate(final SQLiteDatabase db) {
 			if (DBG)
 				Log.d(LOG_TAG, "Création de la base de données.");
 
@@ -122,7 +131,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		}
 
 		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
 			if (DBG)
 				Log.d(LOG_TAG, "Mise à jour de la base de données.");
 
@@ -152,7 +161,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		 * 
 		 * @param db
 		 */
-		private void restoreFavoris(SQLiteDatabase db) {
+		private void restoreFavoris(final SQLiteDatabase db) {
 			if (DBG)
 				Log.i(LOG_TAG, "Restauration des favoris");
 
@@ -180,14 +189,14 @@ public abstract class CustomContentProvider extends ContentProvider {
 
 					final String[] queries = mCompressedQueriesHelper.getQueries(resId);
 
-					for (String query : queries) {
+					for (final String query : queries) {
 						if (query.trim().length() > 0) {
 							db.execSQL(query);
 						}
 					}
 
 				}
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				Log.e(LOG_TAG, "Erreur à l'execution", e);
 			}
 		}
@@ -225,7 +234,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 
 				}
 
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				Log.e(LOG_TAG, "Erreur à l'execution", e);
 			}
 		}

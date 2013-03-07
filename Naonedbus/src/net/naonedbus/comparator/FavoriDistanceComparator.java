@@ -21,7 +21,6 @@ package net.naonedbus.comparator;
 import java.util.Comparator;
 
 import net.naonedbus.bean.Favori;
-import android.content.ClipData.Item;
 import android.location.Location;
 import android.location.LocationManager;
 
@@ -47,6 +46,12 @@ public class FavoriDistanceComparator implements Comparator<Favori> {
 			return 0;
 		if (favori2.latitude == null || favori2.longitude == null)
 			return 0;
+
+		if (favori1.section != null && favori2.section != null) {
+			if (!favori1.section.equals(favori2.section)) {
+				return favori1.section.compareTo(favori2.section);
+			}
+		}
 
 		final Location location1 = new Location(LocationManager.GPS_PROVIDER);
 		location1.setLatitude(favori1.latitude);

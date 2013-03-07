@@ -1,19 +1,31 @@
 package net.naonedbus.widget.indexer.impl;
 
-import android.content.Context;
+import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
+import android.content.Context;
+import android.util.SparseArray;
 
 public class FavoriArrayIndexer extends ArraySectionIndexer<Favori> {
 
-	@Override
-	protected void prepareSection(Favori item) {
+	private final SparseArray<String> mGroupes;
 
+	public FavoriArrayIndexer(final SparseArray<String> groupes) {
+		mGroupes = groupes;
 	}
 
 	@Override
-	protected String getSectionLabel(Context context, Favori item) {
-		return ((String) item.getSection());
+	protected void prepareSection(Favori item) {
+	}
+
+	@Override
+	protected String getSectionLabel(final Context context, final Favori item) {
+		final Integer section = (Integer) item.getSection();
+		if (section == -1) {
+			return context.getString(R.string.section_groupe_aucun);
+		} else {
+			return mGroupes.get(section);
+		}
 	}
 
 }
