@@ -20,8 +20,7 @@
  */
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine.Content"
-    android:layout_height="?android:attr/listPreferredItemHeight" >
+    style="@style/DefaultLine.Content" >
 
     <TextView
         android:id="@id/itemSymbole"
@@ -40,10 +39,10 @@
 
             <TextView
                 android:id="@id/itemTitle"
-                style="@style/ItemPrimaryText"
-                android:layout_height="25dip"
+                style="@style/ItemPrimaryText.SingleLine"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@id/itemTime" />
+                android:layout_toLeftOf="@id/itemTime"
+                android:paddingRight="@dimen/padding_small" />
 
             <ProgressBar
                 android:id="@+id/loading"
@@ -65,7 +64,6 @@
         <TextView
             android:id="@id/itemDescription"
             style="@style/ItemSecondaryText.SingleLine"
-            android:layout_alignParentTop="false"
             android:layout_below="@id/zoneTitle"
             android:layout_toRightOf="@id/itemSymbole"
             android:paddingLeft="10dip" />

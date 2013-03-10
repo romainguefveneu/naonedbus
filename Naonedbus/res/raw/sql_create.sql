@@ -127,7 +127,8 @@ SELECT
     l.couleur AS ligneCouleur, 
     l.lettre AS ligneLettre,
     g.nom AS nomGroupe,
-    g._id AS idGroupe
+    g._id AS idGroupe,
+    (SELECT (timestamp/1000 - ((strftime('%s','now')) / 60) * 60) / 60 FROM horaires WHERE horaires.idArret = f._id AND timestamp/1000 >= (strftime('%s','now')) / 60 * 60 LIMIT 1) as nextHoraire
 FROM
     favoris f 
     LEFT JOIN arrets a ON f._id = a._id

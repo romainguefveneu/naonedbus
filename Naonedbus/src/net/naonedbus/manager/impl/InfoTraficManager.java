@@ -34,6 +34,7 @@ import net.naonedbus.helper.DateTimeFormatHelper;
 import net.naonedbus.rest.controller.impl.InfoTraficController;
 
 import org.joda.time.DateTime;
+import org.json.JSONException;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -60,7 +61,7 @@ public class InfoTraficManager {
 		return instance;
 	}
 
-	public synchronized List<InfoTrafic> getByLigneCode(final Context context, final String code) throws IOException {
+	public synchronized List<InfoTrafic> getByLigneCode(final Context context, final String code) throws IOException, JSONException {
 		List<InfoTrafic> result = new ArrayList<InfoTrafic>();
 
 		init(context);
@@ -72,11 +73,11 @@ public class InfoTraficManager {
 		return result;
 	}
 
-	public synchronized List<InfoTrafic> getAll(final Context context) throws IOException {
+	public synchronized List<InfoTrafic> getAll(final Context context) throws IOException, JSONException {
 		final List<InfoTrafic> result = new ArrayList<InfoTrafic>();
 		init(context);
 
-		for (Entry<String, ArrayList<InfoTrafic>> item : cache.entrySet()) {
+		for (final Entry<String, ArrayList<InfoTrafic>> item : cache.entrySet()) {
 			result.addAll(item.getValue());
 		}
 
@@ -85,7 +86,7 @@ public class InfoTraficManager {
 		return result;
 	}
 
-	public synchronized InfoTrafic getById(final Context context, int id) throws IOException {
+	public synchronized InfoTrafic getById(final Context context, final int id) throws IOException, JSONException {
 		init(context);
 		return cacheById.get(id);
 	}
@@ -94,8 +95,9 @@ public class InfoTraficManager {
 	 * Gérer le remplissage et la péremption du cache
 	 * 
 	 * @throws IOException
+	 * @throws JSONException 
 	 */
-	public void init(final Context context) throws IOException {
+	public void init(final Context context) throws IOException, JSONException {
 		final DateTime now = new DateTime();
 
 		if (cache.isEmpty() || now.isAfter(dateLimit)) {
@@ -114,7 +116,7 @@ public class InfoTraficManager {
 		final Pattern pattern = Pattern.compile("\\[([0-9A-Z]{1,2})/");
 		final DateTimeFormatHelper dateTimeFormatHelper = new DateTimeFormatHelper(context);
 
-		for (InfoTrafic infoTrafic : infoTrafics) {
+		for (final InfoTrafic infoTrafic : infoTrafics) {
 
 			infoTrafic.setDateFormated(dateTimeFormatHelper.formatDuree(infoTrafic.getDateDebut(),
 					infoTrafic.getDateFin()));

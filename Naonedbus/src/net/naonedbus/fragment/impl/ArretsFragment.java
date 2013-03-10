@@ -76,9 +76,9 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	protected final SparseArray<Comparator<Arret>> mComparators;
 	protected int mCurrentSort;
 
-	private FavoriManager mFavoriManager;
+	private final FavoriManager mFavoriManager;
 	private StateHelper mStateHelper;
-	private MyLocationProvider mLocationProvider;
+	private final MyLocationProvider mLocationProvider;
 	private DistanceTask mDistanceTask;
 	private DistanceTaskCallback mDistanceTaskCallback;
 	private Integer mNearestArretPosition;
@@ -103,13 +103,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		registerForContextMenu(getListView());
@@ -128,7 +128,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 		mDistanceTaskCallback = new DistanceTaskCallback() {
 			@Override
-			public void onNearestStationFound(Integer position) {
+			public void onNearestStationFound(final Integer position) {
 				mNearestArretPosition = position;
 				final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
 				if (adapter != null && mNearestArretPosition != null) {
@@ -168,7 +168,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_arrets, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 		menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
@@ -176,13 +176,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
+	public void onPrepareOptionsMenu(final Menu menu) {
 		menu.findItem(R.id.menu_location).setVisible(mLocationProvider.isProviderEnabled());
 		super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 
 		switch (item.getItemId()) {
 		case R.id.menu_sort_name:
@@ -221,7 +221,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
@@ -241,7 +241,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public boolean onContextItemSelected(android.view.MenuItem item) {
+	public boolean onContextItemSelected(final android.view.MenuItem item) {
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final Arret arret = (Arret) getListView().getItemAtPosition(cmi.position);
 
@@ -267,7 +267,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 		final Arret arret = (Arret) l.getItemAtPosition(position);
 
@@ -337,7 +337,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	 * 
 	 * @param filter
 	 */
-	private void setCurrentFilter(int filter) {
+	private void setCurrentFilter(final int filter) {
 		mCurrentFilter = filter;
 
 		if (mCurrentFilter == FILTER_ALL) {
@@ -356,7 +356,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	 * @param viewType
 	 *            Le type de vue de l'adapter
 	 */
-	private void changeSortOrder(int sortOrder, ViewType viewType) {
+	private void changeSortOrder(final int sortOrder, final ViewType viewType) {
 		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
 		mCurrentSort = sortOrder;
 
@@ -383,7 +383,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	 * 
 	 * @param adapter
 	 */
-	private void sort(ArretArrayAdapter adapter) {
+	private void sort(final ArretArrayAdapter adapter) {
 		final Comparator<Arret> comparator = mComparators.get(mCurrentSort);
 		if (comparator != null) {
 			adapter.sort(comparator);
@@ -406,7 +406,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 			mArrets.addAll(arrets);
 
 			result.setResult(mAdapter);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			result.setException(e);
 		}
 		return result;
@@ -420,7 +420,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onChangeSens(Sens sens) {
+	public void onChangeSens(final Sens sens) {
 		if (sens.equals(mSens) == false) {
 			mSens = sens;
 			refreshContent();
@@ -446,8 +446,8 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	private class DistanceTask extends AsyncTask<Void, Void, Integer> {
 
 		private DistanceTaskCallback mCallback;
-		private ListAdapter mAdapter;
-		private Location mCurrentLocation;
+		private final ListAdapter mAdapter;
+		private final Location mCurrentLocation;
 
 		public DistanceTask(final DistanceTaskCallback callback, final Location currentLocation,
 				final ListAdapter adapter) {
@@ -457,7 +457,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		}
 
 		@Override
-		protected Integer doInBackground(Void... params) {
+		protected Integer doInBackground(final Void... params) {
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
 			Arret arret;
@@ -495,7 +495,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		}
 
 		@Override
-		protected void onPostExecute(Integer result) {
+		protected void onPostExecute(final Integer result) {
 			if (!isCancelled() && mCallback != null) {
 				mCallback.onPostExecute();
 				mCallback.onNearestStationFound(result);
@@ -505,7 +505,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	public void onLocationChanged(Location location) {
+	public void onLocationChanged(final Location location) {
 		loadDistances();
 	}
 

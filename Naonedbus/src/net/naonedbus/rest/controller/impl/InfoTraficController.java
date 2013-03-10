@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.bean.InfoTrafic;
-import net.naonedbus.rest.container.HoraireContainer;
 import net.naonedbus.rest.controller.NodRestController;
 
 import org.json.JSONException;
@@ -49,7 +48,7 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 	private static final String TAG_PERTURBATION_TERMINEE = "PERTURBATION_TERMINEE";
 	private static final String TAG_TRONCONS = "TRONCONS";
 
-	public List<InfoTrafic> getAll() throws IOException {
+	public List<InfoTrafic> getAll() throws IOException, JSONException {
 		final List<InfoTrafic> infosTrafics = new ArrayList<InfoTrafic>();
 
 		final List<InfoTrafic> infosReel = super.getAll(API_REEL);
@@ -82,7 +81,7 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 	}
 
 	@Override
-	protected JSONObject toJson(InfoTrafic item) throws JSONException {
+	protected JSONObject toJson(final InfoTrafic item) throws JSONException {
 		return null;
 	}
 }

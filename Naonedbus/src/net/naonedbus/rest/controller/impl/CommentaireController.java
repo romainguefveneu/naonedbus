@@ -23,7 +23,6 @@ import java.util.List;
 
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.rest.UrlBuilder;
-import net.naonedbus.rest.container.HoraireContainer;
 import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
 
@@ -57,7 +56,7 @@ public class CommentaireController extends RestController<Commentaire> {
 		super(TAG_COMMENTAIRE);
 	}
 
-	public void post(String codeLigne, String codeSens, String codeArret, String message, String hash)
+	public void post(final String codeLigne, final String codeSens, final String codeArret, final String message, final String hash)
 			throws IOException, HttpException {
 		final UrlBuilder urlBuilder = new UrlBuilder(RestConfiguration.PATH, PATH);
 
@@ -71,8 +70,8 @@ public class CommentaireController extends RestController<Commentaire> {
 		post(urlBuilder);
 	}
 
-	public List<Commentaire> getAll(String codeLigne, String codeSens, String codeArret, BaseDateTime date)
-			throws IOException {
+	public List<Commentaire> getAll(final String codeLigne, final String codeSens, final String codeArret, final BaseDateTime date)
+			throws IOException, JSONException {
 		final UrlBuilder url = new UrlBuilder(RestConfiguration.PATH, PATH);
 
 		url.addQueryParameter("codeLigne", codeLigne);
@@ -85,7 +84,7 @@ public class CommentaireController extends RestController<Commentaire> {
 	}
 
 	@Override
-	protected Commentaire parseJsonObject(JSONObject object) throws JSONException {
+	protected Commentaire parseJsonObject(final JSONObject object) throws JSONException {
 		final Commentaire commentaire = new Commentaire();
 
 		commentaire.setId(object.getInt(TAG_ID));

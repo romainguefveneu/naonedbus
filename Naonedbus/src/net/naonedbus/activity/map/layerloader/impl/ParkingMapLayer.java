@@ -40,6 +40,9 @@ import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.manager.impl.ParkingRelaiManager;
 import net.naonedbus.utils.GeoPointUtils;
 import net.naonedbus.utils.ParkingUtils;
+
+import org.json.JSONException;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -59,7 +62,7 @@ import com.google.android.maps.GeoPoint;
 public class ParkingMapLayer implements MapLayer {
 
 	private static EquipementManager equipementManager;
-	private SparseArray<Parking> parkingList = new SparseArray<Parking>();
+	private final SparseArray<Parking> parkingList = new SparseArray<Parking>();
 
 	public ParkingMapLayer() {
 		equipementManager = EquipementManager.getInstance();
@@ -75,7 +78,7 @@ public class ParkingMapLayer implements MapLayer {
 			}
 
 			@Override
-			public List<View> getSubview(ViewGroup root) {
+			public List<View> getSubview(final ViewGroup root) {
 				return null;
 			}
 
@@ -169,7 +172,9 @@ public class ParkingMapLayer implements MapLayer {
 				parkings.addAll(publicManager.getAll(context.getContentResolver()));
 				parkings.addAll(relaiManager.getAll(context.getContentResolver()));
 			}
-		} catch (IOException e) {
+		} catch (final IOException e) {
+			BugSenseHandler.sendException(e);
+		} catch (final JSONException e) {
 			BugSenseHandler.sendException(e);
 		}
 
@@ -188,7 +193,7 @@ public class ParkingMapLayer implements MapLayer {
 	}
 
 	@Override
-	public BasicItemizedOverlay getOverlay(Context context, int defaultItemId) {
+	public BasicItemizedOverlay getOverlay(final Context context, final int defaultItemId) {
 		final BasicItemizedOverlay newItemizedOverlay;
 		final Equipement item = equipementManager.getSingle(context.getContentResolver(), defaultItemId);
 		if (item != null) {

@@ -31,6 +31,7 @@ import net.naonedbus.rest.controller.impl.CommentaireController;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.base.BaseDateTime;
+import org.json.JSONException;
 
 import android.content.Context;
 
@@ -47,7 +48,8 @@ public class CommentaireManager {
 		return instance;
 	}
 
-	public List<Commentaire> getFromCache(Context context, String codeLigne, String codeSens, String codeArret) {
+	public List<Commentaire> getFromCache(final Context context, final String codeLigne, final String codeSens,
+			final String codeArret) {
 		final File cacheFile = new File(context.getCacheDir(), genKey(codeLigne, codeSens, codeArret) + ".timeline");
 		List<Commentaire> data = new ArrayList<Commentaire>();
 
@@ -58,7 +60,10 @@ public class CommentaireManager {
 			try {
 				final String json = IOUtils.toString(new FileReader(cacheFile));
 				data = controller.parseJsonArray(json);
-			} catch (IOException e) {
+			} catch (final JSONException e) {
+				BugSenseHandler.sendExceptionMessage("Erreur lors de la lecture du cache timeline.", null, e);
+				cacheFile.delete();
+			} catch (final IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la lecture du cache timeline.", null, e);
 				cacheFile.delete();
 			} finally {
@@ -69,8 +74,8 @@ public class CommentaireManager {
 		return data;
 	}
 
-	public List<Commentaire> getFromWeb(Context context, String codeLigne, String codeSens, String codeArret,
-			BaseDateTime date) throws IOException {
+	public List<Commentaire> getFromWeb(final Context context, final String codeLigne, final String codeSens,
+			final String codeArret, final BaseDateTime date) throws IOException, JSONException {
 		final CommentaireController commentaireController = new CommentaireController();
 		final List<Commentaire> data = commentaireController.getAll(codeLigne, codeSens, codeArret, date);
 
@@ -82,18 +87,18 @@ public class CommentaireManager {
 		return data;
 	}
 
-	private void saveToCache(Context context, String key, List<Commentaire> data) {
+	private void saveToCache(final Context context, final String key, final List<Commentaire> data) {
 		final File cacheFile = new File(context.getCacheDir(), key + ".timeline");
 		final CommentaireController controller = new CommentaireController();
 		try {
 			final String json = controller.toJson(data);
 			FileUtils.writeStringToFile(cacheFile, json, "UTF-8");
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			BugSenseHandler.sendExceptionMessage("Erreur lors de l'écriture du cache timeline.", null, e);
 		}
 	}
 
-	private String genKey(String codeLigne, String codeSens, String codeArret) {
+	private String genKey(final String codeLigne, final String codeSens, final String codeArret) {
 		return codeLigne + codeSens + codeArret;
 	}
 }

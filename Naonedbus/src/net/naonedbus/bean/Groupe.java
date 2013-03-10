@@ -10,7 +10,7 @@ public class Groupe {
 		return mId;
 	}
 
-	public void setId(int id) {
+	public void setId(final int id) {
 		mId = id;
 	}
 
@@ -18,7 +18,7 @@ public class Groupe {
 		return mNom;
 	}
 
-	public void setNom(String nom) {
+	public void setNom(final String nom) {
 		mNom = nom;
 	}
 
@@ -26,8 +26,13 @@ public class Groupe {
 		return mVisibility;
 	}
 
-	public void setVisibility(int visibility) {
+	public void setVisibility(final int visibility) {
 		mVisibility = visibility;
+	}
+
+	@Override
+	public String toString() {
+		return mId + ":" + mNom;
 	}
 
 }

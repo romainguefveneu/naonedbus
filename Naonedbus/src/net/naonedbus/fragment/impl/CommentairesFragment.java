@@ -51,7 +51,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		if (DBG)
@@ -59,7 +59,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		if (DBG)
@@ -75,7 +75,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateOptionsMenu");
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
@@ -87,7 +87,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_refresh:
 			refreshContent();
@@ -97,7 +97,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		final Commentaire commentaire = (Commentaire) l.getItemAtPosition(position);
 		final Intent intent = new Intent(getActivity(), CommentaireDetailActivity.class);
 		intent.putExtra(CommentaireDetailActivity.PARAM_COMMENTAIRE, (Parcelable) commentaire);
@@ -131,11 +131,10 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		if (DBG)
 			Log.d(LOG_TAG, "onPostExecute");
 		hideResfrehMenuLoader();
-		showContent();
 	}
 
 	@Override
-	public Loader<AsyncResult<ListAdapter>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int arg0, final Bundle arg1) {
 		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
 			@Override
 			public AsyncResult<ListAdapter> loadInBackground() {
@@ -157,17 +156,17 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 
 		try {
 			final CommentaireManager manager = CommentaireManager.getInstance();
-			final List<Commentaire> infoTraficLignes = manager.getFromWeb(context, mCodeLigne, mCodeSens, mCodeArret,
+			final List<Commentaire> commentaires = manager.getFromWeb(context, mCodeLigne, mCodeSens, mCodeArret,
 					new DateTime(0));
 
 			final CommentaireFomatter fomatter = new CommentaireFomatter(context);
 			final CommentaireArrayAdapter adapter = new CommentaireArrayAdapter(context);
-			if (infoTraficLignes != null) {
-				fomatter.appendToAdapter(adapter, infoTraficLignes);
+			if (commentaires != null) {
+				fomatter.appendToAdapter(adapter, commentaires);
 			}
 			adapter.setIndexer(new CommentaireIndexer());
 			result.setResult(adapter);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			result.setException(e);
 		}
 
@@ -191,11 +190,12 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			super.onPreExecute();
 			if (DBG)
 				Log.d(LOG_TAG, "Chargement du cache...");
+			showLoader();
 			showResfrehMenuLoader();
 		}
 
 		@Override
-		protected CommentaireArrayAdapter doInBackground(String... codes) {
+		protected CommentaireArrayAdapter doInBackground(final String... codes) {
 			final CommentaireManager manager = CommentaireManager.getInstance();
 			final Context context = getActivity();
 			final String codeLigne = codes.length > PARAM_CODE_LIGNE ? codes[PARAM_CODE_LIGNE] : null;
@@ -216,9 +216,9 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			return adapter;
 		}
 
-		private void setTweetId(List<Commentaire> commentaires) {
+		private void setTweetId(final List<Commentaire> commentaires) {
 			int id = -1;
-			for (Commentaire commentaire : commentaires) {
+			for (final Commentaire commentaire : commentaires) {
 				if (commentaire.getId() == null) {
 					commentaire.setId(id--);
 				}
@@ -226,7 +226,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		}
 
 		@Override
-		protected void onPostExecute(CommentaireArrayAdapter result) {
+		protected void onPostExecute(final CommentaireArrayAdapter result) {
 			super.onPostExecute(result);
 
 			if (DBG)
@@ -239,6 +239,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 
 			// Démarrer la récupérer depuis le web
 			refreshContent();
+
 		}
 	}
 

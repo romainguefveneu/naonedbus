@@ -15,7 +15,7 @@ public class FavoriArrayIndexer extends ArraySectionIndexer<Favori> {
 	}
 
 	@Override
-	protected void prepareSection(Favori item) {
+	protected void prepareSection(final Favori item) {
 	}
 
 	@Override

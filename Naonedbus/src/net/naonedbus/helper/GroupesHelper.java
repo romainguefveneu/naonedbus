@@ -17,15 +17,15 @@ import android.view.WindowManager;
 
 public class GroupesHelper {
 
-	private Context mContext;
-	private GroupeManager mGroupeManager;
+	private final Context mContext;
+	private final GroupeManager mGroupeManager;
 
 	public GroupesHelper(final Context context) {
 		mContext = context;
 		mGroupeManager = GroupeManager.getInstance();
 	}
 
-	public void linkFavori(final List<Integer> idFavoris) {
+	public void linkFavori(final List<Integer> idFavoris, final Runnable callback) {
 		final Cursor c = mGroupeManager.getCursor(mContext.getContentResolver(), idFavoris);
 		final boolean[] checked = new boolean[c.getCount()];
 
@@ -42,7 +42,7 @@ public class GroupesHelper {
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
+			public void onClick(final DialogInterface dialog, final int which) {
 				Groupe groupe;
 				for (int i = 0; i < checked.length; i++) {
 					c.moveToPosition(i);
@@ -50,22 +50,25 @@ public class GroupesHelper {
 
 					// TODO : Bulk insert / delete
 					if (checked[i]) {
-						for (Integer idFavori : idFavoris) {
+						for (final Integer idFavori : idFavoris) {
 							mGroupeManager.addFavoriToGroup(mContext.getContentResolver(), groupe.getId(), idFavori);
 						}
 					} else {
-						for (Integer idFavori : idFavoris) {
+						for (final Integer idFavori : idFavoris) {
 							mGroupeManager.removeFavoriFromGroup(mContext.getContentResolver(), groupe.getId(),
 									idFavori);
 						}
 					}
 				}
+
+				if (callback != null)
+					callback.run();
 			}
 		});
 
 		builder.setMultiChoiceItems(c, FavorisGroupesTable.LINKED, GroupeTable.NOM, new OnMultiChoiceClickListener() {
 			@Override
-			public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+			public void onClick(final DialogInterface dialog, final int which, final boolean isChecked) {
 				checked[which] = isChecked;
 			}
 		});

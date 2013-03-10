@@ -55,7 +55,7 @@ public class FavoriController extends RestController<Favori> {
 		return post(urlBuilder);
 	}
 
-	public List<Favori> get(final String cle) throws IOException {
+	public List<Favori> get(final String cle) throws IOException, JSONException {
 		final UrlBuilder url = new UrlBuilder(RestConfiguration.PATH, PATH);
 		url.addQueryParameter("identifiant", cle);
 

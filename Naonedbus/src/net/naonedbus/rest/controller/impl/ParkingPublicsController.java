@@ -5,12 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.rest.controller.NodRestController;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +16,7 @@ import android.util.SparseArray;
 
 public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 	private static final String API = "getDisponibiliteParkingsPublics";
-	private SparseArray<ParkingPublicStatut> statuts;
+	private final SparseArray<ParkingPublicStatut> statuts;
 
 	private static final String TAG_ID = "IdObj";
 	private static final String TAG_NOM = "Grp_nom";
@@ -32,20 +30,20 @@ public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 		super("opendata", "answer", "data", "Groupes_Parking", "Groupe_Parking");
 
 		statuts = new SparseArray<ParkingPublicStatut>();
-		for (ParkingPublicStatut statut : ParkingPublicStatut.values()) {
+		for (final ParkingPublicStatut statut : ParkingPublicStatut.values()) {
 			statuts.put(statut.getValue(), statut);
 		}
 	}
 
-	public List<ParkingPublic> getAll() throws IOException {
+	public List<ParkingPublic> getAll() throws IOException, JSONException {
 		final List<ParkingPublic> parkings = super.getAll(API);
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-		for (ParkingPublic parkingPublic : parkings) {
+		for (final ParkingPublic parkingPublic : parkings) {
 			parkingPublic.setStatut(statuts.get(parkingPublic.getStatutValue()));
 			try {
 				parkingPublic.setUpdateDate(dateFormat.parse(parkingPublic.getHorodatage()));
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				// Tant pis
 			}
 		}
@@ -54,7 +52,7 @@ public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 	}
 
 	@Override
-	protected ParkingPublic parseJsonObject(JSONObject object) throws JSONException {
+	protected ParkingPublic parseJsonObject(final JSONObject object) throws JSONException {
 		final ParkingPublic parking = new ParkingPublic();
 		parking.setId(object.getInt(TAG_ID));
 		parking.setNom(object.getString(TAG_NOM));

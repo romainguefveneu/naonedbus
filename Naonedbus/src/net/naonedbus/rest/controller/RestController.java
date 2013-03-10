@@ -65,7 +65,7 @@ public abstract class RestController<T> {
 	 */
 	private static int HTTP_ERROR_CODE_START = 400;
 
-	private String[] mRootNodes;
+	private final String[] mRootNodes;
 
 	public RestController(final String... rootNode) {
 		mRootNodes = rootNode;
@@ -82,7 +82,7 @@ public abstract class RestController<T> {
 		T result = null;
 		try {
 			result = parseJsonObject(new JSONObject(source));
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			if (DBG)
 				Log.e(getClass().getSimpleName(), e.getMessage());
 		}
@@ -97,20 +97,17 @@ public abstract class RestController<T> {
 	 *            La chaîne Json
 	 * @return L'objet correspondant
 	 */
-	public List<T> parseJsonArray(final String source) {
+	public List<T> parseJsonArray(final String source) throws JSONException {
 		List<T> result = null;
 
-		try {
-			final JSONTokener tokener = new JSONTokener(source);
-			final Object object = tokener.nextValue();
-			if (object instanceof JSONArray) {
-				result = parseJsonArray(new JSONArray(source));
-			} else if (object instanceof JSONObject) {
-				result = parseJsonArray(new JSONObject(source));
-			}
-		} catch (JSONException e) {
-			if (DBG)
-				Log.e(getClass().getSimpleName(), e.getMessage(), e);
+		final JSONTokener tokener = new JSONTokener(source);
+		final Object object = tokener.nextValue();
+		if (object instanceof JSONArray) {
+			result = parseJsonArray(new JSONArray(source));
+		} else if (object instanceof JSONObject) {
+			result = parseJsonArray(new JSONObject(source));
+		} else {
+			throw new JSONException("L'élément n'est pas flux JSON valide.");
 		}
 
 		return result;
@@ -124,7 +121,7 @@ public abstract class RestController<T> {
 	 * @return
 	 * @throws IOException
 	 */
-	protected T parseJsonObject(URL url) throws IOException {
+	protected T parseJsonObject(final URL url) throws IOException {
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);
@@ -145,7 +142,7 @@ public abstract class RestController<T> {
 	 * @return
 	 * @throws IOException
 	 */
-	protected List<T> parseJson(URL url) throws IOException {
+	protected List<T> parseJson(final URL url) throws IOException, JSONException {
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);
@@ -160,19 +157,19 @@ public abstract class RestController<T> {
 
 	protected JSONArray getRootNode(final JSONObject json) throws JSONException {
 		JSONObject object = json;
-		for (String node : mRootNodes) {
+		for (final String node : mRootNodes) {
 			if (object.get(node) instanceof JSONObject)
 				object = object.getJSONObject(node);
 		}
-		return (JSONArray) object.getJSONArray(mRootNodes[mRootNodes.length - 1]);
+		return object.getJSONArray(mRootNodes[mRootNodes.length - 1]);
 	}
 
-	protected List<T> parseJsonArray(JSONObject json) throws JSONException {
+	protected List<T> parseJsonArray(final JSONObject json) throws JSONException {
 		final JSONArray jsonArray = getRootNode(json);
 		return parseJsonArray(jsonArray);
 	}
 
-	protected List<T> parseJsonArray(JSONArray jsonArray) throws JSONException {
+	protected List<T> parseJsonArray(final JSONArray jsonArray) throws JSONException {
 		final List<T> result = new ArrayList<T>();
 		JSONObject c;
 
@@ -184,14 +181,14 @@ public abstract class RestController<T> {
 		return result;
 	}
 
-	public String toJson(List<T> items) {
+	public String toJson(final List<T> items) {
 		final JSONArray list = new JSONArray();
 		JSONObject object;
 		for (final T item : items) {
 			try {
 				object = toJson(item);
 				list.put(object);
-			} catch (JSONException e) {
+			} catch (final JSONException e) {
 				if (DBG)
 					Log.e(getClass().getSimpleName(), e.getMessage());
 			}
@@ -220,7 +217,7 @@ public abstract class RestController<T> {
 	/**
 	 * @see RestController#post(URL)
 	 */
-	protected String post(UrlBuilder url) throws IOException, HttpException {
+	protected String post(final UrlBuilder url) throws IOException, HttpException {
 		return post(url.getUrl());
 	}
 
@@ -232,7 +229,7 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 * @throws HttpException
 	 */
-	protected String post(URL url) throws IOException, HttpException {
+	protected String post(final URL url) throws IOException, HttpException {
 
 		final HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT);
@@ -259,7 +256,7 @@ public abstract class RestController<T> {
 	 * @throws IllegalStateException
 	 * @throws IOException
 	 */
-	private String readResponse(HttpEntity entity) throws IllegalStateException, IOException {
+	private String readResponse(final HttpEntity entity) throws IllegalStateException, IOException {
 		final StringBuilder builder = new StringBuilder();
 		String line;
 

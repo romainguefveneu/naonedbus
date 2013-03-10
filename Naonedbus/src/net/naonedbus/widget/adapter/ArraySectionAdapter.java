@@ -48,29 +48,29 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 
 	private int mLayoutId;
 
-	public ArraySectionAdapter(Context context, int layoutId) {
+	public ArraySectionAdapter(final Context context, final int layoutId) {
 		super(context, layoutId);
 		init(context, layoutId);
 	}
 
-	public ArraySectionAdapter(Context context, int layoutId, List<T> objects) {
+	public ArraySectionAdapter(final Context context, final int layoutId, final List<T> objects) {
 		super(context, layoutId, objects);
 		init(context, layoutId);
 	}
 
-	private void init(Context context, int layoutId) {
+	private void init(final Context context, final int layoutId) {
 		mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mLayoutId = layoutId;
 	}
 
-	public void setIndexer(ArraySectionIndexer<T> indexer) {
+	public void setIndexer(final ArraySectionIndexer<T> indexer) {
 		this.mIndexer = indexer;
 		if (indexer != null) {
 			this.mIndexer.buildIndex(getContext(), this);
 		}
 	}
 
-	public View newView(Context context, int position) {
+	public View newView(final Context context, final int position) {
 		final View v = mLayoutInflater.inflate(mLayoutId, null);
 		bindViewHolder(v);
 		return v;
@@ -88,7 +88,7 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 	 * @see android.widget.ListAdapter#getView(int, View, ViewGroup)
 	 */
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		final View v;
 		if (convertView == null) {
 			v = newView(getContext(), position);
@@ -122,7 +122,7 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 	 * @param itemView
 	 * @param position
 	 */
-	protected void bindSectionHeader(View itemView, int position) {
+	protected void bindSectionHeader(final View itemView, final int position) {
 		final View headerView = itemView.findViewById(R.id.headerView);
 
 		if (headerView != null) {
@@ -148,7 +148,7 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 
 	}
 
-	public int getPositionForSection(int sectionIndex) {
+	public int getPositionForSection(final int sectionIndex) {
 		if (mIndexer == null) {
 			return -1;
 		}
@@ -157,7 +157,7 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 	}
 
 	@Override
-	public int getSectionForPosition(int position) {
+	public int getSectionForPosition(final int position) {
 		if (mIndexer == null) {
 			return -1;
 		}
@@ -174,18 +174,19 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 	}
 
 	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+	public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+			final int totalItemCount) {
 		if (view instanceof PinnedHeaderListView) {
 			((PinnedHeaderListView) view).configureHeaderView(firstVisibleItem);
 		}
 	}
 
 	@Override
-	public void onScrollStateChanged(AbsListView arg0, int arg1) {
+	public void onScrollStateChanged(final AbsListView arg0, final int arg1) {
 	}
 
 	@Override
-	public int getPinnedHeaderState(int position) {
+	public int getPinnedHeaderState(final int position) {
 		if (mIndexer == null || getCount() == 0) {
 			return PINNED_HEADER_GONE;
 		}
@@ -196,12 +197,12 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 
 		// The header should get pushed up if the top item shown
 		// is the last item in a section for a particular letter.
-		int section = getSectionForPosition(position);
+		final int section = getSectionForPosition(position);
 		if (section == -1) {
 			return PINNED_HEADER_GONE;
 		}
 
-		int nextSectionPosition = getPositionForSection(section + 1);
+		final int nextSectionPosition = getPositionForSection(section + 1);
 		if (nextSectionPosition != -1 && position == nextSectionPosition - 1) {
 			return PINNED_HEADER_PUSHED_UP;
 		}
@@ -210,7 +211,7 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 	}
 
 	@Override
-	public void configurePinnedHeader(View v, int position) {
+	public void configurePinnedHeader(final View v, final int position) {
 		final TextView header = (TextView) v.findViewById(R.id.headerTitle);
 		final int section = getSectionForPosition(position);
 		final String title = (String) getSections()[section];

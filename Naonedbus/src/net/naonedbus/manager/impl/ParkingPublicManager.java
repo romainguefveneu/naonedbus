@@ -31,6 +31,7 @@ import net.naonedbus.manager.Unschedulable;
 import net.naonedbus.rest.controller.impl.ParkingPublicsController;
 
 import org.joda.time.DateTime;
+import org.json.JSONException;
 
 import android.content.ContentResolver;
 import android.os.Handler;
@@ -51,8 +52,8 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	private DateTime dateLimit;
 
 	private Thread parkingsThread;
-	private Stack<ParkingPublicTaskInfo> parkingsTasks;
-	private Object lock = new Object();
+	private final Stack<ParkingPublicTaskInfo> parkingsTasks;
+	private final Object lock = new Object();
 
 	public static ParkingPublicManager getInstance() {
 		if (instance == null) {
@@ -71,8 +72,9 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 * Charger les données et gérer le cache.
 	 * 
 	 * @throws IOException
+	 * @throws JSONException
 	 */
-	private void init(final ContentResolver contentResolver) throws IOException {
+	private void init(final ContentResolver contentResolver) throws IOException, JSONException {
 		final DateTime now = new DateTime();
 
 		if (this.cache.isEmpty() || now.isAfter(this.dateLimit)) {
@@ -89,8 +91,9 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 * 
 	 * @return La liste des parkings publics
 	 * @throws IOException
+	 * @throws JSONException
 	 */
-	public List<ParkingPublic> getAll(final ContentResolver contentResolver) throws IOException {
+	public List<ParkingPublic> getAll(final ContentResolver contentResolver) throws IOException, JSONException {
 		init(contentResolver);
 		return this.cache;
 	}
@@ -102,8 +105,8 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 *            L'id du parking.
 	 * @return Le parking s'il est disponible, {@code null} sinon.
 	 */
-	public ParkingPublic getFromCache(int id) {
-		for (ParkingPublic parkingPublic : cache) {
+	public ParkingPublic getFromCache(final int id) {
+		for (final ParkingPublic parkingPublic : cache) {
 			if (parkingPublic.getId().equals(id)) {
 				return parkingPublic;
 			}
@@ -184,7 +187,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	}
 
 	@Override
-	public void unschedule(ParkingPublicTaskInfo task) {
+	public void unschedule(final ParkingPublicTaskInfo task) {
 		Log.d(LOG_TAG, "unschedule " + task);
 		parkingsTasks.remove(task);
 	}
@@ -192,7 +195,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	/**
 	 * Tâche de chargement d'un parking de manière asynchrone.
 	 */
-	private Runnable parkingsLoader = new Runnable() {
+	private final Runnable parkingsLoader = new Runnable() {
 
 		@Override
 		public void run() {
@@ -209,7 +212,9 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 				try {
 					init(task.getContentResolver());
 					parking = getFromCache(task.getTag());
-				} catch (IOException e) {
+				} catch (final IOException e) {
+					parking = null;
+				} catch (final JSONException e) {
 					parking = null;
 				}
 
@@ -222,7 +227,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 					synchronized (lock) {
 						try {
 							lock.wait(2000);
-						} catch (InterruptedException e) {
+						} catch (final InterruptedException e) {
 						}
 					}
 				}

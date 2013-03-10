@@ -98,17 +98,20 @@
     <string name="action_groupes_manage">Gérer les groupes</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
-    <string name="error_title_webservice">Le service Tan est indisponible</string>
+    <string name="error_title_webservice_tan">Le service Tan est indisponible</string>
+    <string name="error_title_webservice">Le service est indisponible</string>
     <string name="error_title_network">Une erreur réseau est survenue</string>
     <string name="error_title_empty">Aucune donnée n\'est disponible</string>
     <string name="error_title_empty_favori">Aucun favori</string>
     <string name="error_title_empty_groupe">Aucun groupe</string>
+    <string name="error_title_selected_groupe">Aucun groupe sélectionné</string>
     <string name="error_summary">Merci de réessayer !</string>
     <string name="error_summary_network">Vérifiez votre connexion et réessayez</string>
     <string name="error_summary_webservice">Merci de réessayer dans quelques instants</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
     <string name="error_summary_empty_favori">Glissez vers l\'écran de gauche pour naviguer entre les lignes.\n\n&#8592;</string>
     <string name="error_summary_empty_groupe">Ajouter vos groupes en cliquant sur l\'icône “+”</string>
+    <string name="error_summary_selected_groupe">Vous n\'avez sélectionné aucun groupe à afficher.</string>
     <string name="error_summary_empty_arrets_favoris">Vous avez sélectionné le filtre \"Arrêts favoris\" mais aucun favori n\'est défini pour ce sens.</string>
     <!-- Accueil -->
     <string name="title_fragment_lignes">Lignes</string>
@@ -227,7 +230,8 @@
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
-    <string name="msg_error_export_favoris_key">Cette clé n\'est pas valide ou votre connexion a quelques problème.\nVous pouvez retenter votre chance dans quelques instants.</string>
+    <string name="msg_error_title_favoris_key">Erreur lors de l\'import</string>
+    <string name="msg_error_content_favoris_key">Cette clé n\'est pas valide ou votre connexion a quelques problèmes.\nVous pouvez retenter votre chance dans quelques instants.</string>
     <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <!-- Warning -->
     <string name="msg_warning_send_comment">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>

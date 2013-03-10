@@ -8,7 +8,7 @@ package com.espian.showcaseview;
 
 public final class R {
 	public static final class id {
-		public static final int showcase_button = 0x7f070007;
+		public static final int showcase_button = 0x7f080007;
 	}
 	public static final class style {
 		public static final int ShowcaseTitleText = 0x7f0c0006;
@@ -19,7 +19,7 @@ public final class R {
 		public static final int app_name = 0x7f0d0000;
 	}
 	public static final class layout {
-		public static final int main = 0x7f030056;
+		public static final int main = 0x7f030057;
 	}
 	public static final class styleable {
 		public static final int ShowcaseView_backgroundColor = 0;

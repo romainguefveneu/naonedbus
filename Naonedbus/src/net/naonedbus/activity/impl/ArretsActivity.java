@@ -43,7 +43,7 @@ public class ArretsActivity extends OneFragmentActivity {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -78,14 +78,14 @@ public class ArretsActivity extends OneFragmentActivity {
 		sensTitle.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int location, long arg3) {
+			public void onItemSelected(final AdapterView<?> arg0, final View arg1, final int location, final long arg3) {
 				final Sens sens = sensList.get(location);
 				mOnChangeSens.onChangeSens(sens);
 				mCurrentSens = sens;
 			}
 
 			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
+			public void onNothingSelected(final AdapterView<?> arg0) {
 
 			}
 		});
@@ -98,7 +98,7 @@ public class ArretsActivity extends OneFragmentActivity {
 
 		sensTitle.setOnTouchListener(new OnTouchListener() {
 			@Override
-			public boolean onTouch(View v, MotionEvent event) {
+			public boolean onTouch(final View v, final MotionEvent event) {
 				sv.hide();
 				return false;
 			}
@@ -106,7 +106,7 @@ public class ArretsActivity extends OneFragmentActivity {
 	}
 
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
+	protected void onPostCreate(final Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mOnChangeSens = (OnChangeSens) getCurrentFragment();
 	}
@@ -118,7 +118,7 @@ public class ArretsActivity extends OneFragmentActivity {
 		super.onStop();
 	}
 
-	private int getSensPosition(List<Sens> sensList, int id) {
+	private int getSensPosition(final List<Sens> sensList, final int id) {
 		Sens sens;
 		for (int i = 0; i < sensList.size(); i++) {
 			sens = sensList.get(i);

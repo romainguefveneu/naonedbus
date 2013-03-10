@@ -27,7 +27,6 @@ public class MainActivity extends SlidingMenuActivity {
 			ProximiteFragment.class };
 
 	private boolean mHasSetup;
-	private boolean mHasBeenUpdated;
 	private boolean mContentLoaded;
 	private boolean mIsFrontActivity;
 	private boolean mFirstLaunch;

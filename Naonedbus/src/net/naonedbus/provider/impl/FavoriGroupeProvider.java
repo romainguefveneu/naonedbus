@@ -91,7 +91,8 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs, final String sortOrder) {
+	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs,
+			final String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(FavorisGroupesTable.TABLE_NAME);
 
@@ -141,9 +142,12 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 				+ FavorisGroupesTable.ID_GROUPE + "=" + GroupeTable.TABLE_NAME + "." + GroupeTable._ID + " AND fgt."
 				+ FavorisGroupesTable.ID_FAVORI + " IN (%s)";
 
+		final String ORDER = " ORDER BY " + GroupeTable.NOM;
+
 		public static final String SELECT = "SELECT " + GroupeTable._ID + ", " + GroupeTable.NOM + ", "
 				+ GroupeTable.VISIBILITE + ", (" + GROUPE_COUNT + ") as " + FavorisGroupesTable.LINKED + " FROM "
-				+ GroupeTable.TABLE_NAME;
+				+ GroupeTable.TABLE_NAME + ORDER;
+
 	}
 
 }

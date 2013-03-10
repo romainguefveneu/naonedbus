@@ -150,7 +150,7 @@ public class FavorisHelper {
 	}
 
 	private void showErrorKeyNoValid() {
-		InfoDialogUtils.show(mContext, R.string.msg_error_title, R.string.msg_error_export_favoris_key);
+		InfoDialogUtils.show(mContext, R.string.msg_error_title_favoris_key, R.string.msg_error_content_favoris_key);
 	}
 
 	private void onImport(final String id) {

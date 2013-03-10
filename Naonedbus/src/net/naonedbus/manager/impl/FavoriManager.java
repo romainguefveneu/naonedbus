@@ -29,6 +29,9 @@ import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.FavoriProvider;
 import net.naonedbus.provider.table.FavoriTable;
 import net.naonedbus.rest.controller.impl.FavoriController;
+
+import org.json.JSONException;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -185,8 +188,9 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * 
 	 * @param contentResolver
 	 * @param json
+	 * @throws JSONException 
 	 */
-	public void fromJson(final ContentResolver contentResolver, final String json) {
+	public void fromJson(final ContentResolver contentResolver, final String json) throws JSONException {
 		final FavoriController controller = new FavoriController();
 		final List<Favori> favoris = controller.parseJsonArray(json);
 		fromList(contentResolver, favoris);
@@ -197,8 +201,9 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * 
 	 * @param contentResolver
 	 * @param json
+	 * @throws JSONException 
 	 */
-	public void fromJson(final SQLiteDatabase db, final String json) {
+	public void fromJson(final SQLiteDatabase db, final String json) throws JSONException {
 		if (DBG)
 			Log.d(LOG_TAG, "fromJson : " + json);
 
@@ -285,10 +290,11 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * Importer les favoris depuis le cloud
 	 * 
 	 * @throws IOException
+	 * @throws JSONException 
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */
-	public void importFavoris(final ContentResolver contentResolver, final String id) throws IOException {
+	public void importFavoris(final ContentResolver contentResolver, final String id) throws IOException, JSONException {
 		final FavoriController controller = new FavoriController();
 		final List<Favori> favoris = controller.get(id);
 

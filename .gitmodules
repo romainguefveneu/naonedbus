@@ -19,3 +19,6 @@
 [submodule "android-menudrawer"]
 	path = android-menudrawer
 	url = https://github.com/SimonVT/android-menudrawer.git
+[submodule "Android-AppMsg"]
+	path = Android-AppMsg
+	url = https://github.com/johnkil/Android-AppMsg.git

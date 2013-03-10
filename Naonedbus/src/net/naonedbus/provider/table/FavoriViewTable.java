@@ -24,6 +24,8 @@ public interface FavoriViewTable extends BaseColumns {
 	public static final String COULEUR = "ligneCouleur";
 	public static final String LETTRE = "ligneLettre";
 	public static final String TYPE = "ligneType";
+	
+	public static final String NEXT_HORAIRE = "nextHoraire";
 
 	//@formatter:off
 	public static final String ORDER = 

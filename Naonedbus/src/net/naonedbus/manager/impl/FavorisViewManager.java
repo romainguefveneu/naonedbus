@@ -61,13 +61,22 @@ public class FavorisViewManager extends SQLiteManager<Favori> {
 		item.normalizedNom = c.getString(c.getColumnIndex(FavoriViewTable.NOM_NORMALIZED));
 		item.latitude = c.getFloat(c.getColumnIndex(FavoriViewTable.LATITUDE));
 		item.longitude = c.getFloat(c.getColumnIndex(FavoriViewTable.LONGITUDE));
+		item.nomGroupe = c.getString(c.getColumnIndex(FavoriViewTable.NOM_GROUPE));
 
-		final int index = c.getColumnIndex(FavoriViewTable.ID_GROUPE);
-		if (!c.isNull(index)) {
-			item.section = c.getInt(index);
+		int index = c.getColumnIndex(FavoriViewTable.NEXT_HORAIRE);
+		if (c.isNull(index)) {
+			item.nextHoraire = null;
 		} else {
-			item.section = -1;
+			item.nextHoraire = c.getInt(index);
 		}
+
+		index = c.getColumnIndex(FavoriViewTable.ID_GROUPE);
+		if (!c.isNull(index)) {
+			item.idGroupe = c.getInt(index);
+		} else {
+			item.idGroupe = -1;
+		}
+		item.section = item.idGroupe;
 
 		return item;
 	}

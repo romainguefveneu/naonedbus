@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
 
 import org.joda.time.DateTime;
+import org.json.JSONException;
 
 import android.content.Context;
 import android.database.DataSetObserver;
@@ -34,15 +36,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.devspark.appmsg.AppMsg;
 
 public abstract class CustomListFragment extends SherlockListFragment implements CustomFragmentActions,
 		LoaderCallbacks<AsyncResult<ListAdapter>> {
+
+	private static enum State {
+		CONTENT, LOADER, MESSAGE;
+	}
 
 	private static final int LOADER_INIT = 0;
 	private static final int LOADER_REFRESH = 1;
 
 	private static final String STATE_POSITION = "position";
 	private static final String STATE_TOP = "top";
+
+	private static final String LOG_TAG = "CustomListFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	int mMessageEmptyTitleId = R.string.error_title_empty;
 	int mMessageEmptySummaryId = R.string.error_summary_empty;
@@ -56,7 +66,9 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
 
-	private List<OnScrollListener> mOnScrollListeners = new ArrayList<AbsListView.OnScrollListener>();
+	private State mCurrentState;
+
+	private final List<OnScrollListener> mOnScrollListeners = new ArrayList<AbsListView.OnScrollListener>();
 
 	/**
 	 * Gestion du refraichissement
@@ -79,15 +91,25 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
+
+		Log.d(LOG_TAG, "onActivityCreated " + mCurrentState);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public void onStop() {
+		mCurrentState = null;
+		super.onStop();
+	}
+
+	@Override
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (container == null) // must put this in
 			return null;
+
+		Log.d(LOG_TAG, "onCreateView " + mCurrentState);
 
 		if (savedInstanceState != null) {
 			mListViewStatePosition = savedInstanceState.getInt(STATE_POSITION, -1);
@@ -109,30 +131,31 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(final Bundle outState) {
 		if (isAdded()) {
 			final View v = getListView().getChildAt(0);
-			int top = (v == null) ? 0 : v.getTop();
+			final int top = (v == null) ? 0 : v.getTop();
 			outState.putInt(STATE_POSITION, getListView().getFirstVisiblePosition());
 			outState.putInt(STATE_TOP, top);
 		}
 		super.onSaveInstanceState(outState);
 	}
 
-	protected void bindView(View view, Bundle savedInstanceState) {
+	protected void bindView(final View view, final Bundle savedInstanceState) {
 
 	}
 
-	private void setupListView(LayoutInflater inflater, View view) {
+	private void setupListView(final LayoutInflater inflater, final View view) {
 		final ListView listView = (ListView) mFragmentView.findViewById(android.R.id.list);
 
 		listView.setOnScrollListener(new OnScrollListener() {
 			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			public void onScrollStateChanged(final AbsListView view, final int scrollState) {
 			}
 
 			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+					final int totalItemCount) {
 				triggerOnScrollListeners(listView, firstVisibleItem, visibleItemCount, totalItemCount);
 			}
 		});
@@ -143,12 +166,13 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			addOnScrollListener(new OnScrollListener() {
 
 				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
+				public void onScrollStateChanged(final AbsListView view, final int scrollState) {
 
 				}
 
 				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+						final int totalItemCount) {
 					final Adapter adapter = getListAdapter();
 					if (adapter != null && adapter instanceof OnScrollListener) {
 						final OnScrollListener sectionAdapter = (OnScrollListener) adapter;
@@ -159,6 +183,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		}
 	}
 
+	@Override
 	public int getTitleId() {
 		return mTitleId;
 	}
@@ -173,13 +198,13 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		getLoaderManager().restartLoader(LOADER_REFRESH, null, this);
 	}
 
-	protected void addOnScrollListener(OnScrollListener onScrollListener) {
+	protected void addOnScrollListener(final OnScrollListener onScrollListener) {
 		mOnScrollListeners.add(onScrollListener);
 	}
 
-	private void triggerOnScrollListeners(AbsListView view, int firstVisibleItem, int visibleItemCount,
-			int totalItemCount) {
-		for (OnScrollListener l : mOnScrollListeners) {
+	private void triggerOnScrollListeners(final AbsListView view, final int firstVisibleItem,
+			final int visibleItemCount, final int totalItemCount) {
+		for (final OnScrollListener l : mOnScrollListeners) {
 			l.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
 		}
 	}
@@ -194,7 +219,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param drawableId
 	 *            L'identifiant du drawable.
 	 */
-	protected void setEmptyMessageValues(int titleId, int summaryId, int drawableId) {
+	protected void setEmptyMessageValues(final int titleId, final int summaryId, final int drawableId) {
 		this.mMessageEmptyTitleId = titleId;
 		this.mMessageEmptySummaryId = summaryId;
 		this.mMessageEmptyDrawableId = drawableId;
@@ -204,6 +229,14 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * Afficher l'indicateur de chargement.
 	 */
 	protected void showLoader() {
+		if (DBG)
+			Log.d(LOG_TAG, "showLoader");
+
+		if (State.LOADER == mCurrentState)
+			return;
+
+		mCurrentState = State.LOADER;
+
 		mFragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
 		if (mFragmentView.findViewById(R.id.fragmentMessage) != null) {
 			mFragmentView.findViewById(R.id.fragmentMessage).setVisibility(View.GONE);
@@ -215,6 +248,14 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * Afficher le contenu.
 	 */
 	protected void showContent() {
+		if (State.CONTENT == mCurrentState)
+			return;
+
+		if (DBG)
+			Log.d(LOG_TAG, "showContent");
+
+		mCurrentState = State.CONTENT;
+
 		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
 		if (mFragmentView.findViewById(R.id.fragmentMessage) != null) {
@@ -226,6 +267,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			content.setVisibility(View.VISIBLE);
 			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
 		}
+
 	}
 
 	/**
@@ -236,7 +278,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param descriptionRes
 	 *            L'identifiant de la description.
 	 */
-	protected void showError(int titleRes, int descriptionRes) {
+	protected void showError(final int titleRes, final int descriptionRes) {
 		showMessage(getString(titleRes), getString(descriptionRes), R.drawable.warning);
 	}
 
@@ -248,7 +290,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param description
 	 *            La description.
 	 */
-	protected void showError(String title, String description) {
+	protected void showError(final String title, final String description) {
 		showMessage(title, description, R.drawable.warning);
 	}
 
@@ -262,7 +304,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param drawableRes
 	 *            L'identifiant du drawable.
 	 */
-	protected void showMessage(int titleRes, int descriptionRes, int drawableRes) {
+	protected void showMessage(final int titleRes, final int descriptionRes, final int drawableRes) {
 		showMessage(getString(titleRes), (descriptionRes != 0) ? getString(descriptionRes) : null, drawableRes);
 	}
 
@@ -276,7 +318,15 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param drawableRes
 	 *            L'identifiant du symbole.
 	 */
-	protected void showMessage(String title, String description, int drawableRes) {
+	protected void showMessage(final String title, final String description, final int drawableRes) {
+		if (DBG)
+			Log.d(LOG_TAG, "showMessage " + title + "\t" + description + "\t" + drawableRes);
+
+		if (State.MESSAGE == mCurrentState)
+			return;
+
+		mCurrentState = State.MESSAGE;
+
 		mFragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
 		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
@@ -313,7 +363,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param onClickListener
 	 *            Son action.
 	 */
-	protected void setMessageButton(int title, OnClickListener onClickListener) {
+	protected void setMessageButton(final int title, final OnClickListener onClickListener) {
 		setMessageButton(getString(title), onClickListener);
 	}
 
@@ -325,7 +375,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param onClickListener
 	 *            Son action.
 	 */
-	protected void setMessageButton(String title, OnClickListener onClickListener) {
+	protected void setMessageButton(final String title, final OnClickListener onClickListener) {
 		final View message = mFragmentView.findViewById(R.id.fragmentMessage);
 		if (message != null) {
 			final Button button = (Button) message.findViewById(android.R.id.button1);
@@ -341,7 +391,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * 
 	 * @param timeToLive
 	 */
-	protected void setTimeToLive(int timeToLive) {
+	protected void setTimeToLive(final int timeToLive) {
 		this.timeToLive = timeToLive;
 	}
 
@@ -386,7 +436,10 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	@Override
-	public Loader<AsyncResult<ListAdapter>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int arg0, final Bundle arg1) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateLoader");
+
 		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
 			@Override
 			public AsyncResult<ListAdapter> loadInBackground() {
@@ -395,14 +448,15 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		};
 
 		onPreExecute();
-		showLoader();
 		loader.forceLoad();
 
 		return loader;
 	}
 
 	@Override
-	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
+	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {
+		if (DBG)
+			Log.d(LOG_TAG, "onLoadFinished " + result);
 
 		if (result == null) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
@@ -414,9 +468,11 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (exception == null) {
 
 			final ListAdapter adapter = result.getResult();
-			if (adapter == null || adapter.getCount() == 0) {
+
+			if (adapter == null) {
 				showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			} else {
+				setListAdapter(adapter);
 
 				adapter.registerDataSetObserver(new DataSetObserver() {
 					@Override
@@ -426,33 +482,49 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 					}
 				});
 
-				setListAdapter(adapter);
+				if (adapter.getCount() > 0) {
+					if (mListViewStatePosition != -1 && isAdded()) {
+						getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
+						mListViewStatePosition = -1;
+					}
 
-				if (mListViewStatePosition != -1 && isAdded()) {
-					getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
-					mListViewStatePosition = -1;
+					showContent();
+					resetNextUpdate();
+				} else {
+					showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 				}
-
-				showContent();
-				resetNextUpdate();
 			}
 
 		} else {
-			Log.e(getClass().getSimpleName(), "Erreur de chargement.", exception);
+
+			int titleRes = R.string.error_title;
+			int messageRes = R.string.error_summary;
+			int drawableRes = R.drawable.warning;
 
 			// Erreur réseau ou interne ?
 			if (exception instanceof IOException) {
-				showMessage(R.string.error_title_network, R.string.error_summary_network, R.drawable.orage);
-			} else {
-				showError(R.string.error_title, R.string.error_summary);
+				titleRes = R.string.error_title_network;
+				messageRes = R.string.error_summary_network;
+				drawableRes = R.drawable.orage;
+			} else if (exception instanceof JSONException) {
+				titleRes = R.string.error_title_webservice;
+				messageRes = R.string.error_summary_webservice;
 			}
+
+			if (getListAdapter().isEmpty()) {
+				showMessage(titleRes, messageRes, drawableRes);
+			} else {
+				AppMsg.makeText(getActivity(), titleRes, AppMsg.STYLE_ALERT).show();
+			}
+
+			Log.e(getClass().getSimpleName(), "Erreur de chargement.", exception);
 		}
 
 		onPostExecute();
 	}
 
 	@Override
-	public void onLoaderReset(Loader<AsyncResult<ListAdapter>> arg0) {
+	public void onLoaderReset(final Loader<AsyncResult<ListAdapter>> arg0) {
 	}
 
 	/**
@@ -461,7 +533,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * 
 	 * @param adapter
 	 */
-	public void onListAdapterChange(ListAdapter adapter) {
+	public void onListAdapterChange(final ListAdapter adapter) {
 		if (adapter == null || adapter.getCount() == 0) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 		} else {

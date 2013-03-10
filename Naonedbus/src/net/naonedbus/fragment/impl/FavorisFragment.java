@@ -2,6 +2,7 @@ package net.naonedbus.fragment.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -37,6 +38,7 @@ import net.naonedbus.provider.impl.FavoriGroupeProvider;
 import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.utils.FavorisUtil;
 import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 import net.naonedbus.widget.indexer.impl.FavoriArrayIndexer;
 
@@ -76,7 +78,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.bugsense.trace.BugSenseHandler;
 
-@TargetApi(Build.VERSION_CODES.FROYO)
 public class FavorisFragment extends CustomListFragment implements CustomFragmentActions, OnItemLongClickListener,
 		MyLocationListener, ActionMode.Callback {
 
@@ -84,9 +85,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
-	private static final Integer MIN_HOUR = 60;
-	private static final Integer MIN_DURATION = 0;
-
 	private static final String PREF_GROUPES = "favoris.groupes.";
 
 	private static final int MENU_GROUP_GROUPES = 1;
@@ -118,13 +116,13 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private ActionMode mActionMode;
 	private ListView mListView;
 	private BackupManager mBackupManager;
+	private StateHelper mStateHelper;
 	private final GroupeManager mGroupeManager;
 	private final FavoriManager mFavoriManager;
 	private final FavorisViewManager mFavorisViewManager;
-	private StateHelper mStateHelper;
 	private final SharedPreferences mPreferences;
-	private List<Groupe> mGroupes;
 	private final List<Integer> mSelectedGroupes;
+	private List<Groupe> mGroupes;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
 
@@ -206,8 +204,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (DBG)
 				Log.d(LOG_TAG, "GroupesContentObserver onChange selfChange : " + selfChange);
 
-			mGroupes = mGroupeManager.getAll(getActivity().getContentResolver());
+			initGroupes();
 			getSherlockActivity().invalidateOptionsMenu();
+
+			mContentHasChanged = true;
 		};
 	};
 
@@ -218,7 +218,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (DBG)
 				Log.d(LOG_TAG, "mFavorisGroupesContentObserver onChange selfChange : " + selfChange);
 
-			refreshContent();
+			if (isVisible()) {
+				refreshContent();
+			} else {
+				mContentHasChanged = true;
+			}
+
 		};
 	};
 
@@ -261,7 +266,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
 
-		mGroupes = mGroupeManager.getAll(getActivity().getContentResolver());
 		initGroupes();
 	}
 
@@ -277,6 +281,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 		contentResolver.registerContentObserver(GroupeProvider.CONTENT_URI, true, mGroupesContentObserver);
 		contentResolver.registerContentObserver(FavoriGroupeProvider.CONTENT_URI, true, mFavorisGroupesContentObserver);
+
+		loadContent();
 	}
 
 	@Override
@@ -284,14 +290,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateView");
 		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		if (DBG)
-			Log.d(LOG_TAG, "onStart");
-		loadContent();
 	}
 
 	@Override
@@ -365,6 +363,15 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			} else {
 				mSelectedGroupes.remove((Object) item.getItemId());
 			}
+
+			if (mSelectedGroupes.isEmpty()) {
+				setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
+						R.drawable.favori);
+			} else {
+				setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
+						R.drawable.favori);
+			}
+
 			refreshContent();
 			return true;
 		}
@@ -503,12 +510,22 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private void initGroupes() {
 		boolean checked;
 
+		mGroupes = mGroupeManager.getAll(getActivity().getContentResolver());
+
+		if (DBG)
+			Log.d(LOG_TAG, "Groupes : " + Arrays.toString(mGroupes.toArray()));
+
 		mSelectedGroupes.clear();
 		for (final Groupe groupe : mGroupes) {
 			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
 			if (checked) {
 				mSelectedGroupes.add(groupe.getId());
 			}
+		}
+
+		if (mGroupes.isEmpty()) {
+			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
+					R.drawable.favori);
 		}
 	}
 
@@ -588,7 +605,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Log.d(LOG_TAG, "loadContent");
 
 		final HoraireManager horaireManager = HoraireManager.getInstance();
-		final DateMidnight today = new DateMidnight();
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		final List<Favori> favoris = mFavorisViewManager.getAll(context.getContentResolver(), mSelectedGroupes);
@@ -598,9 +614,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		int position = 0;
 		for (final Favori favori : favoris) {
-			Log.d(LOG_TAG, "\t" + favori.lettre + " " + favori.nomArret);
+			Log.d(LOG_TAG, "\t" + favori.lettre + " " + favori.nomArret + "\t" + favori.nomGroupe);
 
-			if (!horaireManager.isInDB(context.getContentResolver(), favori, today)) {
+			favori.delay = FavorisUtil.formatDelay(getActivity(), favori.nextHoraire);
+
+			if (favori.nextHoraire == null) {
 				final NextHoraireTask horaireTask = new NextHoraireTask();
 				horaireTask.setContext(context);
 				horaireTask.setArret(favori);
@@ -613,24 +631,19 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			position++;
 		}
 
-		final SparseArray<String> groupes = new SparseArray<String>();
-		for (final Groupe groupe : mGroupes) {
-			groupes.append(groupe.getId(), groupe.getNom());
-		}
 		final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, favoris);
-		adapter.setIndexer(new FavoriArrayIndexer(groupes));
+
+		if (mGroupes.isEmpty() == false) {
+			final SparseArray<String> groupes = new SparseArray<String>();
+			for (final Groupe groupe : mGroupes) {
+				groupes.append(groupe.getId(), groupe.getNom());
+			}
+			adapter.setIndexer(new FavoriArrayIndexer(groupes));
+		}
 
 		result.setResult(adapter);
 
 		return result;
-	}
-
-	@Override
-	protected void onPostExecute() {
-		if (DBG)
-			Log.d(LOG_TAG, "onPostExecute");
-
-		loadHorairesFavoris();
 	}
 
 	/**
@@ -705,19 +718,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (isDetached() || getActivity() == null)
 				return;
 
-			if (delay != null) {
-				if (delay >= MIN_DURATION) {
-					if (delay == MIN_DURATION) {
-						favori.delay = getString(R.string.msg_depart_proche);
-					} else if (delay <= MIN_HOUR) {
-						favori.delay = getString(R.string.msg_depart_min, delay);
-					} else {
-						favori.delay = getString(R.string.msg_depart_heure, delay / MIN_HOUR);
-					}
-				}
-			} else {
-				favori.delay = getString(R.string.msg_aucun_depart_24h);
-			}
+			favori.delay = FavorisUtil.formatDelay(getActivity(), delay);
 		}
 
 		@Override
@@ -760,9 +761,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final MenuItem menuEdit = menu.findItem(R.id.menu_edit);
 		final MenuItem menuPlace = menu.findItem(R.id.menu_place);
 		final MenuItem menuShowPlan = menu.findItem(R.id.menu_show_plan);
+		final MenuItem menuGroupes = menu.findItem(R.id.menu_group);
 
 		final int checkedItems = getCheckedItemsCount();
 		mActionMode.setTitle(getResources().getQuantityString(R.plurals.selected_items, checkedItems, checkedItems));
+
+		menuGroupes.setVisible(mGroupes.isEmpty() == false);
 
 		if (checkedItems < 2) {
 			menuEdit.setVisible(true);
@@ -798,7 +802,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			break;
 		case R.id.menu_group:
 			final GroupesHelper helper = new GroupesHelper(getActivity());
-			helper.linkFavori(getCheckedItemsIds());
+			helper.linkFavori(getCheckedItemsIds(), new Runnable() {
+				@Override
+				public void run() {
+					mode.finish();
+				}
+			});
 			break;
 		default:
 			return false;

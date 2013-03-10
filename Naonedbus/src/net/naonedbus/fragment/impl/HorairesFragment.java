@@ -69,7 +69,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	 */
 	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 		@Override
-		public void onReceive(Context context, Intent intent) {
+		public void onReceive(final Context context, final Intent intent) {
 			updateItemsTime();
 		}
 	};
@@ -80,19 +80,20 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private final FavoriManager mFavoriManager;
 	private OnSensChangeListener mOnSensChangeListener;
 	private HoraireArrayAdapter mAdapter;
-	private List<Horaire> mHoraires;
+	private final List<Horaire> mHoraires;
 
 	private Ligne mLigne;
 	private Sens mSens;
 	private Arret mArret;
 	private boolean mIsFirstLoad = true;
-	private AtomicBoolean mIsLoading = new AtomicBoolean(false);
+	private final AtomicBoolean mIsLoading = new AtomicBoolean(false);
 
 	private DateMidnight mLastDayLoaded;
 	private DateTime mLastDateTimeLoaded;
 
-	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+	private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+		@Override
+		public void onDateSet(final DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
 			changeDate(new DateMidnight(year, monthOfYear + 1, dayOfMonth));
 		}
 	};
@@ -111,7 +112,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		mLigne = getArguments().getParcelable(PARAM_LIGNE);
@@ -120,7 +121,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
 		mAdapter.setIndexer(new HoraireIndexer());
@@ -129,13 +130,13 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_horaires, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_date:
 			changeDate();
@@ -154,6 +155,12 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		updateItemsTime();
+	}
+
+	@Override
 	public void onStop() {
 		getActivity().unregisterReceiver(intentReceiver);
 		super.onDestroy();
@@ -166,7 +173,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		}
 	}
 
-	private void loadHoraires(DateMidnight date) {
+	private void loadHoraires(final DateMidnight date) {
 		if (mIsLoading.get() == false) {
 			if (DBG)
 				Log.d(LOG_TAG, "loadHoraires " + date.toString() + "\t" + mIsLoading.get());
@@ -191,7 +198,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	 * 
 	 * @param date
 	 */
-	public void changeDate(DateMidnight date) {
+	public void changeDate(final DateMidnight date) {
 		mAdapter.clear();
 		mIsFirstLoad = true;
 		mLastDateTimeLoaded = null;
@@ -201,7 +208,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context) {
 		mIsLoading.set(true);
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
@@ -230,14 +237,14 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 			result.setResult(mAdapter);
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			result.setException(e);
 		}
 		return result;
 	}
 
 	@Override
-	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
+	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {
 
 		if (result.getException() == null) {
 			final ListAdapter adapter = result.getResult();
@@ -252,7 +259,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 			if (exception instanceof IOException) {
 				showError(R.string.error_title_network, R.string.error_summary_network);
 			} else {
-				showError(R.string.error_title_webservice, R.string.error_summary_webservice);
+				showError(R.string.error_title_webservice_tan, R.string.error_summary_webservice);
 			}
 			Log.w(LOG_TAG, "Erreur", exception);
 		}
@@ -326,7 +333,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		}
 	}
 
-	public void setOnChangeSensListener(OnSensChangeListener l) {
+	public void setOnChangeSensListener(final OnSensChangeListener l) {
 		mOnSensChangeListener = l;
 	}
 }
