@@ -17,12 +17,12 @@ import android.widget.ListView;
 
 public abstract class CustomInfiniteListFragement extends CustomListFragment {
 
-	public CustomInfiniteListFragement(int titleId, int layoutId) {
+	public CustomInfiniteListFragement(final int titleId, final int layoutId) {
 		super(titleId, layoutId);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		final ListView listView = getListView();
@@ -34,12 +34,13 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 
 		addOnScrollListener(new OnScrollListener() {
 			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			public void onScrollStateChanged(final AbsListView view, final int scrollState) {
 			}
 
 			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				int lastInScreen = firstVisibleItem + visibleItemCount;
+			public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+					final int totalItemCount) {
+				final int lastInScreen = firstVisibleItem + visibleItemCount;
 				if ((lastInScreen == totalItemCount) && listView.getAdapter() != null) {
 					onLoadMoreItems();
 				}
@@ -53,22 +54,23 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 	protected abstract void onLoadMoreItems();
 
 	@Override
-	public Loader<AsyncResult<ListAdapter>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int arg0, final Bundle arg1) {
 		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
 			@Override
 			public AsyncResult<ListAdapter> loadInBackground() {
 				return loadContent(getActivity());
 			}
 		};
-		if (getListAdapter() == null || getListAdapter().getCount() == 0)
-			showLoader();
+
+		// if (getListAdapter() == null || getListAdapter().getCount() == 0)
+		showLoader();
 		loader.forceLoad();
 
 		return loader;
 	}
 
 	@Override
-	public void onLoadFinished(Loader<AsyncResult<ListAdapter>> loader, AsyncResult<ListAdapter> result) {
+	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {
 
 		if (result == null) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);

@@ -59,30 +59,23 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
 	protected int mTitleId;
-	protected int MLayoutId;
+	protected int mLayoutId;
 	protected int mLayoutListHeaderId = R.layout.list_item_header;
 	protected ViewGroup mFragmentView;
 
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
 
-	private State mCurrentState;
-
 	private final List<OnScrollListener> mOnScrollListeners = new ArrayList<AbsListView.OnScrollListener>();
 
-	/**
-	 * Gestion du refraichissement
-	 */
-	private DateTime nextUpdate = null;
-	/**
-	 * Nombre de minutes pendant lesquelles le contenu est considéré comme à
-	 * jour.
-	 */
-	private int timeToLive = 5;
+	private State mCurrentState;
+	private DateTime mNextUpdate = null;
+	/** Minutes pendant lesquelles le contenu est considéré comme à jour. */
+	private int mTimeToLive = 5;
 
 	public CustomListFragment(final int titleId, final int layoutId) {
-		this.mTitleId = titleId;
-		this.MLayoutId = layoutId;
+		mTitleId = titleId;
+		mLayoutId = layoutId;
 	}
 
 	public CustomListFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
@@ -93,15 +86,15 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	@Override
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		setRetainInstance(true);
+		if (DBG)
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onActivityCreated " + mCurrentState);
 
-		Log.d(LOG_TAG, "onActivityCreated " + mCurrentState);
-	}
-
-	@Override
-	public void onStop() {
-		mCurrentState = null;
-		super.onStop();
+		if (mCurrentState == State.MESSAGE) {
+			mCurrentState = null;
+			if (getListAdapter() == null || getListAdapter().getCount() == 0) {
+				showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
+			}
+		}
 	}
 
 	@Override
@@ -109,7 +102,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (container == null) // must put this in
 			return null;
 
-		Log.d(LOG_TAG, "onCreateView " + mCurrentState);
+		if (DBG)
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onCreateView " + mCurrentState);
 
 		if (savedInstanceState != null) {
 			mListViewStatePosition = savedInstanceState.getInt(STATE_POSITION, -1);
@@ -120,7 +114,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		}
 
 		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
-		final View view = inflater.inflate(this.MLayoutId, container, false);
+		final View view = inflater.inflate(mLayoutId, container, false);
 		bindView(view, savedInstanceState);
 
 		mFragmentView.addView(view);
@@ -139,6 +133,15 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			outState.putInt(STATE_TOP, top);
 		}
 		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		if (DBG)
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onStop");
+
+		// mCurrentState = null;
 	}
 
 	protected void bindView(final View view, final Bundle savedInstanceState) {
@@ -190,6 +193,9 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	public void loadContent() {
 		if (getListAdapter() == null) {
+			if (DBG)
+				Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "loadContent " + getListAdapter());
+
 			getLoaderManager().initLoader(LOADER_INIT, null, this);
 		}
 	}
@@ -230,10 +236,16 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 */
 	protected void showLoader() {
 		if (DBG)
-			Log.d(LOG_TAG, "showLoader");
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "showLoader");
 
-		if (State.LOADER == mCurrentState)
+		if (State.LOADER == mCurrentState) {
+			if (DBG)
+				Log.e(LOG_TAG + "$" + getClass().getSimpleName(), "\t showLoader NO");
 			return;
+		}
+
+		if (DBG)
+			Log.i(LOG_TAG + "$" + getClass().getSimpleName(), "\t showLoader OK");
 
 		mCurrentState = State.LOADER;
 
@@ -248,11 +260,12 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * Afficher le contenu.
 	 */
 	protected void showContent() {
-		if (State.CONTENT == mCurrentState)
+		if (State.CONTENT == mCurrentState) {
 			return;
+		}
 
 		if (DBG)
-			Log.d(LOG_TAG, "showContent");
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "showContent");
 
 		mCurrentState = State.CONTENT;
 
@@ -319,11 +332,13 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 *            L'identifiant du symbole.
 	 */
 	protected void showMessage(final String title, final String description, final int drawableRes) {
-		if (DBG)
-			Log.d(LOG_TAG, "showMessage " + title + "\t" + description + "\t" + drawableRes);
-
-		if (State.MESSAGE == mCurrentState)
+		if (State.MESSAGE == mCurrentState) {
 			return;
+		}
+
+		if (DBG)
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "showMessage " + title + "\t" + description + "\t"
+					+ drawableRes);
 
 		mCurrentState = State.MESSAGE;
 
@@ -392,14 +407,14 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param timeToLive
 	 */
 	protected void setTimeToLive(final int timeToLive) {
-		this.timeToLive = timeToLive;
+		this.mTimeToLive = timeToLive;
 	}
 
 	/**
 	 * Redéfinir la date d'expiration du cache à maintenant
 	 */
 	protected void resetNextUpdate() {
-		nextUpdate = new DateTime().plusMinutes(timeToLive);
+		mNextUpdate = new DateTime().plusMinutes(mTimeToLive);
 	}
 
 	/**
@@ -408,8 +423,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @return true si elle ne sont plus à jour | false si elle sont à jour
 	 */
 	protected boolean isNotUpToDate() {
-		if (nextUpdate != null) {
-			return (nextUpdate.isBeforeNow());
+		if (mNextUpdate != null) {
+			return (mNextUpdate.isBeforeNow());
 		} else {
 			return true;
 		}
@@ -438,15 +453,20 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	@Override
 	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int arg0, final Bundle arg1) {
 		if (DBG)
-			Log.d(LOG_TAG, "onCreateLoader");
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onCreateLoader");
 
 		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
 			@Override
 			public AsyncResult<ListAdapter> loadInBackground() {
+				if (DBG)
+					Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "loadInBackground");
+
 				return loadContent(getActivity());
 			}
 		};
 
+		if (getListAdapter() == null || getListAdapter().getCount() == 0)
+			showLoader();
 		onPreExecute();
 		loader.forceLoad();
 
@@ -456,7 +476,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	@Override
 	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {
 		if (DBG)
-			Log.d(LOG_TAG, "onLoadFinished " + result);
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onLoadFinished " + result);
 
 		if (result == null) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
@@ -468,12 +488,11 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (exception == null) {
 
 			final ListAdapter adapter = result.getResult();
+			setListAdapter(adapter);
 
 			if (adapter == null) {
 				showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 			} else {
-				setListAdapter(adapter);
-
 				adapter.registerDataSetObserver(new DataSetObserver() {
 					@Override
 					public void onChanged() {
@@ -534,6 +553,9 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * @param adapter
 	 */
 	public void onListAdapterChange(final ListAdapter adapter) {
+		if (DBG)
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onListAdapterChange");
+
 		if (adapter == null || adapter.getCount() == 0) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 		} else {

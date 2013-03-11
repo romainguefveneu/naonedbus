@@ -63,9 +63,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
@@ -273,7 +271,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (DBG)
-			Log.d(LOG_TAG, "onCreateView");
+			Log.d(LOG_TAG, "onActivityCreated");
+
 		mListView = getListView();
 		mListView.setOnItemLongClickListener(this);
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -283,13 +282,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		contentResolver.registerContentObserver(FavoriGroupeProvider.CONTENT_URI, true, mFavorisGroupesContentObserver);
 
 		loadContent();
-	}
-
-	@Override
-	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateView");
-		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
 	@Override
@@ -312,7 +304,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mStateHelper.setSortType(this, mCurrentSort);
 
 		mLocationProvider.removeListener(this);
-		super.onStart();
+		super.onStop();
 	}
 
 	@Override
@@ -526,6 +518,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		if (mGroupes.isEmpty()) {
 			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
 					R.drawable.favori);
+		} else if (mSelectedGroupes.isEmpty()) {
+			setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
+					R.drawable.favori);
 		}
 	}
 
@@ -547,19 +542,15 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	 */
 	private void sort(final FavoriArrayAdapter adapter) {
 		final Comparator<Favori> comparator;
-		// final CustomSectionIndexer<Equipement> indexer;
 
 		if (mCurrentSort == SORT_DISTANCE && !mLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation
 			comparator = comparators.get(SORT_NOM);
-			// indexer = indexers.get(SORT_NOM);
 		} else {
 			comparator = comparators.get(mCurrentSort);
-			// indexer = indexers.get(currentSortPreference);
 		}
 
 		adapter.sort(comparator);
-		// adapter.setIndexer(indexer);
 	}
 
 	public void onItemSelected() {
