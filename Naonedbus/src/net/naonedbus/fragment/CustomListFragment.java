@@ -89,6 +89,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (DBG)
 			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onActivityCreated " + mCurrentState);
 
+		setRetainInstance(true);
+
 		if (mCurrentState == State.MESSAGE) {
 			mCurrentState = null;
 			if (getListAdapter() == null || getListAdapter().getCount() == 0) {
@@ -280,7 +282,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			content.setVisibility(View.VISIBLE);
 			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
 		}
-
 	}
 
 	/**
@@ -544,6 +545,13 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	@Override
 	public void onLoaderReset(final Loader<AsyncResult<ListAdapter>> arg0) {
+	}
+
+	@Override
+	public void setListAdapter(final ListAdapter adapter) {
+		if (DBG)
+			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "setListAdapter " + adapter);
+		super.setListAdapter(adapter);
 	}
 
 	/**

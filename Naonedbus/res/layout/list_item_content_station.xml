@@ -19,33 +19,31 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultLine.Content" >
 
     <ImageView
         android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
+        android:layout_marginRight="@dimen/padding_small"
         android:background="@drawable/item_symbole_back"
         android:padding="5dp"
         android:src="@drawable/map_layer_arret" />
 
-    <TwoLineListItem
-        style="@style/TwoListItem"
-        android:paddingLeft="10dip" >
+    <TextView
+        android:id="@id/itemTitle"
+        style="@style/ItemPrimaryText"
+        android:layout_above="@id/itemLignes"
+        android:layout_marginBottom="2dip"
+        android:layout_toRightOf="@id/itemSymbole" />
 
-        <TextView
-            android:id="@id/itemTitle"
-            style="@style/ItemPrimaryText"
-            android:layout_above="@id/itemLignes"
-            android:layout_marginBottom="2dip" />
+    <LinearLayout
+        android:id="@id/itemLignes"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/itemTitle"
+        android:layout_toRightOf="@id/itemSymbole"
+        android:clipChildren="true"
+        android:gravity="left|center_vertical" />
 
-        <LinearLayout
-            android:id="@id/itemLignes"
-            android:layout_width="fill_parent"
-            android:layout_height="20dp"
-            android:layout_below="@id/itemTitle"
-            android:clipChildren="true"
-            android:gravity="left|center_vertical" />
-    </TwoLineListItem>
-
-</LinearLayout>
+</RelativeLayout>

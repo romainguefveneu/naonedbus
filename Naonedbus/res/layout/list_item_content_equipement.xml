@@ -25,7 +25,7 @@
     <ImageView
         android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="@dimen/padding_small"
         android:background="@drawable/item_symbole_back"
         android:padding="5dp"
         android:src="@drawable/map_layer_bicloo" />
@@ -46,6 +46,7 @@
             android:id="@id/itemLignes"
             android:layout_width="fill_parent"
             android:layout_height="20dp"
+            android:layout_marginTop="4dp"
             android:clipChildren="true"
             android:gravity="left|center_vertical"
             android:visibility="gone" />
@@ -58,7 +59,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/itemSymbole" />
+        android:layout_toRightOf="@id/itemSymbole"
+        android:gravity="center_vertical" />
 
     <TextView
         android:id="@id/itemDistance"
@@ -67,6 +69,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="@dimen/padding_small" />
 
 </RelativeLayout>

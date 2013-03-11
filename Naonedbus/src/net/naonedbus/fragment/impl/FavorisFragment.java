@@ -607,7 +607,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		for (final Favori favori : favoris) {
 			Log.d(LOG_TAG, "\t" + favori.lettre + " " + favori.nomArret + "\t" + favori.nomGroupe);
 
-			favori.delay = FavorisUtil.formatDelay(getActivity(), favori.nextHoraire);
+			favori.delay = FavorisUtil.formatDelayLoading(getActivity(), favori.nextHoraire);
 
 			if (favori.nextHoraire == null) {
 				final NextHoraireTask horaireTask = new NextHoraireTask();
@@ -709,7 +709,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (isDetached() || getActivity() == null)
 				return;
 
-			favori.delay = FavorisUtil.formatDelay(getActivity(), delay);
+			favori.delay = FavorisUtil.formatDelayNoDeparture(getActivity(), delay);
 		}
 
 		@Override

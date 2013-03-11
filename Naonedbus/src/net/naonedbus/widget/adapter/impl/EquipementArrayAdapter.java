@@ -39,7 +39,7 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 	private SparseArray<EquipementTypeAdapter> adapters;
 	private Map<Class<? extends AsyncTaskInfo<?>>, Unschedulable<?>> unschedulers;
 
-	public EquipementArrayAdapter(Context context, List<Equipement> objects) {
+	public EquipementArrayAdapter(final Context context, final List<Equipement> objects) {
 		super(context, R.layout.list_item_equipement, objects);
 		initUnschedulers();
 		initAdapters();
@@ -69,7 +69,7 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 	}
 
 	@Override
-	public void bindView(View view, Context context, int position) {
+	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Equipement equipement = getItem(position);
 		final Equipement.Type type = equipement.getType();
@@ -100,7 +100,7 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 	}
 
 	@Override
-	public void bindViewHolder(View view) {
+	public void bindViewHolder(final View view) {
 		final ViewHolder holder;
 		holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -108,10 +108,11 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
 		holder.itemDistance = (TextView) view.findViewById(R.id.itemDistance);
 		holder.itemLignes = (ViewGroup) view.findViewById(R.id.itemLignes);
+		holder.itemSecondLine = view.findViewById(R.id.secondLine);
 		view.setTag(holder);
 	}
 
-	private void bindHeaderView(View view, int position) {
+	private void bindHeaderView(final View view, final int position) {
 		final int section = getSectionForPosition(position);
 		if (getPositionForSection(section) == position) {
 			final TextView headerText = (TextView) view.findViewById(R.id.headerTitle);
@@ -120,7 +121,7 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends AsyncTaskInfo<?>> void unschedule(T task) {
+	public <T extends AsyncTaskInfo<?>> void unschedule(final T task) {
 		Log.d(LOG_TAG, "unschedule :\t	" + task);
 
 		final Unschedulable<T> unschedulable = (Unschedulable<T>) unschedulers.get(task.getClass());
@@ -133,15 +134,16 @@ class ViewHolder {
 	TextView itemDescription;
 	TextView itemDistance;
 	ViewGroup itemLignes;
+	View itemSecondLine;
 	ImageView itemSymbole;
 	AsyncTaskInfo<?> task;
 }
 
 abstract class EquipementTypeAdapter {
 
-	private EquipementArrayAdapter adapter;
+	private final EquipementArrayAdapter adapter;
 
-	public EquipementTypeAdapter(EquipementArrayAdapter equipementArrayAdapter) {
+	public EquipementTypeAdapter(final EquipementArrayAdapter equipementArrayAdapter) {
 		adapter = equipementArrayAdapter;
 	}
 
@@ -154,12 +156,12 @@ abstract class EquipementTypeAdapter {
 
 class DefaultTypeAdapter extends EquipementTypeAdapter {
 
-	public DefaultTypeAdapter(EquipementArrayAdapter equipementArrayAdapter) {
+	public DefaultTypeAdapter(final EquipementArrayAdapter equipementArrayAdapter) {
 		super(equipementArrayAdapter);
 	}
 
 	@Override
-	public void bindView(Context context, ViewHolder holder, Equipement equipement) {
+	public void bindView(final Context context, final ViewHolder holder, final Equipement equipement) {
 		final String details = equipement.getDetails();
 		final String adresse = equipement.getAdresse();
 
@@ -169,22 +171,22 @@ class DefaultTypeAdapter extends EquipementTypeAdapter {
 
 		holder.itemTitle.setText(equipement.getNom());
 		if (details == null && adresse == null) {
-			holder.itemDescription.setVisibility(View.GONE);
+			holder.itemSecondLine.setVisibility(View.GONE);
 		} else {
 			holder.itemDescription.setText((details != null) ? details : adresse);
 			holder.itemDescription.setVisibility(View.VISIBLE);
+			holder.itemSecondLine.setVisibility(View.VISIBLE);
 		}
 
 		holder.itemLignes.setVisibility(View.GONE);
-		holder.itemDescription.setVisibility(View.VISIBLE);
 	}
 }
 
 class ArretTypeAdapter extends EquipementTypeAdapter {
 
-	private LigneManager ligneManager;
+	private final LigneManager ligneManager;
 
-	public ArretTypeAdapter(EquipementArrayAdapter equipementArrayAdapter) {
+	public ArretTypeAdapter(final EquipementArrayAdapter equipementArrayAdapter) {
 		super(equipementArrayAdapter);
 		ligneManager = LigneManager.getInstance();
 	}
@@ -205,7 +207,7 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 		if (equipement.getTag() == null) {
 			final Handler handler = new Handler() {
 				@Override
-				public void handleMessage(Message msg) {
+				public void handleMessage(final Message msg) {
 					super.handleMessage(msg);
 					holder.itemLignes.removeAllViews();
 					final List<Ligne> lignes = (List<Ligne>) msg.obj;
@@ -223,7 +225,8 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 
 	}
 
-	private void bindLignes(List<Ligne> lignes, ViewHolder holder, LayoutInflater layoutInflater) {
+	private void bindLignes(final List<Ligne> lignes, final ViewHolder holder, final LayoutInflater layoutInflater) {
+		holder.itemSecondLine.setVisibility(View.VISIBLE);
 		holder.itemDescription.setVisibility(View.GONE);
 		holder.itemLignes.setVisibility(View.VISIBLE);
 
@@ -243,9 +246,9 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 
 class ParkingTypeAdapter extends EquipementTypeAdapter {
 
-	private ParkingPublicManager parkingPublicManager;
+	private final ParkingPublicManager parkingPublicManager;
 
-	public ParkingTypeAdapter(EquipementArrayAdapter equipementArrayAdapter) {
+	public ParkingTypeAdapter(final EquipementArrayAdapter equipementArrayAdapter) {
 		super(equipementArrayAdapter);
 		parkingPublicManager = ParkingPublicManager.getInstance();
 	}
@@ -263,7 +266,7 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 		if (equipement.getTag() == null) {
 			final Handler handler = new Handler() {
 				@Override
-				public void handleMessage(Message msg) {
+				public void handleMessage(final Message msg) {
 					super.handleMessage(msg);
 
 					holder.itemLignes.removeAllViews();
@@ -285,7 +288,7 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 		}
 	}
 
-	private void bindParking(final Context context, ViewHolder holder, ParkingPublic parkingPublic) {
+	private void bindParking(final Context context, final ViewHolder holder, final ParkingPublic parkingPublic) {
 		if (parkingPublic != null) {
 			int couleur;
 			String detail;
@@ -307,8 +310,9 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
 			holder.itemDescription.setText(detail);
 			holder.itemDescription.setVisibility(View.VISIBLE);
+			holder.itemSecondLine.setVisibility(View.VISIBLE);
 		} else {
-			holder.itemDescription.setVisibility(View.GONE);
+			holder.itemSecondLine.setVisibility(View.GONE);
 		}
 	}
 

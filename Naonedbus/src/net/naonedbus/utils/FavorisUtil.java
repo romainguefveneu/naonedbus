@@ -11,10 +11,20 @@ public abstract class FavorisUtil {
 
 	}
 
-	public static String formatDelay(final Context context, final Integer minutes) {
+	public static String formatDelayLoading(final Context context, final Integer minutes) {
+		return formatDelay(context, minutes, true);
+	}
+
+	public static String formatDelayNoDeparture(final Context context, final Integer minutes) {
+		return formatDelay(context, minutes, false);
+	}
+
+	private static String formatDelay(final Context context, final Integer minutes, final boolean loading) {
 		String delay = "";
 
-		if (minutes != null) {
+		if (minutes == null) {
+			delay = loading ? null : context.getString(R.string.msg_aucun_depart_24h);
+		} else {
 			if (minutes >= MIN_DURATION) {
 				if (minutes == MIN_DURATION) {
 					delay = context.getString(R.string.msg_depart_proche);
@@ -24,8 +34,6 @@ public abstract class FavorisUtil {
 					delay = context.getString(R.string.msg_depart_heure, minutes / MIN_HOUR);
 				}
 			}
-		} else {
-			delay = context.getString(R.string.msg_aucun_depart_24h);
 		}
 
 		return delay;
