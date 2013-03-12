@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="naonedbus-custom" default="help">
 
-	<target name="process-template">
+	<target name="-increase-version">
+        <propertyfile file="version.properties">
+            <entry key="version.build" type="int" operation="+" value="1" />
+        </propertyfile>
+        <property file="version.properties" />
+    </target>
+	
+	<target name="-process-template">
 		<exec executable="git" outputproperty="git.revision">
 			<arg value="rev-parse"/>
 			<arg value="--short"/>
@@ -9,6 +16,7 @@
 		</exec>
 
 		<filterset id="build-tokens">
+		    <filter token="version.build" value="${version.build}"/>
 		    <filter token="version.tag" value="${version.tag}"/>
 		    <filter token="maps.key" value="${maps.key}"/>
 		    <filter token="bugsense.key" value="${bugsense.key}"/>
@@ -25,22 +33,34 @@
 		</copy>
 	</target>
 
-	<target name="read-debug-properties">
+	<target name="-read-debug-properties">
 		<property file="./ant-profiles/debug.properties" />
 	</target>
 
-	<target name="read-release-properties">
+	<target name="-read-release-properties">
 		<property file="./ant-profiles/release.properties" />
 	</target>
 
-	<target name="read-alpha-properties">
+	<target name="-read-alpha-properties">
 		<property file="./ant-profiles/alpha.properties" />
 	</target>
 	
-	<target name="make-debug" depends="read-debug-properties,process-template"/>
-
-	<target name="make-release" depends="read-release-properties,process-template"/>
 	
-	<target name="make-alpha" depends="read-alpha-properties,process-template"/>
+	<target name="make-debug" depends="-read-debug-properties,-increase-version,-process-template">
+	    <property name="out.final.file" location="${ant.project.name}-debug.apk" />
+		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-debug-unsigned.apk" />
+		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-debug-unsigned-aligned.apk" />
+	</target>
+	<target name="make-alpha" depends="-read-alpha-properties,-increase-version,-process-template">
+	    <property name="out.final.file" location="${ant.project.name}-alpha.apk" />
+		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-alpha-unsigned.apk" />
+		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-alpha-unsigned-aligned.apk" />
+	</target>
+	<target name="make-release" depends="-read-release-properties,-increase-version,-process-template">
+	    <property name="out.final.file" location="${ant.project.name}-release.apk" />
+		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-release-unsigned.apk" />
+		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-release-unsigned-aligned.apk" />
+	</target>
 
+	
 </project>

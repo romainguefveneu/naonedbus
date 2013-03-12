@@ -2,3 +2,6 @@
 /gen
 /ant-profiles
 /ant-templates
+/proguard
+/ant.properties
+/rg.keystore
