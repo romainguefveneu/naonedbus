@@ -99,6 +99,9 @@
             android:name=".activity.impl.GroupesActivity"
             android:label="@string/title_activity_groupes" />
         <activity
+            android:name=".activity.impl.ArretDetailActivity"
+            android:label="@string/emptyString" />
+        <activity
             android:name=".activity.impl.SearchActivity"
             android:label="@string/emptyString" >
             <intent-filter>

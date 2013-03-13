@@ -6,9 +6,9 @@ import java.util.List;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.ArretDetailActivity;
 import net.naonedbus.activity.impl.ArretsActivity.OnChangeSens;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
@@ -271,10 +271,10 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		super.onListItemClick(l, v, position, id);
 		final Arret arret = (Arret) l.getItemAtPosition(position);
 
-		final Intent intent = new Intent(getActivity(), HorairesActivity.class);
-		intent.putExtra(HorairesActivity.PARAM_LIGNE, mLigne);
-		intent.putExtra(HorairesActivity.PARAM_SENS, mSens);
-		intent.putExtra(HorairesActivity.PARAM_ARRET, arret);
+		final Intent intent = new Intent(getActivity(), ArretDetailActivity.class);
+		intent.putExtra(ArretDetailActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(ArretDetailActivity.PARAM_SENS, mSens);
+		intent.putExtra(ArretDetailActivity.PARAM_ARRET, arret);
 
 		startActivity(intent);
 	}
