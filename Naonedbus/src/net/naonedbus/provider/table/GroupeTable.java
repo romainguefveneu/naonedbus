@@ -6,5 +6,6 @@ public interface GroupeTable extends BaseColumns {
 	public static final String TABLE_NAME = "groupes";
 
 	public static final String NOM = "nom";
+	public static final String ORDRE = "ordre";
 	public static final String VISIBILITE = "visibilite";
 }

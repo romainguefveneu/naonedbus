@@ -34,6 +34,7 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		final Groupe groupe = new Groupe();
 		groupe.setId(c.getInt(c.getColumnIndex(GroupeTable._ID)));
 		groupe.setNom(c.getString(c.getColumnIndex(GroupeTable.NOM)));
+		groupe.setOrdre(c.getInt(c.getColumnIndex(GroupeTable.ORDRE)));
 		groupe.setVisibility(c.getInt(c.getColumnIndex(GroupeTable.VISIBILITE)));
 		return groupe;
 	}
@@ -49,6 +50,7 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 	public void add(final ContentResolver contentResolver, final Groupe groupe) {
 		final ContentValues contentValues = new ContentValues();
 		contentValues.put(GroupeTable.NOM, groupe.getNom());
+		contentValues.put(GroupeTable.ORDRE, groupe.getOrdre());
 		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
 
 		contentResolver.insert(GroupeProvider.CONTENT_URI, contentValues);
@@ -64,6 +66,7 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 	public void update(final ContentResolver contentResolver, final Groupe groupe) {
 		final ContentValues contentValues = new ContentValues();
 		contentValues.put(GroupeTable.NOM, groupe.getNom());
+		contentValues.put(GroupeTable.ORDRE, groupe.getOrdre());
 		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
 
 		contentResolver.update(GroupeProvider.CONTENT_URI, contentValues, GroupeTable._ID + "=?",

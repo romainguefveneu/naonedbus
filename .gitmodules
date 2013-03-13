@@ -22,3 +22,6 @@
 [submodule "Android-AppMsg"]
 	path = Android-AppMsg
 	url = https://github.com/johnkil/Android-AppMsg.git
+[submodule "drag-sort-listview"]
+	path = drag-sort-listview
+	url = https://github.com/bauerca/drag-sort-listview.git

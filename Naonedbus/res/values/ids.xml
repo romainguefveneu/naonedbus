@@ -87,6 +87,8 @@
     <item name="setupViewLabel" type="id"/>
     <item name="itineraireFrom" type="id"/>
     <item name="itineraireTo" type="id"/>
+    <item name="actionDelete" type="id"/>
+    <item name="actionDrag" type="id"/>
 
     <!-- Fragments -->
     <item name="fragmentLoading" type="id"/>

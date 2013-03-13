@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,52 +23,57 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.mobeta.android.dslv.DragSortListView;
+import com.mobeta.android.dslv.SimpleDragSortCursorAdapter;
 
 public class GroupesFragment extends CustomCursorFragment implements ActionMode.Callback, OnItemClickListener,
-		OnItemLongClickListener {
+		OnItemLongClickListener, DragSortListView.DropListener {
 
 	private final GroupeManager mGroupeManager;
 
 	private ActionMode mActionMode;
-	private ListView mListView;
+	private DragSortListView mListView;
 
 	public GroupesFragment() {
-		super(R.string.title_fragment_lignes, R.layout.fragment_listview);
+		super(R.string.title_fragment_lignes, R.layout.fragment_listview_drag_drop);
 		mGroupeManager = GroupeManager.getInstance();
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 		setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_empty_groupe, R.drawable.groupe);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		mListView = getListView();
+		mListView = (DragSortListView) getListView();
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		mListView.setOnItemClickListener(this);
 		mListView.setOnItemLongClickListener(this);
+		mListView.setDropListener(this);
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_groupes, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 
 		if (item.getItemId() == R.id.menu_add) {
 			menuAdd();
@@ -86,8 +90,8 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		final String[] from = new String[] { GroupeTable.NOM };
 		final int[] to = new int[] { android.R.id.text1 };
 
-		final SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(),
-				android.R.layout.simple_list_item_multiple_choice, c, from, to, 0);
+		final SimpleDragSortCursorAdapter adapter = new SimpleDragSortCursorAdapter(getActivity(),
+				R.layout.list_item_checkable, c, from, to, 0);
 
 		return adapter;
 	}
@@ -168,7 +172,8 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		builder.setView(alertDialogView);
 		builder.setTitle(R.string.action_rename);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
 				final String nom = input.getText().toString().trim();
 				groupe.setNom((nom.length() == 0) ? null : nom);
 
@@ -247,7 +252,8 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		builder.setView(alertDialogView);
 		builder.setTitle(R.string.action_groupes_add);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
 				final Groupe groupe = new Groupe();
 				groupe.setNom(input.getText().toString().trim());
 				mGroupeManager.add(getActivity().getContentResolver(), groupe);
@@ -260,4 +266,18 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		alert.show();
 	}
 
+	@Override
+	public void drop(final int from, final int to) {
+		final Groupe groupeFrom = mGroupeManager.getSingleFromCursor((CursorWrapper) mListView.getItemAtPosition(from));
+		groupeFrom.setOrdre(to);
+
+		// TODO : Il faut tout réindexer en fait...
+
+		mGroupeManager.update(getActivity().getContentResolver(), groupeFrom);
+		final BaseAdapter adapter = (BaseAdapter) getListAdapter();
+		adapter.notifyDataSetChanged();
+
+		Toast.makeText(getActivity(), "Drag  " + groupeFrom.getNom() + " from " + from + " to " + to,
+				Toast.LENGTH_SHORT).show();
+	}
 }

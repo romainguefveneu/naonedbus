@@ -66,7 +66,7 @@ public class GroupeProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public String getType(Uri uri) {
+	public String getType(final Uri uri) {
 		return null;
 	}
 
@@ -103,14 +103,14 @@ public class GroupeProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs, String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(GroupeTable.TABLE_NAME);
 		if (sortOrder == null) {
-			sortOrder = GroupeTable.NOM;
+			sortOrder = GroupeTable.ORDRE;
 		}
 
-		int uriType = URI_MATCHER.match(uri);
+		final int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
 		case GROUPE_ID:
 			queryBuilder.appendWhere(GroupeTable._ID + "=" + uri.getLastPathSegment());
@@ -135,7 +135,7 @@ public class GroupeProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+	public int update(final Uri uri, final ContentValues values, final String selection, final String[] selectionArgs) {
 		final SQLiteDatabase db = getWritableDatabase();
 		final int rowCount = db.update(GroupeTable.TABLE_NAME, values, selection, selectionArgs);
 		if (rowCount > 0) {

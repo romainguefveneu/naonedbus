@@ -4,6 +4,7 @@ public class Groupe {
 
 	private int mId;
 	private String mNom;
+	private int mOrdre;
 	private int mVisibility;
 
 	public int getId() {
@@ -20,6 +21,14 @@ public class Groupe {
 
 	public void setNom(final String nom) {
 		mNom = nom;
+	}
+
+	public int getOrdre() {
+		return mOrdre;
+	}
+
+	public void setOrdre(final int ordre) {
+		mOrdre = ordre;
 	}
 
 	public int getVisibility() {

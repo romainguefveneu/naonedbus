@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ *  Copyright (C) 2011 Romain Guefveneu
+ *  
+ *  This file is part of naonedbus.
+ *  
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<com.mobeta.android.dslv.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dslv="http://schemas.android.com/apk/res-auto"
+    android:id="@android:id/list"
+    style="@style/Listview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    dslv:collapsed_height="1dp"
+    dslv:drag_enabled="true"
+    dslv:drag_handle_id="@id/actionDrag"
+    dslv:drag_scroll_start="0.33"
+    dslv:drag_start_mode="onDown"
+    dslv:float_alpha="0.0"
+    dslv:remove_enabled="false"
+    dslv:slide_shuffle_speed="0.3" />
