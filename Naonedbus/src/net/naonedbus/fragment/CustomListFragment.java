@@ -531,7 +531,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 				messageRes = R.string.error_summary_webservice;
 			}
 
-			if (getListAdapter().isEmpty()) {
+			if (getListAdapter() == null || getListAdapter().isEmpty()) {
 				showMessage(titleRes, messageRes, drawableRes);
 			} else {
 				AppMsg.makeText(getActivity(), titleRes, AppMsg.STYLE_ALERT).show();

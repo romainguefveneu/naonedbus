@@ -41,7 +41,7 @@ public class Groupe {
 
 	@Override
 	public String toString() {
-		return mId + ":" + mNom;
+		return mId + " #" + mOrdre + " - " + mNom;
 	}
 
 }

@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="fill_vertical|start"
         android:paddingBottom="@dimen/padding_small"
+        android:paddingLeft="@dimen/padding_medium"
         android:paddingRight="@dimen/padding_medium"
         android:paddingTop="@dimen/padding_small"
         android:color="#2333" />

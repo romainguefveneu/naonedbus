@@ -100,4 +100,23 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		contentResolver.delete(builder.build(), null, null);
 	}
 
+	public void move(final ContentResolver contentResolver, final Cursor cursor, final int from, final int to) {
+		Groupe groupe;
+		final int start = Math.min(from, to);
+		final int stop = Math.max(from, to);
+		int position = start;
+
+		cursor.moveToPosition(start);
+		while (cursor.getPosition() <= stop && !cursor.isAfterLast()) {
+			groupe = getSingleFromCursor(cursor);
+			groupe.setOrdre(position);
+			
+			update(contentResolver, groupe);
+			
+			cursor.moveToNext();
+			position++;
+		}
+
+	}
+
 }
