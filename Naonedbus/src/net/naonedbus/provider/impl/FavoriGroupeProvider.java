@@ -142,11 +142,11 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 				+ FavorisGroupesTable.ID_GROUPE + "=" + GroupeTable.TABLE_NAME + "." + GroupeTable._ID + " AND fgt."
 				+ FavorisGroupesTable.ID_FAVORI + " IN (%s)";
 
-		final String ORDER = " ORDER BY " + GroupeTable.NOM;
+		final String ORDER = " ORDER BY " + GroupeTable.ORDRE;
 
 		public static final String SELECT = "SELECT " + GroupeTable._ID + ", " + GroupeTable.NOM + ", "
-				+ GroupeTable.VISIBILITE + ", (" + GROUPE_COUNT + ") as " + FavorisGroupesTable.LINKED + " FROM "
-				+ GroupeTable.TABLE_NAME + ORDER;
+				+ GroupeTable.VISIBILITE + ", " + GroupeTable.ORDRE + ", (" + GROUPE_COUNT + ") as "
+				+ FavorisGroupesTable.LINKED + " FROM " + GroupeTable.TABLE_NAME + ORDER;
 
 	}
 

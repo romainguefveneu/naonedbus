@@ -35,7 +35,7 @@ public class FavoriComparator implements Comparator<Favori> {
 
 		if (favori1.section != null && favori2.section != null) {
 			if (!favori1.section.equals(favori2.section)) {
-				return favori1.section.compareTo(favori2.section);
+				return Integer.valueOf(favori1.ordre).compareTo(favori2.ordre);
 			}
 		}
 
