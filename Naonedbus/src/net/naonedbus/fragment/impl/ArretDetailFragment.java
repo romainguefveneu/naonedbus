@@ -2,6 +2,8 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
+import net.naonedbus.card.Card;
+import net.naonedbus.card.impl.SimpleCard;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,18 +31,22 @@ public class ArretDetailFragment extends Fragment {
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
-		LayoutInflater.from(getActivity()).inflate(R.layout.card, mViewGroup);
+		final Card helloWorldCard = new SimpleCard("Hello World !", "Bonjour le monde !");
+
+		final Card helloWorldCard2 = new SimpleCard("Hello World 2 !", "Bonjour le monde 2 !\nBonjour le monde 2 !");
+
+		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
+		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
 
 	}
 

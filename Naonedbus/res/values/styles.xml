@@ -430,4 +430,9 @@
         <item name="android:paddingRight">@dimen/padding_tiny</item>
     </style>
 
+    <style name="Card">
+        <item name="android:background">@drawable/block_light</item>
+        <item name="android:padding">@dimen/padding_small</item>
+    </style>
+
 </resources>
