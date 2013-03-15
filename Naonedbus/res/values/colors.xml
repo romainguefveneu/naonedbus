@@ -40,6 +40,7 @@
     <color name="message_tan_header">#358243</color>
     <color name="query_hint_color">#9bc9e1</color>
     <color name="adressbar_color">#ff147cad</color>
+    <color name="card_text_color">#707070</color>
 
     <!-- PagerHeader -->
     <color name="pager_header_background_color">#ff333333</color>

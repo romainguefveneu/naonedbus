@@ -9,43 +9,45 @@
 
     <TextView
         android:id="@android:id/title"
-        style="@style/BigTitle"
+        style="@style/CardTitle"
         android:layout_marginBottom="@dimen/padding_small"
-        android:text="Titre" />
+        android:text="@string/card_horaires_title" />
 
     <TextView
-        android:id="@android:id/text1"
+        android:id="@+id/horaireNext"
+        style="@style/CardHoraire.Huge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/padding_small"
-        android:text="Message"
-        android:textAppearance="@android:style/TextAppearance.Medium" />
+        android:text="00:00" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:divider="@drawable/divider_vertical"
-        android:dividerPadding="@dimen/padding_small"
         android:showDividers="middle" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            android:id="@+id/horaire1"
+            style="@style/CardHoraire"
+            android:text="00:00" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            android:id="@+id/horaire2"
+            style="@style/CardHoraire"
+            android:text="00:00" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textAppearance="@android:style/TextAppearance.Large" />
+            android:id="@+id/horaire3"
+            style="@style/CardHoraire"
+            android:text="00:00" />
+
+        <TextView
+            android:id="@+id/horaire4"
+            style="@style/CardHoraire"
+            android:text="00:00" />
     </LinearLayout>
 
 </LinearLayout>

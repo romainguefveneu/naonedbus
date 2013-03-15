@@ -13,6 +13,8 @@ public abstract class Card {
 	private final String mTitleString;
 	private final int mTitleId;
 
+	private Typeface mRobotoLight;
+
 	public Card(final String title, final int layoutId) {
 		mTitleString = title;
 		mLayoutId = layoutId;
@@ -27,9 +29,8 @@ public abstract class Card {
 
 	public View getView(final Context context, final ViewGroup root) {
 		final View view = LayoutInflater.from(context).inflate(mLayoutId, root, false);
-		final Typeface robotoLight = FontUtils.getRobotoLight(context);
 		final TextView title = (TextView) view.findViewById(android.R.id.title);
-		title.setTypeface(robotoLight);
+		setTypefaceRobotoLight(title);
 		if (mTitleString == null) {
 			title.setText(mTitleId);
 		} else {
@@ -37,6 +38,13 @@ public abstract class Card {
 		}
 		bindView(context, view);
 		return view;
+	}
+
+	protected void setTypefaceRobotoLight(final TextView textView) {
+		if (mRobotoLight == null) {
+			mRobotoLight = FontUtils.getRobotoLight(textView.getContext());
+		}
+		textView.setTypeface(mRobotoLight);
 	}
 
 	protected abstract void bindView(final Context context, final View view);

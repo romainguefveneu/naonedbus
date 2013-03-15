@@ -2,8 +2,13 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
+import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
+import net.naonedbus.card.impl.HoraireCard;
 import net.naonedbus.card.impl.SimpleCard;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,32 +27,13 @@ public class ArretDetailFragment extends Fragment {
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
 
+	private Ligne mLigne;
+	private Sens mSens;
+	private Arret mArret;
+
 	private ViewGroup mViewGroup;
 
 	public ArretDetailFragment() {
-	}
-
-	@Override
-	public void onActivityCreated(final Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
-		final Card helloWorldCard = new SimpleCard("Hello World !", "Bonjour le monde !");
-
-		final Card helloWorldCard2 = new SimpleCard("Hello World 2 !", "Bonjour le monde 2 !\nBonjour le monde 2 !");
-
-		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard.getView(getActivity(), mViewGroup));
-		mViewGroup.addView(helloWorldCard2.getView(getActivity(), mViewGroup));
-
 	}
 
 	@Override
@@ -65,5 +51,47 @@ public class ArretDetailFragment extends Fragment {
 		mViewGroup.setLayoutAnimation(controller);
 
 		return view;
+	}
+
+	@Override
+	public void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		mLigne = getArguments().getParcelable(PARAM_LIGNE);
+		mSens = getArguments().getParcelable(PARAM_SENS);
+		mArret = getArguments().getParcelable(PARAM_ARRET);
+
+		new CardLoader().execute();
+	}
+
+	private class CardLoader extends AsyncTask<Void, View, Void> {
+
+		@Override
+		protected Void doInBackground(final Void... params) {
+
+			final Card horaireCard = new HoraireCard(getActivity(), mArret);
+			publishProgress(horaireCard.getView(getActivity(), mViewGroup));
+
+			final Card helloWorldCard = new SimpleCard("Hello World !", "Bonjour le monde !");
+
+			publishProgress(helloWorldCard.getView(getActivity(), mViewGroup));
+			publishProgress(helloWorldCard.getView(getActivity(), mViewGroup));
+			publishProgress(helloWorldCard.getView(getActivity(), mViewGroup));
+
+			return null;
+		}
+
+		@Override
+		protected void onProgressUpdate(final View... values) {
+			for (final View view : values) {
+				mViewGroup.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						mViewGroup.addView(view);
+					}
+				}, 100);
+			}
+		}
+
 	}
 }

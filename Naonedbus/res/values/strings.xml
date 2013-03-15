@@ -192,6 +192,10 @@
         <item quantity="one">1 place restante, dépéchez-vous !</item>
         <item quantity="other">%d places disponibles</item>
     </plurals>
+    <!-- Cards -->
+    <string name="card_horaires_title">Prochains passages</string>
+    <string name="card_trafic_title">Perturbations</string>
+    <string name="card_plan_title">Sur la carte</string>
     <!-- Itinéraires -->
     <string name="itineraire_section_form">Trajet</string>
     <!-- Carte -->
