@@ -84,7 +84,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	@Override
-	public Horaire getSingleFromCursor(Cursor c) {
+	public Horaire getSingleFromCursor(final Cursor c) {
 		final Horaire item = new Horaire();
 		item.setId(c.getInt(c.getColumnIndex(HoraireTable._ID)));
 		item.setTimestamp(c.getLong(c.getColumnIndex(HoraireTable.TIMESTAMP)));
@@ -102,7 +102,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * @return {@code true} si la date est postérieure à la date limite du
 	 *         cache, {@code false} sinon.
 	 */
-	public boolean isDateAfterCacheLimit(DateMidnight date) {
+	public boolean isDateAfterCacheLimit(final DateMidnight date) {
 		final DateMidnight dateMax = new DateMidnight().plusDays(DAYS_IN_CACHE);
 		return date.isAfter(dateMax);
 	}
@@ -247,20 +247,31 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getNextHoraires(ContentResolver contentResolver, Arret arret, DateMidnight date, int limit)
-			throws IOException {
+	public List<Horaire> getNextHoraires(final ContentResolver contentResolver, final Arret arret,
+			final DateMidnight date, final int limit) throws IOException {
+		return getNextHoraires(contentResolver, arret, date, limit, 0);
+	}
+
+	/**
+	 * Récupérer les prochains horaires d'un arrêt
+	 * 
+	 * @throws IOException
+	 */
+	public List<Horaire> getNextHoraires(final ContentResolver contentResolver, final Arret arret, DateMidnight date,
+			final int limit, final int minuteDelay) throws IOException {
 		if (DBG)
 			Log.d(LOG_TAG, "getNextHoraires " + arret + " : " + date + "\t" + limit);
 
 		List<Horaire> horaires;
-		final long now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
+		final long now = new DateTime().minusMinutes(minuteDelay).withSecondOfMinute(0).withMillisOfSecond(0)
+				.getMillis();
 		final List<Horaire> nextHoraires = new ArrayList<Horaire>();
 		int horairesCount = 0; // Juste renvoyer le bon nombre d'horaires
 		int loopCount = 0; // Limiter le nombre d'itérations
 
 		do {
 			horaires = getHoraires(contentResolver, arret, date);
-			for (Horaire horaire : horaires) {
+			for (final Horaire horaire : horaires) {
 				if (horaire.getTimestamp() >= now) {
 					nextHoraires.add(horaire);
 					if (++horairesCount >= limit) {
@@ -316,9 +327,9 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	/**
 	 * Thread de chargement des horaires selon la file
 	 */
-	private Runnable loadHoraireTask = new Runnable() {
+	private final Runnable loadHoraireTask = new Runnable() {
 
-		private String LOG_TAG = "HoraireManager$loadHoraireTask";
+		private final String LOG_TAG = "HoraireManager$loadHoraireTask";
 
 		@Override
 		public void run() {
@@ -340,7 +351,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			try {
 				getNextHoraires(task.getContext().getContentResolver(), task.getArret(), new DateMidnight(),
 						task.getLimit());
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				task.setThrowable(e);
 				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 			}

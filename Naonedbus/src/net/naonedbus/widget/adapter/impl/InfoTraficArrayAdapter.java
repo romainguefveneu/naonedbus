@@ -34,7 +34,7 @@ import android.widget.TextView;
 
 public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 
-	private DateTimeFormatHelper dateTimeFormatHelper;
+	private final DateTimeFormatHelper dateTimeFormatHelper;
 
 	static class ViewHolder {
 		TextView itemTitle = null;
@@ -43,22 +43,22 @@ public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 		LinearLayout zoneTitle = null;
 	}
 
-	public InfoTraficArrayAdapter(Context context, List<InfoTrafic> objects) {
+	public InfoTraficArrayAdapter(final Context context, final List<InfoTrafic> objects) {
 		super(context, R.layout.list_item_trafic, objects);
 		this.dateTimeFormatHelper = new DateTimeFormatHelper(context);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		LinearLayout newView;
-		InfoTrafic item = getItem(position);
+		final InfoTrafic item = getItem(position);
 
 		ViewHolder holder;
 
 		if (convertView == null) {
 			newView = new LinearLayout(getContext());
-			String inflater = Context.LAYOUT_INFLATER_SERVICE;
-			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(inflater);
+			final String inflater = Context.LAYOUT_INFLATER_SERVICE;
+			final LayoutInflater vi = (LayoutInflater) getContext().getSystemService(inflater);
 			vi.inflate(R.layout.list_item_trafic, newView, true);
 
 			holder = new ViewHolder();
@@ -81,12 +81,6 @@ public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 			holder.description.setText("Texte Vocal : \u00AB " + item.getTexteVocal() + " \u00BB");
 		}
 
-		// if (isCurrent(item)) {
-		// holder.zoneTitle.setBackgroundDrawable(icoInfoTraficCurrent);
-		// } else {
-		// holder.zoneTitle.setBackgroundDrawable(null);
-		// }
-
 		holder.date.setText(dateTimeFormatHelper.formatDuree(item.getDateDebut(), item.getDateFin()));
 
 		return newView;
@@ -99,7 +93,7 @@ public class InfoTraficArrayAdapter extends ArrayAdapter<InfoTrafic> {
 	 * @return <code>true</code> si l'infotrafic est en cours,
 	 *         <code>false</code> sinon.
 	 */
-	private static boolean isCurrent(InfoTrafic infoTrafic) {
+	private static boolean isCurrent(final InfoTrafic infoTrafic) {
 		return (infoTrafic.getDateDebut() != null && infoTrafic.getDateDebut().isBeforeNow() && (infoTrafic
 				.getDateFin() == null || infoTrafic.getDateFin().isAfterNow()));
 	}

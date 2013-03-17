@@ -193,7 +193,7 @@
         <item quantity="other">%d places disponibles</item>
     </plurals>
     <!-- Cards -->
-    <string name="card_horaires_title">Prochains passages</string>
+    <string name="card_horaires_title">Horaires</string>
     <string name="card_trafic_title">Perturbations</string>
     <string name="card_plan_title">Sur la carte</string>
     <!-- Itinéraires -->
@@ -257,6 +257,8 @@
     <string name="msg_horaire_erreur">indisponible</string>
     <string name="msg_depart_min">dans %d min</string>
     <string name="msg_depart_heure">dans %d h</string>
+    <string name="msg_depart_min_short">%d min</string>
+    <string name="msg_depart_heure_short">%d h</string>
     <string name="msg_nothing_horaires">Aucun horaire n\'a été trouvé</string>
 
     <!-- Info trafic -->

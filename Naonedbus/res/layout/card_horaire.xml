@@ -1,53 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/padding_medium"
-    android:layout_marginTop="@dimen/padding_medium"
-    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
     <TextView
-        android:id="@android:id/title"
-        style="@style/CardTitle"
+        android:id="@id/colLeft"
+        style="@style/CardHoraire.First"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/colRight"
+        android:layout_alignLeft="@+id/horaires"
         android:layout_marginBottom="@dimen/padding_small"
-        android:text="@string/card_horaires_title" />
+        android:tag="@string/cardHoraireTag"
+        android:text="00:00" />
 
     <TextView
-        android:id="@+id/horaireNext"
+        android:id="@id/colRight"
         style="@style/CardHoraire.Huge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_alignRight="@id/horaires"
         android:layout_marginBottom="@dimen/padding_small"
+        android:paddingRight="0dp"
+        android:tag="@string/cardHoraireTag"
         android:text="00:00" />
 
     <LinearLayout
+        android:id="@id/horaires"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/colRight"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding_medium"
         android:divider="@drawable/divider_vertical"
+        android:dividerPadding="@dimen/padding_tiny"
         android:showDividers="middle" >
 
         <TextView
-            android:id="@+id/horaire1"
-            style="@style/CardHoraire"
+            style="@style/CardHoraire.First"
+            android:tag="@string/cardHoraireTag"
             android:text="00:00" />
 
         <TextView
-            android:id="@+id/horaire2"
             style="@style/CardHoraire"
+            android:tag="@string/cardHoraireTag"
             android:text="00:00" />
 
         <TextView
-            android:id="@+id/horaire3"
             style="@style/CardHoraire"
-            android:text="00:00" />
-
-        <TextView
-            android:id="@+id/horaire4"
-            style="@style/CardHoraire"
+            android:tag="@string/cardHoraireTag"
             android:text="00:00" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

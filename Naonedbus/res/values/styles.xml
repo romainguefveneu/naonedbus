@@ -435,6 +435,14 @@
         <item name="android:padding">@dimen/padding_small</item>
     </style>
 
+    <style name="Card.Map">
+        <item name="android:background">@drawable/block_light</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">@dimen/padding_small</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+    </style>
+
     <style name="CardTitle" parent="BigTitle">
         <item name="android:textColor">@color/card_text_color</item>
     </style>
@@ -447,16 +455,47 @@
     </style>
 
     <style name="CardHoraire">
-        <item name="android:textColor">@color/card_text_color</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+        <item name="android:textSize">26sp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/padding_tiny</item>
+        <item name="android:paddingTop">@dimen/padding_tiny</item>
+        <item name="android:paddingBottom">@dimen/padding_tiny</item>
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_small</item>
+    </style>
+
+    <style name="CardHoraire.Previous">
+        <item name="android:textColor">@color/card_text_color</item>
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+
+    <style name="CardHoraire.First">
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+
+    <style name="CardHoraire.Last">
+        <item name="android:paddingRight">0dp</item>
     </style>
 
     <style name="CardHoraire.Huge">
         <item name="android:textColor">?attr/primaryColor</item>
         <item name="android:textSize">48sp</item>
+    </style>
+
+    <style name="CardDelai" parent="CardHoraire">
+        <item name="android:textColor">@color/card_text_color</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">-8sp</item>
+    </style>
+
+    <style name="CardDelai.First">
+        <item name="android:paddingLeft">0dp</item>
+    </style>
+
+    <style name="CardDelai.Last">
+        <item name="android:paddingRight">0dp</item>
     </style>
 
 </resources>

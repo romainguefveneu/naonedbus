@@ -150,4 +150,8 @@
     <item name="menu_layers" type="id"/>
     <item name="menu_add" type="id"/>
 
+    
+    <!-- Card -->
+    <item name="cardHoraireTag" type="string">tag:Horaire</item>
+    <item name="cardDelaiTag" type="string">tag:Delai</item>
 </resources>

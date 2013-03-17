@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ *  Copyright (C) 2011 Romain Guefveneu
+ *  
+ *  This file is part of naonedbus.
+ *  
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/contentView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_small"
+    android:paddingRight="@dimen/padding_small" >
+
+    <TextView
+        android:id="@id/itemTitle"
+        style="@style/ItemPrimaryText"
+        android:layout_toRightOf="@id/itemSymbole"
+        android:paddingRight="@dimen/padding_small"
+        android:paddingTop="@dimen/padding_small" />
+
+    <TextView
+        android:id="@id/itemDate"
+        style="@style/ItemSecondaryText.SingleLine.Small"
+        android:layout_below="@id/itemTitle"
+        android:layout_marginTop="@dimen/padding_small"
+        android:layout_toRightOf="@id/itemSymbole"
+        android:drawableLeft="@drawable/info_trafic_on"
+        android:drawablePadding="@dimen/padding_tiny"
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingLeft="1dp"
+        android:paddingRight="@dimen/padding_small" />
+
+</RelativeLayout>

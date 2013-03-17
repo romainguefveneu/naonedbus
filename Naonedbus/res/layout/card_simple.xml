@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/padding_medium"
-    android:layout_marginTop="@dimen/padding_medium"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@android:id/title"
-        style="@style/CardTitle"
-        android:layout_marginBottom="@dimen/padding_small"
-        android:text="Titre" />
-
-    <TextView
-        android:id="@android:id/text1"
-        style="@style/CardMessage"
-        android:text="Message" />
-
-</LinearLayout>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/CardMessage"
+    android:text="Message" />

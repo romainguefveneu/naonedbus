@@ -23,12 +23,14 @@ public class SimpleCard extends Card {
 
 	@Override
 	protected void bindView(final Context context, final View view) {
-		final TextView message = (TextView) view.findViewById(android.R.id.text1);
+		final TextView message = (TextView) view;
 		if (mMessageString == null) {
 			message.setText(mMessageId);
 		} else {
 			message.setText(mMessageString);
 		}
+
+		showContent();
 	}
 
 }

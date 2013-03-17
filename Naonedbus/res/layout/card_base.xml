@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/padding_medium"
+    android:layout_marginTop="@dimen/padding_medium"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@android:id/title"
+        style="@style/CardTitle"
+        android:layout_marginBottom="@dimen/padding_small"
+        android:text="@string/card_horaires_title" />
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/padding_small" />
+
+    <RelativeLayout
+        android:id="@android:id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
+</RelativeLayout>
