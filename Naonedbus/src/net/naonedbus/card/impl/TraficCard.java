@@ -4,79 +4,58 @@ import java.io.IOException;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.InfoTraficDetailActivity;
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.card.Card;
+import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.InfoTraficManager;
 
 import org.json.JSONException;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.AsyncTaskLoader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TraficCard extends Card {
-
-	public static interface OnInfoTraficClickListener {
-		void onInfoTraficClickListener(InfoTrafic infoTrafic);
-	}
+public class TraficCard extends Card implements LoaderCallbacks<List<InfoTrafic>> {
 
 	private final Ligne mLigne;
-	private final OnInfoTraficClickListener mOnInfoTraficClickListener;
+	private ViewGroup mRoot;
 
-	public TraficCard(final Ligne ligne, final OnInfoTraficClickListener onInfoTraficClickListener) {
-		super(R.string.card_trafic_title, R.layout.card_trafic);
+	public TraficCard(final Context context, final LoaderManager loaderManager, final Ligne ligne) {
+		super(context, loaderManager, R.string.card_trafic_title, R.layout.card_trafic);
 		mLigne = ligne;
-		mOnInfoTraficClickListener = onInfoTraficClickListener;
 	}
 
 	@Override
 	protected void bindView(final Context context, final View view) {
-		new Loader(context, (ViewGroup) view).execute();
+		mRoot = (ViewGroup) view;
+		getLoaderManager().initLoader(1, null, this).forceLoad();
 	}
 
-	private class Loader extends AsyncTask<Void, Void, List<InfoTrafic>> {
+	@Override
+	public android.support.v4.content.Loader<List<InfoTrafic>> onCreateLoader(final int arg0, final Bundle arg1) {
+		return new Loader(getContext(), mLigne);
+	}
 
-		private final Context mContext;
-		private final ViewGroup mRoot;
+	@Override
+	public void onLoadFinished(final android.support.v4.content.Loader<List<InfoTrafic>> arg0,
+			final List<InfoTrafic> infoTrafics) {
+		final LayoutInflater inflater = LayoutInflater.from(getContext());
 
-		public Loader(final Context context, final ViewGroup root) {
-			mContext = context;
-			mRoot = root;
+		for (final InfoTrafic infoTrafic : infoTrafics) {
+			mRoot.addView(createView(inflater, mRoot, infoTrafic));
 		}
 
-		@Override
-		protected List<InfoTrafic> doInBackground(final Void... params) {
-			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-			final InfoTraficManager manager = InfoTraficManager.getInstance();
-
-			List<InfoTrafic> infoTrafics = null;
-			try {
-				infoTrafics = manager.getByLigneCode(mContext, mLigne.code);
-			} catch (final IOException e) {
-				e.printStackTrace();
-			} catch (final JSONException e) {
-				e.printStackTrace();
-			}
-
-			return infoTrafics;
-		}
-
-		@Override
-		protected void onPostExecute(final List<InfoTrafic> infoTrafics) {
-			final LayoutInflater inflater = LayoutInflater.from(mContext);
-
-			for (final InfoTrafic infoTrafic : infoTrafics) {
-				mRoot.addView(createView(inflater, mRoot, infoTrafic));
-			}
-
-			showContent();
-
-		}
+		showContent();
 	}
 
 	private View createView(final LayoutInflater inflater, final ViewGroup root, final InfoTrafic infoTrafic) {
@@ -97,7 +76,9 @@ public class TraficCard extends Card {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				mOnInfoTraficClickListener.onInfoTraficClickListener(infoTrafic);
+				final ParamIntent intent = new ParamIntent(getContext(), InfoTraficDetailActivity.class);
+				intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, (Parcelable) infoTrafic);
+				getContext().startActivity(intent);
 			}
 		});
 
@@ -114,5 +95,35 @@ public class TraficCard extends Card {
 	private static boolean isCurrent(final InfoTrafic infoTrafic) {
 		return (infoTrafic.getDateDebut() != null && infoTrafic.getDateDebut().isBeforeNow() && (infoTrafic
 				.getDateFin() == null || infoTrafic.getDateFin().isAfterNow()));
+	}
+
+	@Override
+	public void onLoaderReset(final android.support.v4.content.Loader<List<InfoTrafic>> arg0) {
+
+	}
+
+	private static class Loader extends AsyncTaskLoader<List<InfoTrafic>> {
+		private final Ligne mLigne;
+
+		public Loader(final Context context, final Ligne ligne) {
+			super(context);
+			mLigne = ligne;
+		}
+
+		@Override
+		public List<InfoTrafic> loadInBackground() {
+			final InfoTraficManager manager = InfoTraficManager.getInstance();
+
+			List<InfoTrafic> infoTrafics = null;
+			try {
+				infoTrafics = manager.getByLigneCode(getContext(), mLigne.code);
+			} catch (final IOException e) {
+				e.printStackTrace();
+			} catch (final JSONException e) {
+				e.printStackTrace();
+			}
+
+			return infoTrafics;
+		}
 	}
 }

@@ -21,15 +21,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.AsyncTaskLoader;
 import android.view.View;
 import android.widget.TextView;
 
-public class HoraireCard extends Card {
+public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>> {
 
-	private final Context mContext;
 	private final Arret mArret;
-	private final HoraireManager mHoraireManager;
 	private final DateFormat mTimeFormat;
 
 	private final List<TextView> mHoraireViews;
@@ -49,22 +50,27 @@ public class HoraireCard extends Card {
 	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(final Context context, final Intent intent) {
-			new Loader(mContext).execute();
+			getLoaderManager().initLoader(0, null, HoraireCard.this).forceLoad();
 		}
 	};
 
-	public HoraireCard(final Context context, final Arret arret) {
-		super(R.string.card_horaires_title, R.layout.card_horaire);
-		mContext = context;
-		mArret = arret;
-		mHoraireManager = HoraireManager.getInstance();
+	public HoraireCard(final Context context, final LoaderManager loaderManager, final Arret arret) {
+		super(context, loaderManager, R.string.card_horaires_title, R.layout.card_horaire);
 
+		mArret = arret;
 		mHoraireViews = new ArrayList<TextView>();
 		mDelaiViews = new ArrayList<TextView>();
-
 		mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
+	}
 
-		context.registerReceiver(intentReceiver, intentFilter);
+	@Override
+	public void onStart() {
+		getContext().registerReceiver(intentReceiver, intentFilter);
+	}
+
+	@Override
+	public void onStop() {
+		getContext().unregisterReceiver(intentReceiver);
 	}
 
 	@Override
@@ -85,82 +91,98 @@ public class HoraireCard extends Card {
 			}
 		});
 
-		new Loader(mContext).execute();
+		getLoaderManager().initLoader(0, null, this).forceLoad();
 	}
 
-	private class Loader extends AsyncTask<Void, Void, List<Horaire>> {
+	@Override
+	public android.support.v4.content.Loader<List<Horaire>> onCreateLoader(final int arg0, final Bundle arg1) {
+		return new Loader(getContext(), mArret, mHoraireViews.size() + 1);
+	}
 
-		private final Context mContext;
+	@Override
+	public void onLoadFinished(final android.support.v4.content.Loader<List<Horaire>> loader,
+			final List<Horaire> horaires) {
 
-		public Loader(final Context context) {
-			mContext = context;
+		if (horaires != null && !horaires.isEmpty()) {
+
+			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
+			final Horaire first = horaires.get(0);
+
+			int minutes;
+			int indexView = 0;
+			int indexHoraire = 0;
+
+			// Gérer le précédent passage si présent
+			final DateTime firstDate = new DateTime(first.getDate());
+			if (firstDate.isAfterNow() || firstDate.isEqual(now)) {
+				indexView = 1;
+				mHoraireViews.get(0).setVisibility(View.GONE);
+				mDelaiViews.get(0).setVisibility(View.GONE);
+			} else {
+				mHoraireViews.get(0).setVisibility(View.VISIBLE);
+				mDelaiViews.get(0).setVisibility(View.VISIBLE);
+			}
+
+			Horaire horaire;
+			String delai = "";
+			while (indexHoraire < horaires.size() && indexView < mHoraireViews.size()) {
+				horaire = horaires.get(indexHoraire);
+				mHoraireViews.get(indexView).setText(mTimeFormat.format(horaire.getDate()));
+
+				if (indexView > 0) {
+					minutes = Minutes.minutesBetween(now,
+							new DateTime(horaire.getDate()).withSecondOfMinute(0).withMillisOfSecond(0)).getMinutes();
+
+					if (minutes > 60) {
+						delai = getString(R.string.msg_depart_heure_short, minutes / 60);
+					} else if (minutes > 0) {
+						delai = getString(R.string.msg_depart_min_short, minutes);
+					} else if (minutes == 0) {
+						delai = getString(R.string.msg_depart_proche);
+					}
+
+					mDelaiViews.get(indexView).setText(delai);
+				}
+
+				indexHoraire++;
+				indexView++;
+			}
+
+			showContent();
+		}
+	}
+
+	@Override
+	public void onLoaderReset(final android.support.v4.content.Loader<List<Horaire>> arg0) {
+
+	}
+
+	private static class Loader extends AsyncTaskLoader<List<Horaire>> {
+		private final HoraireManager mHoraireManager;
+		private final Arret mArret;
+		private final int mHorairesCount;
+
+		public Loader(final Context context, final Arret arret, final int horairesCount) {
+			super(context);
+			mArret = arret;
+			mHorairesCount = horairesCount;
+
+			mHoraireManager = HoraireManager.getInstance();
 		}
 
 		@Override
-		protected List<Horaire> doInBackground(final Void... params) {
-			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-
+		public List<Horaire> loadInBackground() {
 			List<Horaire> horaires = null;
+
 			try {
-				horaires = mHoraireManager.getNextHoraires(mContext.getContentResolver(), mArret, new DateMidnight(),
-						mHoraireViews.size() + 1, 5);
+				horaires = mHoraireManager.getNextHoraires(getContext().getContentResolver(), mArret,
+						new DateMidnight(), mHorairesCount, 5);
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
 			return horaires;
 		}
 
-		@Override
-		protected void onPostExecute(final List<Horaire> horaires) {
-			if (horaires != null && !horaires.isEmpty()) {
-
-				final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
-				final Horaire first = horaires.get(0);
-
-				int minutes;
-				int indexView = 0;
-				int indexHoraire = 0;
-
-				// Gérer le précédent passage si présent
-				final DateTime firstDate = new DateTime(first.getDate());
-				if (firstDate.isAfterNow() || firstDate.isEqual(now)) {
-					indexView = 1;
-					mHoraireViews.get(0).setVisibility(View.GONE);
-					mDelaiViews.get(0).setVisibility(View.GONE);
-				} else {
-					mHoraireViews.get(0).setVisibility(View.VISIBLE);
-					mDelaiViews.get(0).setVisibility(View.VISIBLE);
-				}
-
-				Horaire horaire;
-				String delai = "";
-				while (indexHoraire < horaires.size() && indexView < mHoraireViews.size()) {
-					horaire = horaires.get(indexHoraire);
-					mHoraireViews.get(indexView).setText(mTimeFormat.format(horaire.getDate()));
-
-					if (indexView > 0) {
-						minutes = Minutes.minutesBetween(now,
-								new DateTime(horaire.getDate()).withSecondOfMinute(0).withMillisOfSecond(0))
-								.getMinutes();
-
-						if (minutes > 60) {
-							delai = mContext.getString(R.string.msg_depart_heure_short, minutes / 60);
-						} else if (minutes > 0) {
-							delai = mContext.getString(R.string.msg_depart_min_short, minutes);
-						} else if (minutes == 0) {
-							delai = mContext.getString(R.string.msg_depart_proche);
-						}
-
-						mDelaiViews.get(indexView).setText(delai);
-					}
-
-					indexHoraire++;
-					indexView++;
-				}
-
-				showContent();
-			}
-		}
 	}
 
 }

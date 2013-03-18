@@ -12,6 +12,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.LoaderManager;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -26,8 +27,8 @@ public class MapCard extends Card {
 	private final Float mLatitude;
 	private final Float mLongitude;
 
-	public MapCard(final Float latitude, final Float longitude) {
-		super(R.string.card_plan_title, R.layout.card_map);
+	public MapCard(final Context context, final LoaderManager loaderManager, final Float latitude, final Float longitude) {
+		super(context, loaderManager, R.string.card_plan_title, R.layout.card_map);
 
 		mLatitude = latitude;
 		mLongitude = longitude;

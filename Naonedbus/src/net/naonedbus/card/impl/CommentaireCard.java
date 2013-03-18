@@ -9,6 +9,7 @@ import net.naonedbus.card.Card;
 import net.naonedbus.manager.impl.CommentaireManager;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.app.LoaderManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,12 +24,10 @@ public class CommentaireCard extends Card {
 	}
 
 	private final Ligne mLigne;
-	private final OnItemClickListener mOnItemClickListener;
 
-	public CommentaireCard(final Ligne ligne, final OnItemClickListener onInfoTraficClickListener) {
-		super(R.string.card_trafic_title, R.layout.card_trafic);
+	public CommentaireCard(final Context context, final LoaderManager loaderManager, final Ligne ligne) {
+		super(context, loaderManager, R.string.card_trafic_title, R.layout.card_trafic);
 		mLigne = ligne;
-		mOnItemClickListener = onInfoTraficClickListener;
 	}
 
 	@Override
@@ -82,7 +81,6 @@ public class CommentaireCard extends Card {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				mOnItemClickListener.onItemClickListener(commentaire);
 			}
 		});
 

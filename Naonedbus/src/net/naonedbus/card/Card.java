@@ -4,6 +4,7 @@ import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.app.LoaderManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,9 @@ import android.widget.TextView;
 
 public abstract class Card {
 
+	private final Context mContext;
+	private final LoaderManager mLoaderManager;
 	private final int mLayoutId;
-	private final String mTitleString;
 	private final int mTitleId;
 
 	private View mProgress;
@@ -22,37 +24,52 @@ public abstract class Card {
 	private Typeface mRobotoLight;
 	private Typeface mRobotoBold;
 
-	public Card(final String title, final int layoutId) {
-		mTitleString = title;
+	public Card(final Context context, final LoaderManager loaderManager, final int titleId, final int layoutId) {
+		mContext = context;
+		mLoaderManager = loaderManager;
+		mTitleId = titleId;
 		mLayoutId = layoutId;
-		mTitleId = -1;
 	}
 
-	public Card(final int title, final int layoutId) {
-		mTitleId = title;
-		mLayoutId = layoutId;
-		mTitleString = null;
+	public void onStart() {
+
 	}
 
-	public View getView(final Context context, final ViewGroup root) {
-		final LayoutInflater inflater = LayoutInflater.from(context);
+	public void onStop() {
 
-		final ViewGroup base = (ViewGroup) inflater.inflate(R.layout.card_base, root, false);
+	}
+
+	protected Context getContext() {
+		return mContext;
+	}
+
+	protected LoaderManager getLoaderManager() {
+		return mLoaderManager;
+	}
+
+	protected String getString(final int resId) {
+		return mContext.getString(resId);
+	}
+
+	protected String getString(final int resId, final Object... formatArgs) {
+		return mContext.getString(resId, formatArgs);
+	}
+
+	public View getView(final ViewGroup container) {
+		final LayoutInflater inflater = LayoutInflater.from(mContext);
+
+		final ViewGroup base = (ViewGroup) inflater.inflate(R.layout.card_base, container, false);
 		final View view = inflater.inflate(mLayoutId, base, false);
 
 		final TextView title = (TextView) base.findViewById(android.R.id.title);
 		setTypefaceRobotoLight(title);
-		if (mTitleString == null) {
-			title.setText(mTitleId);
-		} else {
-			title.setText(mTitleString);
-		}
+		title.setText(mTitleId);
 
 		mProgress = base.findViewById(android.R.id.progress);
 		mContent = (ViewGroup) base.findViewById(android.R.id.content);
 		mContent.addView(view);
 
-		bindView(context, view);
+		bindView(container.getContext(), view);
 
 		return base;
 	}
