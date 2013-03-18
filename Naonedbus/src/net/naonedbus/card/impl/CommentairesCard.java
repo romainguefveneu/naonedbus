@@ -1,0 +1,151 @@
+package net.naonedbus.card.impl;
+
+import java.io.IOException;
+import java.util.List;
+
+import net.naonedbus.R;
+import net.naonedbus.bean.Commentaire;
+import net.naonedbus.bean.Ligne;
+import net.naonedbus.card.Card;
+import net.naonedbus.formatter.CommentaireFomatter;
+import net.naonedbus.manager.impl.CommentaireManager;
+
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+import org.json.JSONException;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.AsyncTaskLoader;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.TextView.BufferType;
+
+public class CommentairesCard extends Card implements LoaderCallbacks<List<Commentaire>> {
+
+	private final Ligne mLigne;
+	private ViewGroup mRoot;
+
+	public CommentairesCard(final Context context, final LoaderManager loaderManager, final Ligne ligne) {
+		super(context, loaderManager, R.string.card_commentaires_title, R.layout.card_trafic);
+		mLigne = ligne;
+	}
+
+	@Override
+	protected void bindView(final Context context, final View view) {
+		mRoot = (ViewGroup) view;
+		getLoaderManager().initLoader(2, null, this).forceLoad();
+	}
+
+	private View createView(final LayoutInflater inflater, final ViewGroup root, final Commentaire commentaire) {
+		final View view = inflater.inflate(R.layout.card_item_commentaire, root, false);
+
+		final TextView itemTitle = (TextView) view.findViewById(R.id.itemTitle);
+		final TextView itemDate = (TextView) view.findViewById(R.id.itemTime);
+		final TextView itemDescription = (TextView) view.findViewById(R.id.itemDescription);
+
+		String title = "";
+
+		if (commentaire.getArret() == null && commentaire.getSens() == null && commentaire.getLigne() == null) {
+			title = view.getContext().getString(R.string.commentaire_tout);
+		} else {
+			if (commentaire.getArret() != null) {
+				title = commentaire.getArret().nomArret + " ";
+			}
+			if (commentaire.getSens() != null) {
+				title = title + "\u2192 " + commentaire.getSens().text;
+			}
+		}
+
+		itemDescription.setText(commentaire.getMessage(), BufferType.SPANNABLE);
+		itemDate.setText(commentaire.getDelay());
+
+		if (title.trim().length() == 0) {
+			itemTitle.setVisibility(View.GONE);
+		} else {
+			itemTitle.setVisibility(View.VISIBLE);
+			itemTitle.setText(title.trim());
+		}
+
+		view.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+			}
+		});
+
+		return view;
+	}
+
+	@Override
+	public android.support.v4.content.Loader<List<Commentaire>> onCreateLoader(final int arg0, final Bundle arg1) {
+		return new Loader(getContext(), mLigne);
+	}
+
+	@Override
+	public void onLoadFinished(final android.support.v4.content.Loader<List<Commentaire>> arg0,
+			final List<Commentaire> commentaires) {
+		if (commentaires == null || commentaires.isEmpty()) {
+			showMessage(R.string.msg_nothing_commentaires, R.drawable.ic_checkmark_holo_light);
+		} else {
+			final LayoutInflater inflater = LayoutInflater.from(getContext());
+
+			for (final Commentaire commentaire : commentaires) {
+				mRoot.addView(createView(inflater, mRoot, commentaire));
+			}
+
+			showContent();
+		}
+
+	}
+
+	@Override
+	public void onLoaderReset(final android.support.v4.content.Loader<List<Commentaire>> arg0) {
+
+	}
+
+	private static class Loader extends AsyncTaskLoader<List<Commentaire>> {
+		private final Ligne mLigne;
+
+		public Loader(final Context context, final Ligne ligne) {
+			super(context);
+			mLigne = ligne;
+		}
+
+		@Override
+		public List<Commentaire> loadInBackground() {
+			final CommentaireManager manager = CommentaireManager.getInstance();
+			final CommentaireFomatter fomatter = new CommentaireFomatter(getContext());
+			final long today = new DateMidnight().getMillis();
+			Commentaire commentaire;
+			List<Commentaire> commentaires = null;
+
+			try {
+				commentaires = manager.getFromWeb(getContext(), mLigne.code, null, null, new DateTime(0));
+
+				for (int i = commentaires.size() - 1; i > -1; i--) {
+					commentaire = commentaires.get(i);
+
+					if (commentaire.getTimestamp() > today && mLigne.code.equals(commentaire.getCodeLigne())) {
+						fomatter.formatValues(commentaire);
+					} else {
+						commentaires.remove(i);
+					}
+				}
+
+				commentaires = commentaires.subList(0, Math.min(3, commentaires.size()));
+			} catch (final IOException e) {
+				e.printStackTrace();
+			} catch (final JSONException e) {
+				e.printStackTrace();
+			}
+			return commentaires;
+		}
+
+	}
+
+}

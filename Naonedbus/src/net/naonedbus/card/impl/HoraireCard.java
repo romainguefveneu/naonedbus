@@ -149,6 +149,8 @@ public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>> 
 			}
 
 			showContent();
+		} else {
+			showMessage(R.string.msg_nothing_horaires);
 		}
 	}
 

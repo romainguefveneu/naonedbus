@@ -195,6 +195,7 @@
     <!-- Cards -->
     <string name="card_horaires_title">Horaires</string>
     <string name="card_trafic_title">Perturbations</string>
+    <string name="card_commentaires_title">En direct</string>
     <string name="card_plan_title">Sur la carte</string>
     <!-- Itinéraires -->
     <string name="itineraire_section_form">Trajet</string>
@@ -251,6 +252,8 @@
     <string name="msg_cache_horaire_clear">Les horaires ont été vidés</string>
     <string name="btn_geolocation_service">Services de localisation</string>
     <string name="msg_importing_favoris">Import des favoris en cours&#8230;</string>
+    <string name="msg_nothing_info_trafic">Aucune perturbation en cours</string>
+    <string name="msg_nothing_commentaires">Aucun commentaire récent</string>
     <!-- - - Horaires -->
     <string name="msg_depart_proche">départ proche</string>
     <string name="msg_aucun_depart_24h">dans longtemps</string>

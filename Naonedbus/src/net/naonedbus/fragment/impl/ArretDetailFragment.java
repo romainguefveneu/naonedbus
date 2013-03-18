@@ -1,14 +1,12 @@
 package net.naonedbus.fragment.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
+import net.naonedbus.card.impl.CommentairesCard;
 import net.naonedbus.card.impl.HoraireCard;
 import net.naonedbus.card.impl.TraficCard;
 import android.os.Bundle;
@@ -29,9 +27,6 @@ public class ArretDetailFragment extends Fragment {
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
 
-	private final List<String> mFragmentsTags;
-	private boolean isNew;
-
 	private Ligne mLigne;
 	private Sens mSens;
 	private Arret mArret;
@@ -39,7 +34,6 @@ public class ArretDetailFragment extends Fragment {
 	private ViewGroup mViewGroup;
 
 	public ArretDetailFragment() {
-		mFragmentsTags = new ArrayList<String>();
 	}
 
 	@Override
@@ -49,8 +43,6 @@ public class ArretDetailFragment extends Fragment {
 		mLigne = getArguments().getParcelable(PARAM_LIGNE);
 		mSens = getArguments().getParcelable(PARAM_SENS);
 		mArret = getArguments().getParcelable(PARAM_ARRET);
-
-		isNew = (savedInstanceState == null);
 
 		setRetainInstance(true);
 	}
@@ -78,9 +70,11 @@ public class ArretDetailFragment extends Fragment {
 
 		final Card horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
 		final Card traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
+		final Card commentairesCard = new CommentairesCard(getActivity(), getLoaderManager(), mLigne);
 
 		mViewGroup.addView(horaireCard.getView(mViewGroup));
 		mViewGroup.addView(traficCard.getView(mViewGroup));
+		mViewGroup.addView(commentairesCard.getView(mViewGroup));
 	}
 
 }

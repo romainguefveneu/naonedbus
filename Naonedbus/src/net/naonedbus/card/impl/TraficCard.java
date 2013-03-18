@@ -49,17 +49,23 @@ public class TraficCard extends Card implements LoaderCallbacks<List<InfoTrafic>
 	@Override
 	public void onLoadFinished(final android.support.v4.content.Loader<List<InfoTrafic>> arg0,
 			final List<InfoTrafic> infoTrafics) {
-		final LayoutInflater inflater = LayoutInflater.from(getContext());
 
-		for (final InfoTrafic infoTrafic : infoTrafics) {
-			mRoot.addView(createView(inflater, mRoot, infoTrafic));
+		if (infoTrafics.isEmpty()) {
+			showMessage(R.string.msg_nothing_info_trafic, R.drawable.ic_checkmark_holo_light);
+		} else {
+			final LayoutInflater inflater = LayoutInflater.from(getContext());
+
+			for (final InfoTrafic infoTrafic : infoTrafics) {
+				mRoot.addView(createView(inflater, mRoot, infoTrafic));
+			}
+
+			showContent();
 		}
 
-		showContent();
 	}
 
 	private View createView(final LayoutInflater inflater, final ViewGroup root, final InfoTrafic infoTrafic) {
-		final View view = inflater.inflate(R.layout.card_item_content_trafic_ligne, root, false);
+		final View view = inflater.inflate(R.layout.card_item_trafic_ligne, root, false);
 
 		final TextView itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		final TextView itemDate = (TextView) view.findViewById(R.id.itemDate);

@@ -41,7 +41,7 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 
 	private static final Map<String, CommentaireAdapter> adapterMap = new HashMap<String, CommentaireAdapter>();
 	static {
-		DefaultCommentaireAdapter defaultCommentaireAdapter = new DefaultCommentaireAdapter();
+		final DefaultCommentaireAdapter defaultCommentaireAdapter = new DefaultCommentaireAdapter();
 		adapterMap.put(null, defaultCommentaireAdapter);
 		adapterMap.put(NaonedbusClient.NAONEDBUS.name(), defaultCommentaireAdapter);
 		adapterMap.put(NaonedbusClient.SIMPLETAN.name(), defaultCommentaireAdapter);
@@ -59,13 +59,13 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 
 	private final Typeface robotoMedium;
 
-	public CommentaireArrayAdapter(Context context) {
+	public CommentaireArrayAdapter(final Context context) {
 		super(context, R.layout.list_item_commentaire);
 		robotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	@Override
-	public void bindView(View view, Context context, int position) {
+	public void bindView(final View view, final Context context, final int position) {
 		final Commentaire item = getItem(position);
 		CommentaireAdapter adapter;
 
@@ -79,8 +79,8 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 	}
 
 	@Override
-	public void bindViewHolder(View view) {
-		ViewHolder holder = new ViewHolder();
+	public void bindViewHolder(final View view) {
+		final ViewHolder holder = new ViewHolder();
 		holder.ligneCode = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.ligneCodeBackground = (ImageView) view.findViewById(R.id.itemIcon);
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -108,14 +108,10 @@ interface CommentaireAdapter {
 class TanTraficCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(View itemView, Commentaire item) {
+	public void setObject(final View itemView, final Commentaire item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
-		if (item.getBackground() == null) {
-			item.setBackground(itemView.getContext().getResources().getDrawable(R.drawable.logo_tan));
-		}
-
-		holder.ligneCodeBackground.setBackgroundDrawable(item.getBackground());
+		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_tan);
 		holder.ligneCodeBackground.setVisibility(View.VISIBLE);
 		holder.ligneCode.setVisibility(View.GONE);
 
@@ -134,14 +130,9 @@ class TanTraficCommentaireAdapter implements CommentaireAdapter {
 class MessageServiceCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(View itemView, Commentaire item) {
+	public void setObject(final View itemView, final Commentaire item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
-		if (item.getBackground() == null) {
-			item.setBackground(itemView.getContext().getResources().getDrawable(R.drawable.ic_launcher));
-		}
-
-		holder.ligneCodeBackground.setBackgroundDrawable(itemView.getContext().getResources()
-				.getDrawable(R.drawable.ic_launcher));
+		holder.ligneCodeBackground.setBackgroundResource(R.drawable.ic_launcher);
 		holder.ligneCodeBackground.setVisibility(View.VISIBLE);
 		holder.ligneCode.setVisibility(View.GONE);
 
@@ -160,7 +151,7 @@ class MessageServiceCommentaireAdapter implements CommentaireAdapter {
 class DefaultCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(View itemView, Commentaire item) {
+	public void setObject(final View itemView, final Commentaire item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
 		String title = "";

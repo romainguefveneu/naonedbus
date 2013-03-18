@@ -20,21 +20,18 @@
  */
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@id/contentView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/padding_small"
-    android:paddingRight="@dimen/padding_small" >
+    android:padding="@dimen/padding_small" >
 
     <TextView
         android:id="@id/itemTitle"
         style="@style/ItemPrimaryText"
         android:layout_toRightOf="@id/itemSymbole"
-        android:paddingRight="@dimen/padding_small"
-        android:paddingTop="@dimen/padding_small" />
+        android:paddingRight="@dimen/padding_small" />
 
     <TextView
         android:id="@id/itemDate"

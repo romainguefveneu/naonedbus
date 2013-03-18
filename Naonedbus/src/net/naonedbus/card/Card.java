@@ -19,6 +19,7 @@ public abstract class Card {
 	private final int mTitleId;
 
 	private View mProgress;
+	private TextView mMessage;
 	private ViewGroup mContent;
 
 	private Typeface mRobotoLight;
@@ -66,6 +67,7 @@ public abstract class Card {
 		title.setText(mTitleId);
 
 		mProgress = base.findViewById(android.R.id.progress);
+		mMessage = (TextView) base.findViewById(android.R.id.message);
 		mContent = (ViewGroup) base.findViewById(android.R.id.content);
 		mContent.addView(view);
 
@@ -79,6 +81,21 @@ public abstract class Card {
 			mProgress.setVisibility(View.GONE);
 			mContent.setVisibility(View.VISIBLE);
 			mContent.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), android.R.anim.fade_in));
+		}
+	}
+
+	protected void showMessage(final int messageId, final int drawableId) {
+		mMessage.setCompoundDrawablesWithIntrinsicBounds(drawableId, 0, 0, 0);
+		showMessage(messageId);
+	}
+
+	protected void showMessage(final int messageId) {
+		if (mMessage.getVisibility() != View.VISIBLE) {
+			mProgress.setVisibility(View.GONE);
+			mContent.setVisibility(View.GONE);
+			mMessage.setText(messageId);
+			mMessage.setVisibility(View.VISIBLE);
+			mMessage.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), android.R.anim.fade_in));
 		}
 	}
 
