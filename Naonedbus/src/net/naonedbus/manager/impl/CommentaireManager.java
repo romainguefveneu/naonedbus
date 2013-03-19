@@ -48,6 +48,17 @@ public class CommentaireManager {
 		return instance;
 	}
 
+	public List<Commentaire> getAll(final Context context, final String codeLigne, final String codeSens,
+			final String codeArret, final BaseDateTime date) throws IOException, JSONException {
+
+		List<Commentaire> data = getFromCache(context, codeLigne, codeSens, codeArret);
+		if (data.size() == 0) {
+			data = getFromWeb(context, codeLigne, codeSens, codeArret, date);
+		}
+
+		return data;
+	}
+
 	public List<Commentaire> getFromCache(final Context context, final String codeLigne, final String codeSens,
 			final String codeArret) {
 		final File cacheFile = new File(context.getCacheDir(), genKey(codeLigne, codeSens, codeArret) + ".timeline");

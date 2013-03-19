@@ -10,8 +10,8 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.ArretDetailActivity;
 import net.naonedbus.activity.impl.GroupesActivity;
-import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
@@ -574,8 +574,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			mListView.setItemChecked(position, false);
 			final Favori item = (Favori) l.getItemAtPosition(position);
 
-			final Intent intent = new Intent(getActivity(), HorairesActivity.class);
-			intent.putExtra(HorairesActivity.PARAM_ARRET, item);
+			final Intent intent = new Intent(getActivity(), ArretDetailActivity.class);
+			intent.putExtra(ArretDetailActivity.PARAM_ARRET, item);
 
 			startActivity(intent);
 		} else {

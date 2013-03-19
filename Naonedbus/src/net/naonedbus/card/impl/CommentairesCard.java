@@ -28,6 +28,8 @@ import android.widget.TextView.BufferType;
 
 public class CommentairesCard extends Card implements LoaderCallbacks<List<Commentaire>> {
 
+	private static final int LIMIT = 3;
+
 	private final Ligne mLigne;
 	private ViewGroup mRoot;
 
@@ -121,23 +123,23 @@ public class CommentairesCard extends Card implements LoaderCallbacks<List<Comme
 			final CommentaireManager manager = CommentaireManager.getInstance();
 			final CommentaireFomatter fomatter = new CommentaireFomatter(getContext());
 			final long today = new DateMidnight().getMillis();
-			Commentaire commentaire;
+
 			List<Commentaire> commentaires = null;
 
 			try {
-				commentaires = manager.getFromWeb(getContext(), mLigne.code, null, null, new DateTime(0));
+				commentaires = manager.getAll(getContext(), mLigne.code, null, null, new DateTime(0));
 
 				for (int i = commentaires.size() - 1; i > -1; i--) {
-					commentaire = commentaires.get(i);
+					final Commentaire commentaire = commentaires.get(i);
 
-					if (commentaire.getTimestamp() > today && mLigne.code.equals(commentaire.getCodeLigne())) {
+					if (commentaire.getTimestamp() > today) {
 						fomatter.formatValues(commentaire);
 					} else {
 						commentaires.remove(i);
 					}
 				}
 
-				commentaires = commentaires.subList(0, Math.min(3, commentaires.size()));
+				commentaires = commentaires.subList(0, Math.min(LIMIT, commentaires.size()));
 			} catch (final IOException e) {
 				e.printStackTrace();
 			} catch (final JSONException e) {

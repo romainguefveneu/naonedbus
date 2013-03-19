@@ -9,6 +9,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.card.Card;
+import net.naonedbus.fragment.impl.ArretDetailFragment.OnArretChangeListener;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.ViewHelper;
 import net.naonedbus.utils.ViewHelper.OnTagFoundHandler;
@@ -28,9 +29,9 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.view.View;
 import android.widget.TextView;
 
-public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>> {
+public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>>, OnArretChangeListener {
 
-	private final Arret mArret;
+	private Arret mArret;
 	private final DateFormat mTimeFormat;
 
 	private final List<TextView> mHoraireViews;
@@ -95,7 +96,14 @@ public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>> 
 	}
 
 	@Override
-	public android.support.v4.content.Loader<List<Horaire>> onCreateLoader(final int arg0, final Bundle arg1) {
+	public void onArretChange(final Arret newArret) {
+		mArret = newArret;
+		showLoader();
+		getLoaderManager().restartLoader(0, null, this).forceLoad();
+	}
+
+	@Override
+	public android.support.v4.content.Loader<List<Horaire>> onCreateLoader(final int id, final Bundle bundle) {
 		return new Loader(getContext(), mArret, mHoraireViews.size() + 1);
 	}
 
@@ -160,6 +168,7 @@ public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>> 
 	}
 
 	private static class Loader extends AsyncTaskLoader<List<Horaire>> {
+
 		private final HoraireManager mHoraireManager;
 		private final Arret mArret;
 		private final int mHorairesCount;

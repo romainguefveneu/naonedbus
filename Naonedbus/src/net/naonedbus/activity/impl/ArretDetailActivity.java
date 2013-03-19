@@ -7,13 +7,14 @@ import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.fragment.impl.ArretDetailFragment;
+import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.SymbolesUtils;
 import android.os.Bundle;
 
-public class ArretDetailActivity extends OneFragmentActivity {
+public class ArretDetailActivity extends OneFragmentActivity implements OnSensChangeListener {
 
 	private static final String LOG_TAG = "ArretDetailActivity";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -59,5 +60,10 @@ public class ArretDetailActivity extends OneFragmentActivity {
 		mHeaderHelper.setCode(ligne.lettre);
 		mHeaderHelper.setTitle(arret.nomArret);
 		mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
+	}
+
+	@Override
+	public void onSensChange(final Sens newSens) {
+		mHeaderHelper.setSubTitleAnimated(SymbolesUtils.formatSens(newSens.text));
 	}
 }
