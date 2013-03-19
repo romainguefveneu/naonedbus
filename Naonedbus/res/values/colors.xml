@@ -36,6 +36,8 @@
     <color name="holo_blue_light">#ff2F93C5</color>
     <color name="holo_blue_dark">#ff70AFCE</color>
     <color name="holo_blue_selected">#ff2fa9d2</color>
+    <color name="holo_green">#669900</color>
+    <color name="holo_blue_card">#33b5e5</color>
     <color name="message_service_header">#2F93C5</color>
     <color name="message_tan_header">#358243</color>
     <color name="query_hint_color">#9bc9e1</color>

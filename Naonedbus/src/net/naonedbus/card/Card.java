@@ -1,17 +1,25 @@
 package net.naonedbus.card;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-public abstract class Card {
+public abstract class Card<T> implements LoaderCallbacks<T> {
+
+	private static final Map<Class<?>, Integer> sLoaderIds = new HashMap<Class<?>, Integer>();
 
 	private final Context mContext;
 	private final LoaderManager mLoaderManager;
@@ -33,19 +41,28 @@ public abstract class Card {
 	}
 
 	public void onStart() {
-
 	}
 
 	public void onStop() {
-
 	}
 
 	protected Context getContext() {
 		return mContext;
 	}
 
-	protected LoaderManager getLoaderManager() {
-		return mLoaderManager;
+	protected Loader<T> initLoader(final Bundle bundle, final LoaderCallbacks<T> callbacks) {
+		return mLoaderManager.initLoader(getLoaderId(), bundle, callbacks);
+	}
+
+	protected Loader<T> restartLoader(final Bundle bundle, final LoaderCallbacks<T> callbacks) {
+		return mLoaderManager.restartLoader(getLoaderId(), bundle, callbacks);
+	}
+
+	private synchronized int getLoaderId() {
+		if (!sLoaderIds.containsKey(getClass())) {
+			sLoaderIds.put(getClass(), Integer.MAX_VALUE - sLoaderIds.size());
+		}
+		return sLoaderIds.get(getClass());
 	}
 
 	protected String getString(final int resId) {
@@ -135,4 +152,14 @@ public abstract class Card {
 
 	protected abstract void bindView(final Context context, final View view);
 
+	@Override
+	public abstract Loader<T> onCreateLoader(final int idLoader, final Bundle args);
+
+	@Override
+	public abstract void onLoadFinished(final Loader<T> loader, final T results);
+
+	@Override
+	public void onLoaderReset(final Loader<T> loader) {
+
+	}
 }

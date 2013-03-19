@@ -17,15 +17,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TraficCard extends Card implements LoaderCallbacks<List<InfoTrafic>> {
+public class TraficCard extends Card<List<InfoTrafic>> {
 
 	private final Ligne mLigne;
 	private ViewGroup mRoot;
@@ -38,12 +38,12 @@ public class TraficCard extends Card implements LoaderCallbacks<List<InfoTrafic>
 	@Override
 	protected void bindView(final Context context, final View view) {
 		mRoot = (ViewGroup) view;
-		getLoaderManager().initLoader(1, null, this).forceLoad();
+		initLoader(null, this).forceLoad();
 	}
 
 	@Override
-	public android.support.v4.content.Loader<List<InfoTrafic>> onCreateLoader(final int arg0, final Bundle arg1) {
-		return new Loader(getContext(), mLigne);
+	public Loader<List<InfoTrafic>> onCreateLoader(final int arg0, final Bundle arg1) {
+		return new LoaderTask(getContext(), mLigne);
 	}
 
 	@Override
@@ -103,15 +103,10 @@ public class TraficCard extends Card implements LoaderCallbacks<List<InfoTrafic>
 				.getDateFin() == null || infoTrafic.getDateFin().isAfterNow()));
 	}
 
-	@Override
-	public void onLoaderReset(final android.support.v4.content.Loader<List<InfoTrafic>> arg0) {
-
-	}
-
-	private static class Loader extends AsyncTaskLoader<List<InfoTrafic>> {
+	private static class LoaderTask extends AsyncTaskLoader<List<InfoTrafic>> {
 		private final Ligne mLigne;
 
-		public Loader(final Context context, final Ligne ligne) {
+		public LoaderTask(final Context context, final Ligne ligne) {
 			super(context);
 			mLigne = ligne;
 		}

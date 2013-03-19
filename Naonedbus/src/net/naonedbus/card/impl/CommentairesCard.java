@@ -17,8 +17,8 @@ import org.json.JSONException;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-public class CommentairesCard extends Card implements LoaderCallbacks<List<Commentaire>> {
+public class CommentairesCard extends Card<List<Commentaire>> {
 
 	private static final int LIMIT = 3;
 
@@ -41,7 +41,7 @@ public class CommentairesCard extends Card implements LoaderCallbacks<List<Comme
 	@Override
 	protected void bindView(final Context context, final View view) {
 		mRoot = (ViewGroup) view;
-		getLoaderManager().initLoader(2, null, this).forceLoad();
+		initLoader(null, this).forceLoad();
 	}
 
 	private View createView(final LayoutInflater inflater, final ViewGroup root, final Commentaire commentaire) {
@@ -84,8 +84,8 @@ public class CommentairesCard extends Card implements LoaderCallbacks<List<Comme
 	}
 
 	@Override
-	public android.support.v4.content.Loader<List<Commentaire>> onCreateLoader(final int arg0, final Bundle arg1) {
-		return new Loader(getContext(), mLigne);
+	public Loader<List<Commentaire>> onCreateLoader(final int arg0, final Bundle arg1) {
+		return new LoaderTask(getContext(), mLigne);
 	}
 
 	@Override
@@ -105,15 +105,10 @@ public class CommentairesCard extends Card implements LoaderCallbacks<List<Comme
 
 	}
 
-	@Override
-	public void onLoaderReset(final android.support.v4.content.Loader<List<Commentaire>> arg0) {
-
-	}
-
-	private static class Loader extends AsyncTaskLoader<List<Commentaire>> {
+	private static class LoaderTask extends AsyncTaskLoader<List<Commentaire>> {
 		private final Ligne mLigne;
 
-		public Loader(final Context context, final Ligne ligne) {
+		public LoaderTask(final Context context, final Ligne ligne) {
 			super(context);
 			mLigne = ligne;
 		}

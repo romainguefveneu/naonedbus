@@ -24,12 +24,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.TextView;
 
-public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>>, OnArretChangeListener {
+public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeListener {
 
 	private Arret mArret;
 	private final DateFormat mTimeFormat;
@@ -51,7 +51,7 @@ public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>>,
 	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(final Context context, final Intent intent) {
-			getLoaderManager().initLoader(0, null, HoraireCard.this).forceLoad();
+			restartLoader(null, HoraireCard.this).forceLoad();
 		}
 	};
 
@@ -66,11 +66,13 @@ public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>>,
 
 	@Override
 	public void onStart() {
+		super.onStart();
 		getContext().registerReceiver(intentReceiver, intentFilter);
 	}
 
 	@Override
 	public void onStop() {
+		super.onStop();
 		getContext().unregisterReceiver(intentReceiver);
 	}
 
@@ -92,24 +94,23 @@ public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>>,
 			}
 		});
 
-		getLoaderManager().initLoader(0, null, this).forceLoad();
+		initLoader(null, this).forceLoad();
 	}
 
 	@Override
 	public void onArretChange(final Arret newArret) {
 		mArret = newArret;
 		showLoader();
-		getLoaderManager().restartLoader(0, null, this).forceLoad();
+		restartLoader(null, this).forceLoad();
 	}
 
 	@Override
-	public android.support.v4.content.Loader<List<Horaire>> onCreateLoader(final int id, final Bundle bundle) {
-		return new Loader(getContext(), mArret, mHoraireViews.size() + 1);
+	public Loader<List<Horaire>> onCreateLoader(final int id, final Bundle bundle) {
+		return new LoaderTask(getContext(), mArret, mHoraireViews.size() + 1);
 	}
 
 	@Override
-	public void onLoadFinished(final android.support.v4.content.Loader<List<Horaire>> loader,
-			final List<Horaire> horaires) {
+	public void onLoadFinished(final Loader<List<Horaire>> loader, final List<Horaire> horaires) {
 
 		if (horaires != null && !horaires.isEmpty()) {
 
@@ -162,18 +163,13 @@ public class HoraireCard extends Card implements LoaderCallbacks<List<Horaire>>,
 		}
 	}
 
-	@Override
-	public void onLoaderReset(final android.support.v4.content.Loader<List<Horaire>> arg0) {
-
-	}
-
-	private static class Loader extends AsyncTaskLoader<List<Horaire>> {
+	private static class LoaderTask extends AsyncTaskLoader<List<Horaire>> {
 
 		private final HoraireManager mHoraireManager;
 		private final Arret mArret;
 		private final int mHorairesCount;
 
-		public Loader(final Context context, final Arret arret, final int horairesCount) {
+		public LoaderTask(final Context context, final Arret arret, final int horairesCount) {
 			super(context);
 			mArret = arret;
 			mHorairesCount = horairesCount;

@@ -1,6 +1,5 @@
 package net.naonedbus.activity.impl;
 
-import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
 import net.naonedbus.bean.Arret;
@@ -15,9 +14,6 @@ import net.naonedbus.utils.SymbolesUtils;
 import android.os.Bundle;
 
 public class ArretDetailActivity extends OneFragmentActivity implements OnSensChangeListener {
-
-	private static final String LOG_TAG = "ArretDetailActivity";
-	private static final boolean DBG = BuildConfig.DEBUG;
 
 	public static final String PARAM_LIGNE = "ligne";
 	public static final String PARAM_SENS = "sens";

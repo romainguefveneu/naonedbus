@@ -11,21 +11,22 @@ import net.naonedbus.card.Card;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ImageView;
 
-public class MapCard extends Card {
+public class MapCard extends Card<Bitmap> {
 
 	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?center=%f,%f&zoom=14&scale=2&size=%dx%d&sensor=false&markers=color:blue%%7C%f,%f";
-
-	private static interface Callback {
-		void onBitmapLoaded(Bitmap bitmap);
-	}
+	private static final String PARAM_URL = "url";
 
 	private final Float mLatitude;
 	private final Float mLongitude;
+
+	private ImageView mImageView;
 
 	public MapCard(final Context context, final LoaderManager loaderManager, final Float latitude, final Float longitude) {
 		super(context, loaderManager, R.string.card_plan_title, R.layout.card_map);
@@ -36,31 +37,39 @@ public class MapCard extends Card {
 
 	@Override
 	protected void bindView(final Context context, final View view) {
-		final ImageView imageView = (ImageView) view;
 		final String url = String.format(Locale.ENGLISH, MAP_URL, mLatitude, mLongitude, 600, 300, mLatitude,
 				mLongitude);
 
-		new DownloadFile(url, new Callback() {
-			@Override
-			public void onBitmapLoaded(final Bitmap bitmap) {
-				imageView.setImageBitmap(bitmap);
-				showContent();
-			}
-		}).execute();
+		mImageView = (ImageView) view;
+
+		final Bundle bundle = new Bundle();
+		bundle.putString(PARAM_URL, url);
+
+		initLoader(bundle, this).forceLoad();
 	}
 
-	private class DownloadFile extends AsyncTask<Void, Void, Bitmap> {
+	@Override
+	public Loader<Bitmap> onCreateLoader(final int id, final Bundle bundle) {
+		return new LoaderTask(getContext(), bundle.getString(PARAM_URL));
+	}
 
-		private final Callback mCallback;
+	@Override
+	public void onLoadFinished(final Loader<Bitmap> loader, final Bitmap bitmap) {
+		mImageView.setImageBitmap(bitmap);
+		showContent();
+	}
+
+	private static class LoaderTask extends AsyncTaskLoader<Bitmap> {
+
 		private final String mUrl;
 
-		public DownloadFile(final String url, final Callback callback) {
+		public LoaderTask(final Context context, final String url) {
+			super(context);
 			mUrl = url;
-			mCallback = callback;
 		}
 
 		@Override
-		protected Bitmap doInBackground(final Void... src) {
+		public Bitmap loadInBackground() {
 			try {
 				final URL url = new URL(mUrl);
 				final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -75,10 +84,6 @@ public class MapCard extends Card {
 			}
 		}
 
-		@Override
-		protected void onPostExecute(final Bitmap result) {
-			mCallback.onBitmapLoaded(result);
-		}
 	}
 
 }

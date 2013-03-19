@@ -431,23 +431,22 @@
     </style>
 
     <style name="Card">
-        <item name="android:background">@drawable/block_light</item>
-        <item name="android:padding">@dimen/padding_small</item>
-    </style>
-
-    <style name="Card.Map">
-        <item name="android:background">@drawable/block_light</item>
+        <item name="android:background">@drawable/item_block_background</item>
         <item name="android:paddingLeft">0dp</item>
         <item name="android:paddingRight">0dp</item>
         <item name="android:paddingTop">@dimen/padding_small</item>
-        <item name="android:paddingBottom">@dimen/padding_small</item>
+        <item name="android:paddingBottom">0dp</item>
     </style>
 
     <style name="CardTitle" parent="BigTitle">
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_small</item>
         <item name="android:textColor">@color/card_text_color</item>
     </style>
 
     <style name="CardMessage">
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_small</item>
         <item name="android:textColor">@color/card_text_color</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
         <item name="android:layout_width">wrap_content</item>
@@ -480,6 +479,7 @@
     <style name="CardHoraire.Huge">
         <item name="android:textColor">?attr/primaryColor</item>
         <item name="android:textSize">48sp</item>
+        <item name="android:textColor">@color/holo_green</item>
     </style>
 
     <style name="CardDelai" parent="CardHoraire">
@@ -496,6 +496,15 @@
 
     <style name="CardDelai.Last">
         <item name="android:paddingRight">0dp</item>
+    </style>
+
+    <style name="CardButton" parent="@style/ItemSecondaryText.SingleLine">
+        <item name="android:paddingTop">@dimen/padding_tiny</item>
+        <item name="android:paddingBottom">@dimen/padding_tiny</item>
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_small</item>
+        <item name="android:textColor">@color/holo_blue_card</item>
+        <item name="android:background">@drawable/selectable_background_acapulco</item>
     </style>
 
 </resources>

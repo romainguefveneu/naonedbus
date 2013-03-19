@@ -3,7 +3,6 @@ package net.naonedbus.fragment.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
@@ -16,6 +15,7 @@ import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.card.impl.CommentairesCard;
 import net.naonedbus.card.impl.HoraireCard;
+import net.naonedbus.card.impl.MapCard;
 import net.naonedbus.card.impl.TraficCard;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
@@ -42,9 +42,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ArretDetailFragment extends SherlockFragment {
 
-	private static final String LOG_TAG = "ArretDetailFragment";
-	private static final boolean DBG = BuildConfig.DEBUG;
-
 	public static interface OnSensChangeListener {
 		void onSensChange(Sens newSens);
 	}
@@ -68,14 +65,14 @@ public class ArretDetailFragment extends SherlockFragment {
 	private OnArretChangeListener mOnArretChangeListener;
 
 	private ViewGroup mViewGroup;
-	private final List<Card> mCards;
+	private final List<Card<?>> mCards;
 
 	public ArretDetailFragment() {
 		mFavoriManager = FavoriManager.getInstance();
 		mArretManager = ArretManager.getInstance();
 		mSensManager = SensManager.getInstance();
 
-		mCards = new ArrayList<Card>();
+		mCards = new ArrayList<Card<?>>();
 	}
 
 	@Override
@@ -108,6 +105,7 @@ public class ArretDetailFragment extends SherlockFragment {
 
 		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
 		menuFavori.setIcon(icon);
+
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -132,25 +130,28 @@ public class ArretDetailFragment extends SherlockFragment {
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		final Card horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
-		final Card traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
-		final Card commentairesCard = new CommentairesCard(getActivity(), getLoaderManager(), mLigne);
+		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
+		final TraficCard traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
+		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager(), mLigne);
+		final MapCard mapCard = new MapCard(getActivity(), getLoaderManager(), mArret.latitude, mArret.longitude);
 
 		mViewGroup.addView(horaireCard.getView(mViewGroup));
 		mViewGroup.addView(traficCard.getView(mViewGroup));
 		mViewGroup.addView(commentairesCard.getView(mViewGroup));
+		mViewGroup.addView(mapCard.getView(mViewGroup));
 
 		mCards.add(horaireCard);
 		mCards.add(traficCard);
 		mCards.add(commentairesCard);
+		mCards.add(mapCard);
 
-		mOnArretChangeListener = (OnArretChangeListener) horaireCard;
+		mOnArretChangeListener = horaireCard;
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		for (final Card card : mCards) {
+		for (final Card<?> card : mCards) {
 			card.onStart();
 		}
 	}
@@ -158,9 +159,10 @@ public class ArretDetailFragment extends SherlockFragment {
 	@Override
 	public void onStop() {
 		super.onStop();
-		for (final Card card : mCards) {
+		for (final Card<?> card : mCards) {
 			card.onStop();
 		}
+		mCards.clear();
 	}
 
 	@Override
