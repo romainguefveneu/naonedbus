@@ -14,6 +14,7 @@ import net.naonedbus.manager.impl.InfoTraficManager;
 import org.json.JSONException;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
@@ -36,6 +37,11 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	}
 
 	@Override
+	protected Intent getMoreIntent() {
+		return null;
+	}
+
+	@Override
 	protected void bindView(final Context context, final View view) {
 		mRoot = (ViewGroup) view;
 		initLoader(null, this).forceLoad();
@@ -47,8 +53,7 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	}
 
 	@Override
-	public void onLoadFinished(final android.support.v4.content.Loader<List<InfoTrafic>> arg0,
-			final List<InfoTrafic> infoTrafics) {
+	public void onLoadFinished(final Loader<List<InfoTrafic>> loader, final List<InfoTrafic> infoTrafics) {
 
 		if (infoTrafics.isEmpty()) {
 			showMessage(R.string.msg_nothing_info_trafic, R.drawable.ic_checkmark_holo_light);

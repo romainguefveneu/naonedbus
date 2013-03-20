@@ -10,7 +10,8 @@
     <TextView
         android:id="@android:id/title"
         style="@style/CardTitle"
-        android:layout_marginBottom="@dimen/padding_small"
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingTop="@dimen/padding_small"
         android:text="@string/card_horaires_title" />
 
     <ProgressBar
@@ -23,38 +24,34 @@
         android:layout_alignTop="@android:id/title"
         android:layout_marginRight="@dimen/padding_small" />
 
-    <RelativeLayout
-        android:id="@android:id/content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@android:id/title"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@android:id/message"
-        style="@style/ItemSecondaryText.SingleLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@android:id/title"
-        android:drawableLeft="@drawable/ic_dialog_alert_holo_light"
-        android:drawablePadding="@dimen/padding_small"
-        android:gravity="center_vertical"
-        android:text="@string/error_title_empty"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@android:id/button1"
-        style="@style/CardButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@android:id/content"
-        android:clickable="true"
-        android:drawableLeft="@drawable/ic_dialog_alert_holo_light"
-        android:drawablePadding="@dimen/padding_small"
-        android:gravity="center_vertical"
-        android:text="Plus..." />
+        android:layout_below="@android:id/title"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@android:id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@android:id/message"
+            style="@style/CardMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/error_title_empty"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@android:id/button1"
+            style="@style/CardButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
 
 </RelativeLayout>

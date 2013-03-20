@@ -132,7 +132,10 @@ public class ArretDetailFragment extends SherlockFragment {
 
 		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
 		final TraficCard traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
-		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager(), mLigne);
+		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager());
+		commentairesCard.setLigne(mLigne);
+		commentairesCard.setSens(mSens);
+		commentairesCard.setArret(mArret);
 		final MapCard mapCard = new MapCard(getActivity(), getLoaderManager(), mArret.latitude, mArret.longitude);
 
 		mViewGroup.addView(horaireCard.getView(mViewGroup));

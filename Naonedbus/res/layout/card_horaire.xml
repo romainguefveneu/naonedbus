@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/padding_large" >
 
     <TextView
         android:id="@id/colLeft"
-        style="@style/CardHoraire.First"
+        style="@style/CardHoraire.Previous"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/colRight"
@@ -15,41 +16,91 @@
         android:text="00:00" />
 
     <TextView
+        style="@style/CardDelai"
+        android:layout_alignBaseline="@+id/delaiMain"
+        android:layout_alignLeft="@id/colLeft"
+        android:layout_below="@id/colLeft"
+        android:paddingLeft="1dp"
+        android:tag="@string/cardDelaiTag"
+        android:text="Précédent" />
+
+    <TextView
         android:id="@id/colRight"
         style="@style/CardHoraire.Huge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/horaires"
-        android:layout_marginBottom="@dimen/padding_small"
+        android:paddingBottom="0dp"
         android:paddingRight="0dp"
         android:tag="@string/cardHoraireTag"
         android:text="00:00" />
 
-    <LinearLayout
+    <TextView
+        android:id="@id/delaiMain"
+        style="@style/CardDelai"
+        android:layout_alignRight="@id/colRight"
+        android:layout_below="@id/colRight"
+        android:paddingRight="2dp"
+        android:tag="@string/cardDelaiTag"
+        android:text="0 min" />
+
+    <TableLayout
         android:id="@id/horaires"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/colRight"
+        android:layout_below="@id/delaiMain"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/padding_medium"
-        android:divider="@drawable/divider_vertical"
-        android:dividerPadding="@dimen/padding_tiny"
-        android:showDividers="middle" >
+        android:layout_marginTop="@dimen/padding_medium" >
 
-        <TextView
-            style="@style/CardHoraire.First"
-            android:tag="@string/cardHoraireTag"
-            android:text="00:00" />
+        <TableRow
+            android:layout_margin="0dp"
+            android:divider="@drawable/divider_vertical"
+            android:showDividers="middle" >
 
-        <TextView
-            style="@style/CardHoraire"
-            android:tag="@string/cardHoraireTag"
-            android:text="00:00" />
+            <TextView
+                style="@style/CardHoraire.First"
+                android:tag="@string/cardHoraireTag"
+                android:text="00:00" />
 
-        <TextView
-            style="@style/CardHoraire"
-            android:tag="@string/cardHoraireTag"
-            android:text="00:00" />
-    </LinearLayout>
+            <TextView
+                style="@style/CardHoraire"
+                android:tag="@string/cardHoraireTag"
+                android:text="00:00" />
+
+            <TextView
+                style="@style/CardHoraire"
+                android:tag="@string/cardHoraireTag"
+                android:text="00:00" />
+
+            <TextView
+                style="@style/CardHoraire.Last"
+                android:tag="@string/cardHoraireTag"
+                android:text="00:00" />
+        </TableRow>
+
+        <TableRow
+            android:layout_margin="0dp"
+            android:divider="@drawable/divider_vertical"
+            android:showDividers="middle" >
+
+            <TextView
+                style="@style/CardDelai.First"
+                android:gravity="center_horizontal"
+                android:tag="@string/cardDelaiTag"
+                android:text="0 min" />
+
+            <TextView
+                style="@style/CardDelai"
+                android:gravity="center_horizontal"
+                android:tag="@string/cardDelaiTag"
+                android:text="0 min" />
+
+            <TextView
+                style="@style/CardDelai"
+                android:gravity="center_horizontal"
+                android:tag="@string/cardDelaiTag"
+                android:text="0 min" />
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

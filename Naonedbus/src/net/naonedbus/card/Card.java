@@ -6,6 +6,7 @@ import java.util.Map;
 import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -13,6 +14,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 	private View mProgress;
 	private TextView mMessage;
 	private ViewGroup mContent;
+	private TextView mMoreActionView;
 
 	private Typeface mRobotoLight;
 	private Typeface mRobotoBold;
@@ -85,6 +88,7 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 
 		mProgress = base.findViewById(android.R.id.progress);
 		mMessage = (TextView) base.findViewById(android.R.id.message);
+		mMoreActionView = (TextView) base.findViewById(android.R.id.button1);
 		mContent = (ViewGroup) base.findViewById(android.R.id.content);
 		mContent.addView(view);
 
@@ -115,6 +119,8 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 
 		mMessage.setVisibility(View.GONE);
 		mProgress.setVisibility(View.GONE);
+
+		showMoreAction();
 	}
 
 	protected void showMessage(final int messageId, final int drawableId) {
@@ -134,6 +140,33 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 
 		mProgress.setVisibility(View.GONE);
 		mContent.setVisibility(View.GONE);
+
+		showMoreAction();
+	}
+
+	private void showMoreAction() {
+		final Intent moreIntent = getMoreIntent();
+		if (moreIntent != null) {
+
+			final int title = moreIntent.getIntExtra(Intent.EXTRA_TITLE, 0);
+			if (title != 0) {
+				mMoreActionView.setText(title);
+			}
+
+			final int icon = moreIntent.getIntExtra(Intent.EXTRA_SHORTCUT_ICON, 0);
+			if (icon != 0) {
+				mMoreActionView.setCompoundDrawablesWithIntrinsicBounds(icon, 0, 0, 0);
+			}
+
+			mMoreActionView.setVisibility(View.VISIBLE);
+			mMoreActionView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					mContext.startActivity(moreIntent);
+				}
+			});
+
+		}
 	}
 
 	protected void setTypefaceRobotoLight(final TextView textView) {
@@ -151,6 +184,8 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 	}
 
 	protected abstract void bindView(final Context context, final View view);
+
+	protected abstract Intent getMoreIntent();
 
 	@Override
 	public abstract Loader<T> onCreateLoader(final int idLoader, final Bundle args);

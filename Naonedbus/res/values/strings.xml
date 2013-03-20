@@ -197,6 +197,10 @@
     <string name="card_trafic_title">Perturbations</string>
     <string name="card_commentaires_title">En direct</string>
     <string name="card_plan_title">Sur la carte</string>
+    <string name="card_more_horaires">Afficher tous les horaires</string>
+    <string name="card_more_commenter">Commenter le trafic</string>
+    <string name="card_more_map">Afficher sur la carte</string>
+
     <!-- Itinéraires -->
     <string name="itineraire_section_form">Trajet</string>
     <!-- Carte -->

@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.CommentaireActivity;
+import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.formatter.CommentaireFomatter;
+import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
 
 import org.joda.time.DateMidnight;
@@ -15,6 +19,7 @@ import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -30,18 +35,43 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 	private static final int LIMIT = 3;
 
-	private final Ligne mLigne;
+	private Ligne mLigne;
+	private Sens mSens;
+	private Arret mArret;
 	private ViewGroup mRoot;
 
-	public CommentairesCard(final Context context, final LoaderManager loaderManager, final Ligne ligne) {
+	public CommentairesCard(final Context context, final LoaderManager loaderManager) {
 		super(context, loaderManager, R.string.card_commentaires_title, R.layout.card_trafic);
+	}
+
+	public void setLigne(final Ligne ligne) {
 		mLigne = ligne;
+	}
+
+	public void setSens(final Sens sens) {
+		mSens = sens;
+	}
+
+	public void setArret(final Arret arret) {
+		mArret = arret;
 	}
 
 	@Override
 	protected void bindView(final Context context, final View view) {
 		mRoot = (ViewGroup) view;
 		initLoader(null, this).forceLoad();
+	}
+
+	@Override
+	protected Intent getMoreIntent() {
+		final ParamIntent intent = new ParamIntent(getContext(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
+		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
+		intent.putExtra(CommentaireActivity.Param.idArret, mArret._id);
+
+		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_commenter);
+		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_send);
+		return intent;
 	}
 
 	private View createView(final LayoutInflater inflater, final ViewGroup root, final Commentaire commentaire) {
@@ -89,8 +119,7 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 	}
 
 	@Override
-	public void onLoadFinished(final android.support.v4.content.Loader<List<Commentaire>> arg0,
-			final List<Commentaire> commentaires) {
+	public void onLoadFinished(final Loader<List<Commentaire>> loader, final List<Commentaire> commentaires) {
 		if (commentaires == null || commentaires.isEmpty()) {
 			showMessage(R.string.msg_nothing_commentaires, R.drawable.ic_checkmark_holo_light);
 		} else {

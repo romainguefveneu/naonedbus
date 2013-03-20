@@ -7,8 +7,10 @@ import java.net.URL;
 import java.util.Locale;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.card.Card;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,7 +22,7 @@ import android.widget.ImageView;
 
 public class MapCard extends Card<Bitmap> {
 
-	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?center=%f,%f&zoom=14&scale=2&size=%dx%d&sensor=false&markers=color:blue%%7C%f,%f";
+	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=14&scale=2&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f";
 	private static final String PARAM_URL = "url";
 
 	private final Float mLatitude;
@@ -36,9 +38,16 @@ public class MapCard extends Card<Bitmap> {
 	}
 
 	@Override
+	protected Intent getMoreIntent() {
+		final Intent intent = new Intent(getContext(), MapActivity.class);
+		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_map);
+		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_navigate);
+		return intent;
+	}
+
+	@Override
 	protected void bindView(final Context context, final View view) {
-		final String url = String.format(Locale.ENGLISH, MAP_URL, mLatitude, mLongitude, 600, 300, mLatitude,
-				mLongitude);
+		final String url = String.format(Locale.ENGLISH, MAP_URL, 600, 300, mLatitude, mLongitude);
 
 		mImageView = (ImageView) view;
 

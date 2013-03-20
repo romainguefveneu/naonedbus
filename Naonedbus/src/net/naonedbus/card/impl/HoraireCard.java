@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.card.Card;
@@ -74,6 +75,15 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	public void onStop() {
 		super.onStop();
 		getContext().unregisterReceiver(intentReceiver);
+	}
+
+	@Override
+	protected Intent getMoreIntent() {
+		final Intent intent = new Intent(getContext(), HorairesActivity.class);
+		intent.putExtra(HorairesActivity.PARAM_ARRET, mArret);
+		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_horaires);
+		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_list);
+		return intent;
 	}
 
 	@Override
