@@ -280,23 +280,23 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	private void menuShowPlan() {
-		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.Param.codeLigne, mSens.codeLigne);
+		final Intent intent = new Intent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.PARAM_LIGNE, mLigne);
 		startActivity(intent);
 	}
 
 	private void menuComment() {
-		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
-		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
-		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
+		final Intent intent = new Intent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(CommentaireActivity.PARAM_SENS, mSens);
 		startActivity(intent);
 	}
 
 	private void menuComment(final Arret arret) {
-		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
-		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
-		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
-		intent.putExtra(CommentaireActivity.Param.idArret, arret._id);
+		final Intent intent = new Intent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(CommentaireActivity.PARAM_SENS, mSens);
+		intent.putExtra(CommentaireActivity.PARAM_ARRET, arret);
 		startActivity(intent);
 	}
 

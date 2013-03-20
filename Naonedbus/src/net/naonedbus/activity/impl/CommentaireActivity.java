@@ -13,7 +13,6 @@ import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.helper.SlidingMenuHelper;
-import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
@@ -51,121 +50,121 @@ import com.bugsense.trace.BugSenseHandler;
 
 public class CommentaireActivity extends SherlockActivity {
 
-	public static enum Param implements IIntentParamKey {
-		idLigne, idSens, idArret
-	};
+	public static final String PARAM_LIGNE = "ligne";
+	public static final String PARAM_SENS = "sens";
+	public static final String PARAM_ARRET = "arret";
 
 	private static final String BUNDLE_KEY_LIGNE = "ligne";
 	private static final String BUNDLE_KEY_SENS = "sens";
 	private static final String BUNDLE_KEY_ARRET = "arret";
 
-	private EditText commentText;
+	private EditText mCommentText;
 
-	private LigneManager ligneManager;
-	private SensManager sensManager;
-	private ArretManager arretManager;
+	private LigneManager mLigneManager;
+	private SensManager mSensManager;
+	private ArretManager mArretManager;
 
-	private Ligne ligne;
-	private Sens sens;
-	private Arret arret;
+	private Ligne mLigne;
+	private Sens mSens;
+	private Arret mArret;
 
-	private Ligne allLignes;
-	private Sens allSens;
-	private Arret allArrets;
+	private Ligne mAllLignes;
+	private Sens mAllSens;
+	private Arret mAllArrets;
 
-	private View btnChangeLigne;
-	private View btnChangeSens;
-	private View btnChangeArret;
+	private View mBtnChangeLigne;
+	private View mBtnChangeSens;
+	private View mBtnChangeArret;
 
-	private TextView textLigne;
-	private TextView textSens;
-	private TextView textArret;
+	private TextView mTextLigne;
+	private TextView mTextSens;
+	private TextView mTextArret;
 
-	private ListAdapter lignesAdapter;
-	private ListAdapter sensAdapter;
-	private ListAdapter arretsAdapter;
+	private ListAdapter mLignesAdapter;
+	private ListAdapter mSensAdapter;
+	private ListAdapter mArretsAdapter;
 
-	private int selectedLignePosition;
-	private int selectedSensPosition;
-	private int selectedArretPosition;
+	private int mSelectedLignePosition;
+	private int mSelectedSensPosition;
+	private int mSelectedArretPosition;
 
-	private SendTask sendTask;
+	private SendTask mSendTask;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
 
 		final SlidingMenuHelper slidingMenuHelper = new SlidingMenuHelper(this);
 		slidingMenuHelper.setupActionBar(getSupportActionBar());
 
-		ligneManager = LigneManager.getInstance();
-		sensManager = SensManager.getInstance();
-		arretManager = ArretManager.getInstance();
+		mLigneManager = LigneManager.getInstance();
+		mSensManager = SensManager.getInstance();
+		mArretManager = ArretManager.getInstance();
 
-		allLignes = new Ligne(-1, getString(R.string.target_toutes_lignes),
+		mAllLignes = new Ligne(-1, getString(R.string.target_toutes_lignes),
 				getString(R.string.target_toutes_lignes_symbole));
-		allLignes.couleurTexte = Color.BLACK;
-		allSens = new Sens(-1, getString(R.string.target_tous_sens));
-		allArrets = new Arret(-1, getString(R.string.target_tous_arrets));
+		mAllLignes.couleurTexte = Color.BLACK;
+		mAllSens = new Sens(-1, getString(R.string.target_tous_sens));
+		mAllArrets = new Arret(-1, getString(R.string.target_tous_arrets));
 
-		lignesAdapter = getLignesAdapter();
+		mLignesAdapter = getLignesAdapter();
 
-		commentText = (EditText) findViewById(android.R.id.input);
-		textLigne = (TextView) findViewById(R.id.commentaireLigne);
-		textSens = (TextView) findViewById(R.id.commentaireSens);
-		textArret = (TextView) findViewById(R.id.commentaireArret);
+		mCommentText = (EditText) findViewById(android.R.id.input);
+		mTextLigne = (TextView) findViewById(R.id.commentaireLigne);
+		mTextSens = (TextView) findViewById(R.id.commentaireSens);
+		mTextArret = (TextView) findViewById(R.id.commentaireArret);
 
-		btnChangeLigne = findViewById(R.id.commentaireLigneSpinner);
-		btnChangeLigne.setOnClickListener(new OnClickListener() {
+		mBtnChangeLigne = findViewById(R.id.commentaireLigneSpinner);
+		mBtnChangeLigne.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				showSelectLigneDialog();
 			}
 		});
-		btnChangeSens = findViewById(R.id.commentaireSens);
-		btnChangeSens.setOnClickListener(new OnClickListener() {
+		mBtnChangeSens = findViewById(R.id.commentaireSens);
+		mBtnChangeSens.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				showSelectSensDialog(ligne.code);
+			public void onClick(final View v) {
+				showSelectSensDialog(mLigne.code);
 			}
 		});
-		btnChangeArret = findViewById(R.id.commentaireArret);
-		btnChangeArret.setOnClickListener(new OnClickListener() {
+		mBtnChangeArret = findViewById(R.id.commentaireArret);
+		mBtnChangeArret.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-				showSelectArretDialog(ligne.code, sens.code);
+			public void onClick(final View v) {
+				showSelectArretDialog(mLigne.code, mSens.code);
 			}
 		});
 
-		if (savedInstanceState != null) {
-			if (savedInstanceState.containsKey(BUNDLE_KEY_LIGNE)) {
-				ligne = (Ligne) savedInstanceState.getParcelable(BUNDLE_KEY_LIGNE);
-				if (ligne != null)
-					setLigne(ligne);
-			}
-			if (savedInstanceState.containsKey(BUNDLE_KEY_SENS)) {
-				sens = (Sens) savedInstanceState.getParcelable(BUNDLE_KEY_SENS);
-				if (sens != null)
-					setSens(sens);
-			}
-			if (savedInstanceState.containsKey(BUNDLE_KEY_ARRET)) {
-				arret = (Arret) savedInstanceState.getParcelable(BUNDLE_KEY_ARRET);
-				if (arret != null)
-					setArret(arret);
-			}
+		Ligne ligne;
+		Sens sens;
+		Arret arret;
+
+		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_KEY_LIGNE)) {
+			ligne = (Ligne) savedInstanceState.getParcelable(BUNDLE_KEY_LIGNE);
+			sens = (Sens) savedInstanceState.getParcelable(BUNDLE_KEY_SENS);
+			arret = (Arret) savedInstanceState.getParcelable(BUNDLE_KEY_ARRET);
 		} else {
-			final Integer idLigne = (Integer) getIntent().getSerializableExtra(Param.idLigne.toString());
-			final Integer idSens = (Integer) getIntent().getSerializableExtra(Param.idSens.toString());
-			final Integer idArret = (Integer) getIntent().getSerializableExtra(Param.idArret.toString());
+			ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
+			sens = getIntent().getParcelableExtra(PARAM_SENS);
+			arret = getIntent().getParcelableExtra(PARAM_ARRET);
+		}
 
-			setLigneSensArret(idLigne, idSens, idArret);
+		if (ligne != null) {
+			setLigne(ligne);
+		}
+		if (sens != null) {
+			setSens(sens);
+		}
+		if (arret != null) {
+			setArret(arret);
 		}
 
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		final MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.activity_commentaire, menu);
 
@@ -173,15 +172,15 @@ public class CommentaireActivity extends SherlockActivity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putParcelable(BUNDLE_KEY_LIGNE, ligne);
-		outState.putParcelable(BUNDLE_KEY_SENS, sens);
-		outState.putParcelable(BUNDLE_KEY_ARRET, arret);
+		outState.putParcelable(BUNDLE_KEY_LIGNE, mLigne);
+		outState.putParcelable(BUNDLE_KEY_SENS, mSens);
+		outState.putParcelable(BUNDLE_KEY_ARRET, mArret);
 	}
 
 	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+	public boolean onMenuItemSelected(final int featureId, final MenuItem item) {
 
 		switch (item.getItemId()) {
 		case android.R.id.home:
@@ -195,22 +194,22 @@ public class CommentaireActivity extends SherlockActivity {
 	}
 
 	private ListAdapter getLignesAdapter() {
-		final List<Ligne> lignes = ligneManager.getAll(getContentResolver());
-		lignes.add(0, allLignes);
+		final List<Ligne> lignes = mLigneManager.getAll(getContentResolver());
+		lignes.add(0, mAllLignes);
 		final LignesArrayAdapter adapter = new LignesArrayAdapter(this, lignes);
 		adapter.setHideDivider(true);
 		return adapter;
 	}
 
 	private ListAdapter getSensAdapter(final String codeLigne) {
-		final List<Sens> sens = sensManager.getAll(getContentResolver(), codeLigne);
-		sens.add(0, allSens);
+		final List<Sens> sens = mSensManager.getAll(getContentResolver(), codeLigne);
+		sens.add(0, mAllSens);
 		return new SensArrayAdapter(this, sens);
 	}
 
 	private ListAdapter getArretsAdapter(final String codeLigne, final String codeSens) {
-		final List<Arret> arrets = arretManager.getAll(getContentResolver(), codeLigne, codeSens);
-		arrets.add(0, allArrets);
+		final List<Arret> arrets = mArretManager.getAll(getContentResolver(), codeLigne, codeSens);
+		arrets.add(0, mAllArrets);
 		return new ArretArrayAdapter(this, arrets);
 	}
 
@@ -218,12 +217,12 @@ public class CommentaireActivity extends SherlockActivity {
 	 * Afficher la dialog de sélection de la ligne.
 	 */
 	private void showSelectLigneDialog() {
-		showSelectDialog(R.string.target_ligne, lignesAdapter, selectedLignePosition,
+		showSelectDialog(R.string.target_ligne, mLignesAdapter, mSelectedLignePosition,
 				new DialogInterface.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						selectedLignePosition = which;
-						setLigne((Ligne) lignesAdapter.getItem(which));
+					public void onClick(final DialogInterface dialog, final int which) {
+						mSelectedLignePosition = which;
+						setLigne((Ligne) mLignesAdapter.getItem(which));
 						dialog.dismiss();
 					}
 				});
@@ -232,17 +231,17 @@ public class CommentaireActivity extends SherlockActivity {
 	/**
 	 * Afficher la dialog de sélection du sens.
 	 */
-	private void showSelectSensDialog(String codeLigne) {
-		if (!codeLigne.equals(sens.codeLigne) || sensAdapter == null) {
-			sensAdapter = getSensAdapter(codeLigne);
-			selectedSensPosition = -1;
+	private void showSelectSensDialog(final String codeLigne) {
+		if (!codeLigne.equals(mSens.codeLigne) || mSensAdapter == null) {
+			mSensAdapter = getSensAdapter(codeLigne);
+			mSelectedSensPosition = -1;
 		}
-		showSelectDialog(R.string.target_sens, sensAdapter, selectedSensPosition,
+		showSelectDialog(R.string.target_sens, mSensAdapter, mSelectedSensPosition,
 				new DialogInterface.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						selectedSensPosition = which;
-						setSens((Sens) sensAdapter.getItem(which));
+					public void onClick(final DialogInterface dialog, final int which) {
+						mSelectedSensPosition = which;
+						setSens((Sens) mSensAdapter.getItem(which));
 						dialog.dismiss();
 					}
 				});
@@ -251,17 +250,17 @@ public class CommentaireActivity extends SherlockActivity {
 	/**
 	 * Afficher la dialog de sélection de l'arret.
 	 */
-	private void showSelectArretDialog(String codeLigne, String codeSens) {
-		if (!(codeLigne.equals(arret.codeLigne) && codeSens.equals(arret.codeSens)) || arretsAdapter == null) {
-			arretsAdapter = getArretsAdapter(codeLigne, codeSens);
-			selectedArretPosition = -1;
+	private void showSelectArretDialog(final String codeLigne, final String codeSens) {
+		if (!(codeLigne.equals(mArret.codeLigne) && codeSens.equals(mArret.codeSens)) || mArretsAdapter == null) {
+			mArretsAdapter = getArretsAdapter(codeLigne, codeSens);
+			mSelectedArretPosition = -1;
 		}
-		showSelectDialog(R.string.target_arret, arretsAdapter, selectedArretPosition,
+		showSelectDialog(R.string.target_arret, mArretsAdapter, mSelectedArretPosition,
 				new DialogInterface.OnClickListener() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						selectedArretPosition = which;
-						setArret((Arret) arretsAdapter.getItem(which));
+					public void onClick(final DialogInterface dialog, final int which) {
+						mSelectedArretPosition = which;
+						setArret((Arret) mArretsAdapter.getItem(which));
 						dialog.dismiss();
 					}
 				});
@@ -279,8 +278,8 @@ public class CommentaireActivity extends SherlockActivity {
 	 * @param onClickListener
 	 *            Le callback
 	 */
-	private void showSelectDialog(int title, ListAdapter adapter, int defaultPosition,
-			DialogInterface.OnClickListener onClickListener) {
+	private void showSelectDialog(final int title, final ListAdapter adapter, final int defaultPosition,
+			final DialogInterface.OnClickListener onClickListener) {
 		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(title);
 		builder.setSingleChoiceItems(adapter, defaultPosition, onClickListener);
@@ -293,16 +292,16 @@ public class CommentaireActivity extends SherlockActivity {
 	 */
 	private void prepareAndSendComment() {
 		final Commentaire commentaireItem = new Commentaire();
-		if (arret != null) {
-			commentaireItem.setCodeArret(arret.codeArret);
+		if (mArret != null) {
+			commentaireItem.setCodeArret(mArret.codeArret);
 		}
-		if (sens != null) {
-			commentaireItem.setCodeSens(sens.code);
+		if (mSens != null) {
+			commentaireItem.setCodeSens(mSens.code);
 		}
-		if (ligne != null) {
-			commentaireItem.setCodeLigne(ligne.lettre);
+		if (mLigne != null) {
+			commentaireItem.setCodeLigne(mLigne.lettre);
 		}
-		commentaireItem.setMessage(commentText.getText().toString().trim());
+		commentaireItem.setMessage(mCommentText.getText().toString().trim());
 
 		if (validateComment(commentaireItem)) {
 			sendComment(commentaireItem);
@@ -319,18 +318,18 @@ public class CommentaireActivity extends SherlockActivity {
 	 *            Le nouvelle ligne
 	 */
 	private void setLigne(final Ligne ligne) {
-		this.ligne = ligne;
-		textLigne.setText(ligne.lettre);
-		textLigne.setTextColor(ligne.couleurTexte);
+		this.mLigne = ligne;
+		mTextLigne.setText(ligne.lettre);
+		mTextLigne.setTextColor(ligne.couleurTexte);
 		if (ligne.couleurBackground == 0) {
-			textLigne.setBackgroundResource(R.drawable.item_symbole_back);
+			mTextLigne.setBackgroundResource(R.drawable.item_symbole_back);
 		} else {
-			textLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
+			mTextLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
 		}
 
-		setSens(allSens);
+		setSens(mAllSens);
 
-		btnChangeSens.setEnabled(!ligne.equals(allLignes));
+		mBtnChangeSens.setEnabled(!ligne.equals(mAllLignes));
 	}
 
 	/**
@@ -340,12 +339,12 @@ public class CommentaireActivity extends SherlockActivity {
 	 *            Le nouveau sens
 	 */
 	private void setSens(final Sens sens) {
-		this.sens = sens;
-		textSens.setText(sens.text);
+		this.mSens = sens;
+		mTextSens.setText(sens.text);
 
-		setArret(allArrets);
+		setArret(mAllArrets);
 
-		btnChangeArret.setEnabled(!sens.equals(allSens));
+		mBtnChangeArret.setEnabled(!sens.equals(mAllSens));
 	}
 
 	/**
@@ -355,54 +354,29 @@ public class CommentaireActivity extends SherlockActivity {
 	 *            Le nouvel arret
 	 */
 	private void setArret(final Arret arret) {
-		this.arret = arret;
-		textArret.setText(arret.nomArret);
-	}
-
-	/**
-	 * Gérer l'affichage de l'information sur la ligne, sens et arrêt
-	 * 
-	 * @param idLigne
-	 * @param idSens
-	 * @param idArret
-	 */
-	private void setLigneSensArret(Integer idLigne, Integer idSens, Integer idArret) {
-
-		final Ligne ligne = (idLigne != null) ? ligneManager.getSingle(getContentResolver(), idLigne) : null;
-		final Sens sens = (idSens != null) ? sensManager.getSingle(getContentResolver(), idSens) : null;
-		final Arret arret = (idArret != null) ? arretManager.getSingle(getContentResolver(), idArret) : null;
-
-		if (ligne != null) {
-			setLigne(ligne);
-		}
-		if (sens != null) {
-			setSens(sens);
-		}
-		if (arret != null) {
-			setArret(arret);
-		}
-
+		this.mArret = arret;
+		mTextArret.setText(arret.nomArret);
 	}
 
 	/**
 	 * @return vrai si validé, faux s'il semble louche
 	 */
-	private boolean validateComment(Commentaire comment) {
+	private boolean validateComment(final Commentaire comment) {
 		boolean ret = true;
-		List<CommentaireValidator> validators = new ArrayList<CommentaireValidator>();
+		final List<CommentaireValidator> validators = new ArrayList<CommentaireValidator>();
 		validators.add(new CommentaireSizeValidator());
 		validators.add(new CommentaireContentTypeValidator());
 
-		for (CommentaireValidator commentaireValidator : validators) {
+		for (final CommentaireValidator commentaireValidator : validators) {
 			ret &= commentaireValidator.validate(comment.getMessage());
 		}
 
 		return ret;
 	}
 
-	private void sendComment(Commentaire commentaire) {
-		if (sendTask == null || sendTask.getStatus() == AsyncTask.Status.FINISHED) {
-			sendTask = (SendTask) new SendTask().execute(commentaire);
+	private void sendComment(final Commentaire commentaire) {
+		if (mSendTask == null || mSendTask.getStatus() == AsyncTask.Status.FINISHED) {
+			mSendTask = (SendTask) new SendTask().execute(commentaire);
 		}
 	}
 
@@ -424,7 +398,7 @@ public class CommentaireActivity extends SherlockActivity {
 		}
 
 		@Override
-		protected Boolean doInBackground(Commentaire... args) {
+		protected Boolean doInBackground(final Commentaire... args) {
 			try {
 				final Commentaire messageItem = args[0];
 
@@ -437,18 +411,18 @@ public class CommentaireActivity extends SherlockActivity {
 
 				return true;
 
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				this.e = e;
 				return false;
 			}
 		}
 
 		@Override
-		protected void onPostExecute(Boolean success) {
+		protected void onPostExecute(final Boolean success) {
 			progressDialog.dismiss();
 
 			if (!success) {
-				int msgError = (this.e instanceof HttpException) ? R.string.dialog_content_comment_sending_error
+				final int msgError = (this.e instanceof HttpException) ? R.string.dialog_content_comment_sending_error
 						: R.string.dialog_content_key_error;
 
 				InfoDialogUtils.show(CommentaireActivity.this, R.string.dialog_content_comment_sending_error, msgError);
@@ -473,7 +447,7 @@ public class CommentaireActivity extends SherlockActivity {
 
 			try {
 				privateKey = (PrivateKey) RSAUtils.genNaonedbusKey(KeyType.PRIVATE, mod, exp);
-			} catch (GeneralSecurityException e) {
+			} catch (final GeneralSecurityException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la génération de la clé.", null, e);
 			}
 
@@ -488,7 +462,7 @@ public class CommentaireActivity extends SherlockActivity {
 		 * @throws GeneralSecurityException
 		 * @throws UnsupportedEncodingException
 		 */
-		private String getMessageHashCode(Commentaire messageItem, PrivateKey privateKey)
+		private String getMessageHashCode(final Commentaire messageItem, final PrivateKey privateKey)
 				throws UnsupportedEncodingException, GeneralSecurityException {
 			String concatHashCode;
 			String result = null;

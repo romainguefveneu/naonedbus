@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -23,10 +24,13 @@ import android.widget.ImageView;
 public class MapCard extends Card<Bitmap> {
 
 	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=14&scale=2&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f";
+	private static final String MAP_URL_CURRENT_LOCATION = "http://maps.google.com/maps/api/staticmap?scale=2&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&center=%f,%f";
 	private static final String PARAM_URL = "url";
 
 	private final Float mLatitude;
 	private final Float mLongitude;
+
+	private Location mCurrentLocation;
 
 	private ImageView mImageView;
 
@@ -35,6 +39,10 @@ public class MapCard extends Card<Bitmap> {
 
 		mLatitude = latitude;
 		mLongitude = longitude;
+	}
+
+	public void setCurrentLocation(final Location currentLocation) {
+		mCurrentLocation = currentLocation;
 	}
 
 	@Override
@@ -47,7 +55,14 @@ public class MapCard extends Card<Bitmap> {
 
 	@Override
 	protected void bindView(final Context context, final View view) {
-		final String url = String.format(Locale.ENGLISH, MAP_URL, 600, 300, mLatitude, mLongitude);
+
+		final String url;
+		if (mCurrentLocation == null) {
+			url = String.format(Locale.ENGLISH, MAP_URL, 600, 300, mLatitude, mLongitude);
+		} else {
+			url = String.format(Locale.ENGLISH, MAP_URL_CURRENT_LOCATION, 600, 300, mLatitude, mLongitude,
+					mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+		}
 
 		mImageView = (ImageView) view;
 

@@ -54,8 +54,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private static final String LOG_TAG = "HorairesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private static final String ACTION_UPDATE_DELAYS = "net.naonedbus.action.UPDATE_DELAYS";
-
 	public static final String PARAM_LIGNE = "ligne";
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
@@ -67,7 +65,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	private final static IntentFilter intentFilter;
 	static {
 		intentFilter = new IntentFilter();
-		intentFilter.addAction(HorairesFragment.ACTION_UPDATE_DELAYS);
 		intentFilter.addAction(Intent.ACTION_TIME_TICK);
 		intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
 		intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
@@ -267,16 +264,16 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	}
 
 	private void menuComment() {
-		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
-		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
-		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
-		intent.putExtra(CommentaireActivity.Param.idArret, mArret._id);
+		final Intent intent = new Intent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(CommentaireActivity.PARAM_SENS, mSens);
+		intent.putExtra(CommentaireActivity.PARAM_ARRET, mArret);
 		startActivity(intent);
 	}
 
 	private void menuShowPlan() {
-		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.Param.codeLigne, mArret.codeLigne);
+		final Intent intent = new Intent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.PARAM_LIGNE, mLigne);
 		startActivity(intent);
 	}
 

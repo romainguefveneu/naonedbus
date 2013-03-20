@@ -3,6 +3,7 @@ package net.naonedbus.card.impl;
 import java.io.IOException;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.InfoTraficDetailActivity;
 import net.naonedbus.bean.InfoTrafic;
@@ -20,6 +21,7 @@ import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +29,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class TraficCard extends Card<List<InfoTrafic>> {
+
+	private static final String LOG_TAG = "TraficCard";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private final Ligne mLigne;
 	private ViewGroup mRoot;
@@ -55,11 +60,12 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	@Override
 	public void onLoadFinished(final Loader<List<InfoTrafic>> loader, final List<InfoTrafic> infoTrafics) {
 
-		if (infoTrafics.isEmpty()) {
+		if (infoTrafics == null || infoTrafics.isEmpty()) {
 			showMessage(R.string.msg_nothing_info_trafic, R.drawable.ic_checkmark_holo_light);
 		} else {
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 
+			mRoot.removeAllViews();
 			for (final InfoTrafic infoTrafic : infoTrafics) {
 				mRoot.addView(createView(inflater, mRoot, infoTrafic));
 			}
@@ -124,9 +130,11 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 			try {
 				infoTrafics = manager.getByLigneCode(getContext(), mLigne.code);
 			} catch (final IOException e) {
-				e.printStackTrace();
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur de récupération des infos trafic.", e);
 			} catch (final JSONException e) {
-				e.printStackTrace();
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur de récupération des infos trafic.", e);
 			}
 
 			return infoTrafics;

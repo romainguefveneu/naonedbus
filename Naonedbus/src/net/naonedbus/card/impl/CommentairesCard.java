@@ -65,9 +65,9 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 	@Override
 	protected Intent getMoreIntent() {
 		final ParamIntent intent = new ParamIntent(getContext(), CommentaireActivity.class);
-		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
-		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
-		intent.putExtra(CommentaireActivity.Param.idArret, mArret._id);
+		intent.putExtra(CommentaireActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(CommentaireActivity.PARAM_SENS, mSens);
+		intent.putExtra(CommentaireActivity.PARAM_ARRET, mArret);
 
 		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_commenter);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_send);
@@ -125,6 +125,7 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 		} else {
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 
+			mRoot.removeAllViews();
 			for (final Commentaire commentaire : commentaires) {
 				mRoot.addView(createView(inflater, mRoot, commentaire));
 			}

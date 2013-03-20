@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.bean.Arret;
@@ -27,10 +28,14 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeListener {
+
+	private static final String LOG_TAG = "HoraireCard";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private Arret mArret;
 	private final DateFormat mTimeFormat;
@@ -52,6 +57,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(final Context context, final Intent intent) {
+			if (DBG)
+				Log.d(LOG_TAG, "onReceive " + intent.getAction());
 			restartLoader(null, HoraireCard.this).forceLoad();
 		}
 	};
@@ -67,13 +74,15 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	public void onStart() {
-		super.onStart();
+		if (DBG)
+			Log.d(LOG_TAG, "onStart");
 		getContext().registerReceiver(intentReceiver, intentFilter);
 	}
 
 	@Override
 	public void onStop() {
-		super.onStop();
+		if (DBG)
+			Log.d(LOG_TAG, "onStop");
 		getContext().unregisterReceiver(intentReceiver);
 	}
 

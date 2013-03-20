@@ -3,7 +3,7 @@ package net.naonedbus.fragment.impl;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.HorairesActivity;
+import net.naonedbus.activity.impl.ArretDetailActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
@@ -34,13 +34,13 @@ public class ParcoursFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		final int idStation = getArguments().getInt(PARAM_ID_STATION);
@@ -52,21 +52,21 @@ public class ParcoursFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 		final Parcours item = (Parcours) l.getItemAtPosition(position);
 
 		final ArretManager arretManager = ArretManager.getInstance();
 		final Arret arret = arretManager.getSingle(getActivity().getContentResolver(), item._id);
 
-		final Intent intent = new Intent(getActivity(), HorairesActivity.class);
-		intent.putExtra(HorairesActivity.PARAM_ARRET, arret);
+		final Intent intent = new Intent(getActivity(), ArretDetailActivity.class);
+		intent.putExtra(ArretDetailActivity.PARAM_ARRET, arret);
 
 		startActivity(intent);
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context) {
 		final ParcoursManager parcoursManager = ParcoursManager.getInstance();
 		final List<Parcours> parcoursList = parcoursManager.getParcoursList(context.getContentResolver(),
 				mStation.getNormalizedNom());

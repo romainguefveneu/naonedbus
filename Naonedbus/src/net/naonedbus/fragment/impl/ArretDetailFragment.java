@@ -15,7 +15,6 @@ import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.card.impl.CommentairesCard;
 import net.naonedbus.card.impl.HoraireCard;
-import net.naonedbus.card.impl.MapCard;
 import net.naonedbus.card.impl.TraficCard;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
@@ -25,6 +24,7 @@ import net.naonedbus.manager.impl.SensManager;
 import org.joda.time.DateMidnight;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -136,17 +136,22 @@ public class ArretDetailFragment extends SherlockFragment {
 		commentairesCard.setLigne(mLigne);
 		commentairesCard.setSens(mSens);
 		commentairesCard.setArret(mArret);
-		final MapCard mapCard = new MapCard(getActivity(), getLoaderManager(), mArret.latitude, mArret.longitude);
+
+		// final MapCard mapCard = new MapCard(getActivity(),
+		// getLoaderManager(), mArret.latitude, mArret.longitude);
+		// final MyLocationProvider locationProvider =
+		// NBApplication.getLocationProvider();
+		// mapCard.setCurrentLocation(locationProvider.getLastKnownLocation());
 
 		mViewGroup.addView(horaireCard.getView(mViewGroup));
 		mViewGroup.addView(traficCard.getView(mViewGroup));
 		mViewGroup.addView(commentairesCard.getView(mViewGroup));
-		mViewGroup.addView(mapCard.getView(mViewGroup));
+		// mViewGroup.addView(mapCard.getView(mViewGroup));
 
 		mCards.add(horaireCard);
 		mCards.add(traficCard);
 		mCards.add(commentairesCard);
-		mCards.add(mapCard);
+		// mCards.add(mapCard);
 
 		mOnArretChangeListener = horaireCard;
 	}
@@ -226,16 +231,16 @@ public class ArretDetailFragment extends SherlockFragment {
 	}
 
 	private void menuComment() {
-		final ParamIntent intent = new ParamIntent(getActivity(), CommentaireActivity.class);
-		intent.putExtra(CommentaireActivity.Param.idLigne, mLigne._id);
-		intent.putExtra(CommentaireActivity.Param.idSens, mSens._id);
-		intent.putExtra(CommentaireActivity.Param.idArret, mArret._id);
+		final Intent intent = new Intent(getActivity(), CommentaireActivity.class);
+		intent.putExtra(CommentaireActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(CommentaireActivity.PARAM_SENS, mSens);
+		intent.putExtra(CommentaireActivity.PARAM_ARRET, mArret);
 		startActivity(intent);
 	}
 
 	private void menuShowPlan() {
-		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.Param.codeLigne, mArret.codeLigne);
+		final Intent intent = new Intent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.PARAM_LIGNE, mLigne);
 		startActivity(intent);
 	}
 

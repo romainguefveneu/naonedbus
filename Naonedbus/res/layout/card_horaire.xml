@@ -68,11 +68,6 @@
                 android:text="00:00" />
 
             <TextView
-                style="@style/CardHoraire"
-                android:tag="@string/cardHoraireTag"
-                android:text="00:00" />
-
-            <TextView
                 style="@style/CardHoraire.Last"
                 android:tag="@string/cardHoraireTag"
                 android:text="00:00" />

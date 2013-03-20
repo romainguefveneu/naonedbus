@@ -434,8 +434,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	private void menuShowPlan() {
 		final Favori item = getFirstSelectedItem();
-		final ParamIntent intent = new ParamIntent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.Param.codeLigne, item.codeLigne);
+		final Intent intent = new Intent(getActivity(), PlanActivity.class);
+		intent.putExtra(PlanActivity.PARAM_LIGNE, item.codeLigne);
 		startActivity(intent);
 	}
 
@@ -601,12 +601,8 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		final List<Favori> favoris = mFavorisViewManager.getAll(context.getContentResolver(), mSelectedGroupes);
 		Collections.sort(favoris, comparators.get(mCurrentSort));
 
-		Log.d(LOG_TAG, "\t Favoris : " + favoris.size());
-
 		int position = 0;
 		for (final Favori favori : favoris) {
-			Log.d(LOG_TAG, "\t" + favori.lettre + " " + favori.nomArret + "\t" + favori.nomGroupe);
-
 			favori.delay = FavorisUtil.formatDelayLoading(getActivity(), favori.nextHoraire);
 
 			if (favori.nextHoraire == null) {
