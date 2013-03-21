@@ -54,12 +54,11 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	/**
 	 * Reçoit les intents de notre intentFilter
 	 */
-	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
+	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(final Context context, final Intent intent) {
-			if (DBG)
-				Log.d(LOG_TAG, "onReceive " + intent.getAction());
-			restartLoader(null, HoraireCard.this).forceLoad();
+			Log.d(getClass().getSimpleName(), "onReceive " + intent.getAction());
+			restartLoader(null, HoraireCard.this).onContentChanged();
 		}
 	};
 
@@ -73,17 +72,21 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	}
 
 	@Override
-	public void onStart() {
-		if (DBG)
-			Log.d(LOG_TAG, "onStart");
-		getContext().registerReceiver(intentReceiver, intentFilter);
+	public void onCreate() {
+		super.onCreate();
+		getContext().registerReceiver(mIntentReceiver, intentFilter);
 	}
 
 	@Override
-	public void onStop() {
-		if (DBG)
-			Log.d(LOG_TAG, "onStop");
-		getContext().unregisterReceiver(intentReceiver);
+	public void onResume() {
+		super.onResume();
+		initLoader(null, this);
+	}
+
+	@Override
+	public void onDestroy() {
+		getContext().unregisterReceiver(mIntentReceiver);
+		super.onDestroy();
 	}
 
 	@Override
@@ -97,6 +100,9 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	protected void bindView(final Context context, final View view) {
+		mHoraireViews.clear();
+		mDelaiViews.clear();
+
 		ViewHelper.findViewsByTag(view, context.getString(R.string.cardHoraireTag), new OnTagFoundHandler() {
 			@Override
 			public void onTagFound(final View v) {
@@ -112,15 +118,13 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				setTypefaceRobotoBold((TextView) v);
 			}
 		});
-
-		initLoader(null, this).forceLoad();
 	}
 
 	@Override
 	public void onArretChange(final Arret newArret) {
 		mArret = newArret;
 		showLoader();
-		restartLoader(null, this).forceLoad();
+		restartLoader(null, this);
 	}
 
 	@Override
@@ -130,7 +134,6 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	public void onLoadFinished(final Loader<List<Horaire>> loader, final List<Horaire> horaires) {
-
 		if (horaires != null && !horaires.isEmpty()) {
 
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
@@ -155,6 +158,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 			String delai = "";
 			while (indexHoraire < horaires.size() && indexView < mHoraireViews.size()) {
 				horaire = horaires.get(indexHoraire);
+
 				mHoraireViews.get(indexView).setText(mTimeFormat.format(horaire.getDate()));
 
 				if (indexView > 0) {
@@ -187,6 +191,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		private final HoraireManager mHoraireManager;
 		private final Arret mArret;
 		private final int mHorairesCount;
+		private List<Horaire> mHoraires;
 
 		public LoaderTask(final Context context, final Arret arret, final int horairesCount) {
 			super(context);
@@ -204,9 +209,47 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				horaires = mHoraireManager.getNextHoraires(getContext().getContentResolver(), mArret,
 						new DateMidnight(), mHorairesCount, 5);
 			} catch (final IOException e) {
-				e.printStackTrace();
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur de chargement des horaires.", e);
 			}
+
+			mHoraires = horaires;
+
 			return horaires;
+		}
+
+		/**
+		 * Called when there is new data to deliver to the client. The super
+		 * class will take care of delivering it; the implementation here just
+		 * adds a little more logic.
+		 */
+		@Override
+		public void deliverResult(final List<Horaire> horaires) {
+			mHoraires = horaires;
+
+			if (isStarted()) {
+				// If the Loader is currently started, we can immediately
+				// deliver its results.
+				super.deliverResult(horaires);
+			}
+		}
+
+		/**
+		 * Handles a request to start the Loader.
+		 */
+		@Override
+		protected void onStartLoading() {
+			if (mHoraires != null) {
+				// If we currently have a result available, deliver it
+				// immediately.
+				deliverResult(mHoraires);
+			}
+
+			if (takeContentChanged() || mHoraires == null) {
+				// If the data has changed since the last time it was loaded
+				// or is not currently available, start a load.
+				forceLoad();
+			}
 		}
 
 	}

@@ -18,8 +18,10 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.json.JSONException;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -34,6 +36,26 @@ import android.widget.TextView.BufferType;
 public class CommentairesCard extends Card<List<Commentaire>> {
 
 	private static final int LIMIT = 3;
+	private static final String BUNDLE_FORCE_UPDATE = "forceUpdate";
+
+	private final static IntentFilter intentFilter;
+	static {
+		intentFilter = new IntentFilter();
+		intentFilter.addAction(CommentaireActivity.ACTION_COMMENTAIRE_SENT);
+	}
+
+	/**
+	 * Reçoit les intents de notre intentFilter
+	 */
+	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(final Context context, final Intent intent) {
+			showLoader();
+			final Bundle bundle = new Bundle();
+			bundle.putBoolean(BUNDLE_FORCE_UPDATE, true);
+			restartLoader(bundle, CommentairesCard.this).forceLoad();
+		}
+	};
 
 	private Ligne mLigne;
 	private Sens mSens;
@@ -57,9 +79,26 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 	}
 
 	@Override
+	public void onCreate() {
+		super.onCreate();
+		getContext().registerReceiver(mIntentReceiver, intentFilter);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		initLoader(null, this).forceLoad();
+	}
+
+	@Override
+	public void onDestroy() {
+		getContext().registerReceiver(mIntentReceiver, intentFilter);
+		super.onDestroy();
+	}
+
+	@Override
 	protected void bindView(final Context context, final View view) {
 		mRoot = (ViewGroup) view;
-		initLoader(null, this).forceLoad();
 	}
 
 	@Override
@@ -114,8 +153,9 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 	}
 
 	@Override
-	public Loader<List<Commentaire>> onCreateLoader(final int arg0, final Bundle arg1) {
-		return new LoaderTask(getContext(), mLigne);
+	public Loader<List<Commentaire>> onCreateLoader(final int id, final Bundle bundle) {
+		final boolean forceUpdate = (bundle != null && bundle.getBoolean(BUNDLE_FORCE_UPDATE, false));
+		return new LoaderTask(getContext(), mLigne, forceUpdate);
 	}
 
 	@Override
@@ -137,10 +177,12 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 	private static class LoaderTask extends AsyncTaskLoader<List<Commentaire>> {
 		private final Ligne mLigne;
+		private final boolean mForceUpdate;
 
-		public LoaderTask(final Context context, final Ligne ligne) {
+		public LoaderTask(final Context context, final Ligne ligne, final boolean forceUpdate) {
 			super(context);
 			mLigne = ligne;
+			mForceUpdate = forceUpdate;
 		}
 
 		@Override
@@ -152,7 +194,11 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 			List<Commentaire> commentaires = null;
 
 			try {
-				commentaires = manager.getAll(getContext(), mLigne.code, null, null, new DateTime(0));
+				if (mForceUpdate) {
+					commentaires = manager.getFromWeb(getContext(), mLigne.code, null, null, new DateTime(0));
+				} else {
+					commentaires = manager.getAll(getContext(), mLigne.code, null, null, new DateTime(0));
+				}
 
 				for (int i = commentaires.size() - 1; i > -1; i--) {
 					final Commentaire commentaire = commentaires.get(i);

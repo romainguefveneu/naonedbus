@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,10 +44,20 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 		mLayoutId = layoutId;
 	}
 
-	public void onStart() {
+	public void onCreate() {
+		Log.d(getClass().getSimpleName(), "onCreate");
 	}
 
-	public void onStop() {
+	public void onDestroy() {
+		Log.d(getClass().getSimpleName(), "onDestroy");
+	}
+
+	public void onResume() {
+		Log.d(getClass().getSimpleName(), "onResume");
+	}
+
+	public void onPause() {
+		Log.d(getClass().getSimpleName(), "onPause");
 	}
 
 	protected Context getContext() {

@@ -33,6 +33,7 @@ import org.apache.http.HttpException;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -49,6 +50,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
 public class CommentaireActivity extends SherlockActivity {
+
+	public static final String ACTION_COMMENTAIRE_SENT = "net.naonedbus.action.COMMENTAIRE_SENT";
 
 	public static final String PARAM_LIGNE = "ligne";
 	public static final String PARAM_SENS = "sens";
@@ -428,7 +431,12 @@ public class CommentaireActivity extends SherlockActivity {
 				InfoDialogUtils.show(CommentaireActivity.this, R.string.dialog_content_comment_sending_error, msgError);
 				BugSenseHandler.sendExceptionMessage("Erreur lors de l'envoi du message.", null, this.e);
 			} else {
+
+				final Intent actionCommentaireSent = new Intent(ACTION_COMMENTAIRE_SENT);
+				sendBroadcast(actionCommentaireSent);
+
 				setResult(RESULT_OK, null);
+
 				finish();
 			}
 			super.onPostExecute(success);

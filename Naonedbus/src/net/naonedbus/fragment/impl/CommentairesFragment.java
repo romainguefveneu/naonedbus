@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.CommentaireDetailActivity;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.async.AsyncResult;
@@ -16,8 +17,10 @@ import net.naonedbus.widget.indexer.impl.CommentaireIndexer;
 
 import org.joda.time.DateTime;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -46,6 +49,24 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	private String mCodeSens;
 	private String mCodeArret;
 
+	private final static IntentFilter intentFilter;
+	static {
+		intentFilter = new IntentFilter();
+		intentFilter.addAction(CommentaireActivity.ACTION_COMMENTAIRE_SENT);
+	}
+
+	/**
+	 * Reçoit les intents de notre intentFilter
+	 */
+	private final BroadcastReceiver intentReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(final Context context, final Intent intent) {
+			if (DBG)
+				Log.d(LOG_TAG, "onReceive : " + intent);
+			refreshContent();
+		}
+	};
+
 	public CommentairesFragment() {
 		super(R.string.title_fragment_en_direct, R.layout.fragment_listview_box);
 	}
@@ -53,9 +74,10 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
+		setHasOptionsMenu(true);
+		getActivity().registerReceiver(intentReceiver, intentFilter);
 	}
 
 	@Override
@@ -72,6 +94,12 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		}
 
 		new LoadTimeLineCache().execute(mCodeLigne, mCodeSens, mCodeArret);
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		getActivity().unregisterReceiver(intentReceiver);
 	}
 
 	@Override

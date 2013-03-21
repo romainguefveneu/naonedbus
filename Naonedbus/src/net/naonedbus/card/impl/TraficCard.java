@@ -42,6 +42,12 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		initLoader(null, this).forceLoad();
+	}
+
+	@Override
 	protected Intent getMoreIntent() {
 		return null;
 	}
@@ -49,7 +55,6 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	@Override
 	protected void bindView(final Context context, final View view) {
 		mRoot = (ViewGroup) view;
-		initLoader(null, this).forceLoad();
 	}
 
 	@Override

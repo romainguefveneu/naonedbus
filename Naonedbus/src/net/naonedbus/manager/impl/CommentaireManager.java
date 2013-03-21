@@ -38,7 +38,10 @@ import android.content.Context;
 import com.bugsense.trace.BugSenseHandler;
 
 public class CommentaireManager {
+
 	private static CommentaireManager instance;
+
+	private static final long UP_TO_DATE_DELAY = 900000; // 15 min
 
 	public static CommentaireManager getInstance() {
 		if (instance == null) {
@@ -51,8 +54,18 @@ public class CommentaireManager {
 	public List<Commentaire> getAll(final Context context, final String codeLigne, final String codeSens,
 			final String codeArret, final BaseDateTime date) throws IOException, JSONException {
 
-		List<Commentaire> data = getFromCache(context, codeLigne, codeSens, codeArret);
-		if (data.size() == 0) {
+		List<Commentaire> data;
+		boolean isUpToDate = false;
+
+		final long maxUpdateTime = System.currentTimeMillis() - UP_TO_DATE_DELAY;
+		final File cacheFile = new File(context.getCacheDir(), genKey(codeLigne, codeSens, codeArret) + ".timeline");
+		if (cacheFile.exists()) {
+			isUpToDate = cacheFile.lastModified() > maxUpdateTime;
+		}
+
+		if (isUpToDate) {
+			data = getFromCache(context, codeLigne, codeSens, codeArret);
+		} else {
 			data = getFromWeb(context, codeLigne, codeSens, codeArret, date);
 		}
 

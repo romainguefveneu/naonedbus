@@ -26,6 +26,7 @@ import org.joda.time.DateMidnight;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,8 @@ public class ArretDetailFragment extends SherlockFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		Log.i(getClass().getSimpleName(), "onCreate");
+
 		mLigne = getArguments().getParcelable(PARAM_LIGNE);
 		mSens = getArguments().getParcelable(PARAM_SENS);
 		mArret = getArguments().getParcelable(PARAM_ARRET);
@@ -87,6 +90,30 @@ public class ArretDetailFragment extends SherlockFragment {
 		setHasOptionsMenu(true);
 
 		mOnSensChangeListener = (OnSensChangeListener) getActivity();
+
+		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
+		final TraficCard traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
+		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager());
+		commentairesCard.setLigne(mLigne);
+		commentairesCard.setSens(mSens);
+		commentairesCard.setArret(mArret);
+
+		// final MapCard mapCard = new MapCard(getActivity(),
+		// getLoaderManager(), mArret.latitude, mArret.longitude);
+		// final MyLocationProvider locationProvider =
+		// NBApplication.getLocationProvider();
+		// mapCard.setCurrentLocation(locationProvider.getLastKnownLocation());
+
+		mCards.add(horaireCard);
+		mCards.add(traficCard);
+		mCards.add(commentairesCard);
+		// mCards.add(mapCard);
+
+		for (final Card<?> card : mCards) {
+			card.onCreate();
+		}
+
+		mOnArretChangeListener = horaireCard;
 	}
 
 	@Override
@@ -129,48 +156,36 @@ public class ArretDetailFragment extends SherlockFragment {
 	@Override
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
-		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
-		final TraficCard traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
-		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager());
-		commentairesCard.setLigne(mLigne);
-		commentairesCard.setSens(mSens);
-		commentairesCard.setArret(mArret);
-
-		// final MapCard mapCard = new MapCard(getActivity(),
-		// getLoaderManager(), mArret.latitude, mArret.longitude);
-		// final MyLocationProvider locationProvider =
-		// NBApplication.getLocationProvider();
-		// mapCard.setCurrentLocation(locationProvider.getLastKnownLocation());
-
-		mViewGroup.addView(horaireCard.getView(mViewGroup));
-		mViewGroup.addView(traficCard.getView(mViewGroup));
-		mViewGroup.addView(commentairesCard.getView(mViewGroup));
-		// mViewGroup.addView(mapCard.getView(mViewGroup));
-
-		mCards.add(horaireCard);
-		mCards.add(traficCard);
-		mCards.add(commentairesCard);
-		// mCards.add(mapCard);
-
-		mOnArretChangeListener = horaireCard;
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
 		for (final Card<?> card : mCards) {
-			card.onStart();
+			mViewGroup.addView(card.getView(mViewGroup));
 		}
 	}
 
 	@Override
-	public void onStop() {
-		super.onStop();
+	public void onResume() {
+		super.onResume();
+		Log.i(getClass().getSimpleName(), "onResume " + mCards.size());
 		for (final Card<?> card : mCards) {
-			card.onStop();
+			card.onResume();
 		}
-		mCards.clear();
+	}
+
+	@Override
+	public void onPause() {
+		Log.i(getClass().getSimpleName(), "onPause " + mCards.size());
+		for (final Card<?> card : mCards) {
+			card.onPause();
+		}
+		super.onPause();
+	}
+
+	@Override
+	public void onDestroy() {
+		Log.i(getClass().getSimpleName(), "onDestroy " + mCards.size());
+		for (final Card<?> card : mCards) {
+			card.onDestroy();
+		}
+		super.onDestroy();
 	}
 
 	@Override
