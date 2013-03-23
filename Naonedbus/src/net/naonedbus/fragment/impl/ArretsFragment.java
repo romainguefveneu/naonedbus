@@ -281,7 +281,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 	private void menuShowPlan() {
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, mLigne.code);
 		startActivity(intent);
 	}
 

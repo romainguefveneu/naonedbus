@@ -64,6 +64,7 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 	public CommentairesCard(final Context context, final LoaderManager loaderManager) {
 		super(context, loaderManager, R.string.card_commentaires_title, R.layout.card_trafic);
+		getContext().registerReceiver(mIntentReceiver, intentFilter);
 	}
 
 	public void setLigne(final Ligne ligne) {
@@ -79,9 +80,12 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 	}
 
 	@Override
-	public void onCreate() {
-		super.onCreate();
-		getContext().registerReceiver(mIntentReceiver, intentFilter);
+	public void setContext(final Context context) {
+		if (!context.equals(getContext())) {
+			getContext().unregisterReceiver(mIntentReceiver);
+			super.setContext(context);
+			getContext().registerReceiver(mIntentReceiver, intentFilter);
+		}
 	}
 
 	@Override
@@ -92,7 +96,7 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 	@Override
 	public void onDestroy() {
-		getContext().registerReceiver(mIntentReceiver, intentFilter);
+		getContext().unregisterReceiver(mIntentReceiver);
 		super.onDestroy();
 	}
 

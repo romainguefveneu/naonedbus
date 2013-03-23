@@ -62,8 +62,8 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 			}
 		};
 
-		// if (getListAdapter() == null || getListAdapter().getCount() == 0)
-		showLoader();
+		if (getListAdapter() == null || getListAdapter().getCount() == 0)
+			showLoader();
 		loader.forceLoad();
 
 		return loader;

@@ -273,7 +273,7 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 
 	private void menuShowPlan() {
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, mLigne.code);
 		startActivity(intent);
 	}
 

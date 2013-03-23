@@ -24,7 +24,7 @@
     <string name="tuto_favoris_title">Favoris</string>
     <string name="tuto_favoris_summary"><![CDATA[Marquez vos arrêts <font color="#ffffff"><b>préférés</b></font> pour y avoir accès à tout moment]]></string>
     <string name="tuto_trafic_title">Info trafic</string>
-    <string name="tuto_trafic_summary">Des travaux ? Une manifestation prévu ? Gardez un oeil sur l\'info trafic !</string>
+    <string name="tuto_trafic_summary">Des travaux ? Une manifestation prévue ? Gardez un oeil sur l\'info trafic !</string>
     <string name="tuto_commentaires_title">Info trafic participatif</string>
     <string name="tuto_commentaires_summary"><![CDATA[Accidents, retards : <font color="#ffffff"><b>informez</b></font> et restez informés en <font color="#ffffff"><b>temps réel</b></font> grâce à l\'info trafic participatif]]></string>
     <string name="tuto_parkings_title">Parkings</string>

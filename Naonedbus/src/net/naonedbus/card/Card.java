@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +23,7 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 
 	private static final Map<Class<?>, Integer> sLoaderIds = new HashMap<Class<?>, Integer>();
 
-	private final Context mContext;
+	private Context mContext;
 	private final LoaderManager mLoaderManager;
 	private final int mLayoutId;
 	private final int mTitleId;
@@ -44,24 +43,27 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 		mLayoutId = layoutId;
 	}
 
-	public void onCreate() {
-		Log.d(getClass().getSimpleName(), "onCreate");
+	public void onStart() {
 	}
 
-	public void onDestroy() {
-		Log.d(getClass().getSimpleName(), "onDestroy");
+	public void onStop() {
 	}
 
 	public void onResume() {
-		Log.d(getClass().getSimpleName(), "onResume");
 	}
 
 	public void onPause() {
-		Log.d(getClass().getSimpleName(), "onPause");
+	}
+
+	public void onDestroy() {
 	}
 
 	protected Context getContext() {
 		return mContext;
+	}
+
+	public void setContext(final Context context) {
+		mContext = context;
 	}
 
 	protected Loader<T> initLoader(final Bundle bundle, final LoaderCallbacks<T> callbacks) {

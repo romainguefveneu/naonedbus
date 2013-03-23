@@ -109,10 +109,6 @@ public class ArretDetailFragment extends SherlockFragment {
 		mCards.add(commentairesCard);
 		// mCards.add(mapCard);
 
-		for (final Card<?> card : mCards) {
-			card.onCreate();
-		}
-
 		mOnArretChangeListener = horaireCard;
 	}
 
@@ -162,9 +158,17 @@ public class ArretDetailFragment extends SherlockFragment {
 	}
 
 	@Override
+	public void onStart() {
+		super.onStart();
+		for (final Card<?> card : mCards) {
+			card.setContext(getActivity());
+			card.onStart();
+		}
+	}
+
+	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i(getClass().getSimpleName(), "onResume " + mCards.size());
 		for (final Card<?> card : mCards) {
 			card.onResume();
 		}
@@ -172,7 +176,6 @@ public class ArretDetailFragment extends SherlockFragment {
 
 	@Override
 	public void onPause() {
-		Log.i(getClass().getSimpleName(), "onPause " + mCards.size());
 		for (final Card<?> card : mCards) {
 			card.onPause();
 		}
@@ -180,8 +183,15 @@ public class ArretDetailFragment extends SherlockFragment {
 	}
 
 	@Override
+	public void onStop() {
+		for (final Card<?> card : mCards) {
+			card.onStop();
+		}
+		super.onStop();
+	}
+
+	@Override
 	public void onDestroy() {
-		Log.i(getClass().getSimpleName(), "onDestroy " + mCards.size());
 		for (final Card<?> card : mCards) {
 			card.onDestroy();
 		}
@@ -255,7 +265,7 @@ public class ArretDetailFragment extends SherlockFragment {
 
 	private void menuShowPlan() {
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, mLigne.code);
 		startActivity(intent);
 	}
 

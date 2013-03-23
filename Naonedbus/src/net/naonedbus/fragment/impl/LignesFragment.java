@@ -187,7 +187,7 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	private void menuShowPlan(final Ligne ligne) {
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.PARAM_LIGNE, ligne);
+		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, ligne.code);
 		startActivity(intent);
 	}
 

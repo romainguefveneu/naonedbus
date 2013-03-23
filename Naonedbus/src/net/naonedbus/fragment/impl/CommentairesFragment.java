@@ -49,6 +49,8 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	private String mCodeSens;
 	private String mCodeArret;
 
+	private Context mContext;
+
 	private final static IntentFilter intentFilter;
 	static {
 		intentFilter = new IntentFilter();
@@ -78,6 +80,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			Log.d(LOG_TAG, "onCreate");
 		setHasOptionsMenu(true);
 		getActivity().registerReceiver(intentReceiver, intentFilter);
+		mContext = getActivity();
 	}
 
 	@Override
@@ -97,9 +100,19 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 	}
 
 	@Override
+	public void onStart() {
+		super.onStart();
+		if (!mContext.equals(getActivity())) {
+			mContext.unregisterReceiver(intentReceiver);
+			mContext = getActivity();
+			mContext.registerReceiver(intentReceiver, intentFilter);
+		}
+	}
+
+	@Override
 	public void onDestroy() {
-		super.onDestroy();
 		getActivity().unregisterReceiver(intentReceiver);
+		super.onPause();
 	}
 
 	@Override

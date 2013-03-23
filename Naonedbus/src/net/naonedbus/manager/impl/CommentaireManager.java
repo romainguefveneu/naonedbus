@@ -41,7 +41,7 @@ public class CommentaireManager {
 
 	private static CommentaireManager instance;
 
-	private static final long UP_TO_DATE_DELAY = 900000; // 15 min
+	private static final long UP_TO_DATE_DELAY = 300000; // 5 min
 
 	public static CommentaireManager getInstance() {
 		if (instance == null) {

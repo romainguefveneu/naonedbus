@@ -285,29 +285,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	public void onDestroy() {
-		if (DBG)
-			Log.d(LOG_TAG, "onDestroy");
-
-		mFavoriManager.removeActionListener(mOnFavoriActionListener);
-		final ContentResolver contentResolver = getActivity().getContentResolver();
-		contentResolver.unregisterContentObserver(mGroupesContentObserver);
-		contentResolver.unregisterContentObserver(mFavorisGroupesContentObserver);
-		super.onDestroy();
-	}
-
-	@Override
-	public void onStop() {
-		if (DBG)
-			Log.d(LOG_TAG, "onStop");
-
-		mStateHelper.setSortType(this, mCurrentSort);
-
-		mLocationProvider.removeListener(this);
-		super.onStop();
-	}
-
-	@Override
 	public void onResume() {
 		if (DBG)
 			Log.d(LOG_TAG, "onResume");
@@ -331,6 +308,29 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		mContentHasChanged = false;
 		getActivity().unregisterReceiver(intentReceiver);
 		super.onPause();
+	}
+
+	@Override
+	public void onStop() {
+		if (DBG)
+			Log.d(LOG_TAG, "onStop");
+
+		mStateHelper.setSortType(this, mCurrentSort);
+
+		mLocationProvider.removeListener(this);
+		super.onStop();
+	}
+
+	@Override
+	public void onDestroy() {
+		if (DBG)
+			Log.d(LOG_TAG, "onDestroy");
+
+		mFavoriManager.removeActionListener(mOnFavoriActionListener);
+		final ContentResolver contentResolver = getActivity().getContentResolver();
+		contentResolver.unregisterContentObserver(mGroupesContentObserver);
+		contentResolver.unregisterContentObserver(mFavorisGroupesContentObserver);
+		super.onDestroy();
 	}
 
 	@Override
@@ -435,7 +435,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private void menuShowPlan() {
 		final Favori item = getFirstSelectedItem();
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.PARAM_LIGNE, item.codeLigne);
+		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, item.codeLigne);
 		startActivity(intent);
 	}
 

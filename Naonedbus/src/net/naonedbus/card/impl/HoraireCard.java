@@ -51,13 +51,10 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
 	}
 
-	/**
-	 * Reçoit les intents de notre intentFilter
-	 */
+	/** Reçoit les intents de notre intentFilter */
 	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(final Context context, final Intent intent) {
-			Log.d(getClass().getSimpleName(), "onReceive " + intent.getAction());
 			restartLoader(null, HoraireCard.this).onContentChanged();
 		}
 	};
@@ -72,21 +69,16 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	}
 
 	@Override
-	public void onCreate() {
-		super.onCreate();
-		getContext().registerReceiver(mIntentReceiver, intentFilter);
-	}
-
-	@Override
 	public void onResume() {
 		super.onResume();
+		getContext().registerReceiver(mIntentReceiver, intentFilter);
 		initLoader(null, this);
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onPause() {
+		super.onPause();
 		getContext().unregisterReceiver(mIntentReceiver);
-		super.onDestroy();
 	}
 
 	@Override
