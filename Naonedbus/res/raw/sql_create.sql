@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS equipements (
 	idType INT NOT NULL,
 	idSousType INT, 
 	codeEquipement TEXT,
-	nom TEXT NOT NULL, 
+	nomEquipement TEXT NOT NULL, 
 	normalizedNom TEXT NOT NULL, 
 	details TEXT, 
 	adresse TEXT,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS equipements (
 	tag INT);
 CREATE INDEX IF NOT EXISTS equipements_id ON equipements (_id);
 CREATE INDEX IF NOT EXISTS equipements_type ON equipements (idType);
-CREATE INDEX IF NOT EXISTS equipements_nom ON equipements (nom collate nocase);
+CREATE INDEX IF NOT EXISTS equipements_nom ON equipements (nomEquipement collate nocase);
 CREATE INDEX IF NOT EXISTS equipements_normalizedNom ON equipements (normalizedNom collate nocase);
 CREATE INDEX IF NOT EXISTS equipements_coordonnees ON equipements (latitude, longitude);
 CREATE INDEX IF NOT EXISTS equipements_code ON equipements (codeEquipement);
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS favoris (
 	codeLigne TEXT NOT NULL, 
 	codeSens TEXT NOT NULL, 
 	codeArret TEXT NOT NULL, 
-	nom TEXT);
+	nomFavori TEXT);
 CREATE INDEX IF NOT EXISTS favoris_id ON favoris (_id);
 
 -- Décrire GROUPES
@@ -116,8 +116,8 @@ SELECT
     f.codeLigne, 
     f.codeSens, 
     f.codeArret,
-    f.nom AS nomFavori, 
-    st.nom AS nomArret, 
+    f.nomFavori, 
+    st.nomEquipement AS nomArret, 
     st.normalizedNom, 
     st.codeEquipement,
     a.idStation, 

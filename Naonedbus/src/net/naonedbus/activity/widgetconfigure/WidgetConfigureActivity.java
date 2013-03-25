@@ -24,7 +24,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.appwidget.HoraireWidgetProvider;
 import net.naonedbus.bean.Favori;
-import net.naonedbus.manager.impl.FavorisViewManager;
+import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 import android.app.ListActivity;
 import android.appwidget.AppWidgetManager;
@@ -46,12 +46,11 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	private static final String PREFS_NAME = "net.naonedbus.activity.WidgetProvider";
 	private static final String PREF_PREFIX_KEY = "widgetFavoriId";
 
-	private final FavorisViewManager mFavoriManager;
 	private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 	private LoadFavoris mLoadFavoris;
 
 	public WidgetConfigureActivity() {
-		mFavoriManager = FavorisViewManager.getInstance();
+
 	}
 
 	@Override
@@ -128,11 +127,12 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 
 		@Override
 		protected FavoriArrayAdapter doInBackground(final Void... params) {
+			final FavoriManager favoriManager = FavoriManager.getInstance();
 			final List<Favori> items = new ArrayList<Favori>();
 			final Context context = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_Acapulco_Dark);
 			final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, items);
 
-			items.addAll(mFavoriManager.getUnique(context.getContentResolver()));
+			items.addAll(favoriManager.getFull(context.getContentResolver()));
 
 			if (items.isEmpty()) {
 			} else {

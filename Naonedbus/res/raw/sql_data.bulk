@@ -18,7 +18,7 @@ INSERT INTO typesEquipements(_id, nom) VALUES (?, ?);
 5;Arrêts Lila
 
 # Parkings
-INSERT INTO equipements(_id, idType, idSousType, nom, normalizedNom, adresse, telephone, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO equipements(_id, idType, idSousType, nomEquipement, normalizedNom, adresse, telephone, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 134;1;1;Médiathèque;Mediatheque;Rue Neuve des Capucins - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21087083;-1.562338176
 280;1;1;Gare Nord;Gare Nord;Boulevard de Stalingrad - Nantes;08 25 88 88 26;www.resaplace.com;47.21668904;-1.544984334
 284;1;1;Decré-Bouffay;Decre-Bouffay;18 Rue du Moulin - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21666262;-1.554004632
@@ -83,7 +83,7 @@ INSERT INTO equipements(_id, idType, idSousType, nom, normalizedNom, adresse, te
 3990;1;1;Viviani;Viviani;Rue René Viviani- Nantes;;;47.2087756;-1.53619707
 
 # Stations Bicloo
-INSERT INTO equipements(_id, idType, nom, normalizedNom, details, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, details, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?);
 1;2;Préfecture;Prefecture;Abonnement;47.220195066995;-1.554176048615
 2;2;Picasso;Picasso;Accueil;47.216343586847;-1.534229121012
 3;2;Gréneraie;Greneraie;Abonnement;47.199970710192;-1.534607153787
@@ -188,7 +188,7 @@ INSERT INTO equipements(_id, idType, nom, normalizedNom, details, latitude, long
 102;2;Saint-Jacques;Saint-Jacques;Accueil;47.195859160598;-1.536589628879
 
 # Marguerite
-INSERT INTO equipements(_id, idType, nom, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
 103;3;50 Otages;50 Otages;47.219445958235;-1.557321377259
 104;3;Baco;Baco;47.212548438018;-1.552925281098
 105;3;Bretagne;Bretagne;47.217489907388;-1.559633543181
@@ -210,7 +210,7 @@ INSERT INTO equipements(_id, idType, nom, normalizedNom, latitude, longitude) VA
 121;3;Zola;Zola;47.213899460439;-1.586346204096
 
 # Co voiturage
-INSERT INTO equipements(_id, idType, nom, normalizedNom, adresse, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, adresse, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 500;4;Salle Polyvalente;SALLE POLYVALENTE;Abbaretz;www.covoiturage-nantesmetropole.fr;47.55395210262326;-1.5322793346043333
 501;4;Super U;SUPER U;Arthon;www.covoiturage-nantesmetropole.fr;47.115215313981004;-1.9501037695793397
 502;4;La Herdrie;LA HERDRIE;Basse Goulaine;www.covoiturage-nantesmetropole.fr;47.19812465783537;-1.4542676659553404
@@ -299,7 +299,7 @@ INSERT INTO equipements(_id, idType, nom, normalizedNom, adresse, url, latitude,
 4019;4;La Croix de Mauves;LA CROIX DE MAUVES;RD 723 - Mauves-sur-Loire;www.covoiturage-nantesmetropole.fr;47.3002662582;-1.3981722587
 
 #Lila
-INSERT INTO equipements(_id, idType, nom, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
 1000;5;27 otages;27 OTAGES;47.71891688;-1.36656651
 1001;5;3m;3M;47.42716985;-2.06972548
 1002;5;Acacias;ACACIAS;47.71674311;-1.36333285
@@ -1356,7 +1356,7 @@ INSERT INTO lignes(_id, code, lettre, depuis, vers, couleur, type) VALUES (?, ?,
 64;NL;NL;Trentemoult;Roquios;-15383149;6
 
 # Stations
-INSERT INTO equipements(_id, idType, codeEquipement, nom, normalizedNom, latitude, longitude) VALUES (?,?,?,?,?,?,?);
+INSERT INTO equipements(_id, idType, codeEquipement, nomEquipement, normalizedNom, latitude, longitude) VALUES (?,?,?,?,?,?,?);
 0;0;ABDU;Abel Durand;ABEL DURAND;47.22019661;-1.60337553
 1;0;ABLA;Avenue Blanche;AVENUE BLANCHE;47.22973509;-1.58937990
 2;0;ACHA;Angle Chaillou;ANGLE CHAILLOU;47.26979248;-1.57206627

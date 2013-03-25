@@ -182,7 +182,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		setOnClickListener(context, views, favori);
 
 		try {
-			if (horaireManager.isInDB(context.getContentResolver(), favori, today)) {
+			if (horaireManager.isInDB(context.getContentResolver(), favori, today, mHoraireLimit)) {
 				// Les horaires sont en cache
 				final List<Horaire> horaires = horaireManager.getNextHoraires(context.getContentResolver(), favori,
 						today, mHoraireLimit);
@@ -197,7 +197,6 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		} catch (final IOException e) {
 			BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 		}
-
 	}
 
 	/**
@@ -216,8 +215,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		final HoraireManager horaireManager = HoraireManager.getInstance();
 		horaireManager.schedule(horaireTask);
 
+		views.setTextViewText(R.id.itemTime, null);
 		views.setViewVisibility(R.id.widgetProgress, View.VISIBLE);
-		views.setViewVisibility(R.id.itemTime, View.GONE);
 	}
 
 	/**
@@ -300,7 +299,6 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		}
 
 		views.setTextViewText(R.id.itemTime, builder.toString());
-		views.setViewVisibility(R.id.itemTime, View.VISIBLE);
 		views.setViewVisibility(R.id.widgetProgress, View.GONE);
 	}
 
@@ -322,6 +320,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	public void onReceive(final Context context, final Intent intent) {
 		final String action = intent.getAction();
 		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+
+		if (DBG)
+			Log.i(LOG_TAG, "onReceive " + action);
 
 		if (ACTION_APPWIDGET_UPDATE.equals(action)) {
 

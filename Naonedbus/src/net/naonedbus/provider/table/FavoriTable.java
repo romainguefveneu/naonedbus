@@ -26,16 +26,14 @@ public interface FavoriTable extends BaseColumns {
 	public static final String CODE_ARRET = "codeArret";
 	public static final String CODE_SENS = "codeSens";
 	public static final String CODE_LIGNE = "codeLigne";
-	public static final String NOM = "nom";
+	public static final String NOM = "nomFavori";
 
 	//@formatter:off
 	public static final String JOIN = TABLE_NAME + " f " + " LEFT JOIN " + ArretTable.TABLE_NAME
 			+ " a ON f._id = a._id" + 
-			" LEFT JOIN " + EquipementTable.TABLE_NAME + " st ON st.idType = 0 AND st._id = a.idStation " + 
+			" LEFT JOIN " + EquipementTable.TABLE_NAME + " st ON st.idType = 0 AND st._id = a.idStation " +
 			" LEFT JOIN " + LigneTable.TABLE_NAME+ " l ON l.code = f.codeLigne" + 
-			" LEFT JOIN " + SensTable.TABLE_NAME + " s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens" + 
-			" LEFT JOIN " + FavorisGroupesTable.TABLE_NAME + " fg ON f._id = fg." + FavorisGroupesTable.ID_FAVORI +
-			" LEFT JOIN " + GroupeTable.TABLE_NAME + " g ON g._id = fg." + FavorisGroupesTable.ID_GROUPE;
+			" LEFT JOIN " + SensTable.TABLE_NAME + " s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens"; 
 
 	public static final String[] PROJECTION = new String[] { 
 		FavoriTable._ID, 
@@ -51,21 +49,12 @@ public interface FavoriTable extends BaseColumns {
 			"f." + FavoriTable.CODE_ARRET,
 			"f." + FavoriTable.NOM, 
 			"st." + EquipementTable.NOM, 
-			"st." + EquipementTable.NORMALIZED_NOM, 
-			"st." + EquipementTable.CODE,
-			ArretTable.ID_STATION, 
-			"st." + EquipementTable.LATITUDE, 
-			"st." + EquipementTable.LONGITUDE, 
 			"s." + SensTable.NOM,
 			"l." + LigneTable.COULEUR, 
-			"l." + LigneTable.LETTRE,
-			"g." + GroupeTable.NOM,
-			"g." + GroupeTable._ID};
+			"l." + LigneTable.LETTRE
+			};
 
-	public static final String FULL_ORDER = "g." + GroupeTable.NOM +", l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
-			+ " as numeric)," + FavoriTable.NOM + ", st." + EquipementTable.NOM;
-
-	public static final String WHERE = FavorisGroupesTable.ID_GROUPE + " IN (%s) OR NOT EXISTS (SELECT 1 FROM "
-			+ FavorisGroupesTable.TABLE_NAME + " WHERE " + FavorisGroupesTable.ID_FAVORI + " = f._id)";
+	public static final String FULL_ORDER = "l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
+			+ " as numeric), f." + FavoriTable.NOM+ ", st." + EquipementTable.NOM;
 	//@formatter:on
 }

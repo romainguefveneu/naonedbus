@@ -30,7 +30,7 @@ public interface EquipementTable extends BaseColumns {
 	public static final String ID_TYPE = "idType";
 	public static final String ID_SOUS_TYPE = "idSousType";
 	public static final String CODE = "codeEquipement";
-	public static final String NOM = "nom";
+	public static final String NOM = "nomEquipement";
 	public static final String NORMALIZED_NOM = "normalizedNom";
 	public static final String ADRESSE = "adresse";
 	public static final String DETAILS = "details";

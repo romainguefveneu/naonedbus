@@ -115,6 +115,18 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 *         cache.
 	 */
 	public boolean isInDB(final ContentResolver contentResolver, final Arret arret, final DateMidnight date) {
+		return isInDB(contentResolver, arret, date, 1);
+	}
+
+	/**
+	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée
+	 * 
+	 * @return {@code true} si le cache contient tous les horaires pour l'arret
+	 *         et la date demandée {@code false} si les données ne sont pas en
+	 *         cache.
+	 */
+	public boolean isInDB(final ContentResolver contentResolver, final Arret arret, final DateMidnight date,
+			final int count) {
 		final HoraireToken flag = new HoraireToken(date.getMillis(), arret._id);
 		if (emptyHoraires.contains(flag))
 			return true;
@@ -125,7 +137,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
 
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
-		return c.getCount() > 0;
+		return c.getCount() >= count;
 	}
 
 	/**
@@ -268,9 +280,10 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		final List<Horaire> nextHoraires = new ArrayList<Horaire>();
 		int horairesCount = 0; // Juste renvoyer le bon nombre d'horaires
 		int loopCount = 0; // Limiter le nombre d'itérations
+		DateTime after = null; // Dernier horaire chargé
 
 		do {
-			horaires = getHoraires(contentResolver, arret, date);
+			horaires = getHoraires(contentResolver, arret, date, after);
 			for (final Horaire horaire : horaires) {
 				if (horaire.getTimestamp() >= now) {
 					nextHoraires.add(horaire);
@@ -279,6 +292,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 					}
 				}
 			}
+			after = new DateTime(horaires.get(horaires.size() - 1).getTimestamp());
 			date = date.plusDays(1);
 			loopCount++;
 		} while ((loopCount < 2) && (nextHoraires.size() < limit));
@@ -314,7 +328,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 */
 	public synchronized void schedule(final NextHoraireTask task) {
 		if (DBG)
-			Log.i(LOG_TAG, "Plannification de la tâche " + task);
+			Log.i(LOG_TAG, "Planification de la tâche " + task);
 
 		horairesTasksQueue.add(task);
 		if (loadThread == null || !loadThread.isAlive()) {
@@ -333,7 +347,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 		@Override
 		public void run() {
-			Log.i(LOG_TAG, "Démarrage du thread de chargement des horaires");
+			if (DBG)
+				Log.i(LOG_TAG, "Démarrage du thread de chargement des horaires");
 			NextHoraireTask task;
 			final DateMidnight today = new DateMidnight();
 
@@ -342,11 +357,13 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 					load(task);
 				}
 			}
-			Log.i(LOG_TAG, "Fin du thread de chargement des horaires");
+			if (DBG)
+				Log.i(LOG_TAG, "Fin du thread de chargement des horaires");
 		}
 
 		private void load(final NextHoraireTask task) {
-			Log.d(LOG_TAG, "Récupération des horaires de l'arrêt " + task.getArret().codeArret);
+			if (DBG)
+				Log.d(LOG_TAG, "Récupération des horaires de l'arrêt " + task.getArret().codeArret);
 
 			try {
 				getNextHoraires(task.getContext().getContentResolver(), task.getArret(), new DateMidnight(),

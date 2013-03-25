@@ -27,8 +27,12 @@ import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.FavoriProvider;
+import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.provider.table.FavoriTable;
+import net.naonedbus.provider.table.LigneTable;
+import net.naonedbus.provider.table.SensTable;
 import net.naonedbus.rest.controller.impl.FavoriController;
+import net.naonedbus.utils.ColorUtils;
 
 import org.json.JSONException;
 
@@ -36,6 +40,8 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 
 public class FavoriManager extends SQLiteManager<Favori> {
@@ -72,6 +78,53 @@ public class FavoriManager extends SQLiteManager<Favori> {
 
 	protected FavoriManager() {
 		super(FavoriProvider.CONTENT_URI);
+	}
+
+	/**
+	 * @param contentResolver
+	 * @return les favoris avec les données sur la ligne et le sens
+	 */
+	public List<Favori> getFull(final ContentResolver contentResolver) {
+		final Uri.Builder builder = FavoriProvider.CONTENT_URI.buildUpon();
+		builder.path(FavoriProvider.FAVORIS_FULL_URI_PATH_QUERY);
+
+		return getFromCursorFull(contentResolver.query(builder.build(), null, null, null, null));
+	}
+
+	/**
+	 * Transformer un curseur en liste d'éléments
+	 * 
+	 * @param c
+	 *            un Curseur
+	 * @return une liste d'éléments
+	 */
+	protected List<Favori> getFromCursorFull(final Cursor c) {
+		final List<Favori> items = new ArrayList<Favori>();
+		if (c.getCount() > 0) {
+			c.moveToFirst();
+			while (!c.isAfterLast()) {
+				items.add(getSingleFromCursorFull(c));
+				c.moveToNext();
+			}
+		}
+		c.close();
+		return items;
+	}
+
+	public Favori getSingleFromCursorFull(final Cursor c) {
+		final Favori item = new Favori();
+		item._id = c.getInt(c.getColumnIndex(FavoriTable._ID));
+		item.codeLigne = c.getString(c.getColumnIndex(FavoriTable.CODE_LIGNE));
+		item.codeSens = c.getString(c.getColumnIndex(FavoriTable.CODE_SENS));
+		item.codeArret = c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET));
+		item.nomFavori = c.getString(c.getColumnIndex(FavoriTable.NOM));
+		item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
+		item.couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR));
+		item.couleurTexte = ColorUtils.isLightColor(item.couleurBackground) ? Color.BLACK : Color.WHITE;
+
+		item.nomSens = c.getString(c.getColumnIndex(SensTable.NOM));
+		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
+		return item;
 	}
 
 	@Override
@@ -188,7 +241,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * 
 	 * @param contentResolver
 	 * @param json
-	 * @throws JSONException 
+	 * @throws JSONException
 	 */
 	public void fromJson(final ContentResolver contentResolver, final String json) throws JSONException {
 		final FavoriController controller = new FavoriController();
@@ -201,7 +254,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * 
 	 * @param contentResolver
 	 * @param json
-	 * @throws JSONException 
+	 * @throws JSONException
 	 */
 	public void fromJson(final SQLiteDatabase db, final String json) throws JSONException {
 		if (DBG)
@@ -290,7 +343,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * Importer les favoris depuis le cloud
 	 * 
 	 * @throws IOException
-	 * @throws JSONException 
+	 * @throws JSONException
 	 * @throws JsonMappingException
 	 * @throws JsonParseException
 	 */

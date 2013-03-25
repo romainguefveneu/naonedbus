@@ -35,14 +35,19 @@ public class FavoriProvider extends CustomContentProvider {
 	public static final int FAVORIS = 100;
 	public static final int FAVORI_ID = 110;
 
+	public static final int FAVORIS_FULL = 200;
+	public static final String FAVORIS_FULL_URI_PATH_QUERY = "full";
+
 	private static final String AUTHORITY = "net.naonedbus.provider.FavoriProvider";
-	private static final String ARRETS_BASE_PATH = "favoris";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + ARRETS_BASE_PATH);
+	private static final String FAVORIS_BASE_PATH = "favoris";
+
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + FAVORIS_BASE_PATH);
 
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
-		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH, FAVORIS);
-		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH + "/#", FAVORI_ID);
+		URI_MATCHER.addURI(AUTHORITY, FAVORIS_BASE_PATH, FAVORIS);
+		URI_MATCHER.addURI(AUTHORITY, FAVORIS_BASE_PATH + "/#", FAVORI_ID);
+		URI_MATCHER.addURI(AUTHORITY, FAVORIS_FULL_URI_PATH_QUERY, FAVORIS_FULL);
 	}
 
 	@Override
@@ -100,8 +105,8 @@ public class FavoriProvider extends CustomContentProvider {
 	}
 
 	@Override
-	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs,
-			final String sortOrder) {
+	public Cursor query(final Uri uri, String[] projection, final String selection, final String[] selectionArgs,
+			String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(FavoriTable.TABLE_NAME);
 
@@ -110,6 +115,12 @@ public class FavoriProvider extends CustomContentProvider {
 		case FAVORI_ID:
 			queryBuilder.appendWhere(FavoriTable._ID + "=" + uri.getLastPathSegment());
 			break;
+		case FAVORIS_FULL:
+			queryBuilder.setTables(FavoriTable.JOIN);
+			projection = FavoriTable.FULL_PROJECTION;
+			if (sortOrder == null) {
+				sortOrder = FavoriTable.FULL_ORDER;
+			}
 		case FAVORIS:
 
 			break;
