@@ -23,10 +23,12 @@ import net.naonedbus.manager.impl.SensManager;
 
 import org.joda.time.DateMidnight;
 
+import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +82,6 @@ public class ArretDetailFragment extends SherlockFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Log.i(getClass().getSimpleName(), "onCreate");
-
 		mLigne = getArguments().getParcelable(PARAM_LIGNE);
 		mSens = getArguments().getParcelable(PARAM_SENS);
 		mArret = getArguments().getParcelable(PARAM_ARRET);
@@ -132,6 +132,7 @@ public class ArretDetailFragment extends SherlockFragment {
 		super.onPrepareOptionsMenu(menu);
 	}
 
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (container == null) // must put this in
@@ -139,6 +140,11 @@ public class ArretDetailFragment extends SherlockFragment {
 
 		final View view = inflater.inflate(R.layout.fragment_arret_detail, container, false);
 		mViewGroup = (ViewGroup) view.findViewById(android.R.id.content);
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			final LayoutTransition layoutTransition = mViewGroup.getLayoutTransition();
+			layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+		}
 
 		final Animation slide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_from_bottom);
 		final LayoutAnimationController controller = new LayoutAnimationController(slide);

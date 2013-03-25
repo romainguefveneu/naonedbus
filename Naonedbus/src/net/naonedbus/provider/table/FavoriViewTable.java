@@ -24,9 +24,9 @@ public interface FavoriViewTable extends BaseColumns {
 	public static final String COULEUR = "ligneCouleur";
 	public static final String LETTRE = "ligneLettre";
 	public static final String TYPE = "ligneType";
-	
+
 	public static final String ORDRE_GROUPE = "ordreGroupe";
-	
+
 	public static final String NEXT_HORAIRE = "nextHoraire";
 
 	//@formatter:off
@@ -41,4 +41,5 @@ public interface FavoriViewTable extends BaseColumns {
 	public static final String WHERE = ID_GROUPE + " IN (%s) OR NOT EXISTS (SELECT 1 FROM "
 			+ FavorisGroupesTable.TABLE_NAME + " WHERE " + FavorisGroupesTable.ID_FAVORI + " = " + TABLE_NAME + "."
 			+ _ID + ")";
+
 }

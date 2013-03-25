@@ -158,6 +158,7 @@
     <!-- Commentaires -->
     <string name="commentaire_action_transmission">Transmission en cours&#8230;</string>
     <string name="commentaire_tan_info_trafic">Tan info trafic</string>
+    <string name="commentaire_tan_infos">TANinfos</string>
     <string name="commentaire_tout">Tout le réseau</string>
     <string name="commentaire_message_service">Message de service</string>
     <string name="time_line_yesterday">Hier</string>
@@ -168,8 +169,8 @@
     <string name="source_unknown">quelque chose, mais je sais pas trop quoi</string>
     <string name="source_naonedbus">naonedbus</string>
     <string name="source_twitter">Twitter</string>
-    <string name="source_taninfos">TanInfos</string>
     <string name="source_naonedbus_service">Discovery One</string>
+    <string name="source_taninfos">\@TANinfos sur Twitter \n(compte non affilié à la SEMITAN)</string>
     <!-- Parkings -->
     <string name="parking_section_disponible">Beaucoup de places</string>
     <string name="parking_section_limite">Plus beaucoup de places</string>

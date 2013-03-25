@@ -43,6 +43,11 @@ public class FavorisViewManager extends SQLiteManager<Favori> {
 		return getFromCursor(contentResolver.query(builder.build(), null, null, null, null));
 	}
 
+	public List<Favori> getUnique(final ContentResolver contentResolver) {
+		final Uri.Builder builder = FavorisViewProvider.CONTENT_URI.buildUpon();
+		return getFromCursor(contentResolver.query(builder.build(), null, null, null, null));
+	}
+
 	@Override
 	public Favori getSingleFromCursor(final Cursor c) {
 		final Favori item = new Favori();

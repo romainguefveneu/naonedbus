@@ -21,7 +21,6 @@ package net.naonedbus.activity.widgetconfigure;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.appwidget.HoraireWidgetProvider;
 import net.naonedbus.bean.Favori;
@@ -34,7 +33,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.ListView;
 
@@ -47,12 +46,12 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	private static final String PREFS_NAME = "net.naonedbus.activity.WidgetProvider";
 	private static final String PREF_PREFIX_KEY = "widgetFavoriId";
 
-	private final FavorisViewManager favoriManager;
-	private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-	private LoadFavoris loadFavoris = null;
+	private final FavorisViewManager mFavoriManager;
+	private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+	private LoadFavoris mLoadFavoris;
 
 	public WidgetConfigureActivity() {
-		favoriManager = FavorisViewManager.getInstance();
+		mFavoriManager = FavorisViewManager.getInstance();
 	}
 
 	@Override
@@ -66,11 +65,11 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 		final Intent intent = getIntent();
 		final Bundle extras = intent.getExtras();
 		if (extras != null) {
-			appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+			mAppWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 		}
 
 		// If they gave us an intent without the widget id, just bail.
-		if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+		if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
 			finish();
 		}
 
@@ -84,7 +83,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 */
 	public void configureWidget(final Context context) {
 		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-		getWidgetProvider().updateAppWidget(context, appWidgetManager, appWidgetId);
+		getWidgetProvider().updateAppWidget(context, appWidgetManager, mAppWidgetId);
 	}
 
 	@Override
@@ -96,12 +95,12 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 
 		// Stocker dans les préférences l'id du favori associé à l'id du widget
 		final SharedPreferences.Editor prefs = this.getSharedPreferences(PREFS_NAME, 0).edit();
-		prefs.putInt(PREF_PREFIX_KEY + appWidgetId, item._id);
+		prefs.putInt(PREF_PREFIX_KEY + mAppWidgetId, item._id);
 		prefs.commit();
 
 		// Valider la création du widget
 		final Intent resultValue = new Intent();
-		resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
 		setResult(RESULT_OK, resultValue);
 
 		configureWidget(getApplicationContext());
@@ -114,8 +113,8 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 * Lancer le chargement des favoris
 	 */
 	protected void doLoadFavoris() {
-		if (loadFavoris == null || loadFavoris.getStatus().equals(AsyncTask.Status.FINISHED)) {
-			loadFavoris = (LoadFavoris) new LoadFavoris().execute();
+		if (mLoadFavoris == null || mLoadFavoris.getStatus().equals(AsyncTask.Status.FINISHED)) {
+			mLoadFavoris = (LoadFavoris) new LoadFavoris().execute();
 		}
 	}
 
@@ -130,11 +129,10 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 		@Override
 		protected FavoriArrayAdapter doInBackground(final Void... params) {
 			final List<Favori> items = new ArrayList<Favori>();
-			final Context context = getApplicationContext();
-			context.setTheme(R.style.Theme_Acapulco_Dark);
+			final Context context = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_Acapulco_Dark);
 			final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, items);
 
-			items.addAll(favoriManager.getAll(getApplicationContext().getContentResolver(), null, null));
+			items.addAll(mFavoriManager.getUnique(context.getContentResolver()));
 
 			if (items.isEmpty()) {
 			} else {
@@ -163,8 +161,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 */
 	public static int getFavoriIdFromWidget(final Context context, final int appWidgetId) {
 		final SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-		final int id = prefs.getInt(PREF_PREFIX_KEY + appWidgetId, -1);
-		return id;
+		return prefs.getInt(PREF_PREFIX_KEY + appWidgetId, -1);
 	}
 
 	/**
@@ -174,7 +171,6 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 * @param appWidgetId
 	 */
 	public static void removeWidgetId(final Context context, final long appWidgetId) {
-		Log.d(NBApplication.LOG_TAG, "removeWidgetId(" + appWidgetId + ")");
 		final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
 		prefs.remove(PREF_PREFIX_KEY + appWidgetId);
 		prefs.commit();

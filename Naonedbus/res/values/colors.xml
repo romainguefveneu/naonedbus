@@ -41,6 +41,7 @@
     <color name="holo_blue_card_text">#33b5e5</color>
     <color name="message_service_header">#2F93C5</color>
     <color name="message_tan_header">#358243</color>
+    <color name="message_taninfos_header">#01001f</color>
     <color name="query_hint_color">#9bc9e1</color>
     <color name="adressbar_color">#ff147cad</color>
     <color name="card_text_color">#707070</color>

@@ -32,14 +32,15 @@ public class CommentaireFomatter {
 		sourceTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
 		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_twitter);
 		sourceTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_twitter);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_twitter);
 		sourceTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.source_taninfos);
 		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
 	}
 
-	private PrettyTime prettyTime;
+	private final PrettyTime prettyTime;
 
-	private Context context;
-	private SmileyParser smileyParser;
+	private final Context context;
+	private final SmileyParser smileyParser;
 
 	final DateMidnight now = new DateMidnight();
 	final DateMidnight yesterday = now.minusDays(1);
@@ -47,7 +48,7 @@ public class CommentaireFomatter {
 	final SensManager sensManager;
 	final ArretManager arretManager;
 
-	public CommentaireFomatter(Context context) {
+	public CommentaireFomatter(final Context context) {
 		this.context = context;
 
 		SmileyParser.init(context);
@@ -65,8 +66,8 @@ public class CommentaireFomatter {
 	 * @param commentaires
 	 * @return
 	 */
-	public void appendToAdapter(CommentaireArrayAdapter adapter, List<Commentaire> commentaires) {
-		for (Commentaire commentaire : commentaires) {
+	public void appendToAdapter(final CommentaireArrayAdapter adapter, final List<Commentaire> commentaires) {
+		for (final Commentaire commentaire : commentaires) {
 			formatValues(commentaire);
 			adapter.add(commentaire);
 		}
@@ -80,7 +81,7 @@ public class CommentaireFomatter {
 	 * @return
 	 */
 
-	public void formatValues(Commentaire commentaire) {
+	public void formatValues(final Commentaire commentaire) {
 		commentaire.setMessage(smileyParser.addSmileySpans(commentaire.getMessage()).toString());
 		commentaire.setDateTime(new DateTime(commentaire.getTimestamp()));
 		commentaire.setDelay(prettyTime.format(commentaire.getDateTime().toDate()));
@@ -90,7 +91,7 @@ public class CommentaireFomatter {
 		setCommentaireArret(commentaire);
 	}
 
-	private Object getCommentaireSection(Commentaire commentaire) {
+	private Object getCommentaireSection(final Commentaire commentaire) {
 		final DateMidnight date = commentaire.getDateTime().toDateMidnight();
 		if (date.isAfterNow()) {
 			// A venir
@@ -113,7 +114,7 @@ public class CommentaireFomatter {
 	 * @param commentaire
 	 * @param commentaire
 	 */
-	private void setCommentaireLigne(Commentaire commentaire) {
+	private void setCommentaireLigne(final Commentaire commentaire) {
 		if (commentaire.getCodeLigne() != null) {
 			final Ligne ligne = ligneManager.getSingle(context.getContentResolver(), commentaire.getCodeLigne());
 			commentaire.setLigne(ligne);
@@ -126,7 +127,7 @@ public class CommentaireFomatter {
 	 * @param commentaire
 	 * @param commentaireItem
 	 */
-	private void setCommentaireSens(Commentaire commentaire) {
+	private void setCommentaireSens(final Commentaire commentaire) {
 		if (commentaire.getCodeSens() != null) {
 			final Sens sens = sensManager.getSingle(context.getContentResolver(), commentaire.getCodeLigne(),
 					commentaire.getCodeSens());
@@ -140,7 +141,7 @@ public class CommentaireFomatter {
 	 * @param commentaire
 	 * @param commentaireItem
 	 */
-	private void setCommentaireArret(Commentaire commentaire) {
+	private void setCommentaireArret(final Commentaire commentaire) {
 		if (commentaire.getCodeArret() != null) {
 			final Arret arret = arretManager.getSingle(context.getContentResolver(), commentaire.getCodeArret());
 			commentaire.setArret(arret);
@@ -152,7 +153,7 @@ public class CommentaireFomatter {
 	 * 
 	 * @param source
 	 */
-	public static int getSourceTitle(String source) {
+	public static int getSourceTitle(final String source) {
 		int res = R.string.source_unknown;
 
 		if (sourceTitle.containsKey(source)) {

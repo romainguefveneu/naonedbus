@@ -48,7 +48,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	private TextView itemSource;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment_detail);
 
@@ -76,16 +76,26 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		itemDate.setText(dateFormat.format(commentaire.getTimestamp()) + " "
 				+ timeFormat.format(commentaire.getTimestamp()));
 
-		itemSource.setText(getString(R.string.source, getString(sourceTitle.get(commentaire.getSource()))));
+		final String source = commentaire.getSource();
 
-		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(commentaire.getSource())) {
+		itemSource.setText(getString(R.string.source, getString(sourceTitle.get(source))));
+
+		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(source)
+				|| NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_info_trafic));
 			mHeaderHelper.setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
 
-		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(commentaire.getSource())) {
+		} else if (NaonedbusClient.TWITTER_TAN_INFOS.name().equals(source)) {
+
+			mHeaderHelper.setTitleIcon(R.drawable.logo_taninfos);
+			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_infos));
+			mHeaderHelper.setCode(null);
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_taninfos_header));
+
+		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.ic_launcher);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_message_service));
@@ -100,14 +110,14 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getSupportMenuInflater();
+	public boolean onCreateOptionsMenu(final Menu menu) {
+		final MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.activity_commentaire_detail, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
@@ -123,7 +133,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	 * Proposer de partager l'information
 	 */
 	private void shareComment() {
-		Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+		final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
 				getCommentaireTitle(commentaire) + "\n" + commentaire.getMessage());
@@ -138,7 +148,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	 * @param idSens
 	 * @param idArret
 	 */
-	protected void setLigneSensArret(Commentaire commentaire) {
+	protected void setLigneSensArret(final Commentaire commentaire) {
 		final Ligne ligne = commentaire.getLigne();
 		final Sens sens = commentaire.getSens();
 		final Arret arret = commentaire.getArret();
@@ -170,18 +180,18 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 	}
 
-	public void setLineColor(int color, String codeLigne) {
+	public void setLineColor(final int color, final String codeLigne) {
 		setHeaderBackgroundColor(color);
 		mHeaderHelper.setCode(codeLigne);
 	}
 
-	private void setHeaderBackgroundColor(int color) {
+	private void setHeaderBackgroundColor(final int color) {
 		if (color != Color.TRANSPARENT) {
 			mHeaderHelper.setBackgroundColor(color);
 		}
 	}
 
-	protected String getCommentaireTitle(Commentaire commentaire) {
+	protected String getCommentaireTitle(final Commentaire commentaire) {
 		String title = "";
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(commentaire.getSource())) {

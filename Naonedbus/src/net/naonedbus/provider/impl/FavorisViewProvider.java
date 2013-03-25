@@ -36,6 +36,12 @@ public class FavorisViewProvider extends ReadOnlyContentProvider {
 	public static final String FAVORIS_GROUPES_URI_PATH_QUERY = "groupes";
 	public static final String QUERY_PARAMETER_GROUPES_IDS = "groupes";
 
+	/**
+	 * Récupérer uniquement les favoris, sans groupe.
+	 */
+	public static final int FAVORI_UNIQUES = 300;
+	public static final String FAVORIS_UNIQUES_URI_PATH_QUERY = "uniques";
+
 	private static final String AUTHORITY = "net.naonedbus.provider.FavorisViewProvider";
 	private static final String ARRETS_BASE_PATH = "favoris";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + ARRETS_BASE_PATH);
@@ -44,6 +50,7 @@ public class FavorisViewProvider extends ReadOnlyContentProvider {
 	static {
 		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH, FAVORIS);
 		URI_MATCHER.addURI(AUTHORITY, FAVORIS_GROUPES_URI_PATH_QUERY, FAVORI_GROUPES);
+		URI_MATCHER.addURI(AUTHORITY, FAVORIS_UNIQUES_URI_PATH_QUERY, FAVORI_UNIQUES);
 	}
 
 	@Override
@@ -62,6 +69,9 @@ public class FavorisViewProvider extends ReadOnlyContentProvider {
 			final String idGroupes = uri.getQueryParameter(QUERY_PARAMETER_GROUPES_IDS);
 			final String where = String.format(FavoriViewTable.WHERE, idGroupes);
 			queryBuilder.appendWhere(where);
+			break;
+		case FAVORI_UNIQUES:
+			queryBuilder.setDistinct(true);
 			break;
 		case FAVORIS:
 
