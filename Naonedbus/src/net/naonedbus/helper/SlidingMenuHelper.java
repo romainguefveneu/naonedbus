@@ -9,6 +9,7 @@ import net.naonedbus.activity.impl.EquipementsActivity;
 import net.naonedbus.activity.impl.InfosTraficActivity;
 import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.activity.impl.MapActivity;
+import net.naonedbus.activity.impl.OldSettingsActivity;
 import net.naonedbus.activity.impl.ParkingsActivity;
 import net.naonedbus.activity.impl.SearchActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
@@ -20,6 +21,7 @@ import net.simonvt.menudrawer.MenuDrawer;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -52,13 +54,13 @@ public class SlidingMenuHelper {
 		MENU_ITEMS.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_map, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_parametres, SettingsActivity.class, R.drawable.ic_action_settings, 1));
+		MENU_ITEMS.add(new MainMenuItem(R.string.menu_parametres, (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) ? OldSettingsActivity.class : SettingsActivity.class, R.drawable.ic_action_settings, 1));
 		MENU_ITEMS.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_action_info, 1));
 		MENU_ITEMS.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));
 		// @formatter:on
 	}
 
-	private Activity mActivity;
+	private final Activity mActivity;
 
 	public SlidingMenuHelper(final Activity activity) {
 		mActivity = activity;
@@ -84,11 +86,11 @@ public class SlidingMenuHelper {
 		}
 	}
 
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(final Bundle outState) {
 		outState.putBoolean("menuConsumed", true);
 	}
 
-	public void onWindowFocusChanged(boolean hasFocus, final MenuDrawer slidingMenu) {
+	public void onWindowFocusChanged(final boolean hasFocus, final MenuDrawer slidingMenu) {
 		// Gérer le masquage de menu
 		if (hasFocus == false && slidingMenu.isMenuVisible()) {
 			new Handler().postDelayed(new Runnable() {
@@ -114,7 +116,7 @@ public class SlidingMenuHelper {
 		mMenuListView = (ListView) slidingMenu.findViewById(android.R.id.list);
 		if (sAdapter == null) {
 			sAdapter = new MainMenuAdapter(mActivity);
-			for (MainMenuItem item : MENU_ITEMS) {
+			for (final MainMenuItem item : MENU_ITEMS) {
 				sAdapter.add(item);
 			}
 			final MainMenuIndexer indexer = new MainMenuIndexer();
@@ -131,7 +133,7 @@ public class SlidingMenuHelper {
 
 		mMenuListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 				// Ne pas permettre à l'utilisateur de cliquer n'importe où...
 				mMenuListView.setClickable(false);
 

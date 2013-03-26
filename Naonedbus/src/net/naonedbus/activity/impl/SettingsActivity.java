@@ -5,13 +5,12 @@ import net.naonedbus.R;
 import net.naonedbus.fragment.impl.SettingsFragments;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.simonvt.menudrawer.MenuDrawer;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.view.KeyEvent;
 
@@ -20,16 +19,15 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class SettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
 
-	private ListPreference theme;
-
 	/**
 	 * Gestion du menu latéral.
 	 */
 	private MenuDrawer mMenuDrawer;
 	private SlidingMenuHelper mSlidingMenuHelper;
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsFragments.class.getName());
 		getIntent().putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
@@ -46,19 +44,19 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	}
 
 	@Override
-	public void onPostCreate(Bundle savedInstanceState) {
+	public void onPostCreate(final Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		mSlidingMenuHelper.onSaveInstanceState(outState);
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
+	public void onWindowFocusChanged(final boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
 	}
@@ -67,7 +65,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	 * Show the menu when home icon is clicked.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			mMenuDrawer.toggleMenu();
@@ -81,7 +79,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	 * Show the menu when menu button pressed, hide it when back is pressed
 	 */
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
 			mMenuDrawer.toggleMenu();
 			return true;
@@ -89,22 +87,8 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 		return super.onKeyDown(keyCode, event);
 	}
 
-	private void initTheme(SharedPreferences preferences) {
-		final String[] themeOptions = this.getResources().getStringArray(R.array.themeOptions);
-		theme.setSummary(themeOptions[Integer.valueOf(preferences.getString(NBApplication.PREF_THEME, "0"))]);
-		theme.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				final Integer themePosition = Integer.valueOf((String) newValue);
-				theme.setSummary(themeOptions[themePosition]);
-				NBApplication.THEME = NBApplication.THEMES_RES[themePosition];
-				return true;
-			}
-		});
-	}
-
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
 		if (key.equals(NBApplication.PREF_THEME)) {
 			restart();
 		}

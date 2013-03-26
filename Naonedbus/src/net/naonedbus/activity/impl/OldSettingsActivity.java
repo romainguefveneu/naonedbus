@@ -1,4 +1,4 @@
-package net.naonedbus.fragment.impl;
+package net.naonedbus.activity.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,28 +9,38 @@ import java.util.Map.Entry;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.CalendarUtils;
+import net.simonvt.menudrawer.MenuDrawer;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
-import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class SettingsFragments extends PreferenceFragment {
+@SuppressWarnings("deprecation")
+public class OldSettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
+
+	/**
+	 * Gestion du menu latéral.
+	 */
+	private MenuDrawer mMenuDrawer;
+	private SlidingMenuHelper mSlidingMenuHelper;
 
 	private ListPreference calendrierDefaut;
 	private Preference clearCachePlan;
@@ -38,10 +48,18 @@ public class SettingsFragments extends PreferenceFragment {
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
+		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
+
 		addPreferencesFromResource(R.xml.preferences);
 
-		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
+
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
+		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
+
+		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		calendrierDefaut = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_CALENDRIER_DEFAUT);
 		clearCachePlan = getPreferenceScreen().findPreference("plan.cache.clear");
@@ -49,6 +67,63 @@ public class SettingsFragments extends PreferenceFragment {
 
 		initCalendar(preferences);
 		initClearCache(preferences);
+	}
+
+	@Override
+	public void onPostCreate(final Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
+	}
+
+	@Override
+	protected void onSaveInstanceState(final Bundle outState) {
+		super.onSaveInstanceState(outState);
+		mSlidingMenuHelper.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onWindowFocusChanged(final boolean hasFocus) {
+		super.onWindowFocusChanged(hasFocus);
+		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
+	}
+
+	/**
+	 * Show the menu when home icon is clicked.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			mMenuDrawer.toggleMenu();
+			return true;
+		default:
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Show the menu when menu button pressed, hide it when back is pressed
+	 */
+	@Override
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
+			mMenuDrawer.toggleMenu();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
+		if (key.equals(NBApplication.PREF_THEME)) {
+			restart();
+		}
+	}
+
+	public void restart() {
+		startActivity(new Intent(this, this.getClass()));
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		finish();
 	}
 
 	/**
@@ -96,7 +171,7 @@ public class SettingsFragments extends PreferenceFragment {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
 				clearCacheHoraires();
-				Toast.makeText(getActivity(), R.string.msg_cache_horaire_clear, Toast.LENGTH_SHORT).show();
+				Toast.makeText(OldSettingsActivity.this, R.string.msg_cache_horaire_clear, Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -108,7 +183,7 @@ public class SettingsFragments extends PreferenceFragment {
 	 * @throws IOException
 	 */
 	private void clearCache() throws IOException {
-		FileUtils.deleteQuietly(getActivity().getCacheDir());
+		FileUtils.deleteQuietly(getCacheDir());
 		clearWebviewCache();
 	}
 
@@ -117,7 +192,7 @@ public class SettingsFragments extends PreferenceFragment {
 	 */
 	private void clearCacheHoraires() {
 		final HoraireManager horaireManager = HoraireManager.getInstance();
-		horaireManager.clearAllHoraires(getActivity().getContentResolver());
+		horaireManager.clearAllHoraires(getContentResolver());
 		clearWebviewCache();
 	}
 
@@ -125,7 +200,7 @@ public class SettingsFragments extends PreferenceFragment {
 	 * Supprimer le cache webView
 	 */
 	private void clearWebviewCache() {
-		final File directory = getActivity().getFilesDir();
+		final File directory = getFilesDir();
 
 		final Collection<File> webviewFiles = FileUtils.listFiles(directory, webViewFilter, webViewFilter);
 		for (final File file : webviewFiles) {
@@ -155,7 +230,7 @@ public class SettingsFragments extends PreferenceFragment {
 	private void fillCalendars(final ListPreference list) {
 		CharSequence[] entriesName;
 		CharSequence[] entriesId;
-		final Map<Integer, String> calendars = CalendarUtils.getCalendars(getActivity().getContentResolver());
+		final Map<Integer, String> calendars = CalendarUtils.getCalendars(getContentResolver());
 
 		entriesName = new String[calendars.size()];
 		entriesId = new String[calendars.size()];
@@ -186,7 +261,7 @@ public class SettingsFragments extends PreferenceFragment {
 	 */
 	private void setCalendarSummary(final String id) {
 		if (id != null) {
-			calendrierDefaut.setSummary(CalendarUtils.getCalendarName(getActivity().getContentResolver(), id));
+			calendrierDefaut.setSummary(CalendarUtils.getCalendarName(getContentResolver(), id));
 		} else {
 			calendrierDefaut.setSummary(R.string.msg_calendar_select);
 		}
@@ -198,7 +273,7 @@ public class SettingsFragments extends PreferenceFragment {
 	 * @return La taille du cache en octets
 	 */
 	private long getCacheSize() {
-		final File cache = getActivity().getCacheDir();
+		final File cache = getCacheDir();
 		return FileUtils.sizeOfDirectory(cache);
 	}
 
@@ -215,4 +290,5 @@ public class SettingsFragments extends PreferenceFragment {
 		final int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
 		return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
 	}
+
 }

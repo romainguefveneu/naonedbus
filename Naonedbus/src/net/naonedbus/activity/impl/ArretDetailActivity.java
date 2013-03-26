@@ -11,6 +11,7 @@ import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.SymbolesUtils;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 public class ArretDetailActivity extends OneFragmentActivity implements OnSensChangeListener {
@@ -19,7 +20,10 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
 
+	public static final String BUNDLE_KEY_SENS = "net.naonedbus.activity.impl.ArretDetailActivity:sens";
+
 	private HeaderHelper mHeaderHelper;
+	private Sens mSens;
 
 	public ArretDetailActivity() {
 		super(R.layout.activity_horaires);
@@ -31,7 +35,12 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 
 		final Arret arret = getIntent().getParcelableExtra(PARAM_ARRET);
 		Ligne ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
-		Sens sens = getIntent().getParcelableExtra(PARAM_SENS);
+		Sens sens;
+		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_KEY_SENS)) {
+			sens = savedInstanceState.getParcelable(BUNDLE_KEY_SENS);
+		} else {
+			sens = getIntent().getParcelableExtra(PARAM_SENS);
+		}
 
 		if (ligne == null) {
 			final LigneManager ligneManager = LigneManager.getInstance();
@@ -41,6 +50,7 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 			final SensManager sensManager = SensManager.getInstance();
 			sens = sensManager.getSingle(getContentResolver(), arret.codeLigne, arret.codeSens);
 		}
+		mSens = sens;
 
 		if (savedInstanceState == null) {
 			final Bundle bundle = new Bundle();
@@ -61,5 +71,20 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 	@Override
 	public void onSensChange(final Sens newSens) {
 		mHeaderHelper.setSubTitleAnimated(SymbolesUtils.formatSens(newSens.text));
+		mSens = newSens;
 	}
+
+	@Override
+	protected void onSaveInstanceState(final Bundle outState) {
+		outState.putParcelable(BUNDLE_KEY_SENS, mSens);
+		super.onSaveInstanceState(outState);
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	protected void onResume() {
+		super.onResume();
+		invalidateOptionsMenu();
+	}
+
 }

@@ -26,6 +26,7 @@ import org.joda.time.DateMidnight;
 import android.animation.LayoutTransition;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -89,8 +90,6 @@ public class ArretDetailFragment extends SherlockFragment {
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
-		mOnSensChangeListener = (OnSensChangeListener) getActivity();
-
 		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
 		final TraficCard traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
 		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager());
@@ -110,6 +109,12 @@ public class ArretDetailFragment extends SherlockFragment {
 		// mCards.add(mapCard);
 
 		mOnArretChangeListener = horaireCard;
+	}
+
+	@Override
+	public void onAttach(final Activity activity) {
+		super.onAttach(activity);
+		mOnSensChangeListener = (OnSensChangeListener) activity;
 	}
 
 	@Override

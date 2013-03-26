@@ -17,12 +17,11 @@
     <ProgressBar
         android:id="@android:id/progress"
         style="?android:attr/progressBarStyle"
-        android:layout_width="25dp"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@android:id/title"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@android:id/title"
-        android:layout_marginRight="@dimen/padding_small" />
+        android:padding="@dimen/padding_small" />
 
     <LinearLayout
         android:layout_width="match_parent"
