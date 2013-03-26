@@ -37,14 +37,17 @@
         android:id="@id/headerTitle"
         style="@style/BigTitle"
         android:layout_marginLeft="@dimen/padding_small"
+        android:gravity="center_vertical"
         android:paddingRight="3dip"
         android:text="François" />
 
     <TextView
         android:id="@id/headerSubTitle"
-        style="@style/BigSubTitle"
+        style="@style/BigTitle"
         android:layout_marginLeft="@dimen/padding_small"
+        android:gravity="center_vertical"
         android:paddingRight="3dip"
+        android:paddingTop="3sp"
         android:text="François" />
 
 </LinearLayout>

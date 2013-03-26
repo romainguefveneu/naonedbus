@@ -110,6 +110,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				setTypefaceRobotoBold((TextView) v);
 			}
 		});
+
 	}
 
 	@Override

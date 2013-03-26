@@ -292,7 +292,12 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 					}
 				}
 			}
-			after = new DateTime(horaires.get(horaires.size() - 1).getTimestamp());
+
+			if (horaires.size() > 0)
+				after = new DateTime(horaires.get(horaires.size() - 1).getTimestamp());
+			else
+				after = null;
+
 			date = date.plusDays(1);
 			loopCount++;
 		} while ((loopCount < 2) && (nextHoraires.size() < limit));

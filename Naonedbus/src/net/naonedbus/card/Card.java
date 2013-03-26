@@ -115,7 +115,7 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 			mProgress.setVisibility(View.VISIBLE);
 		}
 		if (mMessage.getVisibility() != View.GONE) {
-			mMessage.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), R.anim.card_disable_content));
+			mMessage.startAnimation(AnimationUtils.loadAnimation(mMessage.getContext(), R.anim.card_disable_content));
 		}
 		if (mContent.getVisibility() != View.GONE) {
 			mContent.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), R.anim.card_disable_content));
@@ -128,8 +128,10 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 			mContent.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), android.R.anim.fade_in));
 		} else if (mProgress.getVisibility() == View.VISIBLE) {
 			mContent.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), R.anim.card_enable_content));
+
 		}
 
+		mMessage.clearAnimation();
 		mMessage.setVisibility(View.GONE);
 		mProgress.setVisibility(View.GONE);
 
@@ -146,12 +148,13 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 
 		if (mMessage.getVisibility() != View.VISIBLE) {
 			mMessage.setVisibility(View.VISIBLE);
-			mMessage.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), android.R.anim.fade_in));
+			mMessage.startAnimation(AnimationUtils.loadAnimation(mMessage.getContext(), android.R.anim.fade_in));
 		} else if (mProgress.getVisibility() == View.VISIBLE) {
-			mMessage.startAnimation(AnimationUtils.loadAnimation(mContent.getContext(), R.anim.card_enable_content));
+			mMessage.startAnimation(AnimationUtils.loadAnimation(mMessage.getContext(), R.anim.card_enable_content));
 		}
 
 		mProgress.setVisibility(View.GONE);
+		mContent.clearAnimation();
 		mContent.setVisibility(View.GONE);
 
 		showMoreAction();

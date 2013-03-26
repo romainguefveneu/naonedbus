@@ -14,14 +14,14 @@ import android.widget.TextView;
 
 public class HeaderHelper {
 
-	private Activity mActivity;
+	private final Activity mActivity;
 
 	private View mHeader;
 	private TextView mTitle;
 	private TextView mSubTitle;
 	private TextView mLigneCode;
 
-	public HeaderHelper(Activity activity) {
+	public HeaderHelper(final Activity activity) {
 		mActivity = activity;
 		init();
 	}
@@ -38,16 +38,16 @@ public class HeaderHelper {
 		mLigneCode = (TextView) view.findViewById(R.id.headerCode);
 
 		mTitle.setTypeface(robotoBold);
-		mSubTitle.setTypeface(robotoMedium);
+		mSubTitle.setTypeface(robotoBold);
 		mLigneCode.setTypeface(robotoBold);
 	}
 
-	public void setBackgroundColor(int color) {
+	public void setBackgroundColor(final int color) {
 		final int textColor = ColorUtils.isLightColor(color) ? Color.BLACK : Color.WHITE;
 		setBackgroundColor(color, textColor);
 	}
 
-	public void setBackgroundColor(int color, int textColor) {
+	public void setBackgroundColor(final int color, final int textColor) {
 		mHeader.setBackgroundDrawable(ColorUtils.getGradiant(color));
 
 		mTitle.setTextColor(textColor);
@@ -55,7 +55,7 @@ public class HeaderHelper {
 		mLigneCode.setTextColor(textColor);
 	}
 
-	public void setCode(CharSequence code) {
+	public void setCode(final CharSequence code) {
 		mLigneCode.setText(code);
 		if (code == null || code.length() == 0) {
 			mLigneCode.setVisibility(View.GONE);
@@ -64,15 +64,15 @@ public class HeaderHelper {
 		}
 	}
 
-	public void setTitle(CharSequence title) {
+	public void setTitle(final CharSequence title) {
 		mTitle.setText(title);
 	}
 
-	public void setTitleIcon(int iconResId) {
+	public void setTitleIcon(final int iconResId) {
 		mTitle.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
 	}
 
-	public void setSubTitle(CharSequence subtitle) {
+	public void setSubTitle(final CharSequence subtitle) {
 		mSubTitle.setText(subtitle);
 		if (subtitle == null || subtitle.length() == 0) {
 			mSubTitle.setVisibility(View.GONE);
@@ -88,17 +88,17 @@ public class HeaderHelper {
 		fadeOut.setAnimationListener(new AnimationListener() {
 
 			@Override
-			public void onAnimationStart(Animation animation) {
+			public void onAnimationStart(final Animation animation) {
 
 			}
 
 			@Override
-			public void onAnimationRepeat(Animation animation) {
+			public void onAnimationRepeat(final Animation animation) {
 
 			}
 
 			@Override
-			public void onAnimationEnd(Animation animation) {
+			public void onAnimationEnd(final Animation animation) {
 				setSubTitle(subtitle);
 				mSubTitle.startAnimation(fadeIn);
 			}
