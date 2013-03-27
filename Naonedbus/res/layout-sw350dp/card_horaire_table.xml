@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/horaires"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/delaiMain"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="@dimen/padding_medium" >
+
+    <TableRow
+        android:layout_margin="0dp"
+        android:divider="@drawable/divider_vertical"
+        android:showDividers="middle" >
+
+        <TextView
+            style="@style/CardHoraire.First"
+            android:tag="@string/cardHoraireTag"
+            android:text="00:00" />
+
+        <TextView
+            style="@style/CardHoraire"
+            android:tag="@string/cardHoraireTag"
+            android:text="00:00" />
+
+        <TextView
+            style="@style/CardHoraire"
+            android:tag="@string/cardHoraireTag"
+            android:text="00:00" />
+
+        <TextView
+            style="@style/CardHoraire.Last"
+            android:tag="@string/cardHoraireTag"
+            android:text="00:00" />
+    </TableRow>
+
+    <TableRow
+        android:layout_margin="0dp"
+        android:divider="@drawable/divider_vertical"
+        android:showDividers="middle" >
+
+        <TextView
+            style="@style/CardDelai.First"
+            android:gravity="center_horizontal"
+            android:tag="@string/cardDelaiTag"
+            android:text="0 min" />
+
+        <TextView
+            style="@style/CardDelai"
+            android:gravity="center_horizontal"
+            android:tag="@string/cardDelaiTag"
+            android:text="0 min" />
+
+        <TextView
+            style="@style/CardDelai"
+            android:gravity="center_horizontal"
+            android:tag="@string/cardDelaiTag"
+            android:text="0 min" />
+
+        <TextView
+            style="@style/CardDelai.Last"
+            android:gravity="center_horizontal"
+            android:tag="@string/cardDelaiTag"
+            android:text="0 min" />
+    </TableRow>
+
+</TableLayout>
