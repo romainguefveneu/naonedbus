@@ -23,12 +23,14 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.rest.controller.impl.FavoriController;
+import net.naonedbus.service.FavoriService;
 import net.naonedbus.utils.InfoDialogUtils;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.ClipboardManager;
 import android.text.InputType;
@@ -71,8 +73,6 @@ public class FavorisHelper {
 		};
 	}
 
-	private ImportTask mImportTask;
-	private ExportTask mExportTask;
 	private final Context mContext;
 
 	private FavorisActionListener mFavorisActionListener;
@@ -126,9 +126,10 @@ public class FavorisHelper {
 	 * Sauvegarder les favoris au format Json et envoyer ça dans le cloud
 	 */
 	public void exportFavoris() {
-		if (mExportTask == null || mExportTask.getStatus() == AsyncTask.Status.FINISHED) {
-			mExportTask = (ExportTask) new ExportTask().execute();
-		}
+		final Intent intent = new Intent(mContext, FavoriService.class);
+		intent.setAction(FavoriService.INTENT_ACTION_EXPORT);
+
+		mContext.startService(intent);
 	}
 
 	/**
@@ -167,10 +168,12 @@ public class FavorisHelper {
 		InfoDialogUtils.show(mContext, R.string.msg_error_export_import, R.string.msg_error_content_favoris_key);
 	}
 
-	private void onImport(final String id) {
-		if (mImportTask == null || mImportTask.getStatus() == AsyncTask.Status.FINISHED) {
-			mImportTask = (ImportTask) new ImportTask().execute(id);
-		}
+	private void onImport(final String key) {
+		final Intent intent = new Intent(mContext, FavoriService.class);
+		intent.setAction(FavoriService.INTENT_ACTION_IMPORT);
+		intent.putExtra(FavoriService.INTENT_PARAM_KEY, key);
+
+		mContext.startService(intent);
 	}
 
 	/**
@@ -185,9 +188,6 @@ public class FavorisHelper {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			progressDialog = ProgressDialog.show(mContext, null, mContext.getString(R.string.msg_importing_favoris),
-					true);
-			progressDialog.show();
 		}
 
 		@Override

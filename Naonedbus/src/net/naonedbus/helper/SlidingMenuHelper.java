@@ -47,15 +47,15 @@ public class SlidingMenuHelper {
 	static {
 		// @formatter:off
 		MENU_ITEMS = new ArrayList<MainMenuItem>();
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_accueil, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_info_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_main, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_infos_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
 //		menuItems.add(new MainMenuItem(R.string.menu_itineraires, ItineraireActivity.class, R.drawable.ic_action_direction, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_carte, MapActivity.class, R.drawable.ic_action_map, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_parametres, (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) ? OldSettingsActivity.class : SettingsActivity.class, R.drawable.ic_action_settings, 1));
-		MENU_ITEMS.add(new MainMenuItem(R.string.menu_about, AboutActivity.class, R.drawable.ic_action_info, 1));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_carte, MapActivity.class, R.drawable.ic_action_map, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parametres, (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) ? OldSettingsActivity.class : SettingsActivity.class, R.drawable.ic_action_settings, 1));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_about, AboutActivity.class, R.drawable.ic_action_info, 1));
 		MENU_ITEMS.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));
 		// @formatter:on
 	}

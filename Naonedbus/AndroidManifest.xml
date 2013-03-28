@@ -27,7 +27,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Acapulco.Light" >
-        <activity android:name=".activity.impl.MainActivity" >
+        <activity
+            android:name=".activity.impl.MainActivity"
+            android:launchMode="singleTop" >
             <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +70,7 @@
             android:label="@string/title_activity_parametres" />
         <activity
             android:name=".activity.impl.MapActivity"
-            android:label="@string/title_activity_map"
+            android:label="@string/title_activity_carte"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -200,6 +202,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <service android:name="net.naonedbus.service.FavoriService" />
 
         <receiver
             android:name=".appwidget.HoraireWidgetLargeProvider"

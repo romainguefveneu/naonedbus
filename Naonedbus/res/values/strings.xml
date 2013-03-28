@@ -10,7 +10,6 @@
     <string name="tomorrow">Demain</string>
     <string name="loading">Chargement&#8230;</string>
     <string name="loading_layers">Chargement des calques&#8230;</string>
-    <string name="whatsup">Que se passe-t-il ?</string>
     <string name="emptyString"></string>
     <string name="updating">Mise à jour en cours&#8230;</string>
     <string name="setup">Installation en cours&#8230;</string>
@@ -38,11 +37,12 @@
     <string name="tuto_beta_summary"><![CDATA[Vous utilisez une version Bêta de naonedbus.<br />Merci de nous signaler tout problème : <br /><font color="#ffffff">naonedbus@gmail.com</font>]]></string>
     <!-- Activities -->
     <string name="title_activity_main">Accueil</string>
-    <string name="title_activity_infos_trafic">Infos Trafic</string>
-    <string name="title_activity_map">Carte</string>
+    <string name="title_activity_infos_trafic">Infos trafic</string>
+    <string name="title_activity_carte">Carte</string>
     <string name="title_activity_itineraire">Itinéraire</string>
     <string name="title_activity_equipements">Mobilité</string>
     <string name="title_activity_parkings">Parkings</string>
+    <string name="title_activity_recherche">Recherche</string>
     <string name="title_activity_commentaire">Commentaire</string>
     <string name="title_activity_actu">Actualité</string>
     <string name="title_activity_parametres">Paramètres</string>
@@ -50,17 +50,7 @@
     <string name="title_activity_about">A propos</string>
     <string name="title_activity_groupes">Gestion des groupes</string>
     <!-- Slide menu -->
-    <string name="menu_accueil">Accueil</string>
-    <string name="menu_info_trafic">Infos trafic</string>
-    <string name="menu_itineraires">Itineraires</string>
-    <string name="menu_parkings">Parkings</string>
-    <string name="menu_equipements">Mobilité</string>
-    <string name="menu_recherche">Recherche</string>
-    <string name="menu_carte">Carte</string>
-    <string name="menu_parametres">Paramètres</string>
     <string name="menu_don">Faire un don</string>
-    <string name="menu_bug">Signaler un bug</string>
-    <string name="menu_about">A propos</string>
     <!-- Actions -->
     <string name="action_share">Partager</string>
     <string name="action_refresh">Actualiser</string>
@@ -256,12 +246,10 @@
     <!-- - - Divers -->
     <string name="msg_communicating">Communication en cours&#8230;</string>
     <string name="msg_loading_address">Récupération de l\'adresse en cours&#8230;</string>
-    <string name="msg_favoris_import">Favoris importés avec succès !</string>
     <string name="msg_cache_size">Taille du cache : %s</string>
     <string name="msg_calendar_select">Sélectionnez un calendrier par défaut.</string>
     <string name="msg_cache_horaire_clear">Les horaires ont été vidés</string>
     <string name="btn_geolocation_service">Services de localisation</string>
-    <string name="msg_importing_favoris">Import des favoris en cours&#8230;</string>
     <string name="msg_nothing_info_trafic">Aucune perturbation en cours</string>
     <string name="msg_nothing_commentaires">Aucun commentaire récent</string>
     <!-- - - Horaires -->
@@ -277,6 +265,16 @@
     <!-- Info trafic -->
     <string name="lignes_concernees">Lignes concernées</string>
     <string name="description">Description</string>
+
+    <!-- Import / Export -->
+    <string name="msg_import_title">Import des favoris</string>
+    <string name="msg_import_succeed">Favoris importés avec succès !</string>
+    <string name="msg_import_ongoing">Import en cours&#8230;</string>
+    <string name="msg_import_error">Erreur lors de l\'import des favoris</string>
+    <string name="msg_export_title">Export des favoris</string>
+    <string name="msg_export_succeed">Favoris exportés avec succès !</string>
+    <string name="msg_export_error">Erreur lors de l\'export des favoris</string>
+    <string name="msg_export_ongoing">Export en cours&#8230;</string>
 
     <!--  -->
     <!-- Hint -->
