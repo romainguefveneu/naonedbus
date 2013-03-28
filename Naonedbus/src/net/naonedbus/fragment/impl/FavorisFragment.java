@@ -59,6 +59,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
@@ -345,6 +346,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
+	public void onPrepareOptionsMenu(final Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		menu.findItem(R.id.menu_export).setVisible(mListView.getCount() > 0);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 
 		if (item.getGroupId() == MENU_GROUP_GROUPES) {
@@ -370,10 +377,12 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		switch (item.getItemId()) {
 		case R.id.menu_import:
-			final FavorisHelper helper = new FavorisHelper(getActivity());
-			helper.importFavoris();
+			final FavorisHelper importHelper = new FavorisHelper(getActivity());
+			importHelper.importFavoris();
 			break;
 		case R.id.menu_export:
+			final FavorisHelper exportHelper = new FavorisHelper(getActivity());
+			exportHelper.exportFavoris();
 			break;
 		case R.id.menu_sort_distance:
 			item.setChecked(true);
@@ -631,6 +640,13 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		result.setResult(adapter);
 
 		return result;
+	}
+	
+	@SuppressLint("NewApi")
+	@Override
+	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {
+		super.onLoadFinished(loader, result);
+		getSherlockActivity().invalidateOptionsMenu();
 	}
 
 	/**

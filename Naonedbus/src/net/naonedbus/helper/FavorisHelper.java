@@ -22,18 +22,22 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.rest.controller.impl.FavoriController;
 import net.naonedbus.utils.InfoDialogUtils;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
+import android.text.ClipboardManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * @author romain
@@ -68,6 +72,7 @@ public class FavorisHelper {
 	}
 
 	private ImportTask mImportTask;
+	private ExportTask mExportTask;
 	private final Context mContext;
 
 	private FavorisActionListener mFavorisActionListener;
@@ -118,6 +123,15 @@ public class FavorisHelper {
 	}
 
 	/**
+	 * Sauvegarder les favoris au format Json et envoyer ça dans le cloud
+	 */
+	public void exportFavoris() {
+		if (mExportTask == null || mExportTask.getStatus() == AsyncTask.Status.FINISHED) {
+			mExportTask = (ExportTask) new ExportTask().execute();
+		}
+	}
+
+	/**
 	 * Importer les favoris depuis les could
 	 */
 	public void importFavoris() {
@@ -150,7 +164,7 @@ public class FavorisHelper {
 	}
 
 	private void showErrorKeyNoValid() {
-		InfoDialogUtils.show(mContext, R.string.msg_error_title_favoris_key, R.string.msg_error_content_favoris_key);
+		InfoDialogUtils.show(mContext, R.string.msg_error_export_import, R.string.msg_error_content_favoris_key);
 	}
 
 	private void onImport(final String id) {
@@ -204,6 +218,83 @@ public class FavorisHelper {
 			}
 		}
 
+	}
+
+	/**
+	 * Classe d'export des favoris
+	 * 
+	 * @author romain
+	 * 
+	 */
+	private class ExportTask extends AsyncTask<Void, Void, String> {
+		protected ProgressDialog progressDialog;
+		private Exception exception = null;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			progressDialog = ProgressDialog.show(mContext, "", "Transfert en cours...", true);
+			progressDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(final Void... params) {
+			final FavoriManager favoriManager = FavoriManager.getInstance();
+			final FavoriController favoriController = new FavoriController();
+			String cle = null;
+			try {
+				final String content = favoriManager.toJson(mContext.getContentResolver());
+				cle = favoriController.post(content);
+			} catch (final Exception e) {
+				exception = e;
+			}
+			return cle;
+		}
+
+		@Override
+		protected void onPostExecute(final String result) {
+			AlertDialog.Builder adb;
+
+			super.onPostExecute(result);
+			progressDialog.dismiss();
+
+			if (exception == null) {
+				final LayoutInflater factory = LayoutInflater.from(mContext);
+				final View alertDialogView = factory.inflate(R.layout.dialog_readonly, null);
+				final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
+				final TextView label = (TextView) alertDialogView.findViewById(R.id.comment);
+				label.setText(R.string.dialog_content_export);
+				input.setText(result);
+				input.setFocusable(false);
+
+				adb = new AlertDialog.Builder(mContext);
+				adb.setView(alertDialogView);
+				adb.setTitle(R.string.dialog_title_export);
+				adb.setPositiveButton(android.R.string.ok, new OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog, final int which) {
+						mFavorisActionListener.onFavorisImport();
+					}
+				});
+				adb.setNeutralButton(R.string.copy, new OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog, final int which) {
+						final ClipboardManager clipboard = (ClipboardManager) mContext
+								.getSystemService(Context.CLIPBOARD_SERVICE);
+						clipboard.setText(result);
+
+						if (mFavorisActionListener != null) {
+							mFavorisActionListener.onFavorisImport();
+						}
+					}
+				});
+				adb.show();
+
+			} else {
+				Log.w("Erreur lors de l'export des favoris", exception);
+				InfoDialogUtils.show(mContext, R.string.msg_error_title, R.string.msg_error_export_favoris);
+			}
+		}
 	}
 
 }

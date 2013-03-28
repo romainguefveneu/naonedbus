@@ -32,7 +32,7 @@ public class FavoriDistanceComparator implements Comparator<Favori> {
 
 	private Location referentiel;
 
-	public void setReferentiel(Location referentiel) {
+	public void setReferentiel(final Location referentiel) {
 		this.referentiel = referentiel;
 	}
 
@@ -49,7 +49,7 @@ public class FavoriDistanceComparator implements Comparator<Favori> {
 
 		if (favori1.section != null && favori2.section != null) {
 			if (!favori1.section.equals(favori2.section)) {
-				return favori1.section.compareTo(favori2.section);
+				return Integer.valueOf(favori1.ordre).compareTo(favori2.ordre);
 			}
 		}
 

@@ -14,6 +14,7 @@
     <string name="emptyString"></string>
     <string name="updating">Mise à jour en cours&#8230;</string>
     <string name="setup">Installation en cours&#8230;</string>
+    <string name="copy">Copier</string>
     <!-- Tuto -->
     <string name="tuto_0_title">Bienvenue dans</string>
     <string name="tuto_0_summary"><![CDATA[Prenez quelques instants pour découvrir l\'application.<br /><big>&rarr;</big>]]></string>
@@ -240,9 +241,12 @@
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
-    <string name="msg_error_title_favoris_key">Erreur lors de l\'import</string>
+    <string name="msg_error_title_import">Erreur lors de l\'import</string>
+    <string name="msg_error_title_export">Erreur lors de l\'export</string>
     <string name="msg_error_content_favoris_key">Cette clé n\'est pas valide ou votre connexion a quelques problèmes.\nVous pouvez retenter votre chance dans quelques instants.</string>
     <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
+    <string name="msg_error_export_favoris">Une erreur s\'est produite lors de l\'export.\nVeuillez réessayer plus tard.</string>
+    <string name="msg_error_export_import">Une erreur s\'est produite lors de l\'import.\nVeuillez réessayer plus tard.</string>
     <!-- Warning -->
     <string name="msg_warning_send_comment">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>
     <!-- - - Vide -->
@@ -250,6 +254,7 @@
     <string name="msg_element_not_localized">Cet élément ne peut pas être localisé.</string>
     <string name="msg_vide">Vide</string>
     <!-- - - Divers -->
+    <string name="msg_communicating">Communication en cours&#8230;</string>
     <string name="msg_loading_address">Récupération de l\'adresse en cours&#8230;</string>
     <string name="msg_favoris_import">Favoris importés avec succès !</string>
     <string name="msg_cache_size">Taille du cache : %s</string>
@@ -286,6 +291,8 @@
     <string name="dialog_title_menu_lignes">Ligne %1$s</string>
     <string name="dialog_title_favoris_import">Votre clé :</string>
     <string name="dialog_title_groupes">Groupes</string>
+    <string name="dialog_title_export">Favoris exportés !</string>
+    <string name="dialog_content_export">Conservez cette clé, elle vous permettra de récupérer vos favoris.</string>
     <!-- Showcase -->
     <string name="showcase_arrets_title">Changez facilement de sens</string>
     <string name="showcase_arrets_content">Cliquez sur le sens pour en changer.</string>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.Acapulco.Light" parent="Theme.acapulco">
-        <item name="actionBarStyle">@style/AcapulcoActionBar</item>
-        <item name="android:actionBarStyle">@style/AcapulcoActionBar</item>
+    <style name="Theme.Acapulco.Light" parent="Theme.Acapulco">
         <item name="activityBackground">@color/activity_background_light</item>
         <item name="android:windowBackground">@color/activity_background_light</item>
         <item name="primaryColor">@android:color/primary_text_light</item>
@@ -14,22 +12,18 @@
         <item name="sectionBackground">@drawable/list_section_underline_light</item>
         <!--  -->
         <item name="actionBarItemBackground">@drawable/selectable_background_acapulco</item>
-        <item name="popupMenuStyle">@style/acapulco_PopupMenu</item>
-        <item name="dropDownListViewStyle">@style/acapulco_DropDownListView</item>
-        <item name="actionBarTabStyle">@style/acapulco_ActionBarTabStyle</item>
-        <item name="actionDropDownStyle">@style/acapulco_DropDownNav</item>
-        <item name="actionBarStyle">@style/acapulco_solid_ActionBar</item>
-        <item name="android:actionBarItemBackground">@drawable/selectable_background_acapulco</item>
-        <item name="android:popupMenuStyle">@style/acapulco_PopupMenu</item>
-        <item name="android:dropDownListViewStyle">@style/acapulco_DropDownListView</item>
-        <item name="android:actionBarTabStyle">@style/acapulco_ActionBarTabStyle</item>
-        <item name="android:actionDropDownStyle">@style/acapulco_DropDownNav</item>
-        <item name="android:actionBarStyle">@style/acapulco_solid_ActionBar</item>
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_acapulco</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Acapulco</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Acapulco</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Acapulco</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Acapulco</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Acapulco</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_acapulco</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
 
         <!-- Light.DarkActionBar specific -->
-        <item name="actionBarWidgetTheme">@style/Theme.acapulco.widget</item>
-        <item name="android:actionBarWidgetTheme">@style/Theme.acapulco.widget</item>
+        <item name="actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
     </style>
 
     <style name="Theme.Acapulco.Light.HomeAsMenu">
@@ -45,7 +39,6 @@
     </style>
 
     <style name="Theme.Acapulco.Dark" parent="@style/Theme.Sherlock">
-        <item name="actionBarStyle">@style/AcapulcoActionBar</item>
         <item name="activityBackground">@android:color/background_dark</item>
         <item name="primaryColor">@android:color/primary_text_dark</item>
         <item name="secondaryColor">@android:color/secondary_text_dark</item>
@@ -61,9 +54,5 @@
 
     <style name="Theme.WidgetDialog" parent="@android:style/Theme.Dialog" />
 
-    <style name="AcapulcoActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/action_bar_background</item>
-        <item name="background">@drawable/action_bar_background</item>
-    </style>
 
 </resources>
