@@ -42,6 +42,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	private ActionMode mActionMode;
 	private DragSortListView mListView;
 	private Cursor mCursor;
+	private CursorAdapter mAdapter;
 
 	public GroupesFragment() {
 		super(R.string.title_fragment_lignes, R.layout.fragment_listview_drag_drop);
@@ -95,10 +96,9 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		final String[] from = new String[] { GroupeTable.NOM };
 		final int[] to = new int[] { android.R.id.text1 };
 
-		final SimpleDragSortCursorAdapter adapter = new SimpleDragSortCursorAdapter(getActivity(),
-				R.layout.list_item_checkable, mCursor, from, to, 0);
+		mAdapter = new SimpleDragSortCursorAdapter(getActivity(), R.layout.list_item_checkable, mCursor, from, to, 0);
 
-		return adapter;
+		return mAdapter;
 	}
 
 	@Override

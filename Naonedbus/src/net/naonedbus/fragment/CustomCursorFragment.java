@@ -59,7 +59,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 
 	private CursorAdapter mCursorAdapter;
 
-	private List<OnScrollListener> mOnScrollListeners = new ArrayList<AbsListView.OnScrollListener>();
+	private final List<OnScrollListener> mOnScrollListeners = new ArrayList<AbsListView.OnScrollListener>();
 
 	/**
 	 * Gestion du refraichissement
@@ -82,7 +82,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (DBG)
 			Log.d(LOG_TAG, "onActivityCreated");
@@ -95,7 +95,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (container == null) // must put this in
 			return null;
 
@@ -119,30 +119,30 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(final Bundle outState) {
 		if (isAdded()) {
 			final View v = getListView().getChildAt(0);
-			int top = (v == null) ? 0 : v.getTop();
+			final int top = (v == null) ? 0 : v.getTop();
 			outState.putInt(STATE_POSITION, getListView().getFirstVisiblePosition());
 			outState.putInt(STATE_TOP, top);
 		}
 		super.onSaveInstanceState(outState);
 	}
 
-	protected void bindView(View view, Bundle savedInstanceState) {
+	protected void bindView(final View view, final Bundle savedInstanceState) {
 
 	}
 
-	private void setupListView(LayoutInflater inflater, View view) {
+	private void setupListView(final LayoutInflater inflater, final View view) {
 		final ListView listView = (ListView) mFragmentView.findViewById(android.R.id.list);
 
 		listView.setOnScrollListener(new OnScrollListener() {
 			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			public void onScrollStateChanged(final AbsListView view, final int scrollState) {
 			}
 
 			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
 				triggerOnScrollListeners(listView, firstVisibleItem, visibleItemCount, totalItemCount);
 			}
 		});
@@ -153,12 +153,12 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 			addOnScrollListener(new OnScrollListener() {
 
 				@Override
-				public void onScrollStateChanged(AbsListView view, int scrollState) {
+				public void onScrollStateChanged(final AbsListView view, final int scrollState) {
 
 				}
 
 				@Override
-				public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
 					final Adapter adapter = getListAdapter();
 					if (adapter != null && adapter instanceof OnScrollListener) {
 						final OnScrollListener sectionAdapter = (OnScrollListener) adapter;
@@ -169,6 +169,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		}
 	}
 
+	@Override
 	public int getTitleId() {
 		return mTitleId;
 	}
@@ -182,13 +183,13 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		getLoaderManager().destroyLoader(LOADER_REFRESH);
 	}
 
-	protected void addOnScrollListener(OnScrollListener onScrollListener) {
+	protected void addOnScrollListener(final OnScrollListener onScrollListener) {
 		mOnScrollListeners.add(onScrollListener);
 	}
 
-	private void triggerOnScrollListeners(AbsListView view, int firstVisibleItem, int visibleItemCount,
-			int totalItemCount) {
-		for (OnScrollListener l : mOnScrollListeners) {
+	private void triggerOnScrollListeners(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+			final int totalItemCount) {
+		for (final OnScrollListener l : mOnScrollListeners) {
 			l.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
 		}
 	}
@@ -203,7 +204,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * @param drawableId
 	 *            L'identifiant du drawable.
 	 */
-	protected void setEmptyMessageValues(int titleId, int summaryId, int drawableId) {
+	protected void setEmptyMessageValues(final int titleId, final int summaryId, final int drawableId) {
 		mMessageEmptyTitleId = titleId;
 		mMessageEmptySummaryId = summaryId;
 		mMessageEmptyDrawableId = drawableId;
@@ -243,7 +244,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * @param descriptionRes
 	 *            L'identifiant de la description.
 	 */
-	protected void showError(int titleRes, int descriptionRes) {
+	protected void showError(final int titleRes, final int descriptionRes) {
 		showMessage(getString(titleRes), getString(descriptionRes), R.drawable.warning);
 	}
 
@@ -255,7 +256,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * @param description
 	 *            La description.
 	 */
-	protected void showError(String title, String description) {
+	protected void showError(final String title, final String description) {
 		showMessage(title, description, R.drawable.warning);
 	}
 
@@ -269,7 +270,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * @param drawableRes
 	 *            L'identifiant du drawable.
 	 */
-	protected void showMessage(int titleRes, int descriptionRes, int drawableRes) {
+	protected void showMessage(final int titleRes, final int descriptionRes, final int drawableRes) {
 		showMessage(getString(titleRes), (descriptionRes != 0) ? getString(descriptionRes) : null, drawableRes);
 	}
 
@@ -283,7 +284,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * @param drawableRes
 	 *            L'identifiant du symbole.
 	 */
-	protected void showMessage(String title, String description, int drawableRes) {
+	protected void showMessage(final String title, final String description, final int drawableRes) {
 		mFragmentView.findViewById(android.R.id.list).setVisibility(View.GONE);
 		mFragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
@@ -320,7 +321,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * @param onClickListener
 	 *            Son action.
 	 */
-	protected void setMessageButton(int title, OnClickListener onClickListener) {
+	protected void setMessageButton(final int title, final OnClickListener onClickListener) {
 		setMessageButton(getString(title), onClickListener);
 	}
 
@@ -332,7 +333,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * @param onClickListener
 	 *            Son action.
 	 */
-	protected void setMessageButton(String title, OnClickListener onClickListener) {
+	protected void setMessageButton(final String title, final OnClickListener onClickListener) {
 		final View message = mFragmentView.findViewById(R.id.fragmentMessage);
 		if (message != null) {
 			final Button button = (Button) message.findViewById(android.R.id.button1);
@@ -348,7 +349,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 * 
 	 * @param timeToLive
 	 */
-	protected void setTimeToLive(int timeToLive) {
+	protected void setTimeToLive(final int timeToLive) {
 		this.timeToLive = timeToLive;
 	}
 
@@ -390,7 +391,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	public abstract Loader<Cursor> onCreateLoader(int arg0, Bundle arg1);
 
 	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor result) {
+	public void onLoadFinished(final Loader<Cursor> loader, final Cursor result) {
 		if (DBG)
 			Log.d(LOG_TAG, "onLoadFinished");
 
@@ -402,7 +403,6 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		if (result == null || result.getCount() == 0) {
 			showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 		} else {
-			mCursorAdapter.swapCursor(result);
 			if (mListViewStatePosition != -1 && isAdded()) {
 				getListView().setSelectionFromTop(mListViewStatePosition, mListViewStateTop);
 				mListViewStatePosition = -1;
@@ -411,11 +411,13 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 			resetNextUpdate();
 		}
 
+		mCursorAdapter.swapCursor(result);
+
 		onPostExecute();
 	}
 
 	@Override
-	public void onLoaderReset(Loader<Cursor> arg0) {
+	public void onLoaderReset(final Loader<Cursor> arg0) {
 		if (DBG)
 			Log.d(LOG_TAG, "onLoaderReset");
 		mCursorAdapter.swapCursor(null);
