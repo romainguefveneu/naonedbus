@@ -8,48 +8,21 @@
     android:layout_marginTop="@dimen/padding_medium" >
 
     <TableRow
+        android:id="@+id/rowTop"
         android:layout_margin="0dp"
         android:divider="@drawable/divider_vertical"
         android:showDividers="middle" >
 
         <TextView
-            style="@style/CardHoraire.First"
-            android:tag="@string/cardHoraireTag"
-            android:text="00:00" />
-
-        <TextView
-            style="@style/CardHoraire"
-            android:tag="@string/cardHoraireTag"
-            android:text="00:00" />
-
-        <TextView
-            style="@style/CardHoraire.Last"
-            android:tag="@string/cardHoraireTag"
-            android:text="00:00" />
+            style="@style/BigTitle"
+            android:text="text" />
     </TableRow>
 
     <TableRow
+        android:id="@+id/rowBottom"
         android:layout_margin="0dp"
         android:divider="@drawable/divider_vertical"
         android:showDividers="middle" >
-
-        <TextView
-            style="@style/CardDelai.First"
-            android:gravity="center_horizontal"
-            android:tag="@string/cardDelaiTag"
-            android:text="0 min" />
-
-        <TextView
-            style="@style/CardDelai"
-            android:gravity="center_horizontal"
-            android:tag="@string/cardDelaiTag"
-            android:text="0 min" />
-
-        <TextView
-            style="@style/CardDelai"
-            android:gravity="center_horizontal"
-            android:tag="@string/cardDelaiTag"
-            android:text="0 min" />
     </TableRow>
 
 </TableLayout>

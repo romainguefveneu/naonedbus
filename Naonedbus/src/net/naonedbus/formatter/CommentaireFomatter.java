@@ -37,27 +37,30 @@ public class CommentaireFomatter {
 		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
 	}
 
-	private final PrettyTime prettyTime;
+	private final PrettyTime mPrettyTime;
 
-	private final Context context;
-	private final SmileyParser smileyParser;
+	private final Context mContext;
+	private final SmileyParser mSmileyParser;
 
-	final DateMidnight now = new DateMidnight();
-	final DateMidnight yesterday = now.minusDays(1);
-	final LigneManager ligneManager;
-	final SensManager sensManager;
-	final ArretManager arretManager;
+	final DateMidnight mNow;
+	final DateMidnight mYesterday;
+	final LigneManager mLigneManager;
+	final SensManager mSensManager;
+	final ArretManager mArretManager;
 
 	public CommentaireFomatter(final Context context) {
-		this.context = context;
+		this.mContext = context;
 
 		SmileyParser.init(context);
-		prettyTime = new PrettyTime(new Locale("fr"));
+		mPrettyTime = new PrettyTime(Locale.getDefault());
 
-		smileyParser = SmileyParser.getInstance();
-		ligneManager = LigneManager.getInstance();
-		sensManager = SensManager.getInstance();
-		arretManager = ArretManager.getInstance();
+		mNow = new DateMidnight();
+		mYesterday = mNow.minusDays(1);
+
+		mSmileyParser = SmileyParser.getInstance();
+		mLigneManager = LigneManager.getInstance();
+		mSensManager = SensManager.getInstance();
+		mArretManager = ArretManager.getInstance();
 	}
 
 	/**
@@ -82,9 +85,9 @@ public class CommentaireFomatter {
 	 */
 
 	public void formatValues(final Commentaire commentaire) {
-		commentaire.setMessage(smileyParser.addSmileySpans(commentaire.getMessage()).toString());
+		commentaire.setMessage(mSmileyParser.addSmileySpans(commentaire.getMessage()).toString());
 		commentaire.setDateTime(new DateTime(commentaire.getTimestamp()));
-		commentaire.setDelay(prettyTime.format(commentaire.getDateTime().toDate()));
+		commentaire.setDelay(mPrettyTime.format(commentaire.getDateTime().toDate()));
 		commentaire.setSection(getCommentaireSection(commentaire));
 		setCommentaireLigne(commentaire);
 		setCommentaireSens(commentaire);
@@ -96,10 +99,10 @@ public class CommentaireFomatter {
 		if (date.isAfterNow()) {
 			// A venir
 			return CommentaireIndexer.SECTION_FUTURE;
-		} else if (date.isEqual(now)) {
+		} else if (date.isEqual(mNow)) {
 			// Maintenant
 			return CommentaireIndexer.SECTION_NOW;
-		} else if (date.equals(yesterday)) {
+		} else if (date.equals(mYesterday)) {
 			// Hier
 			return CommentaireIndexer.SECTION_YESTERDAY;
 		} else {
@@ -116,7 +119,7 @@ public class CommentaireFomatter {
 	 */
 	private void setCommentaireLigne(final Commentaire commentaire) {
 		if (commentaire.getCodeLigne() != null) {
-			final Ligne ligne = ligneManager.getSingle(context.getContentResolver(), commentaire.getCodeLigne());
+			final Ligne ligne = mLigneManager.getSingle(mContext.getContentResolver(), commentaire.getCodeLigne());
 			commentaire.setLigne(ligne);
 		}
 	}
@@ -129,7 +132,7 @@ public class CommentaireFomatter {
 	 */
 	private void setCommentaireSens(final Commentaire commentaire) {
 		if (commentaire.getCodeSens() != null) {
-			final Sens sens = sensManager.getSingle(context.getContentResolver(), commentaire.getCodeLigne(),
+			final Sens sens = mSensManager.getSingle(mContext.getContentResolver(), commentaire.getCodeLigne(),
 					commentaire.getCodeSens());
 			commentaire.setSens(sens);
 		}
@@ -143,7 +146,7 @@ public class CommentaireFomatter {
 	 */
 	private void setCommentaireArret(final Commentaire commentaire) {
 		if (commentaire.getCodeArret() != null) {
-			final Arret arret = arretManager.getSingle(context.getContentResolver(), commentaire.getCodeArret());
+			final Arret arret = mArretManager.getSingle(mContext.getContentResolver(), commentaire.getCodeArret());
 			commentaire.setArret(arret);
 		}
 	}

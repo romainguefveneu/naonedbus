@@ -46,7 +46,7 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 		adapterMap.put(NaonedbusClient.NAONEDBUS.name(), defaultCommentaireAdapter);
 		adapterMap.put(NaonedbusClient.SIMPLETAN.name(), defaultCommentaireAdapter);
 		adapterMap.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), new TanTraficCommentaireAdapter());
-		adapterMap.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), new TanTraficCommentaireAdapter());
+		adapterMap.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), new TanActusCommentaireAdapter());
 		adapterMap.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), new TanInfosCommentaireAdapter());
 		adapterMap.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), new MessageServiceCommentaireAdapter());
 	}
@@ -105,7 +105,7 @@ interface CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type Tweet @tan_trafic
+ * Ligne de commentaire de type Tweet @tan_trafic.
  */
 class TanTraficCommentaireAdapter implements CommentaireAdapter {
 
@@ -128,7 +128,30 @@ class TanTraficCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type Tweet @TANinfos
+ * Ligne de commentaire de type Tweet @tan_actus.
+ */
+class TanActusCommentaireAdapter implements CommentaireAdapter {
+
+	@Override
+	public void setObject(final View itemView, final Commentaire item) {
+		final ViewHolder holder = (ViewHolder) itemView.getTag();
+
+		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_tan);
+		holder.ligneCodeBackground.setImageResource(0);
+		holder.ligneCodeBackground.setVisibility(View.VISIBLE);
+		holder.ligneCode.setVisibility(View.GONE);
+
+		holder.itemDescription.setText(item.getMessage(), BufferType.SPANNABLE);
+		holder.itemDate.setText(item.getDelay());
+
+		holder.itemTitle.setVisibility(View.VISIBLE);
+		holder.itemTitle.setText(R.string.commentaire_tan_actus);
+	}
+
+}
+
+/**
+ * Ligne de commentaire de type Tweet @TANinfos.
  */
 class TanInfosCommentaireAdapter implements CommentaireAdapter {
 
@@ -136,7 +159,7 @@ class TanInfosCommentaireAdapter implements CommentaireAdapter {
 	public void setObject(final View itemView, final Commentaire item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
-		holder.ligneCodeBackground.setBackgroundResource(R.drawable.log_taninfos_background);
+		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_taninfos_background);
 		holder.ligneCodeBackground.setImageResource(R.drawable.logo_taninfos);
 		holder.ligneCodeBackground.setVisibility(View.VISIBLE);
 		holder.ligneCode.setVisibility(View.GONE);

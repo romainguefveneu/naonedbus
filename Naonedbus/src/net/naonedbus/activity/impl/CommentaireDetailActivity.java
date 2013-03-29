@@ -42,10 +42,10 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	private SlidingMenuHelper mSlidingMenuHelper;
 	private HeaderHelper mHeaderHelper;
 
-	private Commentaire commentaire;
-	private TextView itemDescription;
-	private TextView itemDate;
-	private TextView itemSource;
+	private Commentaire mCommentaire;
+	private TextView mItemDescription;
+	private TextView mItemDate;
+	private TextView mItemSource;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -64,27 +64,33 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		mHeaderHelper = new HeaderHelper(this);
 
-		itemDescription = (TextView) findViewById(R.id.itemDescription);
-		itemDate = (TextView) findViewById(R.id.itemDate);
-		itemSource = (TextView) findViewById(R.id.itemSource);
+		mItemDescription = (TextView) findViewById(R.id.itemDescription);
+		mItemDate = (TextView) findViewById(R.id.itemDate);
+		mItemSource = (TextView) findViewById(R.id.itemSource);
 
-		commentaire = getIntent().getParcelableExtra(PARAM_COMMENTAIRE);
+		mCommentaire = getIntent().getParcelableExtra(PARAM_COMMENTAIRE);
 
-		itemDescription.setText(simSmileyParser.addSmileySpans(commentaire.getMessage()));
+		mItemDescription.setText(simSmileyParser.addSmileySpans(mCommentaire.getMessage()));
 
-		itemDate.setTypeface(robotoMedium);
-		itemDate.setText(dateFormat.format(commentaire.getTimestamp()) + " "
-				+ timeFormat.format(commentaire.getTimestamp()));
+		mItemDate.setTypeface(robotoMedium);
+		mItemDate.setText(dateFormat.format(mCommentaire.getTimestamp()) + " "
+				+ timeFormat.format(mCommentaire.getTimestamp()));
 
-		final String source = commentaire.getSource();
+		final String source = mCommentaire.getSource();
 
-		itemSource.setText(getString(R.string.source, getString(sourceTitle.get(source))));
+		mItemSource.setText(getString(R.string.source, getString(sourceTitle.get(source))));
 
-		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(source)
-				|| NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
+		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_info_trafic));
+			mHeaderHelper.setCode(null);
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
+
+		} else if (NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
+
+			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
+			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_actus));
 			mHeaderHelper.setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
 
@@ -104,7 +110,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		} else {
 
-			setLigneSensArret(commentaire);
+			setLigneSensArret(mCommentaire);
 
 		}
 	}
@@ -136,7 +142,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-				getCommentaireTitle(commentaire) + "\n" + commentaire.getMessage());
+				getCommentaireTitle(mCommentaire) + "\n" + mCommentaire.getMessage());
 
 		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
 	}

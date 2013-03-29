@@ -3,6 +3,7 @@ package net.naonedbus.fragment.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
@@ -15,11 +16,13 @@ import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.card.impl.CommentairesCard;
 import net.naonedbus.card.impl.HoraireCard;
+import net.naonedbus.card.impl.MapCard;
 import net.naonedbus.card.impl.TraficCard;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.provider.impl.MyLocationProvider;
 
 import org.joda.time.DateMidnight;
 
@@ -97,16 +100,14 @@ public class ArretDetailFragment extends SherlockFragment {
 		commentairesCard.setSens(mSens);
 		commentairesCard.setArret(mArret);
 
-		// final MapCard mapCard = new MapCard(getActivity(),
-		// getLoaderManager(), mArret.latitude, mArret.longitude);
-		// final MyLocationProvider locationProvider =
-		// NBApplication.getLocationProvider();
-		// mapCard.setCurrentLocation(locationProvider.getLastKnownLocation());
+		final MapCard mapCard = new MapCard(getActivity(), getLoaderManager(), mArret.latitude, mArret.longitude);
+		final MyLocationProvider locationProvider = NBApplication.getLocationProvider();
+		mapCard.setCurrentLocation(locationProvider.getLastKnownLocation());
 
 		mCards.add(horaireCard);
 		mCards.add(traficCard);
 		mCards.add(commentairesCard);
-		// mCards.add(mapCard);
+		mCards.add(mapCard);
 
 		mOnArretChangeListener = horaireCard;
 	}

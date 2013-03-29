@@ -18,13 +18,15 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
 public class MapCard extends Card<Bitmap> {
 
-	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=14&scale=2&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f";
-	private static final String MAP_URL_CURRENT_LOCATION = "http://maps.google.com/maps/api/staticmap?scale=2&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&center=%f,%f";
+	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=14&scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&format=jpg";
+	private static final String MAP_URL_CURRENT_LOCATION = "http://maps.google.com/maps/api/staticmap?scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&center=%f,%f&format=jpg";
 	private static final String PARAM_URL = "url";
 
 	private final Float mLatitude;
@@ -56,15 +58,34 @@ public class MapCard extends Card<Bitmap> {
 	@Override
 	protected void bindView(final Context context, final View view) {
 
+		mImageView = (ImageView) view;
+		showContent();
+		final ViewTreeObserver obs = mImageView.getViewTreeObserver();
+		obs.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+			@Override
+			public boolean onPreDraw() {
+				if (mImageView.getWidth() != 0) {
+					mImageView.getViewTreeObserver().removeOnPreDrawListener(this);
+					fillView(mImageView);
+				}
+				return true;
+			}
+		});
+
+	}
+
+	private void fillView(final ImageView imageView) {
 		final String url;
 		if (mCurrentLocation == null) {
-			url = String.format(Locale.ENGLISH, MAP_URL, 600, 300, mLatitude, mLongitude);
+			url = String.format(Locale.ENGLISH, MAP_URL, imageView.getMeasuredWidth(), imageView.getMeasuredHeight(),
+					mLatitude, mLongitude);
 		} else {
-			url = String.format(Locale.ENGLISH, MAP_URL_CURRENT_LOCATION, 600, 300, mLatitude, mLongitude,
-					mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+			url = String.format(Locale.ENGLISH, MAP_URL_CURRENT_LOCATION, imageView.getMeasuredWidth(),
+					imageView.getMeasuredHeight(), mLatitude, mLongitude, mCurrentLocation.getLatitude(),
+					mCurrentLocation.getLongitude());
 		}
-
-		mImageView = (ImageView) view;
+		
+		Log.d("Map", url);
 
 		final Bundle bundle = new Bundle();
 		bundle.putString(PARAM_URL, url);

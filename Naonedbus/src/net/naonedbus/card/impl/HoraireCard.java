@@ -13,8 +13,6 @@ import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.card.Card;
 import net.naonedbus.fragment.impl.ArretDetailFragment.OnArretChangeListener;
 import net.naonedbus.manager.impl.HoraireManager;
-import net.naonedbus.utils.ViewHelper;
-import net.naonedbus.utils.ViewHelper.OnTagFoundHandler;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -29,7 +27,12 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.MeasureSpec;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeListener {
@@ -42,6 +45,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	private final List<TextView> mHoraireViews;
 	private final List<TextView> mDelaiViews;
+
+	private final LayoutInflater mLayoutInflater;
 
 	private final static IntentFilter intentFilter;
 	static {
@@ -61,6 +66,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	public HoraireCard(final Context context, final LoaderManager loaderManager, final Arret arret) {
 		super(context, loaderManager, R.string.card_horaires_title, R.layout.card_horaire);
+
+		mLayoutInflater = LayoutInflater.from(context);
 
 		mArret = arret;
 		mHoraireViews = new ArrayList<TextView>();
@@ -92,25 +99,52 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	protected void bindView(final Context context, final View view) {
+		final ViewTreeObserver obs = view.getViewTreeObserver();
+		obs.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+			@Override
+			public boolean onPreDraw() {
+				if (view.getWidth() != 0) {
+					view.getViewTreeObserver().removeOnPreDrawListener(this);
+					fillView((ViewGroup) view);
+				}
+				return true;
+			}
+		});
+	}
+
+	private void fillView(final ViewGroup parent) {
 		mHoraireViews.clear();
 		mDelaiViews.clear();
 
-		ViewHelper.findViewsByTag(view, context.getString(R.string.cardHoraireTag), new OnTagFoundHandler() {
-			@Override
-			public void onTagFound(final View v) {
-				mHoraireViews.add((TextView) v);
-				setTypefaceRobotoLight((TextView) v);
-			}
-		});
+		final int viewsCount = getTextViewCount(parent);
 
-		ViewHelper.findViewsByTag(view, context.getString(R.string.cardDelaiTag), new OnTagFoundHandler() {
-			@Override
-			public void onTagFound(final View v) {
-				mDelaiViews.add((TextView) v);
-				setTypefaceRobotoBold((TextView) v);
-			}
-		});
+		final TableRow rowTop = (TableRow) parent.findViewById(R.id.rowTop);
+		final TableRow rowBottom = (TableRow) parent.findViewById(R.id.rowBottom);
 
+		for (int i = 0; i < viewsCount; i++) {
+			final TextView horaireView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_text, parent, false);
+			final TextView delayView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_delay, parent, false);
+
+			rowTop.addView(horaireView);
+			rowBottom.addView(delayView);
+
+			mHoraireViews.add(horaireView);
+			mDelaiViews.add(delayView);
+		}
+	}
+
+	private int getTextViewCount(final ViewGroup parent) {
+		final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_text, parent, false);
+		final DateTime twelve = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
+		final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getContext());
+
+		textView.setText(timeFormat.format(twelve.toDate()));
+
+		final int specY = MeasureSpec.makeMeasureSpec(parent.getHeight(), MeasureSpec.UNSPECIFIED);
+		final int specX = MeasureSpec.makeMeasureSpec(parent.getWidth(), MeasureSpec.UNSPECIFIED);
+		textView.measure(specX, specY);
+
+		return Math.round(parent.getWidth() / (float) textView.getMeasuredWidth());
 	}
 
 	@Override
@@ -127,6 +161,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	public void onLoadFinished(final Loader<List<Horaire>> loader, final List<Horaire> horaires) {
+
 		if (horaires != null && !horaires.isEmpty()) {
 
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);

@@ -148,6 +148,7 @@
     <string name="title_fragment_arrets">Arrets</string>
     <!-- Commentaires -->
     <string name="commentaire_action_transmission">Transmission en cours&#8230;</string>
+    <string name="commentaire_tan_actus">Tan actus</string>
     <string name="commentaire_tan_info_trafic">Tan info trafic</string>
     <string name="commentaire_tan_infos">TANinfos</string>
     <string name="commentaire_tout">Tout le réseau</string>
