@@ -47,7 +47,6 @@
         android:layout_marginLeft="@dimen/padding_small"
         android:gravity="center_vertical"
         android:paddingRight="3dip"
-        android:paddingTop="3sp"
         android:text="François" />
 
 </LinearLayout>

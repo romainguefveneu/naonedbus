@@ -122,12 +122,12 @@
     <string name="about_com_google_plus">Google+</string>
     <string name="about_com_mail">E-mail</string>
     <string name="about_info_title">Informations</string>
-    <string name="about_info_content">Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.\n\nLes données sont celles disponibles sur les sites www.tan.fr et data.nantes.fr</string>
+    <string name="about_info_content">Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.\n\nLes données sont celles disponibles sur les sites tan.fr et data.nantes.fr</string>
     <string name="about_thanks_title">Remerciements</string>
-    <string name="about_thanks_content">Merci à Netapsys pour les moyens techniques mis à disposition.\n\nMerci à Sebastien(s), Pierre-Yves et Céline pour leur aide &amp; conseils.\n\nMerci à Cheewie pour sa vectorisation d\'icônes.\n\nMerci à Arzhel et Guillaume pour leur don ;)\n\nEt bien sûr, merci aux utilisateurs !</string>
+    <string name="about_translators_title">Traducteurs</string>
     <string name="about_licences_title">Licences</string>
     <string name="about_licences_libs">Librairies</string>
-    <string name="about_licences_icons">Icones</string>
+    <string name="about_licences_icons">Icônes</string>
     <!-- Tan -->
     <string name="title_fragment_sens">Sens</string>
     <string name="title_fragment_horaires">Horaires</string>
@@ -260,7 +260,7 @@
     <string name="msg_depart_min">dans %d min</string>
     <string name="msg_depart_heure">dans %d h</string>
     <string name="msg_depart_min_short">%d min</string>
-    <string name="msg_depart_heure_short">%d h</string>
+    <string name="msg_depart_heure_short">> %d h</string>
     <string name="msg_nothing_horaires">Aucun horaire n\'a été trouvé</string>
 
     <!-- Info trafic -->

@@ -53,7 +53,7 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	}
 
 	@Override
-	protected void bindView(final Context context, final View view) {
+	protected void bindView(final Context context, final View base, final View view) {
 		mRoot = (ViewGroup) view;
 	}
 

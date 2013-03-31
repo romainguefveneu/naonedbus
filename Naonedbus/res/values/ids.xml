@@ -57,7 +57,9 @@
     <item name="aboutMail" type="id"/>
     <item name="aboutLicenceLibs" type="id"/>
     <item name="aboutLicenceIcons" type="id"/>
-
+    <item name="aboutSectionThanks" type="id"/>
+    <item name="aboutSectionTranslators" type="id"/>
+    
     <!--  -->
     <item name="send" type="id"/>
     <item name="actionbarFadeTop" type="id"/>

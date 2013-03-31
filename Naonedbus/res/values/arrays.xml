@@ -80,4 +80,28 @@
         <item>Confused</item> <!-- 16: o_O -->
     </string-array>
 
+    <!-- Remerciements -->
+    <string-array name="thanks">
+        <item>Netapsys</item>
+        <item>Benoît Manteau</item>
+        <item>Paul Alisir</item>
+        <item>Arzhel</item>
+        <item>Guillaume</item>
+    </string-array>
+    <string-array name="thanks_urls">
+        <item>http://www.netapsys.fr</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+    <!-- Traducteurs -->
+    <string-array name="translators">
+        <item>\?</item>
+    </string-array>
+    <string-array name="translators_urls">
+        <item></item>
+    </string-array>
+
 </resources>

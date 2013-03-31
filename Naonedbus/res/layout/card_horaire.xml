@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/colRight"
         android:layout_alignLeft="@+id/horaires"
-        android:layout_marginBottom="@dimen/padding_small"
+        android:layout_marginRight="@dimen/padding_small"
         android:tag="@string/cardHoraireTag"
-        android:text="00:00" />
+        android:text="00:00 AM" />
 
     <TextView
         style="@style/CardDelai"
@@ -33,7 +33,7 @@
         android:paddingBottom="0dp"
         android:paddingRight="0dp"
         android:tag="@string/cardHoraireTag"
-        android:text="00:00" />
+        android:text="00:00 AM" />
 
     <TextView
         android:id="@id/delaiMain"
@@ -44,6 +44,30 @@
         android:tag="@string/cardDelaiTag"
         android:text="0 min" />
 
-    <include layout="@layout/card_horaire_table" />
+    <TableLayout
+        android:id="@id/horaires"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/delaiMain"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/padding_medium"
+        android:minWidth="230dp" >
+
+        <TableRow
+            android:id="@+id/rowTop"
+            android:layout_margin="0dp"
+            android:divider="@drawable/divider_vertical"
+            android:gravity="center_horizontal"
+            android:showDividers="middle" >
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/rowBottom"
+            android:layout_margin="0dp"
+            android:divider="@drawable/divider_vertical"
+            android:gravity="center_horizontal"
+            android:showDividers="middle" >
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

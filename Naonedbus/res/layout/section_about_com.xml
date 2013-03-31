@@ -10,48 +10,40 @@
         android:layout_height="wrap_content"
         android:text="@string/about_com_title" />
 
-    <TextView
-        android:id="@id/aboutTwitter"
-        style="@style/SectionContentItem"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/twitter_account"
-        android:text="@string/about_com_twitter" />
+        android:layout_height="match_parent"
+        android:weightSum="3" >
 
-    <View
-        android:id="@id/headerDivider"
-        style="@style/Divider" />
+        <TextView
+            android:id="@id/aboutTwitter"
+            style="@style/SectionContentItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/twitter_account"
+            android:gravity="center_horizontal"
+            android:text="@string/about_com_twitter" />
 
-    <TextView
-        android:id="@id/aboutFacebook"
-        style="@style/SectionContentItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/facebook_account"
-        android:text="@string/about_com_facebook" />
+        <TextView
+            android:id="@id/aboutFacebook"
+            style="@style/SectionContentItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/facebook_account"
+            android:gravity="center_horizontal"
+            android:text="@string/about_com_facebook" />
 
-    <View
-        android:id="@id/headerDivider"
-        style="@style/Divider" />
-
-    <TextView
-        android:id="@id/aboutGooglePlus"
-        style="@style/SectionContentItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/plus_account"
-        android:text="@string/about_com_google_plus" />
-    
-    <View
-        android:id="@id/headerDivider"
-        style="@style/Divider" />
-
-    <TextView
-        android:id="@id/aboutMail"
-        style="@style/SectionContentItem"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/gmail"
-        android:text="@string/about_com_mail" />
+        <TextView
+            android:id="@id/aboutMail"
+            style="@style/SectionContentItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/gmail"
+            android:gravity="center_horizontal"
+            android:text="@string/about_com_mail" />
+    </LinearLayout>
 
 </LinearLayout>

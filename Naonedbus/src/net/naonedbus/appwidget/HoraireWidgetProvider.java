@@ -24,6 +24,7 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HorairesActivity;
+import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.activity.widgetconfigure.WidgetConfigureActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
@@ -46,15 +47,21 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.TaskStackBuilder;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.View.MeasureSpec;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -70,14 +77,13 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	private static final String ACTION_APPWIDGET_UPDATE = "net.naonedbus.action.APPWIDGET_UPDATE";
 	private static final String ACTION_APPWIDGET_ON_CLICK = "net.naonedbus.action.APPWIDGET_ON_CLICK";
 
-	private static final int HORAIRE_WIDTH_RATIO = 66;
-
 	private static FavorisViewManager sFavoriManager;
 	static {
 		sFavoriManager = FavorisViewManager.getInstance();
 	}
 	private static PendingIntent sPendingIntent;
 	private static long sNextTimestamp = Long.MAX_VALUE;
+	private static Integer sHoraireViewWidth = Integer.MIN_VALUE;
 
 	private final int mLayoutId;
 	private int mHoraireLimit = -1;
@@ -154,7 +160,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		// Initialisation du nombre d'horaires
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 			final Bundle bundle = appWidgetManager.getAppWidgetOptions(appWidgetId);
-			mHoraireLimit = getHorairesCount(bundle);
+			mHoraireLimit = getHorairesCount(context, bundle);
 		} else {
 			if (mHoraireLimit == -1) {
 				mHoraireLimit = context.getResources().getInteger(mHoraireLimitRes);
@@ -278,8 +284,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 */
 	protected void prepareWidgetViewHoraires(final Context context, final RemoteViews views, final Favori favori,
 			final List<Horaire> nextHoraires) {
-		final StringBuilder builder = new StringBuilder();
+
 		final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+		CharSequence content = "";
 
 		if (nextHoraires.size() > 0) {
 			int count = 0;
@@ -288,17 +295,19 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			scheduleUpdate(context, nextHoraires.get(0).getTimestamp());
 
 			for (final Horaire horaire : nextHoraires) {
-				builder.append(timeFormat.format(horaire.getTimestamp()));
+				content = TextUtils.concat(content,
+						SymbolesUtils.formatTime(context, timeFormat.format(horaire.getTimestamp())));
 				if (++count < nextHoraires.size()) {
-					builder.append(" \u2022 ");
+					content = TextUtils.concat(content, " \u2022 ");
 				}
+
 			}
 
 		} else {
-			builder.append(context.getString(R.string.msg_aucun_depart_24h));
+			content = context.getString(R.string.msg_aucun_depart_24h);
 		}
 
-		views.setTextViewText(R.id.itemTime, builder.toString());
+		views.setTextViewText(R.id.itemTime, content);
 		views.setViewVisibility(R.id.widgetProgress, View.GONE);
 	}
 
@@ -347,7 +356,12 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				final ParamIntent startIntent = new ParamIntent(context, HorairesActivity.class);
 				startIntent.putExtra(HorairesActivity.PARAM_ARRET, arret);
 				startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(startIntent);
+
+				final TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+				stackBuilder.addParentStack(MainActivity.class);
+				stackBuilder.addNextIntentWithParentStack(startIntent);
+
+				stackBuilder.startActivities();
 			}
 
 		}
@@ -356,8 +370,28 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-	private int getHorairesCount(final Bundle bundle) {
-		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-		return minWidth / HORAIRE_WIDTH_RATIO;
+	private int getHorairesCount(final Context context, final Bundle bundle) {
+		synchronized (sHoraireViewWidth) {
+			if (sHoraireViewWidth == Integer.MIN_VALUE) {
+				final TextView horairesView = new TextView(context);
+				final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
+				final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+				horairesView.setText(SymbolesUtils.formatTime(context, timeFormat.format(noon.toDate())) + "__");
+
+				final int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				final int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				horairesView.measure(specX, specY);
+
+				sHoraireViewWidth = horairesView.getMeasuredWidth();
+			}
+		}
+
+		final Resources r = context.getResources();
+		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH) - 50;
+
+		final float minWidthPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, minWidth,
+				r.getDisplayMetrics());
+
+		return (int) (minWidthPixel / sHoraireViewWidth);
 	}
 }

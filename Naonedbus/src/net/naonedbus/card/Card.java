@@ -105,7 +105,7 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 		mContent = (ViewGroup) base.findViewById(android.R.id.content);
 		mContent.addView(view);
 
-		bindView(container.getContext(), view);
+		bindView(container.getContext(), base, view);
 
 		return base;
 	}
@@ -199,7 +199,7 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 		textView.setTypeface(mRobotoBold);
 	}
 
-	protected abstract void bindView(final Context context, final View view);
+	protected abstract void bindView(final Context context, final View base, final View view);
 
 	protected abstract Intent getMoreIntent();
 

@@ -13,6 +13,9 @@ import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.card.Card;
 import net.naonedbus.fragment.impl.ArretDetailFragment.OnArretChangeListener;
 import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.ViewHelper;
+import net.naonedbus.utils.ViewHelper.OnTagFoundHandler;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -79,7 +82,9 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	public void onResume() {
 		super.onResume();
 		getContext().registerReceiver(mIntentReceiver, intentFilter);
-		initLoader(null, this);
+		if (mDelaiViews.size() > 2) {
+			restartLoader(null, this);
+		}
 	}
 
 	@Override
@@ -98,53 +103,82 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	}
 
 	@Override
-	protected void bindView(final Context context, final View view) {
-		final ViewTreeObserver obs = view.getViewTreeObserver();
+	protected void bindView(final Context context, final View base, final View view) {
+
+		mHoraireViews.clear();
+		mDelaiViews.clear();
+
+		ViewHelper.findViewsByTag(view, context.getString(R.string.cardHoraireTag), new OnTagFoundHandler() {
+			@Override
+			public void onTagFound(final View v) {
+				mHoraireViews.add((TextView) v);
+				setTypefaceRobotoLight((TextView) v);
+			}
+		});
+
+		ViewHelper.findViewsByTag(view, context.getString(R.string.cardDelaiTag), new OnTagFoundHandler() {
+			@Override
+			public void onTagFound(final View v) {
+				mDelaiViews.add((TextView) v);
+			}
+		});
+
+		final ViewTreeObserver obs = base.getViewTreeObserver();
 		obs.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 			@Override
 			public boolean onPreDraw() {
-				if (view.getWidth() != 0) {
-					view.getViewTreeObserver().removeOnPreDrawListener(this);
-					fillView((ViewGroup) view);
+				if (base.getMeasuredWidth() != 0) {
+					base.getViewTreeObserver().removeOnPreDrawListener(this);
+					fillView((ViewGroup) base, (ViewGroup) view);
 				}
 				return true;
 			}
 		});
+
 	}
 
-	private void fillView(final ViewGroup parent) {
-		mHoraireViews.clear();
-		mDelaiViews.clear();
-
-		final int viewsCount = getTextViewCount(parent);
+	private void fillView(final ViewGroup base, final ViewGroup parent) {
+		final int viewsCount = getTextViewCount(base);
 
 		final TableRow rowTop = (TableRow) parent.findViewById(R.id.rowTop);
 		final TableRow rowBottom = (TableRow) parent.findViewById(R.id.rowBottom);
 
 		for (int i = 0; i < viewsCount; i++) {
-			final TextView horaireView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_text, parent, false);
-			final TextView delayView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_delay, parent, false);
+			int layoutHoraire;
+			if (i == 0)
+				layoutHoraire = R.layout.card_horaire_text_first;
+			else if (i < viewsCount - 1)
+				layoutHoraire = R.layout.card_horaire_text;
+			else
+				layoutHoraire = R.layout.card_horaire_text_last;
+
+			final TextView horaireView = (TextView) mLayoutInflater.inflate(layoutHoraire, null);
+			final TextView delayView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_delay, null);
+
+			setTypefaceRobotoLight(horaireView);
 
 			rowTop.addView(horaireView);
 			rowBottom.addView(delayView);
 
 			mHoraireViews.add(horaireView);
 			mDelaiViews.add(delayView);
+
 		}
+
+		initLoader(null, this).forceLoad();
 	}
 
 	private int getTextViewCount(final ViewGroup parent) {
 		final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_text, parent, false);
-		final DateTime twelve = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
-		final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getContext());
-
-		textView.setText(timeFormat.format(twelve.toDate()));
+		final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
+		final int padding = getContext().getResources().getDimensionPixelSize(R.dimen.padding_medium);
+		textView.setText(SymbolesUtils.formatTime(getContext(), mTimeFormat.format(noon.toDate())));
 
 		final int specY = MeasureSpec.makeMeasureSpec(parent.getHeight(), MeasureSpec.UNSPECIFIED);
 		final int specX = MeasureSpec.makeMeasureSpec(parent.getWidth(), MeasureSpec.UNSPECIFIED);
 		textView.measure(specX, specY);
 
-		return Math.round(parent.getWidth() / (float) textView.getMeasuredWidth());
+		return (parent.getWidth() - padding) / textView.getMeasuredWidth();
 	}
 
 	@Override
@@ -161,23 +195,38 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	public void onLoadFinished(final Loader<List<Horaire>> loader, final List<Horaire> horaires) {
-
 		if (horaires != null && !horaires.isEmpty()) {
 
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
-			final Horaire first = horaires.get(0);
 
 			int minutes;
 			int indexView = 0;
-			int indexHoraire = 0;
+			int indexHoraire = -1;
 
 			// Gérer le précédent passage si présent
-			final DateTime firstDate = new DateTime(first.getDate());
-			if (firstDate.isAfterNow() || firstDate.isEqual(now)) {
+			DateTime date = new DateTime();
+			for (int i = 0; i < horaires.size(); i++) {
+				date = date.withMillis(horaires.get(i).getTimestamp());
+
+				Log.d(LOG_TAG, date.toString() + " : " + date.isBefore(now));
+
+				if (date.isBefore(now)) {
+					indexHoraire = i;
+				} else {
+					break;
+				}
+			}
+
+			Log.d(LOG_TAG, " indexHoraire : " + indexHoraire);
+
+			if (indexHoraire == -1) {
+				// Pas de précédent
 				indexView = 1;
+				indexHoraire = 0;
 				mHoraireViews.get(0).setVisibility(View.GONE);
 				mDelaiViews.get(0).setVisibility(View.GONE);
 			} else {
+				// Afficher le précédent
 				mHoraireViews.get(0).setVisibility(View.VISIBLE);
 				mDelaiViews.get(0).setVisibility(View.VISIBLE);
 			}
@@ -187,7 +236,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 			while (indexHoraire < horaires.size() && indexView < mHoraireViews.size()) {
 				horaire = horaires.get(indexHoraire);
 
-				mHoraireViews.get(indexView).setText(mTimeFormat.format(horaire.getDate()));
+				mHoraireViews.get(indexView).setText(
+						SymbolesUtils.formatTime(getContext(), mTimeFormat.format(horaire.getDate())));
 
 				if (indexView > 0) {
 					minutes = Minutes.minutesBetween(now,

@@ -56,7 +56,7 @@ public class MapCard extends Card<Bitmap> {
 	}
 
 	@Override
-	protected void bindView(final Context context, final View view) {
+	protected void bindView(final Context context, final View base, final View view) {
 
 		mImageView = (ImageView) view;
 		showContent();
@@ -84,7 +84,7 @@ public class MapCard extends Card<Bitmap> {
 					imageView.getMeasuredHeight(), mLatitude, mLongitude, mCurrentLocation.getLatitude(),
 					mCurrentLocation.getLongitude());
 		}
-		
+
 		Log.d("Map", url);
 
 		final Bundle bundle = new Bundle();
