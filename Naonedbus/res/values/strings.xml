@@ -3,13 +3,10 @@
     <string name="app_name">NaonedBus</string>
     <string name="version_number">Version %s</string>
     <string name="version_name">Acapulco</string>
-    <string name="menu_settings">Settings</string>
-    <string name="read_more">Lire la suite »</string>
     <string name="today">Aujourd\'hui</string>
     <string name="yesterday">Hier</string>
     <string name="tomorrow">Demain</string>
     <string name="loading">Chargement&#8230;</string>
-    <string name="loading_layers">Chargement des calques&#8230;</string>
     <string name="emptyString"></string>
     <string name="updating">Mise à jour en cours&#8230;</string>
     <string name="setup">Installation en cours&#8230;</string>
@@ -43,7 +40,6 @@
     <string name="title_activity_equipements">Mobilité</string>
     <string name="title_activity_parkings">Parkings</string>
     <string name="title_activity_recherche">Recherche</string>
-    <string name="title_activity_commentaire">Commentaire</string>
     <string name="title_activity_actu">Actualité</string>
     <string name="title_activity_parametres">Paramètres</string>
     <string name="title_activity_horaires">Horaires</string>
@@ -71,8 +67,6 @@
     <string name="action_filter_lignes_favoris">Lignes avec favoris</string>
     <string name="action_filter">Filtrer</string>
     <string name="action_send">Envoyer</string>
-    <string name="action_feedback">Envoyer un retour</string>
-    <string name="action_feedback_bug">Signaler un bug</string>
     <string name="action_rate">Noter cette application</string>
     <string name="action_show_plan">Plan de ligne</string>
     <string name="action_change_date">Changer de date</string>
@@ -119,7 +113,6 @@
     <string name="about_com_title">Communiquons</string>
     <string name="about_com_twitter">Twitter</string>
     <string name="about_com_facebook">Facebook</string>
-    <string name="about_com_google_plus">Google+</string>
     <string name="about_com_mail">E-mail</string>
     <string name="about_info_title">Informations</string>
     <string name="about_info_content">Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.\n\nLes données sont celles disponibles sur les sites tan.fr et data.nantes.fr</string>
@@ -129,8 +122,6 @@
     <string name="about_licences_libs">Librairies</string>
     <string name="about_licences_icons">Icônes</string>
     <!-- Tan -->
-    <string name="title_fragment_sens">Sens</string>
-    <string name="title_fragment_horaires">Horaires</string>
     <string name="title_fragment_plan">Plan</string>
     <string name="title_fragment_parcours">Parcours</string>
     <string name="title_activity_plan">Ligne %1$s &#8226; %2$s</string>
@@ -160,7 +151,8 @@
     <string name="source">Envoyé depuis %s</string>
     <string name="source_unknown">quelque chose, mais je sais pas trop quoi</string>
     <string name="source_naonedbus">naonedbus</string>
-    <string name="source_twitter">Twitter</string>
+    <string name="source_tan_trafic">\@tan_trafic sur Twitter\n(compte officiel de la SEMITAN)</string>
+    <string name="source_tan_actus">\@tan_actus sur Twitter\n(compte officiel de la SEMITAN)</string>
     <string name="source_naonedbus_service">Discovery One</string>
     <string name="source_taninfos">\@TANinfos sur Twitter \n(compte non affilié à la SEMITAN)</string>
     <!-- Parkings -->
@@ -173,13 +165,11 @@
     <string name="parking_ferme">Fermé</string>
     <string name="parking_abonne">Abonnés</string>
     <string name="parking_invalide">Information non disponible</string>
-    <string name="parking_ouvert">Ouvert</string>
     <string name="parking_titre_places_disponibles">Places disponibles</string>
     <string name="parking_titre_places_totales">Places totales</string>
     <string name="parking_titre_mise_a_jour">Mise à jour</string>
     <string name="parking_titre_telephone">Téléphone</string>
     <string name="parking_places_disponibles_zero">C\'est plein !</string>
-    <string name="parking_places_disponibles_na">Aucune info disponible</string>
 
     <plurals name="parking_places_disponibles">
         <item quantity="one">1 place restante, dépéchez-vous !</item>
@@ -232,8 +222,6 @@
     <string name="msg_error_navigation">Veuillez installer Google Navigation.</string>
     <string name="msg_error_location_title">La géolocalisation est désactivée</string>
     <string name="msg_error_location_desc">Activez un service de géolocation dans les paramètres d\'Android</string>
-    <string name="msg_error_title_import">Erreur lors de l\'import</string>
-    <string name="msg_error_title_export">Erreur lors de l\'export</string>
     <string name="msg_error_content_favoris_key">Cette clé n\'est pas valide ou votre connexion a quelques problèmes.\nVous pouvez retenter votre chance dans quelques instants.</string>
     <string name="msg_plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <string name="msg_error_export_favoris">Une erreur s\'est produite lors de l\'export.\nVeuillez réessayer plus tard.</string>
@@ -245,7 +233,6 @@
     <string name="msg_element_not_localized">Cet élément ne peut pas être localisé.</string>
     <string name="msg_vide">Vide</string>
     <!-- - - Divers -->
-    <string name="msg_communicating">Communication en cours&#8230;</string>
     <string name="msg_loading_address">Récupération de l\'adresse en cours&#8230;</string>
     <string name="msg_cache_size">Taille du cache : %s</string>
     <string name="msg_calendar_select">Sélectionnez un calendrier par défaut.</string>
@@ -262,10 +249,6 @@
     <string name="msg_depart_min_short">%d min</string>
     <string name="msg_depart_heure_short">> %d h</string>
     <string name="msg_nothing_horaires">Aucun horaire n\'a été trouvé</string>
-
-    <!-- Info trafic -->
-    <string name="lignes_concernees">Lignes concernées</string>
-    <string name="description">Description</string>
 
     <!-- Import / Export -->
     <string name="msg_import_title">Import des favoris</string>
@@ -284,7 +267,7 @@
     <string name="dialog_title_information">Information</string>
     <string name="dialog_title_warning">Attention</string>
     <string name="dialog_title_invalid_comment">Message trop court</string>
-    <string name="dialog_title_comment_sending_error">Votre message n\'a pas pu être délivré !</string>
+	<string name="dialog_title_comment_sending_error">Votre message n\'a pas pu être délivré !</string>
     <string name="dialog_content_comment_sending_error">Une erreur s\'est produite pendant l\'envoi du message, merci de réessayer plus tard…</string>
     <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
     <string name="dialog_title_menu_lignes">Ligne %1$s</string>
@@ -304,17 +287,9 @@
     <string name="target_toutes_lignes">Toutes les lignes</string>
     <string name="target_tous_sens">Tous les sens</string>
     <string name="target_tous_arrets">Tous les arrêts</string>
-    <!-- Prompt -->
-    <string name="prompt_ligne">Toutes les lignes</string>
-    <string name="prompt_sens">Tous les sens</string>
-    <string name="prompt_arret">Tous les arrêts</string>
     <!-- Toasts -->
     <string name="toast_favori_ajout">Favori ajouté</string>
     <string name="toast_favori_retire">Favori retiré</string>
-
-    <!-- Trafic -->
-    <string name="trafic_en_cours">En cours</string>
-    <string name="trafic_a_venir">A venir</string>
 
     <!-- Items -->
     <plurals name="selected_items">

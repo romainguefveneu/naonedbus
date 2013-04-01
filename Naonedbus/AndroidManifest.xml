@@ -84,9 +84,6 @@
             android:name=".activity.impl.ParkingDetailActivity"
             android:label="@string/emptyString" />
         <activity
-            android:name=".activity.impl.FavorisImportActivity"
-            android:label="@string/emptyString" />
-        <activity
             android:name=".activity.impl.PlanActivity"
             android:label="@string/emptyString" />
         <activity

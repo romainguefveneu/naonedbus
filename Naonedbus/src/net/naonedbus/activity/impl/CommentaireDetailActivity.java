@@ -33,8 +33,8 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	private static final Map<String, Integer> sourceTitle = new HashMap<String, Integer>();
 	static {
 		sourceTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_twitter);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_twitter);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_tan_trafic);
+		sourceTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_tan_actus);
 		sourceTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.source_taninfos);
 		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
 	}

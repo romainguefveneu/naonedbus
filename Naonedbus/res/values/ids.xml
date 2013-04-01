@@ -17,23 +17,20 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Items -->
-    <item name="itemHeaderStub" type="id"/>
     <item name="itemHeader" type="id"/>
     <item name="itemSymbole" type="id"/>
     <item name="itemIcon" type="id"/>
     <item name="itemCode" type="id"/>
     <item name="itemTitle" type="id"/>
-    <item name="itemSubTitle" type="id"/>
     <item name="itemDescription" type="id"/>
     <item name="itemTime" type="id"/>
     <item name="itemDistance" type="id"/>
     <item name="itemLignes" type="id"/>
-    <item name="itemPerturbation" type="id"/>
     <item name="dotLocation" type="id"/>
     <item name="ligneFrom" type="id"/>
     <item name="ligneTo" type="id"/>
@@ -53,34 +50,15 @@
     <item name="aboutTwitterBenoit" type="id"/>
     <item name="aboutTwitter" type="id"/>
     <item name="aboutFacebook" type="id"/>
-    <item name="aboutGooglePlus" type="id"/>
     <item name="aboutMail" type="id"/>
     <item name="aboutLicenceLibs" type="id"/>
     <item name="aboutLicenceIcons" type="id"/>
     <item name="aboutSectionThanks" type="id"/>
     <item name="aboutSectionTranslators" type="id"/>
-    
+
     <!--  -->
-    <item name="send" type="id"/>
-    <item name="actionbarFadeTop" type="id"/>
-    <item name="actionBarSubTitle" type="id"/>
-    <item name="ligneCode" type="id"/>
-    <item name="pageTitle" type="id"/>
-    <item name="pageSubTitle" type="id"/>
-    <item name="star" type="id"/>
-    <item name="gd_action_bar_bottom" type="id"/>
-    <item name="pane_content_view" type="id"/>
     <item name="colLeft" type="id"/>
     <item name="colRight" type="id"/>
-    <item name="sectionSensA" type="id"/>
-    <item name="sensAHoraires" type="id"/>
-    <item name="sectionSensB" type="id"/>
-    <item name="sensBHoraires" type="id"/>
-    <item name="separatorText" type="id"/>
-    <item name="separatorLine" type="id"/>
-    <item name="balloon_inner_layout" type="id"/>
-    <item name="balloon_close" type="id"/>
-    <item name="header" type="id"/>
     <item name="webView" type="id"/>
     <item name="planView" type="id"/>
     <item name="contentView" type="id"/>
@@ -89,7 +67,6 @@
     <item name="setupViewLabel" type="id"/>
     <item name="itineraireFrom" type="id"/>
     <item name="itineraireTo" type="id"/>
-    <item name="actionDelete" type="id"/>
     <item name="actionDrag" type="id"/>
 
     <!-- Fragments -->
@@ -97,10 +74,6 @@
     <item name="fragmentMessageStub" type="id"/>
     <item name="fragmentMessage" type="id"/>
     <item name="fragmentContent" type="id"/>
-    <item name="fragmentLignes" type="id"/>
-    <item name="fragmentFavoris" type="id"/>
-    <item name="fragmentProximite" type="id"/>
-    <item name="fragmentHoraires" type="id"/>
 
     <!-- Layouts -->
     <item name="commentaireLigneSpinner" type="id"/>
@@ -143,8 +116,6 @@
     <item name="menu_filter_favoris" type="id"/>
     <item name="menu_filter_all" type="id"/>
     <item name="menu_send" type="id"/>
-    <item name="menu_feedback" type="id"/>
-    <item name="menu_feedback_bug" type="id"/>
     <item name="menu_rate" type="id"/>
     <item name="menu_show_plan" type="id"/>
     <item name="menu_comment" type="id"/>
@@ -152,8 +123,8 @@
     <item name="menu_layers" type="id"/>
     <item name="menu_add" type="id"/>
 
-    
     <!-- Card -->
     <item name="cardHoraireTag" type="string">tag:Horaire</item>
     <item name="cardDelaiTag" type="string">tag:Delai</item>
+
 </resources>
