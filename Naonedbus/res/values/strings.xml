@@ -14,6 +14,8 @@
     <!-- Tuto -->
     <string name="tuto_0_title">Bienvenue dans</string>
     <string name="tuto_0_summary"><![CDATA[Prenez quelques instants pour découvrir l\'application.<br /><big>&rarr;</big>]]></string>
+    <string name="tuto_about_title">Open source</string>
+    <string name="tuto_about_summary">Naonedbus est une application gratuite, open-source, sans aucune affiliation avec la Semitan. \n Cette application est développée bénévolement. \n\n En cas de problème, envoyez-nous un mail !</string>
     <string name="tuto_menu_title">Menu principal</string>
     <string name="tuto_menu_summary">Accédez aux sections via le menu : soit via l\'icône principale, soit en glissant depuis l\'extrémité gauche de l\'écran</string>
     <string name="tuto_lignes_title">Lignes</string>

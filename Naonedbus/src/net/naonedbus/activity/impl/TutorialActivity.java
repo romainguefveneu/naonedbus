@@ -31,7 +31,7 @@ public class TutorialActivity extends Activity {
 	private Button mButtonOk;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tutorial);
@@ -39,7 +39,7 @@ public class TutorialActivity extends Activity {
 		mButtonOk = (Button) findViewById(R.id.tutorialButton);
 		mButtonOk.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				finish();
 			}
 		});
@@ -47,7 +47,7 @@ public class TutorialActivity extends Activity {
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_0_title,
 				R.string.tuto_0_summary, R.drawable.logo));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_beta_title, R.string.tuto_beta_summary,
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_about_title, R.string.tuto_about_summary,
 				R.drawable.ic_action_good));
 
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
@@ -58,8 +58,6 @@ public class TutorialActivity extends Activity {
 				R.drawable.tuto_lignes));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_favoris_title, R.string.tuto_favoris_summary,
 				R.drawable.tuto_favoris));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_trafic_title, R.string.tuto_trafic_summary,
-				R.drawable.tuto_tanactu));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_commentaires_title,
 				R.string.tuto_commentaires_summary, R.drawable.tuto_infotrafic));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_parkings_title, R.string.tuto_parkings_summary,
@@ -78,19 +76,19 @@ public class TutorialActivity extends Activity {
 
 	private static class TutorialPagerAdapter extends PagerAdapter {
 
-		private Context mContext;
-		private List<TutorialView> mTutorialViews;
-		private LayoutInflater mLayoutInflater;
-		private Typeface mRoboto;
+		private final Context mContext;
+		private final List<TutorialView> mTutorialViews;
+		private final LayoutInflater mLayoutInflater;
+		private final Typeface mRoboto;
 
-		public TutorialPagerAdapter(Context context) {
+		public TutorialPagerAdapter(final Context context) {
 			mContext = context;
 			mTutorialViews = new ArrayList<TutorialActivity.TutorialView>();
 			mLayoutInflater = LayoutInflater.from(context);
 			mRoboto = FontUtils.getRobotoLight(context);
 		}
 
-		public void addView(TutorialView view) {
+		public void addView(final TutorialView view) {
 			mTutorialViews.add(view);
 		}
 
@@ -100,7 +98,7 @@ public class TutorialActivity extends Activity {
 		}
 
 		@Override
-		public Object instantiateItem(View collection, int position) {
+		public Object instantiateItem(final View collection, final int position) {
 			final TutorialView tutorialView = mTutorialViews.get(position);
 			final View layout = mLayoutInflater.inflate(tutorialView.layoutId, null);
 
@@ -122,12 +120,12 @@ public class TutorialActivity extends Activity {
 		}
 
 		@Override
-		public void destroyItem(View collection, int position, Object view) {
+		public void destroyItem(final View collection, final int position, final Object view) {
 			((ViewPager) collection).removeView((View) view);
 		}
 
 		@Override
-		public boolean isViewFromObject(View view, Object object) {
+		public boolean isViewFromObject(final View view, final Object object) {
 			return view == object;
 		}
 
@@ -135,17 +133,17 @@ public class TutorialActivity extends Activity {
 
 	private static class TutorialView {
 		private int layoutId = R.layout.tutorial_view;
-		private int titleResId;
-		private int summaryResId;
-		private int imageResId;
+		private final int titleResId;
+		private final int summaryResId;
+		private final int imageResId;
 
-		private TutorialView(int titleResId, int summaryResId, int imageResId) {
+		private TutorialView(final int titleResId, final int summaryResId, final int imageResId) {
 			this.titleResId = titleResId;
 			this.summaryResId = summaryResId;
 			this.imageResId = imageResId;
 		}
 
-		private TutorialView(int layoutId, int titleResId, int summaryResId, int imageResId) {
+		private TutorialView(final int layoutId, final int titleResId, final int summaryResId, final int imageResId) {
 			this.layoutId = layoutId;
 			this.titleResId = titleResId;
 			this.summaryResId = summaryResId;
