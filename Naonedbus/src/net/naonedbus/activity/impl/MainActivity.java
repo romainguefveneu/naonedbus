@@ -75,6 +75,7 @@ public class MainActivity extends SlidingMenuActivity {
 			new UpdateAndCleanTask().execute();
 		}
 		addDelayedFragments(titles, classes);
+		showTutorial();
 	}
 
 	@Override

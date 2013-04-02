@@ -15,7 +15,7 @@
     <string name="tuto_0_title">Bienvenue dans</string>
     <string name="tuto_0_summary"><![CDATA[Prenez quelques instants pour découvrir l\'application.<br /><big>&rarr;</big>]]></string>
     <string name="tuto_about_title">Open source</string>
-    <string name="tuto_about_summary">Naonedbus est une application gratuite, open-source, sans aucune affiliation avec la Semitan. \n Cette application est développée bénévolement. \n\n En cas de problème, envoyez-nous un mail !</string>
+    <string name="tuto_about_summary"><![CDATA[Naonedbus est une application gratuite, open-source, sans aucune affiliation avec la Semitan.<br /> Cette application est développée bénévolement. <br /><br />Les données sont issues de l\'open data, les horaires sont ceux fournis par la TAN. <br /><br /> <font color="#ffffff"><b>En cas de problème, envoyez-nous un mail, et nous vous aiderons ;)</b></font>]]></string>
     <string name="tuto_menu_title">Menu principal</string>
     <string name="tuto_menu_summary">Accédez aux sections via le menu : soit via l\'icône principale, soit en glissant depuis l\'extrémité gauche de l\'écran</string>
     <string name="tuto_lignes_title">Lignes</string>
@@ -269,7 +269,7 @@
     <string name="dialog_title_information">Information</string>
     <string name="dialog_title_warning">Attention</string>
     <string name="dialog_title_invalid_comment">Message trop court</string>
-	<string name="dialog_title_comment_sending_error">Votre message n\'a pas pu être délivré !</string>
+    <string name="dialog_title_comment_sending_error">Votre message n\'a pas pu être délivré !</string>
     <string name="dialog_content_comment_sending_error">Une erreur s\'est produite pendant l\'envoi du message, merci de réessayer plus tard…</string>
     <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
     <string name="dialog_title_menu_lignes">Ligne %1$s</string>

@@ -1909,24 +1909,23 @@ containing a value of this type.
         public static final int toast_frame=0x7f020112;
         public static final int tuto_favoris=0x7f020113;
         public static final int tuto_infotrafic=0x7f020114;
-        public static final int tuto_lignes=0x7f020115;
-        public static final int tuto_menu=0x7f020116;
-        public static final int tuto_mobilite=0x7f020117;
-        public static final int tuto_parkings=0x7f020118;
-        public static final int tuto_widgets=0x7f020119;
-        public static final int twitter_account=0x7f02011a;
-        public static final int vm_blue_dot_off=0x7f02011b;
-        public static final int vm_blue_dot_on=0x7f02011c;
-        public static final int vpi__tab_indicator=0x7f02011d;
-        public static final int vpi__tab_selected_focused_holo=0x7f02011e;
-        public static final int vpi__tab_selected_holo=0x7f02011f;
-        public static final int vpi__tab_selected_pressed_holo=0x7f020120;
-        public static final int vpi__tab_unselected_focused_holo=0x7f020121;
-        public static final int vpi__tab_unselected_holo=0x7f020122;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020123;
-        public static final int warning=0x7f020124;
-        public static final int widget_large=0x7f020125;
-        public static final int widget_small=0x7f020126;
+        public static final int tuto_menu=0x7f020115;
+        public static final int tuto_mobilite=0x7f020116;
+        public static final int tuto_parkings=0x7f020117;
+        public static final int tuto_widgets=0x7f020118;
+        public static final int twitter_account=0x7f020119;
+        public static final int vm_blue_dot_off=0x7f02011a;
+        public static final int vm_blue_dot_on=0x7f02011b;
+        public static final int vpi__tab_indicator=0x7f02011c;
+        public static final int vpi__tab_selected_focused_holo=0x7f02011d;
+        public static final int vpi__tab_selected_holo=0x7f02011e;
+        public static final int vpi__tab_selected_pressed_holo=0x7f02011f;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020120;
+        public static final int vpi__tab_unselected_holo=0x7f020121;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020122;
+        public static final int warning=0x7f020123;
+        public static final int widget_large=0x7f020124;
+        public static final int widget_small=0x7f020125;
     }
     public static final class id {
         public static final int aboutFacebook=0x7f070038;
@@ -2275,8 +2274,9 @@ containing a value of this type.
         public static final int sherlock_spinner_dropdown_item=0x7f03006a;
         public static final int sherlock_spinner_item=0x7f03006b;
         public static final int tutorial_view=0x7f03006c;
-        public static final int tutorial_view_welcome=0x7f03006d;
-        public static final int widget_horaire_layout=0x7f03006e;
+        public static final int tutorial_view_simple=0x7f03006d;
+        public static final int tutorial_view_welcome=0x7f03006e;
+        public static final int widget_horaire_layout=0x7f03006f;
     }
     public static final class menu {
         public static final int activity_about=0x7f100000;

@@ -47,15 +47,13 @@ public class TutorialActivity extends Activity {
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_0_title,
 				R.string.tuto_0_summary, R.drawable.logo));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_about_title, R.string.tuto_about_summary,
-				R.drawable.ic_action_good));
+		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_simple, R.string.tuto_about_title,
+				R.string.tuto_about_summary, 0));
 
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
 			mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_menu_title, R.string.tuto_menu_summary,
 					R.drawable.tuto_menu));
 		}
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_lignes_title, R.string.tuto_lignes_summary,
-				R.drawable.tuto_lignes));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_favoris_title, R.string.tuto_favoris_summary,
 				R.drawable.tuto_favoris));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_commentaires_title,
@@ -149,5 +147,6 @@ public class TutorialActivity extends Activity {
 			this.summaryResId = summaryResId;
 			this.imageResId = imageResId;
 		}
+
 	}
 }
