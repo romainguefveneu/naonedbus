@@ -1,14 +1,10 @@
 package net.naonedbus.fragment.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.StateHelper;
@@ -16,7 +12,6 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.manager.impl.TypeLigneManager;
 import net.naonedbus.provider.impl.LigneProvider;
 import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.widget.adapter.impl.LigneCursorAdapter;
@@ -210,15 +205,9 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 
 	@Override
 	protected CursorAdapter getCursorAdapter(final Context context) {
+		final String[] types = context.getResources().getStringArray(R.array.types_lignes);
+
 		mAdapter = new LigneCursorAdapter(getActivity(), null);
-
-		final TypeLigneManager typeLigneManager = TypeLigneManager.getInstance();
-		final List<TypeLigne> typesLignes = typeLigneManager.getAll(getActivity().getContentResolver());
-		final List<String> types = new ArrayList<String>();
-		for (final TypeLigne type : typesLignes) {
-			types.add(type.nom);
-		}
-
 		mAdapter.setIndexer(new LigneCursorIndexer(null, types, LigneTable.TYPE));
 
 		return mAdapter;

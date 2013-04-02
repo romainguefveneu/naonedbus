@@ -17,27 +17,27 @@
     <!-- android:title="Importer mes anciens favoris avec ma clé" /> -->
     <!-- </PreferenceCategory> -->
 
-    <PreferenceCategory android:title="Plan des lignes" >
+    <PreferenceCategory android:title="@string/pref_section_plans" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="plan.cache.enabled"
-            android:title="Activer le cache" />
+            android:title="@string/pref_cache_enable" />
 
         <Preference
             android:key="plan.cache.clear"
-            android:summary="Taille du cache : 0 Ko"
-            android:title="Vider le cache" />
+            android:summary="@string/pref_cache_size"
+            android:title="@string/pref_cache_clear" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Horaires" >
+    <PreferenceCategory android:title="@string/pref_section_timetable" >
         <Preference
             android:key="horaires.cache.clear"
-            android:title="Vider le cache" />
+            android:title="@string/pref_cache_clear" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="Calendrier" >
+    <PreferenceCategory android:title="@string/pref_section_calendar" >
         <ListPreference
             android:key="calendrier.defaut"
-            android:summary="Selectionnez un calendrier par défaut"
-            android:title="Calendrier par défaut" />
+            android:summary="@string/pref_calendar_summary"
+            android:title="@string/pref_calendar_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

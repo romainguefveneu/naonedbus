@@ -119,7 +119,7 @@ public class SlidingMenuHelper {
 			for (final MainMenuItem item : MENU_ITEMS) {
 				sAdapter.add(item);
 			}
-			final MainMenuIndexer indexer = new MainMenuIndexer();
+			final MainMenuIndexer indexer = new MainMenuIndexer(mActivity);
 			indexer.buildIndex(mActivity, sAdapter);
 			sAdapter.setIndexer(indexer);
 		}

@@ -1,22 +1,20 @@
 package net.naonedbus.widget.indexer.impl;
 
-import java.util.List;
-
 import net.naonedbus.widget.indexer.CursorSectionIndexer;
 import android.database.Cursor;
 
 public class LigneCursorIndexer extends CursorSectionIndexer {
 
-	private final List<String> mTypes;
+	private final String[] mTypes;
 
-	public LigneCursorIndexer(Cursor cursor, List<String> typesLignes, String columnSectionName) {
-		super(cursor, columnSectionName, typesLignes.size());
+	public LigneCursorIndexer(final Cursor cursor, final String[] typesLignes, final String columnSectionName) {
+		super(cursor, columnSectionName, typesLignes.length);
 		mTypes = typesLignes;
 	}
 
 	@Override
-	protected String getSectionLabel(int section) {
-		return mTypes.get(section);
+	protected String getSectionLabel(final int section) {
+		return mTypes[section];
 	}
 
 }

@@ -74,7 +74,7 @@ public class SettingsFragments extends PreferenceFragment {
 	 * @param preferences
 	 */
 	private void initClearCache(final SharedPreferences preferences) {
-		clearCachePlan.setSummary(getString(R.string.msg_cache_size, readableFileSize(getCacheSize())));
+		clearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
 
 		clearCachePlan.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -82,7 +82,7 @@ public class SettingsFragments extends PreferenceFragment {
 			public boolean onPreferenceClick(final Preference preference) {
 				try {
 					clearCache();
-					clearCachePlan.setSummary(getString(R.string.msg_cache_size, readableFileSize(getCacheSize())));
+					clearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
 				} catch (final IOException e) {
 					BugSenseHandler.sendExceptionMessage("Erreur lors de la suppression du cache des plans", null, e);
 				}
@@ -188,7 +188,7 @@ public class SettingsFragments extends PreferenceFragment {
 		if (id != null) {
 			calendrierDefaut.setSummary(CalendarUtils.getCalendarName(getActivity().getContentResolver(), id));
 		} else {
-			calendrierDefaut.setSummary(R.string.msg_calendar_select);
+			calendrierDefaut.setSummary(R.string.pref_calendar_summary);
 		}
 	}
 

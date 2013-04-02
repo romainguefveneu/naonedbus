@@ -125,7 +125,7 @@ public abstract class RestController<T> {
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);
-		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
+		conn.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
 
 		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
 		final String source = IOUtils.toString(comReader);
@@ -146,7 +146,7 @@ public abstract class RestController<T> {
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);
-		conn.setRequestProperty("Accept-Language", Locale.getDefault().getISO3Language());
+		conn.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
 
 		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
 		final String source = IOUtils.toString(comReader);

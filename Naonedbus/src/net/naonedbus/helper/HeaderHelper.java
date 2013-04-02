@@ -68,6 +68,10 @@ public class HeaderHelper {
 		mTitle.setText(title);
 	}
 
+	public void setTitle(final int title) {
+		mTitle.setText(title);
+	}
+
 	public void setTitleIcon(final int iconResId) {
 		mTitle.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
 	}

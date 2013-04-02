@@ -19,19 +19,19 @@ public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 
 	private Class<?> mCurrentClass;
 
-	public MainMenuAdapter(Context context) {
+	public MainMenuAdapter(final Context context) {
 		super(context, R.layout.list_item_menu);
-		setIndexer(new MainMenuIndexer());
+		setIndexer(new MainMenuIndexer(context));
 		mRoboto = FontUtils.getRobotoLight(context);
 		mSelectedColor = context.getResources().getColor(R.color.menu_current);
 	}
 
-	public void setCurrentClass(Class<?> currentClass) {
+	public void setCurrentClass(final Class<?> currentClass) {
 		mCurrentClass = currentClass;
 	}
 
 	@Override
-	public void bindView(View view, Context context, int position) {
+	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final MainMenuItem item = getItem(position);
 
@@ -47,7 +47,7 @@ public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 	}
 
 	@Override
-	public void bindViewHolder(View view) {
+	public void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.view = view.findViewById(R.id.itemContent);
 		holder.icon = (ImageView) view.findViewById(R.id.itemIcon);

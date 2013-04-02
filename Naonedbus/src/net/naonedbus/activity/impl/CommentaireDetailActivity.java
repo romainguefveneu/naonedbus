@@ -167,7 +167,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		}
 
 		if (arret == null && sens == null && ligne == null) {
-			mHeaderHelper.setTitle("Tout le réseau");
+			mHeaderHelper.setTitle(R.string.commentaire_tout);
 		} else {
 			if (arret != null) {
 				mHeaderHelper.setTitle(arret.nomArret);
@@ -210,9 +210,9 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			final Arret arret = commentaire.getArret();
 
 			if (arret == null && sens == null && ligne == null) {
-				title = "Tout le réseau";
+				title = getString(R.string.commentaire_tout);
 			} else if (ligne != null) {
-				title = "Ligne " + ligne.lettre;
+				title = getString(R.string.commentaire_ligne) + " " + ligne.lettre;
 				if (arret != null) {
 					title += ", " + arret.nomArret;
 				}
