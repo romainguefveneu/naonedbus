@@ -6,12 +6,14 @@ import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.FavorisFragment;
 import net.naonedbus.fragment.impl.LignesFragment;
 import net.naonedbus.fragment.impl.ProximiteFragment;
+import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
 import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.service.FavoriService;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -126,6 +128,15 @@ public class MainActivity extends SlidingMenuActivity {
 		if (mIsFrontActivity && mContentLoaded == false) {
 			hideSetupView();
 			loadContent();
+
+			final Intent intent = getIntent();
+
+			if (intent.hasExtra(FavoriService.INTENT_PARAM_KEY)) {
+				final String key = intent.getStringExtra(FavoriService.INTENT_PARAM_KEY);
+				final FavorisHelper favorisHelper = new FavorisHelper(this);
+				favorisHelper.showExportKey(key);
+				intent.removeExtra(FavoriService.INTENT_PARAM_KEY);
+			}
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}

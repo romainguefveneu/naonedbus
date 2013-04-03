@@ -38,6 +38,7 @@ import net.naonedbus.provider.impl.FavoriGroupeProvider;
 import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.service.FavoriService;
 import net.naonedbus.utils.FavorisUtil;
 import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
 import net.naonedbus.widget.indexer.impl.FavoriArrayIndexer;
@@ -99,6 +100,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private final static IntentFilter intentFilter;
 	static {
 		intentFilter = new IntentFilter();
+		intentFilter.addAction(FavoriService.ACTION_EXPORTED);
 		intentFilter.addAction(FavorisFragment.ACTION_UPDATE_DELAYS);
 		intentFilter.addAction(Intent.ACTION_TIME_TICK);
 		intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
@@ -182,15 +184,26 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (DBG)
 				Log.d(LOG_TAG, "onReceive : " + intent);
 
-			final int id = intent.getIntExtra("id", -1);
-			final Throwable throwable = (Throwable) intent.getSerializableExtra("throwable");
+			final String action = intent.getAction();
 
-			if (throwable != null) {
-				markeFavoriHoraireError(id);
-			} else if (id != -1) {
-				loadHorairesFavoris(id);
+			if (FavoriService.ACTION_EXPORTED.equals(action)) {
+				// Notifier l'export
+				final String key = intent.getStringExtra(FavoriService.INTENT_PARAM_KEY);
+				final FavorisHelper favorisHelper = new FavorisHelper(getActivity());
+				favorisHelper.showExportKey(key);
 			} else {
-				loadHorairesFavoris();
+				// Mise à jour des horaires
+
+				final int id = intent.getIntExtra("id", -1);
+				final Throwable throwable = (Throwable) intent.getSerializableExtra("throwable");
+
+				if (throwable != null) {
+					markeFavoriHoraireError(id);
+				} else if (id != -1) {
+					loadHorairesFavoris(id);
+				} else {
+					loadHorairesFavoris();
+				}
 			}
 
 		}
@@ -641,7 +654,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		return result;
 	}
-	
+
 	@SuppressLint("NewApi")
 	@Override
 	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {

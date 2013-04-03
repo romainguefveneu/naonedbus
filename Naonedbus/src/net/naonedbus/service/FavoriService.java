@@ -16,8 +16,9 @@ public class FavoriService extends IntentService {
 
 	public static final String INTENT_ACTION_IMPORT = "import";
 	public static final String INTENT_ACTION_EXPORT = "export";
-
 	public static final String INTENT_PARAM_KEY = "key";
+
+	public static final String ACTION_EXPORTED = "net.naonedbus.action.FAVORIS_EXPORTED";
 
 	private static final int NOTIFICATION_ID = 0;
 
@@ -26,7 +27,6 @@ public class FavoriService extends IntentService {
 
 	public FavoriService() {
 		super("FavoriService");
-
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class FavoriService extends IntentService {
 			key = intent.getStringExtra(INTENT_PARAM_KEY);
 			importFavoris(key);
 		} else if (INTENT_ACTION_EXPORT.equals(intent.getAction())) {
-			key = exportFavoris();
+			exportFavoris();
 		}
 	}
 
@@ -62,7 +62,7 @@ public class FavoriService extends IntentService {
 		cancelNotification();
 	}
 
-	private String exportFavoris() {
+	private void exportFavoris() {
 		final FavoriManager favoriManager = FavoriManager.getInstance();
 		final FavoriController favoriController = new FavoriController();
 		String key = null;
@@ -79,14 +79,18 @@ public class FavoriService extends IntentService {
 			succeed = false;
 		}
 
-		if (succeed)
-			showNotification(R.string.msg_export_title, R.string.msg_export_succeed);
-		return key;
+		if (succeed) {
+			showResultNotification(R.string.msg_export_title, R.string.msg_export_succeed, key);
+
+			final Intent broadcast = new Intent(ACTION_EXPORTED);
+			broadcast.putExtra(INTENT_PARAM_KEY, key);
+			getApplicationContext().sendBroadcast(broadcast);
+		}
 	}
 
 	private void showNotification(final int title, final int message) {
 		if (mNotification == null) {
-			createNotification(title, message);
+			createNotification(title, message, null);
 		} else {
 			mNotification.setContentTitle(getString(title)).setContentText(getString(message))
 					.setTicker(getString(message));
@@ -94,17 +98,29 @@ public class FavoriService extends IntentService {
 		}
 	}
 
-	private void createNotification(final int title, final int message) {
-		final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-				.setSmallIcon(R.drawable.ic_notification).setContentTitle(getString(title))
-				.setContentText(getString(message)).setTicker(getString(message)).setAutoCancel(true);
+	private void showResultNotification(final int title, final int message, final String key) {
+		cancelNotification();
+		createNotification(title, message, key);
+	}
+
+	private void createNotification(final int title, final int message, final String key) {
 		final Intent resultIntent = new Intent(this, MainActivity.class);
+		if (key != null) {
+			resultIntent.putExtra(INTENT_PARAM_KEY, key);
+		}
 
 		final TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 		stackBuilder.addParentStack(MainActivity.class);
 		stackBuilder.addNextIntent(resultIntent);
 
 		final PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		final String titleString = getString(title);
+		final String messageString = getString(message);
+		final NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+				.setSmallIcon(R.drawable.ic_notification).setContentTitle(titleString).setContentText(messageString)
+				.setTicker(messageString).setAutoCancel(true);
+
 		builder.setContentIntent(resultPendingIntent);
 
 		mNotification = builder;
