@@ -248,6 +248,10 @@
     <string name="msg_export_succeed">Bookmarks successfully exported!</string>
     <string name="msg_export_error">Error during Bookmarks\' export</string>
     <string name="msg_export_ongoing">Export in progress&#8230;</string>
+    <string name="add_event_calendar_select">Calendar selection</string>
+    <string name="add_event_delai_select">Reminder</string>
+    <string name="add_event_message">Message</string>
+    <string name="add_event_toast">Event created</string>
     <string name="hint_ajouter_commentaire">What\'s happening on the TAN network ?</string>
     <string name="dialog_title_information">Information</string>
     <string name="dialog_title_warning">Warning</string>
@@ -260,7 +264,7 @@
     <string name="dialog_title_groupes">Groups</string>
     <string name="dialog_title_export">Bookmarks exported!</string>
     <string name="dialog_content_export">Keep this key, it will allow you to retrieve your Bookmarks.</string>
-	<string name="dialog_title_arret_order">Sort by position</string>
+    <string name="dialog_title_arret_order">Sort by position</string>
     <string name="dialog_content_arret_order">Sort by position is an average on all routes.\n\nIt may be incorrect in some cases.</string>
     <string name="showcase_arrets_title">Easily change direction</string>
     <string name="showcase_arrets_content">Click on the direction to change it.</string>

@@ -285,6 +285,11 @@
     <string name="msg_export_error">Erreur lors de l\'export des favoris</string>
     <string name="msg_export_ongoing">Export en cours&#8230;</string>
 
+    <!-- Add events -->
+    <string name="add_event_calendar_select">Choix du calendrier</string>
+    <string name="add_event_delai_select">Délai avant rappel</string>
+    <string name="add_event_toast">Evénement créé</string>
+    <string name="add_event_message">Message</string>
     <!--  -->
     <!-- Hint -->
     <string name="hint_ajouter_commentaire">Que se passe-t-il sur le réseau Tan ?</string>

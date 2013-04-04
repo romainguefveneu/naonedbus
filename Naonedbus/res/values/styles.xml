@@ -81,6 +81,7 @@
 
     <style name="SectionTitle.Small" parent="ItemPrimaryText.Small">
         <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/secondaryColor</item>
     </style>
 
@@ -465,6 +466,7 @@
         <item name="android:paddingBottom">@dimen/padding_tiny</item>
         <item name="android:paddingLeft">@dimen/padding_small</item>
         <item name="android:paddingRight">@dimen/padding_small</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="CardHoraire.Previous">

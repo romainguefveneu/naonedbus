@@ -19,14 +19,14 @@ public final class R {
 		public static final int app_name = 0x7f0d0000;
 	}
 	public static final class layout {
-		public static final int main = 0x7f030061;
+		public static final int main = 0x7f030065;
 	}
 	public static final class styleable {
 		public static final int ShowcaseView_backgroundColor = 0;
 		public static final int[] ShowcaseView = { 0x7f01003a };
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f0200d7;
+		public static final int ic_launcher = 0x7f0200d8;
 		public static final int cling_button_bg = 0x7f020088;
 		public static final int cling = 0x7f020087;
 		public static final int btn_cling_normal = 0x7f020082;

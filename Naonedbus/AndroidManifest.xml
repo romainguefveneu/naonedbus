@@ -105,6 +105,9 @@
             android:name=".activity.impl.WebViewActivity"
             android:label="@string/emptyString" />
         <activity
+            android:name=".activity.impl.AddEventActivity"
+            android:label="@string/emptyString" />
+        <activity
             android:name=".activity.impl.SearchActivity"
             android:label="@string/emptyString" >
             <intent-filter>

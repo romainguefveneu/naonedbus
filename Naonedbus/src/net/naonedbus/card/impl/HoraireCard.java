@@ -40,6 +40,10 @@ import android.widget.TextView;
 
 public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeListener {
 
+	public static interface OnHoraireClickListener {
+		void onHoraireClick(Horaire horaire);
+	}
+
 	private static final String LOG_TAG = "HoraireCard";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
@@ -162,7 +166,6 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 			mHoraireViews.add(horaireView);
 			mDelaiViews.add(delayView);
-
 		}
 
 		initLoader(null, this).forceLoad();
@@ -207,17 +210,12 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 			DateTime date = new DateTime();
 			for (int i = 0; i < horaires.size(); i++) {
 				date = date.withMillis(horaires.get(i).getTimestamp());
-
-				Log.d(LOG_TAG, date.toString() + " : " + date.isBefore(now));
-
 				if (date.isBefore(now)) {
 					indexHoraire = i;
 				} else {
 					break;
 				}
 			}
-
-			Log.d(LOG_TAG, " indexHoraire : " + indexHoraire);
 
 			if (indexHoraire == -1) {
 				// Pas de précédent
@@ -231,13 +229,12 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				mDelaiViews.get(0).setVisibility(View.VISIBLE);
 			}
 
-			Horaire horaire;
-			String delai = "";
 			while (indexHoraire < horaires.size() && indexView < mHoraireViews.size()) {
-				horaire = horaires.get(indexHoraire);
+				String delai = "";
+				final Horaire horaire = horaires.get(indexHoraire);
+				final TextView horaireView = mHoraireViews.get(indexView);
 
-				mHoraireViews.get(indexView).setText(
-						SymbolesUtils.formatTime(getContext(), mTimeFormat.format(horaire.getDate())));
+				horaireView.setText(SymbolesUtils.formatTime(getContext(), mTimeFormat.format(horaire.getDate())));
 
 				if (indexView > 0) {
 					minutes = Minutes.minutesBetween(now,

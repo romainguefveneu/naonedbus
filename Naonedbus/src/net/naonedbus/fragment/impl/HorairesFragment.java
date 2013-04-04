@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.AddEventActivity;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
@@ -41,6 +42,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.DatePicker;
 import android.widget.ListAdapter;
 import android.widget.Toast;
@@ -49,7 +53,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class HorairesFragment extends CustomInfiniteListFragement {
+public class HorairesFragment extends CustomInfiniteListFragement implements OnItemClickListener {
 
 	private static final String LOG_TAG = "HorairesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -139,6 +143,8 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
 		mAdapter.setIndexer(new HoraireIndexer());
 
+		getListView().setOnItemClickListener(this);
+
 		loadContent();
 	}
 
@@ -152,6 +158,18 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	public void onStop() {
 		getActivity().unregisterReceiver(intentReceiver);
 		super.onDestroy();
+	}
+
+	@Override
+	public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+		final Horaire horaire = (Horaire) getListView().getItemAtPosition(position);
+
+		final ParamIntent intent = new ParamIntent(getActivity(), AddEventActivity.class);
+		intent.putExtra(AddEventActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(AddEventActivity.PARAM_SENS, mSens);
+		intent.putExtra(AddEventActivity.PARAM_ARRET, mArret);
+		intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, horaire.getTimestamp());
+		startActivity(intent);
 	}
 
 	@Override
@@ -329,18 +347,6 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		loadHoraires(date);
 	}
 
-	/**
-	 * Ajout un event au calendrier
-	 * 
-	 * @param horaireItem
-	 */
-	private void addEvent(final Horaire horaireItem) {
-//		final ParamIntent intent = new ParamIntent(getContext(), AddEventActivity.class);
-//		intent.putExtra(AddEventActivity.Param.idArret, arretItem._id);
-//		intent.putExtra(AddEventActivity.Param.timestamp, horaireItem.timestamp);
-//		getContext().startActivity(intent);
-	}
-
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
 		mIsLoading.set(true);
@@ -470,4 +476,5 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 	public void setOnChangeSensListener(final OnSensChangeListener l) {
 		mOnSensChangeListener = l;
 	}
+
 }

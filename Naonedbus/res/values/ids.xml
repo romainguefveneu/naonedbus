@@ -34,6 +34,8 @@
     <item name="dotLocation" type="id"/>
     <item name="ligneFrom" type="id"/>
     <item name="ligneTo" type="id"/>
+    <item name="itemHoraire" type="id"/>
+    <item name="itemDelai" type="id"/>
     <!-- Headers -->
     <item name="headerView" type="id"/>
     <item name="headerTitle" type="id"/>
