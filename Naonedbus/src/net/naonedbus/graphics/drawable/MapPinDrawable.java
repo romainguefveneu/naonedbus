@@ -45,8 +45,8 @@ public class MapPinDrawable extends Drawable {
 
 	private int mCurrentPinColor;
 
-	private Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-	private Paint mMapPinPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private final Paint mMapPinPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 	private Bitmap mBase;
 	private Bitmap mPin;
@@ -64,7 +64,7 @@ public class MapPinDrawable extends Drawable {
 	 * @param color
 	 *            The color of the pin/dot
 	 */
-	public MapPinDrawable(Resources res, int color) {
+	public MapPinDrawable(final Resources res, final int color) {
 		this(res, color, color);
 	}
 
@@ -78,7 +78,7 @@ public class MapPinDrawable extends Drawable {
 	 * @param dotColor
 	 *            The color of the dot
 	 */
-	public MapPinDrawable(Resources res, int pinColor, int dotRes) {
+	public MapPinDrawable(final Resources res, final int pinColor, final int dotRes) {
 		mDotRes = dotRes;
 		initBitmaps(res);
 		setColors(res.getColor(pinColor), res.getColor(pinColor));
@@ -94,7 +94,7 @@ public class MapPinDrawable extends Drawable {
 	 *            A {@link ColorStateList} object giving a set of colors
 	 *            changing depending on the current {@link Drawable}'s state
 	 */
-	public MapPinDrawable(Resources res, ColorStateList color) {
+	public MapPinDrawable(final Resources res, final ColorStateList color) {
 		this(res, color, color);
 	}
 
@@ -113,7 +113,7 @@ public class MapPinDrawable extends Drawable {
 	 *            dot changing depending on the current {@link Drawable} 's
 	 *            state
 	 */
-	public MapPinDrawable(Resources res, ColorStateList pinColor, ColorStateList dotColor) {
+	public MapPinDrawable(final Resources res, final ColorStateList pinColor, final ColorStateList dotColor) {
 		initBitmaps(res);
 		setColors(pinColor, dotColor);
 	}
@@ -123,7 +123,7 @@ public class MapPinDrawable extends Drawable {
 	 * 
 	 * @param mapPinDrawable
 	 */
-	public MapPinDrawable(MapPinDrawable mapPinDrawable) {
+	public MapPinDrawable(final MapPinDrawable mapPinDrawable) {
 		mBase = mapPinDrawable.mBase;
 		mPin = mapPinDrawable.mPin;
 		mDot = mapPinDrawable.mDot;
@@ -133,7 +133,7 @@ public class MapPinDrawable extends Drawable {
 		mNeedRebuild = true;
 	}
 
-	private void initBitmaps(Resources res) {
+	private void initBitmaps(final Resources res) {
 		// TODO Cyril: Share those Bitmaps between all instances of
 		// MapPinDrawable in order to save memory
 		mBase = BitmapFactory.decodeResource(res, R.drawable.gd_map_pin_base);
@@ -149,7 +149,7 @@ public class MapPinDrawable extends Drawable {
 	 * @param dotColor
 	 *            The color of the dot
 	 */
-	public void setColors(int pinColor, int dotColor) {
+	public void setColors(final int pinColor, final int dotColor) {
 		if (mColorMode != COLOR_MODE_COLOR || mPinColor != pinColor) {
 			mColorMode = COLOR_MODE_COLOR;
 			mPinColor = mCurrentPinColor = pinColor;
@@ -165,7 +165,7 @@ public class MapPinDrawable extends Drawable {
 	 * @param dotColor
 	 *            The color of the dot
 	 */
-	public void setColors(ColorStateList pinColor, ColorStateList dotColor) {
+	public void setColors(final ColorStateList pinColor, final ColorStateList dotColor) {
 		if (mColorMode != COLOR_MODE_COLOR_STATE_LIST || mPinColorStateList != pinColor
 				|| mDotColorStateList != dotColor) {
 			mColorMode = COLOR_MODE_COLOR_STATE_LIST;
@@ -191,9 +191,9 @@ public class MapPinDrawable extends Drawable {
 	}
 
 	@Override
-	protected boolean onStateChange(int[] stateSet) {
+	protected boolean onStateChange(final int[] stateSet) {
 		if (mColorMode == COLOR_MODE_COLOR_STATE_LIST) {
-			int pinColor = (mPinColorStateList != null) ? mPinColorStateList.getColorForState(stateSet, Color.BLACK)
+			final int pinColor = (mPinColorStateList != null) ? mPinColorStateList.getColorForState(stateSet, Color.BLACK)
 					: Color.BLACK;
 			if (mCurrentPinColor != pinColor) {
 				mCurrentPinColor = pinColor;
@@ -205,16 +205,14 @@ public class MapPinDrawable extends Drawable {
 	}
 
 	@Override
-	public void draw(Canvas canvas) {
+	public void draw(final Canvas canvas) {
 		if (mNeedRebuild) {
 
 			if (mMapPin == null) {
 				mMapPin = Bitmap.createBitmap(mBase.getWidth(), mBase.getHeight(), Bitmap.Config.ARGB_8888);
 			}
-			Canvas c = new Canvas(mMapPin);
+			final Canvas c = new Canvas(mMapPin);
 			c.drawRect(0, 0, mMapPin.getWidth(), mMapPin.getHeight(), sClearerPaint);
-
-			this.setAlpha((mSelected) ? 255 : 150);
 
 			// 1 - Draw the base
 			c.drawBitmap(mBase, 0, 0, null);
@@ -232,12 +230,12 @@ public class MapPinDrawable extends Drawable {
 	}
 
 	@Override
-	public void setAlpha(int alpha) {
+	public void setAlpha(final int alpha) {
 		mMapPinPaint.setAlpha(alpha);
 	}
 
 	@Override
-	public void setColorFilter(ColorFilter cf) {
+	public void setColorFilter(final ColorFilter cf) {
 		mMapPinPaint.setColorFilter(cf);
 	}
 
@@ -250,7 +248,7 @@ public class MapPinDrawable extends Drawable {
 		return mSelected;
 	}
 
-	public void setSelected(boolean selected) {
+	public void setSelected(final boolean selected) {
 		this.mSelected = selected;
 	}
 

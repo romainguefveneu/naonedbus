@@ -329,6 +329,18 @@ public class HorairesFragment extends CustomInfiniteListFragement {
 		loadHoraires(date);
 	}
 
+	/**
+	 * Ajout un event au calendrier
+	 * 
+	 * @param horaireItem
+	 */
+	private void addEvent(final Horaire horaireItem) {
+//		final ParamIntent intent = new ParamIntent(getContext(), AddEventActivity.class);
+//		intent.putExtra(AddEventActivity.Param.idArret, arretItem._id);
+//		intent.putExtra(AddEventActivity.Param.timestamp, horaireItem.timestamp);
+//		getContext().startActivity(intent);
+	}
+
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
 		mIsLoading.set(true);

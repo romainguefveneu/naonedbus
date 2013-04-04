@@ -264,6 +264,7 @@
     <string name="btn_geolocation_service">Services de localisation</string>
     <string name="msg_nothing_info_trafic">Aucune perturbation en cours</string>
     <string name="msg_nothing_commentaires">Aucun commentaire récent</string>
+    <string name="msg_location_disabled_full"><![CDATA[La géolocalisation semble désactivée sur votre téléphone.<br />Pour utiliser au mieux la fonctionnalité &laquo; Sur la carte &raquo;, nous vous conseillons de l\'activer.]]></string>
     <!-- - - Horaires -->
     <string name="msg_depart_proche">départ proche</string>
     <string name="msg_aucun_depart_24h">dans longtemps</string>

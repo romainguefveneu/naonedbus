@@ -40,40 +40,34 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 		void onItemTap(BasicOverlayItem item);
 	}
 
-	private ArrayList<BasicOverlayItem> mOverlays = new ArrayList<BasicOverlayItem>();
+	private final ArrayList<BasicOverlayItem> mOverlays = new ArrayList<BasicOverlayItem>();
 	private BasicOverlayItem lastSelectedItem;
-	private Drawable selectedMarker;
-	private Drawable defaultMarker;
+	private final Drawable defaultMarker;
 	private OnBasicItemTapListener onBasicItemTapListener;
 	private TypeOverlayItem type;
 
-	public BasicItemizedOverlay(TypeOverlayItem type, MapPinDrawable defaultMarker) {
+	public BasicItemizedOverlay(final TypeOverlayItem type, final MapPinDrawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
 		this.defaultMarker = defaultMarker;
 		this.type = type;
-
-		final MapPinDrawable marker = new MapPinDrawable(defaultMarker);
-		marker.setSelected(true);
-		this.selectedMarker = boundCenterBottom(marker);
 		populate();
 	}
 
-	public void addOverlay(BasicOverlayItem overlay) {
+	public void addOverlay(final BasicOverlayItem overlay) {
 		if (!mOverlays.contains(overlay)) {
 			mOverlays.add(overlay);
 			populate();
 		}
 	}
 
-	public void addSelectedOverlay(BasicOverlayItem overlay) {
+	public void addSelectedOverlay(final BasicOverlayItem overlay) {
 		if (!mOverlays.contains(overlay)) {
 			lastSelectedItem = overlay;
-			overlay.setMarker(selectedMarker);
 			addOverlay(overlay);
 		}
 	}
 
-	public void setOnBasicItemTapListener(OnBasicItemTapListener onBasicItemTapeListener) {
+	public void setOnBasicItemTapListener(final OnBasicItemTapListener onBasicItemTapeListener) {
 		this.onBasicItemTapListener = onBasicItemTapeListener;
 	}
 
@@ -91,29 +85,22 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 		}
 	}
 
+	@Override
 	public void setFocus(final BasicOverlayItem item) {
 
 		final BasicOverlayItem localItem = getItemById(item.getId());
 
 		if (localItem != null) {
 			super.setFocus(localItem);
-
-			if ((lastSelectedItem != null) && (!lastSelectedItem.equals(localItem))) {
-				lastSelectedItem.setMarker(defaultMarker);
-			}
-
 			if (onBasicItemTapListener != null) {
 				onBasicItemTapListener.onItemTap(localItem);
 			}
-
-			localItem.setMarker(selectedMarker);
-			lastSelectedItem = localItem;
 		}
 
 	}
 
-	public BasicOverlayItem getItemById(Integer id) {
-		for (BasicOverlayItem item : mOverlays) {
+	public BasicOverlayItem getItemById(final Integer id) {
+		for (final BasicOverlayItem item : mOverlays) {
 			final Integer itemId = item.getId();
 			if (itemId != null && itemId.equals(id)) {
 				return item;
@@ -123,7 +110,7 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 	}
 
 	@Override
-	protected BasicOverlayItem createItem(int i) {
+	protected BasicOverlayItem createItem(final int i) {
 		return mOverlays.get(i);
 	}
 
@@ -133,14 +120,14 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 	}
 
 	@Override
-	protected boolean onTap(int index) {
+	protected boolean onTap(final int index) {
 		final BasicOverlayItem item = mOverlays.get(index);
 		setFocus(item);
 		return true;
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event, MapView mapView) {
+	public boolean onTouchEvent(final MotionEvent event, final MapView mapView) {
 		return super.onTouchEvent(event, mapView);
 	}
 
@@ -148,7 +135,7 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 		return type;
 	}
 
-	public void setType(TypeOverlayItem type) {
+	public void setType(final TypeOverlayItem type) {
 		this.type = type;
 	}
 

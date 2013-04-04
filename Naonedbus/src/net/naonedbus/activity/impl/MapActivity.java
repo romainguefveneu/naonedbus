@@ -29,9 +29,13 @@ import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.utils.DpiUtils;
 import net.naonedbus.utils.GeoPointUtils;
+import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.widget.BalloonOverlayView;
 import net.simonvt.menudrawer.MenuDrawer;
+import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -39,6 +43,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -69,23 +74,15 @@ public class MapActivity extends SherlockMapActivity {
 	};
 
 	private static final int MENU_GROUP_TYPES = 1;
+
+	private static final int MENU_ID_SATELLITE = Integer.MAX_VALUE;
+
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
-	private static final Map<TypeOverlayItem, MapLayer> mapLayerLoaders = new LinkedHashMap<TypeOverlayItem, MapLayer>();
-	static {
-		mapLayerLoaders.put(TypeOverlayItem.TYPE_STATION, new StationMapLayer());
-		mapLayerLoaders.put(TypeOverlayItem.TYPE_PARKING, new ParkingMapLayer());
-		mapLayerLoaders.put(TypeOverlayItem.TYPE_BICLOO, new BiclooMapLayer());
-		mapLayerLoaders.put(TypeOverlayItem.TYPE_MARGUERITE, new MargueriteMapLayer());
-		mapLayerLoaders.put(TypeOverlayItem.TYPE_COVOITURAGE, new CovoiturageMapLayer());
-		mapLayerLoaders.put(TypeOverlayItem.TYPE_LILA, new LilaMapLayer());
-	}
-
-	private final Map<TypeOverlayItem, BasicItemizedOverlay> mapOverlays = new HashMap<TypeOverlayItem, BasicItemizedOverlay>();
+	private final Map<TypeOverlayItem, MapLayer> mMapLayerLoaders;
+	private final Map<TypeOverlayItem, BasicItemizedOverlay> mMapOverlays;
 
 	private Set<Equipement.Type> mSelectedLayers;
-	private int mOptionsSatellitePosition;
-
 	private SharedPreferences mPreferences;
 
 	private Integer mSelectedItemId;
@@ -97,7 +94,7 @@ public class MapActivity extends SherlockMapActivity {
 	private MenuDrawer mMenuDrawer;
 	private SlidingMenuHelper mSlidingMenuHelper;
 
-	private MyLocationProvider myLocationProvider;
+	private final MyLocationProvider mLocationProvider;
 
 	private LinearLayout mLoaderView;
 	private MapController mMapController;
@@ -109,11 +106,11 @@ public class MapActivity extends SherlockMapActivity {
 
 	private BasicOverlayItem mSelectedOverlayItem;
 
-	private OnBasicItemTapListener mOnBasicItemTapListener = new OnBasicItemTapListener() {
+	private final OnBasicItemTapListener mOnBasicItemTapListener = new OnBasicItemTapListener() {
 		@Override
-		public void onItemTap(BasicOverlayItem item) {
+		public void onItemTap(final BasicOverlayItem item) {
 
-			final MapLayer mapLayer = mapLayerLoaders.get(item.getType());
+			final MapLayer mapLayer = mMapLayerLoaders.get(item.getType());
 			if (mapLayer != null) {
 
 				unselectItems(item);
@@ -134,11 +131,21 @@ public class MapActivity extends SherlockMapActivity {
 	};
 
 	public MapActivity() {
-		this.myLocationProvider = NBApplication.getLocationProvider();
+		mLocationProvider = NBApplication.getLocationProvider();
+
+		mMapLayerLoaders = new LinkedHashMap<TypeOverlayItem, MapLayer>();
+		mMapLayerLoaders.put(TypeOverlayItem.TYPE_STATION, new StationMapLayer());
+		mMapLayerLoaders.put(TypeOverlayItem.TYPE_PARKING, new ParkingMapLayer());
+		mMapLayerLoaders.put(TypeOverlayItem.TYPE_BICLOO, new BiclooMapLayer());
+		mMapLayerLoaders.put(TypeOverlayItem.TYPE_MARGUERITE, new MargueriteMapLayer());
+		mMapLayerLoaders.put(TypeOverlayItem.TYPE_COVOITURAGE, new CovoiturageMapLayer());
+		mMapLayerLoaders.put(TypeOverlayItem.TYPE_LILA, new LilaMapLayer());
+
+		mMapOverlays = new HashMap<TypeOverlayItem, BasicItemizedOverlay>();
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
@@ -149,7 +156,7 @@ public class MapActivity extends SherlockMapActivity {
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
 
-		final Location location = myLocationProvider.getLastKnownLocation();
+		final Location location = mLocationProvider.getLastKnownLocation();
 
 		mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -171,7 +178,7 @@ public class MapActivity extends SherlockMapActivity {
 		setSelectedItem(getIntent());
 
 		// Afficher si besoin l'information sur l'activation du GPS
-		if (myLocationProvider.isProviderEnabled() == false) {
+		if (mLocationProvider.isProviderEnabled() == false) {
 			showGpsDialog();
 
 			if (mSelectedItemId == null) {
@@ -192,7 +199,7 @@ public class MapActivity extends SherlockMapActivity {
 
 		mSelectedLayers = new HashSet<Equipement.Type>();
 		final Equipement.Type[] types = Equipement.Type.values();
-		for (Equipement.Type type : types) {
+		for (final Equipement.Type type : types) {
 			if (isLayerPreferenceEnabled(type.getId())) {
 				mSelectedLayers.add(type);
 			}
@@ -203,27 +210,31 @@ public class MapActivity extends SherlockMapActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		final MenuInflater inflater = getSupportMenuInflater();
 		inflater.inflate(R.menu.activity_map, menu);
 
-		if (myLocationProvider.isProviderEnabled() == false) {
+		if (mLocationProvider.isProviderEnabled() == false) {
 			menu.findItem(R.id.menu_location).setVisible(false);
 		}
 
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
 		final Equipement.Type[] types = Equipement.Type.values();
-		for (Equipement.Type type : types) {
+		for (final Equipement.Type type : types) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
 			item.setCheckable(true);
 			item.setChecked(mSelectedLayers.contains(type));
 		}
 
+		final MenuItem item = filterSubMenu.add(0, MENU_ID_SATELLITE, 0, R.string.map_calque_satellite);
+		item.setCheckable(true);
+		item.setChecked(mMapView.isSatellite());
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getGroupId() == MENU_GROUP_TYPES) {
 
 			final Equipement.Type type = Equipement.Type.getTypeById(item.getItemId());
@@ -246,7 +257,7 @@ public class MapActivity extends SherlockMapActivity {
 				mMenuDrawer.toggleMenu();
 				break;
 			case R.id.menu_location:
-				final Location location = myLocationProvider.getLastKnownLocation();
+				final Location location = mLocationProvider.getLastKnownLocation();
 				if (location != null) {
 					mMapController.animateTo(GeoPointUtils.getGeoPoint(location));
 					refreshMoveableLayers(location);
@@ -254,6 +265,10 @@ public class MapActivity extends SherlockMapActivity {
 				break;
 			case R.id.menu_search:
 				onSearchRequested();
+				break;
+			case MENU_ID_SATELLITE:
+				item.setChecked(!item.isChecked());
+				mMapView.setSatellite(item.isChecked());
 				break;
 			default:
 				break;
@@ -263,19 +278,19 @@ public class MapActivity extends SherlockMapActivity {
 	}
 
 	@Override
-	public void onPostCreate(Bundle savedInstanceState) {
+	public void onPostCreate(final Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		mSlidingMenuHelper.onSaveInstanceState(outState);
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
+	public void onWindowFocusChanged(final boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
 	}
@@ -288,13 +303,13 @@ public class MapActivity extends SherlockMapActivity {
 
 	@Override
 	protected void onStop() {
-		myLocationProvider.stop();
+		mLocationProvider.stop();
 		super.onStop();
 	}
 
 	@Override
 	protected void onResume() {
-		myLocationProvider.start();
+		mLocationProvider.start();
 		super.onResume();
 	}
 
@@ -302,7 +317,7 @@ public class MapActivity extends SherlockMapActivity {
 	 * Show the menu when menu button pressed, hide it when back is pressed
 	 */
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
 			mMenuDrawer.toggleMenu();
 			return true;
@@ -316,17 +331,10 @@ public class MapActivity extends SherlockMapActivity {
 	}
 
 	@Override
-	public void onNewIntent(Intent intent) {
+	public void onNewIntent(final Intent intent) {
 		setIntent(intent);
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			if (intent.getData() == null) {
-				// Démarrer l'activitiée de recherche
-				// final Intent newIntent = new Intent(MapActivity.this,
-				// SearchActivity.class);
-				// newIntent.fillIn(intent, Intent.FILL_IN_ACTION |
-				// Intent.FILL_IN_DATA);
-				// startActivity(newIntent);
-			} else {
+			if (intent.getData() != null) {
 				// Afficher l'élément sélectionné
 				changeSelectedItem(intent);
 			}
@@ -339,7 +347,7 @@ public class MapActivity extends SherlockMapActivity {
 	 * 
 	 * @param intent
 	 */
-	private void setSelectedItem(Intent intent) {
+	private void setSelectedItem(final Intent intent) {
 		final String queryAction = intent.getAction();
 
 		if (Intent.ACTION_SEARCH.equals(queryAction)) {
@@ -370,7 +378,7 @@ public class MapActivity extends SherlockMapActivity {
 	 * 
 	 * @param intent
 	 */
-	private void changeSelectedItem(Intent intent) {
+	private void changeSelectedItem(final Intent intent) {
 		mSelectedItemId = Integer.valueOf(intent.getStringExtra(SearchManager.QUERY));
 		mSelectedItemType = TypeOverlayItem
 				.getById(Integer.valueOf(intent.getStringExtra(SearchManager.EXTRA_DATA_KEY)));
@@ -383,23 +391,23 @@ public class MapActivity extends SherlockMapActivity {
 	 */
 	private void selectedDefaultItem() {
 		if (mSelectedItemType != null) {
-			if (mapOverlays.containsKey(mSelectedItemType) == false) {
+			if (mMapOverlays.containsKey(mSelectedItemType) == false) {
 				// Charger le claque correspondant au type de l'élément.
 				mSelectedLayers.add(Type.getTypeById(mSelectedItemType.getId()));
 				loadLayers(getMapCenterLocation());
 			} else {
-				final MapLayer mapLayer = mapLayerLoaders.get(mSelectedItemType);
-				BasicItemizedOverlay mapOverlay = mapOverlays.get(mSelectedItemType);
+				final MapLayer mapLayer = mMapLayerLoaders.get(mSelectedItemType);
+				BasicItemizedOverlay mapOverlay = mMapOverlays.get(mSelectedItemType);
 				BasicOverlayItem item = mapOverlay.getItemById(mSelectedItemId);
 
 				if (item == null) {
 					// Si besoin, recharger le layer en précisant l'élément
 					// recherché
-					final MapLayer layerLoader = mapLayerLoaders.get(mSelectedItemType);
+					final MapLayer layerLoader = mMapLayerLoaders.get(mSelectedItemType);
 					mapOverlay = layerLoader.getOverlay(getApplicationContext(), mSelectedItemId);
-					mMapView.getOverlays().remove(mapOverlays.get(mSelectedItemType));
+					mMapView.getOverlays().remove(mMapOverlays.get(mSelectedItemType));
 					mMapView.getOverlays().add(mapOverlay);
-					mapOverlays.put(mSelectedItemType, mapOverlay);
+					mMapOverlays.put(mSelectedItemType, mapOverlay);
 
 					item = mapOverlay.getItemById(mSelectedItemId);
 
@@ -427,18 +435,18 @@ public class MapActivity extends SherlockMapActivity {
 	 * Afficher la digalogue d'information sur l'activation du GPS.
 	 */
 	private void showGpsDialog() {
-		// final AlertDialog dialog = InfoDialogUtils.getDialog(this,
-		// R.string.information,
-		// R.string.msg_location_disabled_full);
-		//
-		// dialog.setButton2("Services de localisation", new OnClickListener() {
-		// @Override
-		// public void onClick(DialogInterface dialog, int which) {
-		// startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-		// }
-		// });
-		//
-		// dialog.show();
+		final AlertDialog dialog = InfoDialogUtils.getDialog(this, R.string.btn_geolocation_service,
+				R.string.msg_location_disabled_full);
+
+		dialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.btn_geolocation_service),
+				new OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog, final int which) {
+						startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+					}
+				});
+
+		dialog.show();
 	}
 
 	/**
@@ -447,7 +455,7 @@ public class MapActivity extends SherlockMapActivity {
 	 * @param id
 	 * @return Vrai si le calque est activé.
 	 */
-	private boolean isLayerPreferenceEnabled(Integer id) {
+	private boolean isLayerPreferenceEnabled(final Integer id) {
 		if (id == TypeOverlayItem.TYPE_STATION.getId()) {
 			return mPreferences.getBoolean(PREF_MAP_LAYER + id, true);
 		} else {
@@ -483,14 +491,12 @@ public class MapActivity extends SherlockMapActivity {
 	 * 
 	 * @param itemSelectedInfo
 	 */
-	private void showBalloon(ItemSelectedInfo info) {
-
+	private void showBalloon(final ItemSelectedInfo info) {
 		mBalloonOverlayView.setData(info);
 		mBalloonOverlayView.setVisibility(View.VISIBLE);
 		mMapView.removeView(mBalloonOverlayView);
 		mMapView.addView(mBalloonOverlayView, new MapView.LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, info.getGeoPoint(), MapView.LayoutParams.BOTTOM_CENTER));
-
 	}
 
 	/**
@@ -511,7 +517,7 @@ public class MapActivity extends SherlockMapActivity {
 	 *            L'élément dont la sélection doit être conservée. Peut être
 	 *            null.
 	 */
-	private void unselectItems(BasicOverlayItem current) {
+	private void unselectItems(final BasicOverlayItem current) {
 		for (final Overlay overlay : mMapView.getOverlays()) {
 			if (overlay instanceof BasicItemizedOverlay) {
 				final BasicItemizedOverlay basicOverlay = (BasicItemizedOverlay) overlay;
@@ -560,7 +566,7 @@ public class MapActivity extends SherlockMapActivity {
 		}
 
 		@Override
-		protected Void doInBackground(Location... params) {
+		protected Void doInBackground(final Location... params) {
 
 			try {
 
@@ -570,10 +576,10 @@ public class MapActivity extends SherlockMapActivity {
 				TypeOverlayItem type = null;
 
 				// Gestion des calques
-				for (Type layerType : Type.values()) {
+				for (final Type layerType : Type.values()) {
 
 					type = TypeOverlayItem.getById(layerType.getId());
-					layerLoader = mapLayerLoaders.get(type);
+					layerLoader = mMapLayerLoaders.get(type);
 
 					if (mSelectedLayers.contains(layerType)) {
 						if (mSelectedItemId == null || !mSelectedItemType.equals(type)) {
@@ -592,7 +598,7 @@ public class MapActivity extends SherlockMapActivity {
 
 				}
 
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				BugSenseHandler.sendException(e);
 				Log.e(LOG_TAG, "Erreur lors du chargement du calque.", e);
 			}
@@ -600,13 +606,13 @@ public class MapActivity extends SherlockMapActivity {
 		}
 
 		@Override
-		protected void onProgressUpdate(LoaderInfo... values) {
+		protected void onProgressUpdate(final LoaderInfo... values) {
 			super.onProgressUpdate(values);
 			Type layerType;
 			TypeOverlayItem overlayType;
 			BasicItemizedOverlay overlay;
 
-			for (LoaderInfo loaderInfo : values) {
+			for (final LoaderInfo loaderInfo : values) {
 				layerType = loaderInfo.layerType;
 				overlayType = loaderInfo.overlayType;
 				overlay = loaderInfo.overlay;
@@ -614,20 +620,20 @@ public class MapActivity extends SherlockMapActivity {
 				// Changer les préférences
 				setLayerPreference(overlayType.getId(), mSelectedLayers.contains(layerType));
 
-				if (mapOverlays.containsKey(overlayType) && !mSelectedLayers.contains(layerType)) {
+				if (mMapOverlays.containsKey(overlayType) && !mSelectedLayers.contains(layerType)) {
 					// Effacer les couches
-					mMapView.getOverlays().remove(mapOverlays.get(overlayType));
-					mapOverlays.remove(overlayType);
-				} else if (mapOverlays.containsKey(overlayType) == false && mSelectedLayers.contains(layerType)) {
+					mMapView.getOverlays().remove(mMapOverlays.get(overlayType));
+					mMapOverlays.remove(overlayType);
+				} else if (mMapOverlays.containsKey(overlayType) == false && mSelectedLayers.contains(layerType)) {
 					// Redessiner les couches
-					mapOverlays.put(overlayType, overlay);
+					mMapOverlays.put(overlayType, overlay);
 					mMapView.getOverlays().add(overlay);
 				}
 			}
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(final Void result) {
 			super.onPostExecute(result);
 			mMapView.postInvalidate();
 			mLoaderView.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out));
@@ -635,7 +641,7 @@ public class MapActivity extends SherlockMapActivity {
 
 			// Masquer la description si l'élément sélectionné ne fait plus
 			// partie de la carte
-			if (mSelectedOverlayItem != null && !mapOverlays.containsKey(mSelectedOverlayItem.getType())) {
+			if (mSelectedOverlayItem != null && !mMapOverlays.containsKey(mSelectedOverlayItem.getType())) {
 				mMapView.removeView(mBalloonOverlayView);
 			} else {
 				selectedDefaultItem();
@@ -662,16 +668,16 @@ public class MapActivity extends SherlockMapActivity {
 	private class RefreshMoveableLayers extends AsyncTask<Location, LoaderInfo, Void> {
 
 		@Override
-		protected Void doInBackground(Location... params) {
+		protected Void doInBackground(final Location... params) {
 			Thread.currentThread().setPriority(Thread.NORM_PRIORITY);
 
 			try {
 
 				final Location currentLocation = (params[0] == null) ? getMapCenterLocation() : params[0];
 				if (currentLocation != null) {
-					for (Entry<TypeOverlayItem, BasicItemizedOverlay> entry : mapOverlays.entrySet()) {
+					for (final Entry<TypeOverlayItem, BasicItemizedOverlay> entry : mMapOverlays.entrySet()) {
 						final TypeOverlayItem type = entry.getKey();
-						final MapLayer layerLoader = mapLayerLoaders.get(type);
+						final MapLayer layerLoader = mMapLayerLoaders.get(type);
 
 						if (layerLoader.isMoveable()) {
 
@@ -688,25 +694,25 @@ public class MapActivity extends SherlockMapActivity {
 					}
 				}
 
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				BugSenseHandler.sendException(e);
 			}
 			return null;
 		}
 
 		@Override
-		protected void onProgressUpdate(LoaderInfo... values) {
+		protected void onProgressUpdate(final LoaderInfo... values) {
 			super.onProgressUpdate(values);
 			TypeOverlayItem type;
 			BasicItemizedOverlay overlay;
 
-			for (LoaderInfo loaderInfo : values) {
+			for (final LoaderInfo loaderInfo : values) {
 				type = loaderInfo.overlayType;
 				overlay = loaderInfo.overlay;
 
-				mMapView.getOverlays().remove(mapOverlays.get(type));
+				mMapView.getOverlays().remove(mMapOverlays.get(type));
 				mMapView.getOverlays().add(overlay);
-				mapOverlays.put(type, overlay);
+				mMapOverlays.put(type, overlay);
 
 				// Gérer la sélection
 				if (mSelectedOverlayItem != null && mSelectedOverlayItem.getType().equals(overlay.getType())) {
@@ -731,7 +737,7 @@ public class MapActivity extends SherlockMapActivity {
 		private Location lastLocation = new Location(LocationManager.GPS_PROVIDER);
 
 		@Override
-		public boolean onTouchEvent(MotionEvent event, MapView mapView) {
+		public boolean onTouchEvent(final MotionEvent event, final MapView mapView) {
 			if (event.getAction() == MotionEvent.ACTION_UP) {
 				final Location currentLocation = getMapCenterLocation();
 				final float distance = currentLocation.distanceTo(lastLocation);
@@ -745,7 +751,7 @@ public class MapActivity extends SherlockMapActivity {
 		}
 
 		@Override
-		public boolean onTap(GeoPoint p, MapView mapView) {
+		public boolean onTap(final GeoPoint p, final MapView mapView) {
 			hideBalloon();
 			return super.onTap(p, mapView);
 		}
