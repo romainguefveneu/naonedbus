@@ -300,6 +300,8 @@
     <string name="dialog_title_groupes">Groupes</string>
     <string name="dialog_title_export">Favoris exportés !</string>
     <string name="dialog_content_export">Conservez cette clé, elle vous permettra de récupérer vos favoris.</string>
+    <string name="dialog_title_arret_order">Tri par position</string>
+    <string name="dialog_content_arret_order">Le tri par position est une moyenne observée sur la totalité des trajets.\n\nIl se peut qu\'il soit inexact dans certains cas.</string>
     <!-- Showcase -->
     <string name="showcase_arrets_title">Changez facilement de sens</string>
     <string name="showcase_arrets_content">Cliquez sur le sens pour en changer.</string>

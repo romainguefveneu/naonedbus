@@ -260,6 +260,8 @@
     <string name="dialog_title_groupes">Groups</string>
     <string name="dialog_title_export">Bookmarks exported!</string>
     <string name="dialog_content_export">Keep this key, it will allow you to retrieve your Bookmarks.</string>
+	<string name="dialog_title_arret_order">Sort by position</string>
+    <string name="dialog_content_arret_order">Sort by position is an average on all routes.\n\nIt may be incorrect in some cases.</string>
     <string name="showcase_arrets_title">Easily change direction</string>
     <string name="showcase_arrets_content">Click on the direction to change it.</string>
     <string name="target_ligne">Line</string>

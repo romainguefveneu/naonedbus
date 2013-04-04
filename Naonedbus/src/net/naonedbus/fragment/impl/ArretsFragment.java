@@ -26,6 +26,7 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
 import android.annotation.TargetApi;
@@ -365,6 +366,11 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 
 		sort();
 		loadDistances();
+
+		if (viewType == ViewType.TYPE_METRO) {
+			InfoDialogUtils.showIfNecessary(getActivity(), R.string.dialog_title_arret_order,
+					R.string.dialog_content_arret_order);
+		}
 	}
 
 	/**

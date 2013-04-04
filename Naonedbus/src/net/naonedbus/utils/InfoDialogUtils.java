@@ -1,13 +1,7 @@
 package net.naonedbus.utils;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.Writer;
 
 import net.naonedbus.R;
 
@@ -35,7 +29,7 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param messageId
 	 */
-	public static void show(Context context, int messageId) {
+	public static void show(final Context context, final int messageId) {
 		show(context, R.string.dialog_title_information, messageId);
 	}
 
@@ -46,7 +40,7 @@ public abstract class InfoDialogUtils {
 	 * @param titleId
 	 * @param messageId
 	 */
-	public static void show(Context context, int titleId, int messageId) {
+	public static void show(final Context context, final int titleId, final int messageId) {
 		final AlertDialog moreDetailsDialog = getDialog(context, titleId, messageId);
 		moreDetailsDialog.show();
 	}
@@ -59,7 +53,7 @@ public abstract class InfoDialogUtils {
 	 * @param messageId
 	 * @return La dialogue.
 	 */
-	public static AlertDialog getDialog(Context context, int titleId, int messageId) {
+	public static AlertDialog getDialog(final Context context, final int titleId, final int messageId) {
 
 		final AlertDialog.Builder moreDetailsDialog = new AlertDialog.Builder(context);
 		moreDetailsDialog.setTitle(context.getString(titleId));
@@ -75,10 +69,10 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param html
 	 */
-	public static void showHtml(Context context, String html) {
+	public static void showHtml(final Context context, final String html) {
 		AlertDialog.Builder moreDetailsDialog = null;
-		WebView webView = new WebView(context);
-		ScrollView scrollView = new ScrollView(context);
+		final WebView webView = new WebView(context);
+		final ScrollView scrollView = new ScrollView(context);
 
 		webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		webView.setBackgroundColor(Color.WHITE);
@@ -106,7 +100,7 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param messageId
 	 */
-	public static void showIfNecessary(Context context, int titreId, int messageId) {
+	public static void showIfNecessary(final Context context, final int titreId, final int messageId) {
 		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + messageId);
 
 		createDir(context);
@@ -114,7 +108,7 @@ public abstract class InfoDialogUtils {
 			show(context, titreId, messageId);
 			try {
 				dataFile.createNewFile();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
 			}
 		}
@@ -127,7 +121,7 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param messageId
 	 */
-	public static void showIfNecessary(Context context, int messageId) {
+	public static void showIfNecessary(final Context context, final int messageId) {
 		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + messageId);
 
 		createDir(context);
@@ -135,7 +129,7 @@ public abstract class InfoDialogUtils {
 			show(context, messageId);
 			try {
 				dataFile.createNewFile();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
 			}
 		}
@@ -147,14 +141,14 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param fileFromAssets
 	 */
-	public static void showHtmlFromRaw(Context context, int fileId) {
+	public static void showHtmlFromRaw(final Context context, final int fileId) {
 		String content;
 		try {
 			content = IOUtils.toString(context.getResources().openRawResource(fileId));
 			showHtml(context, content);
-		} catch (NotFoundException e) {
+		} catch (final NotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -175,7 +169,7 @@ public abstract class InfoDialogUtils {
 		final TextView versionNotes = (TextView) alertDialogView.findViewById(R.id.versionNotes);
 		final VersionUtils versionUtils = new VersionUtils(context, "version.html");
 
-		title.setText("Version " + VersionUtils.getVersion(context));
+		title.setText(context.getString(R.string.version_number, VersionUtils.getVersion(context)));
 		codename.setText(VersionUtils.getVersionName(context));
 		versionNotes.setText(versionUtils.getCurrentVersionNotes());
 
@@ -186,7 +180,6 @@ public abstract class InfoDialogUtils {
 		moreDetailsDialog.setTitle("Nouvelle version");
 		moreDetailsDialog.setView(scrollView);
 		moreDetailsDialog.setPositiveButton(android.R.string.ok, null);
-		// moreDetailsDialog.setNeutralButton(R.string.action_show_howto, null);
 		moreDetailsDialog.show();
 	}
 
@@ -195,7 +188,7 @@ public abstract class InfoDialogUtils {
 	 * 
 	 * @param context
 	 */
-	public static void showWelcomeDialogIfNecessary(Context context) {
+	public static void showWelcomeDialogIfNecessary(final Context context) {
 		final String version = VersionUtils.getVersion(context);
 		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + version);
 
@@ -204,7 +197,7 @@ public abstract class InfoDialogUtils {
 			try {
 				showWelcomeDialog(context);
 				dataFile.createNewFile();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
 			}
 		}
@@ -216,8 +209,8 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param fileFromAssets
 	 */
-	public static void showVersionNote(Context context, String fileFromAssets) {
-		VersionUtils versionUtils = new VersionUtils(context, fileFromAssets);
+	public static void showVersionNote(final Context context, final String fileFromAssets) {
+		final VersionUtils versionUtils = new VersionUtils(context, fileFromAssets);
 		showHtml(context, versionUtils.getFormattedContent());
 	}
 
@@ -227,7 +220,7 @@ public abstract class InfoDialogUtils {
 	 * @param context
 	 * @param fileFromAssets
 	 */
-	public static void showVersionNoteIfNecessary(Context context, String fileFromAssets) {
+	public static void showVersionNoteIfNecessary(final Context context, final String fileFromAssets) {
 		final VersionUtils versionUtils = new VersionUtils(context, fileFromAssets);
 		final String version = VersionUtils.getVersion(context);
 		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + version);
@@ -237,7 +230,7 @@ public abstract class InfoDialogUtils {
 			try {
 				showHtml(context, versionUtils.getFormattedContent());
 				dataFile.createNewFile();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
 			}
 		}
@@ -248,36 +241,10 @@ public abstract class InfoDialogUtils {
 	 * 
 	 * @param context
 	 */
-	private static void createDir(Context context) {
+	private static void createDir(final Context context) {
 		final File file = new File(context.getFilesDir(), MESSAGE_FOLDER);
 		if (!file.exists()) {
 			file.mkdirs();
-		}
-	}
-
-	/**
-	 * To convert the InputStream to String we use the Reader.read(char[]
-	 * buffer) method. We iterate until the Reader return -1 which means there's
-	 * no more data to read. We use the StringWriter class to produce the
-	 * string.
-	 */
-	private static String convertStreamToString(InputStream is) throws IOException {
-		if (is != null) {
-			Writer writer = new StringWriter();
-
-			char[] buffer = new char[1024];
-			try {
-				Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-				int n;
-				while ((n = reader.read(buffer)) != -1) {
-					writer.write(buffer, 0, n);
-				}
-			} finally {
-				is.close();
-			}
-			return writer.toString();
-		} else {
-			return "";
 		}
 	}
 
@@ -291,7 +258,7 @@ public abstract class InfoDialogUtils {
 	 * @return <code>true</code> si le message n'a pas encore été affiché,
 	 *         <code>false</code> s'il l'a déjà été.
 	 */
-	public static boolean isNotAlreadyShown(final Context context, int messageId) {
+	public static boolean isNotAlreadyShown(final Context context, final int messageId) {
 		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + messageId);
 		boolean result = true;
 
@@ -299,7 +266,7 @@ public abstract class InfoDialogUtils {
 		if (!dataFile.exists()) {
 			try {
 				dataFile.createNewFile();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
 			}
 		} else {
