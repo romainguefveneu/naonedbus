@@ -48,7 +48,10 @@
                 android:id="@+id/spinnerCalendrier"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:prompt="@string/add_event_calendar_select" />
+                android:prompt="@string/add_event_calendar_select" >
+
+                <requestFocus />
+            </Spinner>
 
             <TextView
                 style="@style/SectionTitle.Small"
@@ -68,12 +71,11 @@
 
             <EditText
                 android:id="@+id/comment"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="top|left"
                 android:imeOptions="actionSend"
                 android:inputType="textCapSentences|textMultiLine"
-                android:maxLines="10"
                 android:minLines="4"
                 android:singleLine="false" />
         </LinearLayout>

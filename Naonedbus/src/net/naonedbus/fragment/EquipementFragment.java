@@ -25,7 +25,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.View;
@@ -56,14 +55,13 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 
 	private StateHelper mStateHelper;
 	private DistanceTask loaderDistance;
-	private Equipement.Type type;
+	private final Equipement.Type type;
 	private SousType sousType;
 
 	protected int localCount = -1;
 
 	public EquipementFragment(final int titleId, final int layoutId, final Equipement.Type type) {
 		super(titleId, layoutId);
-		Log.d(getClass().getSimpleName(), "Creation");
 
 		this.type = type;
 		this.myLocationProvider = NBApplication.getLocationProvider();
@@ -85,7 +83,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 
@@ -118,7 +116,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
 		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
 		intent.putExtra(MapActivity.Param.itemId, equipement.getId());
@@ -127,14 +125,14 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_equipements, menu);
 		menu.findItem(MENU_MAPPING.get(currentSortPreference)).setChecked(true);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		item.setChecked(true);
 
 		switch (item.getItemId()) {
@@ -162,7 +160,6 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context) {
-		Log.d(this.getClass().getSimpleName(), "loadContent " + localCount);
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 			final EquipementManager equipementManager = EquipementManager.getInstance();
@@ -183,13 +180,13 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 
 			result.setResult(adapter);
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			result.setException(e);
 		}
 		return result;
 	}
 
-	protected void setDistances(List<Equipement> equipements) {
+	protected void setDistances(final List<Equipement> equipements) {
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
 		final Location currentLocation = myLocationProvider.getLastKnownLocation();
 
@@ -214,7 +211,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	private class DistanceTask extends AsyncTask<Void, Void, Void> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Void doInBackground(final Void... params) {
 			final ListAdapter adapter = getListAdapter();
 
 			final Location equipementLocation = new Location(LocationManager.GPS_PROVIDER);
@@ -237,7 +234,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(final Void result) {
 			final EquipementArrayAdapter adapter = (EquipementArrayAdapter) getListAdapter();
 			adapter.notifyDataSetChanged();
 		}
@@ -247,9 +244,9 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	/**
 	 * Listener de changement de coordonnées GPS
 	 */
-	private MyLocationListener locationListener = new MyLocationListener() {
+	private final MyLocationListener locationListener = new MyLocationListener() {
 		@Override
-		public void onLocationChanged(Location location) {
+		public void onLocationChanged(final Location location) {
 			final EquipementDistanceComparator<Equipement> comparator = (EquipementDistanceComparator<Equipement>) comparators
 					.get(SORT_DISTANCE);
 			comparator.setReferentiel(location);
@@ -286,7 +283,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	 * 
 	 * @param adapter
 	 */
-	private void setIndexerAndComparator(EquipementArrayAdapter adapter) {
+	private void setIndexerAndComparator(final EquipementArrayAdapter adapter) {
 		final Comparator<Equipement> comparator;
 		final ArraySectionIndexer<Equipement> indexer;
 
@@ -309,7 +306,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	 * @param key
 	 * @param comparator
 	 */
-	protected void addComparator(int key, Comparator<Equipement> comparator) {
+	protected void addComparator(final int key, final Comparator<Equipement> comparator) {
 		comparators.put(key, comparator);
 	}
 
@@ -319,7 +316,7 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	 * @param key
 	 * @param indexer
 	 */
-	protected void addIndexer(int key, ArraySectionIndexer<Equipement> indexer) {
+	protected void addIndexer(final int key, final ArraySectionIndexer<Equipement> indexer) {
 		indexers.put(key, indexer);
 	}
 
