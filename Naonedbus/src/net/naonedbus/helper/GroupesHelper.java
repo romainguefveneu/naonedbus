@@ -28,11 +28,13 @@ public class GroupesHelper {
 	public void linkFavori(final List<Integer> idFavoris, final Runnable callback) {
 		final Cursor c = mGroupeManager.getCursor(mContext.getContentResolver(), idFavoris);
 		final boolean[] checked = new boolean[c.getCount()];
+		final String[] items = new String[c.getCount()];
 
 		if (c.getCount() > 0) {
 			c.moveToFirst();
 			while (!c.isAfterLast()) {
 				checked[c.getPosition()] = c.getInt(c.getColumnIndex(FavorisGroupesTable.LINKED)) > 0;
+				items[c.getPosition()] = c.getString(c.getColumnIndex(GroupeTable.NOM));
 				c.moveToNext();
 			}
 		}
@@ -66,10 +68,11 @@ public class GroupesHelper {
 			}
 		});
 
-		builder.setMultiChoiceItems(c, FavorisGroupesTable.LINKED, GroupeTable.NOM, new OnMultiChoiceClickListener() {
+		builder.setMultiChoiceItems(items, checked, new OnMultiChoiceClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which, final boolean isChecked) {
 				checked[which] = isChecked;
+				((AlertDialog) dialog).getListView().setItemChecked(which, isChecked);
 			}
 		});
 

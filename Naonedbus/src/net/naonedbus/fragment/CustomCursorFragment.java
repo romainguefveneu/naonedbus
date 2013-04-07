@@ -142,7 +142,8 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 			}
 
 			@Override
-			public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
+			public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+					final int totalItemCount) {
 				triggerOnScrollListeners(listView, firstVisibleItem, visibleItemCount, totalItemCount);
 			}
 		});
@@ -158,7 +159,8 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 				}
 
 				@Override
-				public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
+				public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
+						final int totalItemCount) {
 					final Adapter adapter = getListAdapter();
 					if (adapter != null && adapter instanceof OnScrollListener) {
 						final OnScrollListener sectionAdapter = (OnScrollListener) adapter;
@@ -187,8 +189,8 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		mOnScrollListeners.add(onScrollListener);
 	}
 
-	private void triggerOnScrollListeners(final AbsListView view, final int firstVisibleItem, final int visibleItemCount,
-			final int totalItemCount) {
+	private void triggerOnScrollListeners(final AbsListView view, final int firstVisibleItem,
+			final int visibleItemCount, final int totalItemCount) {
 		for (final OnScrollListener l : mOnScrollListeners) {
 			l.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
 		}
@@ -258,6 +260,13 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 */
 	protected void showError(final String title, final String description) {
 		showMessage(title, description, R.drawable.warning);
+	}
+
+	/**
+	 * Afficher le message.
+	 */
+	protected void showMessage() {
+		showMessage(mMessageEmptyTitleId, mMessageEmptySummaryId, mMessageEmptyDrawableId);
 	}
 
 	/**

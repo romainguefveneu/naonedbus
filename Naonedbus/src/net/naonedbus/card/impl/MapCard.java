@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -84,8 +83,6 @@ public class MapCard extends Card<Bitmap> {
 					imageView.getMeasuredHeight(), mLatitude, mLongitude, mCurrentLocation.getLatitude(),
 					mCurrentLocation.getLongitude());
 		}
-
-		Log.d("Map", url);
 
 		final Bundle bundle = new Bundle();
 		bundle.putString(PARAM_URL, url);

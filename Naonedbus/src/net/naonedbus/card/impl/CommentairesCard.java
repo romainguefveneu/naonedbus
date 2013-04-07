@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
+import net.naonedbus.activity.impl.CommentaireDetailActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
@@ -23,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -150,6 +152,9 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
+				final Intent intent = new Intent(getContext(), CommentaireDetailActivity.class);
+				intent.putExtra(CommentaireDetailActivity.PARAM_COMMENTAIRE, (Parcelable) commentaire);
+				getContext().startActivity(intent);
 			}
 		});
 

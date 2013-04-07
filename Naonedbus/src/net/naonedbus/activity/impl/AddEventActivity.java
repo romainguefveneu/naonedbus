@@ -10,6 +10,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
+import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.utils.CalendarUtils;
 import net.naonedbus.utils.SymbolesUtils;
 import android.content.ContentResolver;
@@ -55,6 +56,12 @@ public class AddEventActivity extends SherlockActivity {
 		final Sens sens = getIntent().getParcelableExtra(PARAM_SENS);
 		final Arret arret = getIntent().getParcelableExtra(PARAM_ARRET);
 		final long timestamp = getIntent().getLongExtra(PARAM_TIMESTAMP, 0);
+
+		final HeaderHelper headerHelper = new HeaderHelper(this);
+		headerHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
+		headerHelper.setCode(ligne.lettre);
+		headerHelper.setTitle(arret.nomArret);
+		headerHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -102,7 +109,7 @@ public class AddEventActivity extends SherlockActivity {
 		fillCalendars();
 		fillDelais();
 
-//		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		// getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 
 	private void fillCalendars() {

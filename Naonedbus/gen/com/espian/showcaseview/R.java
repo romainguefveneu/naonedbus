@@ -26,7 +26,7 @@ public final class R {
 		public static final int[] ShowcaseView = { 0x7f01003a };
 	}
 	public static final class drawable {
-		public static final int ic_launcher = 0x7f0200d8;
+		public static final int ic_launcher = 0x7f0200d9;
 		public static final int cling_button_bg = 0x7f020088;
 		public static final int cling = 0x7f020087;
 		public static final int btn_cling_normal = 0x7f020082;

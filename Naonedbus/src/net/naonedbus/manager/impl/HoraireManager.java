@@ -144,7 +144,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * Supprimer les anciens horaires
 	 */
 	public void clearOldHoraires(final ContentResolver contentResolver) {
-		Log.i(LOG_TAG, "Nettoyage du cache horaires");
+		if (DBG)
+			Log.i(LOG_TAG, "Nettoyage du cache horaires");
 
 		contentResolver.delete(HoraireProvider.CONTENT_URI, HoraireTable.DAY_TRIP + " < ?",
 				new String[] { String.valueOf(new DateMidnight().getMillis()) });
@@ -154,7 +155,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * Supprimer tous les horaires
 	 */
 	public void clearAllHoraires(final ContentResolver contentResolver) {
-		Log.i(LOG_TAG, "Suppression du cache horaires");
+		if (DBG)
+			Log.i(LOG_TAG, "Suppression du cache horaires");
 
 		contentResolver.delete(HoraireProvider.CONTENT_URI, null, null);
 	}

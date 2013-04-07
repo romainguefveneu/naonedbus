@@ -457,6 +457,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onCreateLoader");
 
 		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
+			private AsyncResult<ListAdapter> mResult;
+
 			@Override
 			public AsyncResult<ListAdapter> loadInBackground() {
 				if (DBG)
@@ -464,6 +466,41 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 				return loadContent(getActivity());
 			}
+
+			/**
+			 * Called when there is new data to deliver to the client. The super
+			 * class will take care of delivering it; the implementation here
+			 * just adds a little more logic.
+			 */
+			@Override
+			public void deliverResult(final AsyncResult<ListAdapter> result) {
+				mResult = result;
+
+				if (isStarted()) {
+					// If the Loader is currently started, we can immediately
+					// deliver its results.
+					super.deliverResult(result);
+				}
+			}
+
+			/**
+			 * Handles a request to start the Loader.
+			 */
+			@Override
+			protected void onStartLoading() {
+				if (mResult != null) {
+					// If we currently have a result available, deliver it
+					// immediately.
+					deliverResult(mResult);
+				}
+
+				if (takeContentChanged() || mResult == null) {
+					// If the data has changed since the last time it was loaded
+					// or is not currently available, start a load.
+					forceLoad();
+				}
+			}
+
 		};
 
 		if (getListAdapter() == null || getListAdapter().getCount() == 0)

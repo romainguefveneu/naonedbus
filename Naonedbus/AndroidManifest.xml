@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.naonedbus"
-    android:versionCode="41"
+    android:versionCode="43"
     android:versionName="@string/version" >
 
     <uses-sdk
