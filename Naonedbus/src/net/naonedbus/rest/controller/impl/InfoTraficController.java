@@ -81,7 +81,7 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 	}
 
 	@Override
-	protected JSONObject toJson(final InfoTrafic item) throws JSONException {
+	protected JSONObject toJsonObject(final InfoTrafic item) throws JSONException {
 		return null;
 	}
 }

@@ -65,7 +65,7 @@ public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 	}
 
 	@Override
-	protected JSONObject toJson(final ParkingPublic item) throws JSONException {
+	protected JSONObject toJsonObject(final ParkingPublic item) throws JSONException {
 		return null;
 	}
 

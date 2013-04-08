@@ -25,11 +25,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.helper.BulkLoaderHelper.BulkQuery;
 import net.naonedbus.helper.CompressedQueriesHelper;
-import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.utils.TimeLogUtils;
-
-import org.json.JSONException;
-
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -126,11 +122,6 @@ public abstract class CustomContentProvider extends ContentProvider {
 			execute(db, R.raw.sql_create);
 			executeBulk(db, R.raw.sql_data);
 
-			try {
-				restoreFavoris(db);
-			} catch (final JSONException e) {
-			}
-
 			if (DBG) {
 				timeLogUtils.step("Fin d'installation");
 			}
@@ -155,31 +146,9 @@ public abstract class CustomContentProvider extends ContentProvider {
 			executeBulk(db, R.raw.sql_data);
 			execute(db, R.raw.sql_after_update);
 
-			try {
-				restoreFavoris(db);
-			} catch (final JSONException e) {
-			}
-
 			if (DBG)
 				timeLogUtils.step("Fin de la mise à jour");
 
-		}
-
-		/**
-		 * Restaurer les favoris.
-		 * 
-		 * @param db
-		 * @throws JSONException
-		 */
-		private void restoreFavoris(final SQLiteDatabase db) throws JSONException {
-			if (DBG)
-				Log.i(LOG_TAG, "Restauration des favoris");
-
-			final FavoriManager favoriManager = FavoriManager.getInstance();
-			final String restoredFavoris = favoriManager.getRestoredFavoris();
-			if (restoredFavoris != null) {
-				favoriManager.fromJson(db, restoredFavoris);
-			}
 		}
 
 		/**

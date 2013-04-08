@@ -13,13 +13,15 @@ import android.net.Uri;
 
 public class FavoriGroupeProvider extends CustomContentProvider {
 
-	public static final int GROUPES = 100;
-	public static final int GROUPE_ID = 110;
-	public static final int FAVORI_ID = 200;
+	private static final int GROUPES = 100;
+	private static final int GROUPE_ID = 110;
+	private static final int LINK = 200;
+	private static final int FAVORI_ID = 300;
 
 	public static final String QUERY_PARAMETER_IDS = "ids";
 
 	private static final String AUTHORITY = "net.naonedbus.provider.FavoriGroupeProvider";
+	public static final String LINK_BASE_PATH = "link";
 	public static final String FAVORI_ID_BASE_PATH = "favori";
 
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
@@ -30,6 +32,7 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 		URI_MATCHER.addURI(AUTHORITY, "#/#", GROUPES);
 		URI_MATCHER.addURI(AUTHORITY, "#", GROUPE_ID);
 		URI_MATCHER.addURI(AUTHORITY, FAVORI_ID_BASE_PATH, FAVORI_ID);
+		URI_MATCHER.addURI(AUTHORITY, LINK_BASE_PATH, LINK);
 	}
 
 	@Override
@@ -96,11 +99,17 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(FavorisGroupesTable.TABLE_NAME);
 
+		final String query;
 		final int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
+		case LINK:
+			final String favoriIds = uri.getQueryParameter(FavoriGroupeProvider.QUERY_PARAMETER_IDS);
+			query = String.format(LinkQuery.SELECT, favoriIds);
+			return getReadableDatabase().rawQuery(query, null);
+
 		case FAVORI_ID:
 			final String favoriId = uri.getQueryParameter(FavoriGroupeProvider.QUERY_PARAMETER_IDS);
-			final String query = String.format(LinkQuery.SELECT, favoriId);
+			query = String.format(FavoriGroupesQuery.SELECT, favoriId);
 			return getReadableDatabase().rawQuery(query, null);
 
 		case GROUPE_ID:
@@ -148,6 +157,20 @@ public class FavoriGroupeProvider extends CustomContentProvider {
 				+ GroupeTable.VISIBILITE + ", " + GroupeTable.ORDRE + ", (" + GROUPE_COUNT + ") as "
 				+ FavorisGroupesTable.LINKED + " FROM " + GroupeTable.TABLE_NAME + ORDER;
 
+	}
+
+	/**
+	 * Composants de la requête de sélection des groupes associés à un favori.
+	 * 
+	 * @author romain.guefveneu
+	 * 
+	 */
+	private static interface FavoriGroupesQuery {
+
+		public static final String SELECT = "SELECT " + GroupeTable._ID + ", " + GroupeTable.NOM + ", "
+				+ GroupeTable.VISIBILITE + ", " + GroupeTable.ORDRE + " FROM " + GroupeTable.TABLE_NAME
+				+ " INNER JOIN " + FavorisGroupesTable.TABLE_NAME + " fgt ON fgt." + FavorisGroupesTable.ID_GROUPE
+				+ " = " + GroupeTable._ID + " AND fgt." + FavorisGroupesTable.ID_FAVORI + "= %s";;
 	}
 
 }

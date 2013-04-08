@@ -104,7 +104,7 @@ public class CommentaireController extends RestController<Commentaire> {
 	}
 
 	@Override
-	protected JSONObject toJson(final Commentaire item) throws JSONException {
+	protected JSONObject toJsonObject(final Commentaire item) throws JSONException {
 		final JSONObject object = new JSONObject();
 		object.put(TAG_ID, item.getId());
 		object.put(TAG_CODE_LIGNE, item.getCodeLigne());

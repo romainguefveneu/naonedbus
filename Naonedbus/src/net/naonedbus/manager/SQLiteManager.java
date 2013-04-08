@@ -27,9 +27,9 @@ import android.net.Uri;
 
 public abstract class SQLiteManager<T> {
 
-	private Uri contentUri;
+	private final Uri contentUri;
 
-	protected SQLiteManager(Uri contentUri) {
+	protected SQLiteManager(final Uri contentUri) {
 		this.contentUri = contentUri;
 	}
 
@@ -39,7 +39,7 @@ public abstract class SQLiteManager<T> {
 	 * @param contentResolver
 	 * @return un cursor
 	 */
-	public Cursor getCursor(ContentResolver contentResolver) {
+	public Cursor getCursor(final ContentResolver contentResolver) {
 		return contentResolver.query(contentUri, null, null, null, null);
 	}
 
@@ -51,7 +51,7 @@ public abstract class SQLiteManager<T> {
 	 * @param selectionArg
 	 * @return un cursor
 	 */
-	public Cursor getCursor(ContentResolver contentResolver, String selection, String[] selectionArg) {
+	public Cursor getCursor(final ContentResolver contentResolver, final String selection, final String[] selectionArg) {
 		return contentResolver.query(contentUri, null, selection, selectionArg, null);
 	}
 
@@ -63,8 +63,8 @@ public abstract class SQLiteManager<T> {
 	 * @param selectionArg
 	 * @return une liste des éléments
 	 */
-	public List<T> getAll(ContentResolver contentResolver, String selection, String[] selectionArg) {
-		Cursor c = getCursor(contentResolver, selection, selectionArg);
+	public List<T> getAll(final ContentResolver contentResolver, final String selection, final String[] selectionArg) {
+		final Cursor c = getCursor(contentResolver, selection, selectionArg);
 		return getFromCursor(c);
 	}
 
@@ -74,8 +74,8 @@ public abstract class SQLiteManager<T> {
 	 * @param contentResolver
 	 * @return la liste de tous les éléments de la table
 	 */
-	public List<T> getAll(ContentResolver contentResolver) {
-		Cursor c = getCursor(contentResolver, null, null);
+	public List<T> getAll(final ContentResolver contentResolver) {
+		final Cursor c = getCursor(contentResolver, null, null);
 		return getFromCursor(c);
 	}
 
@@ -87,8 +87,8 @@ public abstract class SQLiteManager<T> {
 	 * @param selectionArg
 	 * @return un élément
 	 */
-	public T getSingle(ContentResolver contentResolver, String selection, String[] selectionArg) {
-		Cursor c = getCursor(contentResolver, selection, selectionArg);
+	public T getSingle(final ContentResolver contentResolver, final String selection, final String[] selectionArg) {
+		final Cursor c = getCursor(contentResolver, selection, selectionArg);
 		return getFirstFromCursor(c);
 	}
 
@@ -99,19 +99,19 @@ public abstract class SQLiteManager<T> {
 	 * @param id
 	 * @return un élément
 	 */
-	public T getSingle(ContentResolver contentResolver, int id) {
+	public T getSingle(final ContentResolver contentResolver, final int id) {
 		final Cursor c = getCursor(contentResolver, "_id = ?", new String[] { String.valueOf(id) });
 		return getFirstFromCursor(c);
 	}
 
 	/**
-	 * Récupérer un élément selon son id
+	 * Récupérer un élément selon son code.
 	 * 
 	 * @param contentResolver
 	 * @param code
 	 * @return un élément
 	 */
-	public T getSingle(ContentResolver contentResolver, String code) {
+	public T getSingle(final ContentResolver contentResolver, final String code) {
 		final Cursor c = getCursor(contentResolver, "code = ?", new String[] { code });
 		return getFirstFromCursor(c);
 	}
@@ -123,8 +123,8 @@ public abstract class SQLiteManager<T> {
 	 *            un Curseur
 	 * @return une liste d'éléments
 	 */
-	protected List<T> getFromCursor(Cursor c) {
-		List<T> items = new ArrayList<T>();
+	protected List<T> getFromCursor(final Cursor c) {
+		final List<T> items = new ArrayList<T>();
 		if (c.getCount() > 0) {
 			c.moveToFirst();
 			while (!c.isAfterLast()) {
@@ -142,7 +142,7 @@ public abstract class SQLiteManager<T> {
 	 * @param c
 	 * @return le premier élément du curseur
 	 */
-	protected T getFirstFromCursor(Cursor c) {
+	protected T getFirstFromCursor(final Cursor c) {
 		T result = null;
 		if (c.getCount() > 0) {
 			c.moveToFirst();

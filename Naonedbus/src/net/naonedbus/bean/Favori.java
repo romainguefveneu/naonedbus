@@ -25,11 +25,12 @@ public class Favori extends Arret implements SectionItem {
 
 	public String nomFavori;
 	public String nomSens;
-	public int couleurBackground;
-	public int couleurTexte;
 	public int idGroupe;
 	public String nomGroupe;
+
 	public Integer nextHoraire;
+	public int couleurBackground;
+	public int couleurTexte;
 
 	public Drawable background;
 	public String delay;

@@ -179,7 +179,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	}
 
 	@Override
-	protected JSONObject toJson(HoraireContainer item) throws JSONException {
+	protected JSONObject toJsonObject(HoraireContainer item) throws JSONException {
 		return null;
 	}
 

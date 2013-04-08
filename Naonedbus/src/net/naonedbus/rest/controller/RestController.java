@@ -122,16 +122,7 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 */
 	protected T parseJsonObject(final URL url) throws IOException {
-		final URLConnection conn = url.openConnection();
-		conn.setConnectTimeout(TIMEOUT);
-		conn.setReadTimeout(TIMEOUT);
-		conn.setRequestProperty("Accept-Language", Locale.getDefault().getLanguage());
-
-		final InputStreamReader comReader = new InputStreamReader(conn.getInputStream());
-		final String source = IOUtils.toString(comReader);
-		IOUtils.closeQuietly(comReader);
-
-		return parseJsonObject(source);
+		return parseJsonObject(readJsonFromUrl(url));
 	}
 
 	/**
@@ -143,6 +134,18 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 */
 	protected List<T> parseJson(final URL url) throws IOException, JSONException {
+		return parseJsonArray(readJsonFromUrl(url));
+	}
+
+	/**
+	 * Lire un flux Json.
+	 * 
+	 * @param url
+	 *            L'url
+	 * @return Le fulx Json au format string
+	 * @throws IOException
+	 */
+	protected String readJsonFromUrl(final URL url) throws IOException {
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);
@@ -152,7 +155,7 @@ public abstract class RestController<T> {
 		final String source = IOUtils.toString(comReader);
 		IOUtils.closeQuietly(comReader);
 
-		return parseJsonArray(source);
+		return source;
 	}
 
 	protected JSONArray getRootNode(final JSONObject json) throws JSONException {
@@ -186,7 +189,7 @@ public abstract class RestController<T> {
 		JSONObject object;
 		for (final T item : items) {
 			try {
-				object = toJson(item);
+				object = toJsonObject(item);
 				list.put(object);
 			} catch (final JSONException e) {
 				if (DBG)
@@ -194,6 +197,17 @@ public abstract class RestController<T> {
 			}
 		}
 		return list.toString();
+	}
+
+	public String toJson(final T item) {
+		JSONObject object = new JSONObject();
+		try {
+			object = toJsonObject(item);
+		} catch (final JSONException e) {
+			if (DBG)
+				Log.e(getClass().getSimpleName(), e.getMessage());
+		}
+		return object.toString();
 	}
 
 	/**
@@ -212,7 +226,7 @@ public abstract class RestController<T> {
 	 *            L'élément à convertir
 	 * @return L'object Json
 	 */
-	protected abstract JSONObject toJson(T item) throws JSONException;
+	protected abstract JSONObject toJsonObject(T item) throws JSONException;
 
 	/**
 	 * @see RestController#post(URL)

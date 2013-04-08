@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
 public class FavoriService extends IntentService {
 
@@ -19,6 +20,8 @@ public class FavoriService extends IntentService {
 	public static final String INTENT_PARAM_KEY = "key";
 
 	public static final String ACTION_EXPORTED = "net.naonedbus.action.FAVORIS_EXPORTED";
+
+	private static final String LOG_TAG = "FavoriService";
 
 	private static final int NOTIFICATION_ID = 0;
 
@@ -55,7 +58,9 @@ public class FavoriService extends IntentService {
 		try {
 			favoriManager.importFavoris(getContentResolver(), key);
 		} catch (final Exception e) {
+			Log.e(LOG_TAG, "Erreur lors de l'import des favoris", e);
 			showNotification(R.string.msg_import_title, R.string.msg_import_error);
+			return;
 		}
 
 		showNotification(R.string.msg_import_title, R.string.msg_import_succeed);
@@ -75,6 +80,7 @@ public class FavoriService extends IntentService {
 			key = favoriController.post(content);
 			succeed = (key != null);
 		} catch (final Exception e) {
+			Log.e(LOG_TAG, "Erreur lors de l'export des favoris", e);
 			showNotification(R.string.msg_export_title, R.string.msg_export_error);
 			succeed = false;
 		}

@@ -29,6 +29,20 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		super(GroupeProvider.CONTENT_URI);
 	}
 
+	/**
+	 * Récupérer un groupe selon son nom.
+	 * 
+	 * @param contentResolver
+	 * @param nom
+	 * @return le groupe
+	 */
+
+	@Override
+	public Groupe getSingle(final ContentResolver contentResolver, final String nom) {
+		final Cursor c = getCursor(contentResolver, GroupeTable.NOM + "=?", new String[] { nom });
+		return getFirstFromCursor(c);
+	}
+
 	@Override
 	public Groupe getSingleFromCursor(final Cursor c) {
 		final Groupe groupe = new Groupe();
@@ -41,19 +55,20 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 
 	public Cursor getCursor(final ContentResolver contentResolver, final List<Integer> idFavoris) {
 		final Uri.Builder builder = FavoriGroupeProvider.CONTENT_URI.buildUpon();
-		builder.path(FavoriGroupeProvider.FAVORI_ID_BASE_PATH);
+		builder.path(FavoriGroupeProvider.LINK_BASE_PATH);
 		builder.appendQueryParameter(FavoriGroupeProvider.QUERY_PARAMETER_IDS, QueryUtils.listToInStatement(idFavoris));
 
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
-	public void add(final ContentResolver contentResolver, final Groupe groupe) {
+	public Integer add(final ContentResolver contentResolver, final Groupe groupe) {
 		final ContentValues contentValues = new ContentValues();
 		contentValues.put(GroupeTable.NOM, groupe.getNom());
 		contentValues.put(GroupeTable.ORDRE, groupe.getOrdre());
 		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
 
-		contentResolver.insert(GroupeProvider.CONTENT_URI, contentValues);
+		final Uri uri = contentResolver.insert(GroupeProvider.CONTENT_URI, contentValues);
+		return Integer.valueOf(uri.getLastPathSegment());
 	}
 
 	public void delete(final ContentResolver contentResolver, final int idGroupe) {
@@ -85,6 +100,14 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		return result;
 	}
 
+	public List<Groupe> getAll(final ContentResolver contentResolver, final int idFavori) {
+		final Uri.Builder builder = FavoriGroupeProvider.CONTENT_URI.buildUpon();
+		builder.path(FavoriGroupeProvider.FAVORI_ID_BASE_PATH);
+		builder.appendQueryParameter(FavoriGroupeProvider.QUERY_PARAMETER_IDS, String.valueOf(idFavori));
+
+		return getFromCursor(contentResolver.query(builder.build(), null, null, null, null));
+	}
+
 	public void addFavoriToGroup(final ContentResolver contentResolver, final int idGroupe, final int idFavori) {
 		final ContentValues contentValues = new ContentValues();
 		contentValues.put(FavorisGroupesTable.ID_GROUPE, String.valueOf(idGroupe));
@@ -110,9 +133,9 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		while (cursor.getPosition() <= stop && !cursor.isAfterLast()) {
 			groupe = getSingleFromCursor(cursor);
 			groupe.setOrdre(position);
-			
+
 			update(contentResolver, groupe);
-			
+
 			cursor.moveToNext();
 			position++;
 		}

@@ -25,12 +25,15 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
+import net.naonedbus.bean.Groupe;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.FavoriProvider;
+import net.naonedbus.provider.impl.GroupeProvider;
 import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.provider.table.FavoriTable;
 import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.provider.table.SensTable;
+import net.naonedbus.rest.container.FavoriContainer;
 import net.naonedbus.rest.controller.impl.FavoriController;
 import net.naonedbus.utils.ColorUtils;
 
@@ -42,7 +45,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
-import android.util.Log;
+import android.util.SparseIntArray;
 
 public class FavoriManager extends SQLiteManager<Favori> {
 
@@ -218,22 +221,25 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 * @return la liste des favoris au format Json
 	 */
 	public String toJson(final ContentResolver contentResolver) {
+		final GroupeManager groupeManager = GroupeManager.getInstance();
 		final List<Favori> favoris = getAll(contentResolver, null, null);
-		final FavoriController controller = new FavoriController();
-		return controller.toJson(favoris);
-	}
+		final List<Groupe> groupes = groupeManager.getAll(contentResolver);
 
-	/**
-	 * Renvoyer la liste des favoris sous forme simple (uniquement la table
-	 * Favoris) au format Json.
-	 * 
-	 * @return la liste des favoris au format Json
-	 */
-	public String toJsonSimple(final ContentResolver contentResolver) {
-		final Cursor c = contentResolver.query(FavoriProvider.CONTENT_URI, FavoriTable.PROJECTION, null, null, null);
-		final List<Favori> favoris = getFromCursor(c);
+		final FavoriContainer container = new FavoriContainer();
+		for (final Groupe groupe : groupes) {
+			container.addGroupe(groupe.getId(), groupe.getNom(), groupe.getOrdre());
+		}
+		for (final Favori favori : favoris) {
+			final List<Groupe> favoriGroupes = groupeManager.getAll(contentResolver, favori._id);
+			final List<Integer> idGroupes = new ArrayList<Integer>();
+			for (final Groupe groupe : favoriGroupes) {
+				idGroupes.add(groupe.getId());
+			}
+			container.addFavori(favori.codeLigne, favori.codeSens, favori.codeArret, favori.nomFavori, idGroupes);
+		}
+
 		final FavoriController controller = new FavoriController();
-		return controller.toJson(favoris);
+		return controller.toJson(container);
 	}
 
 	/**
@@ -245,97 +251,59 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	public void fromJson(final ContentResolver contentResolver, final String json) throws JSONException {
 		final FavoriController controller = new FavoriController();
-		final List<Favori> favoris = controller.parseJsonArray(json);
+		final FavoriContainer favoris = controller.parseJsonObject(json);
 		fromList(contentResolver, favoris);
 	}
 
 	/**
-	 * Remplacer les favoris par ceux fournis en Json
-	 * 
-	 * @param contentResolver
-	 * @param json
-	 * @throws JSONException
-	 */
-	public void fromJson(final SQLiteDatabase db, final String json) throws JSONException {
-		if (DBG)
-			Log.d(LOG_TAG, "fromJson : " + json);
-
-		final FavoriController controller = new FavoriController();
-		final List<Favori> favoris = controller.parseJsonArray(json);
-
-		fromList(db, favoris);
-	}
-
-	/**
 	 * Remplacer les favoris par ceux de la liste
 	 * 
 	 * @param contentResolver
-	 * @param favoris
+	 * @param container
 	 */
-	private void fromList(final SQLiteDatabase db, final List<Favori> favoris) {
-		if (DBG)
-			Log.d(LOG_TAG, "fromList");
-
-		Integer itemId;
+	private void fromList(final ContentResolver contentResolver, final FavoriContainer container) {
 		final ArretManager arretManager = ArretManager.getInstance();
-
-		// Delete old items
-		db.delete(FavoriTable.TABLE_NAME, null, null);
-
-		// Add new items
-		for (final Favori favori : favoris) {
-			itemId = arretManager.getIdByFavori(db, favori);
-			if (itemId != null) {
-				favori._id = itemId;
-				addFavori(db, favori);
-			}
-		}
-	}
-
-	/**
-	 * Remplacer les favoris par ceux de la liste
-	 * 
-	 * @param contentResolver
-	 * @param favoris
-	 */
-	private void fromList(final ContentResolver contentResolver, final List<Favori> favoris) {
-		Integer itemId;
-		final ArretManager arretManager = ArretManager.getInstance();
+		final GroupeManager groupeManager = GroupeManager.getInstance();
+		final SparseIntArray groupeMapping = new SparseIntArray();
 
 		// Delete old items
 		contentResolver.delete(FavoriProvider.CONTENT_URI, null, null);
+		contentResolver.delete(GroupeProvider.CONTENT_URI, null, null);
 
 		// Add new items
-		for (final Favori favori : favoris) {
+		for (final net.naonedbus.rest.container.FavoriContainer.Groupe g : container.groupes) {
+			final Groupe groupe = new Groupe();
+			groupe.setNom(g.nom);
+			groupe.setOrdre(g.ordre);
+
+			final int idLocal = groupeManager.add(contentResolver, groupe);
+
+			groupeMapping.put(g.id, idLocal);
+		}
+		for (final net.naonedbus.rest.container.FavoriContainer.Favori f : container.favoris) {
+
+			Integer itemId;
+
+			final Favori favori = new Favori();
+			favori.codeArret = f.codeArret;
+			favori.codeSens = f.codeSens;
+			favori.codeLigne = f.codeLigne;
+			favori.nomFavori = f.nomFavori;
+
 			itemId = arretManager.getIdByFavori(contentResolver, favori);
 			if (itemId != null) {
 				favori._id = itemId;
 				addFavori(contentResolver, favori);
 			}
-		}
-	}
 
-	/**
-	 * Remplacer les favoris par ceux de la liste
-	 * 
-	 * @param contentResolver
-	 * @param favoris
-	 */
-	private void fromListFavoris(final ContentResolver contentResolver, final List<Favori> favoris) {
-		Integer itemId;
-		final ArretManager arretManager = ArretManager.getInstance();
-
-		// Delete old items
-		contentResolver.delete(FavoriProvider.CONTENT_URI, null, null);
-
-		// Add new items
-		for (final Favori favori : favoris) {
-			itemId = arretManager.getIdByFavori(contentResolver, favori);
-
-			if (itemId != null) {
-				favori._id = itemId;
-				addFavori(contentResolver, favori);
-			}
+			// Associer aux groupes
+			final List<Integer> favoriGroupes = f.idGroupes;
+			if (favoriGroupes != null)
+				for (final Integer idGroupe : favoriGroupes) {
+					if (groupeMapping.indexOfKey(idGroupe) > -1) {
+						groupeManager.addFavoriToGroup(contentResolver, groupeMapping.get(idGroupe), favori._id);
+					}
+				}
 		}
 	}
 
@@ -349,11 +317,11 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	public void importFavoris(final ContentResolver contentResolver, final String id) throws IOException, JSONException {
 		final FavoriController controller = new FavoriController();
-		final List<Favori> favoris = controller.get(id);
+		final FavoriContainer favoris = controller.get(id);
 
 		mIsImporting = true;
 
-		fromListFavoris(contentResolver, favoris);
+		fromList(contentResolver, favoris);
 
 		mIsImporting = false;
 
