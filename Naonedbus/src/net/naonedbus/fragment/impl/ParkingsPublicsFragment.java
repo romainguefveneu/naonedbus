@@ -41,9 +41,9 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ParkingsPublicsFragment extends CustomListFragment {
 
-	private final static int SORT_NOM = R.id.menu_sort_name;
-	private final static int SORT_DISTANCE = R.id.menu_sort_distance;
-	private final static int SORT_PLACES = R.id.menu_sort_parking_places;
+	private final static int SORT_NOM = 0;
+	private final static int SORT_DISTANCE = 1;
+	private final static int SORT_PLACES = 2;
 
 	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
 	static {
@@ -66,7 +66,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	}
 
 	private StateHelper mStateHelper;
-	private MyLocationProvider myLocationProvider;
+	private final MyLocationProvider myLocationProvider;
 	private ParkingDistance loaderDistance;
 	private int mCurrentSort = SORT_NOM;
 
@@ -76,9 +76,8 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
 		myLocationProvider.addListener(locationListener);
 
 		// Initaliser le comparator avec la position actuelle.
@@ -86,10 +85,12 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
+
+		setHasOptionsMenu(true);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		getListView().setDividerHeight(0);
 		loadContent();
@@ -108,14 +109,14 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_parkings_publics, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		item.setChecked(true);
 
 		switch (item.getItemId()) {
@@ -131,12 +132,15 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 			mCurrentSort = SORT_PLACES;
 			sort();
 			break;
+		case R.id.menu_refresh:
+			refreshContent();
+			break;
 		}
 		return false;
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 		final Parking parking = (Parking) getListAdapter().getItem(position);
 
@@ -164,7 +168,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 			adapter.setIndexer(indexers.get(mCurrentSort));
 
 			result.setResult(adapter);
-		} catch (Exception exception) {
+		} catch (final Exception exception) {
 			result.setException(exception);
 		}
 		return result;
@@ -183,7 +187,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	private class ParkingDistance extends AsyncTask<Void, Void, Void> {
 
 		@Override
-		protected Void doInBackground(Void... params) {
+		protected Void doInBackground(final Void... params) {
 			final ListAdapter adapter = getListAdapter();
 
 			final Location parkingLocation = new Location(LocationManager.GPS_PROVIDER);
@@ -208,7 +212,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		}
 
 		@Override
-		protected void onPostExecute(Void result) {
+		protected void onPostExecute(final Void result) {
 			sort();
 		}
 
@@ -230,7 +234,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	 * 
 	 * @param adapter
 	 */
-	private void sort(ParkingPublicArrayAdapter adapter) {
+	private void sort(final ParkingPublicArrayAdapter adapter) {
 		final Comparator<ParkingPublic> comparator;
 		final ArraySectionIndexer<ParkingPublic> indexer;
 
@@ -250,9 +254,9 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	/**
 	 * Listener de changement de coordonnées GPS
 	 */
-	private MyLocationListener locationListener = new MyLocationListener() {
+	private final MyLocationListener locationListener = new MyLocationListener() {
 		@Override
-		public void onLocationChanged(Location location) {
+		public void onLocationChanged(final Location location) {
 			final ParkingDistanceComparator comparator = (ParkingDistanceComparator) comparators.get(SORT_DISTANCE);
 			comparator.setReferentiel(location);
 

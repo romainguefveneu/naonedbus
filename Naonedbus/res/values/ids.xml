@@ -31,6 +31,7 @@
     <item name="itemTime" type="id"/>
     <item name="itemDistance" type="id"/>
     <item name="itemLignes" type="id"/>
+    <item name="itemTelephone" type="id"/>
     <item name="dotLocation" type="id"/>
     <item name="ligneFrom" type="id"/>
     <item name="ligneTo" type="id"/>
@@ -58,6 +59,10 @@
     <item name="aboutSectionThanks" type="id"/>
     <item name="aboutSectionTranslators" type="id"/>
 
+    <!-- Parking -->
+    <item name="placesTotales" type="id"/>
+    <item name="placesDisponibles" type="id"/>
+    <item name="majDate" type="id"/>
     <!--  -->
     <item name="colLeft" type="id"/>
     <item name="colRight" type="id"/>

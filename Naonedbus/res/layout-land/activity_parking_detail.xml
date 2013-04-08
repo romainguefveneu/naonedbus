@@ -1,123 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultActivity" >
+    style="@style/DefaultActivityContent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_small"
+    android:paddingTop="@dimen/padding_small" >
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginTop="10dp" >
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@id/itemTitle"
-            style="@style/BigTitle"
-            android:layout_marginRight="10dip" />
+            style="@style/BigTitle.Blue"
+            android:layout_marginRight="@dimen/padding_medium" />
 
         <TextView
             android:id="@id/itemDescription"
-            style="@style/ItemParkingDescription"
-            android:background="@drawable/item_symbole_back" />
+            style="@style/ItemParkingDescription" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:baselineAligned="false"
-        android:orientation="horizontal" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/padding_small"
+        android:weightSum="5" >
 
         <LinearLayout
-            android:id="@+id/colLeft"
+            android:id="@id/colLeft"
+            style="@style/Card"
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="5dp" >
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/padding_medium"
+            android:layout_weight="3"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small" >
+
+                <!-- Left -->
+
+                <TextView
+                    android:id="@id/placesTotales"
+                    style="@style/ItemPrimaryText.Large"
+                    android:layout_alignBaseline="@id/placesDisponibles"
+                    android:layout_alignParentLeft="true" />
+
+                <TextView
+                    android:id="@+id/placesTotalesLabel"
+                    style="@style/SectionTitle.Small"
+                    android:layout_alignBaseline="@+id/placesDisponiblesLabel"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/placesTotales"
+                    android:text="@string/parking_titre_places_totales" />
+
+                <TextView
+                    android:id="@id/itemTelephone"
+                    style="@style/ItemPrimaryText.Large"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/placesDisponiblesLabel" />
+
+                <TextView
+                    android:id="@+id/itemTelephoneLabel"
+                    style="@style/SectionTitle.Small"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/itemTelephone"
+                    android:text="@string/parking_titre_telephone" />
+
+                <!-- Right -->
+
+                <TextView
+                    android:id="@id/placesDisponibles"
+                    style="@style/CardTextHuge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@id/placesDisponiblesLabel"
+                    style="@style/SectionTitle.Small"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/placesDisponibles"
+                    android:layout_marginBottom="@dimen/padding_small"
+                    android:text="@string/parking_titre_places_disponibles" />
+            </RelativeLayout>
+            <!-- Footer -->
 
             <TextView
-                style="@style/SectionTitle"
-                android:text="@string/parking_section_info" />
-
-            <ScrollView
+                android:id="@id/itemDate"
+                style="@style/ItemTime.Secondary"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="5dp" >
-
-                    <TextView
-                        android:id="@+id/placesDisponibles"
-                        style="@style/ItemPrimaryText"
-                        android:text="aucune" />
-
-                    <TextView
-                        style="@style/SectionTitle.Small"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/parking_titre_places_disponibles" />
-
-                    <TextView
-                        android:id="@+id/placesTotales"
-                        style="@style/ItemPrimaryText"
-                        android:text="aucune" />
-
-                    <TextView
-                        style="@style/SectionTitle.Small"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/parking_titre_places_totales" />
-
-                    <TextView
-                        android:id="@+id/majDate"
-                        style="@style/ItemPrimaryText"
-                        android:text="aucune" />
-
-                    <TextView
-                        style="@style/SectionTitle.Small"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/parking_titre_mise_a_jour" />
-
-                    <TextView
-                        android:id="@+id/itemTelephone"
-                        style="@style/ItemPrimaryText" />
-
-                    <TextView
-                        style="@style/SectionTitle.Small"
-                        android:text="@string/parking_titre_telephone" />
-                </LinearLayout>
-            </ScrollView>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_small"
+                android:background="@drawable/box_footer_background"
+                android:gravity="right"
+                android:padding="@dimen/padding_small" />
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/colRight"
+            android:id="@id/colRight"
+            style="@style/Card"
             android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="5dp" >
-
-            <TextView
-                style="@style/SectionTitle"
-                android:text="@string/parking_section_carte" />
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical" >
 
             <com.google.android.maps.MapView
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/map_view"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:apiKey="@string/google_map_api_key"
                 android:clickable="true" />
 
             <TextView
                 android:id="@+id/message"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/msg_element_not_localized"
                 android:visibility="gone" />

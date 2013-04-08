@@ -37,7 +37,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public abstract class EquipementFragment extends CustomListFragment implements CustomFragmentActions {
 
-	private final static int SORT_NOM = 0;;
+	private final static int SORT_NOM = 0;
 	private final static int SORT_DISTANCE = 1;
 	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
 	static {

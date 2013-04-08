@@ -64,67 +64,69 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		parking, parkingRelai
 	};
 
-	private static final Map<Class<?>, ParkingDetailAdapter> adapterMap = new HashMap<Class<?>, ParkingDetailAdapter>();
-	static {
-		adapterMap.put(ParkingRelai.class, new ParkingRelaiDetailAdapter());
-		adapterMap.put(ParkingPublic.class, new ParkingPublicDetailAdapter());
-	}
-
 	protected static final String NAVIGATION_INTENT = "google.navigation:q=%f,%f";
 	protected static final String SMS_NAVIGATION_URL = "maps.google.com/?q=%f,%f";
-	protected static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.FRANCE);
+	protected static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.getDefault());
 
-	private SlidingMenuHelper slidingMenuHelper;
+	private final Map<Class<?>, ParkingDetailAdapter> mAadapterMap = new HashMap<Class<?>, ParkingDetailAdapter>();
 
-	protected TextView parkingTitle;
-	protected TextView parkingDescription;
-	protected TextView placesDisponibles;
-	protected TextView placesTotales;
-	protected TextView majDate;
-	protected TextView itemTelephone;
-	protected TextView message;
-	protected MapView mapView;
-	protected MapController mapController;
+	private SlidingMenuHelper mSlidingMenuHelper;
 
-	private Parking parking;
+	protected TextView mParkingTitle;
+	protected TextView mParkingDescription;
+	protected TextView mPlacesDisponibles;
+	protected TextView mPlacesTotales;
+	protected TextView mItemDate;
+	protected TextView mItemTelephone;
+	protected TextView mMessage;
+	protected MapView mMapView;
+	protected MapController mMapController;
+
+	private Parking mParking;
+
+	public ParkingDetailActivity() {
+		mAadapterMap.put(ParkingRelai.class, new ParkingRelaiDetailAdapter());
+		mAadapterMap.put(ParkingPublic.class, new ParkingPublicDetailAdapter());
+	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		setTheme(NBApplication.THEME);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parking_detail);
 
 		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
+		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 
-		slidingMenuHelper = new SlidingMenuHelper(this);
-		slidingMenuHelper.setupActionBar(getSupportActionBar());
+		mSlidingMenuHelper = new SlidingMenuHelper(this);
+		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 
 		getSupportActionBar().setIcon(R.drawable.ic_launcher);
 
-		itemTelephone = (TextView) findViewById(R.id.itemTelephone);
+		mItemTelephone = (TextView) findViewById(R.id.itemTelephone);
 
-		parkingTitle = (TextView) findViewById(R.id.itemTitle);
-		parkingDescription = (TextView) findViewById(R.id.itemDescription);
-		placesDisponibles = (TextView) findViewById(R.id.placesDisponibles);
-		placesTotales = (TextView) findViewById(R.id.placesTotales);
-		majDate = (TextView) findViewById(R.id.majDate);
-		message = (TextView) findViewById(R.id.message);
+		mParkingTitle = (TextView) findViewById(R.id.itemTitle);
+		mParkingDescription = (TextView) findViewById(R.id.itemDescription);
+		mPlacesDisponibles = (TextView) findViewById(R.id.placesDisponibles);
+		mPlacesTotales = (TextView) findViewById(R.id.placesTotales);
+		mItemDate = (TextView) findViewById(R.id.itemDate);
+		mMessage = (TextView) findViewById(R.id.message);
 
-		parkingTitle.setTypeface(robotoBold);
-		placesDisponibles.setTypeface(robotoLight);
-		placesTotales.setTypeface(robotoLight);
-		majDate.setTypeface(robotoLight);
-		itemTelephone.setTypeface(robotoLight);
+		mParkingTitle.setTypeface(robotoBold);
+		mPlacesDisponibles.setTypeface(robotoLight);
+		mPlacesTotales.setTypeface(robotoLight);
+		mItemDate.setTypeface(robotoMedium);
+		mItemTelephone.setTypeface(robotoLight);
 
-		mapView = (MapView) findViewById(R.id.map_view);
-		mapView.setBuiltInZoomControls(true);
-		mapController = mapView.getController();
-		mapController.setZoom(17);
+		mMapView = (MapView) findViewById(R.id.map_view);
+		mMapView.setBuiltInZoomControls(true);
+		mMapController = mMapView.getController();
+		mMapController.setZoom(17);
 
-		parking = (Parking) getIntent().getSerializableExtra(Param.parking.toString());
-		if (parking != null) {
-			loadParking(parking);
+		mParking = (Parking) getIntent().getSerializableExtra(Param.parking.toString());
+		if (mParking != null) {
+			loadParking(mParking);
 		} else {
 			throw new IllegalArgumentException("Un parking doit être renseigné.");
 		}
@@ -137,28 +139,28 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		final MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.activity_parking_detail, menu);
 		menu.findItem(R.id.menu_phone).setVisible(
-				parking.getTelephone() != null && parking.getTelephone().length() != 0);
+				mParking.getTelephone() != null && mParking.getTelephone().length() != 0);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			finish();
 			break;
 		case R.id.menu_navigation:
-			startNavigation(parking);
+			startNavigation(mParking);
 			break;
 		case R.id.menu_share:
-			shareComment(parking);
+			shareComment(mParking);
 			break;
 		case R.id.menu_phone:
-			final Uri telUri = Uri.parse("tel:" + parking.getTelephone());
+			final Uri telUri = Uri.parse("tel:" + mParking.getTelephone());
 			startActivity(new Intent(Intent.ACTION_DIAL, telUri));
 		}
 		return super.onOptionsItemSelected(item);
@@ -166,16 +168,17 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 
 	private void loadParking(final Parking parking) {
 
-		parkingTitle.setText(parking.getNom());
+		mParkingTitle.setText(parking.getNom());
 
 		if (parking.getTelephone() == null || parking.getTelephone().length() == 0) {
-			itemTelephone.setText(R.string.msg_nothing_telephone);
+			mItemTelephone.setVisibility(View.GONE);
+			findViewById(R.id.itemTelephoneLabel).setVisibility(View.GONE);
 		} else {
-			itemTelephone.setText(parking.getTelephone());
+			mItemTelephone.setText(parking.getTelephone());
 		}
 
 		if (parking.getLatitude() != null) {
-			mapController.animateTo(getGeoPoint(parking));
+			mMapController.animateTo(getGeoPoint(parking));
 
 			final ParkingItemizedOverlay itemizedOverlay = new ParkingItemizedOverlay(getResources());
 			final BasicOverlayItem parkingOverlayItem = new BasicOverlayItem(getGeoPoint(parking), parking.getNom(),
@@ -183,15 +186,15 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 			itemizedOverlay.addOverlay(parkingOverlayItem);
 			itemizedOverlay.setFocus(parkingOverlayItem);
 
-			mapView.getOverlays().add(itemizedOverlay);
-			mapView.postInvalidate();
+			mMapView.getOverlays().add(itemizedOverlay);
+			mMapView.postInvalidate();
 		} else {
-			mapView.setVisibility(View.GONE);
-			message.setVisibility(View.VISIBLE);
+			mMapView.setVisibility(View.GONE);
+			mMessage.setVisibility(View.VISIBLE);
 		}
 
-		if (adapterMap.containsKey(parking.getClass())) {
-			adapterMap.get(parking.getClass()).setObject(parking, this);
+		if (mAadapterMap.containsKey(parking.getClass())) {
+			mAadapterMap.get(parking.getClass()).setObject(parking, this);
 		}
 	}
 
@@ -200,13 +203,13 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	 * 
 	 * @param parking
 	 */
-	private void startNavigation(Parking parking) {
+	private void startNavigation(final Parking parking) {
 		final Uri uri = Uri.parse(String.format(Locale.ENGLISH, NAVIGATION_INTENT, parking.getLatitude(),
 				parking.getLongitude()));
 		final Intent i = new Intent(Intent.ACTION_VIEW, uri);
 		try {
 			startActivity(i);
-		} catch (ActivityNotFoundException e) {
+		} catch (final ActivityNotFoundException e) {
 			Toast.makeText(getApplicationContext(), R.string.msg_error_navigation, Toast.LENGTH_LONG).show();
 		}
 	}
@@ -214,8 +217,8 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	/**
 	 * Proposer de partager l'information
 	 */
-	private void shareComment(Parking parking) {
-		Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+	private void shareComment(final Parking parking) {
+		final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getParkingInformation(parking));
 		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
@@ -227,15 +230,15 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	 * @param parking
 	 * @return
 	 */
-	private String getParkingInformation(Parking parking) {
-		if (adapterMap.containsKey(parking.getClass())) {
-			final ParkingDetailAdapter adapter = adapterMap.get(parking.getClass());
+	private String getParkingInformation(final Parking parking) {
+		if (mAadapterMap.containsKey(parking.getClass())) {
+			final ParkingDetailAdapter adapter = mAadapterMap.get(parking.getClass());
 			return adapter.getParkingInformation(this, parking);
 		}
 		return "";
 	}
 
-	private GeoPoint getGeoPoint(Parking parking) {
+	private GeoPoint getGeoPoint(final Parking parking) {
 		return new GeoPoint((int) (parking.getLatitude() * 1E6), (int) (parking.getLongitude() * 1E6));
 	}
 
@@ -275,7 +278,7 @@ interface ParkingDetailAdapter {
 class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 
 	@Override
-	public void setObject(Parking p, ParkingDetailActivity activity) {
+	public void setObject(final Parking p, final ParkingDetailActivity activity) {
 		final ParkingPublic parking = (ParkingPublic) p;
 
 		int couleur;
@@ -290,23 +293,23 @@ class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 			couleur = activity.getResources().getColor(parking.getStatut().getColorRes());
 		}
 
-		activity.parkingDescription.setText(detail);
-		activity.parkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
+		activity.mParkingDescription.setText(detail);
+		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
 
 		if (parking.getStatut().equals(ParkingPublicStatut.INVALIDE)
 				|| parking.getStatut().equals(ParkingPublicStatut.ABONNES)) {
-			activity.placesDisponibles.setText("\u2026");
-			activity.placesTotales.setText("\u2026");
+			activity.mPlacesDisponibles.setText("\u2026");
+			activity.mPlacesTotales.setText("\u2026");
 		} else {
-			activity.placesDisponibles.setText(String.valueOf(parking.getPlacesDisponibles()));
-			activity.placesTotales.setText(String.valueOf(parking.getPlacesTotales()));
+			activity.mPlacesDisponibles.setText(String.valueOf(parking.getPlacesDisponibles()));
+			activity.mPlacesTotales.setText(String.valueOf(parking.getPlacesTotales()));
 		}
 
-		activity.majDate.setText(ParkingDetailActivity.PRETTY_TIME.format(parking.getUpdateDate()));
+		activity.mItemDate.setText(ParkingDetailActivity.PRETTY_TIME.format(parking.getUpdateDate()));
 	}
 
 	@Override
-	public String getParkingInformation(Context context, Parking p) {
+	public String getParkingInformation(final Context context, final Parking p) {
 		final ParkingPublic parking = (ParkingPublic) p;
 
 		final StringBuilder stringBuilder = new StringBuilder();
@@ -337,16 +340,16 @@ class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 class ParkingRelaiDetailAdapter implements ParkingDetailAdapter {
 
 	@Override
-	public void setObject(Parking p, ParkingDetailActivity activity) {
+	public void setObject(final Parking p, final ParkingDetailActivity activity) {
 		final Context context = activity.getApplicationContext();
 
-		activity.parkingDescription.setText("\u2022 " + activity.getString(R.string.parking_relai));
-		activity.parkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources()
+		activity.mParkingDescription.setText("\u2022 " + activity.getString(R.string.parking_relai));
+		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources()
 				.getColor(R.color.parking_state_blue)));
 	}
 
 	@Override
-	public String getParkingInformation(Context context, Parking p) {
+	public String getParkingInformation(final Context context, final Parking p) {
 		final ParkingRelai parking = (ParkingRelai) p;
 
 		final StringBuilder stringBuilder = new StringBuilder();
