@@ -197,8 +197,14 @@ public class FavoriController extends RestController<FavoriContainer> {
 					idGroupes.add(favoriGroupeJson.getInt(g));
 				}
 
+				final String nomFavori;
+				if (favori.has(TAG_FAVORI_NOM_FAVORI)) {
+					nomFavori = favori.getString(TAG_FAVORI_NOM_FAVORI);
+				} else {
+					nomFavori = null;
+				}
 				container.addFavori(favori.getString(TAG_FAVORI_CODE_LIGNE), favori.getString(TAG_FAVORI_CODE_SENS),
-						favori.getString(TAG_FAVORI_CODE_ARRET), favori.getString(TAG_FAVORI_NOM_FAVORI), idGroupes);
+						favori.getString(TAG_FAVORI_CODE_ARRET), nomFavori, idGroupes);
 			}
 
 			return container;
