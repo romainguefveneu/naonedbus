@@ -1584,19 +1584,21 @@ containing a value of this type.
  Minimum width for an action button in the menu area of an action bar 
          */
         public static final int action_button_min_width=0x7f09001e;
-        public static final int bigcode_text_size=0x7f090026;
-        public static final int bigsens_text_size=0x7f090028;
-        public static final int bigsubtitle_height=0x7f09002a;
-        public static final int bigsubtitle_text_size=0x7f090029;
-        public static final int bigsubtitlesmall_text_size=0x7f09002b;
-        public static final int bigtitle_text_size=0x7f090027;
-        public static final int clock_hand_height=0x7f09002f;
+        public static final int bigcode_text_size=0x7f090028;
+        public static final int bigsens_text_size=0x7f09002a;
+        public static final int bigsubtitle_height=0x7f09002c;
+        public static final int bigsubtitle_text_size=0x7f09002b;
+        public static final int bigsubtitlesmall_text_size=0x7f09002d;
+        public static final int bigtitle_text_size=0x7f090029;
+        public static final int clock_hand_height=0x7f090031;
         /**  Clock 
          */
-        public static final int clock_hand_width=0x7f09002e;
+        public static final int clock_hand_width=0x7f090030;
         /**  Clock 
          */
-        public static final int clock_icon_size=0x7f09002d;
+        public static final int clock_icon_size=0x7f09002f;
+        public static final int codeitem_margin=0x7f090025;
+        public static final int codeitem_width=0x7f090026;
         public static final int default_circle_indicator_radius=0x7f090001;
         public static final int default_circle_indicator_stroke_width=0x7f090002;
         /**  The default gap between components in a layout. 
@@ -1613,23 +1615,23 @@ containing a value of this type.
         public static final int default_title_indicator_text_size=0x7f09000b;
         public static final int default_title_indicator_title_padding=0x7f09000c;
         public static final int default_title_indicator_top_padding=0x7f09000d;
-        public static final int drag_grip_ridge_gap=0x7f090031;
+        public static final int drag_grip_ridge_gap=0x7f090033;
         /**  Drag n drop 
          */
-        public static final int drag_grip_ridge_size=0x7f090030;
+        public static final int drag_grip_ridge_size=0x7f090032;
         /**  Activity Header 
  Activity Header 
  Activity Header 
  Activity Header 
          */
-        public static final int headeractivity_height=0x7f090025;
+        public static final int headeractivity_height=0x7f090027;
         /**  HoraireCard 
  HoraireCard 
          */
-        public static final int horaire_huge=0x7f090032;
+        public static final int horaire_huge=0x7f090034;
         /**  Dimensions for PagerHeaders 
          */
-        public static final int list_section_divider_min_height=0x7f09002c;
+        public static final int list_section_divider_min_height=0x7f09002e;
         public static final int padding_large=0x7f090022;
         public static final int padding_medium=0x7f090021;
         public static final int padding_small=0x7f090020;

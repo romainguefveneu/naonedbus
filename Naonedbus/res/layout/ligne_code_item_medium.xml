@@ -20,11 +20,11 @@
  */
 -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="35dip"
-    android:layout_height="30dip"
-    android:layout_marginBottom="1dp"
-    android:layout_marginRight="1dp"
+    android:layout_width="@dimen/codeitem_width"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/codeitem_margin"
+    android:layout_marginRight="@dimen/codeitem_margin"
     android:gravity="center_horizontal|center_vertical"
-    android:paddingLeft="3dp"
-    android:paddingRight="3dp"
+    android:paddingBottom="@dimen/padding_tiny"
+    android:paddingTop="@dimen/padding_tiny"
     android:textSize="18sp" />

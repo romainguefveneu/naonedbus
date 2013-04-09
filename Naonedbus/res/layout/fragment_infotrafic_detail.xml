@@ -58,7 +58,6 @@
             android:paddingLeft="@dimen/padding_small"
             android:paddingRight="@dimen/padding_small"
             gridlayout:alignmentMode="alignBounds"
-            gridlayout:columnCount="10"
             gridlayout:columnOrderPreserved="true"
             gridlayout:useDefaultMargins="false" />
     </LinearLayout>
