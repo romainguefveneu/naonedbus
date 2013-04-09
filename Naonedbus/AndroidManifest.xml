@@ -110,7 +110,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.impl.SearchActivity"
-            android:label="@string/emptyString" >
+            android:label="@string/emptyString"
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
 

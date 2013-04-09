@@ -22,7 +22,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 	private static String BUNDLE_TABS_BUNDLES = "tabsBundles";
 
-	private int layoutId;
+	private final int layoutId;
 
 	/**
 	 * Liste des fragments
@@ -38,20 +38,19 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	private SlidingMenuHelper mSlidingMenuHelper;
 
 	/** Sert à la détection du changement de thème. */
-	private int currentTheme = NBApplication.THEME;
+	private final int currentTheme = NBApplication.THEME;
 
-	public OneFragmentSlidingActivity(int layoutId) {
+	public OneFragmentSlidingActivity(final int layoutId) {
 		this.layoutId = layoutId;
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
 
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
-		mMenuDrawer.setOnDrawerStateChangeListener(this);
 
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
@@ -62,7 +61,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	}
 
 	@Override
-	public void onPostCreate(Bundle savedInstanceState) {
+	public void onPostCreate(final Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
 	}
@@ -71,7 +70,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	 * Show the menu when home icon is clicked.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			mMenuDrawer.toggleMenu();
@@ -87,7 +86,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putString(BUNDLE_TABS_CLASSES, mClasse);
 		outState.putParcelable(BUNDLE_TABS_BUNDLES, mBundle);
@@ -95,7 +94,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
 		if (savedInstanceState.containsKey(BUNDLE_TABS_CLASSES)) {
 			mClasse = savedInstanceState.getString(BUNDLE_TABS_CLASSES);
 			mBundle = savedInstanceState.getParcelable(BUNDLE_TABS_BUNDLES);
@@ -106,7 +105,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
+	public void onWindowFocusChanged(final boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 
 		// Gérer le changement de thème;
@@ -125,7 +124,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	 * Show the menu when menu button pressed, hide it when back is pressed
 	 */
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
 			mMenuDrawer.toggleMenu();
 			return true;
@@ -133,7 +132,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 		return super.onKeyDown(keyCode, event);
 	}
 
-	protected void addFragment(String classe) {
+	protected void addFragment(final String classe) {
 		final ActionBar actionBar = getSupportActionBar();
 		this.mClasse = classe;
 
@@ -144,7 +143,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 	}
 
-	protected void addFragment(String classe, Bundle bundle) {
+	protected void addFragment(final String classe, final Bundle bundle) {
 		final ActionBar actionBar = getSupportActionBar();
 		this.mClasse = classe;
 		this.mBundle = bundle;
@@ -162,7 +161,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	 * @param classes
 	 *            Les classes des fragments.
 	 */
-	protected void addFragment(Class<?> classes) {
+	protected void addFragment(final Class<?> classes) {
 		this.mClasse = classes.getName();
 		addFragment(this.mClasse);
 	}
@@ -173,7 +172,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	 * @param classe
 	 *            Les classes des fragments.
 	 */
-	protected void addFragment(Class<?> classe, Bundle bundle) {
+	protected void addFragment(final Class<?> classe, final Bundle bundle) {
 		this.mClasse = classe.getName();
 		addFragment(this.mClasse, bundle);
 	}
@@ -193,7 +192,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	 * @param key
 	 * @return
 	 */
-	protected Object getParamValue(IIntentParamKey key) {
+	protected Object getParamValue(final IIntentParamKey key) {
 		return getIntent().getSerializableExtra(key.toString());
 	}
 
@@ -202,7 +201,19 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	}
 
 	@Override
-	public void onDrawerStateChange(int oldState, int newState) {
+	protected void onResume() {
+		super.onResume();
+		mMenuDrawer.setOnDrawerStateChangeListener(this);
+	}
+
+	@Override
+	protected void onPause() {
+		mMenuDrawer.setOnDrawerStateChangeListener(null);
+		super.onPause();
+	}
+
+	@Override
+	public void onDrawerStateChange(final int oldState, final int newState) {
 
 	}
 

@@ -20,7 +20,7 @@ public class SearchActivity extends OneFragmentSlidingActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		if (savedInstanceState == null) {
@@ -39,7 +39,7 @@ public class SearchActivity extends OneFragmentSlidingActivity {
 	}
 
 	@Override
-	public void onDrawerStateChange(int oldState, int newState) {
+	public void onDrawerStateChange(final int oldState, final int newState) {
 		if (newState == MenuDrawer.STATE_CLOSED) {
 			mModalSearchView.requestFocus();
 			final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
