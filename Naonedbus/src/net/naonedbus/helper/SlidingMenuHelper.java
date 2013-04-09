@@ -37,8 +37,6 @@ public class SlidingMenuHelper {
 	private static int sSavedPosition = -1;
 	private static int sSavedListTop;
 
-	private static final String DONATE_URL = "https://www.paypal.com/fr/cgi-bin/webscr?cmd=_flow&SESSION=p9xEUD2T2w_kkznvnHKQD35CRgV1K6y_3OKHq35dIYRabmfJ30AiFS_7FnG&dispatch=5885d80a13c0db1f8e263663d3faee8d5348ead9d61c709ee8c979deef3ea735";
-
 	/** Menu général. */
 	private ListView mMenuListView;
 
@@ -58,7 +56,7 @@ public class SlidingMenuHelper {
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_carte, MapActivity.class, R.drawable.ic_action_map, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parametres, (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) ? OldSettingsActivity.class : SettingsActivity.class, R.drawable.ic_action_settings, 1));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_about, AboutActivity.class, R.drawable.ic_action_info, 1));
-		MENU_ITEMS.add(new LinkMainMenuItem(R.string.menu_don, DONATE_URL, R.drawable.ic_action_favourite, 1));
+		MENU_ITEMS.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));
 		// @formatter:on
 	}
 
