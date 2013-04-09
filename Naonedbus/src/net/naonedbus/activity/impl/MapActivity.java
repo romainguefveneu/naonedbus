@@ -32,6 +32,7 @@ import net.naonedbus.utils.GeoPointUtils;
 import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.widget.BalloonOverlayView;
 import net.simonvt.menudrawer.MenuDrawer;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.DialogInterface;
@@ -223,7 +224,6 @@ public class MapActivity extends SherlockMapActivity {
 		for (final Equipement.Type type : types) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
 			item.setCheckable(true);
-			item.setChecked(mSelectedLayers.contains(type));
 		}
 
 		final MenuItem item = filterSubMenu.add(0, MENU_ID_SATELLITE, 0, R.string.map_calque_satellite);
@@ -231,6 +231,20 @@ public class MapActivity extends SherlockMapActivity {
 		item.setChecked(mMapView.isSatellite());
 
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(final Menu menu) {
+
+		final Equipement.Type[] types = Equipement.Type.values();
+		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
+
+		for (final Equipement.Type type : types) {
+			final MenuItem item = filterSubMenu.findItem(type.getId());
+			item.setChecked(mSelectedLayers.contains(type));
+		}
+
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -330,6 +344,7 @@ public class MapActivity extends SherlockMapActivity {
 		return false;
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onNewIntent(final Intent intent) {
 		setIntent(intent);
@@ -337,6 +352,8 @@ public class MapActivity extends SherlockMapActivity {
 			if (intent.getData() != null) {
 				// Afficher l'élément sélectionné
 				changeSelectedItem(intent);
+
+				invalidateOptionsMenu();
 			}
 		}
 	}
