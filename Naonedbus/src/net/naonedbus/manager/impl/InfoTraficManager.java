@@ -121,7 +121,7 @@ public class InfoTraficManager {
 			infoTrafic.setDateFormated(dateTimeFormatHelper.formatDuree(infoTrafic.getDateDebut(),
 					infoTrafic.getDateFin()));
 
-			if (infoTrafic.getDateFin() == null || infoTrafic.getDateFin().isAfterNow()) {
+			if (infoTrafic.getDateFin() != null && infoTrafic.getDateFin().isAfterNow()) {
 				final String troncons = infoTrafic.getTroncons();
 				if (troncons != null) {
 					final Matcher matcher = pattern.matcher(troncons);

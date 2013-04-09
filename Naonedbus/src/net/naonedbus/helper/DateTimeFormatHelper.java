@@ -37,7 +37,7 @@ public class DateTimeFormatHelper {
 
 	private static final String ARROW = " \u2192 ";
 
-	private Context context;
+	private final Context context;
 	private final DateTime now;
 	private final String[] months;
 
@@ -56,9 +56,10 @@ public class DateTimeFormatHelper {
 	 */
 	public String formatDuree(final DateTime debut, final DateTime fin) {
 		final StringBuilder builder = new StringBuilder();
-		builder.append(format(debut)).append(ARROW);
+		builder.append(format(debut));
 
 		if (fin != null) {
+			builder.append(ARROW);
 			if (debut.toDateMidnight().equals(fin.toDateMidnight())) {
 				// Même jour
 				formatTime(fin, builder);
@@ -122,7 +123,7 @@ public class DateTimeFormatHelper {
 	 * @return Le nombre avec un 0 préfixé si besoin.
 	 */
 
-	private String twoDigitFormat(int value) {
+	private String twoDigitFormat(final int value) {
 		if (value < 10) {
 			return "0" + value;
 		} else {
