@@ -13,6 +13,8 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
+import com.bugsense.trace.BugSenseHandler;
+
 public class FavoriService extends IntentService {
 
 	public static final String INTENT_ACTION_IMPORT = "import";
@@ -58,6 +60,7 @@ public class FavoriService extends IntentService {
 		try {
 			favoriManager.importFavoris(getContentResolver(), key);
 		} catch (final Exception e) {
+			BugSenseHandler.sendExceptionMessage("Erreur lors de l'import des favoris", null, e);
 			Log.e(LOG_TAG, "Erreur lors de l'import des favoris", e);
 			showNotification(R.string.msg_import_title, R.string.msg_import_error);
 			return;
@@ -80,6 +83,7 @@ public class FavoriService extends IntentService {
 			key = favoriController.post(content);
 			succeed = (key != null);
 		} catch (final Exception e) {
+			BugSenseHandler.sendExceptionMessage("Erreur lors de l'export des favoris", null, e);
 			Log.e(LOG_TAG, "Erreur lors de l'export des favoris", e);
 			showNotification(R.string.msg_export_title, R.string.msg_export_error);
 			succeed = false;
