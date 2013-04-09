@@ -52,6 +52,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/itemTitle"
+                android:layout_marginTop="@dimen/padding_tiny"
                 android:gravity="left|center_vertical" />
         </RelativeLayout>
     </LinearLayout>
@@ -61,7 +62,7 @@
         style="@style/ItemTime.Secondary"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/padding_tiny"
         android:gravity="right"
         android:padding="5dp" />
 
