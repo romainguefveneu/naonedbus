@@ -36,7 +36,6 @@ import org.json.JSONException;
 import android.content.ContentResolver;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 /**
  * @author romain.guefveneu
@@ -188,7 +187,6 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 
 	@Override
 	public void unschedule(final ParkingPublicTaskInfo task) {
-		Log.d(LOG_TAG, "unschedule " + task);
 		parkingsTasks.remove(task);
 	}
 

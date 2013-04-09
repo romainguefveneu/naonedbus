@@ -744,7 +744,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		@Override
 		protected void onPostExecute(final Boolean result) {
-			Log.d(LOG_TAG, "LoadHoraires end");
 		}
 
 	}

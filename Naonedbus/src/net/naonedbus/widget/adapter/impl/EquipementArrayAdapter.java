@@ -23,7 +23,6 @@ import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,12 +59,6 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 		unschedulers = new HashMap<Class<? extends AsyncTaskInfo<?>>, Unschedulable<?>>();
 		unschedulers.put(LignesTaskInfo.class, LigneManager.getInstance());
 		unschedulers.put(ParkingPublicTaskInfo.class, ParkingPublicManager.getInstance());
-	}
-
-	@Override
-	public void notifyDataSetChanged() {
-		super.notifyDataSetChanged();
-		Log.d(LOG_TAG, "notifyDataSetChanged");
 	}
 
 	@Override
@@ -122,8 +115,6 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 
 	@SuppressWarnings("unchecked")
 	public <T extends AsyncTaskInfo<?>> void unschedule(final T task) {
-		Log.d(LOG_TAG, "unschedule :\t	" + task);
-
 		final Unschedulable<T> unschedulable = (Unschedulable<T>) unschedulers.get(task.getClass());
 		unschedulable.unschedule(task);
 	}
