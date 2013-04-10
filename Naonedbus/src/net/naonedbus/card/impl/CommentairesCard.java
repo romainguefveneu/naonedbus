@@ -3,6 +3,7 @@ package net.naonedbus.card.impl;
 import java.io.IOException;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.CommentaireDetailActivity;
@@ -14,6 +15,8 @@ import net.naonedbus.card.Card;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
+import net.naonedbus.security.NaonedbusClient;
+import net.naonedbus.utils.FontUtils;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -23,11 +26,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +40,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import com.bugsense.trace.BugSenseHandler;
+
 public class CommentairesCard extends Card<List<Commentaire>> {
+
+	private static final String LOG_TAG = "CommentairesCard";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int LIMIT = 3;
 	private static final String BUNDLE_FORCE_UPDATE = "forceUpdate";
@@ -63,10 +73,12 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 	private Sens mSens;
 	private Arret mArret;
 	private ViewGroup mRoot;
+	private final Typeface mRobotoMedium;
 
 	public CommentairesCard(final Context context, final LoaderManager loaderManager) {
 		super(context, loaderManager, R.string.card_commentaires_title, R.layout.card_trafic);
 		getContext().registerReceiver(mIntentReceiver, intentFilter);
+		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	public void setLigne(final Ligne ligne) {
@@ -128,19 +140,24 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 		String title = "";
 
-		if (commentaire.getArret() == null && commentaire.getSens() == null && commentaire.getLigne() == null) {
-			title = view.getContext().getString(R.string.commentaire_tout);
+		if (NaonedbusClient.NAONEDBUS.name().equals(commentaire.getSource())) {
+			if (commentaire.getArret() == null && commentaire.getSens() == null && commentaire.getLigne() == null) {
+				title = view.getContext().getString(R.string.commentaire_tout);
+			} else {
+				if (commentaire.getArret() != null) {
+					title = commentaire.getArret().nomArret + " ";
+				}
+				if (commentaire.getSens() != null) {
+					title = title + "\u2192 " + commentaire.getSens().text;
+				}
+			}
 		} else {
-			if (commentaire.getArret() != null) {
-				title = commentaire.getArret().nomArret + " ";
-			}
-			if (commentaire.getSens() != null) {
-				title = title + "\u2192 " + commentaire.getSens().text;
-			}
+			title = getString(CommentaireFomatter.getTitleResId(commentaire.getSource()));
 		}
 
 		itemDescription.setText(commentaire.getMessage(), BufferType.SPANNABLE);
 		itemDate.setText(commentaire.getDelay());
+		itemDate.setTypeface(mRobotoMedium);
 
 		if (title.trim().length() == 0) {
 			itemTitle.setVisibility(View.GONE);
@@ -221,9 +238,12 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 				commentaires = commentaires.subList(0, Math.min(LIMIT, commentaires.size()));
 			} catch (final IOException e) {
-				e.printStackTrace();
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur de chargement", e);
 			} catch (final JSONException e) {
-				e.printStackTrace();
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur de chargement", e);
+				BugSenseHandler.sendExceptionMessage("Erreur de chargement", "", e);
 			}
 			return commentaires;
 		}

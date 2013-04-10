@@ -1,14 +1,13 @@
 package net.naonedbus.activity.impl;
 
 import java.text.DateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
+import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.security.NaonedbusClient;
@@ -29,15 +28,6 @@ import com.actionbarsherlock.view.MenuItem;
 public class CommentaireDetailActivity extends SherlockActivity {
 
 	public static final String PARAM_COMMENTAIRE = "commentaire";
-
-	private static final Map<String, Integer> sourceTitle = new HashMap<String, Integer>();
-	static {
-		sourceTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_tan_trafic);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_tan_actus);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.source_taninfos);
-		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
-	}
 
 	private SlidingMenuHelper mSlidingMenuHelper;
 	private HeaderHelper mHeaderHelper;
@@ -78,7 +68,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		final String source = mCommentaire.getSource();
 
-		mItemSource.setText(getString(R.string.source, getString(sourceTitle.get(source))));
+		mItemSource.setText(getString(R.string.source, getString(CommentaireFomatter.getSourceResId(source))));
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(source)) {
 

@@ -121,8 +121,10 @@
     <string-array name="translators">
         <item>Olivier Raulin</item>
         <item>Alexandre Berthaud</item>
+        <item>Pascale Cotinat</item>
     </string-array>
     <string-array name="translators_urls">
+        <item></item>
         <item></item>
         <item></item>
     </string-array>

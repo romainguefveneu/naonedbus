@@ -430,6 +430,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 	}
 
+	@SuppressLint("NewApi")
 	private void menuDelete() {
 		Favori item;
 		final ContentResolver contentResolver = getActivity().getContentResolver();
@@ -444,6 +445,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		}
 
 		adapter.notifyDataSetChanged();
+		getActivity().invalidateOptionsMenu();
 	}
 
 	private void menuPlace() {

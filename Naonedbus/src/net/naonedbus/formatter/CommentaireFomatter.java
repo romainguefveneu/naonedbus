@@ -27,13 +27,22 @@ import com.ocpsoft.pretty.time.PrettyTime;
 
 public class CommentaireFomatter {
 
-	private static final Map<String, Integer> sourceTitle = new HashMap<String, Integer>();
+	private static final Map<String, Integer> sSource = new HashMap<String, Integer>();
 	static {
-		sourceTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_tan_trafic);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_tan_actus);
-		sourceTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.source_taninfos);
-		sourceTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
+		sSource.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
+		sSource.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.source_tan_trafic);
+		sSource.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.source_tan_actus);
+		sSource.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.source_taninfos);
+		sSource.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.source_naonedbus_service);
+	}
+
+	private static final Map<String, Integer> sTitle = new HashMap<String, Integer>();
+	static {
+		sTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
+		sTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.commentaire_tan_info_trafic);
+		sTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.commentaire_tan_actus);
+		sTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.commentaire_tan_infos);
+		sTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.commentaire_message_service);
 	}
 
 	private final PrettyTime mPrettyTime;
@@ -151,18 +160,32 @@ public class CommentaireFomatter {
 	}
 
 	/**
-	 * Renvoyer l'id de la resource du titre de la source
+	 * Renvoyer l'id de la resource de la source
 	 * 
 	 * @param source
 	 */
-	public static int getSourceTitle(final String source) {
+	public static int getSourceResId(final String source) {
 		int res = R.string.source_unknown;
 
-		if (sourceTitle.containsKey(source)) {
-			res = sourceTitle.get(source);
+		if (sSource.containsKey(source)) {
+			res = sSource.get(source);
 		}
 
 		return res;
 	}
 
+	/**
+	 * Renvoyer l'id de la resource du titre de la source
+	 * 
+	 * @param source
+	 */
+	public static int getTitleResId(final String source) {
+		int res = R.string.source_unknown;
+
+		if (sTitle.containsKey(source)) {
+			res = sTitle.get(source);
+		}
+
+		return res;
+	}
 }
