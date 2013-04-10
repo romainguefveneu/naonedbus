@@ -119,7 +119,7 @@
     <string name="error_summary_webservice">Merci de réessayer dans quelques instants</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
     <string name="error_summary_empty_favori">Glissez vers l\'écran de gauche pour naviguer entre les lignes.\n\n&#8592;</string>
-    <string name="error_summary_empty_groupe">Ajouter vos groupes en cliquant sur l\'icône “+”</string>
+    <string name="error_summary_empty_groupe">Ajoutez vos groupes en cliquant sur l\'icône “+”</string>
     <string name="error_summary_selected_groupe">Vous n\'avez sélectionné aucun groupe de favoris à afficher.</string>
     <string name="error_summary_empty_arrets_favoris">Vous avez sélectionné le filtre \"Arrêts favoris\" mais aucun favori n\'est défini pour ce sens.</string>
     <!-- Accueil -->
