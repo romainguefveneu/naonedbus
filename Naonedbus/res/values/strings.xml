@@ -231,7 +231,7 @@
     <string name="btn_geolocation_service">Localization services</string>
     <string name="msg_nothing_info_trafic">No current disturbance</string>
     <string name="msg_nothing_commentaires">No recent comment</string>
-    <string name="msg_location_disabled_full"><![CDATA[Geolocation seems disabled on your phone.<br />To best use the feature "On the map" we recommend that you enable it.]]></string>
+    <string name="msg_location_disabled_full">Geolocation seems disabled on your phone.\nTo best use the feature "On the map" we recommend that you enable it.</string>
     <string name="msg_depart_proche">near departure</string>
     <string name="msg_aucun_depart_24h">in a long time</string>
     <string name="msg_horaire_erreur">Not available</string>

@@ -40,7 +40,7 @@ public class ModalSearchView extends LinearLayout implements TextWatcher {
 	private ImageView mCloseButton;
 	private OnQueryTextListener mOnQueryTextListener;
 
-	public ModalSearchView(Context context, AttributeSet attrs) {
+	public ModalSearchView(final Context context, final AttributeSet attrs) {
 		super(context, attrs);
 
 	}
@@ -58,17 +58,17 @@ public class ModalSearchView extends LinearLayout implements TextWatcher {
 		mCloseButton = (ImageView) findViewById(R.id.searchViewClose);
 		mCloseButton.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				mQueryTextView.setText(null);
 			}
 		});
 	}
 
-	public void setOnQueryTextListener(OnQueryTextListener onQueryTextListener) {
+	public void setOnQueryTextListener(final OnQueryTextListener onQueryTextListener) {
 		mOnQueryTextListener = onQueryTextListener;
 	}
 
-	private CharSequence getDecoratedHint(CharSequence hintText) {
+	private CharSequence getDecoratedHint(final CharSequence hintText) {
 		final SpannableStringBuilder ssb = new SpannableStringBuilder("   "); // for
 																				// the
 																				// icon
@@ -82,17 +82,17 @@ public class ModalSearchView extends LinearLayout implements TextWatcher {
 	}
 
 	@Override
-	public void afterTextChanged(Editable s) {
+	public void afterTextChanged(final Editable s) {
 
 	}
 
 	@Override
-	public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+	public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
 
 	}
 
 	@Override
-	public void onTextChanged(CharSequence s, int start, int before, int count) {
+	public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
 		if (mOnQueryTextListener != null) {
 			mOnQueryTextListener.onQueryTextChange(s.toString());
 		}
@@ -106,6 +106,10 @@ public class ModalSearchView extends LinearLayout implements TextWatcher {
 		} else {
 			mCloseButton.setVisibility(View.GONE);
 		}
+	}
+
+	public void setText(final CharSequence text) {
+		mQueryTextView.setText(text);
 	}
 
 }

@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_dark"
     android:gravity="center"
-    android:orientation="vertical"
     android:padding="8dip" >
 
     <RelativeLayout
         android:id="@id/colLeft"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true" >
 
         <TextView
             android:id="@android:id/title"
