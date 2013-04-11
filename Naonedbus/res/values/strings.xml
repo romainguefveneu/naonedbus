@@ -30,7 +30,7 @@
     <string name="tuto_0_title">Welcome in</string>
     <string name="tuto_0_summary"><![CDATA[Take some time to discover the app.<br /><big>&rarr;</big>]]></string>
     <string name="tuto_about_title">Open source</string>
-    <string name="tuto_about_summary"><![CDATA[Naonedbus is a free, open-source application, without any affiliation with the Semitan.<br />This applicatio is developped volunteeringly. <br /><br />Data comes from Open Data, times are provided by the TAN. <br /><br /> <font color="#ffffff"><b>If you encounter any problem with the app, please send us an email and we\'ll get back to you ;)</b></font>]]></string>
+    <string name="tuto_about_summary"><![CDATA[Naonedbus is a free, open-source application, without any affiliation with the Semitan.<br />This application is developped volunteeringly. <br /><br />Data comes from Open Data, times are provided by the TAN. <br /><br /> <font color="#ffffff"><b>If you encounter any problem with the app, please send us an email and we\'ll get back to you ;)</b></font>]]></string>
     <string name="tuto_menu_title">Main menu</string>
     <string name="tuto_menu_summary">Access sections through the menu: whether by the main icon or by sliding from the left side of the screen</string>
     <string name="tuto_lignes_title">Lines</string>
