@@ -1289,7 +1289,7 @@ INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, lon
 
 # Lignes
 INSERT INTO lignes(_id, code, lettre, depuis, vers, couleur, type) VALUES (?, ?, ?, ?, ?, ?, ?);
-0;1;1;François Mitterrand;Beaujoire / Ranzay;-16745144;1
+0;1;1;François Mitterrand / Jamet;Beaujoire / Ranzay;-16745144;1
 1;2;2;Orvault Grand Val;Gare de Pont Rousseau;-1627337;1
 2;3;3;Marcel Paul;Neustrie;-16746306;1
 3;4;4;Foch;Cathédrale;-146157;1
@@ -2380,7 +2380,7 @@ INSERT INTO equipements(_id, idType, codeEquipement, nomEquipement, normalizedNo
 # Sens
 INSERT INTO sens(_id, codeLigne, code, nomSens) VALUES (?, ?, ?, ?);
 0;1;2;Beaujoire / Ranzay
-1;1;1;François Mitterrand
+1;1;1;François Mitterrand / Jamet
 2;2;2;Gare de Pont Rousseau
 3;2;1;Orvault Grand Val
 4;3;2;Neustrie
@@ -2407,7 +2407,7 @@ INSERT INTO sens(_id, codeLigne, code, nomSens) VALUES (?, ?, ?, ?);
 25;29;1;La Herdrie
 26;30;2;Trentemoult
 27;30;1;Savarières
-28;33;2;Ecpace Diderot
+28;33;2;Espace Diderot
 29;33;1;Robinière / Aufrère
 30;36;2;Neustrie
 31;36;1;Gréneraie
