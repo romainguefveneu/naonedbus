@@ -355,6 +355,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			if (arret != null) {
 				final ParamIntent startIntent = new ParamIntent(context, HorairesActivity.class);
 				startIntent.putExtra(HorairesActivity.PARAM_ARRET, arret);
+				startIntent.putExtra(HorairesActivity.PARAM_FROM_WIDGET, true);
 				startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 				final TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);

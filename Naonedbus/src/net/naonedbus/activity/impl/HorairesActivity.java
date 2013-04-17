@@ -29,15 +29,20 @@ import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.SymbolesUtils;
+import android.content.Intent;
 import android.os.Bundle;
+
+import com.actionbarsherlock.view.MenuItem;
 
 public class HorairesActivity extends OneFragmentActivity implements OnSensChangeListener {
 
 	public static final String PARAM_LIGNE = "ligne";
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
+	public static final String PARAM_FROM_WIDGET = "fromWidget";
 
 	private HeaderHelper mHeaderHelper;
+	private boolean mFromWidget;
 
 	public HorairesActivity() {
 		super(R.layout.activity_horaires);
@@ -48,9 +53,12 @@ public class HorairesActivity extends OneFragmentActivity implements OnSensChang
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-		final Arret arret = getIntent().getParcelableExtra(PARAM_ARRET);
-		Ligne ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
-		Sens sens = getIntent().getParcelableExtra(PARAM_SENS);
+		final Intent intent = getIntent();
+		mFromWidget = intent.getBooleanExtra(PARAM_FROM_WIDGET, false);
+
+		final Arret arret = intent.getParcelableExtra(PARAM_ARRET);
+		Ligne ligne = intent.getParcelableExtra(PARAM_LIGNE);
+		Sens sens = intent.getParcelableExtra(PARAM_SENS);
 
 		if (ligne == null) {
 			final LigneManager ligneManager = LigneManager.getInstance();
@@ -82,4 +90,18 @@ public class HorairesActivity extends OneFragmentActivity implements OnSensChang
 		mHeaderHelper.setSubTitleAnimated(SymbolesUtils.formatSens(newSens.text));
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		if (mFromWidget) {
+			switch (item.getItemId()) {
+			case android.R.id.home:
+				final Intent parentActivityIntent = new Intent(this, MainActivity.class);
+				parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(parentActivityIntent);
+				finish();
+				return true;
+			}
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
