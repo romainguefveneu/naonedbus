@@ -645,7 +645,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		int position = 0;
 		for (final Favori favori : favoris) {
-			favori.delay = FavorisUtil.formatDelayLoading(getActivity(), favori.nextHoraire);
+			if (getActivity() != null) {
+				favori.delay = FavorisUtil.formatDelayLoading(getActivity(), favori.nextHoraire);
+			}
 
 			if (favori.nextHoraire == null) {
 				final NextHoraireTask horaireTask = new NextHoraireTask();
