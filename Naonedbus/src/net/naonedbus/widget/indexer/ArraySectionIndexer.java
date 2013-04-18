@@ -40,7 +40,7 @@ public abstract class ArraySectionIndexer<T extends SectionItem> implements Sect
 	 * @param counts
 	 *            a non-null array of the same size as <code>sections</code>
 	 */
-	public void buildIndex(Context context, ArrayAdapter<T> adapter) {
+	public void buildIndex(final Context context, final ArrayAdapter<T> adapter) {
 		final ArrayList<String> sectionsText = new ArrayList<String>();
 		final ArrayList<Integer> sectionsCount = new ArrayList<Integer>();
 		int lastSectionPosition;
@@ -106,7 +106,7 @@ public abstract class ArraySectionIndexer<T extends SectionItem> implements Sect
 	}
 
 	@Override
-	public int getPositionForSection(int section) {
+	public int getPositionForSection(final int section) {
 		if (section < 0 || section >= mSections.length) {
 			return -1;
 		}
@@ -115,12 +115,12 @@ public abstract class ArraySectionIndexer<T extends SectionItem> implements Sect
 	}
 
 	@Override
-	public int getSectionForPosition(int position) {
+	public int getSectionForPosition(final int position) {
 		if (position < 0 || position >= mCount) {
 			return -1;
 		}
 
-		int index = Arrays.binarySearch(mPositions, position);
+		final int index = Arrays.binarySearch(mPositions, position);
 
 		/*
 		 * Consider this example: section positions are 0, 3, 5; the supplied

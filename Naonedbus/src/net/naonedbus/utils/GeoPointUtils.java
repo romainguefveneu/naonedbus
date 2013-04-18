@@ -1,18 +1,18 @@
 /**
- *  Copyright (C) 2011 Romain Guefveneu
- *  
+ * Copyright (C) 2013 Romain Guefveneu.
+ *   
  *  This file is part of naonedbus.
- *  
+ *   
  *  Naonedbus is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- *
+ *  
  *  Naonedbus is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *
+ *  
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -25,10 +25,6 @@ import android.location.LocationManager;
 
 import com.google.android.maps.GeoPoint;
 
-/**
- * @author romain
- * 
- */
 public abstract class GeoPointUtils {
 
 	/**
@@ -37,7 +33,7 @@ public abstract class GeoPointUtils {
 	 * @param parking
 	 * @return le GeoPoint
 	 */
-	public static GeoPoint getGeoPoint(Parking parking) {
+	public static GeoPoint getGeoPoint(final Parking parking) {
 		return new GeoPoint((int) (parking.getLatitude() * 1E6), (int) (parking.getLongitude() * 1E6));
 	}
 
@@ -47,7 +43,7 @@ public abstract class GeoPointUtils {
 	 * @param item
 	 * @return le GeoPoint
 	 */
-	public static GeoPoint getGeoPoint(Equipement item) {
+	public static GeoPoint getGeoPoint(final Equipement item) {
 		return new GeoPoint((int) (item.getLatitude() * 1E6), (int) (item.getLongitude() * 1E6));
 	}
 
@@ -57,7 +53,7 @@ public abstract class GeoPointUtils {
 	 * @param itemTitle
 	 * @return le GeoPoint
 	 */
-	public static GeoPoint getGeoPoint(Location location) {
+	public static GeoPoint getGeoPoint(final Location location) {
 		if (location == null)
 			return null;
 		return new GeoPoint((int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
@@ -69,7 +65,7 @@ public abstract class GeoPointUtils {
 	 * @param geoPoint
 	 * @return l'object Location avec la latitude et longitude du GeoPoint.
 	 */
-	public static Location getLocation(GeoPoint geoPoint) {
+	public static Location getLocation(final GeoPoint geoPoint) {
 		if (geoPoint == null)
 			return null;
 		final Location location = new Location(LocationManager.GPS_PROVIDER);

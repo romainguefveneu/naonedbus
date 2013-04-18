@@ -19,173 +19,181 @@ INSERT INTO typesEquipements(_id, nom) VALUES (?, ?);
 
 # Parkings
 INSERT INTO equipements(_id, idType, idSousType, nomEquipement, normalizedNom, adresse, telephone, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-134;1;1;Médiathèque;Mediatheque;Rue Neuve des Capucins - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21087083;-1.562338176
-280;1;1;Gare Nord;Gare Nord;Boulevard de Stalingrad - Nantes;08 25 88 88 26;www.resaplace.com;47.21668904;-1.544984334
-284;1;1;Decré-Bouffay;Decre-Bouffay;18 Rue du Moulin - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21666262;-1.554004632
-288;1;1;Graslin;Graslin;Rue Scribe- Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21431021;-1.562571816
-299;1;1;Tour Bretagne;Tour Bretagne;4 Place de Bretagne - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21773942;-1.558201639
-677;1;1;Commerce;Commerce;Place du Commerce- Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21312029;-1.55771322
-1043;1;1;Aristide Briand;Aristide Briand;Place Aristide Briand - Nantes;08 10 26 30 00;www.vincipark.com;47.2170936;-1.562936418
-1044;1;1;Cité des Congrès;Cite des Congres;Avenue Jean Claude Bonduelle - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.21290167;-1.543971277
-1045;1;1;Gare Sud 1;Gare Sud 1;Rue de Lourmel - Nantes;08 25 88 88 26;www.resaplace.com;47.21614964;-1.541036828
-1046;1;1;Talensac;Talensac;Rue Le Nôtre - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.22025598;-1.5583573
-1341;1;2;Recteur Schmitt 1;Recteur Schmitt 1;Rue Recteur Schmitt- Nantes;;www.tan.fr;47.25173525;-1.552903104
-3188;1;2;Frachon;Frachon;Boulevard Salvador Allende- Saint-Herblain;;www.tan.fr;47.21869614;-1.621633362
-3189;1;2;Le Cardo;Le Cardo;Esplanade du Cardo- Orvault;;www.tan.fr;47.26250209;-1.584511981
-3190;1;2;François Mitterrand;Francois Mitterrand;Rue Virginia Woolf- Saint-Herblain;;www.tan.fr;47.2217062;-1.639484143
-3191;1;2;Recteur Schmitt 2;Recteur Schmitt 2;Rue Recteur Schmitt- Nantes;;www.tan.fr;47.2520277;-1.552470385
-3192;1;2;La Beaujoire;La Beaujoire;Rue Colette- Nantes;;www.tan.fr;47.2594833;-1.527398471
-3194;1;2;08-mai;08-mai;Avenue André Malraux - Reze;;www.tan.fr;47.19017791;-1.551691452
-3195;1;2;Trocardière;Trocardiere;Avenue Léon Blum - Reze;;www.tan.fr;-1.571095589;47.18329275
-3196;1;2;René Cassin;Rene Cassin;Route de la Chapelle Sur Erdre- Nantes;;www.tan.fr;47.26395093;-1.574997908
-3197;1;2;Pirmil;Pirmil;Rue Esnoult des Châtelets- Nantes;;www.tan.fr;47.19735868;-1.541533595
-3198;1;2;Goudy;Goudy;Rue Gabriel Goudy- Nantes;;www.tan.fr;47.19609895;-1.541047747
-3200;1;2;TER Frêne Rond;TER Frene Rond;Rue de l'Ouche Quinet- Saint-Sébastien;;;47.19054926;-1.496218309
-3201;1;2;TER Gare de Vertou Nord;TER Gare de Vertou Nord;Impasse de la Gare- Vertou;;;47.18640238;-1.479161855
-3202;1;2;TER Gare de Vertou Sud;TER Gare de Vertou Sud;Rue du Bois Rigaud- Vertou;;;47.18574981;-1.47860857
-3227;1;2;Plaisance;Plaisance;Route de Vannes- Saint-Herblain;;;47.24053266;-1.593440524
-3549;1;1;Feydeau;Feydeau;Allée de l'Ile Gloriette- Nantes;;;47.21117966;-1.55843873
-3550;1;1;Hôtel Dieu;Hotel Dieu;Chaussée de la Madeleine- Nantes;;;47.21105709;-1.551983112
-3551;1;1;Baco-LU;Baco-LU;Allée Baco- Nantes;;;47.21385525;-1.549872883
-3552;1;2;TER Gare des Pas Enchantés;TER Gare des Pas Enchantes;Rue de la Loire- Saint-Sébastien;;;47.20822905;-1.512996443
-3554;1;1;Château;Chateau;Rue Henri IV- Nantes;;;47.21698996;-1.54785045
-3555;1;1;Gare Sud 3;Gare Sud 3;Rue Marcel Paul- Nantes;;;47.21613586;-1.537894828
-3556;1;2;TER Gare de Couëron;TER Gare de Coueron;Rue de la Gare - Coueron;;;47.22177719;-1.723637502
-3558;1;2;Neustrie 2;Neustrie 2;Rue de la Neustrie- Bouguenais;;;47.17667245;-1.593399696
-3560;1;2;Trentemoult Port;Trentemoult Port;Quai Surcouf - Reze;;;47.19525251;-1.577783932
-3561;1;2;Gare de Basse-Indre - Saint-Herblain;Gare de Basse-Indre - Saint-Herblain;Rue de la Gare- Saint-Herblain;;;47.20415797;-1.661038096
-3562;1;2;Neustrie 1;Neustrie 1;Chemin de la Neustrie- Bouguenais;;;47.17569331;-1.593272351
-3564;1;2;TER Gare de Thouaré-sur-Loire;TER Gare de Thouare-sur-Loire;Rue des Ponts- Thouare-sur-Loire;;;47.26471199;-1.441389354
-3565;1;2;TER Gare de Mauves-sur-Loire;TER Gare de Mauves-sur-Loire;Place de la Gare- Mauves-sur-Loire;;;47.29325833;-1.388904887
-3566;1;2;TER Gare de Bouaye;TER Gare de Bouaye;Allée Louis Armand- Bouaye;;;47.13833972;-1.682099253
-3582;1;1;Trentemoult;Trentemoult;Rue Ordronneau - Rezé;;;47.19196499;-1.580687686
-3583;1;2;Morlière Paquelais;Morliere Paquelais;50 Avenue de la Paquelais- Orvault;;;47.24782352;-1.602838747
-3584;1;2;Orvault Morlière;Orvault Morliere;Avenue de la Morlière- Orvault;;;47.24677665;-1.603049467
-3586;1;1;Beauséjour;Beausejour;142 Route de Vannes- Nantes;;;47.23841352;-1.587343749
-3589;1;1;Gare Sud 2;Gare Sud 2;Quai de Malakoff- Nantes;;;47.21423404;-1.541343376
-3590;1;1;Gare Sud limité 1h;Gare Sud limite 1h;Quai de Malakoff- Nantes;;;47.21520212;-1.542675139
-3627;1;2;Porte de Vertou;Porte de Vertou;Boulevard Auguste Priou- Vertou;;;47.1801753;-1.505160178
-3628;1;1;Gréneraie;Greneraie;Boulevard Emile Gabory- Nantes;;;47.20013904;-1.533333623
-3629;1;2;Bourdonnières 1;Bourdonnieres 1;Boulevard de Vendée- Nantes;;;47.18625559;-1.521154295
-3630;1;2;Chapeau Verni;Chapeau Verni;Route de Clisson - Vertou;;;47.18953008;-1.511298892
-3648;1;2;TER Gare de Pont-Rousseau;TER Gare de Pont-Rousseau;Avenue de la Libération - Reze;;;47.192801;-1.548190272
-3649;1;1;Bignon;Bignon;Rue des Verts Prés- Orvault;;;47.24897525;-1.598200225
-3650;1;1;Bellamy;Bellamy;Impasse de la Courtine- Nantes;;;47.22236042;-1.557693693
-3651;1;1;CHU;CHU;Quai de Tourville- Nantes;;;47.20936197;-1.557250234
-3652;1;1;Cathédrale;Cathedrale;Rue Sully- Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.22081335;-1.551056168
-3655;1;2;Maraîchers;Maraichers;Rue de la Grand' Maison- Vertou;;;47.18530279;-1.510859656
-3776;1;2;Marcel Paul;Marcel Paul;Boulevard Marcel Paul- Saint-Herblain;;;47.24590457;-1.61800835
-3777;1;2;Grande Ouche;Grande Ouche;Impasse de la Boisselée- Bouguenais;;;47.18199484;-1.579472035
-3778;1;1;Bourdonnières 2;Bourdonnieres 2;Rue des Bourdonnières- Nantes;;;47.18672424;-1.523151332
-3950;1;1;Courte Durée Gare Nord;Courte Duree Gare Nord;Boulevard de Stalingrad- Nantes;;;47.21726473;-1.543478751
-3951;1;1;Les Machines;Les Machines;Rue Arthur III- Nantes;08 25 88 88 26;www.resaplace.com;47.20590062;-1.562727792
-3989;1;1;Gare Sud 4;Gare Sud 4;24 Mail Pablo Picasso- Nantes;08 25 88 88 26;www.resaplace.com;47.21520993;-1.537545043
-3990;1;1;Viviani;Viviani;Rue René Viviani- Nantes;;;47.2087756;-1.53619707
+3551;1;1;Baco-LU 2 côté CHU;Baco-LU 2 cote CHU;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2131509800273;-1.55160425745185
+4142;1;1;Baco-LU 1 côté gare;Baco-LU 1 cote gare;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2143324211276;-1.54898882844897
+3650;1;1;Bellamy;Bellamy;Impasse de la Courtine 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2223604161017;-1.55769369256355
+4073;1;1;Gloriette 2;Gloriette 2;Rue Albert de Mun 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2102736871054;-1.56028436884679
+3549;1;1;Gloriette 1;Gloriette 1;Allée de l'Ile Gloriette 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2111796553233;-1.55843872950464
+3589;1;1;Gare Sud 2;Gare Sud 2;Quai Malakoff 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2142340366163;-1.54134337584288
+3590;1;1;Gare Sud 2 limité 1h;Gare Sud 2 limite 1h;Quai Malakoff 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2152021232956;-1.54267513884661
+4072;1;1;Chantiers Navals;Chantiers Navals;Quai de la Fosse 44100 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2082893195233;-1.56891560955727
+3554;1;1;Château;Chateau;Rue Henri IV 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2169899609793;-1.54785044968527
+3950;1;1;Courte Durée Gare Nord;Courte Duree Gare Nord;Boulevard de Stalingrad 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2172647322169;-1.54347875084443
+3651;1;1;CHU;CHU;Quai de Tourville 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2093619715999;-1.55725023399242
+3550;1;1;Hôtel Dieu;Hotel Dieu;Chaussée de la Madeleine 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2110570860299;-1.55198311230427
+3555;1;1;Gare Sud 3;Gare Sud 3;Rue Marcel Paul 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.216135859474;-1.53789482834948
+3990;1;1;Viviani;Viviani;Rue René Viviani 44200 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2087756042897;-1.53619706978924
+3951;1;1;Les Machines;Les Machines;Rue Arthur III 44200 - Nantes;08 25 88 88 26;www.resaplace.com;47.2059006220645;-1.56272779236372
+677;1;1;Commerce;Commerce;Place du Commerce 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2131202858024;-1.55771321969051
+1046;1;1;Talensac;Talensac;Rue Le Nôtre 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2202559810468;-1.55835729990237
+1043;1;1;Aristide Briand;Aristide Briand;Place Aristide Briand 44000 - Nantes;08 10 26 30 00;www.vincipark.com;47.2170936048579;-1.56293641808053
+1045;1;1;Gare Sud 1;Gare Sud 1;Rue de Lourmel 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2161496359544;-1.54103682846398
+1044;1;1;Cité des Congrès;Cite des Congres;Avenue Jean Claude Bonduelle 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2129016709023;-1.54397127716684
+288;1;1;Graslin;Graslin;Rue Scribe 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2143102105068;-1.56257181621741
+284;1;1;Decré-Bouffay;Decre-Bouffay;18 Rue du Moulin 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2166626199643;-1.55400463227177
+299;1;1;Tour Bretagne;Tour Bretagne;4 Place de Bretagne 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2177394198201;-1.55820163936291
+3989;1;1;Gare Sud 4;Gare Sud 4;24 Mail Pablo Picasso 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2152099260756;-1.53754504260148
+134;1;1;Médiathèque;Mediatheque;Rue Neuve des Capucins 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2108708271003;-1.5623381759623
+280;1;1;Gare Nord;Gare Nord;Boulevard de Stalingrad 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2166890401729;-1.54498433411572
+3652;1;1;Cathédrale;Cathedrale;Rue Sully 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2208133510721;-1.55105616832611
+3648;1;2;Gare de Pont-Rousseau;Gare de Pont-Rousseau;Avenue de la Libération 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1928009988406;-1.5481902720875
+1341;1;2;Recteur Schmitt 1;Recteur Schmitt 1;Rue Recteur Schmitt 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2517352538688;-1.55290310437924
+3191;1;2;Recteur Schmitt 2;Recteur Schmitt 2;Rue Recteur Schmitt 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2520277017386;-1.55247038464754
+4100;1;2;Ranzay;Ranzay;Route de Saint Joseph 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2543632744444;-1.53313665411229
+3584;1;2;Orvault Morlière;Orvault Morliere;Avenue de la Morlière 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2467766477065;-1.60304946676259
+3189;1;2;Le Cardo;Le Cardo;Esplanade du Cardo 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2625020936155;-1.58451198079141
+3197;1;2;Pirmil;Pirmil;Rue Esnoult des Châtelets 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1973586776381;-1.54153359455402
+4076;1;2;Santos Dumont;Santos Dumont;Rue des Renards 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2593236730243;-1.56822710791259
+3777;1;2;Grande Ouche;Grande Ouche;Rue de la Grande Ouche 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.1819948350479;-1.57947203525665
+3198;1;2;Goudy;Goudy;Rue Gabriel Goudy 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1960989467374;-1.5410477469437
+3778;1;2;Bourdonnières 2;Bourdonnieres 2;Rue des Bourdonnières 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1867242428305;-1.52315133155692
+3560;1;2;Trentemoult-Roquios;Trentemoult-Roquios;Quai Surcouf 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1952525112789;-1.57778393206355
+3655;1;2;Maraîchers;Maraichers;Rue de la Grand' Maison 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1853027936471;-1.51085965558255
+3556;1;2;Gare de Couëron;Gare de Coueron;Rue de la Gare 44220 - Couëron;02 40 44 44 44;www.tan.fr;47.2217771934083;-1.72363750160792
+3630;1;2;Chapeau Verni;Chapeau Verni;Route de Clisson 44230 - Vertou;02 40 44 44 44;www.tan.fr;47.1895300762792;-1.51129889181404
+3627;1;2;Porte de Vertou;Porte de Vertou;Boulevard Auguste Priou 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1801752959869;-1.50516017764927
+3552;1;2;Gare des Pas Enchantés;Gare des Pas Enchantes;Rue de la Loire 44230 - St-Sébastien;02 40 44 44 44;www.tan.fr;47.2082290545652;-1.51299644307533
+3188;1;2;Frachon;Frachon;Boulevard Salvador Allende 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2186961365515;-1.62163336178234
+3776;1;2;Marcel Paul;Marcel Paul;Boulevard Marcel Paul 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2459045698135;-1.61800834963946
+3190;1;2;François Mitterrand;Francois Mitterrand;Rue Virginia Woolf 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.22170620087;-1.63948414305523
+4101;1;2;Haluchère 1;Haluchere 1;Rue du Ranzai 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2484503442291;-1.52283117372235
+3629;1;2;Bourdonnières 1;Bourdonnieres 1;Boulevard de Vendée 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.186255590967;-1.52115429456528
+3227;1;2;Plaisance;Plaisance;Route de Vannes 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2405326620207;-1.59344052396589
+3201;1;2;Gare de Vertou Nord;Gare de Vertou Nord;Impasse de la Gare 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1864023763705;-1.47916185458301
+3566;1;2;Gare de Bouaye;Gare de Bouaye;Allée Louis Armand 44830 - Bouaye;02 40 44 44 44;www.tan.fr;47.138339716512;-1.68209925257509
+3561;1;2;Gare de Basse-Indre Saint-Herblain;Gare de Basse-Indre Saint-Herblain;Rue de la Gare 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2041579741319;-1.66103809646199
+3583;1;2;Morlière Paquelais;Morliere Paquelais;50 Avenue de la Paquelais 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2478235218625;-1.60283874722482
+3586;1;2;Beauséjour;Beausejour;142 Route de Vannes 44100 - Nantes;02 40 44 44 44;www.tan.fr;47.2384135213971;-1.5873437488368
+3628;1;2;Gréneraie;Greneraie;Boulevard Emile Gabory 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.2001390392692;-1.53333362324729
+3194;1;2;8 Mai;8 Mai;Avenue André Malraux 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1901779141219;-1.55169145198101
+3195;1;2;Trocardière;Trocardiere;Avenue Léon Blum 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1832927458839;-1.57109558940531
+3202;1;2;Gare de Vertou Sud;Gare de Vertou Sud;Rue du Bois Rigaud 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1857498067425;-1.47860856997784
+3564;1;2;Gare de Thouaré-sur-Loire;Gare de Thouare-sur-Loire;Place de la République 44470 - Thouaré-sur-loire;02 40 44 44 44;www.tan.fr;47.2647119908848;-1.4413893536783
+3562;1;2;Neustrie 1;Neustrie 1;Chemin de la Neustrie 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.1756933085378;-1.5932723508575
+3196;1;2;René Cassin;Rene Cassin;Route de la Chapelle Sur Erdre 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2639509260101;-1.57499790750312
+3192;1;2;La Beaujoire;La Beaujoire;Rue Colette 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2594833036504;-1.52739847057661
+3649;1;2;Bignon;Bignon;Rue des Verts Prés 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2489752466115;-1.59820022515513
+3558;1;2;Neustrie 2;Neustrie 2;Rue de la Neustrie 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.176672451111;-1.59339969648243
+3200;1;2;Frêne Rond;Frene Rond;Rue de l'Ouche Quinet 44230 - St-Sébastien;02 40 44 44 44;www.tan.fr;47.1905492575224;-1.49621830894861
+3582;1;2;Trentemoult-Dépôt;Trentemoult-Depot;Rue Ordronneau 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1919649895095;-1.58068768637466
+3565;1;2;Gare de Mauves-sur-Loire;Gare de Mauves-sur-Loire;Place de la Gare 44470 - Mauves-sur-loire;02 40 44 44 44;www.tan.fr;47.2932583339329;-1.388904886686
+
 
 # Stations Bicloo
 INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, details, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?);
-1;2;Préfecture;Prefecture;Abonnement;47.220195066995;-1.554176048615
-2;2;Picasso;Picasso;Accueil;47.216343586847;-1.534229121012
-3;2;Gréneraie;Greneraie;Abonnement;47.199970710192;-1.534607153787
-4;2;Pirmil;Pirmil;Abonnement;47.196629488228;-1.541450633643
-5;2;Gare Pont Rousseau;Gare Pont Rousseau;Abonnement;47.193149276695;-1.549005454463
-6;2;Calvaire;Calvaire;Accueil;47.215599181963;-1.560606306876
-7;2;Place Delorme;Place Delorme;Abonnement et Bonus;47.215158134429;-1.563963566828
-8;2;Bretagne Sud;Bretagne Sud;Abonnement et Bonus;47.216750059447;-1.559157317875
-9;2;Bretagne Nord;Bretagne Nord;Accueil;47.218444866727;-1.558667159705
-10;2;Place Aristide Briand;Place Aristide Briand;Accueil;47.217196287643;-1.563005503482
-11;2;Place Edouard Normand;Place Edouard Normand;Accueil;47.219028032543;-1.563494733376
-12;2;Sainte Elisabeth;Sainte Elisabeth;Accueil;47.219225442242;-1.561588768418
-13;2;Place Viarme;Place Viarme;Abonnement et Bonus;47.221440878007;-1.563326981143
-14;2;Saint Similien;Saint Similien;Accueil;47.219835952652;-1.558928909642
-15;2;Hôtel de Ville;Hotel de Ville;Accueil;47.218564001564;-1.553544268536
-16;2;Bellamy;Bellamy;Abonnement;47.223348795628;-1.557659854435
-17;2;Marché Talensac Sud;Marche Talensac Sud;Accueil;47.221154818394;-1.556494771798
-18;2;Moquechien;Moquechien;Accueil;47.220379047481;-1.555582979271
-19;2;Buat;Buat;Accueil;47.2271569726;-1.542422643412
-20;2;Versailles;Versailles;Accueil;47.224423383876;-1.553728032107
-21;2;Dalby;Dalby;Abonnement;47.223612648875;-1.530108457388
-22;2;Guist'hau Sud;Guist'hau Sud;Abonnement et Bonus;47.216839445305;-1.567023357312
-23;2;Guist'hau Nord;Guist'hau Nord;Accueil;47.217940185225;-1.569267206185
-24;2;Place Edit de Nantes;Place Edit de Nantes;Accueil;47.214459027951;-1.567610750129
-25;2;Duguay Trouin;Duguay Trouin;Accueil;47.21346157879;-1.555288508406
-26;2;Strasbourg;Strasbourg;Accueil;47.216532854728;-1.551617564984
-27;2;Commerce;Commerce;Abonnement;47.213145029425;-1.557380722638
-28;2;Bourse;Bourse;Accueil;47.212094380848;-1.559105277589
-29;2;Rubens;Rubens;Accueil;47.214351440918;-1.560287290723
-30;2;Racine;Racine;Accueil;47.213483260326;-1.563187705896
-31;2;Médiathèque;Mediatheque;Abonnement;47.210912654925;-1.561841844952
-32;2;Jean V;Jean V;Abonnement;47.212180370735;-1.565562892074
-33;2;Alger;Alger;Accueil;47.210705238574;-1.566674313665
-34;2;Feydeau;Feydeau;Accueil;47.211472898917;-1.556882483425
-35;2;Place Ricordeau;Place Ricordeau;Abonnement;47.212116039221;-1.552930075997
-36;2;Quai Moncousu;Quai Moncousu;Accueil;47.209365456061;-1.555248414263
-37;2;Moulin;Moulin;Accueil;47.2166468712;-1.554425847107
-38;2;Madeleine;Madeleine;Accueil;47.208815874652;-1.550430474908
-39;2;Chantier Naval;Chantier Naval;Accueil;47.208368839559;-1.569543162242
-40;2;Gare Maritime;Gare Maritime;Abonnement;47.206609081175;-1.572629532377
-41;2;Machines de l'Ile;Machines de l'Ile;Abonnement;47.206930260547;-1.56482580615
-42;2;Palais de Justice;Palais de Justice;Accueil;47.208363178205;-1.561242453731
-43;2;Prairie au Duc;Prairie au Duc;Accueil;47.204784819206;-1.558882840172
-44;2;Place République;Place Republique;Accueil;47.205401226591;-1.555193861635
-45;2;Martyrs Nantais;Martyrs Nantais;Abonnement;47.207035364629;-1.548179850547
-46;2;Verdun;Verdun;Abonnement;47.217516769716;-1.551868176513
-47;2;Duchesse Anne;Duchesse Anne;Accueil;47.216528748586;-1.54707722079
-48;2;Brossard;Brossard;Accueil;47.218822583124;-1.55632709029
-49;2;Château;Chateau;Abonnement;47.215135932323;-1.550276002344
-50;2;Berlin;Berlin;Abonnement;47.214391469976;-1.530072500615
-51;2;Baco;Baco;Accueil;47.214338842647;-1.548768937518
-52;2;Olivettes;Olivettes;Accueil;47.211749426576;-1.549959351078
-53;2;Cité Internationale des Congrès;Cite Internationale des Congres;Abonnement;47.213168554028;-1.545027483831
-54;2;Magellan;Magellan;Accueil;47.210683975483;-1.544248263392
-55;2;Vincent Gache;Vincent Gache;Accueil;47.206884735167;-1.541850967268
-56;2;Gaëtan Rondeau;Gaetan Rondeau;Abonnement;47.205407211862;-1.537600139625
-57;2;Palais des Sports;Palais des Sports;Accueil;47.208477196156;-1.535999160686
-58;2;Stade Saupin;Stade Saupin;Accueil;47.213978001005;-1.539639581349
-59;2;Place du Cirque;Place du Cirque;Abonnement;47.217652287732;-1.556869629336
-60;2;Gare Sud;Gare Sud;Abonnement;47.215930742147;-1.542865960917
-61;2;LU Lieu Unique;LU Lieu Unique;Accueil;47.215602785014;-1.545924211177
-62;2;Gare Nord;Gare Nord;Abonnement;47.218141404614;-1.542240968402
-63;2;Jardins des Plantes;Jardins des Plantes;Accueil;47.219931771933;-1.544764109624
-64;2;Saint Clément;Saint Clement;Abonnement et Bonus;47.221973737285;-1.546931671984
-65;2;Sully;Sully;Accueil;47.222598818465;-1.551684839193
-66;2;Chanzy;Chanzy;Accueil;47.225441394771;-1.54801802179
-67;2;Place Waldeck Rousseau;Place Waldeck Rousseau;Accueil;47.22778633816;-1.552166139129
-68;2;Livet;Livet;Accueil;47.224095495505;-1.545216320958
-69;2;Manufacture;Manufacture;Accueil;47.219227699299;-1.535865350197
-70;2;Barillerie;Barillerie;Accueil;47.215409629938;-1.556100379995
-71;2;Foch Cathédrale;Foch Cathedrale;Abonnement et Bonus;47.218694565936;-1.550480136778
-72;2;Marché Talensac Nord;Marche Talensac Nord;Abonnement et Bonus;47.221910341954;-1.559069342877
-73;2;Félibien;Felibien;Accueil;47.220766478732;-1.566849350985
-74;2;Sarradin;Sarradin;Accueil;47.220883766721;-1.570507177852
-75;2;Place Canclaux;Place Canclaux;Accueil;47.214371684292;-1.575006081926
-76;2;Lamoricière;Lamoriciere;Accueil;47.212365614395;-1.571398998401
-77;2;Place René Bouhier;Place Rene Bouhier;Accueil;47.209442040964;-1.570589286667
-78;2;Ecole d'Architecture;Ecole d'Architecture;Accueil;47.207616902001;-1.557551259669
-79;2;De Gaulle;De Gaulle;Accueil;47.208460378395;-1.540568733291
-80;2;Malakoff;Malakoff;Accueil;47.213234526632;-1.536420715916
-81;2;Boucherie;Boucherie;Abonnement;47.216208142635;-1.557090686786
-82;2;Victor-Hugo;Victor-Hugo;Accueil;47.204014359992;-1.551567325067
-83;2;Mangin;Mangin;Abonnement;47.2010219272;-1.545497627403
-84;2;Sébilleau;Sebilleau;Accueil;47.206768584698;-1.533136362926
-85;2;Millerand;Millerand;Abonnement;47.208217819463;-1.530161413494
-86;2;Région;Region;Accueil;47.210753237185;-1.525951275481
-87;2;Bel Air;Bel Air;Accueil;47.226406033943;-1.560041221375
-88;2;Hauts-Pavés;Hauts-Paves;Accueil;47.225482261833;-1.567520471822
-89;2;Anatole-France;Anatole-France;Accueil;47.223616443722;-1.571392360493
-90;2;Mellinet;Mellinet;Accueil;47.211489622114;-1.577126765418
-91;2;Saint-Aignan;Saint-Aignan;Accueil;47.207444063946;-1.578715096614
-92;2;Guépin;Guepin;Accueil;47.215829434071;-1.559155737871
-93;2;Procé;Proce;Abonnement;47.224321586199;-1.576583566602
-94;2;Rond Point Vannes;Rond Point Vannes;Abonnement;47.229675345348;-1.572012091255
-95;2;Rond Point Rennes;Rond Point Rennes;Abonnement;47.233091703755;-1.566016980776
-96;2;Facultés;Facultes;Abonnement;47.246323288345;-1.555338349805
-97;2;Petit Port;Petit Port;Abonnement;47.243262644076;-1.556380986355
-98;2;Michelet;Michelet;Abonnement;47.235083706675;-1.556388702048
-99;2;Tortière;Tortiere;Abonnement;47.235344800187;-1.549473437411
-100;2;Saint-Donatien;Saint-Donatien;Accueil;47.229128762669;-1.540402417437
-101;2;Huit Mai;Huit Mai;Abonnement;47.18999862013;-1.551821259531
-102;2;Saint-Jacques;Saint-Jacques;Accueil;47.195859160598;-1.536589628879
+1;2;Préfecture;Prefecture;Abonnement;47.2201950669957;-1.55417604861584
+2;2;Hôtel de Ville;Hotel de Ville;Accueil;47.2185640015645;-1.55354426853678
+3;2;Strasbourg;Strasbourg;Accueil;47.216532854728;-1.55161756498412
+4;2;Moulin;Moulin;Accueil;47.2166468712003;-1.55442584710721
+5;2;Brossard;Brossard;Accueil;47.2188225831247;-1.5563270902907
+6;2;Place du Cirque;Place du Cirque;Abonnement;47.2176522877325;-1.55686962933674
+7;2;Barillerie;Barillerie;Accueil;47.2154096299385;-1.5561003799956
+8;2;Boucherie;Boucherie;Abonnement;47.2162081426351;-1.55709068678671
+9;2;Guépin;Guepin;Accueil;47.2158294340716;-1.55915573787153
+10;2;Picasso;Picasso;Accueil;47.2163435868477;-1.53422912101255
+11;2;Calvaire;Calvaire;Accueil;47.2155991819633;-1.56060630687651
+12;2;Place Delorme;Place Delorme;Abonnement;47.2151581344299;-1.56396356682832
+13;2;Bretagne Sud;Bretagne Sud;Abonnement;47.2167500594478;-1.55915731787571
+14;2;Saint-Félix;Saint-Felix;Accueil;47.2306076047205;-1.55623411620874
+15;2;Place Aristide Briand;Place Aristide Briand;Accueil;47.2171962876433;-1.56300550348212
+16;2;Place Edouard Normand;Place Edouard Normand;Accueil;47.2190280325433;-1.56349473337675
+17;2;Sainte Elisabeth;Sainte Elisabeth;Accueil;47.219225442242;-1.56158876841816
+18;2;Place Viarme;Place Viarme;Abonnement;47.2214408780072;-1.56332698114374
+19;2;Saint Similien;Saint Similien;Accueil;47.219835952652;-1.55892890964265
+20;2;Bellamy;Bellamy;Abonnement;47.223348795628;-1.55765985443575
+21;2;Marché Talensac Sud;Marche Talensac Sud;Accueil;47.221154818394;-1.55649477179845
+22;2;Moquechien;Moquechien;Accueil;47.2203790474815;-1.55558297927192
+23;2;Buat;Buat;Accueil;47.2271569726;-1.54242264341268
+24;2;Versailles;Versailles;Accueil;47.2244233838765;-1.55372803210723
+25;2;Dalby;Dalby;Abonnement;47.2236126488755;-1.53010845738847
+26;2;Guist'hau Sud;Guist'hau Sud;Abonnement;47.2168394453051;-1.56702335731262
+27;2;Guist'hau Nord;Guist'hau Nord;Accueil;47.2179401852254;-1.56926720618524
+28;2;Place Edit de Nantes;Place Edit de Nantes;Accueil;47.2144590279511;-1.56761075012927
+29;2;Duguay Trouin;Duguay Trouin;Accueil;47.2134615787904;-1.55528850840637
+30;2;Commerce;Commerce;Abonnement;47.2131450294256;-1.55738072263822
+31;2;Bourse;Bourse;Accueil;47.2120943808486;-1.55910527758924
+32;2;Rubens;Rubens;Accueil;47.2143514409189;-1.56028729072365
+33;2;Racine;Racine;Accueil;47.2134832603266;-1.5631877058962
+34;2;Médiathèque;Mediatheque;Abonnement;47.2109126549257;-1.5618418449525
+35;2;Jean V;Jean V;Abonnement;47.212180370735;-1.56556289207478
+36;2;Alger;Alger;Accueil;47.210705238574;-1.5666743136651
+37;2;Feydeau;Feydeau;Accueil;47.2114728989176;-1.55688248342545
+38;2;Place Ricordeau;Place Ricordeau;Abonnement;47.2120904234566;-1.55313666650746
+39;2;Quai Moncousu;Quai Moncousu;Accueil;47.2093654560619;-1.555248414263
+40;2;Madeleine;Madeleine;Accueil;47.208815874652;-1.5504304749082
+41;2;Chantier Naval;Chantier Naval;Accueil;47.2083688395591;-1.56954316224266
+42;2;Gare Maritime;Gare Maritime;Abonnement;47.2066090811753;-1.57262953237793
+43;2;Machines de l'Ile;Machines de l'Ile;Abonnement;47.2069302605475;-1.56482580615095
+44;2;Palais de Justice;Palais de Justice;Accueil;47.2083631782056;-1.56124245373142
+45;2;Prairie au Duc;Prairie au Duc;Accueil;47.2047848192062;-1.55888284017234
+46;2;Place République;Place Republique;Accueil;47.2054012265916;-1.55519386163571
+47;2;Martyrs Nantais;Martyrs Nantais;Abonnement;47.207035364629;-1.54817985054706
+48;2;Verdun;Verdun;Abonnement;47.217516769716;-1.55186817651381
+49;2;Duchesse Anne;Duchesse Anne;Accueil;47.2165287485861;-1.54707722079028
+50;2;Château;Chateau;Abonnement;47.2151359323236;-1.55027600234498
+51;2;Berlin;Berlin;Abonnement;47.2143914699763;-1.53007250061588
+52;2;Baco;Baco;Accueil;47.2143388426474;-1.54876893751898
+53;2;Olivettes;Olivettes;Accueil;47.2117494265765;-1.54995935107843
+54;2;Cité Internationale des Congrès;Cite Internationale des Congres;Abonnement;47.2131685540285;-1.54502748383111
+55;2;Magellan;Magellan;Accueil;47.2106839754833;-1.54424826339243
+56;2;Vincent Gache;Vincent Gache;Accueil;47.2068847351676;-1.54185096726864
+57;2;Gaëtan Rondeau;Gaetan Rondeau;Abonnement;47.2054072118627;-1.53760013962524
+58;2;Palais des Sports;Palais des Sports;Accueil;47.2084771961567;-1.53599916068622
+59;2;Stade Saupin;Stade Saupin;Accueil;47.2139780010056;-1.53963958134972
+60;2;Gare Sud;Gare Sud;Abonnement;47.2159307421474;-1.54286596091712
+61;2;LU Lieu Unique;LU Lieu Unique;Accueil;47.2156027850142;-1.54592421117785
+62;2;Gare Nord;Gare Nord;Abonnement;47.2181414046142;-1.54224096840209
+63;2;Jardins des Plantes;Jardins des Plantes;Accueil;47.2199317719337;-1.54476410962437
+64;2;Saint Clément;Saint Clement;Abonnement;47.2217983948072;-1.54717172480906
+65;2;Sully;Sully;Accueil;47.2225988184658;-1.5516848391931
+66;2;Chanzy;Chanzy;Accueil;47.2254413947716;-1.54801802179078
+67;2;Place Waldeck Rousseau;Place Waldeck Rousseau;Accueil;47.2277863381608;-1.55216613912966
+68;2;Livet;Livet;Accueil;47.2240954955051;-1.54521632095855
+69;2;Manufacture;Manufacture;Accueil;47.2192276992993;-1.53586535019784
+70;2;Foch Cathédrale;Foch Cathedrale;Abonnement;47.2186945659362;-1.55048013677801
+71;2;Marché Talensac;Marche Talensac;Abonnement;47.2219103419541;-1.55906934287743
+72;2;Bellamy Gué-Moreau;Bellamy Gue-Moreau;Accueil;47.2286141235376;-1.56192014921017
+73;2;Sarradin;Sarradin;Accueil;47.2208837667212;-1.57050717785263
+74;2;Place Canclaux;Place Canclaux;Accueil;47.2143716842925;-1.57500608192678
+75;2;Lamoricière;Lamoriciere;Accueil;47.212365614395;-1.57139899840128
+76;2;Place René Bouhier;Place Rene Bouhier;Accueil;47.2094420409641;-1.57058928666779
+77;2;Ecole d'Architecture;Ecole d'Architecture;Accueil;47.2076169020017;-1.55755125966966
+78;2;De Gaulle;De Gaulle;Accueil;47.2084603783954;-1.54056873329161
+79;2;Malakoff;Malakoff;Accueil;47.2132345266324;-1.53642071591634
+80;2;Victor-Hugo;Victor-Hugo;Accueil;47.2040143599928;-1.55156732506795
+81;2;Mangin;Mangin;Abonnement;47.2010219272;-1.54549762740334
+82;2;Sébilleau;Sebilleau;Accueil;47.2067685846983;-1.53313636292619
+83;2;Millerand;Millerand;Abonnement;47.208217819463;-1.53016141349475
+84;2;Région;Region;Accueil;47.2107532371851;-1.52595127548116
+85;2;Bel Air;Bel Air;Accueil;47.2264060339437;-1.56004122137593
+86;2;Hauts-Pavés;Hauts-Paves;Accueil;47.2254822618338;-1.56752047182291
+87;2;Anatole-France;Anatole-France;Accueil;47.2236164437223;-1.57139236049388
+88;2;Mellinet;Mellinet;Accueil;47.211489622114;-1.57712676541886
+89;2;Saint-Aignan;Saint-Aignan;Accueil;47.2074440639466;-1.57871509661417
+90;2;Procé;Proce;Abonnement;47.2243215861999;-1.57658356660229
+91;2;Rond Point Vannes;Rond Point Vannes;Abonnement;47.229675345348;-1.57201209125591
+92;2;Rond Point Rennes;Rond Point Rennes;Abonnement;47.2330917037559;-1.56601698077602
+93;2;Facultés;Facultes;Abonnement;47.2463232883454;-1.5553383498054
+94;2;Petit Port;Petit Port;Abonnement;47.2432626440766;-1.55638098635507
+95;2;Michelet;Michelet;Abonnement;47.2350837066755;-1.55638870204855
+96;2;Tortière;Tortiere;Abonnement;47.2353448001876;-1.54947343741177
+97;2;Saint-Donatien;Saint-Donatien;Accueil;47.2291287626691;-1.5404024174378
+98;2;Huit Mai;Huit Mai;Abonnement;47.1899986201306;-1.55182125953104
+99;2;Saint-Jacques;Saint-Jacques;Accueil;47.1958591605985;-1.53658962887906
+100;2;Gréneraie;Greneraie;Abonnement;47.1999707101929;-1.5346071537874
+101;2;Pirmil;Pirmil;Abonnement;47.1966294882289;-1.54145063364339
+102;2;Gare Pont Rousseau;Gare Pont Rousseau;Abonnement;47.1931492766954;-1.54900545446362
+103;2;Mobile;Mobile;Mobile;47.2059145067047;-1.56970373529113
 
 # Marguerite
 INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
@@ -1287,12 +1295,12 @@ INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, lon
 1984;5;Za des bauches;ZA DES BAUCHES;47.6322733;-2.05244816
 1985;5;Zone industrielle;ZONE INDUSTRIELLE;47.10071858;-1.60296323
 
-# Lignes
+#Lignes
 INSERT INTO lignes(_id, code, lettre, depuis, vers, couleur, type) VALUES (?, ?, ?, ?, ?, ?, ?);
-0;1;1;François Mitterrand;Beaujoire / Ranzay;-16745144;1
+0;1;1;François Mitterrand / Jamet;Beaujoire / Ranzay;-16745144;1
 1;2;2;Orvault Grand Val;Gare de Pont Rousseau;-1627337;1
 2;3;3;Marcel Paul;Neustrie;-16746306;1
-3;4;4;Foch;Cathédrale;-146157;1
+3;4;4;Foch - Cathédrale;Porte de Vertou;-146157;1
 4;11;11;Tertre;Perray;-6525266;3
 5;12;12;Colinière / Jules Verne;Beauséjour;-4924170;3
 6;22;22;St-Joseph Porterie / Atlanpôle;Hermeland;-6525266;3
@@ -1303,7 +1311,7 @@ INSERT INTO lignes(_id, code, lettre, depuis, vers, couleur, type) VALUES (?, ?,
 11;28;28;Vertou;Pirmil;-4924170;3
 12;29;29;La Herdrie;Pirmil;-607544;3
 13;30;30;Savarières;Trentemoult;-4596;3
-14;33;33;Robinière / Aufrère;Ecpace Diderot;-607544;3
+14;33;33;Robinière / Aufrère;Espace Diderot;-607544;3
 15;36;36;Gréneraie;Neustrie;-16734806;3
 16;37;37;Neustrie;Croix Jeannette;-16737730;3
 17;39;39;Chalonges;Pirmil;-607544;3
@@ -2380,7 +2388,7 @@ INSERT INTO equipements(_id, idType, codeEquipement, nomEquipement, normalizedNo
 # Sens
 INSERT INTO sens(_id, codeLigne, code, nomSens) VALUES (?, ?, ?, ?);
 0;1;2;Beaujoire / Ranzay
-1;1;1;François Mitterrand
+1;1;1;François Mitterrand / Jamet
 2;2;2;Gare de Pont Rousseau
 3;2;1;Orvault Grand Val
 4;3;2;Neustrie
@@ -2407,7 +2415,7 @@ INSERT INTO sens(_id, codeLigne, code, nomSens) VALUES (?, ?, ?, ?);
 25;29;1;La Herdrie
 26;30;2;Trentemoult
 27;30;1;Savarières
-28;33;2;Ecpace Diderot
+28;33;2;Espace Diderot
 29;33;1;Robinière / Aufrère
 30;36;2;Neustrie
 31;36;1;Gréneraie

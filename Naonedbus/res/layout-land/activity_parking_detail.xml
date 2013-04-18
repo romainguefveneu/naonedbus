@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2013 Romain Guefveneu.
+    
+   This file is part of naonedbus.
+    
+   Naonedbus is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   
+   Naonedbus is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultActivityContent"
     android:orientation="vertical"
@@ -122,6 +140,17 @@
                 android:gravity="center"
                 android:text="@string/msg_element_not_localized"
                 android:visibility="gone" />
+
+            <!-- Footer -->
+
+            <TextView
+                android:id="@id/itemAddress"
+                style="@style/ItemTime.Secondary"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/box_footer_background"
+                android:gravity="right"
+                android:padding="@dimen/padding_small" />
         </LinearLayout>
     </LinearLayout>
 

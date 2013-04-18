@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2013 Romain Guefveneu.
+ *   
+ *  This file is part of naonedbus.
+ *   
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.NBApplication;
@@ -19,8 +37,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
-import com.bugsense.trace.BugSenseHandler;
 
 public class MainActivity extends SlidingMenuActivity {
 
@@ -72,8 +88,8 @@ public class MainActivity extends SlidingMenuActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		setTitle(R.string.title_activity_main);
+
 		super.onCreate(savedInstanceState);
-		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
 
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();

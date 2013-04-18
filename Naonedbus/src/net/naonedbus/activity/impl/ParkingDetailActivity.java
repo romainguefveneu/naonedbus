@@ -1,18 +1,18 @@
 /**
- *  Copyright (C) 2011 Romain Guefveneu
- *  
+ * Copyright (C) 2013 Romain Guefveneu.
+ *   
  *  This file is part of naonedbus.
- *  
+ *   
  *  Naonedbus is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- *
+ *  
  *  Naonedbus is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *
+ *  
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -73,6 +73,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	private SlidingMenuHelper mSlidingMenuHelper;
 
 	protected TextView mParkingTitle;
+	protected TextView mParkingAdresse;
 	protected TextView mParkingDescription;
 	protected TextView mPlacesDisponibles;
 	protected TextView mPlacesTotales;
@@ -108,6 +109,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 
 		mParkingTitle = (TextView) findViewById(R.id.itemTitle);
 		mParkingDescription = (TextView) findViewById(R.id.itemDescription);
+		mParkingAdresse = (TextView) findViewById(R.id.itemAddress);
 		mPlacesDisponibles = (TextView) findViewById(R.id.placesDisponibles);
 		mPlacesTotales = (TextView) findViewById(R.id.placesTotales);
 		mItemDate = (TextView) findViewById(R.id.itemDate);
@@ -118,6 +120,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		mPlacesTotales.setTypeface(robotoLight);
 		mItemDate.setTypeface(robotoMedium);
 		mItemTelephone.setTypeface(robotoLight);
+		mParkingAdresse.setTypeface(robotoMedium);
 
 		mMapView = (MapView) findViewById(R.id.map_view);
 		mMapView.setBuiltInZoomControls(true);
@@ -169,6 +172,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	private void loadParking(final Parking parking) {
 
 		mParkingTitle.setText(parking.getNom());
+		mParkingAdresse.setText(parking.getAdresse());
 
 		if (parking.getTelephone() == null || parking.getTelephone().length() == 0) {
 			mItemTelephone.setVisibility(View.GONE);
@@ -191,6 +195,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		} else {
 			mMapView.setVisibility(View.GONE);
 			mMessage.setVisibility(View.VISIBLE);
+			mParkingAdresse.setVisibility(View.GONE);
 		}
 
 		if (mAadapterMap.containsKey(parking.getClass())) {

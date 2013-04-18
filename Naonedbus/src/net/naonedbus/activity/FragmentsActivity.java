@@ -1,9 +1,26 @@
+/**
+ * Copyright (C) 2013 Romain Guefveneu.
+ *   
+ *  This file is part of naonedbus.
+ *   
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package net.naonedbus.activity;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.intent.IIntentParamKey;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +28,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -33,9 +48,9 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 
 	/** Layout de l'activitée courante. */
-	private int mLayoutId;
+	private final int mLayoutId;
 	/** Sert à la détection du changement de thème. */
-	private int mCurrentTheme = NBApplication.THEME;
+	private final int mCurrentTheme = NBApplication.THEME;
 
 	/** Titres des fragments. */
 	private int[] mTitles;
@@ -59,12 +74,12 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	 */
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 
-	public FragmentsActivity(int layoutId) {
+	public FragmentsActivity(final int layoutId) {
 		this.mLayoutId = layoutId;
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
 
@@ -89,7 +104,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		// a reference to the Tab.
 		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
-			public void onPageSelected(int position) {
+			public void onPageSelected(final int position) {
 				getSupportActionBar().setSelectedNavigationItem(position);
 			}
 		});
@@ -99,7 +114,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	 * Gérer les click sur les menus.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
 			finish();
 			return true;
@@ -108,7 +123,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(BUNDLE_TABS_CURRENT, getSupportActionBar().getSelectedNavigationIndex());
 		outState.putIntArray(BUNDLE_TABS_TITLES, mTitles);
@@ -116,7 +131,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
 		if (savedInstanceState.containsKey(BUNDLE_TABS_TITLES)) {
 			final int[] titles = savedInstanceState.getIntArray(BUNDLE_TABS_TITLES);
 			final String[] classes = savedInstanceState.getStringArray(BUNDLE_TABS_CLASSES);
@@ -130,7 +145,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
+	public void onWindowFocusChanged(final boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 
 		// Gérer le changement de thème;
@@ -145,7 +160,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	}
 
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	public void onTabSelected(final Tab tab, final FragmentTransaction ft) {
 		if (DBG)
 			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
 
@@ -153,18 +168,18 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	public void onTabUnselected(final Tab tab, final FragmentTransaction ft) {
 		if (DBG)
 			Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	public void onTabReselected(final Tab tab, final FragmentTransaction ft) {
 		if (DBG)
 			Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
 	}
 
-	protected void addFragments(int[] titles, String[] classes) {
+	protected void addFragments(final int[] titles, final String[] classes) {
 		if (DBG)
 			Log.d(LOG_TAG, "addFragments " + titles.length);
 
@@ -191,7 +206,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	 * @param classes
 	 *            Les classes des fragments.
 	 */
-	protected void addFragments(int[] titles, Class<?>[] classes, Bundle[] bundles) {
+	protected void addFragments(final int[] titles, final Class<?>[] classes, final Bundle[] bundles) {
 		mClasses = new String[classes.length];
 		mBundles = bundles;
 		for (int i = 0; i < classes.length; i++) {
@@ -200,7 +215,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		addFragments(titles, mClasses);
 	}
 
-	protected void addDelayedFragments(int[] titles, Class<?>[] classes, Bundle[] bundles) {
+	protected void addDelayedFragments(final int[] titles, final Class<?>[] classes, final Bundle[] bundles) {
 		mClasses = new String[classes.length];
 		mBundles = bundles;
 		for (int i = 0; i < classes.length; i++) {
@@ -213,7 +228,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		addFragments(mTitles, mClasses);
 	}
 
-	protected void setSelectedTab(int position) {
+	protected void setSelectedTab(final int position) {
 		if (DBG)
 			Log.d(LOG_TAG, "setSelectedTab " + position);
 		getSupportActionBar().setSelectedNavigationItem(position);
@@ -238,7 +253,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	 * @param key
 	 * @return
 	 */
-	protected Object getParamValue(IIntentParamKey key) {
+	protected Object getParamValue(final IIntentParamKey key) {
 		return getIntent().getSerializableExtra(key.toString());
 	}
 
@@ -250,12 +265,12 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 
 		private static final String LOG_TAG = FragmentsActivity.LOG_TAG + "$SectionsPagerAdapter";
 
-		public SectionsPagerAdapter(FragmentManager fm) {
+		public SectionsPagerAdapter(final FragmentManager fm) {
 			super(fm);
 		}
 
 		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
+		public Object instantiateItem(final ViewGroup container, final int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "instantiateItem " + position);
 
@@ -265,7 +280,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		}
 
 		@Override
-		public Fragment getItem(int position) {
+		public Fragment getItem(final int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "getItem " + position);
 			return Fragment.instantiate(FragmentsActivity.this, mClasses[position],
@@ -278,14 +293,14 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		}
 
 		@Override
-		public CharSequence getPageTitle(int position) {
+		public CharSequence getPageTitle(final int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "getPageTitle " + position);
 
 			return getString(mTitles[position]);
 		}
 
-		public String makeFragmentName(int viewId, long id) {
+		public String makeFragmentName(final int viewId, final long id) {
 			return "android:switcher:" + viewId + ":" + id;
 		}
 	}
