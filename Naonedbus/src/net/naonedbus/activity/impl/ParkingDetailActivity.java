@@ -73,6 +73,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	private SlidingMenuHelper mSlidingMenuHelper;
 
 	protected TextView mParkingTitle;
+	protected TextView mParkingAdresse;
 	protected TextView mParkingDescription;
 	protected TextView mPlacesDisponibles;
 	protected TextView mPlacesTotales;
@@ -108,6 +109,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 
 		mParkingTitle = (TextView) findViewById(R.id.itemTitle);
 		mParkingDescription = (TextView) findViewById(R.id.itemDescription);
+		mParkingAdresse = (TextView) findViewById(R.id.itemAddress);
 		mPlacesDisponibles = (TextView) findViewById(R.id.placesDisponibles);
 		mPlacesTotales = (TextView) findViewById(R.id.placesTotales);
 		mItemDate = (TextView) findViewById(R.id.itemDate);
@@ -118,6 +120,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		mPlacesTotales.setTypeface(robotoLight);
 		mItemDate.setTypeface(robotoMedium);
 		mItemTelephone.setTypeface(robotoLight);
+		mParkingAdresse.setTypeface(robotoMedium);
 
 		mMapView = (MapView) findViewById(R.id.map_view);
 		mMapView.setBuiltInZoomControls(true);
@@ -169,6 +172,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 	private void loadParking(final Parking parking) {
 
 		mParkingTitle.setText(parking.getNom());
+		mParkingAdresse.setText(parking.getAdresse());
 
 		if (parking.getTelephone() == null || parking.getTelephone().length() == 0) {
 			mItemTelephone.setVisibility(View.GONE);
@@ -191,6 +195,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		} else {
 			mMapView.setVisibility(View.GONE);
 			mMessage.setVisibility(View.VISIBLE);
+			mParkingAdresse.setVisibility(View.GONE);
 		}
 
 		if (mAadapterMap.containsKey(parking.getClass())) {

@@ -447,11 +447,15 @@
         <item name="android:textSize">@dimen/horaire_huge</item>
         <item name="android:textColor">@color/holo_green</item>
     </style>
-    
+
     <style name="CardTitle" parent="BigTitle">
         <item name="android:paddingLeft">@dimen/padding_small</item>
         <item name="android:paddingRight">@dimen/padding_small</item>
         <item name="android:textColor">@color/card_text_color</item>
+    </style>
+
+    <style name="CardTitle.Small">
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="CardMessage" parent="@style/ItemSecondaryText.SingleLine">
@@ -488,8 +492,7 @@
         <item name="android:paddingRight">0dp</item>
     </style>
 
-    <style name="CardHoraire.Huge" parent="CardTextHuge">
-    </style>
+    <style name="CardHoraire.Huge" parent="CardTextHuge"></style>
 
     <style name="CardDelai" parent="CardHoraire">
         <item name="android:textColor">@color/card_text_color</item>

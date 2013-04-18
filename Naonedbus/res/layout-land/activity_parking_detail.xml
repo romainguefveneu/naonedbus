@@ -140,6 +140,17 @@
                 android:gravity="center"
                 android:text="@string/msg_element_not_localized"
                 android:visibility="gone" />
+
+            <!-- Footer -->
+
+            <TextView
+                android:id="@id/itemAddress"
+                style="@style/ItemTime.Secondary"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/box_footer_background"
+                android:gravity="right"
+                android:padding="@dimen/padding_small" />
         </LinearLayout>
     </LinearLayout>
 
