@@ -25,6 +25,7 @@ import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
@@ -55,6 +56,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -74,6 +76,9 @@ public class CommentaireActivity extends SherlockActivity {
 	public static final String PARAM_LIGNE = "ligne";
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
+
+	private static final String LOG_TAG = "CommentaireActivity";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final String BUNDLE_KEY_LIGNE = "ligne";
 	private static final String BUNDLE_KEY_SENS = "sens";
@@ -320,7 +325,7 @@ public class CommentaireActivity extends SherlockActivity {
 			commentaireItem.setCodeSens(mSens.code);
 		}
 		if (mLigne != null) {
-			commentaireItem.setCodeLigne(mLigne.lettre);
+			commentaireItem.setCodeLigne(mLigne.code);
 		}
 		commentaireItem.setMessage(mCommentText.getText().toString().trim());
 
@@ -408,8 +413,8 @@ public class CommentaireActivity extends SherlockActivity {
 	 * 
 	 */
 	private class SendTask extends AsyncTask<Commentaire, Void, Boolean> {
-		private ProgressDialog progressDialog = null;
-		private Exception e;
+		private ProgressDialog progressDialog;
+		private Exception exception;
 
 		@Override
 		protected void onPreExecute() {
@@ -433,7 +438,7 @@ public class CommentaireActivity extends SherlockActivity {
 				return true;
 
 			} catch (final Exception e) {
-				this.e = e;
+				this.exception = e;
 				return false;
 			}
 		}
@@ -443,11 +448,14 @@ public class CommentaireActivity extends SherlockActivity {
 			progressDialog.dismiss();
 
 			if (!success) {
-				final int msgError = (this.e instanceof HttpException) ? R.string.dialog_content_comment_sending_error
+				final int msgError = (this.exception instanceof HttpException) ? R.string.dialog_content_comment_sending_error
 						: R.string.dialog_content_key_error;
 
-				InfoDialogUtils.show(CommentaireActivity.this, R.string.dialog_content_comment_sending_error, msgError);
-				BugSenseHandler.sendExceptionMessage("Erreur lors de l'envoi du message.", null, this.e);
+				InfoDialogUtils.show(CommentaireActivity.this, R.string.dialog_title_comment_sending_error, msgError);
+
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur lors de l'envoi du message.", this.exception);
+				BugSenseHandler.sendExceptionMessage("Erreur lors de l'envoi du message.", null, this.exception);
 			} else {
 
 				final Intent actionCommentaireSent = new Intent(ACTION_COMMENTAIRE_SENT);

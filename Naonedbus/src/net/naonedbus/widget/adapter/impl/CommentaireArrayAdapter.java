@@ -216,7 +216,7 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 				item.setBackground(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
 			}
 
-			holder.ligneCode.setText(item.getCodeLigne());
+			holder.ligneCode.setText(ligne.lettre);
 			holder.ligneCode.setBackgroundDrawable(item.getBackground());
 			holder.ligneCode.setTextColor(ligne.couleurTexte);
 
