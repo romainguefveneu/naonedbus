@@ -19,1282 +19,1283 @@ INSERT INTO typesEquipements(_id, nom) VALUES (?, ?);
 
 # Parkings
 INSERT INTO equipements(_id, idType, idSousType, nomEquipement, normalizedNom, adresse, telephone, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-1019;1;1;Baco-LU 2 côté CHU;Baco-LU 2 cote CHU;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2131509800273;-1.55160425745185
-1020;1;1;Baco-LU 1 côté gare;Baco-LU 1 cote gare;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2143324211276;-1.54898882844897
-1021;1;1;Bellamy;Bellamy;Impasse de la Courtine 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2223604161017;-1.55769369256355
-1022;1;1;Gloriette 2;Gloriette 2;Rue Albert de Mun 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2102736871054;-1.56028436884679
-1023;1;1;Gloriette 1;Gloriette 1;Allée de l'Ile Gloriette 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2111796553233;-1.55843872950464
-1024;1;1;Gare Sud 2;Gare Sud 2;Quai Malakoff 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2142340366163;-1.54134337584288
-1025;1;1;Gare Sud 2 limité 1h;Gare Sud 2 limite 1h;Quai Malakoff 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2152021232956;-1.54267513884661
-1026;1;1;Chantiers Navals;Chantiers Navals;Quai de la Fosse 44100 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2082893195233;-1.56891560955727
-1027;1;1;Château;Chateau;Rue Henri IV 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2169899609793;-1.54785044968527
-1028;1;1;Courte Durée Gare Nord;Courte Duree Gare Nord;Boulevard de Stalingrad 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2172647322169;-1.54347875084443
-1029;1;1;CHU;CHU;Quai de Tourville 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2093619715999;-1.55725023399242
-1030;1;1;Hôtel Dieu;Hotel Dieu;Chaussée de la Madeleine 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2110570860299;-1.55198311230427
-1031;1;1;Gare Sud 3;Gare Sud 3;Rue Marcel Paul 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.216135859474;-1.53789482834948
-1032;1;1;Viviani;Viviani;Rue René Viviani 44200 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2087756042897;-1.53619706978924
-1033;1;1;Les Machines;Les Machines;Rue Arthur III 44200 - Nantes;08 25 88 88 26;www.resaplace.com;47.2059006220645;-1.56272779236372
-1034;1;1;Commerce;Commerce;Place du Commerce 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2131202858024;-1.55771321969051
-1035;1;1;Talensac;Talensac;Rue Le Nôtre 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2202559810468;-1.55835729990237
-1036;1;1;Aristide Briand;Aristide Briand;Place Aristide Briand 44000 - Nantes;08 10 26 30 00;www.vincipark.com;47.2170936048579;-1.56293641808053
-1037;1;1;Gare Sud 1;Gare Sud 1;Rue de Lourmel 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2161496359544;-1.54103682846398
-1038;1;1;Cité des Congrès;Cite des Congres;Avenue Jean Claude Bonduelle 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2129016709023;-1.54397127716684
-1039;1;1;Graslin;Graslin;Rue Scribe 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2143102105068;-1.56257181621741
-1040;1;1;Decré-Bouffay;Decre-Bouffay;18 Rue du Moulin 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2166626199643;-1.55400463227177
-1041;1;1;Tour Bretagne;Tour Bretagne;4 Place de Bretagne 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2177394198201;-1.55820163936291
-1042;1;1;Gare Sud 4;Gare Sud 4;24 Mail Pablo Picasso 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2152099260756;-1.53754504260148
-1043;1;1;Médiathèque;Mediatheque;Rue Neuve des Capucins 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2108708271003;-1.5623381759623
-1044;1;1;Gare Nord;Gare Nord;Boulevard de Stalingrad 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2166890401729;-1.54498433411572
-1045;1;1;Cathédrale;Cathedrale;Rue Sully 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2208133510721;-1.55105616832611
-1046;1;2;Gare de Pont-Rousseau;Gare de Pont-Rousseau;Avenue de la Libération 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1928009988406;-1.5481902720875
-1047;1;2;Recteur Schmitt 1;Recteur Schmitt 1;Rue Recteur Schmitt 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2517352538688;-1.55290310437924
-1048;1;2;Recteur Schmitt 2;Recteur Schmitt 2;Rue Recteur Schmitt 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2520277017386;-1.55247038464754
-1049;1;2;Ranzay;Ranzay;Route de Saint Joseph 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2543632744444;-1.53313665411229
-1050;1;2;Orvault Morlière;Orvault Morliere;Avenue de la Morlière 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2467766477065;-1.60304946676259
-1051;1;2;Le Cardo;Le Cardo;Esplanade du Cardo 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2625020936155;-1.58451198079141
-1052;1;2;Pirmil;Pirmil;Rue Esnoult des Châtelets 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1973586776381;-1.54153359455402
-1053;1;2;Santos Dumont;Santos Dumont;Rue des Renards 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2593236730243;-1.56822710791259
-1054;1;2;Grande Ouche;Grande Ouche;Rue de la Grande Ouche 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.1819948350479;-1.57947203525665
-1055;1;2;Goudy;Goudy;Rue Gabriel Goudy 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1960989467374;-1.5410477469437
-1056;1;2;Bourdonnières 2;Bourdonnieres 2;Rue des Bourdonnières 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1867242428305;-1.52315133155692
-1057;1;2;Trentemoult-Roquios;Trentemoult-Roquios;Quai Surcouf 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1952525112789;-1.57778393206355
-1058;1;2;Maraîchers;Maraichers;Rue de la Grand' Maison 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1853027936471;-1.51085965558255
-1059;1;2;Gare de Couëron;Gare de Coueron;Rue de la Gare 44220 - Couëron;02 40 44 44 44;www.tan.fr;47.2217771934083;-1.72363750160792
-1060;1;2;Chapeau Verni;Chapeau Verni;Route de Clisson 44230 - Vertou;02 40 44 44 44;www.tan.fr;47.1895300762792;-1.51129889181404
-1061;1;2;Porte de Vertou;Porte de Vertou;Boulevard Auguste Priou 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1801752959869;-1.50516017764927
-1062;1;2;Gare des Pas Enchantés;Gare des Pas Enchantes;Rue de la Loire 44230 - St-Sébastien;02 40 44 44 44;www.tan.fr;47.2082290545652;-1.51299644307533
-1063;1;2;Frachon;Frachon;Boulevard Salvador Allende 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2186961365515;-1.62163336178234
-1064;1;2;Marcel Paul;Marcel Paul;Boulevard Marcel Paul 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2459045698135;-1.61800834963946
-1065;1;2;François Mitterrand;Francois Mitterrand;Rue Virginia Woolf 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.22170620087;-1.63948414305523
-1066;1;2;Haluchère 1;Haluchere 1;Rue du Ranzai 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2484503442291;-1.52283117372235
-1067;1;2;Bourdonnières 1;Bourdonnieres 1;Boulevard de Vendée 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.186255590967;-1.52115429456528
-1068;1;2;Plaisance;Plaisance;Route de Vannes 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2405326620207;-1.59344052396589
-1069;1;2;Gare de Vertou Nord;Gare de Vertou Nord;Impasse de la Gare 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1864023763705;-1.47916185458301
-1070;1;2;Gare de Bouaye;Gare de Bouaye;Allée Louis Armand 44830 - Bouaye;02 40 44 44 44;www.tan.fr;47.138339716512;-1.68209925257509
-1071;1;2;Gare de Basse-Indre Saint-Herblain;Gare de Basse-Indre Saint-Herblain;Rue de la Gare 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2041579741319;-1.66103809646199
-1072;1;2;Morlière Paquelais;Morliere Paquelais;50 Avenue de la Paquelais 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2478235218625;-1.60283874722482
-1073;1;2;Beauséjour;Beausejour;142 Route de Vannes 44100 - Nantes;02 40 44 44 44;www.tan.fr;47.2384135213971;-1.5873437488368
-1074;1;2;Gréneraie;Greneraie;Boulevard Emile Gabory 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.2001390392692;-1.53333362324729
-1075;1;2;08/05/13;08/05/13;Avenue André Malraux 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1901779141219;-1.55169145198101
-1076;1;2;Trocardière;Trocardiere;Avenue Léon Blum 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1832927458839;-1.57109558940531
-1077;1;2;Gare de Vertou Sud;Gare de Vertou Sud;Rue du Bois Rigaud 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1857498067425;-1.47860856997784
-1078;1;2;Gare de Thouaré-sur-Loire;Gare de Thouare-sur-Loire;Place de la République 44470 - Thouaré-sur-loire;02 40 44 44 44;www.tan.fr;47.2647119908848;-1.4413893536783
-1079;1;2;Neustrie 1;Neustrie 1;Chemin de la Neustrie 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.1756933085378;-1.5932723508575
-1080;1;2;René Cassin;Rene Cassin;Route de la Chapelle Sur Erdre 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2639509260101;-1.57499790750312
-1081;1;2;La Beaujoire;La Beaujoire;Rue Colette 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2594833036504;-1.52739847057661
-1082;1;2;Bignon;Bignon;Rue des Verts Prés 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2489752466115;-1.59820022515513
-1083;1;2;Neustrie 2;Neustrie 2;Rue de la Neustrie 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.176672451111;-1.59339969648243
-1084;1;2;Frêne Rond;Frene Rond;Rue de l'Ouche Quinet 44230 - St-Sébastien;02 40 44 44 44;www.tan.fr;47.1905492575224;-1.49621830894861
-1085;1;2;Trentemoult-Dépôt;Trentemoult-Depot;Rue Ordronneau 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1919649895095;-1.58068768637466
-1086;1;2;Gare de Mauves-sur-Loire;Gare de Mauves-sur-Loire;Place de la Gare 44470 - Mauves-sur-loire;02 40 44 44 44;www.tan.fr;47.2932583339329;-1.388904886686
+3551;1;1;Baco-LU 2 côté CHU;Baco-LU 2 cote CHU;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2131509800273;-1.55160425745185
+4142;1;1;Baco-LU 1 côté gare;Baco-LU 1 cote gare;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2143324211276;-1.54898882844897
+3650;1;1;Bellamy;Bellamy;Impasse de la Courtine 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2223604161017;-1.55769369256355
+4073;1;1;Gloriette 2;Gloriette 2;Rue Albert de Mun 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2102736871054;-1.56028436884679
+3549;1;1;Gloriette 1;Gloriette 1;Allée de l'Ile Gloriette 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2111796553233;-1.55843872950464
+3589;1;1;Gare Sud 2;Gare Sud 2;Quai Malakoff 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2142340366163;-1.54134337584288
+3590;1;1;Gare Sud 2 limité 1h;Gare Sud 2 limite 1h;Quai Malakoff 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2152021232956;-1.54267513884661
+4072;1;1;Chantiers Navals;Chantiers Navals;Quai de la Fosse 44100 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2082893195233;-1.56891560955727
+3554;1;1;Château;Chateau;Rue Henri IV 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2169899609793;-1.54785044968527
+3950;1;1;Courte Durée Gare Nord;Courte Duree Gare Nord;Boulevard de Stalingrad 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2172647322169;-1.54347875084443
+3651;1;1;CHU;CHU;Quai de Tourville 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2093619715999;-1.55725023399242
+3550;1;1;Hôtel Dieu;Hotel Dieu;Chaussée de la Madeleine 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2110570860299;-1.55198311230427
+3555;1;1;Gare Sud 3;Gare Sud 3;Rue Marcel Paul 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.216135859474;-1.53789482834948
+3990;1;1;Viviani;Viviani;Rue René Viviani 44200 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2087756042897;-1.53619706978924
+3951;1;1;Les Machines;Les Machines;Rue Arthur III 44200 - Nantes;08 25 88 88 26;www.resaplace.com;47.2059006220645;-1.56272779236372
+677;1;1;Commerce;Commerce;Place du Commerce 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2131202858024;-1.55771321969051
+1046;1;1;Talensac;Talensac;Rue Le Nôtre 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2202559810468;-1.55835729990237
+1043;1;1;Aristide Briand;Aristide Briand;Place Aristide Briand 44000 - Nantes;08 10 26 30 00;www.vincipark.com;47.2170936048579;-1.56293641808053
+1045;1;1;Gare Sud 1;Gare Sud 1;Rue de Lourmel 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2161496359544;-1.54103682846398
+1044;1;1;Cité des Congrès;Cite des Congres;Avenue Jean Claude Bonduelle 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2129016709023;-1.54397127716684
+288;1;1;Graslin;Graslin;Rue Scribe 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2143102105068;-1.56257181621741
+284;1;1;Decré-Bouffay;Decre-Bouffay;18 Rue du Moulin 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2166626199643;-1.55400463227177
+299;1;1;Tour Bretagne;Tour Bretagne;4 Place de Bretagne 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2177394198201;-1.55820163936291
+3989;1;1;Gare Sud 4;Gare Sud 4;24 Mail Pablo Picasso 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2152099260756;-1.53754504260148
+134;1;1;Médiathèque;Mediatheque;Rue Neuve des Capucins 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2108708271003;-1.5623381759623
+280;1;1;Gare Nord;Gare Nord;Boulevard de Stalingrad 44000 - Nantes;08 25 88 88 26;www.resaplace.com;47.2166890401729;-1.54498433411572
+3652;1;1;Cathédrale;Cathedrale;Rue Sully 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2208133510721;-1.55105616832611
+3648;1;2;Gare de Pont-Rousseau;Gare de Pont-Rousseau;Avenue de la Libération 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1928009988406;-1.5481902720875
+1341;1;2;Recteur Schmitt 1;Recteur Schmitt 1;Rue Recteur Schmitt 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2517352538688;-1.55290310437924
+3191;1;2;Recteur Schmitt 2;Recteur Schmitt 2;Rue Recteur Schmitt 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2520277017386;-1.55247038464754
+4100;1;2;Ranzay;Ranzay;Route de Saint Joseph 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2543632744444;-1.53313665411229
+3584;1;2;Orvault Morlière;Orvault Morliere;Avenue de la Morlière 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2467766477065;-1.60304946676259
+3189;1;2;Le Cardo;Le Cardo;Esplanade du Cardo 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2625020936155;-1.58451198079141
+3197;1;2;Pirmil;Pirmil;Rue Esnoult des Châtelets 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1973586776381;-1.54153359455402
+4076;1;2;Santos Dumont;Santos Dumont;Rue des Renards 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2593236730243;-1.56822710791259
+3777;1;2;Grande Ouche;Grande Ouche;Rue de la Grande Ouche 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.1819948350479;-1.57947203525665
+3198;1;2;Goudy;Goudy;Rue Gabriel Goudy 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1960989467374;-1.5410477469437
+3778;1;2;Bourdonnières 2;Bourdonnieres 2;Rue des Bourdonnières 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.1867242428305;-1.52315133155692
+3560;1;2;Trentemoult-Roquios;Trentemoult-Roquios;Quai Surcouf 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1952525112789;-1.57778393206355
+3655;1;2;Maraîchers;Maraichers;Rue de la Grand' Maison 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1853027936471;-1.51085965558255
+3556;1;2;Gare de Couëron;Gare de Coueron;Rue de la Gare 44220 - Couëron;02 40 44 44 44;www.tan.fr;47.2217771934083;-1.72363750160792
+3630;1;2;Chapeau Verni;Chapeau Verni;Route de Clisson 44230 - Vertou;02 40 44 44 44;www.tan.fr;47.1895300762792;-1.51129889181404
+3627;1;2;Porte de Vertou;Porte de Vertou;Boulevard Auguste Priou 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1801752959869;-1.50516017764927
+3552;1;2;Gare des Pas Enchantés;Gare des Pas Enchantes;Rue de la Loire 44230 - St-Sébastien;02 40 44 44 44;www.tan.fr;47.2082290545652;-1.51299644307533
+3188;1;2;Frachon;Frachon;Boulevard Salvador Allende 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2186961365515;-1.62163336178234
+3776;1;2;Marcel Paul;Marcel Paul;Boulevard Marcel Paul 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2459045698135;-1.61800834963946
+3190;1;2;François Mitterrand;Francois Mitterrand;Rue Virginia Woolf 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.22170620087;-1.63948414305523
+4101;1;2;Haluchère 1;Haluchere 1;Rue du Ranzai 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2484503442291;-1.52283117372235
+3629;1;2;Bourdonnières 1;Bourdonnieres 1;Boulevard de Vendée 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.186255590967;-1.52115429456528
+3227;1;2;Plaisance;Plaisance;Route de Vannes 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2405326620207;-1.59344052396589
+3201;1;2;Gare de Vertou Nord;Gare de Vertou Nord;Impasse de la Gare 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1864023763705;-1.47916185458301
+3566;1;2;Gare de Bouaye;Gare de Bouaye;Allée Louis Armand 44830 - Bouaye;02 40 44 44 44;www.tan.fr;47.138339716512;-1.68209925257509
+3561;1;2;Gare de Basse-Indre Saint-Herblain;Gare de Basse-Indre Saint-Herblain;Rue de la Gare 44800 - St-Herblain;02 40 44 44 44;www.tan.fr;47.2041579741319;-1.66103809646199
+3583;1;2;Morlière Paquelais;Morliere Paquelais;50 Avenue de la Paquelais 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2478235218625;-1.60283874722482
+3586;1;2;Beauséjour;Beausejour;142 Route de Vannes 44100 - Nantes;02 40 44 44 44;www.tan.fr;47.2384135213971;-1.5873437488368
+3628;1;2;Gréneraie;Greneraie;Boulevard Emile Gabory 44200 - Nantes;02 40 44 44 44;www.tan.fr;47.2001390392692;-1.53333362324729
+3194;1;2;8 Mai;8 Mai;Avenue André Malraux 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1901779141219;-1.55169145198101
+3195;1;2;Trocardière;Trocardiere;Avenue Léon Blum 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1832927458839;-1.57109558940531
+3202;1;2;Gare de Vertou Sud;Gare de Vertou Sud;Rue du Bois Rigaud 44120 - Vertou;02 40 44 44 44;www.tan.fr;47.1857498067425;-1.47860856997784
+3564;1;2;Gare de Thouaré-sur-Loire;Gare de Thouare-sur-Loire;Place de la République 44470 - Thouaré-sur-loire;02 40 44 44 44;www.tan.fr;47.2647119908848;-1.4413893536783
+3562;1;2;Neustrie 1;Neustrie 1;Chemin de la Neustrie 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.1756933085378;-1.5932723508575
+3196;1;2;René Cassin;Rene Cassin;Route de la Chapelle Sur Erdre 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2639509260101;-1.57499790750312
+3192;1;2;La Beaujoire;La Beaujoire;Rue Colette 44300 - Nantes;02 40 44 44 44;www.tan.fr;47.2594833036504;-1.52739847057661
+3649;1;2;Bignon;Bignon;Rue des Verts Prés 44700 - Orvault;02 40 44 44 44;www.tan.fr;47.2489752466115;-1.59820022515513
+3558;1;2;Neustrie 2;Neustrie 2;Rue de la Neustrie 44340 - Bouguenais;02 40 44 44 44;www.tan.fr;47.176672451111;-1.59339969648243
+3200;1;2;Frêne Rond;Frene Rond;Rue de l'Ouche Quinet 44230 - St-Sébastien;02 40 44 44 44;www.tan.fr;47.1905492575224;-1.49621830894861
+3582;1;2;Trentemoult-Dépôt;Trentemoult-Depot;Rue Ordronneau 44400 - Rezé;02 40 44 44 44;www.tan.fr;47.1919649895095;-1.58068768637466
+3565;1;2;Gare de Mauves-sur-Loire;Gare de Mauves-sur-Loire;Place de la Gare 44470 - Mauves-sur-loire;02 40 44 44 44;www.tan.fr;47.2932583339329;-1.388904886686
 
 # Stations Bicloo
 INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, details, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?);
-1087;2;Préfecture;Prefecture;Abonnement;47.2201950669957;-1.55417604861584
-1088;2;Hôtel de Ville;Hotel de Ville;Accueil;47.2185640015645;-1.55354426853678
-1089;2;Strasbourg;Strasbourg;Accueil;47.216532854728;-1.55161756498412
-1090;2;Moulin;Moulin;Accueil;47.2166468712003;-1.55442584710721
-1091;2;Brossard;Brossard;Accueil;47.2188225831247;-1.5563270902907
-1092;2;Place du Cirque;Place du Cirque;Abonnement;47.2176522877325;-1.55686962933674
-1093;2;Barillerie;Barillerie;Accueil;47.2154096299385;-1.5561003799956
-1094;2;Boucherie;Boucherie;Abonnement;47.2162081426351;-1.55709068678671
-1095;2;Guépin;Guepin;Accueil;47.2158294340716;-1.55915573787153
-1096;2;Picasso;Picasso;Accueil;47.2163435868477;-1.53422912101255
-1097;2;Calvaire;Calvaire;Accueil;47.2155991819633;-1.56060630687651
-1098;2;Place Delorme;Place Delorme;Abonnement;47.2151581344299;-1.56396356682832
-1099;2;Bretagne Sud;Bretagne Sud;Abonnement;47.2167500594478;-1.55915731787571
-1100;2;Saint-Félix;Saint-Felix;Accueil;47.2306076047205;-1.55623411620874
-1101;2;Place Aristide Briand;Place Aristide Briand;Accueil;47.2171962876433;-1.56300550348212
-1102;2;Place Edouard Normand;Place Edouard Normand;Accueil;47.2190280325433;-1.56349473337675
-1103;2;Sainte Elisabeth;Sainte Elisabeth;Accueil;47.219225442242;-1.56158876841816
-1104;2;Place Viarme;Place Viarme;Abonnement;47.2214408780072;-1.56332698114374
-1105;2;Saint Similien;Saint Similien;Accueil;47.219835952652;-1.55892890964265
-1106;2;Bellamy;Bellamy;Abonnement;47.223348795628;-1.55765985443575
-1107;2;Marché Talensac Sud;Marche Talensac Sud;Accueil;47.221154818394;-1.55649477179845
-1108;2;Moquechien;Moquechien;Accueil;47.2203790474815;-1.55558297927192
-1109;2;Buat;Buat;Accueil;47.2271569726;-1.54242264341268
-1110;2;Versailles;Versailles;Accueil;47.2244233838765;-1.55372803210723
-1111;2;Dalby;Dalby;Abonnement;47.2236126488755;-1.53010845738847
-1112;2;Guist'hau Sud;Guist'hau Sud;Abonnement;47.2168394453051;-1.56702335731262
-1113;2;Guist'hau Nord;Guist'hau Nord;Accueil;47.2179401852254;-1.56926720618524
-1114;2;Place Edit de Nantes;Place Edit de Nantes;Accueil;47.2144590279511;-1.56761075012927
-1115;2;Duguay Trouin;Duguay Trouin;Accueil;47.2134615787904;-1.55528850840637
-1116;2;Commerce;Commerce;Abonnement;47.2131450294256;-1.55738072263822
-1117;2;Bourse;Bourse;Accueil;47.2120943808486;-1.55910527758924
-1118;2;Rubens;Rubens;Accueil;47.2143514409189;-1.56028729072365
-1119;2;Racine;Racine;Accueil;47.2134832603266;-1.5631877058962
-1120;2;Médiathèque;Mediatheque;Abonnement;47.2109126549257;-1.5618418449525
-1121;2;Jean V;Jean V;Abonnement;47.212180370735;-1.56556289207478
-1122;2;Alger;Alger;Accueil;47.210705238574;-1.5666743136651
-1123;2;Feydeau;Feydeau;Accueil;47.2114728989176;-1.55688248342545
-1124;2;Place Ricordeau;Place Ricordeau;Abonnement;47.2120904234566;-1.55313666650746
-1125;2;Quai Moncousu;Quai Moncousu;Accueil;47.2093654560619;-1.555248414263
-1126;2;Madeleine;Madeleine;Accueil;47.208815874652;-1.5504304749082
-1127;2;Chantier Naval;Chantier Naval;Accueil;47.2083688395591;-1.56954316224266
-1128;2;Gare Maritime;Gare Maritime;Abonnement;47.2066090811753;-1.57262953237793
-1129;2;Machines de l'Ile;Machines de l'Ile;Abonnement;47.2069302605475;-1.56482580615095
-1130;2;Palais de Justice;Palais de Justice;Accueil;47.2083631782056;-1.56124245373142
-1131;2;Prairie au Duc;Prairie au Duc;Accueil;47.2047848192062;-1.55888284017234
-1132;2;Place République;Place Republique;Accueil;47.2054012265916;-1.55519386163571
-1133;2;Martyrs Nantais;Martyrs Nantais;Abonnement;47.207035364629;-1.54817985054706
-1134;2;Verdun;Verdun;Abonnement;47.217516769716;-1.55186817651381
-1135;2;Duchesse Anne;Duchesse Anne;Accueil;47.2165287485861;-1.54707722079028
-1136;2;Château;Chateau;Abonnement;47.2151359323236;-1.55027600234498
-1137;2;Berlin;Berlin;Abonnement;47.2143914699763;-1.53007250061588
-1138;2;Baco;Baco;Accueil;47.2143388426474;-1.54876893751898
-1139;2;Olivettes;Olivettes;Accueil;47.2117494265765;-1.54995935107843
-1140;2;Cité Internationale des Congrès;Cite Internationale des Congres;Abonnement;47.2131685540285;-1.54502748383111
-1141;2;Magellan;Magellan;Accueil;47.2106839754833;-1.54424826339243
-1142;2;Vincent Gache;Vincent Gache;Accueil;47.2068847351676;-1.54185096726864
-1143;2;Gaëtan Rondeau;Gaetan Rondeau;Abonnement;47.2054072118627;-1.53760013962524
-1144;2;Palais des Sports;Palais des Sports;Accueil;47.2084771961567;-1.53599916068622
-1145;2;Stade Saupin;Stade Saupin;Accueil;47.2139780010056;-1.53963958134972
-1146;2;Gare Sud;Gare Sud;Abonnement;47.2159307421474;-1.54286596091712
-1147;2;LU Lieu Unique;LU Lieu Unique;Accueil;47.2156027850142;-1.54592421117785
-1148;2;Gare Nord;Gare Nord;Abonnement;47.2181414046142;-1.54224096840209
-1149;2;Jardins des Plantes;Jardins des Plantes;Accueil;47.2199317719337;-1.54476410962437
-1150;2;Saint Clément;Saint Clement;Abonnement;47.2217983948072;-1.54717172480906
-1151;2;Sully;Sully;Accueil;47.2225988184658;-1.5516848391931
-1152;2;Chanzy;Chanzy;Accueil;47.2254413947716;-1.54801802179078
-1153;2;Place Waldeck Rousseau;Place Waldeck Rousseau;Accueil;47.2277863381608;-1.55216613912966
-1154;2;Livet;Livet;Accueil;47.2240954955051;-1.54521632095855
-1155;2;Manufacture;Manufacture;Accueil;47.2192276992993;-1.53586535019784
-1156;2;Foch Cathédrale;Foch Cathedrale;Abonnement;47.2186945659362;-1.55048013677801
-1157;2;Marché Talensac;Marche Talensac;Abonnement;47.2219103419541;-1.55906934287743
-1158;2;Bellamy Gué-Moreau;Bellamy Gue-Moreau;Accueil;47.2286141235376;-1.56192014921017
-1159;2;Sarradin;Sarradin;Accueil;47.2208837667212;-1.57050717785263
-1160;2;Place Canclaux;Place Canclaux;Accueil;47.2143716842925;-1.57500608192678
-1161;2;Lamoricière;Lamoriciere;Accueil;47.212365614395;-1.57139899840128
-1162;2;Place René Bouhier;Place Rene Bouhier;Accueil;47.2094420409641;-1.57058928666779
-1163;2;Ecole d'Architecture;Ecole d'Architecture;Accueil;47.2076169020017;-1.55755125966966
-1164;2;De Gaulle;De Gaulle;Accueil;47.2084603783954;-1.54056873329161
-1165;2;Malakoff;Malakoff;Accueil;47.2132345266324;-1.53642071591634
-1166;2;Victor-Hugo;Victor-Hugo;Accueil;47.2040143599928;-1.55156732506795
-1167;2;Mangin;Mangin;Abonnement;47.2010219272;-1.54549762740334
-1168;2;Sébilleau;Sebilleau;Accueil;47.2067685846983;-1.53313636292619
-1169;2;Millerand;Millerand;Abonnement;47.208217819463;-1.53016141349475
-1170;2;Région;Region;Accueil;47.2107532371851;-1.52595127548116
-1171;2;Bel Air;Bel Air;Accueil;47.2264060339437;-1.56004122137593
-1172;2;Hauts-Pavés;Hauts-Paves;Accueil;47.2254822618338;-1.56752047182291
-1173;2;Anatole-France;Anatole-France;Accueil;47.2236164437223;-1.57139236049388
-1174;2;Mellinet;Mellinet;Accueil;47.211489622114;-1.57712676541886
-1175;2;Saint-Aignan;Saint-Aignan;Accueil;47.2074440639466;-1.57871509661417
-1176;2;Procé;Proce;Abonnement;47.2243215861999;-1.57658356660229
-1177;2;Rond Point Vannes;Rond Point Vannes;Abonnement;47.229675345348;-1.57201209125591
-1178;2;Rond Point Rennes;Rond Point Rennes;Abonnement;47.2330917037559;-1.56601698077602
-1179;2;Facultés;Facultes;Abonnement;47.2463232883454;-1.5553383498054
-1180;2;Petit Port;Petit Port;Abonnement;47.2432626440766;-1.55638098635507
-1181;2;Michelet;Michelet;Abonnement;47.2350837066755;-1.55638870204855
-1182;2;Tortière;Tortiere;Abonnement;47.2353448001876;-1.54947343741177
-1183;2;Saint-Donatien;Saint-Donatien;Accueil;47.2291287626691;-1.5404024174378
-1184;2;8 Mai;8 Mai;Abonnement;47.1899986201306;-1.55182125953104
-1185;2;Saint-Jacques;Saint-Jacques;Accueil;47.1958591605985;-1.53658962887906
-1186;2;Gréneraie;Greneraie;Abonnement;47.1999707101929;-1.5346071537874
-1187;2;Pirmil;Pirmil;Abonnement;47.1966294882289;-1.54145063364339
-1188;2;Gare Pont Rousseau;Gare Pont Rousseau;Abonnement;47.1931492766954;-1.54900545446362
-1189;2;Mobile;Mobile;Mobile;47.2059145067047;-1.56970373529113
+1;2;Préfecture;Prefecture;Abonnement;47.2201950669957;-1.55417604861584
+2;2;Hôtel de Ville;Hotel de Ville;Accueil;47.2185640015645;-1.55354426853678
+3;2;Strasbourg;Strasbourg;Accueil;47.216532854728;-1.55161756498412
+4;2;Moulin;Moulin;Accueil;47.2166468712003;-1.55442584710721
+5;2;Brossard;Brossard;Accueil;47.2188225831247;-1.5563270902907
+6;2;Place du Cirque;Place du Cirque;Abonnement;47.2176522877325;-1.55686962933674
+7;2;Barillerie;Barillerie;Accueil;47.2154096299385;-1.5561003799956
+8;2;Boucherie;Boucherie;Abonnement;47.2162081426351;-1.55709068678671
+9;2;Guépin;Guepin;Accueil;47.2158294340716;-1.55915573787153
+10;2;Picasso;Picasso;Accueil;47.2163435868477;-1.53422912101255
+11;2;Calvaire;Calvaire;Accueil;47.2155991819633;-1.56060630687651
+12;2;Place Delorme;Place Delorme;Abonnement;47.2151581344299;-1.56396356682832
+13;2;Bretagne Sud;Bretagne Sud;Abonnement;47.2167500594478;-1.55915731787571
+14;2;Saint-Félix;Saint-Felix;Accueil;47.2306076047205;-1.55623411620874
+15;2;Place Aristide Briand;Place Aristide Briand;Accueil;47.2171962876433;-1.56300550348212
+16;2;Place Edouard Normand;Place Edouard Normand;Accueil;47.2190280325433;-1.56349473337675
+17;2;Sainte Elisabeth;Sainte Elisabeth;Accueil;47.219225442242;-1.56158876841816
+18;2;Place Viarme;Place Viarme;Abonnement;47.2214408780072;-1.56332698114374
+19;2;Saint Similien;Saint Similien;Accueil;47.219835952652;-1.55892890964265
+20;2;Bellamy;Bellamy;Abonnement;47.223348795628;-1.55765985443575
+21;2;Marché Talensac Sud;Marche Talensac Sud;Accueil;47.221154818394;-1.55649477179845
+22;2;Moquechien;Moquechien;Accueil;47.2203790474815;-1.55558297927192
+23;2;Buat;Buat;Accueil;47.2271569726;-1.54242264341268
+24;2;Versailles;Versailles;Accueil;47.2244233838765;-1.55372803210723
+25;2;Dalby;Dalby;Abonnement;47.2236126488755;-1.53010845738847
+26;2;Guist'hau Sud;Guist'hau Sud;Abonnement;47.2168394453051;-1.56702335731262
+27;2;Guist'hau Nord;Guist'hau Nord;Accueil;47.2179401852254;-1.56926720618524
+28;2;Place Edit de Nantes;Place Edit de Nantes;Accueil;47.2144590279511;-1.56761075012927
+29;2;Duguay Trouin;Duguay Trouin;Accueil;47.2134615787904;-1.55528850840637
+30;2;Commerce;Commerce;Abonnement;47.2131450294256;-1.55738072263822
+31;2;Bourse;Bourse;Accueil;47.2120943808486;-1.55910527758924
+32;2;Rubens;Rubens;Accueil;47.2143514409189;-1.56028729072365
+33;2;Racine;Racine;Accueil;47.2134832603266;-1.5631877058962
+34;2;Médiathèque;Mediatheque;Abonnement;47.2109126549257;-1.5618418449525
+35;2;Jean V;Jean V;Abonnement;47.212180370735;-1.56556289207478
+36;2;Alger;Alger;Accueil;47.210705238574;-1.5666743136651
+37;2;Feydeau;Feydeau;Accueil;47.2114728989176;-1.55688248342545
+38;2;Place Ricordeau;Place Ricordeau;Abonnement;47.2120904234566;-1.55313666650746
+39;2;Quai Moncousu;Quai Moncousu;Accueil;47.2093654560619;-1.555248414263
+40;2;Madeleine;Madeleine;Accueil;47.208815874652;-1.5504304749082
+41;2;Chantier Naval;Chantier Naval;Accueil;47.2083688395591;-1.56954316224266
+42;2;Gare Maritime;Gare Maritime;Abonnement;47.2066090811753;-1.57262953237793
+43;2;Machines de l'Ile;Machines de l'Ile;Abonnement;47.2069302605475;-1.56482580615095
+44;2;Palais de Justice;Palais de Justice;Accueil;47.2083631782056;-1.56124245373142
+45;2;Prairie au Duc;Prairie au Duc;Accueil;47.2047848192062;-1.55888284017234
+46;2;Place République;Place Republique;Accueil;47.2054012265916;-1.55519386163571
+47;2;Martyrs Nantais;Martyrs Nantais;Abonnement;47.207035364629;-1.54817985054706
+48;2;Verdun;Verdun;Abonnement;47.217516769716;-1.55186817651381
+49;2;Duchesse Anne;Duchesse Anne;Accueil;47.2165287485861;-1.54707722079028
+50;2;Château;Chateau;Abonnement;47.2151359323236;-1.55027600234498
+51;2;Berlin;Berlin;Abonnement;47.2143914699763;-1.53007250061588
+52;2;Baco;Baco;Accueil;47.2143388426474;-1.54876893751898
+53;2;Olivettes;Olivettes;Accueil;47.2117494265765;-1.54995935107843
+54;2;Cité Internationale des Congrès;Cite Internationale des Congres;Abonnement;47.2131685540285;-1.54502748383111
+55;2;Magellan;Magellan;Accueil;47.2106839754833;-1.54424826339243
+56;2;Vincent Gache;Vincent Gache;Accueil;47.2068847351676;-1.54185096726864
+57;2;Gaëtan Rondeau;Gaetan Rondeau;Abonnement;47.2054072118627;-1.53760013962524
+58;2;Palais des Sports;Palais des Sports;Accueil;47.2084771961567;-1.53599916068622
+59;2;Stade Saupin;Stade Saupin;Accueil;47.2139780010056;-1.53963958134972
+60;2;Gare Sud;Gare Sud;Abonnement;47.2159307421474;-1.54286596091712
+61;2;LU Lieu Unique;LU Lieu Unique;Accueil;47.2156027850142;-1.54592421117785
+62;2;Gare Nord;Gare Nord;Abonnement;47.2181414046142;-1.54224096840209
+63;2;Jardins des Plantes;Jardins des Plantes;Accueil;47.2199317719337;-1.54476410962437
+64;2;Saint Clément;Saint Clement;Abonnement;47.2217983948072;-1.54717172480906
+65;2;Sully;Sully;Accueil;47.2225988184658;-1.5516848391931
+66;2;Chanzy;Chanzy;Accueil;47.2254413947716;-1.54801802179078
+67;2;Place Waldeck Rousseau;Place Waldeck Rousseau;Accueil;47.2277863381608;-1.55216613912966
+68;2;Livet;Livet;Accueil;47.2240954955051;-1.54521632095855
+69;2;Manufacture;Manufacture;Accueil;47.2192276992993;-1.53586535019784
+70;2;Foch Cathédrale;Foch Cathedrale;Abonnement;47.2186945659362;-1.55048013677801
+71;2;Marché Talensac;Marche Talensac;Abonnement;47.2219103419541;-1.55906934287743
+72;2;Bellamy Gué-Moreau;Bellamy Gue-Moreau;Accueil;47.2286141235376;-1.56192014921017
+73;2;Sarradin;Sarradin;Accueil;47.2208837667212;-1.57050717785263
+74;2;Place Canclaux;Place Canclaux;Accueil;47.2143716842925;-1.57500608192678
+75;2;Lamoricière;Lamoriciere;Accueil;47.212365614395;-1.57139899840128
+76;2;Place René Bouhier;Place Rene Bouhier;Accueil;47.2094420409641;-1.57058928666779
+77;2;Ecole d'Architecture;Ecole d'Architecture;Accueil;47.2076169020017;-1.55755125966966
+78;2;De Gaulle;De Gaulle;Accueil;47.2084603783954;-1.54056873329161
+79;2;Malakoff;Malakoff;Accueil;47.2132345266324;-1.53642071591634
+80;2;Victor-Hugo;Victor-Hugo;Accueil;47.2040143599928;-1.55156732506795
+81;2;Mangin;Mangin;Abonnement;47.2010219272;-1.54549762740334
+82;2;Sébilleau;Sebilleau;Accueil;47.2067685846983;-1.53313636292619
+83;2;Millerand;Millerand;Abonnement;47.208217819463;-1.53016141349475
+84;2;Région;Region;Accueil;47.2107532371851;-1.52595127548116
+85;2;Bel Air;Bel Air;Accueil;47.2264060339437;-1.56004122137593
+86;2;Hauts-Pavés;Hauts-Paves;Accueil;47.2254822618338;-1.56752047182291
+87;2;Anatole-France;Anatole-France;Accueil;47.2236164437223;-1.57139236049388
+88;2;Mellinet;Mellinet;Accueil;47.211489622114;-1.57712676541886
+89;2;Saint-Aignan;Saint-Aignan;Accueil;47.2074440639466;-1.57871509661417
+90;2;Procé;Proce;Abonnement;47.2243215861999;-1.57658356660229
+91;2;Rond Point Vannes;Rond Point Vannes;Abonnement;47.229675345348;-1.57201209125591
+92;2;Rond Point Rennes;Rond Point Rennes;Abonnement;47.2330917037559;-1.56601698077602
+93;2;Facultés;Facultes;Abonnement;47.2463232883454;-1.5553383498054
+94;2;Petit Port;Petit Port;Abonnement;47.2432626440766;-1.55638098635507
+95;2;Michelet;Michelet;Abonnement;47.2350837066755;-1.55638870204855
+96;2;Tortière;Tortiere;Abonnement;47.2353448001876;-1.54947343741177
+97;2;Saint-Donatien;Saint-Donatien;Accueil;47.2291287626691;-1.5404024174378
+98;2;Huit Mai;Huit Mai;Abonnement;47.1899986201306;-1.55182125953104
+99;2;Saint-Jacques;Saint-Jacques;Accueil;47.1958591605985;-1.53658962887906
+100;2;Gréneraie;Greneraie;Abonnement;47.1999707101929;-1.5346071537874
+101;2;Pirmil;Pirmil;Abonnement;47.1966294882289;-1.54145063364339
+102;2;Gare Pont Rousseau;Gare Pont Rousseau;Abonnement;47.1931492766954;-1.54900545446362
+103;2;Mobile;Mobile;Mobile;47.2059145067047;-1.56970373529113
 
 # Marguerite
 INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
-1190;3;50 Otages;50 Otages;47.2184474307694;-1.55759693321303
-1191;3;Aristide Briand;Aristide Briand;47.2172290515068;-1.5624656224159
-1192;3;Baco;Baco;47.2121787060193;-1.55252763911359
-1193;3;Bretagne;Bretagne;47.2174899073883;-1.55963354318143
-1194;3;Canclaux;Canclaux;47.2141311870327;-1.57441453801924
-1195;3;CIO;CIO;47.2112773575355;-1.54453132747124
-1196;3;Cité des Congrès;Cite des Congres;47.2132409347;-1.54452831608963
-1197;3;Commerce;Commerce;47.2123927720913;-1.55794606610268
-1198;3;Doulon;Doulon;47.225899016345;-1.52241697039325
-1199;3;Duchesse Anne;Duchesse Anne;47.2165024497787;-1.54717075568781
-1200;3;Ecole d'Architecture;Ecole d'Architecture;47.2064491542021;-1.55657046348583
-1201;3;Gare Maritime;Gare Maritime;47.2065301936315;-1.57266897343107
-1202;3;Gare SNCF Sud;Gare SNCF Sud;47.2149069334244;-1.54185994912442
-1203;3;Graslin;Graslin;47.212029862504;-1.56519317277433
-1204;3;Hôtel de Ville;Hotel de Ville;47.2176490515034;-1.55407383358279
-1205;3;Mairie de Chantenay;Mairie de Chantenay;47.2065168340528;-1.58787125667645
-1206;3;Mangin;Mangin;47.2012759690694;-1.54518063963327
-1207;3;Manufacture;Manufacture;47.219107562114;-1.53586498523079
-1208;3;Rezé Mairie;Reze Mairie;47.1912719943743;-1.57041911066494
-1209;3;Sainte Thérèse;Sainte Therese;47.2322056559262;-1.57724775456618
-1210;3;Zola;Zola;47.2138994604397;-1.58634620409642
+1;3;50 Otages;50 Otages;47.2184474307694;-1.55759693321303
+2;3;Aristide Briand;Aristide Briand;47.2172290515068;-1.5624656224159
+3;3;Baco;Baco;47.2121787060193;-1.55252763911359
+4;3;Bretagne;Bretagne;47.2174899073883;-1.55963354318143
+5;3;Canclaux;Canclaux;47.2141311870327;-1.57441453801924
+6;3;CIO;CIO;47.2112773575355;-1.54453132747124
+7;3;Cité des Congrès;Cite des Congres;47.2132409347;-1.54452831608963
+8;3;Commerce;Commerce;47.2123927720913;-1.55794606610268
+9;3;Doulon;Doulon;47.225899016345;-1.52241697039325
+10;3;Duchesse Anne;Duchesse Anne;47.2165024497787;-1.54717075568781
+11;3;Ecole d'Architecture;Ecole d'Architecture;47.2064491542021;-1.55657046348583
+12;3;Gare Maritime;Gare Maritime;47.2065301936315;-1.57266897343107
+13;3;Gare SNCF Sud;Gare SNCF Sud;47.2149069334244;-1.54185994912442
+14;3;Graslin;Graslin;47.212029862504;-1.56519317277433
+15;3;Hôtel de Ville;Hotel de Ville;47.2176490515034;-1.55407383358279
+16;3;Mairie de Chantenay;Mairie de Chantenay;47.2065168340528;-1.58787125667645
+17;3;Mangin;Mangin;47.2012759690694;-1.54518063963327
+18;3;Manufacture;Manufacture;47.219107562114;-1.53586498523079
+19;3;Rezé Mairie;Reze Mairie;47.1912719943743;-1.57041911066494
+20;3;Sainte Thérèse;Sainte Therese;47.2322056559262;-1.57724775456618
+21;3;Zola;Zola;47.2138994604397;-1.58634620409642
 
 # Co voiturage
 INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, adresse, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-1211;4;Salle Polyvalente;SALLE POLYVALENTE;Abbaretz;www.covoiturage-nantesmetropole.fr;47.55395210262326;-1.5322793346043333
-1212;4;Super U;SUPER U;Arthon;www.covoiturage-nantesmetropole.fr;47.115215313981004;-1.9501037695793397
-1213;4;La Herdrie;LA HERDRIE;Basse Goulaine;www.covoiturage-nantesmetropole.fr;47.19812465783537;-1.4542676659553404
-1214;4;Super U;SUPER U;Blain;www.covoiturage-nantesmetropole.fr;47.472840666090725;-1.7472786251403711
-1215;4;Les Ormeaux;LES ORMEAUX;Bouaye;www.covoiturage-nantesmetropole.fr;47.193444817544275;-1.730345240329651
-1216;4;La Méchinaudière;LA MECHINAUDIERE;Boussay;www.covoiturage-nantesmetropole.fr;47.058190672430804;-1.1807355685475882
-1217;4;Institut Rural des MFR La Charmelière;INSTITUT RURAL DES MFR LA CHARMELIERE;Carquefou;www.covoiturage-nantesmetropole.fr;47.294732910251696;-1.4736845018853755
-1218;4;Le Grand Murin;LE GRAND MURIN;Casson;www.covoiturage-nantesmetropole.fr;47.384686290524094;-1.5596331485635333
-1219;4;Place de l'église;PLACE DE L'EGLISE;Chauve;www.covoiturage-nantesmetropole.fr;47.15041672624262;-1.9844700765459096
-1220;4;Parking de la Gare;PARKING DE LA GARE;Chéméré;www.covoiturage-nantesmetropole.fr;47.12501113705179;-1.9103771136393193
-1221;4;Le Vélodrome;LE VELODROME;Coueron;www.covoiturage-nantesmetropole.fr;47.21156411572229;-1.7387168289811985
-1222;4;Le Paradis;LE PARADIS;Coueron;www.covoiturage-nantesmetropole.fr;47.205913708407245;-1.7515854668703084
-1223;4;Parking de la Gare;PARKING DE LA GARE;Derval;www.covoiturage-nantesmetropole.fr;47.66704771961005;-1.6749876273234638
-1224;4;Les Six Croix;LES SIX CROIX;Donges;www.covoiturage-nantesmetropole.fr;47.339909013224144;-2.0929411755701834
-1225;4;La Pommeraie;LA POMMERAIE;Donges;www.covoiturage-nantesmetropole.fr;47.356417962763224;-2.1058607115686567
-1226;4;Parking du stage;PARKING DU STAGE;Fay de Bretagne;www.covoiturage-nantesmetropole.fr;47.409307192723375;-1.7942932035310555
-1227;4;Place Georges Gaudet;PLACE GEORGES GAUDET;Geneston;www.covoiturage-nantesmetropole.fr;47.05435765540001;-1.5121620025446514
-1228;4;Place Maurice Renoul;PLACE MAURICE RENOUL;Gorges;www.covoiturage-nantesmetropole.fr;47.10124378988671;-1.3046428229786935
-1229;4;Stade Bellevue;STADE BELLEVUE;Grandchamps Des Fontaines;www.covoiturage-nantesmetropole.fr;47.35673295373129;-1.603726782011928
-1230;4;Tournebride;TOURNEBRIDE;Haute Goulaine;www.covoiturage-nantesmetropole.fr;47.178067037169114;-1.4020623004136177
-1231;4;Le Rhodoir;LE RHODOIR;Herbignac;www.covoiturage-nantesmetropole.fr;47.51144777236671;-2.2855023442002382
-1232;4;Erette Grand'Haie;ERETTE GRAND'HAIE;Héric;www.covoiturage-nantesmetropole.fr;47.377491083461756;-1.6442620435477613
-1233;4;Place André Mazureau;PLACE ANDRE MAZUREAU;Joue sur Erdre;www.covoiturage-nantesmetropole.fr;47.49584060486022;-1.4197801450203629
-1234;4;La Chapelaine;LA CHAPELAINE;La Chapelle Basse Mer;www.covoiturage-nantesmetropole.fr;47.269297272558916;-1.3343816077438024
-1235;4;La Grenouillette;LA GRENOUILLETTE;La Chapelle Glain;www.covoiturage-nantesmetropole.fr;47.621880215013654;-1.1975442474225027
-1236;4;L'Enclose;L'ENCLOSE;La Chevrolière;www.covoiturage-nantesmetropole.fr;47.10053328464961;-1.6012140631222795
-1237;4;Salle Polyvalente;SALLE POLYVALENTE;La Meilleraye De Bretagne;www.covoiturage-nantesmetropole.fr;47.558924007079874;-1.3992570136794789
-1238;4;Georges Brassens;GEORGES BRASSENS;La Montagne;www.covoiturage-nantesmetropole.fr;47.18501966620923;-1.6746908104975462
-1239;4;Salle Polyvalente;SALLE POLYVALENTE;La Planche;www.covoiturage-nantesmetropole.fr;47.01713605673153;-1.4369631706417634
-1240;4;L'Etoile;L'ETOILE;La Turballe;www.covoiturage-nantesmetropole.fr;47.34465243318827;-2.4828925930214996
-1241;4;Les Relandières;LES RELANDIERES;Le Cellier;www.covoiturage-nantesmetropole.fr;47.31976636770021;-1.3783818777571788
-1242;4;Complexe Polyvalent;COMPLEXE POLYVALENT;Le Landreau;www.covoiturage-nantesmetropole.fr;47.20754826106557;-1.3060371149109222
-1243;4;La Cour du Chêne;LA COUR DU CHENE;Le Loroux Bottereau;www.covoiturage-nantesmetropole.fr;47.24483342620884;-1.360649008275857
-1244;4;Complexe Sportif;COMPLEXE SPORTIF;Le Temple De Bretagne;www.covoiturage-nantesmetropole.fr;47.32908738563402;-1.7946815998946666
-1245;4;Stade St Léger;STADE ST LEGER;Marsac Sur Don;www.covoiturage-nantesmetropole.fr;47.59362887404746;-1.6829503751177886
-1246;4;Salle Polyvalente;SALLE POLYVALENTE;Massérac;www.covoiturage-nantesmetropole.fr;47.67233535305725;-1.9131878444889763
-1247;4;La Croix de Mauves;LA CROIX DE MAUVES;Mauves Sur Loire;www.covoiturage-nantesmetropole.fr;47.30025481075753;-1.3981689237335375
-1248;4;Rue de Malabry;RUE DE MALABRY;Moisdon La Riviere;www.covoiturage-nantesmetropole.fr;47.62017975389981;-1.3751090604721308
-1249;4;Parking de l'Ancienne Cure;PARKING DE L'ANCIENNE CURE;Monnieres;www.covoiturage-nantesmetropole.fr;47.131775263232974;-1.354423779085528
-1250;4;Les Perrières;LES PERRIERES;Oudon;www.covoiturage-nantesmetropole.fr;47.35394760320066;-1.2850940858954434
-1251;4;La Croix Rouge;LA CROIX ROUGE;Oudon;www.covoiturage-nantesmetropole.fr;47.352652192586916;-1.2710743182074131
-1252;4;Champ de foire;CHAMP DE FOIRE;Nort Sur Erdre;www.covoiturage-nantesmetropole.fr;47.43691495146086;-1.5010380135804209
-1253;4;Intermarché Nort sur Erdre;INTERMARCHE NORT SUR ERDRE;Nort Sur Erdre;www.covoiturage-nantesmetropole.fr;47.43964850746005;-1.480456241203217
-1254;4;Rue du Stade;RUE DU STADE;Pont St Martin;www.covoiturage-nantesmetropole.fr;47.12710485237317;-1.5804671735442894
-1255;4;Viais;VIAIS;Pont St Martin;www.covoiturage-nantesmetropole.fr;47.112373701745895;-1.540139808390778
-1256;4;Intermarché Port St Père;INTERMARCHE PORT ST PERE;Port St Père;www.covoiturage-nantesmetropole.fr;47.13083009818077;-1.753970224694812
-1257;4;La régéserie;LA REGESERIE;Pouille Les Coteaux;www.covoiturage-nantesmetropole.fr;47.47112595789088;-1.1753038411855992
-1258;4;Plateforme multimodale de Puceul;PLATEFORME MULTIMODALE DE PUCEUL;Puceul;www.covoiturage-nantesmetropole.fr;47.517998527429626;-1.6420460647043218
-1259;4;Parking de la Tour;PARKING DE LA TOUR;Remouille;www.covoiturage-nantesmetropole.fr;47.057462339138695;-1.3753111990103613
-1260;4;Parking de la Bresse Saint-Brévin;PARKING DE LA BRESSE SAINT-BREVIN;St Brevin Les Pins;www.covoiturage-nantesmetropole.fr;47.24817962507664;-2.1624615495117014
-1261;4;Parking Paul Mercier;PARKING PAUL MERCIER;St Etienne De Montluc;www.covoiturage-nantesmetropole.fr;47.2743377718803;-1.7784076751901725
-1262;4;Parking du stade;PARKING DU STADE;St Herblon;www.covoiturage-nantesmetropole.fr;47.4110582056129;-1.0935870535561085
-1263;4;Le Pont Béranger;LE PONT BERANGER;St Hilaire De Chaléons;www.covoiturage-nantesmetropole.fr;47.129763473752604;-1.8338212394120446
-1264;4;La Quintaine;LA QUINTAINE;St Julien De Concelles;www.covoiturage-nantesmetropole.fr;47.25717043311946;-1.3849460431287741
-1265;4;Intermarché;INTERMARCHE;St Mars du Désert;www.covoiturage-nantesmetropole.fr;47.36004883531009;-1.4089138983117058
-1266;4;Parking de la Gare;PARKING DE LA GARE;St Mars La Jaille;www.covoiturage-nantesmetropole.fr;47.52124254578038;-1.1831584430462216
-1267;4;Super U Saint-Mars-la-Jaille;SUPER U SAINT-MARS-LA-JAILLE;St Mars La Jaille;www.covoiturage-nantesmetropole.fr;47.530716884679;-1.1869081753131299
-1268;4;Parking de la Mairie;PARKING DE LA MAIRIE;St Michel Chef Chef;www.covoiturage-nantesmetropole.fr;47.182221374740074;-2.147248202220761
-1269;4;Le Moulin de la Chaussée;LE MOULIN DE LA CHAUSSEE;St Philbert De Grand Lieu;www.covoiturage-nantesmetropole.fr;47.046051816681974;-1.6388511296718353
-1270;4;La Gare;LA GARE;St Vincent des Landes;www.covoiturage-nantesmetropole.fr;47.66317792211003;-1.4990103115509672
-1271;4;Place de la Forge;PLACE DE LA FORGE;St Vincent des Landes;www.covoiturage-nantesmetropole.fr;47.655729120141174;-1.4990620015062137
-1272;4;La Croix Joubert;LA CROIX JOUBERT;Prinquiau;www.covoiturage-nantesmetropole.fr;47.35789395955587;-2.0069815095022623
-1273;4;Super U;SUPER U;Derval;www.covoiturage-nantesmetropole.fr;47.66820213604932;-1.661900710463134
-1274;4;Parking de la Mairie;PARKING DE LA MAIRIE;Bouee;www.covoiturage-nantesmetropole.fr;47.320372151219196;-1.909655425240412
-1275;4;Carrefour market;CARREFOUR MARKET;Blain;www.covoiturage-nantesmetropole.fr;47.47535768584418;-1.7540994576855973
-1276;4;Parking du Val de Loire;PARKING DU VAL DE LOIRE;Varades;www.covoiturage-nantesmetropole.fr;47.38439341838247;-1.0281225130710112
-1277;4;Complexe Sportif;COMPLEXE SPORTIF;Vieillevigne;www.covoiturage-nantesmetropole.fr;46.96754652689725;-1.4393431862630648
-1278;4;Super U;SUPER U;Machecoul;www.covoiturage-nantesmetropole.fr;46.998274216851385;-1.8149346367572965
-1279;4;Piano'cktail;PIANO'CKTAIL;Bouguenais;www.covoiturage-nantesmetropole.fr;47.174590609010885;-1.6057643619787347
-1280;4;Parc d'activité de Brais;PARC D'ACTIVITE DE BRAIS;St Nazaire;www.covoiturage-nantesmetropole.fr;47.28667904739567;-2.2994907999607515
-1281;4;ZA Beau-Soleil;ZA BEAU-SOLEIL;Ste Pazanne;www.covoiturage-nantesmetropole.fr;47.10329073572413;-1.7998465240059114
-1282;4;Salle Polyvalente;SALLE POLYVALENTE;Soudan;www.covoiturage-nantesmetropole.fr;47.73518678444313;-1.3066768592519087
-1283;4;Hyper U;HYPER U;Savenay;www.covoiturage-nantesmetropole.fr;47.37403834859016;-1.9377436311765854
-1284;4;Bibliothèque;BIBLIOTHEQUE;Quilly;www.covoiturage-nantesmetropole.fr;47.46097460888853;-1.9518214615478862
-1285;4;La Chaussée;LA CHAUSSEE;Campbon;www.covoiturage-nantesmetropole.fr;47.410347219242;-1.9615547951026158
-1286;4;La Haie Meriaie;LA HAIE MERIAIE;Campbon;www.covoiturage-nantesmetropole.fr;47.41109151984265;-1.9741006915035386
-1287;4;Intermarché;INTERMARCHE;Chateaubriant;www.covoiturage-nantesmetropole.fr;47.707007333740975;-1.38550243186896
-1288;4;Le Relais du Tillon;LE RELAIS DU TILLON;La Chapelle Launay;www.covoiturage-nantesmetropole.fr;47.38132804813427;-1.9664628130071
-1289;4;Carrefour market;CARREFOUR MARKET;La Chapelle Launay;www.covoiturage-nantesmetropole.fr;47.36215682727281;-1.9579021498754519
-1290;4;Vival;VIVAL;La Marne;www.covoiturage-nantesmetropole.fr;46.99758865119212;-1.7369970251850473
-1291;4;Le Calvaire;LE CALVAIRE;Lavau Sur Loire;www.covoiturage-nantesmetropole.fr;47.30594257473625;-1.9678373123655368
-1292;4;Bois Hérault;BOIS HERAULT;Vallet;www.covoiturage-nantesmetropole.fr;47.15526505455934;-1.2763430960329472
-1293;4;Champ de Foire (Place Joalland de Clerville);CHAMP DE FOIRE (PLACE JOALLAND DE CLERVILLE);Blain;www.covoiturage-nantesmetropole.fr;47.47527140727293;-1.7615005502640484
-1294;4;Rue du pont;RUE DU PONT;Teillé;www.covoiturage-nantesmetropole.fr;47.4599668672552;-1.278485067304032
-1295;4;Le Vélodrôme;LE VEOLODROME;Boulevard Francois Blancho - Couëron;www.covoiturage-nantesmetropole.fr;47.2114911475;-1.7355358715
-1296;4;La Croix de Mauves;LA CROIX DE MAUVES;RD 723 - Mauves-sur-Loire;www.covoiturage-nantesmetropole.fr;47.3002662582;-1.3981722587
+1;4;Salle Polyvalente;SALLE POLYVALENTE;Abbaretz;www.covoiturage-nantesmetropole.fr;47.55395210262326;-1.5322793346043333
+2;4;Super U;SUPER U;Arthon;www.covoiturage-nantesmetropole.fr;47.115215313981004;-1.9501037695793397
+3;4;La Herdrie;LA HERDRIE;Basse Goulaine;www.covoiturage-nantesmetropole.fr;47.19812465783537;-1.4542676659553404
+4;4;Super U;SUPER U;Blain;www.covoiturage-nantesmetropole.fr;47.472840666090725;-1.7472786251403711
+5;4;Les Ormeaux;LES ORMEAUX;Bouaye;www.covoiturage-nantesmetropole.fr;47.193444817544275;-1.730345240329651
+6;4;La Méchinaudière;LA MECHINAUDIERE;Boussay;www.covoiturage-nantesmetropole.fr;47.058190672430804;-1.1807355685475882
+7;4;Institut Rural des MFR La Charmelière;INSTITUT RURAL DES MFR LA CHARMELIERE;Carquefou;www.covoiturage-nantesmetropole.fr;47.294732910251696;-1.4736845018853755
+8;4;Le Grand Murin;LE GRAND MURIN;Casson;www.covoiturage-nantesmetropole.fr;47.384686290524094;-1.5596331485635333
+9;4;Place de l'église;PLACE DE L'EGLISE;Chauve;www.covoiturage-nantesmetropole.fr;47.15041672624262;-1.9844700765459096
+10;4;Parking de la Gare;PARKING DE LA GARE;Chéméré;www.covoiturage-nantesmetropole.fr;47.12501113705179;-1.9103771136393193
+11;4;Le Vélodrome;LE VELODROME;Coueron;www.covoiturage-nantesmetropole.fr;47.21156411572229;-1.7387168289811985
+12;4;Le Paradis;LE PARADIS;Coueron;www.covoiturage-nantesmetropole.fr;47.205913708407245;-1.7515854668703084
+13;4;Parking de la Gare;PARKING DE LA GARE;Derval;www.covoiturage-nantesmetropole.fr;47.66704771961005;-1.6749876273234638
+14;4;Les Six Croix;LES SIX CROIX;Donges;www.covoiturage-nantesmetropole.fr;47.339909013224144;-2.0929411755701834
+15;4;La Pommeraie;LA POMMERAIE;Donges;www.covoiturage-nantesmetropole.fr;47.356417962763224;-2.1058607115686567
+16;4;Parking du stage;PARKING DU STAGE;Fay de Bretagne;www.covoiturage-nantesmetropole.fr;47.409307192723375;-1.7942932035310555
+17;4;Place Georges Gaudet;PLACE GEORGES GAUDET;Geneston;www.covoiturage-nantesmetropole.fr;47.05435765540001;-1.5121620025446514
+18;4;Place Maurice Renoul;PLACE MAURICE RENOUL;Gorges;www.covoiturage-nantesmetropole.fr;47.10124378988671;-1.3046428229786935
+19;4;Stade Bellevue;STADE BELLEVUE;Grandchamps Des Fontaines;www.covoiturage-nantesmetropole.fr;47.35673295373129;-1.603726782011928
+20;4;Tournebride;TOURNEBRIDE;Haute Goulaine;www.covoiturage-nantesmetropole.fr;47.178067037169114;-1.4020623004136177
+21;4;Le Rhodoir;LE RHODOIR;Herbignac;www.covoiturage-nantesmetropole.fr;47.51144777236671;-2.2855023442002382
+22;4;Erette Grand'Haie;ERETTE GRAND'HAIE;Héric;www.covoiturage-nantesmetropole.fr;47.377491083461756;-1.6442620435477613
+23;4;Place André Mazureau;PLACE ANDRE MAZUREAU;Joue sur Erdre;www.covoiturage-nantesmetropole.fr;47.49584060486022;-1.4197801450203629
+24;4;La Chapelaine;LA CHAPELAINE;La Chapelle Basse Mer;www.covoiturage-nantesmetropole.fr;47.269297272558916;-1.3343816077438024
+25;4;La Grenouillette;LA GRENOUILLETTE;La Chapelle Glain;www.covoiturage-nantesmetropole.fr;47.621880215013654;-1.1975442474225027
+26;4;L'Enclose;L'ENCLOSE;La Chevrolière;www.covoiturage-nantesmetropole.fr;47.10053328464961;-1.6012140631222795
+27;4;Salle Polyvalente;SALLE POLYVALENTE;La Meilleraye De Bretagne;www.covoiturage-nantesmetropole.fr;47.558924007079874;-1.3992570136794789
+28;4;Georges Brassens;GEORGES BRASSENS;La Montagne;www.covoiturage-nantesmetropole.fr;47.18501966620923;-1.6746908104975462
+29;4;Salle Polyvalente;SALLE POLYVALENTE;La Planche;www.covoiturage-nantesmetropole.fr;47.01713605673153;-1.4369631706417634
+30;4;L'Etoile;L'ETOILE;La Turballe;www.covoiturage-nantesmetropole.fr;47.34465243318827;-2.4828925930214996
+31;4;Les Relandières;LES RELANDIERES;Le Cellier;www.covoiturage-nantesmetropole.fr;47.31976636770021;-1.3783818777571788
+32;4;Complexe Polyvalent;COMPLEXE POLYVALENT;Le Landreau;www.covoiturage-nantesmetropole.fr;47.20754826106557;-1.3060371149109222
+33;4;La Cour du Chêne;LA COUR DU CHENE;Le Loroux Bottereau;www.covoiturage-nantesmetropole.fr;47.24483342620884;-1.360649008275857
+34;4;Complexe Sportif;COMPLEXE SPORTIF;Le Temple De Bretagne;www.covoiturage-nantesmetropole.fr;47.32908738563402;-1.7946815998946666
+35;4;Stade St Léger;STADE ST LEGER;Marsac Sur Don;www.covoiturage-nantesmetropole.fr;47.59362887404746;-1.6829503751177886
+36;4;Salle Polyvalente;SALLE POLYVALENTE;Massérac;www.covoiturage-nantesmetropole.fr;47.67233535305725;-1.9131878444889763
+37;4;La Croix de Mauves;LA CROIX DE MAUVES;Mauves Sur Loire;www.covoiturage-nantesmetropole.fr;47.30025481075753;-1.3981689237335375
+38;4;Rue de Malabry;RUE DE MALABRY;Moisdon La Riviere;www.covoiturage-nantesmetropole.fr;47.62017975389981;-1.3751090604721308
+39;4;Parking de l'Ancienne Cure;PARKING DE L'ANCIENNE CURE;Monnieres;www.covoiturage-nantesmetropole.fr;47.131775263232974;-1.354423779085528
+40;4;Les Perrières;LES PERRIERES;Oudon;www.covoiturage-nantesmetropole.fr;47.35394760320066;-1.2850940858954434
+41;4;La Croix Rouge;LA CROIX ROUGE;Oudon;www.covoiturage-nantesmetropole.fr;47.352652192586916;-1.2710743182074131
+42;4;Champ de foire;CHAMP DE FOIRE;Nort Sur Erdre;www.covoiturage-nantesmetropole.fr;47.43691495146086;-1.5010380135804209
+43;4;Intermarché Nort sur Erdre;INTERMARCHE NORT SUR ERDRE;Nort Sur Erdre;www.covoiturage-nantesmetropole.fr;47.43964850746005;-1.480456241203217
+44;4;Rue du Stade;RUE DU STADE;Pont St Martin;www.covoiturage-nantesmetropole.fr;47.12710485237317;-1.5804671735442894
+45;4;Viais;VIAIS;Pont St Martin;www.covoiturage-nantesmetropole.fr;47.112373701745895;-1.540139808390778
+46;4;Intermarché Port St Père;INTERMARCHE PORT ST PERE;Port St Père;www.covoiturage-nantesmetropole.fr;47.13083009818077;-1.753970224694812
+47;4;La régéserie;LA REGESERIE;Pouille Les Coteaux;www.covoiturage-nantesmetropole.fr;47.47112595789088;-1.1753038411855992
+48;4;Plateforme multimodale de Puceul;PLATEFORME MULTIMODALE DE PUCEUL;Puceul;www.covoiturage-nantesmetropole.fr;47.517998527429626;-1.6420460647043218
+49;4;Parking de la Tour;PARKING DE LA TOUR;Remouille;www.covoiturage-nantesmetropole.fr;47.057462339138695;-1.3753111990103613
+50;4;Parking de la Bresse Saint-Brévin;PARKING DE LA BRESSE SAINT-BREVIN;St Brevin Les Pins;www.covoiturage-nantesmetropole.fr;47.24817962507664;-2.1624615495117014
+51;4;Parking Paul Mercier;PARKING PAUL MERCIER;St Etienne De Montluc;www.covoiturage-nantesmetropole.fr;47.2743377718803;-1.7784076751901725
+52;4;Parking du stade;PARKING DU STADE;St Herblon;www.covoiturage-nantesmetropole.fr;47.4110582056129;-1.0935870535561085
+53;4;Le Pont Béranger;LE PONT BERANGER;St Hilaire De Chaléons;www.covoiturage-nantesmetropole.fr;47.129763473752604;-1.8338212394120446
+54;4;La Quintaine;LA QUINTAINE;St Julien De Concelles;www.covoiturage-nantesmetropole.fr;47.25717043311946;-1.3849460431287741
+55;4;Intermarché;INTERMARCHE;St Mars du Désert;www.covoiturage-nantesmetropole.fr;47.36004883531009;-1.4089138983117058
+56;4;Parking de la Gare;PARKING DE LA GARE;St Mars La Jaille;www.covoiturage-nantesmetropole.fr;47.52124254578038;-1.1831584430462216
+57;4;Super U Saint-Mars-la-Jaille;SUPER U SAINT-MARS-LA-JAILLE;St Mars La Jaille;www.covoiturage-nantesmetropole.fr;47.530716884679;-1.1869081753131299
+58;4;Parking de la Mairie;PARKING DE LA MAIRIE;St Michel Chef Chef;www.covoiturage-nantesmetropole.fr;47.182221374740074;-2.147248202220761
+59;4;Le Moulin de la Chaussée;LE MOULIN DE LA CHAUSSEE;St Philbert De Grand Lieu;www.covoiturage-nantesmetropole.fr;47.046051816681974;-1.6388511296718353
+60;4;La Gare;LA GARE;St Vincent des Landes;www.covoiturage-nantesmetropole.fr;47.66317792211003;-1.4990103115509672
+61;4;Place de la Forge;PLACE DE LA FORGE;St Vincent des Landes;www.covoiturage-nantesmetropole.fr;47.655729120141174;-1.4990620015062137
+62;4;La Croix Joubert;LA CROIX JOUBERT;Prinquiau;www.covoiturage-nantesmetropole.fr;47.35789395955587;-2.0069815095022623
+63;4;Super U;SUPER U;Derval;www.covoiturage-nantesmetropole.fr;47.66820213604932;-1.661900710463134
+64;4;Parking de la Mairie;PARKING DE LA MAIRIE;Bouee;www.covoiturage-nantesmetropole.fr;47.320372151219196;-1.909655425240412
+65;4;Carrefour market;CARREFOUR MARKET;Blain;www.covoiturage-nantesmetropole.fr;47.47535768584418;-1.7540994576855973
+66;4;Parking du Val de Loire;PARKING DU VAL DE LOIRE;Varades;www.covoiturage-nantesmetropole.fr;47.38439341838247;-1.0281225130710112
+67;4;Complexe Sportif;COMPLEXE SPORTIF;Vieillevigne;www.covoiturage-nantesmetropole.fr;46.96754652689725;-1.4393431862630648
+68;4;Super U;SUPER U;Machecoul;www.covoiturage-nantesmetropole.fr;46.998274216851385;-1.8149346367572965
+69;4;Piano'cktail;PIANO'CKTAIL;Bouguenais;www.covoiturage-nantesmetropole.fr;47.174590609010885;-1.6057643619787347
+70;4;Parc d'activité de Brais;PARC D'ACTIVITE DE BRAIS;St Nazaire;www.covoiturage-nantesmetropole.fr;47.28667904739567;-2.2994907999607515
+71;4;ZA Beau-Soleil;ZA BEAU-SOLEIL;Ste Pazanne;www.covoiturage-nantesmetropole.fr;47.10329073572413;-1.7998465240059114
+72;4;Salle Polyvalente;SALLE POLYVALENTE;Soudan;www.covoiturage-nantesmetropole.fr;47.73518678444313;-1.3066768592519087
+73;4;Hyper U;HYPER U;Savenay;www.covoiturage-nantesmetropole.fr;47.37403834859016;-1.9377436311765854
+74;4;Bibliothèque;BIBLIOTHEQUE;Quilly;www.covoiturage-nantesmetropole.fr;47.46097460888853;-1.9518214615478862
+75;4;La Chaussée;LA CHAUSSEE;Campbon;www.covoiturage-nantesmetropole.fr;47.410347219242;-1.9615547951026158
+76;4;La Haie Meriaie;LA HAIE MERIAIE;Campbon;www.covoiturage-nantesmetropole.fr;47.41109151984265;-1.9741006915035386
+77;4;Intermarché;INTERMARCHE;Chateaubriant;www.covoiturage-nantesmetropole.fr;47.707007333740975;-1.38550243186896
+78;4;Le Relais du Tillon;LE RELAIS DU TILLON;La Chapelle Launay;www.covoiturage-nantesmetropole.fr;47.38132804813427;-1.9664628130071
+79;4;Carrefour market;CARREFOUR MARKET;La Chapelle Launay;www.covoiturage-nantesmetropole.fr;47.36215682727281;-1.9579021498754519
+80;4;Vival;VIVAL;La Marne;www.covoiturage-nantesmetropole.fr;46.99758865119212;-1.7369970251850473
+81;4;Le Calvaire;LE CALVAIRE;Lavau Sur Loire;www.covoiturage-nantesmetropole.fr;47.30594257473625;-1.9678373123655368
+82;4;Bois Hérault;BOIS HERAULT;Vallet;www.covoiturage-nantesmetropole.fr;47.15526505455934;-1.2763430960329472
+83;4;Champ de Foire (Place Joalland de Clerville);CHAMP DE FOIRE (PLACE JOALLAND DE CLERVILLE);Blain;www.covoiturage-nantesmetropole.fr;47.47527140727293;-1.7615005502640484
+84;4;Rue du pont;RUE DU PONT;Teillé;www.covoiturage-nantesmetropole.fr;47.4599668672552;-1.278485067304032
+85;4;Le Vélodrôme;LE VEOLODROME;Boulevard Francois Blancho - Couëron;www.covoiturage-nantesmetropole.fr;47.2114911475;-1.7355358715
+86;4;La Croix de Mauves;LA CROIX DE MAUVES;RD 723 - Mauves-sur-Loire;www.covoiturage-nantesmetropole.fr;47.3002662582;-1.3981722587
+
 
 #Lila
 INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
-1297;5;27 otages;27 OTAGES;47.71891688;-1.36656651
-1298;5;3m;3M;47.42716985;-2.06972548
-1299;5;Acacias;ACACIAS;47.71674311;-1.36333285
-1300;5;Allée cavaliEre;ALLEE CAVALIERE;47.28465551;-2.37394724
-1301;5;Allée du château;ALLEE DU CHATEAU;47.19491869;-1.41425967
-1302;5;Américains;AMERICAINS;47.2357569;-1.56791581
-1303;5;Angle rue de brest/metz;ANGLE RUE DE BREST/METZ;47.72659465;-1.39088018
-1304;5;Armoricaine;ARMORICAINE;47.25838662;-1.64799896
-1305;5;Arrêt busway l4;ARRET BUSWAY L4;47.18114232;-1.5057803
-1306;5;Athanor;ATHANOR;47.33153588;-2.42891895
-1307;5;Atout sud;ATOUT SUD;47.19309684;-1.571421
-1308;5;Avenue de la fraternité;AVENUE DE LA FRATERNITE;47.71028194;-1.38794779
-1309;5;Avenue de lyon;AVENUE DE LYON;47.27733661;-2.35810363
-1310;5;Avenue de rhuys;AVENUE DE RHUYS;47.27564628;-2.36221529
-1311;5;Avenue noëlles;AVENUE NOELLES;47.291374;-2.394274
-1312;5;Avenue saint-geoges;AVENUE SAINT-GEOGES;47.27289011;-2.3503223
-1313;5;Baco;BACO;47.21274572;-1.55207291
-1314;5;Barbechat;BARBECHAT;47.27755457;-1.28644379
-1315;5;Barges;BARGES;47.47863921;-2.43455572
-1316;5;BarriEre;BARRIERE;47.28336642;-2.50322062
-1317;5;Bas-epaud;BAS-EPAUD;47.48562576;-1.92243207
-1318;5;Basse goulitiEre;BASSE GOULITIERE;47.35736533;-1.52961733
-1319;5;Basse prinais;BASSE PRINAIS;47.26160628;-2.15180727
-1320;5;Beau chêne;BEAU CHENE;47.25787375;-1.34431607
-1321;5;Beau séjour;BEAU SEJOUR;47.33769019;-2.42855998
-1322;5;Beau soleil;BEAU SOLEIL;47.24007797;-1.40389324
-1323;5;Beaubois;BEAUBOIS;47.46772859;-2.06933844
-1324;5;BeauchEne;BEAUCHENE;47.3578242;-1.45701067
-1325;5;Beauchêne;BEAUCHENE;47.36946255;-1.55145368
-1326;5;Beaujour;BEAUJOUR;47.50366664;-1.57142519
-1327;5;Beaulieu;BEAULIEU;47.30437904;-1.38621399
-1328;5;Beauséjour;BEAUSEJOUR;47.23800876;-1.58679753
-1329;5;Bel air;BEL AIR;47.22541082;-1.5592675
-1330;5;Bel air;BEL AIR;47.13635825;-1.58140179
-1331;5;Bel air;BEL AIR;47.40689558;-1.26625956
-1332;5;Bel air;BEL AIR;47.32406739;-1.34805524
-1333;5;Bel air;BEL AIR;47.37858895;-1.39733459
-1334;5;Bel air;BEL AIR;47.27052975;-2.43080754
-1335;5;Bel-abord;BEL-ABORD;47.27486403;-1.71168857
-1336;5;Bêle;BELE;47.26662671;-1.50306402
-1337;5;Bellanger;BELLANGER;47.34496566;-2.50861443
-1338;5;Bellevigne;BELLEVIGNE;47.34555285;-1.52992793
-1339;5;Bellevue;BELLEVUE;47.68405595;-1.68398894
-1340;5;Bellevue;BELLEVUE;47.30489;-2.182118
-1341;5;Bellevue;BELLEVUE;47.35400938;-1.60504975
-1342;5;BenetiEre;BENETIERE;47.11247465;-1.53274046
-1343;5;Bergon;BERGON;47.45860762;-2.20238545
-1344;5;Berlioz;BERLIOZ;47.24005204;-1.57217729
-1345;5;Beslon;BESLON;47.29347479;-2.39029739
-1346;5;Bétulas;BETULAS;47.33659053;-1.51281106
-1347;5;Bilais;BILAIS;47.45678612;-2.08026685
-1348;5;Boeufs gras;BOEUFS GRAS;47.34724516;-1.62578705
-1349;5;Boire courant;BOIRE COURANT;47.24555076;-1.43670709
-1350;5;Bois robin;BOIS ROBIN;47.37448578;-1.59744134
-1351;5;Bois-alix;BOIS-ALIX;47.28275405;-1.80242188
-1352;5;Bois/plage;BOIS/PLAGE;47.27248066;-2.42590118
-1353;5;Bole eden;BOLE EDEN;47.28858507;-2.37302568
-1354;5;Bonnoeuvre;BONNOEUVRE;47.45370557;-1.42034777
-1355;5;Boris vian;BORIS VIAN;47.27526745;-2.22061515
-1356;5;Bosselas;BOSSELAS;47.42118732;-2.17497317
-1357;5;Boue le chaillereau;BOUE LE CHAILLEREAU;47.3276151;-1.88222969
-1358;5;Bouillon jaune;BOUILLON JAUNE;47.51662235;-1.63911777
-1359;5;Boule d'or;BOULE D'OR;47.43777838;-2.09391914
-1360;5;Boulevard de la forêt;BOULEVARD DE LA FORET;47.28149339;-2.3556257
-1361;5;Boulevard du midi;BOULEVARD DU MIDI;47.3260302;-2.42935485
-1362;5;BourdonniEres;BOURDONNIERES;47.18633674;-1.51752998
-1363;5;Bout de bois;BOUT DE BOIS;47.45219954;-1.63771164
-1364;5;Bout des pavés;BOUT DES PAVES;47.25369202;-1.57587793
-1365;5;Bouton d'or;BOUTON D'OR;47.32909104;-2.43755233
-1366;5;Bouzaire;BOUZAIRE;47.36604228;-2.38003834
-1367;5;Brandu;BRANDU;47.36146532;-2.52270536
-1368;5;BréchetiEre;BRECHETIERE;47.28465996;-1.50354726
-1369;5;Bredeloup;BREDELOUP;47.39835772;-1.72598952
-1370;5;Breherin;BREHERIN;47.40381482;-2.45164386
-1371;5;BretonniEre;BRETONNIERE;47.24717533;-1.34543613
-1372;5;Brezean;BREZEAN;47.35939936;-2.45109285
-1373;5;BriandiEre;BRIANDIERE;47.18990338;-1.69247942
-1374;5;BrissonniEre;BRISSONNIERE;47.05649247;-1.63359405
-1375;5;Café de l'avenir;CAFE DE L'AVENIR;47.28650597;-2.01826883
-1376;5;Café de l'union;CAFE DE L'UNION;47.08956369;-1.27853513
-1377;5;Caillaud;CAILLAUD;47.27349388;-2.34275477
-1378;5;Callac;CALLAC;47.423938;-2.14125338
-1379;5;Calvaire;CALVAIRE;47.44275295;-2.13495478
-1380;5;Calvaire;CALVAIRE;47.39268845;-2.31579987
-1381;5;Caquereau;CAQUEREAU;47.49356714;-1.2566833
-1382;5;Careil;CAREIL;47.2982455;-2.40615388
-1383;5;Carrefour;CARREFOUR;47.18776892;-1.80723914
-1384;5;Castouillet;CASTOUILLET;47.29905423;-2.53507238
-1385;5;Cat;CAT;47.42898281;-2.07022579
-1386;5;Cent sillons;CENT SILLONS;47.36974848;-1.60877885
-1387;5;Centre de Corsept;CENTRE DE CORSEPT;47.27752117;-2.05916851
-1388;5;Centre de Vue;CENTRE DE VUE;47.19970445;-1.8774249
-1389;5;Centre de Rouans;CENTRE DE ROUANS;47.18554515;-1.86082011
-1390;5;Centre de Cheix-en-Retz;CENTRE DE CHEIX-EN-RETZ;47.18137108;-1.81502273
-1391;5;Centre de Brains;CENTRE DE BRAINS;47.16825336;-1.72009874
-1392;5;Centre de Saint-Jean-de-Boiseau;CENTRE DE SAINT-JEAN-DE-BOISEAU;47.19589923;-1.72436958
-1393;5;Centre de Bouguenais;CENTRE DE BOUGUENAIS;47.17943982;-1.62328622
-1394;5;Centre de Conquereuil;CENTRE DE CONQUEREUIL;47.62413282;-1.75078947
-1395;5;Centre de Guémené-Penfao;CENTRE DE GUÉMENÉ-PENFAO;47.62850022;-1.83205359
-1396;5;Centre de Pierric;CENTRE DE PIERRIC;47.68696875;-1.73655431
-1397;5;Centre de Derval;CENTRE DE DERVAL;47.66711534;-1.67138154
-1398;5;Centre de Puceul;CENTRE DE PUCEUL;47.52277193;-1.61479475
-1399;5;Centre de Marsac-sur-Don;CENTRE DE MARSAC-SUR-DON;47.59688885;-1.67892464
-1400;5;Centre de Vay;CENTRE DE VAY;47.55400541;-1.70065349
-1401;5;Centre de La Grigonnais;CENTRE DE LA GRIGONNAIS;47.52695966;-1.66769949
-1402;5;Centre de La Chevallerais;CENTRE DE LA CHEVALLERAIS;47.46894587;-1.67256689
-1403;5;Centre de Héric;CENTRE DE HÉRIC;47.41347763;-1.65176046
-1404;5;Centre de Blain;CENTRE DE BLAIN;47.4754379;-1.76484259
-1405;5;Centre de Le Gavre;CENTRE DE LE GAVRE;47.51995186;-1.74838626
-1406;5;Centre de Plesse;CENTRE DE PLESSE;47.54126206;-1.88709728
-1407;5;Centre de Touvois;CENTRE DE TOUVOIS;46.90152102;-1.68370094
-1408;5;Centre de Legé;CENTRE DE LEGÉ;46.88604763;-1.5973715
-1409;5;Centre de La LimouziniEre;CENTRE DE LA LIMOUZINIERE;46.99216382;-1.59671731
-1410;5;Centre de Saint-Colomban;CENTRE DE SAINT-COLOMBAN;47.00876321;-1.58300975
-1411;5;Centre de La Marne;CENTRE DE LA MARNE;46.99484894;-1.74037301
-1412;5;Centre de Saint-Lumine-de-Coutais;CENTRE DE SAINT-LUMINE-DE-COUTAIS;47.05552341;-1.72652675
-1413;5;Centre de Saint-Philbert-de-Grand-Lieu;CENTRE DE SAINT-PHILBERT-DE-GRAND-LIEU;47.03505684;-1.63870737
-1414;5;Centre de La ChevroliEre;CENTRE DE LA CHEVROLIERE;47.09189441;-1.60904492
-1415;5;Centre de Pont-Saint-Martin;CENTRE DE PONT-SAINT-MARTIN;47.12199737;-1.5825136
-1416;5;Centre de Missillac;CENTRE DE MISSILLAC;47.48223514;-2.1586414
-1417;5;Centre de Sainte-Reine-de-Bretagne;CENTRE DE SAINTE-REINE-DE-BRETAGNE;47.44107459;-2.19236077
-1418;5;Centre de Crossac;CENTRE DE CROSSAC;47.41124875;-2.16872544
-1419;5;Centre de Saint-Nicolas-de-Redon;CENTRE DE SAINT-NICOLAS-DE-REDON;47.64413417;-2.07097205
-1420;5;Centre de Sévérac;CENTRE DE SÉVÉRAC;47.54675085;-2.07868162
-1421;5;Centre de Guenrouet;CENTRE DE GUENROUET;47.51899965;-1.95502256
-1422;5;Centre de Quilly;CENTRE DE QUILLY;47.46130602;-1.95487815
-1423;5;Centre de Sainte-Anne-sur-Brivet;CENTRE DE SAINTE-ANNE-SUR-BRIVET;47.45986384;-2.00577586
-1424;5;Centre de Besne;CENTRE DE BESNE;47.3974861;-2.09137557
-1425;5;Centre de Montoir-de-Bretagne;CENTRE DE MONTOIR-DE-BRETAGNE;47.32893224;-2.14957592
-1426;5;Centre de Préfailles;CENTRE DE PRÉFAILLES;47.12943325;-2.21288614
-1427;5;Centre de La Plaine-sur-Mer;CENTRE DE LA PLAINE-SUR-MER;47.13731461;-2.19062248
-1428;5;Centre de RocheserviEre;CENTRE DE ROCHESERVIERE;46.94006483;-1.51009958
-1429;5;Centre de Geneston;CENTRE DE GENESTON;47.05538318;-1.51447722
-1430;5;Centre de Les SoriniEres;CENTRE DE LES SORINIERES;47.1501632;-1.53335186
-1431;5;Centre de Cordemais;CENTRE DE CORDEMAIS;47.29141234;-1.87709345
-1432;5;Centre de Malville;CENTRE DE MALVILLE;47.35662708;-1.85876369
-1433;5;Centre de Le Temple-de-Bretagne;CENTRE DE LE TEMPLE-DE-BRETAGNE;47.32985374;-1.79217447
-1434;5;Centre de Vigneux-de-Bretagne;CENTRE DE VIGNEUX-DE-BRETAGNE;47.32732437;-1.73793173
-1435;5;Centre de Sautron;CENTRE DE SAUTRON;47.2618441;-1.66976661
-1436;5;Centre de TreilliEres;CENTRE DE TREILLIERES;47.33067607;-1.62486846
-1437;5;Centre de Aigrefeuille-sur-Maine;CENTRE DE AIGREFEUILLE-SUR-MAINE;47.07468694;-1.39674014
-1438;5;Centre de Remouillé;CENTRE DE REMOUILLÉ;47.05738952;-1.37340831
-1439;5;Centre de Maisdon-sur-SEvre;CENTRE DE MAISDON-SUR-SEVRE;47.09707747;-1.38438444
-1440;5;Centre de Chauve;CENTRE DE CHAUVE;47.1511925;-1.98519706
-1441;5;Centre de La Bernerie-en-Retz;CENTRE DE LA BERNERIE-EN-RETZ;47.08035984;-2.03729246
-1442;5;Centre de Les Moutiers-en-Retz;CENTRE DE LES MOUTIERS-EN-RETZ;47.06361106;-2.00139057
-1443;5;Centre de Arthon-en-Retz;CENTRE DE ARTHON-EN-RETZ;47.10637114;-1.93849633
-1444;5;Centre de Chéméré;CENTRE DE CHÉMÉRÉ;47.12323314;-1.91241734
-1445;5;Centre de Port-Saint-PEre;CENTRE DE PORT-SAINT-PERE;47.1336125;-1.74791532
-1446;5;Centre de Saint-Léger-les-Vignes;CENTRE DE SAINT-LÉGER-LES-VIGNES;47.13652145;-1.73026717
-1447;5;Centre de La Varenne;CENTRE DE LA VARENNE;47.31327217;-1.32215833
-1448;5;Centre de La Chapelle-Basse-Mer;CENTRE DE LA CHAPELLE-BASSE-MER;47.27246606;-1.33757741
-1449;5;Centre de La BoissiEre-du-Doré;CENTRE DE LA BOISSIERE-DU-DORÉ;47.23149237;-1.21792935
-1450;5;Centre de La RemaudiEre;CENTRE DE LA REMAUDIERE;47.23766251;-1.24328365
-1451;5;Centre de Le Landreau;CENTRE DE LE LANDREAU;47.20530127;-1.30586412
-1452;5;Centre de Le Loroux-Bottereau;CENTRE DE LE LOROUX-BOTTEREAU;47.2386764;-1.34881744
-1453;5;Centre de Saint-Julien-de-Concelles;CENTRE DE SAINT-JULIEN-DE-CONCELLES;47.25412448;-1.38606747
-1454;5;Centre de La RegrippiEre;CENTRE DE LA REGRIPPIERE;47.18223702;-1.17489782
-1455;5;Centre de Mouzillon;CENTRE DE MOUZILLON;47.13940183;-1.28178677
-1456;5;Centre de La Chapelle-Heulin;CENTRE DE LA CHAPELLE-HEULIN;47.176399;-1.34055933
-1457;5;Centre de Haute-Goulaine;CENTRE DE HAUTE-GOULAINE;47.19920587;-1.42974142
-1458;5;Centre de Saint-Lumine-de-Clisson;CENTRE DE SAINT-LUMINE-DE-CLISSON;47.08154822;-1.33790509
-1459;5;Centre de Gorges;CENTRE DE GORGES;47.10103008;-1.30262495
-1460;5;Centre de Gétigné;CENTRE DE GÉTIGNÉ;47.07551151;-1.24797059
-1461;5;Centre de Moisdon-la-RiviEre;CENTRE DE MOISDON-LA-RIVIERE;47.62164072;-1.3726845
-1462;5;Centre de La Meilleraye-de-Bretagne;CENTRE DE LA MEILLERAYE-DE-BRETAGNE;47.55872653;-1.40237842
-1463;5;Centre de Joué-sur-Erdre;CENTRE DE JOUÉ-SUR-ERDRE;47.49589092;-1.42057909
-1464;5;Centre de Trans-sur-Erdre;CENTRE DE TRANS-SUR-ERDRE;47.47670455;-1.37259889
-1465;5;Centre de Les Touches;CENTRE DE LES TOUCHES;47.44213508;-1.43073292
-1466;5;Centre de Petit-Mars;CENTRE DE PETIT-MARS;47.39537145;-1.45476312
-1467;5;Centre de Isse;CENTRE DE ISSE;47.6232835;-1.45210283
-1468;5;Centre de Abbaretz;CENTRE DE ABBARETZ;47.55252689;-1.53259594
-1469;5;Centre de Saffré;CENTRE DE SAFFRÉ;47.50151496;-1.57648677
-1470;5;Centre de Casson;CENTRE DE CASSON;47.38590277;-1.55960292
-1471;5;Centre de Treffieux;CENTRE DE TREFFIEUX;47.61953687;-1.53728693
-1472;5;Centre de Bouvron;CENTRE DE BOUVRON;47.41822542;-1.8488596
-1473;5;Centre de Campbon;CENTRE DE CAMPBON;47.41204177;-1.96903817
-1474;5;Centre de La Chapelle-Launay;CENTRE DE LA CHAPELLE-LAUNAY;47.37233486;-1.97150078
-1475;5;Centre de Prinquiau;CENTRE DE PRINQUIAU;47.36263419;-2.01140087
-1476;5;Centre de Saint-Mars-la-Jaille;CENTRE DE SAINT-MARS-LA-JAILLE;47.5235396;-1.18289791
-1477;5;Centre de Pouillé-les-Côteaux;CENTRE DE POUILLÉ-LES-CÔTEAUX;47.45412632;-1.16156551
-1478;5;Centre de Mésanger;CENTRE DE MÉSANGER;47.43302302;-1.2297684
-1479;5;Centre de Couffé;CENTRE DE COUFFÉ;47.39096194;-1.29284965
-1480;5;Centre de Le Cellier;CENTRE DE LE CELLIER;47.31971355;-1.34786049
-1481;5;Centre de Carquefou;CENTRE DE CARQUEFOU;47.28076525;-1.45685517
-1482;5;Centre de Saint-Étienne-de-Montluc;CENTRE DE SAINT-ÉTIENNE-DE-MONTLUC;47.27583865;-1.78015828
-1483;5;Centre de Bonnœuvre;CENTRE DE BONNŒUVRE;47.52767548;-1.23698525
-1484;5;Centre de Riaille;CENTRE DE RIAILLE;47.51630758;-1.29011835
-1485;5;Centre de Pannecé;CENTRE DE PANNECÉ;47.48525332;-1.24006531
-1486;5;Centre de Teillé;CENTRE DE TEILLÉ;47.46123946;-1.27810702
-1487;5;Centre de Mouzeil;CENTRE DE MOUZEIL;47.44759973;-1.34770036
-1488;5;Centre de Ligne;CENTRE DE LIGNE;47.41140553;-1.37454483
-1489;5;Centre de Saint-Mars-du-Désert;CENTRE DE SAINT-MARS-DU-DÉSERT;47.36718651;-1.40526556
-1490;5;Centre de Vieillevigne;CENTRE DE VIEILLEVIGNE;46.96987897;-1.43162001
-1491;5;Centre de La Planche;CENTRE DE LA PLANCHE;47.01878939;-1.43937981
-1492;5;Centre de Montbert;CENTRE DE MONTBERT;47.05719932;-1.48831411
-1493;5;Centre de Le Bignon;CENTRE DE LE BIGNON;47.09852284;-1.49137836
-1494;5;Centre de Fay-de-Bretagne;CENTRE DE FAY-DE-BRETAGNE;47.41507152;-1.79145505
-1495;5;Centre de Notre-Dame-des-Landes;CENTRE DE NOTRE-DAME-DES-LANDES;47.38182015;-1.70997274
-1496;5;Centre de Orvault;CENTRE DE ORVAULT;47.27132522;-1.62382431
-1497;5;Centre de Férel;CENTRE DE FÉREL;47.48354951;-2.3437623
-1498;5;Centre de Le Pouliguen;CENTRE DE LE POULIGUEN;47.27762224;-2.4304562
-1499;5;Centre de Batz-sur-Mer;CENTRE DE BATZ-SUR-MER;47.27504562;-2.48111018
-1500;5;Centre de Mesquer;CENTRE DE MESQUER;47.39897954;-2.46027959
-1501;5;Centre de Piriac-sur-Mer;CENTRE DE PIRIAC-SUR-MER;47.3787257;-2.5468099
-1502;5;Centre carquefou;CENTRE CARQUEFOU;47.29695537;-1.4907885
-1503;5;Centre commercial;CENTRE COMMERCIAL;47.47332312;-1.74613897
-1504;5;Centre commercial;CENTRE COMMERCIAL;47.51161839;-2.039246
-1505;5;Centre commercial;CENTRE COMMERCIAL;47.20486583;-2.04375082
-1506;5;Centre commercial;CENTRE COMMERCIAL;47.09128316;-1.28888442
-1507;5;Centre commercial (rue b.franklin);CENTRE COMMERCIAL (RUE B.FRANKLIN);47.70628695;-1.38814689
-1508;5;Centre commercial (rue g.eisenhower);CENTRE COMMERCIAL (RUE G.EISENHOWER);47.70736119;-1.38457725
-1509;5;Centre commercial rue brient 1er;CENTRE COMMERCIAL RUE BRIENT 1ER;47.7177981;-1.38851782
-1510;5;Centre commercial vent d'ouest;CENTRE COMMERCIAL VENT D'OUEST;47.70131193;-1.40091956
-1511;5;Centre municipal des sports;CENTRE MUNICIPAL DES SPORTS;47.71439706;-1.37887649
-1512;5;César franck;CESAR FRANCK;47.7136265;-1.38517033
-1513;5;Champ de foire;CHAMP DE FOIRE;47.56503508;-1.6263054
-1514;5;Champ de foire;CHAMP DE FOIRE;47.43767697;-1.5010131
-1515;5;Champ de foire;CHAMP DE FOIRE;47.44924753;-2.31245639
-1516;5;Champ failli;CHAMP FAILLI;47.1907868;-1.40116427
-1517;5;Champbriant;CHAMPBRIANT;47.32969499;-1.35715987
-1518;5;ChampionniEre;CHAMPIONNIERE;47.11181288;-1.58647985
-1519;5;Champsiome;CHAMPSIOME;47.1485917;-1.55540329
-1520;5;Charles de gaulle;CHARLES DE GAULLE;47.44018226;-2.09345281
-1521;5;Charles de gaulle;CHARLES DE GAULLE;47.71834927;-1.37273807
-1522;5;Charmilles;CHARMILLES;47.26556886;-2.44724162
-1523;5;Chataigneraie;CHATAIGNERAIE;47.43621763;-2.08347005
-1524;5;Chataigneraie;CHATAIGNERAIE;47.3355013;-1.52131293
-1525;5;Château d'eau;CHATEAU D'EAU;47.19865726;-1.43640119
-1526;5;Château d'eau;CHATEAU D'EAU;47.38758947;-1.55708647
-1527;5;Château-de-clermont;CHATEAU-DE-CLERMONT;47.32738749;-1.34152995
-1528;5;Château-rouge;CHATEAU-ROUGE;47.5205117;-2.01360676
-1529;5;Châteaubriant;CHATEAUBRIANT;47.28400251;-2.38612435
-1530;5;Chatillon;CHATILLON;47.28971943;-1.65670137
-1531;5;Chaussée le retz;CHAUSSEE LE RETZ;47.19368794;-1.85129276
-1532;5;ChauviniEre;CHAUVINIERE;47.22867214;-1.63558392
-1533;5;Chemin nantais;CHEMIN NANTAIS;47.28808356;-1.4357075
-1534;5;Chemin rouge;CHEMIN ROUGE;47.25175555;-1.51757718
-1535;5;Chêne bonnet;CHENE BONNET;47.27746789;-2.06462743
-1536;5;Chene vert;CHENE VERT;47.27918306;-1.35119989
-1537;5;ChevroliEre sud;CHEVROLIERE SUD;47.09028392;-1.6109548
-1538;5;Chevry;CHEVRY;47.28536032;-2.03009451
-1539;5;Cifam;CIFAM;47.2656679;-1.48716466
-1540;5;CimetiEre;CIMETIERE;47.38929637;-2.42610775
-1541;5;CimetiEre;CIMETIERE;47.28941591;-2.38466496
-1542;5;Cinéma st gilles;CINEMA ST GILLES;47.11956822;-2.10123942
-1543;5;Cinq chemins de valais;CINQ CHEMINS DE VALAIS;47.31561718;-1.68885843
-1544;5;Cinq routes;CINQ ROUTES;47.00615185;-1.45506896
-1545;5;Cité du rocher;CITE DU ROCHER;47.29160188;-2.3731692
-1546;5;Cité paul huard;CITE PAUL HUARD;47.71116305;-1.37484097
-1547;5;Clémenceau;CLEMENCEAU;47.27384565;-2.43160646
-1548;5;Clis;CLIS;47.33717431;-2.46703954
-1549;5;Cloisons;CLOISONS;47.37126439;-1.52208556
-1550;5;Clos belay;CLOS BELAY;47.26149682;-2.42370975
-1551;5;Clos colin;CLOS COLIN;47.29231315;-2.35680786
-1552;5;Coët rotz;COET ROTZ;47.44408541;-2.0924484
-1553;5;Cogéa;COGEA;47.34452987;-2.35284585
-1554;5;Coispean;COISPEAN;47.36535949;-2.46580134
-1555;5;Colbert;COLBERT;47.34482607;-2.50497506
-1556;5;ColiniEre;COLINIERE;47.23596214;-1.50836983
-1557;5;CollEge petite lande;COLLEGE PETITE LANDE;47.17790841;-1.54950362
-1558;5;CollEge ste anne;COLLEGE STE ANNE;47.19141874;-1.56730513
-1559;5;CommandiEres;COMMANDIERES;47.28988605;-2.25744947
-1560;5;Cornette;CORNETTE;47.35724939;-1.54067363
-1561;5;Cour des haies;COUR DES HAIES;47.52956883;-1.39743039
-1562;5;Cpio;CPIO;47.26273009;-1.50771694
-1563;5;Croissant;CROISSANT;47.24074108;-1.53041164
-1564;5;Croix blanche;CROIX BLANCHE;47.35003701;-1.86513971
-1565;5;Croix danet;CROIX DANET;47.06567401;-1.52042073
-1566;5;Croix de kerbezo;CROIX DE KERBEZO;47.32798485;-2.44683064
-1567;5;Croix de kerdinio;CROIX DE KERDINIO;47.37849993;-2.5266004
-1568;5;Croix de mission;CROIX DE MISSION;47.43209421;-2.08431395
-1569;5;Croix des chardonneaux;CROIX DES CHARDONNEAUX;47.26997648;-1.36304537
-1570;5;Croix morzelle gare;CROIX MORZELLE GARE;47.30461398;-1.84430457
-1571;5;Croix verte;CROIX VERTE;47.12463641;-1.42386749
-1572;5;Croix-de-bauche;CROIX-DE-BAUCHE;47.29446519;-1.82744101
-1573;5;Croix-de-morzelle rd-17;CROIX-DE-MORZELLE RD-17;47.30461398;-1.84430457
-1574;5;Croix-millette;CROIX-MILLETTE;47.32948477;-2.49754181
-1575;5;Curette;CURETTE;47.35991269;-1.63218273
-1576;5;Cuy;CUY;47.27778483;-2.34026892
-1577;5;Dauphin SNCF;DAUPHIN SNCF;47.27013195;-2.34619059
-1578;5;De joie;DE JOIE;47.16320381;-1.26544768
-1579;5;Delinais;DELINAIS;47.66120601;-1.41396977
-1580;5;Delorme;DELORME;47.21546137;-1.56443924
-1581;5;Dervin;DERVIN;47.26976505;-2.45917001
-1582;5;Desaix;DESAIX;47.22690394;-1.54271579
-1583;5;Diderot arrêt tan;DIDEROT ARRET TAN;47.184115;-1.563167
-1584;5;Dilane;DILANE;47.27113383;-2.47132697
-1585;5;Dr sourdille;DR SOURDILLE;47.26374833;-2.42053115
-1586;5;Drevet;DREVET;47.28511792;-2.40515809
-1587;5;Duquesne;DUQUESNE;47.21721969;-1.55693031
-1588;5;DurandiEre;DURANDIERE;47.33352077;-1.51706063
-1589;5;E. Outtier;E. OUTTIER;47.268256;-2.340515
-1590;5;Ecole;ECOLE;47.3992619;-2.45764863
-1591;5;Ecole du gaz;ECOLE DU GAZ;47.283043;-1.73979315
-1592;5;Ecomarché;ECOMARCHE;47.1331505;-1.749861
-1593;5;Eglise;EGLISE;47.43789686;-2.08829012
-1594;5;Eglise;EGLISE;47.51759945;-2.03761423
-1595;5;Eglise;EGLISE;47.47636158;-2.05659765
-1596;5;Eglise;EGLISE;47.14344101;-1.41601382
-1597;5;Eglise;EGLISE;47.29542845;-1.39368188
-1598;5;Eglise;EGLISE;47.44933343;-2.3175485
-1599;5;Eglise de béré;EGLISE DE BERE;47.72369616;-1.38710314
-1600;5;Ennerie;ENNERIE;47.19446711;-2.02061681
-1601;5;Epinettes;EPINETTES;47.20062587;-1.44480543
-1602;5;Escoublac centre;ESCOUBLAC CENTRE;47.29339385;-2.35763968
-1603;5;Etoile du matin;ETOILE DU MATIN;47.25570825;-2.27114496
-1604;5;Europe;EUROPE;47.27846794;-2.43534716
-1605;5;Facultés;FACULTES;47.246319;-1.555395
-1606;5;Fégréac;FEGREAC;47.58533927;-2.04515826
-1607;5;Félix tableau;FELIX TABLEAU;47.1878501;-1.54663213
-1608;5;Ferme ecole;FERME ECOLE;47.48714196;-2.05106382
-1609;5;Fief du parc;FIEF DU PARC;47.08401027;-1.26016548
-1610;5;Flandin;FLANDIN;47.28983649;-2.37178084
-1611;5;Fleuriaye;FLEURIAYE;47.29873976;-1.49980238
-1612;5;Fontaine;FONTAINE;47.24210885;-2.15691681
-1613;5;Fontaine aux bruns;FONTAINE AUX BRUNS;47.29898269;-2.20727774
-1614;5;Fontaine braz;FONTAINE BRAZ;47.40201885;-2.44563276
-1615;5;Forêt pavée;FORET PAVEE;47.66739367;-1.37965114
-1616;5;Forum;FORUM;47.25099923;-1.61952394
-1617;5;Foyer;FOYER;47.44408541;-2.0924484
-1618;5;Foyer;FOYER;47.28377213;-2.40464859
-1619;5;Foyer du travailleur;FOYER DU TRAVAILLEUR;47.27680397;-2.22611047
-1620;5;Franchet d'esperey;FRANCHET D'ESPEREY;47.26608771;-2.43698215
-1621;5;Fructidor;FRUCTIDOR;47.23981;-1.560391
-1622;5;Garage;GARAGE;47.51630761;-1.29011831
-1623;5;Garambeau;GARAMBEAU;47.31341446;-1.63351923
-1624;5;Gare;GARE;47.65023788;-1.73912165
-1625;5;Gare;GARE;47.68622236;-1.43603794
-1626;5;Gare de châteaubriant;GARE DE CHATEAUBRIANT;47.7169964;-1.37139708
-1627;5;Gare de la baule-les-pins;GARE DE LA BAULE-LES-PINS;47.28362387;-2.36466727
-1628;5;Gare de savenay;GARE DE SAVENAY;47.35851289;-1.95141501
-1629;5;Gare de sévérac;GARE DE SEVERAC;47.54974924;-2.07274422
-1630;5;Gare routiEre;GARE ROUTIERE;46.67371565;-1.42038766
-1631;5;Gare routiEre;GARE ROUTIERE;47.36231478;-1.94512113
-1632;5;Gare SNCF de Nantes;GARE SNCF DE NANTES;47.21675853;-1.54295503
-1633;5;Gare SNCF de Rennes;GARE SNCF DE RENNES;48.1035157;-1.67231969
-1634;5;Gare SNCF de Saint-Nazaire;GARE SNCF DE SAINT-NAZAIRE;47.28566315;-2.21127728
-1635;5;Gare SNCF de Redon;GARE SNCF DE REDON;47.6517633;-2.08787664
-1636;5;Gare SNCF de Pornic;GARE SNCF DE PORNIC;47.11452651;-2.09767298
-1637;5;Gare SNCF de Bourgneuf-en-Retz;GARE SNCF DE BOURGNEUF-EN-RETZ;47.04684377;-1.95529641
-1638;5;Gare SNCF de Vertou;GARE SNCF DE VERTOU;47.18596565;-1.47794424
-1639;5;Gare SNCF de Clisson;GARE SNCF DE CLISSON;47.08583846;-1.28675466
-1640;5;Gare SNCF de Nort-sur-Erdre;GARE SNCF DE NORT-SUR-ERDRE;47.44173214;-1.50270735
-1641;5;Gare SNCF de Saint-Vincent-des-Landes;GARE SNCF DE SAINT-VINCENT-DES-LANDES;47.65519773;-1.49430839
-1642;5;Gare SNCF de Mauves-sur-Loire;GARE SNCF DE MAUVES-SUR-LOIRE;47.29280201;-1.38928716
-1643;5;Gare SNCF de Le Pouliguen;GARE SNCF DE LE POULIGUEN;47.28244806;-2.43412989
-1644;5;Gare SNCF de Le Croisic;GARE SNCF DE LE CROISIC;47.28973383;-2.50691659
-1645;5;Garlahy;GARLAHY;47.34827097;-2.51220248
-1646;5;Garnerie;GARNERIE;47.3302223;-1.53643205
-1647;5;Garnier (immaculée);GARNIER (IMMACULEE);47.28230609;-2.25947836
-1648;5;GaudiniEre;GAUDINIERE;47.30125792;-1.71094776
-1649;5;Gendarmerie;GENDARMERIE;47.5625101;-1.62726403
-1650;5;Gendarmerie;GENDARMERIE;47.32621781;-2.14574576
-1651;5;Gendarmerie;GENDARMERIE;47.04644578;-1.95572907
-1652;5;Gendarmerie;GENDARMERIE;47.24112081;-1.35575736
-1653;5;Gendarmerie;GENDARMERIE;47.16039735;-1.26892474
-1654;5;Gendarmerie (avenue jean moulin);GENDARMERIE (AVENUE JEAN MOULIN);47.72530278;-1.38452328
-1655;5;Génetais;GENETAIS;47.16367413;-1.55326975
-1656;5;George sand;GEORGE SAND;47.16578218;-1.54522603
-1657;5;Georges brassens;GEORGES BRASSENS;47.28687727;-2.02920282
-1658;5;GergaudiEre;GERGAUDIERE;47.28943975;-1.59653612
-1659;5;Giboire;GIBOIRE;47.3796579;-1.5214568
-1660;5;GiliEre;GILIERE;47.29929031;-1.55299051
-1661;5;Golf;GOLF;47.2920398;-1.70396424
-1662;5;Gourap;GOURAP;47.50630514;-2.04475576
-1663;5;Govelle;GOVELLE;47.26729228;-2.45408343
-1664;5;Govilon;GOVILON;47.47674781;-2.16285629
-1665;5;Grain;GRAIN;47.37809154;-2.53986581
-1666;5;Grand carcouët;GRAND CARCOUET;47.23134801;-1.59236636
-1667;5;Grand perret;GRAND PERRET;47.2767388;-2.07963026
-1668;5;Grand-rue;GRAND-RUE;47.35225012;-2.51298987
-1669;5;Grandchamps;GRANDCHAMPS;47.29341881;-2.20831444
-1670;5;Grande bodiniEre;GRANDE BODINIERE;47.3833254;-1.51043282
-1671;5;Grande douve;GRANDE DOUVE;47.34632524;-2.50395405
-1672;5;Grandes terres;GRANDES TERRES;47.26773035;-2.43056826
-1673;5;Graviers;GRAVIERS;47.4683002;-1.76856675
-1674;5;GrehandiEre;GREHANDIERE;47.3273234;-1.64335625
-1675;5;Greix;GREIX;47.26434757;-2.10736794
-1676;5;GuillonniEre;GUILLONNIERE;47.35569634;-1.51748476
-1677;5;Guineau;GUINEAU;47.26774378;-1.35551653
-1678;5;GuinEvre;GUINEVRE;47.05077583;-1.63553332
-1679;5;Haie-maheas;HAIE-MAHEAS;47.28023261;-1.82334616
-1680;5;Halte garderie;HALTE GARDERIE;47.7133771;-1.3872749
-1681;5;HaluchEre;HALUCHERE;47.24830065;-1.52106689
-1682;5;Halvêque;HALVEQUE;47.25856539;-1.51950496
-1683;5;Haut brivin;HAUT BRIVIN;47.30044055;-2.38614032
-1684;5;Haute perche;HAUTE PERCHE;47.131427;-1.969836
-1685;5;HélEne boucher;HELENE BOUCHER;47.7116276;-1.36903474
-1686;5;Henri dunant;HENRI DUNANT;47.29185479;-2.51916577
-1687;5;Hlm vitré;HLM VITRE;47.72421205;-1.37185186
-1688;5;Hopital;HOPITAL;47.2773957;-2.23597226
-1689;5;Hôpital;HOPITAL;47.11263082;-2.06659451
-1690;5;Hôpital;HOPITAL;47.72569678;-1.38247308
-1691;5;Hôpital;HOPITAL;47.29056792;-2.51459997
-1692;5;Hôtel de france;HOTEL DE FRANCE;47.44315511;-1.81335093
-1693;5;Hotel de ville;HOTEL DE VILLE;47.26937188;-2.42484805
-1694;5;Hôtel de ville st-nazaire;HOTEL DE VILLE ST-NAZAIRE;47.27389827;-2.21366954
-1695;5;Icam;ICAM;47.2757535;-1.50960262
-1696;5;Jean perrin;JEAN PERRIN;47.1812653;-1.56078359
-1697;5;Joli séjour;JOLI SEJOUR;47.11301184;-2.09088607
-1698;5;Joliverie;JOLIVERIE;47.18969892;-1.51780157
-1699;5;Jules rieffel;JULES RIEFFEL;47.25555287;-1.64261028
-1700;5;Ker d'abas;KER D'ABAS;47.27596761;-2.48670919
-1701;5;Ker elisabeth;KER ELISABETH;47.35592839;-2.51864459
-1702;5;Ker marie;KER MARIE;47.32789317;-2.44173044
-1703;5;Ker-al-men;KER-AL-MEN;47.39898134;-2.48844652
-1704;5;Kerbennet;KERBENNET;47.33450596;-2.42645871
-1705;5;Kerbiniou;KERBINIOU;47.32907025;-2.41882372
-1706;5;Kerbourg;KERBOURG;47.36465069;-2.36593644
-1707;5;Kercabellec;KERCABELLEC;47.40828874;-2.46430851
-1708;5;Kerdandec;KERDANDEC;47.41189374;-2.47662045
-1709;5;Kerdinio;KERDINIO;47.37806244;-2.5306902
-1710;5;Kerdun;KERDUN;47.2646673;-2.43192578
-1711;5;Kerguillote;KERGUILLOTE;47.39560436;-2.48602794
-1712;5;Kerhinet;KERHINET;47.36304063;-2.35761194
-1713;5;Kerlagadec;KERLAGADEC;47.39445167;-2.46546407
-1714;5;Kerlibérin;KERLIBERIN;47.42896797;-2.30866487
-1715;5;Kerquessaud;KERQUESSAUD;47.30457012;-2.37920074
-1716;5;Kerro;KERRO;47.39892528;-2.49116665
-1717;5;Kerroué;KERROUE;47.39846008;-2.4466298
-1718;5;Kervin;KERVIN;47.37230556;-2.52690349
-1719;5;Kervolan;KERVOLAN;47.36026196;-2.4332653
-1720;5;Korrigans;KORRIGANS;47.26479374;-2.44269121
-1721;5;Korrigans;KORRIGANS;47.26479374;-2.44269121
-1722;5;Kuhlman;KUHLMAN;47.2832255;-2.0160947
-1723;5;L' arche du fouan;L' ARCHE DU FOUAN;47.40652282;-1.73129197
-1724;5;L'alcidais;L'ALCIDAIS;47.49032779;-1.63714402
-1725;5;L'angle bertho;L'ANGLE BERTHO;47.46614631;-2.2196943
-1726;5;L'anglechais;L'ANGLECHAIS;47.51493193;-1.75132005
-1727;5;L'aubraie;L'AUBRAIE;47.08016954;-1.63108251
-1728;5;L'audonniEre;L'AUDONNIERE;46.99704572;-1.45510911
-1729;5;L'aujardiEre;L'AUJARDIERE;47.01891872;-1.59950085
-1730;5;L'aujardiEre;L'AUJARDIERE;47.17050044;-1.17953134
-1731;5;L'epeau;L'EPEAU;47.32183155;-1.47412137
-1732;5;L'epine;L'EPINE;47.36976161;-1.70406276
-1733;5;L'etoile;L'ETOILE;47.3447983;-2.48309675
-1734;5;L'hommeau;L'HOMMEAU;47.07148093;-1.49678347
-1735;5;L'isle;L'ISLE;47.4249527;-1.48228234
-1736;5;L'organais;L'ORGANAIS;47.45402101;-2.19127196
-1737;5;La babonniEre;LA BABONNIERE;47.33811065;-1.3416711
-1738;5;La baie de loire;LA BAIE DE LOIRE;47.26081836;-2.12501342
-1739;5;La bénate;LA BENATE;46.95539624;-1.60449963
-1740;5;La bernardiEre;LA BERNARDIERE;47.28685724;-1.70546937
-1741;5;La bernardiEre;LA BERNARDIERE;47.17174937;-1.36343788
-1742;5;La birochEre;LA BIROCHERE;47.10977935;-2.08850296
-1743;5;La boissiEre;LA BOISSIERE;47.34673925;-1.69637118
-1744;5;La boizonniEre;LA BOIZONNIERE;47.13731989;-1.72258383
-1745;5;La bosse;LA BOSSE;47.28299812;-2.32048558
-1746;5;La bosse des landes;LA BOSSE DES LANDES;47.39952299;-1.64483923
-1747;5;La boulaie;LA BOULAIE;47.07213753;-1.62310273
-1748;5;La boule d'or;LA BOULE D'OR;47.09115389;-1.52982658
-1749;5;La bourchiniEre;LA BOURCHINIERE;47.15167028;-1.42919922
-1750;5;La bourie;LA BOURIE;47.13156097;-1.58291581
-1751;5;La bouvardiEre;LA BOUVARDIERE;47.32144616;-1.69605251
-1752;5;La bretonniEre;LA BRETONNIERE;47.32632122;-1.78775953
-1753;5;La buterie;LA BUTERIE;47.11322933;-1.44145008
-1754;5;La butte;LA BUTTE;47.36743237;-1.60626892
-1755;5;La carrée;LA CARREE;47.16847663;-1.54319266
-1756;5;La carrée;LA CARREE;47.46181582;-1.78342436
-1757;5;La cerclerie;LA CERCLERIE;47.17293905;-1.35416474
-1758;5;La chalousiEre;LA CHALOUSIERE;47.16040421;-1.22124366
-1759;5;La chapelle;LA CHAPELLE;47.40367922;-2.30434004
-1760;5;La chapelle;LA CHAPELLE;47.26574019;-2.34056285
-1761;5;La chapelle breton;LA CHAPELLE BRETON;47.44914251;-1.32734866
-1762;5;La chapelle jean jaurés;LA CHAPELLE JEAN JAURES;47.29942181;-1.55003047
-1763;5;La charliEre;LA CHARLIERE;47.31938069;-1.54920258
-1764;5;La chaussée;LA CHAUSSEE;47.09839445;-1.61107034
-1765;5;La chebuette;LA CHEBUETTE;47.26822587;-1.40906854
-1766;5;La chEre;LA CHERE;47.45984764;-1.4185879
-1767;5;La chesnaye;LA CHESNAYE;47.30691075;-1.39154147
-1768;5;La chouamétrie;LA CHOUAMETRIE;47.30841834;-1.68010656
-1769;5;La cogne;LA COGNE;47.28720337;-1.55705903
-1770;5;La compointerie;LA COMPOINTERIE;47.03493437;-1.66863659
-1771;5;La côte;LA COTE;47.28216723;-1.56045219
-1772;5;La courance;LA COURANCE;47.23837309;-2.16938845
-1773;5;La crochardais;LA CROCHARDAIS;47.4604849;-1.9636395
-1774;5;La croix;LA CROIX;47.30000308;-1.39804644
-1775;5;La croix basse;LA CROIX BASSE;47.43471837;-2.09363028
-1776;5;La croix blot;LA CROIX BLOT;47.11994431;-1.5810806
-1777;5;La croix d'en haut;LA CROIX D'EN HAUT;47.5002997;-2.13256681
-1778;5;La croix des prés;LA CROIX DES PRES;47.06158677;-1.4936426
-1779;5;La croix verte;LA CROIX VERTE;46.93827139;-1.60300325
-1780;5;La croix-de-pierre;LA CROIX-DE-PIERRE;47.31898385;-1.73408613
-1781;5;La dechausserie;LA DECHAUSSERIE;47.38256386;-1.45316891
-1782;5;La digue;LA DIGUE;47.64781359;-2.08313022
-1783;5;La droitiEre;LA DROITIERE;47.30794279;-1.37285651
-1784;5;La duchée;LA DUCHEE;47.3628175;-2.09803547
-1785;5;La ferriEre;LA FERRIERE;47.69888434;-1.38168758
-1786;5;La fléchousserie;LA FLECHOUSSERIE;47.10212952;-2.05915779
-1787;5;La fontaine;LA FONTAINE;47.3073795;-1.63246712
-1788;5;La fosse des prés;LA FOSSE DES PRES;47.1986734;-1.90629771
-1789;5;La foy;LA FOY;47.65853811;-1.66133012
-1790;5;La frégate;LA FREGATE;47.35067421;-2.49785153
-1791;5;La freuziEre;LA FREUZIERE;47.32029408;-1.76846324
-1792;5;La furetiEre;LA FURETIERE;47.40757067;-1.46098886
-1793;5;La garneraie;LA GARNERAIE;47.24491133;-1.72569624
-1794;5;La gauterie;LA GAUTERIE;47.33745269;-1.47432138
-1795;5;La gicquelais;LA GICQUELAIS;47.40415849;-1.96281492
-1796;5;La giraudiEre;LA GIRAUDIERE;47.21459256;-2.05412221
-1797;5;La gobiniEre;LA GOBINIERE;47.18423;-1.31837601
-1798;5;La gouarais;LA GOUARAIS;47.51873055;-2.11021212
-1799;5;La gouliEre;LA GOULIERE;47.35146038;-1.42165182
-1800;5;La grande haie;LA GRANDE HAIE;47.37348734;-1.63370456
-1801;5;La gravouillerie;LA GRAVOUILLERIE;47.02179023;-1.68817967
-1802;5;La grée;LA GREE;47.36581998;-1.45468364
-1803;5;La grue;LA GRUE;47.03017677;-1.62530481
-1804;5;La guérandaise;LA GUERANDAISE;47.35444592;-2.39032216
-1805;5;La guerche;LA GUERCHE;47.2787431;-1.79072464
-1806;5;La guesne;LA GUESNE;47.38322523;-2.13376756
-1807;5;La guilleraie;LA GUILLERAIE;47.27779582;-2.35626728
-1808;5;La harie;LA HARIE;47.51295701;-1.19157035
-1809;5;La harliEre;LA HARLIERE;47.40990366;-1.93191507
-1810;5;La herdrie;LA HERDRIE;47.19789887;-1.45234757
-1811;5;La herviais;LA HERVIAIS;47.42851434;-2.11028039
-1812;5;La jarriais;LA JARRIAIS;47.22008265;-2.09526447
-1813;5;La jarrie;LA JARRIE;47.105398;-1.50876055
-1814;5;La jaunaie;LA JAUNAIE;47.09466785;-1.43917688
-1815;5;La jo;LA JO;47.28740984;-2.35957314
-1816;5;La joie;LA JOIE;47.33997616;-1.34927409
-1817;5;La joseliEre;LA JOSELIERE;47.10400199;-2.07645433
-1818;5;La laiterie;LA LAITERIE;47.54935281;-1.86244416
-1819;5;La loiriEre;LA LOIRIERE;47.09682371;-1.53243407
-1820;5;La louisiane;LA LOUISIANE;47.22239631;-2.07909636
-1821;5;La mabilais;LA MABILAIS;47.27333503;-2.08884994
-1822;5;La madeleine;LA MADELEINE;47.3565622;-2.3694989
-1823;5;La maison blanche;LA MAISON BLANCHE;47.31238746;-1.38669027
-1824;5;La maison neuve;LA MAISON NEUVE;47.32761158;-1.3817065
-1825;5;La maladrie;LA MALADRIE;47.3490633;-1.34108002
-1826;5;La marchanderie;LA MARCHANDERIE;47.43724642;-1.46028482
-1827;5;La masure;LA MASURE;47.08708246;-1.49697064
-1828;5;La méloiterie;LA MELOITERIE;47.56578247;-1.51953375
-1829;5;La métellerie;LA METELLERIE;47.37252374;-1.31895279
-1830;5;La miraudiEre;LA MIRAUDIERE;47.17382438;-1.37185951
-1831;5;La moisenais;LA MOISENAIS;47.26381946;-2.10008693
-1832;5;La montagne;LA MONTAGNE;47.24480657;-1.68743046
-1833;5;La moucletiEre;LA MOUCLETIERE;47.17054065;-1.28800023
-1834;5;La moune;LA MOUNE;47.01370342;-1.43964084
-1835;5;La nantaise;LA NANTAISE;47.30606633;-2.40836697
-1836;5;La noé;LA NOE;47.4524882;-2.0738182
-1837;5;La noé;LA NOE;47.3495018;-1.46508345
-1838;5;La noé;LA NOE;47.31983812;-1.87191064
-1839;5;La noé;LA NOE;47.50367959;-1.27462096
-1840;5;La normandais;LA NORMANDAIS;47.55729834;-2.05457206
-1841;5;La nouée fleurie;LA NOUEE FLEURIE;47.0316932;-1.26534055
-1842;5;La paquelais;LA PAQUELAIS;47.33327739;-1.69656465
-1843;5;La pendiEre;LA PENDIERE;47.46391592;-1.94346265
-1844;5;La petiaudais;LA PETIAUDAIS;47.55452558;-1.85289491
-1845;5;La pironniEre;LA PIRONNIERE;47.0386382;-1.70464725
-1846;5;La planche-marion;LA PLANCHE-MARION;47.42317836;-2.14796616
-1847;5;La plée;LA PLEE;47.30118186;-1.66616411
-1848;5;La porte du gué-géraud;LA PORTE DU GUE-GERAUD;47.4094053;-1.76039762
-1849;5;La poste;LA POSTE;47.18158567;-2.15400611
-1850;5;La poste;LA POSTE;47.05538447;-1.48760788
-1851;5;La potence;LA POTENCE;47.24302903;-1.67395513
-1852;5;La poterie;LA POTERIE;47.43069911;-2.18071097
-1853;5;La poterie;LA POTERIE;47.17651127;-1.38845118
-1854;5;La poussaudiEre;LA POUSSAUDIERE;47.36734736;-1.32405444
-1855;5;La pradonnais;LA PRADONNAIS;47.33374457;-2.42347321
-1856;5;La quintaine;LA QUINTAINE;47.25735706;-1.38797617
-1857;5;La ratelais;LA RATELAIS;47.40557804;-2.15780922
-1858;5;La ridelais;LA RIDELAIS;47.41628948;-1.82827583
-1859;5;La roberdais;LA ROBERDAIS;47.54003836;-1.75580665
-1860;5;La robiniEre;LA ROBINIERE;47.33422744;-1.36400708
-1861;5;La rouillonnais;LA ROUILLONNAIS;47.26396265;-1.76470336
-1862;5;La rousseliEre;LA ROUSSELIERE;47.23251753;-1.64555958
-1863;5;La savariais;LA SAVARIAIS;47.33296179;-1.3430733
-1864;5;La seilleraye;LA SEILLERAYE;47.29353016;-1.41568897
-1865;5;La sicaudais;LA SICAUDAIS;47.18735013;-1.94740929
-1866;5;La statue;LA STATUE;47.26552728;-1.51442328
-1867;5;La sureté;LA SURETE;47.47855176;-2.16105601
-1868;5;La touche;LA TOUCHE;47.67229855;-1.40918368
-1869;5;La tournerie;LA TOURNERIE;47.45188333;-2.46139101
-1870;5;La tréluEre;LA TRELUERE;47.37291055;-1.40680153
-1871;5;La trimossiEre;LA TRIMOSSIERE;47.28091365;-1.70739458
-1872;5;La turcaudais;LA TURCAUDAIS;47.46233891;-1.98829793
-1873;5;La valiniEre;LA VALINIERE;47.32333102;-1.74885792
-1874;5;La vallée du bourg;LA VALLEE DU BOURG;47.47393325;-2.05958791
-1875;5;La vigie;LA VIGIE;47.28880454;-2.53496511
-1876;5;La vigne;LA VIGNE;47.39790109;-2.45406546
-1877;5;La ville en bois;LA VILLE EN BOIS;47.70500392;-1.38256173
-1878;5;La ville en bois;LA VILLE EN BOIS;47.54834945;-1.53140471
-1879;5;La villeneuve;LA VILLENEUVE;47.48835505;-2.15281203
-1880;5;La vinaliEre;LA VINALIERE;47.32626504;-1.35392137
-1881;5;Lafayette;LAFAYETTE;47.27884969;-2.36426563
-1882;5;Lanseria;LANSERIA;47.40371416;-2.49354547
-1883;5;Lantilloux;LANTILLOUX;47.55857091;-1.52747865
-1884;5;Lavoir;LAVOIR;47.37643435;-1.50741103
-1885;5;Le bas-vernay;LE BAS-VERNAY;47.3138812;-1.7303787
-1886;5;Le binar;LE BINAR;47.44153971;-2.04026515
-1887;5;Le bois morel;LE BOIS MOREL;47.6084408;-1.379846
-1888;5;Le bois rignoux;LE BOIS RIGNOUX;47.33739981;-1.7003123
-1889;5;Le bois rochefort;LE BOIS ROCHEFORT;47.32901817;-2.42618416
-1890;5;Le bon tour;LE BON TOUR;47.47814388;-2.17869222
-1891;5;Le bosquet;LE BOSQUET;47.26490756;-2.16545113
-1892;5;Le boulay;LE BOULAY;47.43017195;-1.33203029
-1893;5;Le bout des ponts;LE BOUT DES PONTS;47.25728873;-1.42606054
-1894;5;Le brunet;LE BRUNET;47.36358562;-2.33376614
-1895;5;Le butay;LE BUTAY;47.09574236;-1.447567
-1896;5;Le cardo;LE CARDO;47.26177935;-1.58431557
-1897;5;Le chêne creux;LE CHENE CREUX;47.25479109;-1.75099666
-1898;5;Le clémois;LE CLEMOIS;47.13733818;-1.7225303
-1899;5;Le clion sur mer - eglise;LE CLION SUR MER - EGLISE;47.11938939;-2.04995962
-1900;5;Le cormier;LE CORMIER;47.16085592;-2.17215497
-1901;5;Le coudray;LE COUDRAY;47.55825025;-1.83920762
-1902;5;Le goffic;LE GOFFIC;47.23042085;-1.56348679
-1903;5;Le grand chemin;LE GRAND CHEMIN;47.64232761;-1.38114533
-1904;5;Le grand patis;LE GRAND PATIS;47.37562886;-1.45040818
-1905;5;Le gray;LE GRAY;47.28414;-1.586699
-1906;5;Le guerny;LE GUERNY;47.48242553;-2.35421181
-1907;5;Le guézy;LE GUEZY;47.27161223;-2.34500108
-1908;5;Le haut coin;LE HAUT COIN;47.08323256;-1.41709686
-1909;5;Le lany;LE LANY;47.39694639;-2.47210546
-1910;5;Le louaret;LE LOUARET;47.03904978;-1.95543542
-1911;5;Le manoir;LE MANOIR;47.34888943;-2.48658285
-1912;5;Le migron;LE MIGRON;47.25487975;-1.91682884
-1913;5;Le mouchoir;LE MOUCHOIR;47.3751986;-2.32443611
-1914;5;Le moulin;LE MOULIN;47.0934571;-1.63099959
-1915;5;Le moulin;LE MOULIN;47.27344877;-2.33774718
-1916;5;Le moulin;LE MOULIN;47.3513042;-2.49243855
-1917;5;Le moulin blanc;LE MOULIN BLANC;47.32588899;-1.61548825
-1918;5;Le moulin de la motte;LE MOULIN DE LA MOTTE;47.1485917;-1.55540329
-1919;5;Le moulin guérin;LE MOULIN GUERIN;46.92145059;-1.59941159
-1920;5;Le noyer;LE NOYER;47.02306941;-1.44995612
-1921;5;Le pérou;LE PEROU;47.124457;-1.52751
-1922;5;Le perray;LE PERRAY;47.33428154;-1.45353596
-1923;5;Le petit plessis;LE PETIT PLESSIS;47.30230214;-1.38599168
-1924;5;Le pied pain;LE PIED PAIN;47.02830538;-1.67083844
-1925;5;Le pilon carrefour;LE PILON CARREFOUR;47.17449873;-1.78698684
-1926;5;Le plantis;LE PLANTIS;47.33114321;-1.33551479
-1927;5;Le plessis;LE PLESSIS;47.55437898;-1.87217918
-1928;5;Le plessis;LE PLESSIS;47.03055675;-1.67866339
-1929;5;Le plessis;LE PLESSIS;47.07801929;-1.40537098
-1930;5;Le plessis;LE PLESSIS;47.39944665;-1.37958761
-1931;5;Le pont;LE PONT;47.37587549;-1.55500812
-1932;5;Le pontereau;LE PONTEREAU;47.30635211;-1.37896899
-1933;5;Le poteau vert;LE POTEAU VERT;47.61011;-2.038491
-1934;5;Le quai;LE QUAI;47.27572483;-2.42672266
-1935;5;Le redois;LE REDOIS;47.18216907;-2.1598628
-1936;5;Le sandier;LE SANDIER;47.12174153;-2.11201804
-1937;5;Le scall;LE SCALL;47.26340342;-2.44802703
-1938;5;Le tertre;LE TERTRE;47.26852813;-2.11508523
-1939;5;Le tillon;LE TILLON;47.38069654;-1.96622601
-1940;5;Le velin;LE VELIN;47.40128411;-2.45838696
-1941;5;Lechat;LECHAT;47.17544021;-1.54373953
-1942;5;Leclerc;LECLERC;47.28762297;-2.50993652
-1943;5;Lenigo;LENIGO;47.29865223;-2.51693263
-1944;5;Les 4 routes;LES 4 ROUTES;47.46069268;-1.99759836
-1945;5;Les 4 vents;LES 4 VENTS;47.27828777;-2.29198164
-1946;5;Les abies;LES ABIES;47.34776386;-1.53075135
-1947;5;Les aires;LES AIRES;47.09867444;-1.49348235
-1948;5;Les ajoncs;LES AJONCS;47.26541312;-2.45229615
-1949;5;Les amourettes;LES AMOURETTES;47.28338654;-2.030964
-1950;5;Les anges;LES ANGES;47.27475906;-1.63662944
-1951;5;Les bourdonniEres arrêt busway;LES BOURDONNIERES ARRET BUSWAY;47.18633674;-1.51752998
-1952;5;Les bourdonniEres lycée;LES BOURDONNIERES LYCEE;47.18583291;-1.5173069
-1953;5;Les chaises;LES CHAISES;47.0796559;-1.49406964
-1954;5;Les charmes;LES CHARMES;47.42585173;-1.50697581
-1955;5;Les cinq chemins;LES CINQ CHEMINS;47.30492729;-1.50375122
-1956;5;Les coutumes;LES COUTUMES;47.10701136;-1.59034382
-1957;5;Les fauvettes;LES FAUVETTES;47.71804596;-1.36318886
-1958;5;Les halles;LES HALLES;47.09183928;-1.62098742
-1959;5;Les hauts viais;LES HAUTS VIAIS;47.11542593;-1.54125813
-1960;5;Les jaunais;LES JAUNAIS;47.41950032;-1.37385533
-1961;5;Les lardiEres;LES LARDIERES;47.21982842;-2.11076751
-1962;5;Les mazEres;LES MAZERES;47.31233571;-1.35324483
-1963;5;Les monceaux;LES MONCEAUX;47.31304686;-1.50855087
-1964;5;Les mouettes;LES MOUETTES;47.27382434;-2.43962203
-1965;5;Les noés;LES NOES;47.44580777;-2.1909894
-1966;5;Les paludiers;LES PALUDIERS;47.40467601;-2.46145377
-1967;5;Les pierres couchées;LES PIERRES COUCHEES;47.205035;-2.15359
-1968;5;Les pierres rousses;LES PIERRES ROUSSES;47.11654481;-1.93259539
-1969;5;Les pilorgEres;LES PILORGERES;47.22071279;-2.07082512
-1970;5;Les quatre routes;LES QUATRE ROUTES;47.35302051;-2.49055156
-1971;5;Les rochelets;LES ROCHELETS;47.21607284;-2.15501985
-1972;5;Les rousses;LES ROUSSES;47.51257909;-1.95807956
-1973;5;Les salines;LES SALINES;47.28994452;-2.39446084
-1974;5;Les templiers;LES TEMPLIERS;47.32805672;-1.79177812
-1975;5;Les thébaudiEres;LES THEBAUDIERES;47.31026305;-1.35831669
-1976;5;Les trois hermines;LES TROIS HERMINES;47.10950751;-1.47287408
-1977;5;Les troissarts;LES TROISSARTS;47.03644875;-1.69548417
-1978;5;Lesseps;LESSEPS;47.273316;-2.218406
-1979;5;Levée des dons;LEVEE DES DONS;47.29982588;-1.62104293
-1980;5;Libert;LIBERT;47.28283689;-2.02544168
-1981;5;Liberté;LIBERTE;47.296803;-2.195467
-1982;5;Lilette;LILETTE;47.580137;-2.044152
-1983;5;Longrais;LONGRAIS;47.34311067;-1.43588018
-1984;5;Lot marigny;LOT MARIGNY;47.27170049;-1.77603542
-1985;5;Louise michEle;LOUISE MICHELE;47.28665895;-2.02570321
-1986;5;Luxembourg;LUXEMBOURG;47.16563743;-1.27138
-1987;5;Lycée appert;LYCEE APPERT;47.25158313;-1.6112437
-1988;5;Lycée notre dame;LYCEE NOTRE DAME;47.18334616;-1.54427546
-1989;5;Maillardais;MAILLARDAIS;47.52582215;-1.76828605
-1990;5;Mairie de Saint-Viaud;MAIRIE DE SAINT-VIAUD;47.25609433;-2.01883583
-1991;5;Mairie de Saint-PEre-en-Retz;MAIRIE DE SAINT-PERE-EN-RETZ;47.20549753;-2.04407161
-1992;5;Mairie de Saint-Michel-Chef-Chef;MAIRIE DE SAINT-MICHEL-CHEF-CHEF;47.18158565;-2.15400617
-1993;5;Mairie de Paimbœuf;MAIRIE DE PAIMBŒUF;47.28919038;-2.03469756
-1994;5;Mairie de Bouée;MAIRIE DE BOUÉE;47.32020772;-1.91013005
-1995;5;Mairie de Grandchamps-des-Fontaines;MAIRIE DE GRANDCHAMPS-DES-FONTAINES;47.36590535;-1.60585341
-1996;5;Mairie de Saint-Vincent-des-Landes;MAIRIE DE SAINT-VINCENT-DES-LANDES;47.65540867;-1.49757126
-1997;5;Mairie de Mauves-sur-Loire;MAIRIE DE MAUVES-SUR-LOIRE;47.29696782;-1.39249981
-1998;5;Mairie de Saint-Lyphard;MAIRIE DE SAINT-LYPHARD;47.39723022;-2.30943245
-1999;5;Mairie de Chateaubriant;MAIRIE DE CHATEAUBRIANT;47.721599;-1.376112
-2000;5;Mairie de Saint-Molf;MAIRIE DE SAINT-MOLF;47.39118539;-2.42467088
-2001;5;Mairie de Assérac;MAIRIE DE ASSÉRAC;47.42788558;-2.39217644
-2002;5;Mairie de Camoël;MAIRIE DE CAMOËL;47.48101807;-2.39701274
-2003;5;Mairie de Le Croisic;MAIRIE DE LE CROISIC;47.29488904;-2.51151803
-2004;5;Mairie de doulon;MAIRIE DE DOULON;47.22681934;-1.51893699
-2005;5;Mairie du guézy;MAIRIE DU GUEZY;47.27161223;-2.34500108
-2006;5;Maison blanche;MAISON BLANCHE;47.55956877;-1.82164742
-2007;5;Maison blanche;MAISON BLANCHE;47.35259994;-1.53806246
-2008;5;Maison blanche;MAISON BLANCHE;47.22150534;-1.60694995
-2009;5;Maison de retraite;MAISON DE RETRAITE;47.724215;-1.382899
-2010;5;Maison départementale;MAISON DEPARTEMENTALE;47.26755206;-2.15913696
-2011;5;Maison des associations;MAISON DES ASSOCIATIONS;47.3430404;-1.52943584
-2012;5;Maison du guézy;MAISON DU GUEZY;47.27475435;-2.33443714
-2013;5;Maison médicale;MAISON MEDICALE;47.28799585;-2.38379085
-2014;5;Maison neuve;MAISON NEUVE;47.25812655;-1.51540063
-2015;5;Maison rouge;MAISON ROUGE;47.11805121;-1.52418113
-2016;5;Maladrie;MALADRIE;47.18798151;-1.49449857
-2017;5;Malnoue;MALNOUE;47.16148924;-1.54218928
-2018;5;Marché;MARCHE;47.28635923;-2.3937568
-2019;5;Marché;MARCHE;47.27859529;-2.42833386
-2020;5;Marché de pornichet;MARCHE DE PORNICHET;47.25983214;-2.33797655
-2021;5;Marché guézy;MARCHE GUEZY;47.27172519;-2.34321247
-2022;5;Maréchal juin;MARECHAL JUIN;47.26764357;-2.44025212
-2023;5;Marigny;MARIGNY;47.27143042;-1.7756188
-2024;5;Marlais;MARLAIS;47.4098389;-2.298827
-2025;5;Marongle;MARONGLE;47.43284965;-2.19099169
-2026;5;MarvilliEre;MARVILLIERE;47.33437417;-1.53176119
-2027;5;Mazy;MAZY;47.27459567;-2.36076051
-2028;5;MédiathEque;MEDIATHEQUE;47.27925403;-2.21678468
-2029;5;Ménardais;MENARDAIS;47.3149058;-1.61831586
-2030;5;Ménaudoux;MENAUDOUX;47.27594607;-2.22206541
-2031;5;Mercerie;MERCERIE;47.32890606;-1.45813629
-2032;5;Messan;MESSAN;47.19017663;-1.85611084
-2033;5;Meunier;MEUNIER;47.26699029;-2.44437581
-2034;5;Michelet;MICHELET;47.23484653;-1.55685789
-2035;5;Mindin;MINDIN;47.26549084;-2.16786691
-2036;5;Miroiterie;MIROITERIE;47.32944037;-2.13448261
-2037;5;Miroux;MIROUX;47.35577958;-2.43422537
-2038;5;Mondésir;MONDESIR;47.21779017;-1.56898336
-2039;5;Mont plaisir;MONT PLAISIR;46.90446876;-1.60106148
-2040;5;Montherlant;MONTHERLANT;47.712643;-1.364035
-2041;5;Montigne;MONTIGNE;47.43993538;-1.47566699
-2042;5;MorliEre;MORLIERE;47.17686285;-1.9172291
-2043;5;MorrhonniEre;MORRHONNIERE;47.24138142;-1.55661358
-2044;5;Moulin brûlé;MOULIN BRULE;47.25953541;-1.65486454
-2045;5;Moulin de la chaussée;MOULIN DE LA CHAUSSEE;47.04821926;-1.63536018
-2046;5;Moulin de la verrie;MOULIN DE LA VERRIE;47.44581689;-2.47612939
-2047;5;Moulin de praillane;MOULIN DE PRAILLANE;47.36664285;-2.52213423
-2048;5;Moulin du greix;MOULIN DU GREIX;47.26469807;-2.11347275
-2049;5;Moulin du pé;MOULIN DU PE;47.27829864;-2.23978323
-2050;5;Moulin miltiEre;MOULIN MILTIERE;47.33714797;-1.5160574
-2051;5;Moulin rouge;MOULIN ROUGE;47.15399525;-1.55884358
-2052;5;Moulin roussel;MOULIN ROUSSEL;47.59739932;-1.38317109
-2053;5;Moulin-de-la-justice;MOULIN-DE-LA-JUSTICE;47.5193038;-1.96686417
-2054;5;Moulin-malecot;MOULIN-MALECOT;47.30887265;-1.72277251
-2055;5;Muzon;MUZON;47.33141634;-1.66804059
-2056;5;NaudiEres;NAUDIERES;47.2698115;-1.69747039
-2057;5;Néricou;NERICOU;47.55861717;-1.76771089
-2058;5;Neuville rond point;NEUVILLE ROND POINT;47.42049555;-1.65748663
-2059;5;Noe violin;NOE VIOLIN;47.30165594;-1.59352991
-2060;5;Noé-simon;NOE-SIMON;47.25369644;-2.00970594
-2061;5;Nonnaire;NONNAIRE;47.03680152;-1.46946608
-2062;5;Notre dame de grace;NOTRE DAME DE GRACE;47.48901014;-1.9306463
-2063;5;Noue;NOUE;47.36713903;-1.51211267
-2064;5;Noue verriEre;NOUE VERRIERE;47.27553415;-1.5710943
-2065;5;Océan;OCEAN;47.27125901;-2.4340741
-2066;5;Océan;OCEAN;47.27125902;-2.43407411
-2067;5;Océarium;OCEARIUM;47.30075379;-2.52559781
-2068;5;Office de tourisme;OFFICE DE TOURISME;47.48326849;-2.47262214
-2069;5;Otsi;OTSI;47.28057673;-2.42853041
-2070;5;Palmiers;PALMIERS;47.28125677;-2.36882286
-2071;5;Pan loup;PAN LOUP;47.24046954;-1.66153478
-2072;5;Papin;PAPIN;47.29886709;-2.2967023
-2073;5;Papinais;PAPINAIS;47.29965547;-1.84920266
-2074;5;Parmentier;PARMENTIER;47.324704;-2.137416
-2075;5;Pas chevalier;PAS CHEVALIER;47.40222619;-1.53844164
-2076;5;Pas des haies;PAS DES HAIES;47.38084943;-1.59473338
-2077;5;Passay;PASSAY;47.09664037;-1.63492241
-2078;5;Passay rue du lac;PASSAY RUE DU LAC;47.09492061;-1.62954569
-2079;5;Paul perrin;PAUL PERRIN;47.284453;-2.215326
-2080;5;Pem gare routiEre;PEM GARE ROUTIERE;47.28703327;-2.39084271
-2081;5;Pen an ran;PEN AN RAN;47.37342971;-2.55027095
-2082;5;Perception;PERCEPTION;47.29651447;-1.49096744
-2083;5;PerriEres;PERRIERES;47.08571998;-1.61265762
-2084;5;Perrines;PERRINES;47.22756741;-1.51553351
-2085;5;Perthuischaud;PERTHUISCHAUD;47.26356529;-2.23444357
-2086;5;Petit bois;PETIT BOIS;47.30577825;-1.63307496
-2087;5;Petit bonheur;PETIT BONHEUR;47.57740658;-1.39196557
-2088;5;Petit paimboeuf;PETIT PAIMBOEUF;47.28557016;-2.02082482
-2089;5;Petit port;PETIT PORT;47.24329302;-1.55642389
-2090;5;Petit prince;PETIT PRINCE;47.26487359;-2.43356098
-2091;5;Petit rouillonnais;PETIT ROUILLONNAIS;47.28504416;-1.74805728
-2092;5;Petit-poissevin;PETIT-POISSEVIN;47.34569052;-2.39993105
-2093;5;Pharmacie;PHARMACIE;47.51630761;-1.29011831
-2094;5;Pierre percée;PIERRE PERCEE;47.28193319;-1.3851551
-2095;5;Pierre plate;PIERRE PLATE;47.26178254;-2.42781317
-2096;5;Pigeon blanc;PIGEON BLANC;47.29633047;-1.61162321
-2097;5;Pigeon blanc;PIGEON BLANC;47.37655613;-2.45976307
-2098;5;Pinier;PINIER;47.18214234;-1.54542944
-2099;5;Pinsoison;PINSOISON;47.35880216;-1.41057196
-2100;5;PinsonniEre;PINSONNIERE;47.28823049;-1.37588048
-2101;5;Piolais;PIOLAIS;47.42169165;-2.15139533
-2102;5;Pirmil;PIRMIL;47.19625028;-1.54265052
-2103;5;Piscine;PISCINE;47.28173573;-2.38032713
-2104;5;Place de gaulle;PLACE DE GAULLE;47.24470414;-1.93609238
-2105;5;Place de la bascule;PLACE DE LA BASCULE;47.34176545;-1.52641624
-2106;5;Place des martyrs;PLACE DES MARTYRS;47.19134979;-1.54789006
-2107;5;Place dinan;PLACE DINAN;47.29210515;-2.51016674
-2108;5;Place du marché;PLACE DU MARCHE;47.28856298;-2.03172902
-2109;5;Place du marché;PLACE DU MARCHE;47.20549753;-2.04407164
-2110;5;Place leclerc;PLACE LECLERC;47.26592184;-2.34330071
-2111;5;Place marché montoir;PLACE MARCHE MONTOIR;47.32691984;-2.15536514
-2112;5;Plaisance;PLAISANCE;47.29149946;-1.87412933
-2113;5;Planchette;PLANCHETTE;47.14263694;-1.57236774
-2114;5;Plein air;PLEIN AIR;47.27674571;-2.01191308
-2115;5;Plessis de l'angle;PLESSIS DE L'ANGLE;47.27999811;-1.76956103
-2116;5;Plessis tison;PLESSIS TISON;47.23687395;-1.53332998
-2117;5;Plongeon;PLONGEON;47.46710128;-1.71714529
-2118;5;Poincaré;POINCARE;47.22257646;-1.58490216
-2119;5;Pôle de bresse;POLE DE BRESSE;47.24789543;-2.16230932
-2120;5;Pôle emploi;POLE EMPLOI;47.28209;-2.227695
-2121;5;Polyclinique de l'europe;POLYCLINIQUE DE L'EUROPE;47.25357079;-2.26519193
-2122;5;Ponnement;PONNEMENT;47.44409178;-2.323596
-2123;5;Pont béranger;PONT BERANGER;47.13013363;-1.83437217
-2124;5;Pont d'armes;PONT D'ARMES;47.41466171;-2.39986403
-2125;5;Pont david;PONT DAVID;47.36747356;-1.41197779
-2126;5;Pont de maffre;PONT DE MAFFRE;47.46311545;-1.77941384
-2127;5;Pont de quinze mEtres;PONT DE QUINZE METRES;47.34869328;-1.92708509
-2128;5;Pont du guy;PONT DU GUY;47.08577618;-1.62796886
-2129;5;Pont piétin;PONT PIETIN;47.46783962;-1.81647977
-2130;5;Port;PORT;47.34669421;-2.5106804
-2131;5;Port aux rocs;PORT AUX ROCS;47.29432252;-2.54644648
-2132;5;Port de comberge;PORT DE COMBERGE;47.17373012;-2.16448573
-2133;5;Port gaud;PORT GAUD;47.24817661;-1.375444
-2134;5;Port val;PORT VAL;47.2985103;-2.54320028
-2135;5;Porte joie;PORTE JOIE;47.28082376;-2.43122734
-2136;5;Porte st michel;PORTE ST MICHEL;47.3270582;-2.42659549
-2137;5;Poste;POSTE;47.71910199;-1.37845931
-2138;5;Poste de gesvre;POSTE DE GESVRE;47.32792831;-1.61641411
-2139;5;Poteau casson;POTEAU CASSON;47.37565223;-1.59096761
-2140;5;Pré de la lande;PRE DE LA LANDE;47.26293771;-2.43059334
-2141;5;Pré neuf;PRE NEUF;47.29276324;-2.52775345
-2142;5;Prevenerie;PREVENERIE;47.2972288;-2.36618759
-2143;5;Prigny;PRIGNY;47.06518041;-1.98299065
-2144;5;Procé;PROCE;47.36041644;-1.56404142
-2145;5;Promenade;PROMENADE;47.27423696;-2.42571775
-2146;5;Promota;PROMOTA;47.40188767;-2.48843187
-2147;5;Provence;PROVENCE;47.70960372;-1.37895188
-2148;5;Provost;PROVOST;47.2859716;-2.50750771
-2149;5;Quai;QUAI;47.2888159;-2.0273428
-2150;5;Quai bliesransbach;QUAI BLIESRANSBACH;47.33921006;-1.52721637
-2151;5;Quelnet;QUELNET;47.46567441;-2.3325461
-2152;5;Quiételais;QUIETELAIS;47.24823795;-1.73721254
-2153;5;Quimiac;QUIMIAC;47.40633945;-2.48441421
-2154;5;Quirouard;QUIROUARD;47.12896231;-2.20661829
-2155;5;Rairie;RAIRIE;47.13886843;-1.57919983
-2156;5;Ranrouet;RANROUET;47.44442827;-2.31160144
-2157;5;Raoul dufy;RAOUL DUFY;47.22262133;-1.59957793
-2158;5;Rd point de la belle etoile;RD POINT DE LA BELLE ETOILE;47.51660117;-1.80220028
-2159;5;Rd-pt de paris;RD-PT DE PARIS;47.23389748;-1.53571196
-2160;5;Recouvrance;RECOUVRANCE;47.07790854;-1.24033573
-2161;5;Recteur schmit;RECTEUR SCHMIT;47.252325;-1.552858
-2162;5;René cassin;RENE CASSIN;47.26442499;-1.57554648
-2163;5;René moritz;RENE MORITZ;47.28203361;-2.02810635
-2164;5;Rennes longchamp;RENNES LONGCHAMP;47.23841678;-1.57036877
-2165;5;République;REPUBLIQUE;47.28083179;-2.21174792
-2166;5;République;REPUBLIQUE;47.71754644;-1.38344867
-2167;5;Réségerie;RESEGERIE;47.47070514;-1.17574491
-2168;5;Roche mathieu;ROCHE MATHIEU;47.27207125;-2.47691283
-2169;5;RochEre;ROCHERE;47.34341545;-1.60686145
-2170;5;Rohello;ROHELLO;47.29569135;-2.52030302
-2171;5;Rond point de breil;ROND POINT DE BREIL;47.28130608;-2.37651266
-2172;5;Rond point edf;ROND POINT EDF;47.12258061;-2.1196184
-2173;5;Rotz;ROTZ;47.39933539;-2.15241337
-2174;5;Route d'ancenis;ROUTE D'ANCENIS;47.71288946;-1.37129424
-2175;5;Route d'angers;ROUTE D'ANGERS;47.70962175;-1.36983886
-2176;5;Route de paimboeuf;ROUTE DE PAIMBOEUF;47.19914748;-1.88730909
-2177;5;Route de paimboeuf;ROUTE DE PAIMBOEUF;47.25614257;-2.0140106
-2178;5;Route de remouillé;ROUTE DE REMOUILLE;47.08029376;-1.34222059
-2179;5;Route de sucé;ROUTE DE SUCE;47.34421963;-1.47899685
-2180;5;Route de vandel;ROUTE DE VANDEL;47.33295126;-1.33104782
-2181;5;Route du bile;ROUTE DU BILE;47.45987062;-2.4771712
-2182;5;Route du temple;ROUTE DU TEMPLE;47.27753174;-1.78161942
-2183;5;Royal;ROYAL;47.28286419;-2.40844431
-2184;5;Rue de la gare;RUE DE LA GARE;47.25242004;-2.02078118
-2185;5;Rue de nantes n°40;RUE DE NANTES N°40;47.27735973;-1.77862198
-2186;5;Rue de verdun;RUE DE VERDUN;47.72595809;-1.38456837
-2187;5;Rue du marais;RUE DU MARAIS;47.03805202;-1.64813523
-2188;5;Rue du pont;RUE DU PONT;47.46042381;-1.27645029
-2189;5;Rue du port;RUE DU PORT;47.0399191;-1.64177224
-2190;5;Sable menu;SABLE MENU;47.28820997;-2.52145478
-2191;5;Saint georges;SAINT GEORGES;47.43997709;-1.4916247
-2192;5;Saint guillaume;SAINT GUILLAUME;47.42200992;-2.12082249
-2193;5;Saint martin;SAINT MARTIN;47.1328086;-1.42265207
-2194;5;Saint-blais;SAINT-BLAIS;47.25194176;-1.70777276
-2195;5;Saint-brévin l'océan;SAINT-BREVIN L'OCEAN;47.23095256;-2.17567559
-2196;5;Saint-eloi;SAINT-ELOI;47.41712221;-1.8940742
-2197;5;Saint-etienne de corcoué;SAINT-ETIENNE DE CORCOUE;46.9662299;-1.57657069
-2198;5;Saint-goustan;SAINT-GOUSTAN;47.30038944;-2.52994948
-2199;5;Saint-jean de corcoué;SAINT-JEAN DE CORCOUE;46.9634495;-1.58400083
-2200;5;Saint-jean de dieu;SAINT-JEAN DE DIEU;47.30038797;-2.52238438
-2201;5;Saint-jean-baptiste;SAINT-JEAN-BAPTISTE;47.2334723;-1.5601631
-2202;5;Saint-lomer;SAINT-LOMER;47.44663283;-2.02903317
-2203;5;Saint-louis;SAINT-LOUIS;47.50960024;-1.39859892
-2204;5;Saint-sébastien de piriac;SAINT-SEBASTIEN DE PIRIAC;47.36727604;-2.51633958
-2205;5;Saint-servais;SAINT-SERVAIS;47.30128535;-2.3713606
-2206;5;Sainte thérEse;SAINTE THERESE;47.23376028;-1.57445527
-2207;5;Sarcelles;SARCELLES;47.28079126;-2.41718399
-2208;5;Sarradin;SARRADIN;47.22049876;-1.57015808
-2209;5;Sautron;SAUTRON;47.26512625;-2.22498097
-2210;5;Schweitzer;SCHWEITZER;47.32646878;-2.15930306
-2211;5;Sensive;SENSIVE;47.26202511;-1.34291978
-2212;5;SionniEre;SIONNIERE;47.31659036;-1.63748334
-2213;5;Sissac;SISSAC;47.36369882;-2.52662371
-2214;5;Six croix;SIX CROIX;47.3410014;-2.09475805
-2215;5;Sorloc;SORLOC;47.41595385;-2.47208297
-2216;5;Soursac;SOURSAC;47.40074267;-2.4932082
-2217;5;Square kerbez;SQUARE KERBEZ;47.28828808;-2.02992643
-2218;5;St-clément;ST-CLEMENT;47.22202557;-1.54699374
-2219;5;St-donatien;ST-DONATIEN;47.22913181;-1.54057145
-2220;5;St-nicolas;ST-NICOLAS;47.21564632;-1.55981093
-2221;5;St-paul salengro;ST-PAUL SALENGRO;47.18484624;-1.54618832
-2222;5;Stade de La ChevroliEre;STADE DE LA CHEVROLIERE;47.09082829;-1.61534195
-2223;5;Stade de Pont-Saint-Martin;STADE DE PONT-SAINT-MARTIN;47.12732458;-1.58122923
-2224;5;Stade de Saint-PEre-en-Retz;STADE DE SAINT-PERE-EN-RETZ;47.20489308;-2.04002544
-2225;5;Stade de Saint-Lyphard;STADE DE SAINT-LYPHARD;47.40043584;-2.30577759
-2226;5;Stade de Herbignac;STADE DE HERBIGNAC;47.44234738;-2.33076749
-2227;5;Stade de La Baule-Escoublac;STADE DE LA BAULE-ESCOUBLAC;47.28015592;-2.42426768
-2228;5;Stade de Le Croisic;STADE DE LE CROISIC;47.28765443;-2.51429982
-2229;5;Stade-la fuie;STADE-LA FUIE;47.24735514;-1.94609975
-2230;5;Ste-marie-sur-mer;STE-MARIE-SUR-MER;47.11442146;-2.12928037
-2231;5;Sterwitz;STERWITZ;47.28230401;-2.42899185
-2232;5;Super u;SUPER U;47.204892;-2.043834
-2233;5;Tacon;TACON;47.41665014;-1.24885417
-2234;5;Talensac;TALENSAC;47.22145182;-1.55589886
-2235;5;Telegraphe;TELEGRAPHE;47.28978089;-1.60725484
-2236;5;Tennis;TENNIS;47.28221606;-2.41131533
-2237;5;Terrain des sports;TERRAIN DES SPORTS;46.96856777;-1.4368951
-2238;5;Terres-aux-moines;TERRES-AUX-MOINES;47.11885803;-2.12602131
-2239;5;Terres-jarries;TERRES-JARRIES;47.12237217;-2.11759084
-2240;5;Tharon;THARON;47.164939;-2.1642551
-2241;5;Toullain;TOULLAIN;47.26616342;-2.42210682
-2242;5;Tour eiffel;TOUR EIFFEL;47.19965379;-1.75452852
-2243;5;Tournebride;TOURNEBRIDE;47.07933967;-1.56837865
-2244;5;Tournebride;TOURNEBRIDE;47.31621631;-1.47832314
-2245;5;Tourneuve;TOURNEUVE;47.27926883;-1.59831947
-2246;5;Toutes aides;TOUTES AIDES;47.22620979;-1.52281356
-2247;5;Tranchée;TRANCHEE;47.27687188;-2.2293994
-2248;5;Tranchée;TRANCHEE;47.37748237;-2.54258348
-2249;5;Transformateur;TRANSFORMATEUR;47.68405595;-1.68398894
-2250;5;Trelan;TRELAN;47.55832656;-1.80982375
-2251;5;Tréméac;TREMEAC;47.286671;-2.37882077
-2252;5;Trevigale;TREVIGALE;47.39652094;-2.47023991
-2253;5;Trevin;TREVIN;47.39441266;-2.44893355
-2254;5;Trinité;TRINITE;47.72207586;-1.38077583
-2255;5;Trois fontaines;TROIS FONTAINES;47.29036888;-2.36493586
-2256;5;Trois moulins;TROIS MOULINS;47.17810558;-1.54411433
-2257;5;Tromartin;TROMARTIN;47.3112466;-2.40925197
-2258;5;TurballiEre;TURBALLIERE;47.33502509;-1.53488604
-2259;5;Val du cens;VAL DU CENS;47.26126546;-1.66612493
-2260;5;Valentin;VALENTIN;47.27824638;-2.4819319
-2261;5;Vandel;VANDEL;47.33072451;-1.327455
-2262;5;Vannerie;VANNERIE;47.0604306;-1.63174929
-2263;5;Vaux;VAUX;47.36018386;-1.52129334
-2264;5;Vecquerie;VECQUERIE;47.25683089;-2.25935815
-2265;5;Viais;VIAIS;47.11864955;-1.53773064
-2266;5;Victor hugo;VICTOR HUGO;47.280753;-2.216346
-2267;5;Vierge logne;VIERGE LOGNE;47.33073011;-1.5124106
-2268;5;Vieux moulin;VIEUX MOULIN;47.09073737;-1.62926162
-2269;5;Villages;VILLAGES;47.20500886;-1.30600676
-2270;5;Ville aux fèves;VILLE AUX FEVES;47.27984275;-2.34499862
-2271;5;Ville aux roses;VILLE AUX ROSES;47.71011691;-1.38131205
-2272;5;Ville halgand;VILLE HALGAND;47.28107867;-2.35051269
-2273;5;Ville halluard;VILLE HALLUARD;47.284606;-2.204098
-2274;5;Ville james;VILLE JAMES;47.32207602;-2.40819778
-2275;5;Ville port;VILLE PORT;47.27478953;-2.20392861
-2276;5;Villeneuve;VILLENEUVE;47.30368028;-2.38139057
-2277;5;Vvf;VVF;47.27986266;-2.48738432
-2278;5;Z.i. de brais;Z.I. DE BRAIS;47.29836955;-2.29571111
-2279;5;Za de kergoulinet;ZA DE KERGOULINET;47.39333888;-2.46012438
-2280;5;Za de l'érette;ZA DE L'ERETTE;47.37761413;-1.64465485
-2281;5;Za des bauches;ZA DES BAUCHES;47.6322733;-2.05244816
-2282;5;Zone industrielle;ZONE INDUSTRIELLE;47.10071858;-1.60296323
+1;5;27 otages;27 OTAGES;47.71891688;-1.36656651
+2;5;3m;3M;47.42716985;-2.06972548
+3;5;Acacias;ACACIAS;47.71674311;-1.36333285
+4;5;Allée cavaliEre;ALLEE CAVALIERE;47.28465551;-2.37394724
+5;5;Allée du château;ALLEE DU CHATEAU;47.19491869;-1.41425967
+6;5;Américains;AMERICAINS;47.2357569;-1.56791581
+7;5;Angle rue de brest/metz;ANGLE RUE DE BREST/METZ;47.72659465;-1.39088018
+8;5;Armoricaine;ARMORICAINE;47.25838662;-1.64799896
+9;5;Arrêt busway l4;ARRET BUSWAY L4;47.18114232;-1.5057803
+10;5;Athanor;ATHANOR;47.33153588;-2.42891895
+11;5;Atout sud;ATOUT SUD;47.19309684;-1.571421
+12;5;Avenue de la fraternité;AVENUE DE LA FRATERNITE;47.71028194;-1.38794779
+13;5;Avenue de lyon;AVENUE DE LYON;47.27733661;-2.35810363
+14;5;Avenue de rhuys;AVENUE DE RHUYS;47.27564628;-2.36221529
+15;5;Avenue noëlles;AVENUE NOELLES;47.291374;-2.394274
+16;5;Avenue saint-geoges;AVENUE SAINT-GEOGES;47.27289011;-2.3503223
+17;5;Baco;BACO;47.21274572;-1.55207291
+18;5;Barbechat;BARBECHAT;47.27755457;-1.28644379
+19;5;Barges;BARGES;47.47863921;-2.43455572
+20;5;BarriEre;BARRIERE;47.28336642;-2.50322062
+21;5;Bas-epaud;BAS-EPAUD;47.48562576;-1.92243207
+22;5;Basse goulitiEre;BASSE GOULITIERE;47.35736533;-1.52961733
+23;5;Basse prinais;BASSE PRINAIS;47.26160628;-2.15180727
+24;5;Beau chêne;BEAU CHENE;47.25787375;-1.34431607
+25;5;Beau séjour;BEAU SEJOUR;47.33769019;-2.42855998
+26;5;Beau soleil;BEAU SOLEIL;47.24007797;-1.40389324
+27;5;Beaubois;BEAUBOIS;47.46772859;-2.06933844
+28;5;BeauchEne;BEAUCHENE;47.3578242;-1.45701067
+29;5;Beauchêne;BEAUCHENE;47.36946255;-1.55145368
+30;5;Beaujour;BEAUJOUR;47.50366664;-1.57142519
+31;5;Beaulieu;BEAULIEU;47.30437904;-1.38621399
+32;5;Beauséjour;BEAUSEJOUR;47.23800876;-1.58679753
+33;5;Bel air;BEL AIR;47.22541082;-1.5592675
+34;5;Bel air;BEL AIR;47.13635825;-1.58140179
+35;5;Bel air;BEL AIR;47.40689558;-1.26625956
+36;5;Bel air;BEL AIR;47.32406739;-1.34805524
+37;5;Bel air;BEL AIR;47.37858895;-1.39733459
+38;5;Bel air;BEL AIR;47.27052975;-2.43080754
+39;5;Bel-abord;BEL-ABORD;47.27486403;-1.71168857
+40;5;Bêle;BELE;47.26662671;-1.50306402
+41;5;Bellanger;BELLANGER;47.34496566;-2.50861443
+42;5;Bellevigne;BELLEVIGNE;47.34555285;-1.52992793
+43;5;Bellevue;BELLEVUE;47.68405595;-1.68398894
+44;5;Bellevue;BELLEVUE;47.30489;-2.182118
+45;5;Bellevue;BELLEVUE;47.35400938;-1.60504975
+46;5;BenetiEre;BENETIERE;47.11247465;-1.53274046
+47;5;Bergon;BERGON;47.45860762;-2.20238545
+48;5;Berlioz;BERLIOZ;47.24005204;-1.57217729
+49;5;Beslon;BESLON;47.29347479;-2.39029739
+50;5;Bétulas;BETULAS;47.33659053;-1.51281106
+51;5;Bilais;BILAIS;47.45678612;-2.08026685
+52;5;Boeufs gras;BOEUFS GRAS;47.34724516;-1.62578705
+53;5;Boire courant;BOIRE COURANT;47.24555076;-1.43670709
+54;5;Bois robin;BOIS ROBIN;47.37448578;-1.59744134
+55;5;Bois-alix;BOIS-ALIX;47.28275405;-1.80242188
+56;5;Bois/plage;BOIS/PLAGE;47.27248066;-2.42590118
+57;5;Bole eden;BOLE EDEN;47.28858507;-2.37302568
+58;5;Bonnoeuvre;BONNOEUVRE;47.45370557;-1.42034777
+59;5;Boris vian;BORIS VIAN;47.27526745;-2.22061515
+60;5;Bosselas;BOSSELAS;47.42118732;-2.17497317
+61;5;Boue le chaillereau;BOUE LE CHAILLEREAU;47.3276151;-1.88222969
+62;5;Bouillon jaune;BOUILLON JAUNE;47.51662235;-1.63911777
+63;5;Boule d'or;BOULE D'OR;47.43777838;-2.09391914
+64;5;Boulevard de la forêt;BOULEVARD DE LA FORET;47.28149339;-2.3556257
+65;5;Boulevard du midi;BOULEVARD DU MIDI;47.3260302;-2.42935485
+66;5;BourdonniEres;BOURDONNIERES;47.18633674;-1.51752998
+67;5;Bout de bois;BOUT DE BOIS;47.45219954;-1.63771164
+68;5;Bout des pavés;BOUT DES PAVES;47.25369202;-1.57587793
+69;5;Bouton d'or;BOUTON D'OR;47.32909104;-2.43755233
+70;5;Bouzaire;BOUZAIRE;47.36604228;-2.38003834
+71;5;Brandu;BRANDU;47.36146532;-2.52270536
+72;5;BréchetiEre;BRECHETIERE;47.28465996;-1.50354726
+73;5;Bredeloup;BREDELOUP;47.39835772;-1.72598952
+74;5;Breherin;BREHERIN;47.40381482;-2.45164386
+75;5;BretonniEre;BRETONNIERE;47.24717533;-1.34543613
+76;5;Brezean;BREZEAN;47.35939936;-2.45109285
+77;5;BriandiEre;BRIANDIERE;47.18990338;-1.69247942
+78;5;BrissonniEre;BRISSONNIERE;47.05649247;-1.63359405
+79;5;Café de l'avenir;CAFE DE L'AVENIR;47.28650597;-2.01826883
+80;5;Café de l'union;CAFE DE L'UNION;47.08956369;-1.27853513
+81;5;Caillaud;CAILLAUD;47.27349388;-2.34275477
+82;5;Callac;CALLAC;47.423938;-2.14125338
+83;5;Calvaire;CALVAIRE;47.44275295;-2.13495478
+84;5;Calvaire;CALVAIRE;47.39268845;-2.31579987
+85;5;Caquereau;CAQUEREAU;47.49356714;-1.2566833
+86;5;Careil;CAREIL;47.2982455;-2.40615388
+87;5;Carrefour;CARREFOUR;47.18776892;-1.80723914
+88;5;Castouillet;CASTOUILLET;47.29905423;-2.53507238
+89;5;Cat;CAT;47.42898281;-2.07022579
+90;5;Cent sillons;CENT SILLONS;47.36974848;-1.60877885
+91;5;Centre de Corsept;CENTRE DE CORSEPT;47.27752117;-2.05916851
+92;5;Centre de Vue;CENTRE DE VUE;47.19970445;-1.8774249
+93;5;Centre de Rouans;CENTRE DE ROUANS;47.18554515;-1.86082011
+94;5;Centre de Cheix-en-Retz;CENTRE DE CHEIX-EN-RETZ;47.18137108;-1.81502273
+95;5;Centre de Brains;CENTRE DE BRAINS;47.16825336;-1.72009874
+96;5;Centre de Saint-Jean-de-Boiseau;CENTRE DE SAINT-JEAN-DE-BOISEAU;47.19589923;-1.72436958
+97;5;Centre de Bouguenais;CENTRE DE BOUGUENAIS;47.17943982;-1.62328622
+98;5;Centre de Conquereuil;CENTRE DE CONQUEREUIL;47.62413282;-1.75078947
+99;5;Centre de Guémené-Penfao;CENTRE DE GUÉMENÉ-PENFAO;47.62850022;-1.83205359
+100;5;Centre de Pierric;CENTRE DE PIERRIC;47.68696875;-1.73655431
+101;5;Centre de Derval;CENTRE DE DERVAL;47.66711534;-1.67138154
+102;5;Centre de Puceul;CENTRE DE PUCEUL;47.52277193;-1.61479475
+103;5;Centre de Marsac-sur-Don;CENTRE DE MARSAC-SUR-DON;47.59688885;-1.67892464
+104;5;Centre de Vay;CENTRE DE VAY;47.55400541;-1.70065349
+105;5;Centre de La Grigonnais;CENTRE DE LA GRIGONNAIS;47.52695966;-1.66769949
+106;5;Centre de La Chevallerais;CENTRE DE LA CHEVALLERAIS;47.46894587;-1.67256689
+107;5;Centre de Héric;CENTRE DE HÉRIC;47.41347763;-1.65176046
+108;5;Centre de Blain;CENTRE DE BLAIN;47.4754379;-1.76484259
+109;5;Centre de Le Gavre;CENTRE DE LE GAVRE;47.51995186;-1.74838626
+110;5;Centre de Plesse;CENTRE DE PLESSE;47.54126206;-1.88709728
+111;5;Centre de Touvois;CENTRE DE TOUVOIS;46.90152102;-1.68370094
+112;5;Centre de Legé;CENTRE DE LEGÉ;46.88604763;-1.5973715
+113;5;Centre de La LimouziniEre;CENTRE DE LA LIMOUZINIERE;46.99216382;-1.59671731
+114;5;Centre de Saint-Colomban;CENTRE DE SAINT-COLOMBAN;47.00876321;-1.58300975
+115;5;Centre de La Marne;CENTRE DE LA MARNE;46.99484894;-1.74037301
+116;5;Centre de Saint-Lumine-de-Coutais;CENTRE DE SAINT-LUMINE-DE-COUTAIS;47.05552341;-1.72652675
+117;5;Centre de Saint-Philbert-de-Grand-Lieu;CENTRE DE SAINT-PHILBERT-DE-GRAND-LIEU;47.03505684;-1.63870737
+118;5;Centre de La ChevroliEre;CENTRE DE LA CHEVROLIERE;47.09189441;-1.60904492
+119;5;Centre de Pont-Saint-Martin;CENTRE DE PONT-SAINT-MARTIN;47.12199737;-1.5825136
+120;5;Centre de Missillac;CENTRE DE MISSILLAC;47.48223514;-2.1586414
+121;5;Centre de Sainte-Reine-de-Bretagne;CENTRE DE SAINTE-REINE-DE-BRETAGNE;47.44107459;-2.19236077
+122;5;Centre de Crossac;CENTRE DE CROSSAC;47.41124875;-2.16872544
+123;5;Centre de Saint-Nicolas-de-Redon;CENTRE DE SAINT-NICOLAS-DE-REDON;47.64413417;-2.07097205
+124;5;Centre de Sévérac;CENTRE DE SÉVÉRAC;47.54675085;-2.07868162
+125;5;Centre de Guenrouet;CENTRE DE GUENROUET;47.51899965;-1.95502256
+126;5;Centre de Quilly;CENTRE DE QUILLY;47.46130602;-1.95487815
+127;5;Centre de Sainte-Anne-sur-Brivet;CENTRE DE SAINTE-ANNE-SUR-BRIVET;47.45986384;-2.00577586
+128;5;Centre de Besne;CENTRE DE BESNE;47.3974861;-2.09137557
+129;5;Centre de Montoir-de-Bretagne;CENTRE DE MONTOIR-DE-BRETAGNE;47.32893224;-2.14957592
+130;5;Centre de Préfailles;CENTRE DE PRÉFAILLES;47.12943325;-2.21288614
+131;5;Centre de La Plaine-sur-Mer;CENTRE DE LA PLAINE-SUR-MER;47.13731461;-2.19062248
+132;5;Centre de RocheserviEre;CENTRE DE ROCHESERVIERE;46.94006483;-1.51009958
+133;5;Centre de Geneston;CENTRE DE GENESTON;47.05538318;-1.51447722
+134;5;Centre de Les SoriniEres;CENTRE DE LES SORINIERES;47.1501632;-1.53335186
+135;5;Centre de Cordemais;CENTRE DE CORDEMAIS;47.29141234;-1.87709345
+136;5;Centre de Malville;CENTRE DE MALVILLE;47.35662708;-1.85876369
+137;5;Centre de Le Temple-de-Bretagne;CENTRE DE LE TEMPLE-DE-BRETAGNE;47.32985374;-1.79217447
+138;5;Centre de Vigneux-de-Bretagne;CENTRE DE VIGNEUX-DE-BRETAGNE;47.32732437;-1.73793173
+139;5;Centre de Sautron;CENTRE DE SAUTRON;47.2618441;-1.66976661
+140;5;Centre de TreilliEres;CENTRE DE TREILLIERES;47.33067607;-1.62486846
+141;5;Centre de Aigrefeuille-sur-Maine;CENTRE DE AIGREFEUILLE-SUR-MAINE;47.07468694;-1.39674014
+142;5;Centre de Remouillé;CENTRE DE REMOUILLÉ;47.05738952;-1.37340831
+143;5;Centre de Maisdon-sur-SEvre;CENTRE DE MAISDON-SUR-SEVRE;47.09707747;-1.38438444
+144;5;Centre de Chauve;CENTRE DE CHAUVE;47.1511925;-1.98519706
+145;5;Centre de La Bernerie-en-Retz;CENTRE DE LA BERNERIE-EN-RETZ;47.08035984;-2.03729246
+146;5;Centre de Les Moutiers-en-Retz;CENTRE DE LES MOUTIERS-EN-RETZ;47.06361106;-2.00139057
+147;5;Centre de Arthon-en-Retz;CENTRE DE ARTHON-EN-RETZ;47.10637114;-1.93849633
+148;5;Centre de Chéméré;CENTRE DE CHÉMÉRÉ;47.12323314;-1.91241734
+149;5;Centre de Port-Saint-PEre;CENTRE DE PORT-SAINT-PERE;47.1336125;-1.74791532
+150;5;Centre de Saint-Léger-les-Vignes;CENTRE DE SAINT-LÉGER-LES-VIGNES;47.13652145;-1.73026717
+151;5;Centre de La Varenne;CENTRE DE LA VARENNE;47.31327217;-1.32215833
+152;5;Centre de La Chapelle-Basse-Mer;CENTRE DE LA CHAPELLE-BASSE-MER;47.27246606;-1.33757741
+153;5;Centre de La BoissiEre-du-Doré;CENTRE DE LA BOISSIERE-DU-DORÉ;47.23149237;-1.21792935
+154;5;Centre de La RemaudiEre;CENTRE DE LA REMAUDIERE;47.23766251;-1.24328365
+155;5;Centre de Le Landreau;CENTRE DE LE LANDREAU;47.20530127;-1.30586412
+156;5;Centre de Le Loroux-Bottereau;CENTRE DE LE LOROUX-BOTTEREAU;47.2386764;-1.34881744
+157;5;Centre de Saint-Julien-de-Concelles;CENTRE DE SAINT-JULIEN-DE-CONCELLES;47.25412448;-1.38606747
+158;5;Centre de La RegrippiEre;CENTRE DE LA REGRIPPIERE;47.18223702;-1.17489782
+159;5;Centre de Mouzillon;CENTRE DE MOUZILLON;47.13940183;-1.28178677
+160;5;Centre de La Chapelle-Heulin;CENTRE DE LA CHAPELLE-HEULIN;47.176399;-1.34055933
+161;5;Centre de Haute-Goulaine;CENTRE DE HAUTE-GOULAINE;47.19920587;-1.42974142
+162;5;Centre de Saint-Lumine-de-Clisson;CENTRE DE SAINT-LUMINE-DE-CLISSON;47.08154822;-1.33790509
+163;5;Centre de Gorges;CENTRE DE GORGES;47.10103008;-1.30262495
+164;5;Centre de Gétigné;CENTRE DE GÉTIGNÉ;47.07551151;-1.24797059
+165;5;Centre de Moisdon-la-RiviEre;CENTRE DE MOISDON-LA-RIVIERE;47.62164072;-1.3726845
+166;5;Centre de La Meilleraye-de-Bretagne;CENTRE DE LA MEILLERAYE-DE-BRETAGNE;47.55872653;-1.40237842
+167;5;Centre de Joué-sur-Erdre;CENTRE DE JOUÉ-SUR-ERDRE;47.49589092;-1.42057909
+168;5;Centre de Trans-sur-Erdre;CENTRE DE TRANS-SUR-ERDRE;47.47670455;-1.37259889
+169;5;Centre de Les Touches;CENTRE DE LES TOUCHES;47.44213508;-1.43073292
+170;5;Centre de Petit-Mars;CENTRE DE PETIT-MARS;47.39537145;-1.45476312
+171;5;Centre de Isse;CENTRE DE ISSE;47.6232835;-1.45210283
+172;5;Centre de Abbaretz;CENTRE DE ABBARETZ;47.55252689;-1.53259594
+173;5;Centre de Saffré;CENTRE DE SAFFRÉ;47.50151496;-1.57648677
+174;5;Centre de Casson;CENTRE DE CASSON;47.38590277;-1.55960292
+175;5;Centre de Treffieux;CENTRE DE TREFFIEUX;47.61953687;-1.53728693
+176;5;Centre de Bouvron;CENTRE DE BOUVRON;47.41822542;-1.8488596
+177;5;Centre de Campbon;CENTRE DE CAMPBON;47.41204177;-1.96903817
+178;5;Centre de La Chapelle-Launay;CENTRE DE LA CHAPELLE-LAUNAY;47.37233486;-1.97150078
+179;5;Centre de Prinquiau;CENTRE DE PRINQUIAU;47.36263419;-2.01140087
+180;5;Centre de Saint-Mars-la-Jaille;CENTRE DE SAINT-MARS-LA-JAILLE;47.5235396;-1.18289791
+181;5;Centre de Pouillé-les-Côteaux;CENTRE DE POUILLÉ-LES-CÔTEAUX;47.45412632;-1.16156551
+182;5;Centre de Mésanger;CENTRE DE MÉSANGER;47.43302302;-1.2297684
+183;5;Centre de Couffé;CENTRE DE COUFFÉ;47.39096194;-1.29284965
+184;5;Centre de Le Cellier;CENTRE DE LE CELLIER;47.31971355;-1.34786049
+185;5;Centre de Carquefou;CENTRE DE CARQUEFOU;47.28076525;-1.45685517
+186;5;Centre de Saint-Étienne-de-Montluc;CENTRE DE SAINT-ÉTIENNE-DE-MONTLUC;47.27583865;-1.78015828
+187;5;Centre de Bonnœuvre;CENTRE DE BONNŒUVRE;47.52767548;-1.23698525
+188;5;Centre de Riaille;CENTRE DE RIAILLE;47.51630758;-1.29011835
+189;5;Centre de Pannecé;CENTRE DE PANNECÉ;47.48525332;-1.24006531
+190;5;Centre de Teillé;CENTRE DE TEILLÉ;47.46123946;-1.27810702
+191;5;Centre de Mouzeil;CENTRE DE MOUZEIL;47.44759973;-1.34770036
+192;5;Centre de Ligne;CENTRE DE LIGNE;47.41140553;-1.37454483
+193;5;Centre de Saint-Mars-du-Désert;CENTRE DE SAINT-MARS-DU-DÉSERT;47.36718651;-1.40526556
+194;5;Centre de Vieillevigne;CENTRE DE VIEILLEVIGNE;46.96987897;-1.43162001
+195;5;Centre de La Planche;CENTRE DE LA PLANCHE;47.01878939;-1.43937981
+196;5;Centre de Montbert;CENTRE DE MONTBERT;47.05719932;-1.48831411
+197;5;Centre de Le Bignon;CENTRE DE LE BIGNON;47.09852284;-1.49137836
+198;5;Centre de Fay-de-Bretagne;CENTRE DE FAY-DE-BRETAGNE;47.41507152;-1.79145505
+199;5;Centre de Notre-Dame-des-Landes;CENTRE DE NOTRE-DAME-DES-LANDES;47.38182015;-1.70997274
+200;5;Centre de Orvault;CENTRE DE ORVAULT;47.27132522;-1.62382431
+201;5;Centre de Férel;CENTRE DE FÉREL;47.48354951;-2.3437623
+202;5;Centre de Le Pouliguen;CENTRE DE LE POULIGUEN;47.27762224;-2.4304562
+203;5;Centre de Batz-sur-Mer;CENTRE DE BATZ-SUR-MER;47.27504562;-2.48111018
+204;5;Centre de Mesquer;CENTRE DE MESQUER;47.39897954;-2.46027959
+205;5;Centre de Piriac-sur-Mer;CENTRE DE PIRIAC-SUR-MER;47.3787257;-2.5468099
+206;5;Centre carquefou;CENTRE CARQUEFOU;47.29695537;-1.4907885
+207;5;Centre commercial;CENTRE COMMERCIAL;47.47332312;-1.74613897
+208;5;Centre commercial;CENTRE COMMERCIAL;47.51161839;-2.039246
+209;5;Centre commercial;CENTRE COMMERCIAL;47.20486583;-2.04375082
+210;5;Centre commercial;CENTRE COMMERCIAL;47.09128316;-1.28888442
+211;5;Centre commercial (rue b.franklin);CENTRE COMMERCIAL (RUE B.FRANKLIN);47.70628695;-1.38814689
+212;5;Centre commercial (rue g.eisenhower);CENTRE COMMERCIAL (RUE G.EISENHOWER);47.70736119;-1.38457725
+213;5;Centre commercial rue brient 1er;CENTRE COMMERCIAL RUE BRIENT 1ER;47.7177981;-1.38851782
+214;5;Centre commercial vent d'ouest;CENTRE COMMERCIAL VENT D'OUEST;47.70131193;-1.40091956
+215;5;Centre municipal des sports;CENTRE MUNICIPAL DES SPORTS;47.71439706;-1.37887649
+216;5;César franck;CESAR FRANCK;47.7136265;-1.38517033
+217;5;Champ de foire;CHAMP DE FOIRE;47.56503508;-1.6263054
+218;5;Champ de foire;CHAMP DE FOIRE;47.43767697;-1.5010131
+219;5;Champ de foire;CHAMP DE FOIRE;47.44924753;-2.31245639
+220;5;Champ failli;CHAMP FAILLI;47.1907868;-1.40116427
+221;5;Champbriant;CHAMPBRIANT;47.32969499;-1.35715987
+222;5;ChampionniEre;CHAMPIONNIERE;47.11181288;-1.58647985
+223;5;Champsiome;CHAMPSIOME;47.1485917;-1.55540329
+224;5;Charles de gaulle;CHARLES DE GAULLE;47.44018226;-2.09345281
+225;5;Charles de gaulle;CHARLES DE GAULLE;47.71834927;-1.37273807
+226;5;Charmilles;CHARMILLES;47.26556886;-2.44724162
+227;5;Chataigneraie;CHATAIGNERAIE;47.43621763;-2.08347005
+228;5;Chataigneraie;CHATAIGNERAIE;47.3355013;-1.52131293
+229;5;Château d'eau;CHATEAU D'EAU;47.19865726;-1.43640119
+230;5;Château d'eau;CHATEAU D'EAU;47.38758947;-1.55708647
+231;5;Château-de-clermont;CHATEAU-DE-CLERMONT;47.32738749;-1.34152995
+232;5;Château-rouge;CHATEAU-ROUGE;47.5205117;-2.01360676
+233;5;Châteaubriant;CHATEAUBRIANT;47.28400251;-2.38612435
+234;5;Chatillon;CHATILLON;47.28971943;-1.65670137
+235;5;Chaussée le retz;CHAUSSEE LE RETZ;47.19368794;-1.85129276
+236;5;ChauviniEre;CHAUVINIERE;47.22867214;-1.63558392
+237;5;Chemin nantais;CHEMIN NANTAIS;47.28808356;-1.4357075
+238;5;Chemin rouge;CHEMIN ROUGE;47.25175555;-1.51757718
+239;5;Chêne bonnet;CHENE BONNET;47.27746789;-2.06462743
+240;5;Chene vert;CHENE VERT;47.27918306;-1.35119989
+241;5;ChevroliEre sud;CHEVROLIERE SUD;47.09028392;-1.6109548
+242;5;Chevry;CHEVRY;47.28536032;-2.03009451
+243;5;Cifam;CIFAM;47.2656679;-1.48716466
+244;5;CimetiEre;CIMETIERE;47.38929637;-2.42610775
+245;5;CimetiEre;CIMETIERE;47.28941591;-2.38466496
+246;5;Cinéma st gilles;CINEMA ST GILLES;47.11956822;-2.10123942
+247;5;Cinq chemins de valais;CINQ CHEMINS DE VALAIS;47.31561718;-1.68885843
+248;5;Cinq routes;CINQ ROUTES;47.00615185;-1.45506896
+249;5;Cité du rocher;CITE DU ROCHER;47.29160188;-2.3731692
+250;5;Cité paul huard;CITE PAUL HUARD;47.71116305;-1.37484097
+251;5;Clémenceau;CLEMENCEAU;47.27384565;-2.43160646
+252;5;Clis;CLIS;47.33717431;-2.46703954
+253;5;Cloisons;CLOISONS;47.37126439;-1.52208556
+254;5;Clos belay;CLOS BELAY;47.26149682;-2.42370975
+255;5;Clos colin;CLOS COLIN;47.29231315;-2.35680786
+256;5;Coët rotz;COET ROTZ;47.44408541;-2.0924484
+257;5;Cogéa;COGEA;47.34452987;-2.35284585
+258;5;Coispean;COISPEAN;47.36535949;-2.46580134
+259;5;Colbert;COLBERT;47.34482607;-2.50497506
+260;5;ColiniEre;COLINIERE;47.23596214;-1.50836983
+261;5;CollEge petite lande;COLLEGE PETITE LANDE;47.17790841;-1.54950362
+262;5;CollEge ste anne;COLLEGE STE ANNE;47.19141874;-1.56730513
+263;5;CommandiEres;COMMANDIERES;47.28988605;-2.25744947
+264;5;Cornette;CORNETTE;47.35724939;-1.54067363
+265;5;Cour des haies;COUR DES HAIES;47.52956883;-1.39743039
+266;5;Cpio;CPIO;47.26273009;-1.50771694
+267;5;Croissant;CROISSANT;47.24074108;-1.53041164
+268;5;Croix blanche;CROIX BLANCHE;47.35003701;-1.86513971
+269;5;Croix danet;CROIX DANET;47.06567401;-1.52042073
+270;5;Croix de kerbezo;CROIX DE KERBEZO;47.32798485;-2.44683064
+271;5;Croix de kerdinio;CROIX DE KERDINIO;47.37849993;-2.5266004
+272;5;Croix de mission;CROIX DE MISSION;47.43209421;-2.08431395
+273;5;Croix des chardonneaux;CROIX DES CHARDONNEAUX;47.26997648;-1.36304537
+274;5;Croix morzelle gare;CROIX MORZELLE GARE;47.30461398;-1.84430457
+275;5;Croix verte;CROIX VERTE;47.12463641;-1.42386749
+276;5;Croix-de-bauche;CROIX-DE-BAUCHE;47.29446519;-1.82744101
+277;5;Croix-de-morzelle rd-17;CROIX-DE-MORZELLE RD-17;47.30461398;-1.84430457
+278;5;Croix-millette;CROIX-MILLETTE;47.32948477;-2.49754181
+279;5;Curette;CURETTE;47.35991269;-1.63218273
+280;5;Cuy;CUY;47.27778483;-2.34026892
+281;5;Dauphin SNCF;DAUPHIN SNCF;47.27013195;-2.34619059
+282;5;De joie;DE JOIE;47.16320381;-1.26544768
+283;5;Delinais;DELINAIS;47.66120601;-1.41396977
+284;5;Delorme;DELORME;47.21546137;-1.56443924
+285;5;Dervin;DERVIN;47.26976505;-2.45917001
+286;5;Desaix;DESAIX;47.22690394;-1.54271579
+287;5;Diderot arrêt tan;DIDEROT ARRET TAN;47.184115;-1.563167
+288;5;Dilane;DILANE;47.27113383;-2.47132697
+289;5;Dr sourdille;DR SOURDILLE;47.26374833;-2.42053115
+290;5;Drevet;DREVET;47.28511792;-2.40515809
+291;5;Duquesne;DUQUESNE;47.21721969;-1.55693031
+292;5;DurandiEre;DURANDIERE;47.33352077;-1.51706063
+293;5;E. Outtier;E. OUTTIER;47.268256;-2.340515
+294;5;Ecole;ECOLE;47.3992619;-2.45764863
+295;5;Ecole du gaz;ECOLE DU GAZ;47.283043;-1.73979315
+296;5;Ecomarché;ECOMARCHE;47.1331505;-1.749861
+297;5;Eglise;EGLISE;47.43789686;-2.08829012
+298;5;Eglise;EGLISE;47.51759945;-2.03761423
+299;5;Eglise;EGLISE;47.47636158;-2.05659765
+300;5;Eglise;EGLISE;47.14344101;-1.41601382
+301;5;Eglise;EGLISE;47.29542845;-1.39368188
+302;5;Eglise;EGLISE;47.44933343;-2.3175485
+303;5;Eglise de béré;EGLISE DE BERE;47.72369616;-1.38710314
+304;5;Ennerie;ENNERIE;47.19446711;-2.02061681
+305;5;Epinettes;EPINETTES;47.20062587;-1.44480543
+306;5;Escoublac centre;ESCOUBLAC CENTRE;47.29339385;-2.35763968
+307;5;Etoile du matin;ETOILE DU MATIN;47.25570825;-2.27114496
+308;5;Europe;EUROPE;47.27846794;-2.43534716
+309;5;Facultés;FACULTES;47.246319;-1.555395
+310;5;Fégréac;FEGREAC;47.58533927;-2.04515826
+311;5;Félix tableau;FELIX TABLEAU;47.1878501;-1.54663213
+312;5;Ferme ecole;FERME ECOLE;47.48714196;-2.05106382
+313;5;Fief du parc;FIEF DU PARC;47.08401027;-1.26016548
+314;5;Flandin;FLANDIN;47.28983649;-2.37178084
+315;5;Fleuriaye;FLEURIAYE;47.29873976;-1.49980238
+316;5;Fontaine;FONTAINE;47.24210885;-2.15691681
+317;5;Fontaine aux bruns;FONTAINE AUX BRUNS;47.29898269;-2.20727774
+318;5;Fontaine braz;FONTAINE BRAZ;47.40201885;-2.44563276
+319;5;Forêt pavée;FORET PAVEE;47.66739367;-1.37965114
+320;5;Forum;FORUM;47.25099923;-1.61952394
+321;5;Foyer;FOYER;47.44408541;-2.0924484
+322;5;Foyer;FOYER;47.28377213;-2.40464859
+323;5;Foyer du travailleur;FOYER DU TRAVAILLEUR;47.27680397;-2.22611047
+324;5;Franchet d'esperey;FRANCHET D'ESPEREY;47.26608771;-2.43698215
+325;5;Fructidor;FRUCTIDOR;47.23981;-1.560391
+326;5;Garage;GARAGE;47.51630761;-1.29011831
+327;5;Garambeau;GARAMBEAU;47.31341446;-1.63351923
+328;5;Gare;GARE;47.65023788;-1.73912165
+329;5;Gare;GARE;47.68622236;-1.43603794
+330;5;Gare de châteaubriant;GARE DE CHATEAUBRIANT;47.7169964;-1.37139708
+331;5;Gare de la baule-les-pins;GARE DE LA BAULE-LES-PINS;47.28362387;-2.36466727
+332;5;Gare de savenay;GARE DE SAVENAY;47.35851289;-1.95141501
+333;5;Gare de sévérac;GARE DE SEVERAC;47.54974924;-2.07274422
+334;5;Gare routiEre;GARE ROUTIERE;46.67371565;-1.42038766
+335;5;Gare routiEre;GARE ROUTIERE;47.36231478;-1.94512113
+336;5;Gare SNCF de Nantes;GARE SNCF DE NANTES;47.21675853;-1.54295503
+337;5;Gare SNCF de Rennes;GARE SNCF DE RENNES;48.1035157;-1.67231969
+338;5;Gare SNCF de Saint-Nazaire;GARE SNCF DE SAINT-NAZAIRE;47.28566315;-2.21127728
+339;5;Gare SNCF de Redon;GARE SNCF DE REDON;47.6517633;-2.08787664
+340;5;Gare SNCF de Pornic;GARE SNCF DE PORNIC;47.11452651;-2.09767298
+341;5;Gare SNCF de Bourgneuf-en-Retz;GARE SNCF DE BOURGNEUF-EN-RETZ;47.04684377;-1.95529641
+342;5;Gare SNCF de Vertou;GARE SNCF DE VERTOU;47.18596565;-1.47794424
+343;5;Gare SNCF de Clisson;GARE SNCF DE CLISSON;47.08583846;-1.28675466
+344;5;Gare SNCF de Nort-sur-Erdre;GARE SNCF DE NORT-SUR-ERDRE;47.44173214;-1.50270735
+345;5;Gare SNCF de Saint-Vincent-des-Landes;GARE SNCF DE SAINT-VINCENT-DES-LANDES;47.65519773;-1.49430839
+346;5;Gare SNCF de Mauves-sur-Loire;GARE SNCF DE MAUVES-SUR-LOIRE;47.29280201;-1.38928716
+347;5;Gare SNCF de Le Pouliguen;GARE SNCF DE LE POULIGUEN;47.28244806;-2.43412989
+348;5;Gare SNCF de Le Croisic;GARE SNCF DE LE CROISIC;47.28973383;-2.50691659
+349;5;Garlahy;GARLAHY;47.34827097;-2.51220248
+350;5;Garnerie;GARNERIE;47.3302223;-1.53643205
+351;5;Garnier (immaculée);GARNIER (IMMACULEE);47.28230609;-2.25947836
+352;5;GaudiniEre;GAUDINIERE;47.30125792;-1.71094776
+353;5;Gendarmerie;GENDARMERIE;47.5625101;-1.62726403
+354;5;Gendarmerie;GENDARMERIE;47.32621781;-2.14574576
+355;5;Gendarmerie;GENDARMERIE;47.04644578;-1.95572907
+356;5;Gendarmerie;GENDARMERIE;47.24112081;-1.35575736
+357;5;Gendarmerie;GENDARMERIE;47.16039735;-1.26892474
+358;5;Gendarmerie (avenue jean moulin);GENDARMERIE (AVENUE JEAN MOULIN);47.72530278;-1.38452328
+359;5;Génetais;GENETAIS;47.16367413;-1.55326975
+360;5;George sand;GEORGE SAND;47.16578218;-1.54522603
+361;5;Georges brassens;GEORGES BRASSENS;47.28687727;-2.02920282
+362;5;GergaudiEre;GERGAUDIERE;47.28943975;-1.59653612
+363;5;Giboire;GIBOIRE;47.3796579;-1.5214568
+364;5;GiliEre;GILIERE;47.29929031;-1.55299051
+365;5;Golf;GOLF;47.2920398;-1.70396424
+366;5;Gourap;GOURAP;47.50630514;-2.04475576
+367;5;Govelle;GOVELLE;47.26729228;-2.45408343
+368;5;Govilon;GOVILON;47.47674781;-2.16285629
+369;5;Grain;GRAIN;47.37809154;-2.53986581
+370;5;Grand carcouët;GRAND CARCOUET;47.23134801;-1.59236636
+371;5;Grand perret;GRAND PERRET;47.2767388;-2.07963026
+372;5;Grand-rue;GRAND-RUE;47.35225012;-2.51298987
+373;5;Grandchamps;GRANDCHAMPS;47.29341881;-2.20831444
+374;5;Grande bodiniEre;GRANDE BODINIERE;47.3833254;-1.51043282
+375;5;Grande douve;GRANDE DOUVE;47.34632524;-2.50395405
+376;5;Grandes terres;GRANDES TERRES;47.26773035;-2.43056826
+377;5;Graviers;GRAVIERS;47.4683002;-1.76856675
+378;5;GrehandiEre;GREHANDIERE;47.3273234;-1.64335625
+379;5;Greix;GREIX;47.26434757;-2.10736794
+380;5;GuillonniEre;GUILLONNIERE;47.35569634;-1.51748476
+381;5;Guineau;GUINEAU;47.26774378;-1.35551653
+382;5;GuinEvre;GUINEVRE;47.05077583;-1.63553332
+383;5;Haie-maheas;HAIE-MAHEAS;47.28023261;-1.82334616
+384;5;Halte garderie;HALTE GARDERIE;47.7133771;-1.3872749
+385;5;HaluchEre;HALUCHERE;47.24830065;-1.52106689
+386;5;Halvêque;HALVEQUE;47.25856539;-1.51950496
+387;5;Haut brivin;HAUT BRIVIN;47.30044055;-2.38614032
+388;5;Haute perche;HAUTE PERCHE;47.131427;-1.969836
+389;5;HélEne boucher;HELENE BOUCHER;47.7116276;-1.36903474
+390;5;Henri dunant;HENRI DUNANT;47.29185479;-2.51916577
+391;5;Hlm vitré;HLM VITRE;47.72421205;-1.37185186
+392;5;Hopital;HOPITAL;47.2773957;-2.23597226
+393;5;Hôpital;HOPITAL;47.11263082;-2.06659451
+394;5;Hôpital;HOPITAL;47.72569678;-1.38247308
+395;5;Hôpital;HOPITAL;47.29056792;-2.51459997
+396;5;Hôtel de france;HOTEL DE FRANCE;47.44315511;-1.81335093
+397;5;Hotel de ville;HOTEL DE VILLE;47.26937188;-2.42484805
+398;5;Hôtel de ville st-nazaire;HOTEL DE VILLE ST-NAZAIRE;47.27389827;-2.21366954
+399;5;Icam;ICAM;47.2757535;-1.50960262
+400;5;Jean perrin;JEAN PERRIN;47.1812653;-1.56078359
+401;5;Joli séjour;JOLI SEJOUR;47.11301184;-2.09088607
+402;5;Joliverie;JOLIVERIE;47.18969892;-1.51780157
+403;5;Jules rieffel;JULES RIEFFEL;47.25555287;-1.64261028
+404;5;Ker d'abas;KER D'ABAS;47.27596761;-2.48670919
+405;5;Ker elisabeth;KER ELISABETH;47.35592839;-2.51864459
+406;5;Ker marie;KER MARIE;47.32789317;-2.44173044
+407;5;Ker-al-men;KER-AL-MEN;47.39898134;-2.48844652
+408;5;Kerbennet;KERBENNET;47.33450596;-2.42645871
+409;5;Kerbiniou;KERBINIOU;47.32907025;-2.41882372
+410;5;Kerbourg;KERBOURG;47.36465069;-2.36593644
+411;5;Kercabellec;KERCABELLEC;47.40828874;-2.46430851
+412;5;Kerdandec;KERDANDEC;47.41189374;-2.47662045
+413;5;Kerdinio;KERDINIO;47.37806244;-2.5306902
+414;5;Kerdun;KERDUN;47.2646673;-2.43192578
+415;5;Kerguillote;KERGUILLOTE;47.39560436;-2.48602794
+416;5;Kerhinet;KERHINET;47.36304063;-2.35761194
+417;5;Kerlagadec;KERLAGADEC;47.39445167;-2.46546407
+418;5;Kerlibérin;KERLIBERIN;47.42896797;-2.30866487
+419;5;Kerquessaud;KERQUESSAUD;47.30457012;-2.37920074
+420;5;Kerro;KERRO;47.39892528;-2.49116665
+421;5;Kerroué;KERROUE;47.39846008;-2.4466298
+422;5;Kervin;KERVIN;47.37230556;-2.52690349
+423;5;Kervolan;KERVOLAN;47.36026196;-2.4332653
+424;5;Korrigans;KORRIGANS;47.26479374;-2.44269121
+425;5;Korrigans;KORRIGANS;47.26479374;-2.44269121
+426;5;Kuhlman;KUHLMAN;47.2832255;-2.0160947
+427;5;L' arche du fouan;L' ARCHE DU FOUAN;47.40652282;-1.73129197
+428;5;L'alcidais;L'ALCIDAIS;47.49032779;-1.63714402
+429;5;L'angle bertho;L'ANGLE BERTHO;47.46614631;-2.2196943
+430;5;L'anglechais;L'ANGLECHAIS;47.51493193;-1.75132005
+431;5;L'aubraie;L'AUBRAIE;47.08016954;-1.63108251
+432;5;L'audonniEre;L'AUDONNIERE;46.99704572;-1.45510911
+433;5;L'aujardiEre;L'AUJARDIERE;47.01891872;-1.59950085
+434;5;L'aujardiEre;L'AUJARDIERE;47.17050044;-1.17953134
+435;5;L'epeau;L'EPEAU;47.32183155;-1.47412137
+436;5;L'epine;L'EPINE;47.36976161;-1.70406276
+437;5;L'etoile;L'ETOILE;47.3447983;-2.48309675
+438;5;L'hommeau;L'HOMMEAU;47.07148093;-1.49678347
+439;5;L'isle;L'ISLE;47.4249527;-1.48228234
+440;5;L'organais;L'ORGANAIS;47.45402101;-2.19127196
+441;5;La babonniEre;LA BABONNIERE;47.33811065;-1.3416711
+442;5;La baie de loire;LA BAIE DE LOIRE;47.26081836;-2.12501342
+443;5;La bénate;LA BENATE;46.95539624;-1.60449963
+444;5;La bernardiEre;LA BERNARDIERE;47.28685724;-1.70546937
+445;5;La bernardiEre;LA BERNARDIERE;47.17174937;-1.36343788
+446;5;La birochEre;LA BIROCHERE;47.10977935;-2.08850296
+447;5;La boissiEre;LA BOISSIERE;47.34673925;-1.69637118
+448;5;La boizonniEre;LA BOIZONNIERE;47.13731989;-1.72258383
+449;5;La bosse;LA BOSSE;47.28299812;-2.32048558
+450;5;La bosse des landes;LA BOSSE DES LANDES;47.39952299;-1.64483923
+451;5;La boulaie;LA BOULAIE;47.07213753;-1.62310273
+452;5;La boule d'or;LA BOULE D'OR;47.09115389;-1.52982658
+453;5;La bourchiniEre;LA BOURCHINIERE;47.15167028;-1.42919922
+454;5;La bourie;LA BOURIE;47.13156097;-1.58291581
+455;5;La bouvardiEre;LA BOUVARDIERE;47.32144616;-1.69605251
+456;5;La bretonniEre;LA BRETONNIERE;47.32632122;-1.78775953
+457;5;La buterie;LA BUTERIE;47.11322933;-1.44145008
+458;5;La butte;LA BUTTE;47.36743237;-1.60626892
+459;5;La carrée;LA CARREE;47.16847663;-1.54319266
+460;5;La carrée;LA CARREE;47.46181582;-1.78342436
+461;5;La cerclerie;LA CERCLERIE;47.17293905;-1.35416474
+462;5;La chalousiEre;LA CHALOUSIERE;47.16040421;-1.22124366
+463;5;La chapelle;LA CHAPELLE;47.40367922;-2.30434004
+464;5;La chapelle;LA CHAPELLE;47.26574019;-2.34056285
+465;5;La chapelle breton;LA CHAPELLE BRETON;47.44914251;-1.32734866
+466;5;La chapelle jean jaurés;LA CHAPELLE JEAN JAURES;47.29942181;-1.55003047
+467;5;La charliEre;LA CHARLIERE;47.31938069;-1.54920258
+468;5;La chaussée;LA CHAUSSEE;47.09839445;-1.61107034
+469;5;La chebuette;LA CHEBUETTE;47.26822587;-1.40906854
+470;5;La chEre;LA CHERE;47.45984764;-1.4185879
+471;5;La chesnaye;LA CHESNAYE;47.30691075;-1.39154147
+472;5;La chouamétrie;LA CHOUAMETRIE;47.30841834;-1.68010656
+473;5;La cogne;LA COGNE;47.28720337;-1.55705903
+474;5;La compointerie;LA COMPOINTERIE;47.03493437;-1.66863659
+475;5;La côte;LA COTE;47.28216723;-1.56045219
+476;5;La courance;LA COURANCE;47.23837309;-2.16938845
+477;5;La crochardais;LA CROCHARDAIS;47.4604849;-1.9636395
+478;5;La croix;LA CROIX;47.30000308;-1.39804644
+479;5;La croix basse;LA CROIX BASSE;47.43471837;-2.09363028
+480;5;La croix blot;LA CROIX BLOT;47.11994431;-1.5810806
+481;5;La croix d'en haut;LA CROIX D'EN HAUT;47.5002997;-2.13256681
+482;5;La croix des prés;LA CROIX DES PRES;47.06158677;-1.4936426
+483;5;La croix verte;LA CROIX VERTE;46.93827139;-1.60300325
+484;5;La croix-de-pierre;LA CROIX-DE-PIERRE;47.31898385;-1.73408613
+485;5;La dechausserie;LA DECHAUSSERIE;47.38256386;-1.45316891
+486;5;La digue;LA DIGUE;47.64781359;-2.08313022
+487;5;La droitiEre;LA DROITIERE;47.30794279;-1.37285651
+488;5;La duchée;LA DUCHEE;47.3628175;-2.09803547
+489;5;La ferriEre;LA FERRIERE;47.69888434;-1.38168758
+490;5;La fléchousserie;LA FLECHOUSSERIE;47.10212952;-2.05915779
+491;5;La fontaine;LA FONTAINE;47.3073795;-1.63246712
+492;5;La fosse des prés;LA FOSSE DES PRES;47.1986734;-1.90629771
+493;5;La foy;LA FOY;47.65853811;-1.66133012
+494;5;La frégate;LA FREGATE;47.35067421;-2.49785153
+495;5;La freuziEre;LA FREUZIERE;47.32029408;-1.76846324
+496;5;La furetiEre;LA FURETIERE;47.40757067;-1.46098886
+497;5;La garneraie;LA GARNERAIE;47.24491133;-1.72569624
+498;5;La gauterie;LA GAUTERIE;47.33745269;-1.47432138
+499;5;La gicquelais;LA GICQUELAIS;47.40415849;-1.96281492
+500;5;La giraudiEre;LA GIRAUDIERE;47.21459256;-2.05412221
+501;5;La gobiniEre;LA GOBINIERE;47.18423;-1.31837601
+502;5;La gouarais;LA GOUARAIS;47.51873055;-2.11021212
+503;5;La gouliEre;LA GOULIERE;47.35146038;-1.42165182
+504;5;La grande haie;LA GRANDE HAIE;47.37348734;-1.63370456
+505;5;La gravouillerie;LA GRAVOUILLERIE;47.02179023;-1.68817967
+506;5;La grée;LA GREE;47.36581998;-1.45468364
+507;5;La grue;LA GRUE;47.03017677;-1.62530481
+508;5;La guérandaise;LA GUERANDAISE;47.35444592;-2.39032216
+509;5;La guerche;LA GUERCHE;47.2787431;-1.79072464
+510;5;La guesne;LA GUESNE;47.38322523;-2.13376756
+511;5;La guilleraie;LA GUILLERAIE;47.27779582;-2.35626728
+512;5;La harie;LA HARIE;47.51295701;-1.19157035
+513;5;La harliEre;LA HARLIERE;47.40990366;-1.93191507
+514;5;La herdrie;LA HERDRIE;47.19789887;-1.45234757
+515;5;La herviais;LA HERVIAIS;47.42851434;-2.11028039
+516;5;La jarriais;LA JARRIAIS;47.22008265;-2.09526447
+517;5;La jarrie;LA JARRIE;47.105398;-1.50876055
+518;5;La jaunaie;LA JAUNAIE;47.09466785;-1.43917688
+519;5;La jo;LA JO;47.28740984;-2.35957314
+520;5;La joie;LA JOIE;47.33997616;-1.34927409
+521;5;La joseliEre;LA JOSELIERE;47.10400199;-2.07645433
+522;5;La laiterie;LA LAITERIE;47.54935281;-1.86244416
+523;5;La loiriEre;LA LOIRIERE;47.09682371;-1.53243407
+524;5;La louisiane;LA LOUISIANE;47.22239631;-2.07909636
+525;5;La mabilais;LA MABILAIS;47.27333503;-2.08884994
+526;5;La madeleine;LA MADELEINE;47.3565622;-2.3694989
+527;5;La maison blanche;LA MAISON BLANCHE;47.31238746;-1.38669027
+528;5;La maison neuve;LA MAISON NEUVE;47.32761158;-1.3817065
+529;5;La maladrie;LA MALADRIE;47.3490633;-1.34108002
+530;5;La marchanderie;LA MARCHANDERIE;47.43724642;-1.46028482
+531;5;La masure;LA MASURE;47.08708246;-1.49697064
+532;5;La méloiterie;LA MELOITERIE;47.56578247;-1.51953375
+533;5;La métellerie;LA METELLERIE;47.37252374;-1.31895279
+534;5;La miraudiEre;LA MIRAUDIERE;47.17382438;-1.37185951
+535;5;La moisenais;LA MOISENAIS;47.26381946;-2.10008693
+536;5;La montagne;LA MONTAGNE;47.24480657;-1.68743046
+537;5;La moucletiEre;LA MOUCLETIERE;47.17054065;-1.28800023
+538;5;La moune;LA MOUNE;47.01370342;-1.43964084
+539;5;La nantaise;LA NANTAISE;47.30606633;-2.40836697
+540;5;La noé;LA NOE;47.4524882;-2.0738182
+541;5;La noé;LA NOE;47.3495018;-1.46508345
+542;5;La noé;LA NOE;47.31983812;-1.87191064
+543;5;La noé;LA NOE;47.50367959;-1.27462096
+544;5;La normandais;LA NORMANDAIS;47.55729834;-2.05457206
+545;5;La nouée fleurie;LA NOUEE FLEURIE;47.0316932;-1.26534055
+546;5;La paquelais;LA PAQUELAIS;47.33327739;-1.69656465
+547;5;La pendiEre;LA PENDIERE;47.46391592;-1.94346265
+548;5;La petiaudais;LA PETIAUDAIS;47.55452558;-1.85289491
+549;5;La pironniEre;LA PIRONNIERE;47.0386382;-1.70464725
+550;5;La planche-marion;LA PLANCHE-MARION;47.42317836;-2.14796616
+551;5;La plée;LA PLEE;47.30118186;-1.66616411
+552;5;La porte du gué-géraud;LA PORTE DU GUE-GERAUD;47.4094053;-1.76039762
+553;5;La poste;LA POSTE;47.18158567;-2.15400611
+554;5;La poste;LA POSTE;47.05538447;-1.48760788
+555;5;La potence;LA POTENCE;47.24302903;-1.67395513
+556;5;La poterie;LA POTERIE;47.43069911;-2.18071097
+557;5;La poterie;LA POTERIE;47.17651127;-1.38845118
+558;5;La poussaudiEre;LA POUSSAUDIERE;47.36734736;-1.32405444
+559;5;La pradonnais;LA PRADONNAIS;47.33374457;-2.42347321
+560;5;La quintaine;LA QUINTAINE;47.25735706;-1.38797617
+561;5;La ratelais;LA RATELAIS;47.40557804;-2.15780922
+562;5;La ridelais;LA RIDELAIS;47.41628948;-1.82827583
+563;5;La roberdais;LA ROBERDAIS;47.54003836;-1.75580665
+564;5;La robiniEre;LA ROBINIERE;47.33422744;-1.36400708
+565;5;La rouillonnais;LA ROUILLONNAIS;47.26396265;-1.76470336
+566;5;La rousseliEre;LA ROUSSELIERE;47.23251753;-1.64555958
+567;5;La savariais;LA SAVARIAIS;47.33296179;-1.3430733
+568;5;La seilleraye;LA SEILLERAYE;47.29353016;-1.41568897
+569;5;La sicaudais;LA SICAUDAIS;47.18735013;-1.94740929
+570;5;La statue;LA STATUE;47.26552728;-1.51442328
+571;5;La sureté;LA SURETE;47.47855176;-2.16105601
+572;5;La touche;LA TOUCHE;47.67229855;-1.40918368
+573;5;La tournerie;LA TOURNERIE;47.45188333;-2.46139101
+574;5;La tréluEre;LA TRELUERE;47.37291055;-1.40680153
+575;5;La trimossiEre;LA TRIMOSSIERE;47.28091365;-1.70739458
+576;5;La turcaudais;LA TURCAUDAIS;47.46233891;-1.98829793
+577;5;La valiniEre;LA VALINIERE;47.32333102;-1.74885792
+578;5;La vallée du bourg;LA VALLEE DU BOURG;47.47393325;-2.05958791
+579;5;La vigie;LA VIGIE;47.28880454;-2.53496511
+580;5;La vigne;LA VIGNE;47.39790109;-2.45406546
+581;5;La ville en bois;LA VILLE EN BOIS;47.70500392;-1.38256173
+582;5;La ville en bois;LA VILLE EN BOIS;47.54834945;-1.53140471
+583;5;La villeneuve;LA VILLENEUVE;47.48835505;-2.15281203
+584;5;La vinaliEre;LA VINALIERE;47.32626504;-1.35392137
+585;5;Lafayette;LAFAYETTE;47.27884969;-2.36426563
+586;5;Lanseria;LANSERIA;47.40371416;-2.49354547
+587;5;Lantilloux;LANTILLOUX;47.55857091;-1.52747865
+588;5;Lavoir;LAVOIR;47.37643435;-1.50741103
+589;5;Le bas-vernay;LE BAS-VERNAY;47.3138812;-1.7303787
+590;5;Le binar;LE BINAR;47.44153971;-2.04026515
+591;5;Le bois morel;LE BOIS MOREL;47.6084408;-1.379846
+592;5;Le bois rignoux;LE BOIS RIGNOUX;47.33739981;-1.7003123
+593;5;Le bois rochefort;LE BOIS ROCHEFORT;47.32901817;-2.42618416
+594;5;Le bon tour;LE BON TOUR;47.47814388;-2.17869222
+595;5;Le bosquet;LE BOSQUET;47.26490756;-2.16545113
+596;5;Le boulay;LE BOULAY;47.43017195;-1.33203029
+597;5;Le bout des ponts;LE BOUT DES PONTS;47.25728873;-1.42606054
+598;5;Le brunet;LE BRUNET;47.36358562;-2.33376614
+599;5;Le butay;LE BUTAY;47.09574236;-1.447567
+600;5;Le cardo;LE CARDO;47.26177935;-1.58431557
+601;5;Le chêne creux;LE CHENE CREUX;47.25479109;-1.75099666
+602;5;Le clémois;LE CLEMOIS;47.13733818;-1.7225303
+603;5;Le clion sur mer - eglise;LE CLION SUR MER - EGLISE;47.11938939;-2.04995962
+604;5;Le cormier;LE CORMIER;47.16085592;-2.17215497
+605;5;Le coudray;LE COUDRAY;47.55825025;-1.83920762
+606;5;Le goffic;LE GOFFIC;47.23042085;-1.56348679
+607;5;Le grand chemin;LE GRAND CHEMIN;47.64232761;-1.38114533
+608;5;Le grand patis;LE GRAND PATIS;47.37562886;-1.45040818
+609;5;Le gray;LE GRAY;47.28414;-1.586699
+610;5;Le guerny;LE GUERNY;47.48242553;-2.35421181
+611;5;Le guézy;LE GUEZY;47.27161223;-2.34500108
+612;5;Le haut coin;LE HAUT COIN;47.08323256;-1.41709686
+613;5;Le lany;LE LANY;47.39694639;-2.47210546
+614;5;Le louaret;LE LOUARET;47.03904978;-1.95543542
+615;5;Le manoir;LE MANOIR;47.34888943;-2.48658285
+616;5;Le migron;LE MIGRON;47.25487975;-1.91682884
+617;5;Le mouchoir;LE MOUCHOIR;47.3751986;-2.32443611
+618;5;Le moulin;LE MOULIN;47.0934571;-1.63099959
+619;5;Le moulin;LE MOULIN;47.27344877;-2.33774718
+620;5;Le moulin;LE MOULIN;47.3513042;-2.49243855
+621;5;Le moulin blanc;LE MOULIN BLANC;47.32588899;-1.61548825
+622;5;Le moulin de la motte;LE MOULIN DE LA MOTTE;47.1485917;-1.55540329
+623;5;Le moulin guérin;LE MOULIN GUERIN;46.92145059;-1.59941159
+624;5;Le noyer;LE NOYER;47.02306941;-1.44995612
+625;5;Le pérou;LE PEROU;47.124457;-1.52751
+626;5;Le perray;LE PERRAY;47.33428154;-1.45353596
+627;5;Le petit plessis;LE PETIT PLESSIS;47.30230214;-1.38599168
+628;5;Le pied pain;LE PIED PAIN;47.02830538;-1.67083844
+629;5;Le pilon carrefour;LE PILON CARREFOUR;47.17449873;-1.78698684
+630;5;Le plantis;LE PLANTIS;47.33114321;-1.33551479
+631;5;Le plessis;LE PLESSIS;47.55437898;-1.87217918
+632;5;Le plessis;LE PLESSIS;47.03055675;-1.67866339
+633;5;Le plessis;LE PLESSIS;47.07801929;-1.40537098
+634;5;Le plessis;LE PLESSIS;47.39944665;-1.37958761
+635;5;Le pont;LE PONT;47.37587549;-1.55500812
+636;5;Le pontereau;LE PONTEREAU;47.30635211;-1.37896899
+637;5;Le poteau vert;LE POTEAU VERT;47.61011;-2.038491
+638;5;Le quai;LE QUAI;47.27572483;-2.42672266
+639;5;Le redois;LE REDOIS;47.18216907;-2.1598628
+640;5;Le sandier;LE SANDIER;47.12174153;-2.11201804
+641;5;Le scall;LE SCALL;47.26340342;-2.44802703
+642;5;Le tertre;LE TERTRE;47.26852813;-2.11508523
+643;5;Le tillon;LE TILLON;47.38069654;-1.96622601
+644;5;Le velin;LE VELIN;47.40128411;-2.45838696
+645;5;Lechat;LECHAT;47.17544021;-1.54373953
+646;5;Leclerc;LECLERC;47.28762297;-2.50993652
+647;5;Lenigo;LENIGO;47.29865223;-2.51693263
+648;5;Les 4 routes;LES 4 ROUTES;47.46069268;-1.99759836
+649;5;Les 4 vents;LES 4 VENTS;47.27828777;-2.29198164
+650;5;Les abies;LES ABIES;47.34776386;-1.53075135
+651;5;Les aires;LES AIRES;47.09867444;-1.49348235
+652;5;Les ajoncs;LES AJONCS;47.26541312;-2.45229615
+653;5;Les amourettes;LES AMOURETTES;47.28338654;-2.030964
+654;5;Les anges;LES ANGES;47.27475906;-1.63662944
+655;5;Les bourdonniEres arrêt busway;LES BOURDONNIERES ARRET BUSWAY;47.18633674;-1.51752998
+656;5;Les bourdonniEres lycée;LES BOURDONNIERES LYCEE;47.18583291;-1.5173069
+657;5;Les chaises;LES CHAISES;47.0796559;-1.49406964
+658;5;Les charmes;LES CHARMES;47.42585173;-1.50697581
+659;5;Les cinq chemins;LES CINQ CHEMINS;47.30492729;-1.50375122
+660;5;Les coutumes;LES COUTUMES;47.10701136;-1.59034382
+661;5;Les fauvettes;LES FAUVETTES;47.71804596;-1.36318886
+662;5;Les halles;LES HALLES;47.09183928;-1.62098742
+663;5;Les hauts viais;LES HAUTS VIAIS;47.11542593;-1.54125813
+664;5;Les jaunais;LES JAUNAIS;47.41950032;-1.37385533
+665;5;Les lardiEres;LES LARDIERES;47.21982842;-2.11076751
+666;5;Les mazEres;LES MAZERES;47.31233571;-1.35324483
+667;5;Les monceaux;LES MONCEAUX;47.31304686;-1.50855087
+668;5;Les mouettes;LES MOUETTES;47.27382434;-2.43962203
+669;5;Les noés;LES NOES;47.44580777;-2.1909894
+670;5;Les paludiers;LES PALUDIERS;47.40467601;-2.46145377
+671;5;Les pierres couchées;LES PIERRES COUCHEES;47.205035;-2.15359
+672;5;Les pierres rousses;LES PIERRES ROUSSES;47.11654481;-1.93259539
+673;5;Les pilorgEres;LES PILORGERES;47.22071279;-2.07082512
+674;5;Les quatre routes;LES QUATRE ROUTES;47.35302051;-2.49055156
+675;5;Les rochelets;LES ROCHELETS;47.21607284;-2.15501985
+676;5;Les rousses;LES ROUSSES;47.51257909;-1.95807956
+677;5;Les salines;LES SALINES;47.28994452;-2.39446084
+678;5;Les templiers;LES TEMPLIERS;47.32805672;-1.79177812
+679;5;Les thébaudiEres;LES THEBAUDIERES;47.31026305;-1.35831669
+680;5;Les trois hermines;LES TROIS HERMINES;47.10950751;-1.47287408
+681;5;Les troissarts;LES TROISSARTS;47.03644875;-1.69548417
+682;5;Lesseps;LESSEPS;47.273316;-2.218406
+683;5;Levée des dons;LEVEE DES DONS;47.29982588;-1.62104293
+684;5;Libert;LIBERT;47.28283689;-2.02544168
+685;5;Liberté;LIBERTE;47.296803;-2.195467
+686;5;Lilette;LILETTE;47.580137;-2.044152
+687;5;Longrais;LONGRAIS;47.34311067;-1.43588018
+688;5;Lot marigny;LOT MARIGNY;47.27170049;-1.77603542
+689;5;Louise michEle;LOUISE MICHELE;47.28665895;-2.02570321
+690;5;Luxembourg;LUXEMBOURG;47.16563743;-1.27138
+691;5;Lycée appert;LYCEE APPERT;47.25158313;-1.6112437
+692;5;Lycée notre dame;LYCEE NOTRE DAME;47.18334616;-1.54427546
+693;5;Maillardais;MAILLARDAIS;47.52582215;-1.76828605
+694;5;Mairie de Saint-Viaud;MAIRIE DE SAINT-VIAUD;47.25609433;-2.01883583
+695;5;Mairie de Saint-PEre-en-Retz;MAIRIE DE SAINT-PERE-EN-RETZ;47.20549753;-2.04407161
+696;5;Mairie de Saint-Michel-Chef-Chef;MAIRIE DE SAINT-MICHEL-CHEF-CHEF;47.18158565;-2.15400617
+697;5;Mairie de Paimbœuf;MAIRIE DE PAIMBŒUF;47.28919038;-2.03469756
+698;5;Mairie de Bouée;MAIRIE DE BOUÉE;47.32020772;-1.91013005
+699;5;Mairie de Grandchamps-des-Fontaines;MAIRIE DE GRANDCHAMPS-DES-FONTAINES;47.36590535;-1.60585341
+700;5;Mairie de Saint-Vincent-des-Landes;MAIRIE DE SAINT-VINCENT-DES-LANDES;47.65540867;-1.49757126
+701;5;Mairie de Mauves-sur-Loire;MAIRIE DE MAUVES-SUR-LOIRE;47.29696782;-1.39249981
+702;5;Mairie de Saint-Lyphard;MAIRIE DE SAINT-LYPHARD;47.39723022;-2.30943245
+703;5;Mairie de Chateaubriant;MAIRIE DE CHATEAUBRIANT;47.721599;-1.376112
+704;5;Mairie de Saint-Molf;MAIRIE DE SAINT-MOLF;47.39118539;-2.42467088
+705;5;Mairie de Assérac;MAIRIE DE ASSÉRAC;47.42788558;-2.39217644
+706;5;Mairie de Camoël;MAIRIE DE CAMOËL;47.48101807;-2.39701274
+707;5;Mairie de Le Croisic;MAIRIE DE LE CROISIC;47.29488904;-2.51151803
+708;5;Mairie de doulon;MAIRIE DE DOULON;47.22681934;-1.51893699
+709;5;Mairie du guézy;MAIRIE DU GUEZY;47.27161223;-2.34500108
+710;5;Maison blanche;MAISON BLANCHE;47.55956877;-1.82164742
+711;5;Maison blanche;MAISON BLANCHE;47.35259994;-1.53806246
+712;5;Maison blanche;MAISON BLANCHE;47.22150534;-1.60694995
+713;5;Maison de retraite;MAISON DE RETRAITE;47.724215;-1.382899
+714;5;Maison départementale;MAISON DEPARTEMENTALE;47.26755206;-2.15913696
+715;5;Maison des associations;MAISON DES ASSOCIATIONS;47.3430404;-1.52943584
+716;5;Maison du guézy;MAISON DU GUEZY;47.27475435;-2.33443714
+717;5;Maison médicale;MAISON MEDICALE;47.28799585;-2.38379085
+718;5;Maison neuve;MAISON NEUVE;47.25812655;-1.51540063
+719;5;Maison rouge;MAISON ROUGE;47.11805121;-1.52418113
+720;5;Maladrie;MALADRIE;47.18798151;-1.49449857
+721;5;Malnoue;MALNOUE;47.16148924;-1.54218928
+722;5;Marché;MARCHE;47.28635923;-2.3937568
+723;5;Marché;MARCHE;47.27859529;-2.42833386
+724;5;Marché de pornichet;MARCHE DE PORNICHET;47.25983214;-2.33797655
+725;5;Marché guézy;MARCHE GUEZY;47.27172519;-2.34321247
+726;5;Maréchal juin;MARECHAL JUIN;47.26764357;-2.44025212
+727;5;Marigny;MARIGNY;47.27143042;-1.7756188
+728;5;Marlais;MARLAIS;47.4098389;-2.298827
+729;5;Marongle;MARONGLE;47.43284965;-2.19099169
+730;5;MarvilliEre;MARVILLIERE;47.33437417;-1.53176119
+731;5;Mazy;MAZY;47.27459567;-2.36076051
+732;5;MédiathEque;MEDIATHEQUE;47.27925403;-2.21678468
+733;5;Ménardais;MENARDAIS;47.3149058;-1.61831586
+734;5;Ménaudoux;MENAUDOUX;47.27594607;-2.22206541
+735;5;Mercerie;MERCERIE;47.32890606;-1.45813629
+736;5;Messan;MESSAN;47.19017663;-1.85611084
+737;5;Meunier;MEUNIER;47.26699029;-2.44437581
+738;5;Michelet;MICHELET;47.23484653;-1.55685789
+739;5;Mindin;MINDIN;47.26549084;-2.16786691
+740;5;Miroiterie;MIROITERIE;47.32944037;-2.13448261
+741;5;Miroux;MIROUX;47.35577958;-2.43422537
+742;5;Mondésir;MONDESIR;47.21779017;-1.56898336
+743;5;Mont plaisir;MONT PLAISIR;46.90446876;-1.60106148
+744;5;Montherlant;MONTHERLANT;47.712643;-1.364035
+745;5;Montigne;MONTIGNE;47.43993538;-1.47566699
+746;5;MorliEre;MORLIERE;47.17686285;-1.9172291
+747;5;MorrhonniEre;MORRHONNIERE;47.24138142;-1.55661358
+748;5;Moulin brûlé;MOULIN BRULE;47.25953541;-1.65486454
+749;5;Moulin de la chaussée;MOULIN DE LA CHAUSSEE;47.04821926;-1.63536018
+750;5;Moulin de la verrie;MOULIN DE LA VERRIE;47.44581689;-2.47612939
+751;5;Moulin de praillane;MOULIN DE PRAILLANE;47.36664285;-2.52213423
+752;5;Moulin du greix;MOULIN DU GREIX;47.26469807;-2.11347275
+753;5;Moulin du pé;MOULIN DU PE;47.27829864;-2.23978323
+754;5;Moulin miltiEre;MOULIN MILTIERE;47.33714797;-1.5160574
+755;5;Moulin rouge;MOULIN ROUGE;47.15399525;-1.55884358
+756;5;Moulin roussel;MOULIN ROUSSEL;47.59739932;-1.38317109
+757;5;Moulin-de-la-justice;MOULIN-DE-LA-JUSTICE;47.5193038;-1.96686417
+758;5;Moulin-malecot;MOULIN-MALECOT;47.30887265;-1.72277251
+759;5;Muzon;MUZON;47.33141634;-1.66804059
+760;5;NaudiEres;NAUDIERES;47.2698115;-1.69747039
+761;5;Néricou;NERICOU;47.55861717;-1.76771089
+762;5;Neuville rond point;NEUVILLE ROND POINT;47.42049555;-1.65748663
+763;5;Noe violin;NOE VIOLIN;47.30165594;-1.59352991
+764;5;Noé-simon;NOE-SIMON;47.25369644;-2.00970594
+765;5;Nonnaire;NONNAIRE;47.03680152;-1.46946608
+766;5;Notre dame de grace;NOTRE DAME DE GRACE;47.48901014;-1.9306463
+767;5;Noue;NOUE;47.36713903;-1.51211267
+768;5;Noue verriEre;NOUE VERRIERE;47.27553415;-1.5710943
+769;5;Océan;OCEAN;47.27125901;-2.4340741
+770;5;Océan;OCEAN;47.27125902;-2.43407411
+771;5;Océarium;OCEARIUM;47.30075379;-2.52559781
+772;5;Office de tourisme;OFFICE DE TOURISME;47.48326849;-2.47262214
+773;5;Otsi;OTSI;47.28057673;-2.42853041
+774;5;Palmiers;PALMIERS;47.28125677;-2.36882286
+775;5;Pan loup;PAN LOUP;47.24046954;-1.66153478
+776;5;Papin;PAPIN;47.29886709;-2.2967023
+777;5;Papinais;PAPINAIS;47.29965547;-1.84920266
+778;5;Parmentier;PARMENTIER;47.324704;-2.137416
+779;5;Pas chevalier;PAS CHEVALIER;47.40222619;-1.53844164
+780;5;Pas des haies;PAS DES HAIES;47.38084943;-1.59473338
+781;5;Passay;PASSAY;47.09664037;-1.63492241
+782;5;Passay rue du lac;PASSAY RUE DU LAC;47.09492061;-1.62954569
+783;5;Paul perrin;PAUL PERRIN;47.284453;-2.215326
+784;5;Pem gare routiEre;PEM GARE ROUTIERE;47.28703327;-2.39084271
+785;5;Pen an ran;PEN AN RAN;47.37342971;-2.55027095
+786;5;Perception;PERCEPTION;47.29651447;-1.49096744
+787;5;PerriEres;PERRIERES;47.08571998;-1.61265762
+788;5;Perrines;PERRINES;47.22756741;-1.51553351
+789;5;Perthuischaud;PERTHUISCHAUD;47.26356529;-2.23444357
+790;5;Petit bois;PETIT BOIS;47.30577825;-1.63307496
+791;5;Petit bonheur;PETIT BONHEUR;47.57740658;-1.39196557
+792;5;Petit paimboeuf;PETIT PAIMBOEUF;47.28557016;-2.02082482
+793;5;Petit port;PETIT PORT;47.24329302;-1.55642389
+794;5;Petit prince;PETIT PRINCE;47.26487359;-2.43356098
+795;5;Petit rouillonnais;PETIT ROUILLONNAIS;47.28504416;-1.74805728
+796;5;Petit-poissevin;PETIT-POISSEVIN;47.34569052;-2.39993105
+797;5;Pharmacie;PHARMACIE;47.51630761;-1.29011831
+798;5;Pierre percée;PIERRE PERCEE;47.28193319;-1.3851551
+799;5;Pierre plate;PIERRE PLATE;47.26178254;-2.42781317
+800;5;Pigeon blanc;PIGEON BLANC;47.29633047;-1.61162321
+801;5;Pigeon blanc;PIGEON BLANC;47.37655613;-2.45976307
+802;5;Pinier;PINIER;47.18214234;-1.54542944
+803;5;Pinsoison;PINSOISON;47.35880216;-1.41057196
+804;5;PinsonniEre;PINSONNIERE;47.28823049;-1.37588048
+805;5;Piolais;PIOLAIS;47.42169165;-2.15139533
+806;5;Pirmil;PIRMIL;47.19625028;-1.54265052
+807;5;Piscine;PISCINE;47.28173573;-2.38032713
+808;5;Place de gaulle;PLACE DE GAULLE;47.24470414;-1.93609238
+809;5;Place de la bascule;PLACE DE LA BASCULE;47.34176545;-1.52641624
+810;5;Place des martyrs;PLACE DES MARTYRS;47.19134979;-1.54789006
+811;5;Place dinan;PLACE DINAN;47.29210515;-2.51016674
+812;5;Place du marché;PLACE DU MARCHE;47.28856298;-2.03172902
+813;5;Place du marché;PLACE DU MARCHE;47.20549753;-2.04407164
+814;5;Place leclerc;PLACE LECLERC;47.26592184;-2.34330071
+815;5;Place marché montoir;PLACE MARCHE MONTOIR;47.32691984;-2.15536514
+816;5;Plaisance;PLAISANCE;47.29149946;-1.87412933
+817;5;Planchette;PLANCHETTE;47.14263694;-1.57236774
+818;5;Plein air;PLEIN AIR;47.27674571;-2.01191308
+819;5;Plessis de l'angle;PLESSIS DE L'ANGLE;47.27999811;-1.76956103
+820;5;Plessis tison;PLESSIS TISON;47.23687395;-1.53332998
+821;5;Plongeon;PLONGEON;47.46710128;-1.71714529
+822;5;Poincaré;POINCARE;47.22257646;-1.58490216
+823;5;Pôle de bresse;POLE DE BRESSE;47.24789543;-2.16230932
+824;5;Pôle emploi;POLE EMPLOI;47.28209;-2.227695
+825;5;Polyclinique de l'europe;POLYCLINIQUE DE L'EUROPE;47.25357079;-2.26519193
+826;5;Ponnement;PONNEMENT;47.44409178;-2.323596
+827;5;Pont béranger;PONT BERANGER;47.13013363;-1.83437217
+828;5;Pont d'armes;PONT D'ARMES;47.41466171;-2.39986403
+829;5;Pont david;PONT DAVID;47.36747356;-1.41197779
+830;5;Pont de maffre;PONT DE MAFFRE;47.46311545;-1.77941384
+831;5;Pont de quinze mEtres;PONT DE QUINZE METRES;47.34869328;-1.92708509
+832;5;Pont du guy;PONT DU GUY;47.08577618;-1.62796886
+833;5;Pont piétin;PONT PIETIN;47.46783962;-1.81647977
+834;5;Port;PORT;47.34669421;-2.5106804
+835;5;Port aux rocs;PORT AUX ROCS;47.29432252;-2.54644648
+836;5;Port de comberge;PORT DE COMBERGE;47.17373012;-2.16448573
+837;5;Port gaud;PORT GAUD;47.24817661;-1.375444
+838;5;Port val;PORT VAL;47.2985103;-2.54320028
+839;5;Porte joie;PORTE JOIE;47.28082376;-2.43122734
+840;5;Porte st michel;PORTE ST MICHEL;47.3270582;-2.42659549
+841;5;Poste;POSTE;47.71910199;-1.37845931
+842;5;Poste de gesvre;POSTE DE GESVRE;47.32792831;-1.61641411
+843;5;Poteau casson;POTEAU CASSON;47.37565223;-1.59096761
+844;5;Pré de la lande;PRE DE LA LANDE;47.26293771;-2.43059334
+845;5;Pré neuf;PRE NEUF;47.29276324;-2.52775345
+846;5;Prevenerie;PREVENERIE;47.2972288;-2.36618759
+847;5;Prigny;PRIGNY;47.06518041;-1.98299065
+848;5;Procé;PROCE;47.36041644;-1.56404142
+849;5;Promenade;PROMENADE;47.27423696;-2.42571775
+850;5;Promota;PROMOTA;47.40188767;-2.48843187
+851;5;Provence;PROVENCE;47.70960372;-1.37895188
+852;5;Provost;PROVOST;47.2859716;-2.50750771
+853;5;Quai;QUAI;47.2888159;-2.0273428
+854;5;Quai bliesransbach;QUAI BLIESRANSBACH;47.33921006;-1.52721637
+855;5;Quelnet;QUELNET;47.46567441;-2.3325461
+856;5;Quiételais;QUIETELAIS;47.24823795;-1.73721254
+857;5;Quimiac;QUIMIAC;47.40633945;-2.48441421
+858;5;Quirouard;QUIROUARD;47.12896231;-2.20661829
+859;5;Rairie;RAIRIE;47.13886843;-1.57919983
+860;5;Ranrouet;RANROUET;47.44442827;-2.31160144
+861;5;Raoul dufy;RAOUL DUFY;47.22262133;-1.59957793
+862;5;Rd point de la belle etoile;RD POINT DE LA BELLE ETOILE;47.51660117;-1.80220028
+863;5;Rd-pt de paris;RD-PT DE PARIS;47.23389748;-1.53571196
+864;5;Recouvrance;RECOUVRANCE;47.07790854;-1.24033573
+865;5;Recteur schmit;RECTEUR SCHMIT;47.252325;-1.552858
+866;5;René cassin;RENE CASSIN;47.26442499;-1.57554648
+867;5;René moritz;RENE MORITZ;47.28203361;-2.02810635
+868;5;Rennes longchamp;RENNES LONGCHAMP;47.23841678;-1.57036877
+869;5;République;REPUBLIQUE;47.28083179;-2.21174792
+870;5;République;REPUBLIQUE;47.71754644;-1.38344867
+871;5;Réségerie;RESEGERIE;47.47070514;-1.17574491
+872;5;Roche mathieu;ROCHE MATHIEU;47.27207125;-2.47691283
+873;5;RochEre;ROCHERE;47.34341545;-1.60686145
+874;5;Rohello;ROHELLO;47.29569135;-2.52030302
+875;5;Rond point de breil;ROND POINT DE BREIL;47.28130608;-2.37651266
+876;5;Rond point edf;ROND POINT EDF;47.12258061;-2.1196184
+877;5;Rotz;ROTZ;47.39933539;-2.15241337
+878;5;Route d'ancenis;ROUTE D'ANCENIS;47.71288946;-1.37129424
+879;5;Route d'angers;ROUTE D'ANGERS;47.70962175;-1.36983886
+880;5;Route de paimboeuf;ROUTE DE PAIMBOEUF;47.19914748;-1.88730909
+881;5;Route de paimboeuf;ROUTE DE PAIMBOEUF;47.25614257;-2.0140106
+882;5;Route de remouillé;ROUTE DE REMOUILLE;47.08029376;-1.34222059
+883;5;Route de sucé;ROUTE DE SUCE;47.34421963;-1.47899685
+884;5;Route de vandel;ROUTE DE VANDEL;47.33295126;-1.33104782
+885;5;Route du bile;ROUTE DU BILE;47.45987062;-2.4771712
+886;5;Route du temple;ROUTE DU TEMPLE;47.27753174;-1.78161942
+887;5;Royal;ROYAL;47.28286419;-2.40844431
+888;5;Rue de la gare;RUE DE LA GARE;47.25242004;-2.02078118
+889;5;Rue de nantes n°40;RUE DE NANTES N°40;47.27735973;-1.77862198
+890;5;Rue de verdun;RUE DE VERDUN;47.72595809;-1.38456837
+891;5;Rue du marais;RUE DU MARAIS;47.03805202;-1.64813523
+892;5;Rue du pont;RUE DU PONT;47.46042381;-1.27645029
+893;5;Rue du port;RUE DU PORT;47.0399191;-1.64177224
+894;5;Sable menu;SABLE MENU;47.28820997;-2.52145478
+895;5;Saint georges;SAINT GEORGES;47.43997709;-1.4916247
+896;5;Saint guillaume;SAINT GUILLAUME;47.42200992;-2.12082249
+897;5;Saint martin;SAINT MARTIN;47.1328086;-1.42265207
+898;5;Saint-blais;SAINT-BLAIS;47.25194176;-1.70777276
+899;5;Saint-brévin l'océan;SAINT-BREVIN L'OCEAN;47.23095256;-2.17567559
+900;5;Saint-eloi;SAINT-ELOI;47.41712221;-1.8940742
+901;5;Saint-etienne de corcoué;SAINT-ETIENNE DE CORCOUE;46.9662299;-1.57657069
+902;5;Saint-goustan;SAINT-GOUSTAN;47.30038944;-2.52994948
+903;5;Saint-jean de corcoué;SAINT-JEAN DE CORCOUE;46.9634495;-1.58400083
+904;5;Saint-jean de dieu;SAINT-JEAN DE DIEU;47.30038797;-2.52238438
+905;5;Saint-jean-baptiste;SAINT-JEAN-BAPTISTE;47.2334723;-1.5601631
+906;5;Saint-lomer;SAINT-LOMER;47.44663283;-2.02903317
+907;5;Saint-louis;SAINT-LOUIS;47.50960024;-1.39859892
+908;5;Saint-sébastien de piriac;SAINT-SEBASTIEN DE PIRIAC;47.36727604;-2.51633958
+909;5;Saint-servais;SAINT-SERVAIS;47.30128535;-2.3713606
+910;5;Sainte thérEse;SAINTE THERESE;47.23376028;-1.57445527
+911;5;Sarcelles;SARCELLES;47.28079126;-2.41718399
+912;5;Sarradin;SARRADIN;47.22049876;-1.57015808
+913;5;Sautron;SAUTRON;47.26512625;-2.22498097
+914;5;Schweitzer;SCHWEITZER;47.32646878;-2.15930306
+915;5;Sensive;SENSIVE;47.26202511;-1.34291978
+916;5;SionniEre;SIONNIERE;47.31659036;-1.63748334
+917;5;Sissac;SISSAC;47.36369882;-2.52662371
+918;5;Six croix;SIX CROIX;47.3410014;-2.09475805
+919;5;Sorloc;SORLOC;47.41595385;-2.47208297
+920;5;Soursac;SOURSAC;47.40074267;-2.4932082
+921;5;Square kerbez;SQUARE KERBEZ;47.28828808;-2.02992643
+922;5;St-clément;ST-CLEMENT;47.22202557;-1.54699374
+923;5;St-donatien;ST-DONATIEN;47.22913181;-1.54057145
+924;5;St-nicolas;ST-NICOLAS;47.21564632;-1.55981093
+925;5;St-paul salengro;ST-PAUL SALENGRO;47.18484624;-1.54618832
+926;5;Stade de La ChevroliEre;STADE DE LA CHEVROLIERE;47.09082829;-1.61534195
+927;5;Stade de Pont-Saint-Martin;STADE DE PONT-SAINT-MARTIN;47.12732458;-1.58122923
+928;5;Stade de Saint-PEre-en-Retz;STADE DE SAINT-PERE-EN-RETZ;47.20489308;-2.04002544
+929;5;Stade de Saint-Lyphard;STADE DE SAINT-LYPHARD;47.40043584;-2.30577759
+930;5;Stade de Herbignac;STADE DE HERBIGNAC;47.44234738;-2.33076749
+931;5;Stade de La Baule-Escoublac;STADE DE LA BAULE-ESCOUBLAC;47.28015592;-2.42426768
+932;5;Stade de Le Croisic;STADE DE LE CROISIC;47.28765443;-2.51429982
+933;5;Stade-la fuie;STADE-LA FUIE;47.24735514;-1.94609975
+934;5;Ste-marie-sur-mer;STE-MARIE-SUR-MER;47.11442146;-2.12928037
+935;5;Sterwitz;STERWITZ;47.28230401;-2.42899185
+936;5;Super u;SUPER U;47.204892;-2.043834
+937;5;Tacon;TACON;47.41665014;-1.24885417
+938;5;Talensac;TALENSAC;47.22145182;-1.55589886
+939;5;Telegraphe;TELEGRAPHE;47.28978089;-1.60725484
+940;5;Tennis;TENNIS;47.28221606;-2.41131533
+941;5;Terrain des sports;TERRAIN DES SPORTS;46.96856777;-1.4368951
+942;5;Terres-aux-moines;TERRES-AUX-MOINES;47.11885803;-2.12602131
+943;5;Terres-jarries;TERRES-JARRIES;47.12237217;-2.11759084
+944;5;Tharon;THARON;47.164939;-2.1642551
+945;5;Toullain;TOULLAIN;47.26616342;-2.42210682
+946;5;Tour eiffel;TOUR EIFFEL;47.19965379;-1.75452852
+947;5;Tournebride;TOURNEBRIDE;47.07933967;-1.56837865
+948;5;Tournebride;TOURNEBRIDE;47.31621631;-1.47832314
+949;5;Tourneuve;TOURNEUVE;47.27926883;-1.59831947
+950;5;Toutes aides;TOUTES AIDES;47.22620979;-1.52281356
+951;5;Tranchée;TRANCHEE;47.27687188;-2.2293994
+952;5;Tranchée;TRANCHEE;47.37748237;-2.54258348
+953;5;Transformateur;TRANSFORMATEUR;47.68405595;-1.68398894
+954;5;Trelan;TRELAN;47.55832656;-1.80982375
+955;5;Tréméac;TREMEAC;47.286671;-2.37882077
+956;5;Trevigale;TREVIGALE;47.39652094;-2.47023991
+957;5;Trevin;TREVIN;47.39441266;-2.44893355
+958;5;Trinité;TRINITE;47.72207586;-1.38077583
+959;5;Trois fontaines;TROIS FONTAINES;47.29036888;-2.36493586
+960;5;Trois moulins;TROIS MOULINS;47.17810558;-1.54411433
+961;5;Tromartin;TROMARTIN;47.3112466;-2.40925197
+962;5;TurballiEre;TURBALLIERE;47.33502509;-1.53488604
+963;5;Val du cens;VAL DU CENS;47.26126546;-1.66612493
+964;5;Valentin;VALENTIN;47.27824638;-2.4819319
+965;5;Vandel;VANDEL;47.33072451;-1.327455
+966;5;Vannerie;VANNERIE;47.0604306;-1.63174929
+967;5;Vaux;VAUX;47.36018386;-1.52129334
+968;5;Vecquerie;VECQUERIE;47.25683089;-2.25935815
+969;5;Viais;VIAIS;47.11864955;-1.53773064
+970;5;Victor hugo;VICTOR HUGO;47.280753;-2.216346
+971;5;Vierge logne;VIERGE LOGNE;47.33073011;-1.5124106
+972;5;Vieux moulin;VIEUX MOULIN;47.09073737;-1.62926162
+973;5;Villages;VILLAGES;47.20500886;-1.30600676
+974;5;Ville aux fèves;VILLE AUX FEVES;47.27984275;-2.34499862
+975;5;Ville aux roses;VILLE AUX ROSES;47.71011691;-1.38131205
+976;5;Ville halgand;VILLE HALGAND;47.28107867;-2.35051269
+977;5;Ville halluard;VILLE HALLUARD;47.284606;-2.204098
+978;5;Ville james;VILLE JAMES;47.32207602;-2.40819778
+979;5;Ville port;VILLE PORT;47.27478953;-2.20392861
+980;5;Villeneuve;VILLENEUVE;47.30368028;-2.38139057
+981;5;Vvf;VVF;47.27986266;-2.48738432
+982;5;Z.i. de brais;Z.I. DE BRAIS;47.29836955;-2.29571111
+983;5;Za de kergoulinet;ZA DE KERGOULINET;47.39333888;-2.46012438
+984;5;Za de l'érette;ZA DE L'ERETTE;47.37761413;-1.64465485
+985;5;Za des bauches;ZA DES BAUCHES;47.6322733;-2.05244816
+986;5;Zone industrielle;ZONE INDUSTRIELLE;47.10071858;-1.60296323
 
 #Lignes
 INSERT INTO lignes(_id, code, lettre, depuis, vers, couleur, type) VALUES (?, ?, ?, ?, ?, ?, ?);
