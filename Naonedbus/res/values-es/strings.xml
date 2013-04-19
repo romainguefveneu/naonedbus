@@ -7,6 +7,7 @@
   <string name="yesterday">Ayer</string>
   <string name="tomorrow">Mañana</string>
   <string name="loading">Cargando...</string>
+  <string name="emptyString"></string>
   <string name="updating">Actualizando...</string>
   <string name="setup">Instalando...</string>
   <string name="copy">Copiar</string>
@@ -164,8 +165,8 @@
   <string name="source_tan_actus">\@tan_actus en Twitter\n(cuenta oficial de la SEMITAN)</string>
   <string name="source_naonedbus_service">Discovery One</string>
   <string name="source_taninfos">\@TANinfos en Twitter \n(cuenta no afiliada a la SEMITAN)</string>
-  <string name="parking_section_disponible">Muchas plazas de aparcamiento</string>
-  <string name="parking_section_limite">Pocas plazas de aparcamiento</string>
+  <string name="parking_section_disponible">Muchas plazas</string>
+  <string name="parking_section_limite">Pocas plazas</string>
   <string name="parking_section_info">Noticias</string>
   <string name="parking_section_carte">En el mapa</string>
   <string name="parking">Aparcamiento</string>
