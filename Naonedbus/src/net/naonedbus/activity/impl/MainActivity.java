@@ -30,6 +30,7 @@ import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.DatabaseActionListener;
+import net.naonedbus.provider.DatabaseVersions;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.service.FavoriService;
 import android.content.Intent;
@@ -57,12 +58,12 @@ public class MainActivity extends SlidingMenuActivity {
 	private final DatabaseActionListener mListener = new DatabaseActionListener() {
 
 		@Override
-		public void onUpgrade(final int oldVersion, final boolean isPreAcapulco) {
+		public void onUpgrade(final int oldVersion) {
 			MainActivity.this.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
 					showSetupView(R.string.updating);
-					if (isPreAcapulco) {
+					if (oldVersion < DatabaseVersions.ACAPULCO) {
 						mFirstLaunch = true;
 						showTutorial();
 					}

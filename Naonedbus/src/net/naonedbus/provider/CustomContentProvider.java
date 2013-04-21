@@ -84,9 +84,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final String LOG_TAG = "CoreDatabase";
 		private static final boolean DBG = BuildConfig.DEBUG;
 
-		private static final int DB_VERSION_ACAPULCO = 11;
-
-		private static final int DB_VERSION = 12;
+		private static final int DB_VERSION = DatabaseVersions.ACAPULCO_MR1;
 		private static final String DB_NAME = "data.db";
 
 		private final CompressedQueriesHelper mCompressedQueriesHelper;
@@ -137,7 +135,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 			TimeLogUtils timeLogUtils;
 
 			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.onUpgrade(oldVersion, oldVersion < DB_VERSION_ACAPULCO);
+				CustomContentProvider.databaseActionListener.onUpgrade(oldVersion);
 			}
 
 			if (DBG) {

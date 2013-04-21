@@ -33,10 +33,11 @@ public class UpdaterProvider extends ReadOnlyContentProvider {
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/");
 
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs,
+			final String sortOrder) {
+		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables("android_metadata");
-		return queryBuilder.query(getReadableDatabase(), null, null, null, null, null, null);
+		return queryBuilder.query(getWritableDatabase(), null, null, null, null, null, null);
 	}
 
 }
