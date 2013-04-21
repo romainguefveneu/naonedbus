@@ -30,8 +30,8 @@ public interface DatabaseActionListener {
 	void onCreate();
 
 	/**
-	 * Indique que la base est en cour de mise à jour.
+	 * Indique que la base est en cours de mise à jour.
 	 */
-	void onUpgrade(int oldVersion);
+	void onUpgrade(int oldVersion, boolean isPreAcapulco);
 
 }

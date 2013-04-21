@@ -38,6 +38,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bugsense.trace.BugSenseHandler;
+
 public class MainActivity extends SlidingMenuActivity {
 
 	private static int[] titles = new int[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
@@ -55,14 +57,15 @@ public class MainActivity extends SlidingMenuActivity {
 	private final DatabaseActionListener mListener = new DatabaseActionListener() {
 
 		@Override
-		public void onUpgrade(final int oldVersion) {
+		public void onUpgrade(final int oldVersion, final boolean isPreAcapulco) {
 			MainActivity.this.runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					mFirstLaunch = true;
 					showSetupView(R.string.updating);
-					if (oldVersion < 11)
+					if (isPreAcapulco) {
+						mFirstLaunch = true;
 						showTutorial();
+					}
 				}
 			});
 		}
@@ -88,8 +91,9 @@ public class MainActivity extends SlidingMenuActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		setTitle(R.string.title_activity_main);
-
 		super.onCreate(savedInstanceState);
+
+		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
 
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();
