@@ -145,10 +145,11 @@ public abstract class CustomContentProvider extends ContentProvider {
 				timeLogUtils.start();
 			}
 
-			final int versionBeforeUpdateResId = mContext.getResources().getIdentifier(
-					"sql_before_update_v" + oldVersion, "raw", mContext.getPackageName());
-			final int versionAfterUpdateResId = mContext.getResources().getIdentifier(
-					"sql_after_update_v" + oldVersion, "raw", mContext.getPackageName());
+			// Quick fix : Update favorisGroupes id
+			final int versionBeforeUpdateResId = oldVersion >= DatabaseVersions.ACAPULCO ? R.raw.sql_before_update_v11
+					: 0;
+			final int versionAfterUpdateResId = oldVersion >= DatabaseVersions.ACAPULCO ? R.raw.sql_after_update_v11
+					: 0;
 
 			execute(db, versionBeforeUpdateResId, R.raw.sql_before_update, R.raw.sql_create);
 			executeBulk(db, R.raw.sql_data);
@@ -156,7 +157,6 @@ public abstract class CustomContentProvider extends ContentProvider {
 
 			if (DBG)
 				timeLogUtils.step("Fin de la mise à jour");
-
 		}
 
 		/**
