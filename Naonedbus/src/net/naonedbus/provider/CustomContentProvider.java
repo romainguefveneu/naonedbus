@@ -87,10 +87,12 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final int DB_VERSION = DatabaseVersions.ACAPULCO_MR1;
 		private static final String DB_NAME = "data.db";
 
+		private final Context mContext;
 		private final CompressedQueriesHelper mCompressedQueriesHelper;
 
 		public CoreDatabase(final Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
+			mContext = context;
 			mCompressedQueriesHelper = new CompressedQueriesHelper(context);
 		}
 
@@ -142,9 +144,15 @@ public abstract class CustomContentProvider extends ContentProvider {
 				timeLogUtils = new TimeLogUtils(LOG_TAG);
 				timeLogUtils.start();
 			}
-			execute(db, R.raw.sql_before_update, R.raw.sql_create);
+
+			final int versionBeforeUpdateResId = mContext.getResources().getIdentifier(
+					"sql_before_update_v" + oldVersion, "raw", mContext.getPackageName());
+			final int versionAfterUpdateResId = mContext.getResources().getIdentifier(
+					"sql_after_update_v" + oldVersion, "raw", mContext.getPackageName());
+
+			execute(db, versionBeforeUpdateResId, R.raw.sql_before_update, R.raw.sql_create);
 			executeBulk(db, R.raw.sql_data);
-			execute(db, R.raw.sql_after_update);
+			execute(db, R.raw.sql_after_update, versionAfterUpdateResId);
 
 			if (DBG)
 				timeLogUtils.step("Fin de la mise à jour");
@@ -162,13 +170,18 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private void execute(final SQLiteDatabase db, final int... resIds) {
 			try {
 				for (final int resId : resIds) {
+					if (resId == 0)
+						continue;
 
 					if (DBG)
-						Log.i(LOG_TAG, "Execution du script " + resId);
+						Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
 
 					final String[] queries = mCompressedQueriesHelper.getQueries(resId);
 
 					for (final String query : queries) {
+						if (DBG)
+							Log.d(LOG_TAG, "\t" + query);
+
 						if (query.trim().length() > 0) {
 							db.execSQL(query);
 						}
@@ -196,7 +209,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 
 				for (final int resId : resIds) {
 					if (DBG)
-						Log.i(LOG_TAG, "Execution du script " + resId);
+						Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
 
 					bulkQueries = mCompressedQueriesHelper.getBulkQueries(resId);
 

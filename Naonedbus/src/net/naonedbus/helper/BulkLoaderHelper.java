@@ -37,10 +37,10 @@ public class BulkLoaderHelper {
 	private static final String COMMENT_TOKEN = "#";
 	private static final char CHAR_PARAM_SPLIT = ';';
 
-	private InputStream inputStream;
-	private List<BulkQuery> bulkQueries;
+	private final InputStream inputStream;
+	private final List<BulkQuery> bulkQueries;
 
-	public BulkLoaderHelper(InputStream inputStream) {
+	public BulkLoaderHelper(final InputStream inputStream) {
 		this.inputStream = inputStream;
 		bulkQueries = new ArrayList<BulkLoaderHelper.BulkQuery>();
 	}
@@ -61,8 +61,7 @@ public class BulkLoaderHelper {
 		String line;
 
 		while ((line = buffer.readLine()) != null) {
-
-			if (line.trim().length() == 0) { // pas de isEmpty() sous 2.1
+			if (line.trim().length() == 0) {
 				changePattern = true;
 				continue;
 			}
@@ -109,7 +108,7 @@ public class BulkLoaderHelper {
 			j = line.indexOf(split, i); // Rest of substrings
 		}
 		temp[wordCount++] = line.substring(i); // Last substring
-		String[] result = new String[wordCount];
+		final String[] result = new String[wordCount];
 		System.arraycopy(temp, 0, result, 0, wordCount);
 		return result;
 	}
@@ -127,7 +126,7 @@ public class BulkLoaderHelper {
 		private List<String[]> values;
 		private int paramCount = 0;
 
-		public BulkQuery(String pattern) {
+		public BulkQuery(final String pattern) {
 			this.values = new ArrayList<String[]>();
 			setPattern(pattern);
 		}
@@ -136,12 +135,12 @@ public class BulkLoaderHelper {
 			return pattern;
 		}
 
-		public void setPattern(String pattern) {
+		public void setPattern(final String pattern) {
 			this.pattern = pattern;
 			this.paramCount = countOccurrences(pattern, paramChar, 0);
 		}
 
-		public void addValues(String[] values) {
+		public void addValues(final String[] values) {
 			if (values.length != paramCount) {
 				throw new IllegalArgumentException("Nombre de paramètres incorrect : " + values.length + " au lieu de "
 						+ paramCount + " attendus. [" + Arrays.toString(values) + "]");
@@ -154,16 +153,16 @@ public class BulkLoaderHelper {
 			return values;
 		}
 
-		public void setValues(List<String[]> values) {
+		public void setValues(final List<String[]> values) {
 			this.values = values;
 		}
 
-		private static int countOccurrences(String haystack, char needle, int index) {
+		private static int countOccurrences(final String haystack, final char needle, final int index) {
 			if (index >= haystack.length()) {
 				return 0;
 			}
 
-			int contribution = haystack.charAt(index) == needle ? 1 : 0;
+			final int contribution = haystack.charAt(index) == needle ? 1 : 0;
 			return contribution + countOccurrences(haystack, needle, index + 1);
 		}
 	}
