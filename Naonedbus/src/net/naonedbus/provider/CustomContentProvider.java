@@ -94,6 +94,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 			super(context, DB_NAME, null, DB_VERSION);
 			mContext = context;
 			mCompressedQueriesHelper = new CompressedQueriesHelper(context);
+			mCompressedQueriesHelper.setNewVersion(DB_VERSION);
 		}
 
 		@Override
@@ -134,6 +135,8 @@ public abstract class CustomContentProvider extends ContentProvider {
 			if (DBG)
 				Log.d(LOG_TAG, "Mise à jour de la base de données.");
 
+			mCompressedQueriesHelper.setOldVersion(oldVersion);
+
 			TimeLogUtils timeLogUtils;
 
 			if (CustomContentProvider.databaseActionListener != null) {
@@ -145,15 +148,9 @@ public abstract class CustomContentProvider extends ContentProvider {
 				timeLogUtils.start();
 			}
 
-			// Quick fix : Update favorisGroupes id
-			final int versionBeforeUpdateResId = oldVersion >= DatabaseVersions.ACAPULCO ? R.raw.sql_before_update_v11
-					: 0;
-			final int versionAfterUpdateResId = oldVersion >= DatabaseVersions.ACAPULCO ? R.raw.sql_after_update_v11
-					: 0;
-
-			execute(db, versionBeforeUpdateResId, R.raw.sql_before_update, R.raw.sql_create);
+			execute(db, R.raw.sql_before_update, R.raw.sql_create);
 			executeBulk(db, R.raw.sql_data);
-			execute(db, R.raw.sql_after_update, versionAfterUpdateResId);
+			execute(db, R.raw.sql_after_update);
 
 			if (DBG)
 				timeLogUtils.step("Fin de la mise à jour");
@@ -176,7 +173,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 					if (DBG)
 						Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
 
-					final String[] queries = mCompressedQueriesHelper.getQueries(resId);
+					final List<String> queries = mCompressedQueriesHelper.getQueries(resId);
 
 					for (final String query : queries) {
 						if (DBG)

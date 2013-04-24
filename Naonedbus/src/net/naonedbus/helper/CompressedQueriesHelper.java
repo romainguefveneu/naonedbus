@@ -23,9 +23,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import net.naonedbus.helper.BulkLoaderHelper.BulkQuery;
-
-import org.apache.commons.io.IOUtils;
-
+import net.naonedbus.sql.LiteScript;
 import android.content.Context;
 
 /**
@@ -34,10 +32,28 @@ import android.content.Context;
  */
 public class CompressedQueriesHelper {
 
-	private Context context;
+	private final Context mContext;
+	private final LiteScript mLiteScript;
 
 	public CompressedQueriesHelper(final Context context) {
-		this.context = context;
+		mContext = context;
+		mLiteScript = new LiteScript();
+	}
+
+	/**
+	 * @param newVersion
+	 *            The new version of the database
+	 */
+	public void setOldVersion(final int oldVersion) {
+		mLiteScript.setOldVersion(oldVersion);
+	}
+
+	/**
+	 * @param newVersion
+	 *            The new version of the database
+	 */
+	public void setNewVersion(final int newVersion) {
+		mLiteScript.setNewVersion(newVersion);
 	}
 
 	/**
@@ -46,9 +62,9 @@ public class CompressedQueriesHelper {
 	 * @param resId
 	 * @return La liste des requêtes.
 	 */
-	public String[] getQueries(int resId) throws IOException {
-		final InputStream inputStream = this.context.getResources().openRawResource(resId);
-		final String[] queries = IOUtils.toString(inputStream).split(";");
+	public List<String> getQueries(final int resId) throws IOException {
+		final InputStream inputStream = mContext.getResources().openRawResource(resId);
+		final List<String> queries = mLiteScript.getQueries(inputStream);
 		inputStream.close();
 		return queries;
 	}
@@ -59,8 +75,8 @@ public class CompressedQueriesHelper {
 	 * @param resId
 	 * @return La liste des requêtes Bulk
 	 */
-	public List<BulkQuery> getBulkQueries(int resId) throws IOException {
-		final InputStream inputStream = this.context.getResources().openRawResource(resId);
+	public List<BulkQuery> getBulkQueries(final int resId) throws IOException {
+		final InputStream inputStream = this.mContext.getResources().openRawResource(resId);
 		final BulkLoaderHelper bulkLoaderHelper = new BulkLoaderHelper(inputStream);
 		return bulkLoaderHelper.getQueries();
 	}

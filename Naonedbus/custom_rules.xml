@@ -40,21 +40,30 @@
 	<target name="-read-release-properties">
 		<property file="./ant-profiles/release.properties" />
 	</target>
+	
+	<target name="-read-integ-properties">
+		<property file="./ant-profiles/integ.properties" />
+	</target>
 
 	<target name="-read-alpha-properties">
 		<property file="./ant-profiles/alpha.properties" />
 	</target>
 	
 	
-	<target name="make-debug" depends="-read-debug-properties,-increase-version,-process-template">
+	<target name="make-debug" depends="-read-debug-properties,-process-template">
 	    <property name="out.final.file" location="${ant.project.name}-debug.apk" />
 		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-debug-unsigned.apk" />
 		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-debug-unsigned-aligned.apk" />
 	</target>
-	<target name="make-alpha" depends="-read-alpha-properties,-increase-version,-process-template">
+	<target name="make-alpha" depends="-read-alpha-properties,-process-template">
 	    <property name="out.final.file" location="${ant.project.name}-alpha.apk" />
 		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-alpha-unsigned.apk" />
 		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-alpha-unsigned-aligned.apk" />
+	</target>
+	<target name="make-integ" depends="-read-integ-properties,-process-template">
+	    <property name="out.final.file" location="${ant.project.name}-integ.apk" />
+		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-integ-unsigned.apk" />
+		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-integ-unsigned-aligned.apk" />
 	</target>
 	<target name="make-release" depends="-read-release-properties,-increase-version,-process-template">
 	    <property name="out.final.file" location="${ant.project.name}-release.apk" />
