@@ -20,10 +20,6 @@ package net.naonedbus.bean;
 
 import android.content.Context;
 
-/**
- * @author romain.guefveneu
- * 
- */
 public class NextHoraireTask {
 
 	private Context mContext;
@@ -37,8 +33,8 @@ public class NextHoraireTask {
 		return mContext;
 	}
 
-	public NextHoraireTask setContext(Context context) {
-		this.mContext = context;
+	public NextHoraireTask setContext(final Context context) {
+		mContext = context;
 		return this;
 	}
 
@@ -46,8 +42,8 @@ public class NextHoraireTask {
 		return mId;
 	}
 
-	public NextHoraireTask setId(int id) {
-		this.mId = id;
+	public NextHoraireTask setId(final int id) {
+		mId = id;
 		return this;
 	}
 
@@ -55,8 +51,8 @@ public class NextHoraireTask {
 		return mArret;
 	}
 
-	public NextHoraireTask setArret(Arret arret) {
-		this.mArret = arret;
+	public NextHoraireTask setArret(final Arret arret) {
+		mArret = arret;
 		return this;
 	}
 
@@ -64,8 +60,8 @@ public class NextHoraireTask {
 		return mLimit;
 	}
 
-	public NextHoraireTask setLimit(int limit) {
-		this.mLimit = limit;
+	public NextHoraireTask setLimit(final int limit) {
+		mLimit = limit;
 		return this;
 	}
 
@@ -73,12 +69,12 @@ public class NextHoraireTask {
 		return mActionCallback;
 	}
 
-	public NextHoraireTask setActionCallback(String actionCallback) {
-		this.mActionCallback = actionCallback;
+	public NextHoraireTask setActionCallback(final String actionCallback) {
+		mActionCallback = actionCallback;
 		return this;
 	}
 
-	public void setThrowable(Throwable t) {
+	public void setThrowable(final Throwable t) {
 		mThrowable = t;
 	}
 
@@ -86,8 +82,9 @@ public class NextHoraireTask {
 		return mThrowable;
 	}
 
+	@Override
 	public String toString() {
-		return String.format("%d|%s|%d|%s", this.mId, this.mArret.codeArret, this.mLimit, this.mActionCallback);
+		return String.format("%d|%s|%d|%s", mId, mArret.toString(), mLimit, mActionCallback);
 	}
 
 }

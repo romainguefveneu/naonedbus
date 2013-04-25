@@ -95,19 +95,6 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	/**
-	 * Indique si une date est postérieure à la date limite du cache.
-	 * 
-	 * @param date
-	 *            La date à tester.
-	 * @return {@code true} si la date est postérieure à la date limite du
-	 *         cache, {@code false} sinon.
-	 */
-	public boolean isDateAfterCacheLimit(final DateMidnight date) {
-		final DateMidnight dateMax = new DateMidnight().plusDays(DAYS_IN_CACHE);
-		return date.isAfter(dateMax);
-	}
-
-	/**
 	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée
 	 * 
 	 * @return {@code true} si le cache contient tous les horaires pour l'arret
@@ -233,9 +220,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 				fillDB(contentResolver, arret, flag, horaires);
 
 			}
-			//
-			// Charger les horaires depuis la base
 
+			// Charger les horaires depuis la base
 			final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
 			builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
 			builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret._id));
@@ -356,26 +342,35 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		public void run() {
 			if (DBG)
 				Log.i(LOG_TAG, "Démarrage du thread de chargement des horaires");
-			NextHoraireTask task;
+
 			final DateMidnight today = new DateMidnight();
+			NextHoraireTask task;
 
 			while ((task = horairesTasksQueue.poll()) != null) {
 				if (!isInDB(task.getContext().getContentResolver(), task.getArret(), today)) {
-					load(task);
+					load(task, today);
 				}
 			}
+
 			if (DBG)
 				Log.i(LOG_TAG, "Fin du thread de chargement des horaires");
 		}
 
-		private void load(final NextHoraireTask task) {
+		private void load(final NextHoraireTask task, final DateMidnight today) {
 			if (DBG)
 				Log.d(LOG_TAG, "Récupération des horaires de l'arrêt " + task.getArret().codeArret);
 
 			try {
-				getNextHoraires(task.getContext().getContentResolver(), task.getArret(), new DateMidnight(),
-						task.getLimit());
+
+				getNextHoraires(task.getContext().getContentResolver(), task.getArret(), today, task.getLimit());
+
+			} catch (final IOException e) {
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur de récupération des horaires de l'arrêt " + task.getArret().codeArret, e);
+				task.setThrowable(e);
 			} catch (final Exception e) {
+				if (DBG)
+					Log.e(LOG_TAG, "Erreur de récupération des horaires de l'arrêt " + task.getArret().codeArret, e);
 				task.setThrowable(e);
 				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 			}

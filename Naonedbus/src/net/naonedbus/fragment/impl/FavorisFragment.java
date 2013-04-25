@@ -94,7 +94,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
-import com.bugsense.trace.BugSenseHandler;
 
 public class FavorisFragment extends CustomListFragment implements CustomFragmentActions, OnItemLongClickListener,
 		MyLocationListener, ActionMode.Callback {
@@ -724,7 +723,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 					}
 				}
 			} catch (final IOException e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 				result = false;
 			}
 

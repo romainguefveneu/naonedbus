@@ -63,8 +63,6 @@ import android.view.View.MeasureSpec;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import com.bugsense.trace.BugSenseHandler;
-
 /**
  * @author romain.guefveneu
  * 
@@ -201,7 +199,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				prepareWidgetAndloadHoraires(context, views, favori, appWidgetId);
 			}
 		} catch (final IOException e) {
-			BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
+			if (DBG)
+				Log.e(LOG_TAG, "Erreur lors du chargement des horaires", e);
 		}
 	}
 

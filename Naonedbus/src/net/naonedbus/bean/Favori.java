@@ -42,4 +42,9 @@ public class Favori extends Arret implements SectionItem {
 		return section;
 	}
 
+	@Override
+	public String toString() {
+		return "[" + codeLigne + "," + codeSens + "," + codeArret + "]";
+	}
+
 }
