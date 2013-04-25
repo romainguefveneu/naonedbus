@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="naonedbus-custom" default="help">
 
-	<target name="-increase-version">
-        <propertyfile file="version.properties">
-            <entry key="version.build" type="int" operation="+" value="1" />
-        </propertyfile>
-        <property file="version.properties" />
-    </target>
-	
 	<target name="-process-template">
 		<exec executable="git" outputproperty="git.revision">
 			<arg value="rev-parse"/>
@@ -65,7 +57,7 @@
 		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-integ-unsigned.apk" />
 		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-integ-unsigned-aligned.apk" />
 	</target>
-	<target name="make-release" depends="-read-release-properties,-increase-version,-process-template">
+	<target name="make-release" depends="-read-release-properties,-process-template">
 	    <property name="out.final.file" location="${ant.project.name}-release.apk" />
 		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-release-unsigned.apk" />
 		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-release-unsigned-aligned.apk" />
