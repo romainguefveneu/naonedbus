@@ -168,7 +168,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		final Arret arret = commentaire.getArret();
 
 		if (ligne != null) {
-			setLineColor(ligne.couleurBackground, ligne.code);
+			setLineColor(ligne.couleurBackground, ligne.lettre);
 			mHeaderHelper.setTitle(ligne.nom);
 		} else {
 			setLineColor(Color.TRANSPARENT, "");
@@ -194,9 +194,9 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 	}
 
-	public void setLineColor(final int color, final String codeLigne) {
+	public void setLineColor(final int color, final String lettre) {
 		setHeaderBackgroundColor(color);
-		mHeaderHelper.setCode(codeLigne);
+		mHeaderHelper.setCode(lettre);
 	}
 
 	private void setHeaderBackgroundColor(final int color) {
