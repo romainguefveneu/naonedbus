@@ -23,7 +23,9 @@ import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import net.naonedbus.bean.Arret;
@@ -31,7 +33,6 @@ import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.rest.UrlBuilder;
 import net.naonedbus.rest.container.HoraireContainer;
 import net.naonedbus.rest.container.HoraireContainer.HoraireNode;
-import net.naonedbus.rest.container.HoraireContainer.NoteNode;
 import net.naonedbus.rest.controller.RestController;
 
 import org.joda.time.DateMidnight;
@@ -39,12 +40,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.text.TextUtils;
 import android.util.Log;
 
-/**
- * @author romain.guefveneu
- * 
- */
+@SuppressLint("SimpleDateFormat")
 public class HoraireController extends RestController<HoraireContainer> {
 
 	private static final String LOG_TAG = HoraireController.class.getSimpleName();
@@ -75,7 +75,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	public List<Horaire> getAllFromWeb(Arret arret, DateMidnight date) throws IOException {
+	public List<Horaire> getAllFromWeb(final Arret arret, final DateMidnight date) throws IOException {
 		final UrlBuilder url = new UrlBuilder(PATH);
 		long timeOffset = date.getMillis();
 		final List<Horaire> result = new ArrayList<Horaire>();
@@ -85,27 +85,23 @@ public class HoraireController extends RestController<HoraireContainer> {
 		url.addSegment(arret.codeLigne);
 		url.addSegment(arret.codeSens);
 		url.addSegment(dateFormat.format(date.toDate()));
-		HoraireContainer content = parseJsonObject(url.getUrl());
+		final HoraireContainer content = parseJsonObject(url.getUrl());
 
 		if (content != null) {
 			horaires = content.horaires;
 			// Transformation des horaires TAN en horaire naonedbus.
-			Horaire horaire;
-			String heure;
-			for (HoraireNode horaireTan : horaires) {
-				heure = horaireTan.heure;
+			for (final HoraireNode horaireTan : horaires) {
+				final String heure = horaireTan.heure;
+
 				// Changement de jour
 				if (heure.equals("0h")) {
 					timeOffset = date.plusDays(1).getMillis();
 				}
-				for (String minute : horaireTan.passages) {
-					horaire = new Horaire();
+				for (final String minute : horaireTan.passages) {
+					final Horaire horaire = new Horaire();
 					horaire.setDayTrip(date.getMillis());
-					try {
-						horaire.setTimestamp(timeOffset + dateDecode.parse(heure + minute).getTime());
-					} catch (ParseException e) {
-						Log.e(LOG_TAG, "Erreur de convertion.", e);
-					}
+					horaire.setTimestamp(parseTimestamp(heure, minute, timeOffset));
+					horaire.setTerminus(parseTerminus(minute, content.notes));
 					horaire.setSection(new DateMidnight(horaire.getTimestamp()));
 					result.add(horaire);
 				}
@@ -113,6 +109,24 @@ public class HoraireController extends RestController<HoraireContainer> {
 		}
 
 		return result;
+	}
+
+	private long parseTimestamp(final String heure, final String minute, final long timeOffset) {
+		long timestamp = 0;
+		try {
+			timestamp = timeOffset + dateDecode.parse(heure + minute).getTime();
+		} catch (final ParseException e) {
+			Log.e(LOG_TAG, "Erreur de convertion.", e);
+		}
+		return timestamp;
+	}
+
+	private String parseTerminus(final String minute, final Map<String, String> notes) {
+		if (TextUtils.isDigitsOnly(minute)) {
+			return null;
+		}
+		final String code = minute.replaceAll("[0-9]", "");
+		return notes.get(code);
 	}
 
 	@Override
@@ -131,20 +145,21 @@ public class HoraireController extends RestController<HoraireContainer> {
 		return container;
 	}
 
-	private List<HoraireContainer.NoteNode> parseNotes(final JSONArray array) throws JSONException {
-		final List<HoraireContainer.NoteNode> notes = new ArrayList<HoraireContainer.NoteNode>();
+	private Map<String, String> parseNotes(final JSONArray array) throws JSONException {
+		final Map<String, String> notes = new HashMap<String, String>();
 		JSONObject object;
 
 		for (int i = 0; i < array.length(); i++) {
 			object = array.getJSONObject(i);
 
-			final NoteNode note = new NoteNode();
+			String code = null;
+			String libelle = null;
 			if (object.has(TAG_NOTES_CODE))
-				note.code = object.getString(TAG_NOTES_CODE);
+				code = object.getString(TAG_NOTES_CODE);
 			if (object.has(TAG_NOTES_LIBELLE))
-				note.libelle = object.getString(TAG_NOTES_LIBELLE);
+				libelle = object.getString(TAG_NOTES_LIBELLE);
 
-			notes.add(note);
+			notes.put(code, libelle);
 		}
 
 		return notes;
@@ -179,7 +194,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	}
 
 	@Override
-	protected JSONObject toJsonObject(HoraireContainer item) throws JSONException {
+	protected JSONObject toJsonObject(final HoraireContainer item) throws JSONException {
 		return null;
 	}
 

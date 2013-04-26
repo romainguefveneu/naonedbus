@@ -19,23 +19,16 @@
 package net.naonedbus.rest.container;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/**
- * @author romain.guefveneu
- * 
- */
 public class HoraireContainer {
 
 	public String codeCouleur;
 	public String plageDeService;
-	public List<NoteNode> notes = new ArrayList<NoteNode>();
 	public List<HoraireNode> horaires = new ArrayList<HoraireNode>();
-
-	public static class NoteNode {
-		public String code;
-		public String libelle;
-	}
+	public Map<String, String> notes = new HashMap<String, String>();
 
 	public static class HoraireNode {
 		public String heure;

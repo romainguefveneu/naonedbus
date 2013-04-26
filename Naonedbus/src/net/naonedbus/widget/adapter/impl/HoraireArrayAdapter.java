@@ -24,7 +24,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.horaire.EmptyHoraire;
 import net.naonedbus.bean.horaire.Horaire;
-import net.naonedbus.utils.DrawableUtils;
+import net.naonedbus.widget.ClockDrawer;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -40,18 +40,21 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 	final float mClockHandWidth;
 	final float mClockHandHeight;
 	final int mClockSize;
+	final ClockDrawer mClockDrawer;
 
-	public HoraireArrayAdapter(Context context, List<Horaire> objects) {
+	public HoraireArrayAdapter(final Context context, final List<Horaire> objects) {
 		super(context, R.layout.list_item_horaire, objects);
 		mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
 
 		mClockHandWidth = context.getResources().getDimension(R.dimen.clock_hand_width);
 		mClockHandHeight = context.getResources().getDimension(R.dimen.clock_hand_height);
 		mClockSize = context.getResources().getDimensionPixelSize(R.dimen.clock_icon_size);
+
+		mClockDrawer = new ClockDrawer(mClockHandWidth, mClockHandHeight);
 	}
 
 	@Override
-	public boolean isEnabled(int position) {
+	public boolean isEnabled(final int position) {
 		final Horaire item = getItem(position);
 		if (item instanceof EmptyHoraire)
 			return false;
@@ -59,7 +62,7 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 	}
 
 	@Override
-	public void bindView(View view, Context context, int position) {
+	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Horaire item = getItem(position);
 
@@ -70,26 +73,19 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 		}
 	}
 
-	private void bindHoraireView(ViewHolder holder, Horaire item) {
+	private void bindHoraireView(final ViewHolder holder, final Horaire item) {
 		holder.itemTitle.setText(mTimeFormat.format(item.getDate()));
 		holder.itemTitle.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
 		holder.itemTitle.setEnabled(true);
 
-		if (item.getTerminus() != null) {
-			holder.itemDescription.setText(item.getTerminus());
-			holder.itemDescription.setVisibility(View.VISIBLE);
-		} else {
-			holder.itemDescription.setVisibility(View.GONE);
-		}
+		final String terminus = item.getTerminus();
+		holder.itemDescription.setText(terminus);
+		holder.itemDescription.setVisibility(terminus == null ? View.GONE : View.VISIBLE);
 
-		if (item.getDelai() != null) {
-			holder.itemTime.setText(item.getDelai());
-			holder.itemTime.setVisibility(View.VISIBLE);
-		} else {
-			holder.itemTime.setVisibility(View.GONE);
-		}
+		final String delai = item.getDelai();
+		holder.itemTime.setText(delai);
+		holder.itemTime.setVisibility(delai == null ? View.GONE : View.VISIBLE);
 
-		final Bitmap bitmap = Bitmap.createBitmap(mClockSize, mClockSize, Bitmap.Config.ARGB_8888);
 		int color;
 
 		if (item.isBeforeNow()) {
@@ -101,20 +97,27 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 			holder.itemDescription.setEnabled(true);
 			color = Color.BLACK;
 		}
-		DrawableUtils.drawClockBitmap(bitmap, color, mClockHandWidth, mClockHandHeight, item.getDate());
-		holder.itemIcon.setImageBitmap(bitmap);
+
+		if (holder.bitmap == null) {
+			holder.bitmap = Bitmap.createBitmap(mClockSize, mClockSize, Bitmap.Config.ARGB_8888);
+		}
+
+		mClockDrawer.drawClockBitmap(holder.bitmap, color, item.getDate());
+
+		holder.itemIcon.setImageBitmap(holder.bitmap);
 		holder.itemIcon.setVisibility(View.VISIBLE);
 	}
 
-	private void bindEmptyView(ViewHolder holder, EmptyHoraire item) {
+	private void bindEmptyView(final ViewHolder holder, final EmptyHoraire item) {
 		holder.itemTitle.setText(item.getTextId());
 		holder.itemTitle.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 		holder.itemTitle.setEnabled(false);
 		holder.itemIcon.setVisibility(View.GONE);
+		holder.itemDescription.setVisibility(View.GONE);
 	}
 
 	@Override
-	public void bindViewHolder(View view) {
+	public void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
@@ -128,6 +131,7 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 		TextView itemTitle;
 		TextView itemDescription;
 		TextView itemTime;
+		Bitmap bitmap;
 	}
 
 }

@@ -1297,7 +1297,7 @@ INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, lon
 985;5;Za des bauches;ZA DES BAUCHES;47.6322733;-2.05244816
 986;5;Zone industrielle;ZONE INDUSTRIELLE;47.10071858;-1.60296323
 
-#Lignes
+# Lignes
 INSERT INTO lignes(_id, code, lettre, depuis, vers, couleur, type) VALUES (?, ?, ?, ?, ?, ?, ?);
 0;1;1;François Mitterrand / Jamet;Beaujoire / Ranzay;-16745144;1
 1;2;2;Orvault Grand Val;Gare de Pont Rousseau;-1627337;1

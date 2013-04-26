@@ -58,15 +58,15 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int DAYS_IN_CACHE = 3;
-
 	private static final int END_OF_TRIP_HOURS = 4;
 
 	private static Set<HoraireToken> emptyHoraires = new HashSet<HoraireToken>();
 
 	private static HoraireManager instance;
-	private static ConcurrentLinkedQueue<NextHoraireTask> horairesTasksQueue = new ConcurrentLinkedQueue<NextHoraireTask>();
-	private static Thread loadThread;
-	private static HoraireController controller;
+
+	private final HoraireController mController;
+	private final ConcurrentLinkedQueue<NextHoraireTask> mHorairesTasksQueue;
+	private Thread mLoadThread;
 
 	/**
 	 * Make it singleton !
@@ -80,7 +80,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 	private HoraireManager() {
 		super(HoraireProvider.CONTENT_URI);
-		controller = new HoraireController();
+		mController = new HoraireController();
+		mHorairesTasksQueue = new ConcurrentLinkedQueue<NextHoraireTask>();
 	}
 
 	@Override
@@ -211,12 +212,12 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 				if (date.isEqual(currentDay) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
 					final HoraireToken previousFlag = new HoraireToken(date.minusDays(1).getMillis(), arret._id);
 					if (!isInDB(contentResolver, arret, date.minusDays(1)) && (!emptyHoraires.contains(previousFlag))) {
-						horaires = controller.getAllFromWeb(arret, date.minusDays(1));
+						horaires = mController.getAllFromWeb(arret, date.minusDays(1));
 						fillDB(contentResolver, arret, previousFlag, horaires);
 					}
 				}
 
-				horaires = controller.getAllFromWeb(arret, date);
+				horaires = mController.getAllFromWeb(arret, date);
 				fillDB(contentResolver, arret, flag, horaires);
 
 			}
@@ -238,7 +239,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			return horaires;
 
 		} else {
-			return controller.getAllFromWeb(arret, date);
+			return mController.getAllFromWeb(arret, date);
 		}
 	}
 
@@ -323,11 +324,11 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		if (DBG)
 			Log.i(LOG_TAG, "Planification de la tâche " + task);
 
-		horairesTasksQueue.add(task);
-		if (loadThread == null || !loadThread.isAlive()) {
-			loadThread = new Thread(loadHoraireTask);
-			loadThread.setPriority(Thread.MIN_PRIORITY);
-			loadThread.start();
+		mHorairesTasksQueue.add(task);
+		if (mLoadThread == null || !mLoadThread.isAlive()) {
+			mLoadThread = new Thread(loadHoraireTask);
+			mLoadThread.setPriority(Thread.MIN_PRIORITY);
+			mLoadThread.start();
 		}
 	}
 
@@ -346,7 +347,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			final DateMidnight today = new DateMidnight();
 			NextHoraireTask task;
 
-			while ((task = horairesTasksQueue.poll()) != null) {
+			while ((task = mHorairesTasksQueue.poll()) != null) {
 				if (!isInDB(task.getContext().getContentResolver(), task.getArret(), today)) {
 					load(task, today);
 				}

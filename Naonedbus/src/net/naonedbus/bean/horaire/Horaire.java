@@ -20,107 +20,94 @@ package net.naonedbus.bean.horaire;
 
 import java.util.Date;
 
-import net.naonedbus.model.common.IHoraire;
 import net.naonedbus.widget.item.SectionItem;
 
-/**
- * @author romain
- * 
- */
-public class Horaire implements IHoraire, SectionItem {
+public class Horaire implements SectionItem {
 
-	private static final long serialVersionUID = 6005990920131960102L;
+	private int mId;
+	private String mTerminus;
+	private long mDayTrip;
+	private long mTimestamp;
 
-	private Integer id;
-	private String terminus;
-	private Long dayTrip;
-	private Long timestamp;
-
-	private Date date;
-	private String delai;
-	private Object section;
-	private boolean isBeforeNow;
+	private Date mDate;
+	private String mDelai;
+	private Object mSection;
+	private boolean mIsBeforeNow;
 
 	public Horaire() {
 	}
 
-	public Horaire(Horaire horaire) {
-		this.id = horaire.getId();
-		this.dayTrip = horaire.getDayTrip();
-		this.terminus = horaire.getTerminus();
-		this.timestamp = horaire.getTimestamp();
+	public Horaire(final Horaire horaire) {
+		mId = horaire.getId();
+		mDayTrip = horaire.getDayTrip();
+		mTerminus = horaire.getTerminus();
+		mTimestamp = horaire.getTimestamp();
 	}
 
-	@Override
-	public Integer getId() {
-		return id;
+	public int getId() {
+		return mId;
 	}
 
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(final int id) {
+		mId = id;
 	}
 
-	@Override
 	public String getTerminus() {
-		return terminus;
+		return mTerminus;
 	}
 
-	@Override
-	public Long getTimestamp() {
-		return timestamp;
+	public long getTimestamp() {
+		return mTimestamp;
 	}
 
-	public Long getDayTrip() {
-		return dayTrip;
+	public long getDayTrip() {
+		return mDayTrip;
 	}
 
-	public void setDayTrip(Long dayTrip) {
-		this.dayTrip = dayTrip;
+	public void setDayTrip(final long dayTrip) {
+		mDayTrip = dayTrip;
 	}
 
-	@Override
-	public void setTerminus(String terminus) {
-		this.terminus = terminus;
+	public void setTerminus(final String terminus) {
+		mTerminus = terminus;
 	}
 
-	@Override
-	public void setTimestamp(Long timestamp) {
-		this.timestamp = timestamp;
-		this.date = new Date(timestamp);
+	public void setTimestamp(final long timestamp) {
+		mTimestamp = timestamp;
+		mDate = new Date(timestamp);
 	}
 
 	public Date getDate() {
-		return date;
+		return mDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(final Date date) {
+		mDate = date;
 	}
 
 	public String getDelai() {
-		return delai;
+		return mDelai;
 	}
 
-	public void setDelai(String delai) {
-		this.delai = delai;
+	public void setDelai(final String delai) {
+		mDelai = delai;
 	}
 
 	public boolean isBeforeNow() {
-		return isBeforeNow;
+		return mIsBeforeNow;
 	}
 
-	public void setBeforeNow(boolean isBeforeNow) {
-		this.isBeforeNow = isBeforeNow;
+	public void setBeforeNow(final boolean isBeforeNow) {
+		mIsBeforeNow = isBeforeNow;
 	}
 
-	public void setSection(Object section) {
-		this.section = section;
+	public void setSection(final Object section) {
+		mSection = section;
 	}
 
 	@Override
 	public Object getSection() {
-		return section;
+		return mSection;
 	}
 
 }

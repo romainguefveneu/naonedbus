@@ -18,26 +18,21 @@
  */
 package net.naonedbus.bean.horaire;
 
-
-/**
- * @author romain.guefveneu
- * 
- */
 public class HoraireToken {
 
-	private Long date;
-	private Integer id;
+	private final Long mDate;
+	private final Integer mId;
 
-	public HoraireToken(Long date, Integer id) {
-		this.date = date;
-		this.id = id;
+	public HoraireToken(final Long date, final Integer id) {
+		mDate = date;
+		mId = id;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (o instanceof HoraireToken) {
-			HoraireToken element = (HoraireToken) o;
-			return (element.date.equals(this.date) && element.id.equals(this.id));
+			final HoraireToken element = (HoraireToken) o;
+			return (element.mDate.equals(mDate) && element.mId.equals(mId));
 		} else {
 			return super.equals(o);
 		}
@@ -45,12 +40,12 @@ public class HoraireToken {
 
 	@Override
 	public int hashCode() {
-		return date.hashCode() * 31 + id.hashCode() * 31;
+		return mDate.hashCode() * 31 + mId.hashCode() * 31;
 	}
 
 	@Override
 	public String toString() {
-		return id + " : " + date;
+		return mId + " : " + mDate;
 	}
 
 }
