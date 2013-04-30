@@ -54,7 +54,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	private final Stack<ParkingPublicTaskInfo> parkingsTasks;
 	private final Object lock = new Object();
 
-	public static ParkingPublicManager getInstance() {
+	public static synchronized ParkingPublicManager getInstance() {
 		if (instance == null) {
 			instance = new ParkingPublicManager();
 		}

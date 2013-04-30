@@ -32,12 +32,12 @@ import java.net.URLEncoder;
  */
 public class UrlBuilder {
 
-	private StringBuilder stringBuilder;
+	private final StringBuilder stringBuilder;
 	private boolean isFirstParameter = true;
 
-	public UrlBuilder(String... params) {
+	public UrlBuilder(final String... params) {
 		stringBuilder = new StringBuilder();
-		for (String string : params) {
+		for (final String string : params) {
 			stringBuilder.append(string);
 		}
 		if (!stringBuilder.toString().endsWith("/")) {
@@ -51,7 +51,7 @@ public class UrlBuilder {
 	 * @param parameter
 	 * @param value
 	 */
-	public void addQueryParameter(String parameter, Object value) {
+	public void addQueryParameter(final String parameter, final Object value) {
 		if (isFirstParameter) {
 			stringBuilder.append("?");
 			isFirstParameter = false;
@@ -72,8 +72,11 @@ public class UrlBuilder {
 	 * 
 	 * @param value
 	 */
-	public void addSegment(String value) {
-		stringBuilder.append("/").append(value);
+	public void addSegment(final String value) {
+		if (!stringBuilder.toString().endsWith("/")) {
+			stringBuilder.append("/");
+		}
+		stringBuilder.append(value);
 	}
 
 	public URL getUrl() throws MalformedURLException {

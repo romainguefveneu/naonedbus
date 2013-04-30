@@ -53,6 +53,7 @@ import android.util.Log;
  */
 public abstract class RestController<T> {
 
+	private static final String LOG_TAG = "RestController";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	/**
@@ -146,6 +147,9 @@ public abstract class RestController<T> {
 	 * @throws IOException
 	 */
 	protected String readJsonFromUrl(final URL url) throws IOException {
+		if (DBG)
+			Log.d(LOG_TAG, "readJsonFromUrl " + url.toString());
+		
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);

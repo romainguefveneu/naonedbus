@@ -46,8 +46,10 @@ public abstract class CustomContentProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
-		if (mDB == null) {
-			mDB = new CoreDatabase(getContext());
+		synchronized (this) {
+			if (mDB == null) {
+				mDB = new CoreDatabase(getContext());
+			}
 		}
 		return true;
 	}

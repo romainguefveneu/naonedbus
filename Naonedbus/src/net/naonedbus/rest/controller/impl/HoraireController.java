@@ -75,7 +75,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	public List<Horaire> getAllFromWeb(final Arret arret, final DateMidnight date) throws IOException {
+	public synchronized List<Horaire> getAllFromWeb(final Arret arret, final DateMidnight date) throws IOException {
 		final UrlBuilder url = new UrlBuilder(PATH);
 		long timeOffset = date.getMillis();
 		final List<Horaire> result = new ArrayList<Horaire>();

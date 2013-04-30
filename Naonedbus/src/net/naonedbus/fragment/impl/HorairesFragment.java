@@ -326,28 +326,29 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 			}
 		}
 
-		// Chercher l'arrêt dans le nouveau sens
-		final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code, autreSens.code,
-				mArret.normalizedNom);
+		if (autreSens != null) {
+			// Chercher l'arrêt dans le nouveau sens
+			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code,
+					autreSens.code, mArret.normalizedNom);
 
-		if (arret != null) {
-			mSens = autreSens;
-			mArret = arret;
+			if (arret != null) {
+				mSens = autreSens;
+				mArret = arret;
 
-			mAdapter.clear();
-			mAdapter.notifyDataSetChanged();
+				mAdapter.clear();
+				mAdapter.notifyDataSetChanged();
 
-			changeDateToNow();
+				changeDateToNow();
 
-			if (mOnSensChangeListener != null) {
-				mOnSensChangeListener.onSensChange(mSens);
+				if (mOnSensChangeListener != null) {
+					mOnSensChangeListener.onSensChange(mSens);
+				}
+
+				getSherlockActivity().invalidateOptionsMenu();
+				return;
 			}
-
-			getSherlockActivity().invalidateOptionsMenu();
-		} else {
-			Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT)
-					.show();
 		}
+		Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT).show();
 
 	}
 

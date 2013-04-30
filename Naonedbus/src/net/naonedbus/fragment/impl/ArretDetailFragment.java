@@ -311,23 +311,23 @@ public class ArretDetailFragment extends SherlockFragment {
 			}
 		}
 
-		// Chercher l'arrêt dans le nouveau sens
-		final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code, autreSens.code,
-				mArret.normalizedNom);
+		if (autreSens != null) {
+			// Chercher l'arrêt dans le nouveau sens
+			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code,
+					autreSens.code, mArret.normalizedNom);
 
-		if (arret != null) {
-			mSens = autreSens;
-			mArret = arret;
+			if (arret != null) {
+				mSens = autreSens;
+				mArret = arret;
 
-			mOnSensChangeListener.onSensChange(mSens);
-			mOnArretChangeListener.onArretChange(mArret);
+				mOnSensChangeListener.onSensChange(mSens);
+				mOnArretChangeListener.onArretChange(mArret);
 
-			getSherlockActivity().invalidateOptionsMenu();
-		} else {
-			Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT)
-					.show();
+				getSherlockActivity().invalidateOptionsMenu();
+				return;
+			}
 		}
-
+		Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT).show();
 	}
 
 	/**
