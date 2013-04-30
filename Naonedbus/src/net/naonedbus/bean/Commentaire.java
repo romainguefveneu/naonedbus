@@ -43,9 +43,9 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 	private String mDelay;
 	private DateTime mDateTime;
 	private transient Drawable mBackground;
-	private Ligne mLigne;
-	private Sens mSens;
-	private Arret mArret;
+	private transient Ligne mLigne;
+	private transient Sens mSens;
+	private transient Arret mArret;
 
 	public Commentaire() {
 	}
@@ -56,8 +56,8 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 	}
 
 	@Override
-	public void setId(Integer id) {
-		this.mId = id;
+	public void setId(final Integer id) {
+		mId = id;
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 	}
 
 	@Override
-	public void setCodeLigne(String codeLigne) {
-		this.mCodeLigne = codeLigne;
+	public void setCodeLigne(final String codeLigne) {
+		mCodeLigne = codeLigne;
 	}
 
 	@Override
@@ -76,8 +76,8 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 	}
 
 	@Override
-	public void setCodeSens(String codeSens) {
-		this.mCodeSens = codeSens;
+	public void setCodeSens(final String codeSens) {
+		mCodeSens = codeSens;
 	}
 
 	@Override
@@ -86,8 +86,8 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 	}
 
 	@Override
-	public void setCodeArret(String codeArret) {
-		this.mCodeArret = codeArret;
+	public void setCodeArret(final String codeArret) {
+		mCodeArret = codeArret;
 	}
 
 	@Override
@@ -96,81 +96,81 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 	}
 
 	@Override
-	public void setMessage(String message) {
-		this.mMessage = message;
+	public void setMessage(final String message) {
+		mMessage = message;
 	}
 
 	@Override
 	public Long getTimestamp() {
-		return this.mTimestamp;
+		return mTimestamp;
 	}
 
 	@Override
-	public void setTimestamp(Long timestamp) {
-		this.mTimestamp = timestamp;
+	public void setTimestamp(final Long timestamp) {
+		mTimestamp = timestamp;
 	}
 
 	@Override
-	public void setSource(String source) {
-		this.mSource = source;
+	public void setSource(final String source) {
+		mSource = source;
 	}
 
 	@Override
 	public String getSource() {
-		return this.mSource;
+		return mSource;
 	}
 
-	public void setSection(Object section) {
-		this.mSection = section;
+	public void setSection(final Object section) {
+		mSection = section;
 	}
 
 	@Override
 	public Object getSection() {
-		return this.mSection;
+		return mSection;
 	}
 
 	public String getDelay() {
 		return mDelay;
 	}
 
-	public void setDelay(String delay) {
-		this.mDelay = delay;
+	public void setDelay(final String delay) {
+		mDelay = delay;
 	}
 
 	public DateTime getDateTime() {
 		return mDateTime;
 	}
 
-	public void setDateTime(DateTime dateTime) {
-		this.mDateTime = dateTime;
+	public void setDateTime(final DateTime dateTime) {
+		mDateTime = dateTime;
 	}
 
 	public Drawable getBackground() {
 		return mBackground;
 	}
 
-	public void setBackground(Drawable background) {
-		this.mBackground = background;
+	public void setBackground(final Drawable background) {
+		mBackground = background;
 	}
 
-	public void setLigne(Ligne ligne) {
-		this.mLigne = ligne;
+	public void setLigne(final Ligne ligne) {
+		mLigne = ligne;
 	}
 
 	public Ligne getLigne() {
 		return mLigne;
 	}
 
-	public void setSens(Sens sens) {
-		this.mSens = sens;
+	public void setSens(final Sens sens) {
+		mSens = sens;
 	}
 
 	public Sens getSens() {
 		return mSens;
 	}
 
-	public void setArret(Arret arret) {
-		this.mArret = arret;
+	public void setArret(final Arret arret) {
+		mArret = arret;
 	}
 
 	public Arret getArret() {
@@ -185,7 +185,7 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 		return builder.toString();
 	}
 
-	protected Commentaire(Parcel in) {
+	protected Commentaire(final Parcel in) {
 		mId = in.readInt();
 		mCodeLigne = in.readString();
 		mCodeSens = in.readString();
@@ -199,11 +199,13 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 		mArret = in.readParcelable(Arret.class.getClassLoader());
 	}
 
+	@Override
 	public int describeContents() {
 		return 0;
 	}
 
-	public void writeToParcel(Parcel dest, int flags) {
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeInt(mId);
 		dest.writeString(mCodeLigne);
 		dest.writeString(mCodeSens);
@@ -218,11 +220,13 @@ public class Commentaire implements ICommentaire, SectionItem, Parcelable {
 	}
 
 	public static final Parcelable.Creator<Commentaire> CREATOR = new Parcelable.Creator<Commentaire>() {
-		public Commentaire createFromParcel(Parcel in) {
+		@Override
+		public Commentaire createFromParcel(final Parcel in) {
 			return new Commentaire(in);
 		}
 
-		public Commentaire[] newArray(int size) {
+		@Override
+		public Commentaire[] newArray(final int size) {
 			return new Commentaire[size];
 		}
 	};

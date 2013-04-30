@@ -82,6 +82,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	private static PendingIntent sPendingIntent;
 	private static long sNextTimestamp = Long.MAX_VALUE;
 	private static Integer sHoraireViewWidth = Integer.MIN_VALUE;
+	private static Object sLock = new Object();
 
 	private final int mLayoutId;
 	private int mHoraireLimit = -1;
@@ -371,7 +372,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private int getHorairesCount(final Context context, final Bundle bundle) {
-		synchronized (sHoraireViewWidth) {
+		synchronized (sLock) {
 			if (sHoraireViewWidth == Integer.MIN_VALUE) {
 				final TextView horairesView = new TextView(context);
 				final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);

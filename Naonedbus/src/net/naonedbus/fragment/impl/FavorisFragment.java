@@ -632,7 +632,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		if (DBG)
 			Log.d(LOG_TAG, "loadContent");
 

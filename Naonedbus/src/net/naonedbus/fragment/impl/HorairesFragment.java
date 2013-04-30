@@ -327,6 +327,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		}
 
 		if (autreSens != null) {
+
 			// Chercher l'arrêt dans le nouveau sens
 			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code,
 					autreSens.code, mArret.normalizedNom);
@@ -348,8 +349,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 				return;
 			}
 		}
-		Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT).show();
-
+		Toast.makeText(getActivity(), getString(R.string.toast_autre_sens), Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -367,7 +367,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		mIsLoading.set(true);
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();

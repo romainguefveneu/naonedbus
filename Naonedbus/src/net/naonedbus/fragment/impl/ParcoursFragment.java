@@ -84,7 +84,7 @@ public class ParcoursFragment extends CustomListFragment {
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final ParcoursManager parcoursManager = ParcoursManager.getInstance();
 		final List<Parcours> parcoursList = parcoursManager.getParcoursList(context.getContentResolver(),
 				mStation.getNormalizedNom());

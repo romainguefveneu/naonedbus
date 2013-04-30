@@ -109,6 +109,43 @@ CREATE TABLE IF NOT EXISTS favorisGroupes (
 CREATE INDEX IF NOT EXISTS favorisGroupes_idFavori ON favorisGroupes (idFavori);
 CREATE INDEX IF NOT EXISTS favorisGroupes_idGroupe ON favorisGroupes (idGroupe);
 
+-- Décrire COMMENTAIRES
+CREATE TABLE IF NOT EXISTS commentaires (
+    _id INTEGER PRIMARY KEY,
+    codeLigne TEXT,
+    codeSens TEXT,
+    codeArret TEXT,
+    message TEXT NOT NULL,
+    source TEXT NOT NULL,
+    timestamp LONG NOT NULL
+);
+CREATE INDEX IF NOT EXISTS commentaires_ligne ON commentaires(codeLigne);
+CREATE INDEX IF NOT EXISTS commentaires_ligne_sens ON commentaires(codeLigne, codeSens);
+CREATE INDEX IF NOT EXISTS commentaires_ligne_sens_arret ON commentaires(codeLigne, codeSens, codeArret);
+
+-- Décrire INFOSTRAFIC
+CREATE TABLE IF NOT EXISTS infostrafic (
+    _id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    code TEXT NOT NULL,
+    intitule TEXT NOT NULL,
+    resume TEXT NOT NULL,
+    texteVocal TEXT NOT NULL,
+    dateDebut LONG NOT NULL,
+    dateFin LONG NOT NULL,
+    perturbationTerminee BOOLEAN NOT NULL
+);
+
+-- Décrire INFOSTRAFICLINK
+CREATE TABLE IF NOT EXISTS infostraficLink (
+    idInfoTrafic INTEGER REFERENCES infostrafic(_id) ON DELETE CASCADE,
+    codeLigne TEXT NOT NULL,
+    codeSens TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS infostraficLink_ligne ON infostraficLink(codeLigne);
+CREATE INDEX IF NOT EXISTS infostraficLink_ligne_sens ON infostraficLink(codeLigne, codeSens);
+CREATE INDEX IF NOT EXISTS infostraficLink_idInfoTrafic ON infostraficLink(idInfoTrafic);
+
+
 -- Décrire FAVORISVIEW
 CREATE VIEW IF NOT EXISTS favorisView AS
 SELECT

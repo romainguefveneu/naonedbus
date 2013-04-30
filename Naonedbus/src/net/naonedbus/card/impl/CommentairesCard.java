@@ -31,13 +31,13 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.formatter.CommentaireFomatter;
+import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.FontUtils;
 
 import org.joda.time.DateMidnight;
-import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import android.content.BroadcastReceiver;
@@ -60,7 +60,7 @@ import android.widget.TextView.BufferType;
 
 import com.bugsense.trace.BugSenseHandler;
 
-public class CommentairesCard extends Card<List<Commentaire>> {
+public class CommentairesCard extends Card<List<Commentaire>> implements OnSensChangeListener {
 
 	private static final String LOG_TAG = "CommentairesCard";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -199,7 +199,7 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 	@Override
 	public Loader<List<Commentaire>> onCreateLoader(final int id, final Bundle bundle) {
 		final boolean forceUpdate = (bundle != null && bundle.getBoolean(BUNDLE_FORCE_UPDATE, false));
-		return new LoaderTask(getContext(), mLigne, forceUpdate);
+		return new LoaderTask(getContext(), mLigne, mSens, forceUpdate);
 	}
 
 	@Override
@@ -221,11 +221,14 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 	private static class LoaderTask extends AsyncTaskLoader<List<Commentaire>> {
 		private final Ligne mLigne;
+		private final Sens mSens;
 		private final boolean mForceUpdate;
+		private List<Commentaire> mCommentaires;
 
-		public LoaderTask(final Context context, final Ligne ligne, final boolean forceUpdate) {
+		public LoaderTask(final Context context, final Ligne ligne, final Sens sens, final boolean forceUpdate) {
 			super(context);
 			mLigne = ligne;
+			mSens = sens;
 			mForceUpdate = forceUpdate;
 		}
 
@@ -239,10 +242,9 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 			try {
 				if (mForceUpdate) {
-					commentaires = manager.getFromWeb(getContext(), mLigne.code, null, null, new DateTime(0));
-				} else {
-					commentaires = manager.getAll(getContext(), mLigne.code, null, null, new DateTime(0));
+					manager.clear(getContext().getContentResolver());
 				}
+				commentaires = manager.getAll(getContext().getContentResolver(), mLigne.code, mSens.code, null);
 
 				for (int i = commentaires.size() - 1; i > -1; i--) {
 					final Commentaire commentaire = commentaires.get(i);
@@ -266,6 +268,47 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 			return commentaires;
 		}
 
+		/**
+		 * Called when there is new data to deliver to the client. The super
+		 * class will take care of delivering it; the implementation here just
+		 * adds a little more logic.
+		 */
+		@Override
+		public void deliverResult(final List<Commentaire> commentaires) {
+			mCommentaires = commentaires;
+
+			if (isStarted()) {
+				// If the Loader is currently started, we can immediately
+				// deliver its results.
+				super.deliverResult(mCommentaires);
+			}
+		}
+
+		/**
+		 * Handles a request to start the Loader.
+		 */
+		@Override
+		protected void onStartLoading() {
+			if (mCommentaires != null) {
+				// If we currently have a result available, deliver it
+				// immediately.
+				deliverResult(mCommentaires);
+			}
+
+			if (takeContentChanged() || mCommentaires == null) {
+				// If the data has changed since the last time it was loaded
+				// or is not currently available, start a load.
+				forceLoad();
+			}
+		}
+
+	}
+
+	@Override
+	public void onSensChange(final Sens newSens) {
+		mSens = newSens;
+		showLoader();
+		restartLoader(null, this);
 	}
 
 }

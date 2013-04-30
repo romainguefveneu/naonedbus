@@ -75,9 +75,9 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 	private static final String PREF_PROXIMITE_LAYER = "proximite.layer.";
 
-	private SharedPreferences mPreferences;
-	private MyLocationProvider mLocationProvider;
-	private Set<Equipement.Type> mSelectedTypesEquipements;
+	private final SharedPreferences mPreferences;
+	private final MyLocationProvider mLocationProvider;
+	private final Set<Equipement.Type> mSelectedTypesEquipements;
 	private AddressResolverTask mAddressResolverTask;
 
 	private TextView headerTextView;
@@ -95,7 +95,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 		mSelectedTypesEquipements = new HashSet<Equipement.Type>();
 		final Equipement.Type[] types = Equipement.Type.values();
-		for (Equipement.Type type : types) {
+		for (final Equipement.Type type : types) {
 			if (isLayerPreferenceEnabled(type.getId())) {
 				mSelectedTypesEquipements.add(type);
 			}
@@ -103,13 +103,13 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateView");
 
@@ -151,12 +151,12 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_proximite, menu);
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_filter).getSubMenu();
 
 		final Equipement.Type[] types = Equipement.Type.values();
-		for (Equipement.Type type : types) {
+		for (final Equipement.Type type : types) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
 			item.setCheckable(true);
 			item.setChecked((mSelectedTypesEquipements.contains(type)));
@@ -166,12 +166,12 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onPrepareOptionsMenu(Menu menu) {
+	public void onPrepareOptionsMenu(final Menu menu) {
 
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 
 		if (item.getGroupId() == MENU_GROUP_TYPES) {
 			final Equipement.Type type = Equipement.Type.getTypeById(item.getItemId());
@@ -201,7 +201,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
 
 		final ParamIntent intent;
@@ -230,7 +230,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		EquipementArrayAdapter adapter = null;
 
@@ -253,14 +253,14 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 
 			result.setResult(adapter);
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			result.setException(e);
 		}
 
 		return result;
 	}
 
-	protected void setDistances(List<Equipement> equipements) {
+	protected void setDistances(final List<Equipement> equipements) {
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
 		final Location currentLocation = mLocationProvider.getLastKnownLocation();
 
@@ -294,7 +294,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 		showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
 		setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 				getActivity().startActivity(intent);
 			}
@@ -333,7 +333,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onAddressTaskResult(String address) {
+	public void onAddressTaskResult(final String address) {
 		if (address != null) {
 			headerTextView.setText(address);
 			imageView.setVisibility(View.VISIBLE);

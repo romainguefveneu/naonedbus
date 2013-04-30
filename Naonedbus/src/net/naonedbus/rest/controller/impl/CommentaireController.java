@@ -27,7 +27,6 @@ import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
 
 import org.apache.http.HttpException;
-import org.joda.time.base.BaseDateTime;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -56,8 +55,8 @@ public class CommentaireController extends RestController<Commentaire> {
 		super(TAG_COMMENTAIRE);
 	}
 
-	public void post(final String codeLigne, final String codeSens, final String codeArret, final String message, final String hash)
-			throws IOException, HttpException {
+	public void post(final String codeLigne, final String codeSens, final String codeArret, final String message,
+			final String hash) throws IOException, HttpException {
 		final UrlBuilder urlBuilder = new UrlBuilder(RestConfiguration.PATH, PATH);
 
 		urlBuilder.addQueryParameter("codeLigne", codeLigne);
@@ -70,14 +69,14 @@ public class CommentaireController extends RestController<Commentaire> {
 		post(urlBuilder);
 	}
 
-	public List<Commentaire> getAll(final String codeLigne, final String codeSens, final String codeArret, final BaseDateTime date)
+	public List<Commentaire> getAll(final String codeLigne, final String codeSens, final String codeArret)
 			throws IOException, JSONException {
 		final UrlBuilder url = new UrlBuilder(RestConfiguration.PATH, PATH);
 
 		url.addQueryParameter("codeLigne", codeLigne);
 		url.addQueryParameter("codeSens", codeSens);
 		url.addQueryParameter("codeArret", codeArret);
-		url.addQueryParameter("timestamp", String.valueOf(date.getMillis()));
+		url.addQueryParameter("timestamp", 0);
 		url.addQueryParameter("limit", String.valueOf(LIMIT));
 
 		return parseJson(url.getUrl());

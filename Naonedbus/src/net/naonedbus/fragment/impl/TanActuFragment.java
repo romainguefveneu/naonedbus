@@ -54,7 +54,7 @@ public class TanActuFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		if (getArguments() != null) {
@@ -65,7 +65,7 @@ public class TanActuFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 		final InfoTrafic item = (InfoTrafic) getListAdapter().getItem(position);
 
@@ -75,7 +75,7 @@ public class TanActuFragment extends CustomListFragment {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_refresh:
 			refreshContent();
@@ -85,7 +85,7 @@ public class TanActuFragment extends CustomListFragment {
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 
 		try {
@@ -101,7 +101,7 @@ public class TanActuFragment extends CustomListFragment {
 			if (mCodeLigne == null) {
 				final List<Ligne> lignes = ligneManager.getAll(context.getContentResolver());
 
-				for (Ligne ligne : lignes) {
+				for (final Ligne ligne : lignes) {
 					infoTrafics = infoTraficManager.getByLigneCode(context, ligne.code);
 
 					if (infoTrafics.size() == 0) {
@@ -111,7 +111,7 @@ public class TanActuFragment extends CustomListFragment {
 
 						infoTraficDetails.add(emptyDetail);
 					} else {
-						for (InfoTrafic infoTrafic : infoTrafics) {
+						for (final InfoTrafic infoTrafic : infoTrafics) {
 							infoTraficClone = infoTrafic.clone();
 							infoTraficClone.setSection(ligne);
 							infoTraficDetails.add(infoTraficClone);
@@ -129,7 +129,7 @@ public class TanActuFragment extends CustomListFragment {
 
 					infoTraficDetails.add(emptyDetail);
 				} else {
-					for (InfoTrafic infoTrafic : infoTrafics) {
+					for (final InfoTrafic infoTrafic : infoTrafics) {
 						infoTraficClone = infoTrafic.clone();
 						infoTraficClone.setSection(ligne);
 						infoTraficDetails.add(infoTraficClone);
@@ -140,7 +140,7 @@ public class TanActuFragment extends CustomListFragment {
 			final ArraySectionAdapter<InfoTrafic> adapter = new InfoTraficLigneArrayAdapter(context, infoTraficDetails);
 			adapter.setIndexer(new InfoTraficIndexer());
 			result.setResult(adapter);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			result.setException(e);
 		}
 		return result;

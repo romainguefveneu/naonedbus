@@ -212,16 +212,24 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	public void loadContent() {
+		loadContent((Bundle) null);
+	}
+
+	public void loadContent(final Bundle bundle) {
 		if (getListAdapter() == null) {
 			if (DBG)
 				Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "loadContent " + getListAdapter());
 
-			getLoaderManager().initLoader(LOADER_INIT, null, this);
+			getLoaderManager().initLoader(LOADER_INIT, bundle, this);
 		}
 	}
 
 	public void refreshContent() {
-		getLoaderManager().restartLoader(LOADER_REFRESH, null, this);
+		refreshContent((Bundle) null);
+	}
+
+	public void refreshContent(final Bundle bundle) {
+		getLoaderManager().restartLoader(LOADER_REFRESH, bundle, this);
 	}
 
 	protected void addOnScrollListener(final OnScrollListener onScrollListener) {
@@ -461,7 +469,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	 * 
 	 * @return AsyncResult du resultat.
 	 */
-	protected abstract AsyncResult<ListAdapter> loadContent(final Context context);
+	protected abstract AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle);
 
 	/**
 	 * Après le chargement.
@@ -470,7 +478,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	}
 
 	@Override
-	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int arg0, final Bundle arg1) {
+	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int loaderId, final Bundle bundle) {
 		if (DBG)
 			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onCreateLoader");
 
@@ -482,7 +490,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 				if (DBG)
 					Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "loadInBackground");
 
-				return loadContent(getActivity());
+				return loadContent(getActivity(), bundle);
 			}
 
 			/**

@@ -37,13 +37,13 @@ import android.net.Uri;
 
 public class ArretManager extends SQLiteManager<Arret> {
 
-	private static ArretManager instance;
+	private static ArretManager sInstance;
 
 	public static synchronized ArretManager getInstance() {
-		if (instance == null) {
-			instance = new ArretManager();
+		if (sInstance == null) {
+			sInstance = new ArretManager();
 		}
-		return instance;
+		return sInstance;
 	}
 
 	private ArretManager() {
@@ -56,14 +56,15 @@ public class ArretManager extends SQLiteManager<Arret> {
 	 * @param contentResolver
 	 * @param codeLigne
 	 */
-	public List<Arret> getAll(ContentResolver contentResolver, String codeLigne, String codeSens) {
-		Cursor c = getCursor(contentResolver, codeLigne, codeSens);
+	public List<Arret> getAll(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
+		final Cursor c = getCursor(contentResolver, codeLigne, codeSens);
 		return getFromCursor(c);
 	}
 
 	@Override
-	public Arret getSingle(ContentResolver contentResolver, int id) {
-		Cursor c = getCursor(contentResolver, ArretTable.TABLE_NAME + "._id = ?", new String[] { String.valueOf(id) });
+	public Arret getSingle(final ContentResolver contentResolver, final int id) {
+		final Cursor c = getCursor(contentResolver, ArretTable.TABLE_NAME + "._id = ?",
+				new String[] { String.valueOf(id) });
 		return getFirstFromCursor(c);
 	}
 
@@ -79,7 +80,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 	 *            le code de l'arrêt
 	 * @return L'arrêt cherche, ou {@code null} si non trouvé.
 	 */
-	public Arret getSingle(ContentResolver contentResolver, String codeLigne, String codeSens, String nomArret) {
+	public Arret getSingle(final ContentResolver contentResolver, final String codeLigne, final String codeSens, final String nomArret) {
 		final Cursor c = getCursor(contentResolver, ArretTable.CODE_LIGNE + "=? AND " + ArretTable.CODE_SENS
 				+ "=? AND " + EquipementTable.NORMALIZED_NOM + "=?", new String[] { codeLigne, codeSens, nomArret });
 		return getFirstFromCursor(c);
@@ -95,7 +96,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 	 *            le code du sens
 	 * @return La liste des arrêts favoris de la ligne et du sens donné
 	 */
-	public List<Arret> getArretsFavoris(ContentResolver contentResolver, String codeLigne, String codeSens) {
+	public List<Arret> getArretsFavoris(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
 		final Cursor c = getCursor(contentResolver, ArretTable.CODE_LIGNE + "=? AND " + ArretTable.CODE_SENS
 				+ "=? AND EXISTS (SELECT 1 FROM " + FavoriTable.TABLE_NAME + " WHERE " + FavoriTable.TABLE_NAME + "."
 				+ FavoriTable._ID + "=" + ArretTable.TABLE_NAME + "." + ArretTable._ID + ")", new String[] { codeLigne,
@@ -103,7 +104,7 @@ public class ArretManager extends SQLiteManager<Arret> {
 		return getFromCursor(c);
 	}
 
-	public Cursor getCursor(ContentResolver contentResolver, String codeLigne, String codeSens) {
+	public Cursor getCursor(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
 		final Uri.Builder builder = ArretProvider.CONTENT_URI.buildUpon();
 		builder.path(ArretProvider.ARRET_CODESENS_CODELIGNE_URI_PATH_QUERY);
 		builder.appendQueryParameter("codeLigne", codeLigne);
@@ -111,8 +112,9 @@ public class ArretManager extends SQLiteManager<Arret> {
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
-	public Arret getSingleFromCursor(Cursor c) {
-		Arret item = new Arret();
+	@Override
+	public Arret getSingleFromCursor(final Cursor c) {
+		final Arret item = new Arret();
 		item._id = c.getInt(c.getColumnIndex(ArretTable._ID));
 		item.codeArret = c.getString(c.getColumnIndex(ArretTable.CODE));
 		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
@@ -128,8 +130,8 @@ public class ArretManager extends SQLiteManager<Arret> {
 		return item;
 	}
 
-	public Arret getSingleFromCursorWrapper(CursorWrapper c) {
-		Arret item = new Arret();
+	public Arret getSingleFromCursorWrapper(final CursorWrapper c) {
+		final Arret item = new Arret();
 		item._id = c.getInt(c.getColumnIndex(ArretTable._ID));
 		item.codeArret = c.getString(c.getColumnIndex(ArretTable.CODE));
 		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
@@ -179,13 +181,13 @@ public class ArretManager extends SQLiteManager<Arret> {
 	}
 
 	@Override
-	public Arret getSingle(ContentResolver contentResolver, String code) {
-		Cursor c = getCursor(contentResolver, ArretTable.TABLE_NAME + ".code = ?", new String[] { code });
+	public Arret getSingle(final ContentResolver contentResolver, final String code) {
+		final Cursor c = getCursor(contentResolver, ArretTable.TABLE_NAME + ".code = ?", new String[] { code });
 		return getFirstFromCursor(c);
 	}
 
-	public ContentValues getContentValues(Arret item) {
-		ContentValues values = new ContentValues();
+	public ContentValues getContentValues(final Arret item) {
+		final ContentValues values = new ContentValues();
 		values.put(ArretTable._ID, item._id);
 		values.put(ArretTable.CODE_LIGNE, item.codeLigne);
 		values.put(ArretTable.CODE_SENS, item.codeSens);

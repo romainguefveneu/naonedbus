@@ -72,11 +72,11 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 	protected abstract void onLoadMoreItems();
 
 	@Override
-	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int arg0, final Bundle arg1) {
+	public Loader<AsyncResult<ListAdapter>> onCreateLoader(final int arg0, final Bundle bundle) {
 		final Loader<AsyncResult<ListAdapter>> loader = new AsyncTaskLoader<AsyncResult<ListAdapter>>(getActivity()) {
 			@Override
 			public AsyncResult<ListAdapter> loadInBackground() {
-				return loadContent(getActivity());
+				return loadContent(getActivity(), bundle);
 			}
 		};
 

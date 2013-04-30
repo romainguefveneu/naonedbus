@@ -2690,6 +2690,7 @@ containing a value of this type.
         public static final int title_fragment_tan_actu=0x7f0d009f;
         public static final int title_fragment_trafic_detail=0x7f0d00a1;
         public static final int title_fragment_versions=0x7f0d008b;
+        public static final int toast_autre_sens=0x7f0d012a;
         /**  Toasts 
          */
         public static final int toast_favori_ajout=0x7f0d0128;

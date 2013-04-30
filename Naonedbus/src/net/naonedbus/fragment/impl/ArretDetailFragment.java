@@ -83,7 +83,7 @@ public class ArretDetailFragment extends SherlockFragment {
 	private final ArretManager mArretManager;
 	private final SensManager mSensManager;
 	private final FavoriManager mFavoriManager;
-	private OnSensChangeListener mOnSensChangeListener;
+	private final List<OnSensChangeListener> mOnSensChangeListeners;
 	private OnArretChangeListener mOnArretChangeListener;
 
 	private ViewGroup mViewGroup;
@@ -95,6 +95,7 @@ public class ArretDetailFragment extends SherlockFragment {
 		mSensManager = SensManager.getInstance();
 
 		mCards = new ArrayList<Card<?>>();
+		mOnSensChangeListeners = new ArrayList<ArretDetailFragment.OnSensChangeListener>();
 	}
 
 	@Override
@@ -127,12 +128,13 @@ public class ArretDetailFragment extends SherlockFragment {
 		// mCards.add(mapCard);
 
 		mOnArretChangeListener = horaireCard;
+		mOnSensChangeListeners.add(commentairesCard);
 	}
 
 	@Override
 	public void onAttach(final Activity activity) {
 		super.onAttach(activity);
-		mOnSensChangeListener = (OnSensChangeListener) activity;
+		mOnSensChangeListeners.add((OnSensChangeListener) activity);
 	}
 
 	@Override
@@ -320,14 +322,16 @@ public class ArretDetailFragment extends SherlockFragment {
 				mSens = autreSens;
 				mArret = arret;
 
-				mOnSensChangeListener.onSensChange(mSens);
+				for (final OnSensChangeListener listener : mOnSensChangeListeners) {
+					listener.onSensChange(mSens);
+				}
 				mOnArretChangeListener.onArretChange(mArret);
 
 				getSherlockActivity().invalidateOptionsMenu();
 				return;
 			}
 		}
-		Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), getString(R.string.toast_autre_sens), Toast.LENGTH_SHORT).show();
 	}
 
 	/**

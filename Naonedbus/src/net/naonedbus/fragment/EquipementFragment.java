@@ -72,32 +72,32 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	protected int currentSortPreference = SORT_NOM;
 
 	private StateHelper mStateHelper;
-	private DistanceTask loaderDistance;
-	private final Equipement.Type type;
-	private SousType sousType;
+	private DistanceTask mLoaderDistance;
+	private final Equipement.Type mType;
+	private SousType mSousType;
 
 	protected int localCount = -1;
 
 	public EquipementFragment(final int titleId, final int layoutId, final Equipement.Type type) {
 		super(titleId, layoutId);
 
-		this.type = type;
-		this.myLocationProvider = NBApplication.getLocationProvider();
+		mType = type;
+		myLocationProvider = NBApplication.getLocationProvider();
 
-		this.indexers = new SparseArray<ArraySectionIndexer<Equipement>>();
-		this.indexers.append(SORT_NOM, new EquipementNomIndexer());
-		this.indexers.append(SORT_DISTANCE, new EquipementDistanceIndexer());
+		indexers = new SparseArray<ArraySectionIndexer<Equipement>>();
+		indexers.append(SORT_NOM, new EquipementNomIndexer());
+		indexers.append(SORT_DISTANCE, new EquipementDistanceIndexer());
 
-		this.comparators = new SparseArray<Comparator<Equipement>>();
-		this.comparators.append(SORT_NOM, new EquipementComparator<Equipement>());
-		this.comparators.append(SORT_DISTANCE, new EquipementDistanceComparator<Equipement>());
+		comparators = new SparseArray<Comparator<Equipement>>();
+		comparators.append(SORT_NOM, new EquipementComparator<Equipement>());
+		comparators.append(SORT_DISTANCE, new EquipementDistanceComparator<Equipement>());
 
 		localCount = COUNT++;
 	}
 
 	public EquipementFragment(final int titleId, final int layoutId, final Equipement.Type type, final SousType sousType) {
 		this(titleId, layoutId, type);
-		this.sousType = sousType;
+		mSousType = sousType;
 	}
 
 	@Override
@@ -171,23 +171,22 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 	 */
 	private void refreshDistance() {
 		if (myLocationProvider.isProviderEnabled() && getListAdapter() != null
-				&& (loaderDistance == null || loaderDistance.getStatus() == AsyncTask.Status.FINISHED)) {
-			loaderDistance = (DistanceTask) new DistanceTask().execute();
+				&& (mLoaderDistance == null || mLoaderDistance.getStatus() == AsyncTask.Status.FINISHED)) {
+			mLoaderDistance = (DistanceTask) new DistanceTask().execute();
 		}
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 			final EquipementManager equipementManager = EquipementManager.getInstance();
 			final List<Equipement> equipements;
 
-			if (this.sousType == null) {
-				equipements = equipementManager.getEquipementsByType(context.getContentResolver(), this.type);
+			if (mSousType == null) {
+				equipements = equipementManager.getEquipementsByType(context.getContentResolver(), mType);
 			} else {
-				equipements = equipementManager.getEquipementsByType(context.getContentResolver(), this.type,
-						this.sousType);
+				equipements = equipementManager.getEquipementsByType(context.getContentResolver(), mType, mSousType);
 			}
 
 			setDistances(equipements);

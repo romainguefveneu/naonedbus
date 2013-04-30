@@ -175,7 +175,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 

@@ -415,7 +415,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 			final ArretManager arretManager = ArretManager.getInstance();
