@@ -38,16 +38,15 @@ import android.util.Log;
 
 public abstract class CustomContentProvider extends ContentProvider {
 
-	protected static final String AUTHORITY = "naonedbus";
-
-	private static CoreDatabase mDB;
-
+	private static CoreDatabase database;
 	private static DatabaseActionListener databaseActionListener;
 
 	@Override
 	public boolean onCreate() {
-		if (mDB == null) {
-			mDB = new CoreDatabase(getContext());
+		synchronized (this) {
+			if (database == null) {
+				database = new CoreDatabase(getContext());
+			}
 		}
 		return true;
 	}
@@ -66,11 +65,11 @@ public abstract class CustomContentProvider extends ContentProvider {
 			String sortOrder);
 
 	protected SQLiteDatabase getReadableDatabase() {
-		return mDB.getReadableDatabase();
+		return database.getReadableDatabase();
 	}
 
 	protected SQLiteDatabase getWritableDatabase() {
-		return mDB.getWritableDatabase();
+		return database.getWritableDatabase();
 	}
 
 	public static synchronized void setDatabaseActionListener(final DatabaseActionListener listener) {

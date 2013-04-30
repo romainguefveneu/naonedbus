@@ -53,7 +53,7 @@ public class InfoTraficManager {
 
 	private static DateTime dateLimit;
 
-	public static InfoTraficManager getInstance() {
+	public static synchronized InfoTraficManager getInstance() {
 		if (instance == null) {
 			instance = new InfoTraficManager();
 		}
@@ -61,7 +61,8 @@ public class InfoTraficManager {
 		return instance;
 	}
 
-	public synchronized List<InfoTrafic> getByLigneCode(final Context context, final String code) throws IOException, JSONException {
+	public synchronized List<InfoTrafic> getByLigneCode(final Context context, final String code) throws IOException,
+			JSONException {
 		List<InfoTrafic> result = new ArrayList<InfoTrafic>();
 
 		init(context);
@@ -95,7 +96,7 @@ public class InfoTraficManager {
 	 * Gérer le remplissage et la péremption du cache
 	 * 
 	 * @throws IOException
-	 * @throws JSONException 
+	 * @throws JSONException
 	 */
 	public void init(final Context context) throws IOException, JSONException {
 		final DateTime now = new DateTime();

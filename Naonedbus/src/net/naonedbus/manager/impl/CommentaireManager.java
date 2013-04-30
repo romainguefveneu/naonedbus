@@ -18,111 +18,164 @@
  */
 package net.naonedbus.manager.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.bean.Commentaire;
+import net.naonedbus.manager.SQLiteManager;
+import net.naonedbus.provider.impl.CommentaireProvider;
+import net.naonedbus.provider.table.CommentaireTable;
 import net.naonedbus.rest.controller.impl.CommentaireController;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.joda.time.base.BaseDateTime;
 import org.json.JSONException;
 
-import android.content.Context;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 
-import com.bugsense.trace.BugSenseHandler;
+public class CommentaireManager extends SQLiteManager<Commentaire> {
 
-public class CommentaireManager {
+	private static CommentaireManager sInstance;
 
-	private static CommentaireManager instance;
+	private static final long UP_TO_DATE_DELAY = 300000; // 5 min de cache
 
-	private static final long UP_TO_DATE_DELAY = 300000; // 5 min
+	private long mLastUpdateTimestamp = -1;
 
-	public static CommentaireManager getInstance() {
-		if (instance == null) {
-			instance = new CommentaireManager();
+	private int mColId;
+	private int mColCodeLigne;
+	private int mColCodeSens;
+	private int mColCodeArret;
+	private int mColMessage;
+	private int mColSource;
+	private int mColTimestamp;
+
+	public static synchronized CommentaireManager getInstance() {
+		if (sInstance == null) {
+			sInstance = new CommentaireManager();
 		}
 
-		return instance;
+		return sInstance;
 	}
 
-	public List<Commentaire> getAll(final Context context, final String codeLigne, final String codeSens,
-			final String codeArret, final BaseDateTime date) throws IOException, JSONException {
-
-		List<Commentaire> data;
-		boolean isUpToDate = false;
-
-		final long maxUpdateTime = System.currentTimeMillis() - UP_TO_DATE_DELAY;
-		final File cacheFile = new File(context.getCacheDir(), genKey(codeLigne, codeSens, codeArret) + ".timeline");
-		if (cacheFile.exists()) {
-			isUpToDate = cacheFile.lastModified() > maxUpdateTime;
-		}
-
-		if (isUpToDate) {
-			data = getFromCache(context, codeLigne, codeSens, codeArret);
-		} else {
-			data = getFromWeb(context, codeLigne, codeSens, codeArret, date);
-		}
-
-		return data;
+	private CommentaireManager() {
+		super(CommentaireProvider.CONTENT_URI);
 	}
 
-	public List<Commentaire> getFromCache(final Context context, final String codeLigne, final String codeSens,
-			final String codeArret) {
-		final File cacheFile = new File(context.getCacheDir(), genKey(codeLigne, codeSens, codeArret) + ".timeline");
-		List<Commentaire> data = new ArrayList<Commentaire>();
+	public boolean isUpToDate() {
+		return mLastUpdateTimestamp + UP_TO_DATE_DELAY >= System.currentTimeMillis();
+	}
 
-		if (cacheFile.exists()) {
-			final BufferedReader br = null;
-			final CommentaireController controller = new CommentaireController();
+	public List<Commentaire> getAll(final ContentResolver contentResolver, final String codeLigne,
+			final String codeSens, final String codeArret, final BaseDateTime date) throws IOException, JSONException {
 
-			try {
-				final String json = IOUtils.toString(new FileReader(cacheFile));
-				data = controller.parseJsonArray(json);
-			} catch (final JSONException e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors de la lecture du cache timeline.", null, e);
-				cacheFile.delete();
-			} catch (final IOException e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors de la lecture du cache timeline.", null, e);
-				cacheFile.delete();
-			} finally {
-				IOUtils.closeQuietly(br);
+		List<Commentaire> commentaires = null;
+
+		if (isUpToDate()) {
+			commentaires = getFromCache(contentResolver, codeLigne, codeSens, codeArret);
+		}
+
+		if (commentaires == null || commentaires.isEmpty()) {
+			commentaires = getFromWeb(contentResolver, codeLigne, codeSens, codeArret, date);
+		}
+
+		return commentaires;
+	}
+
+	public List<Commentaire> getFromCache(final ContentResolver contentResolver, final String codeLigne,
+			final String codeSens, final String codeArret) {
+
+		final Uri.Builder builder = CommentaireProvider.CONTENT_URI.buildUpon();
+		if (codeLigne != null) {
+			builder.appendPath(codeLigne);
+			if (codeSens != null) {
+				builder.appendPath(codeSens);
+				if (codeArret != null) {
+					builder.appendPath(codeArret);
+				}
 			}
 		}
 
-		return data;
+		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
+		return getFromCursor(c);
 	}
 
-	public List<Commentaire> getFromWeb(final Context context, final String codeLigne, final String codeSens,
-			final String codeArret, final BaseDateTime date) throws IOException, JSONException {
+	public List<Commentaire> getFromWeb(final ContentResolver contentResolver, final String codeLigne,
+			final String codeSens, final String codeArret, final BaseDateTime date) throws IOException, JSONException {
+
 		final CommentaireController commentaireController = new CommentaireController();
 		final List<Commentaire> data = commentaireController.getAll(codeLigne, codeSens, codeArret, date);
 
-		if (data != null && data.size() > 0) {
-			final String key = genKey(codeLigne, codeSens, codeArret);
-			saveToCache(context, key, data);
-		}
+		clear(contentResolver, codeLigne, codeSens, codeArret);
+		fillDB(contentResolver, data);
+		mLastUpdateTimestamp = System.currentTimeMillis();
 
 		return data;
 	}
 
-	private void saveToCache(final Context context, final String key, final List<Commentaire> data) {
-		final File cacheFile = new File(context.getCacheDir(), key + ".timeline");
-		final CommentaireController controller = new CommentaireController();
-		try {
-			final String json = controller.toJson(data);
-			FileUtils.writeStringToFile(cacheFile, json, "UTF-8");
-		} catch (final IOException e) {
-			BugSenseHandler.sendExceptionMessage("Erreur lors de l'écriture du cache timeline.", null, e);
-		}
+	public void clear(final ContentResolver contentResolver) {
+		contentResolver.delete(CommentaireProvider.CONTENT_URI, null, null);
 	}
 
-	private String genKey(final String codeLigne, final String codeSens, final String codeArret) {
-		return codeLigne + codeSens + codeArret;
+	public void clear(final ContentResolver contentResolver, final String codeLigne, final String codeSens,
+			final String codeArret) {
+
+		final Uri.Builder builder = CommentaireProvider.CONTENT_URI.buildUpon();
+		if (codeLigne != null) {
+			builder.appendPath(codeLigne);
+			if (codeSens != null) {
+				builder.appendPath(codeSens);
+				if (codeArret != null) {
+					builder.appendPath(codeArret);
+				}
+			}
+		}
+
+		contentResolver.delete(builder.build(), null, null);
+	}
+
+	@Override
+	public void onIndexCursor(final Cursor c) {
+		mColId = c.getColumnIndex(CommentaireTable._ID);
+		mColCodeLigne = c.getColumnIndex(CommentaireTable.CODE_LIGNE);
+		mColCodeSens = c.getColumnIndex(CommentaireTable.CODE_SENS);
+		mColCodeArret = c.getColumnIndex(CommentaireTable.CODE_ARRET);
+		mColMessage = c.getColumnIndex(CommentaireTable.MESSAGE);
+		mColSource = c.getColumnIndex(CommentaireTable.SOURCE);
+		mColTimestamp = c.getColumnIndex(CommentaireTable.TIMESTAMP);
+	}
+
+	@Override
+	public Commentaire getSingleFromCursor(final Cursor c) {
+		final Commentaire commentaire = new Commentaire();
+		commentaire.setId(c.getInt(mColId));
+		commentaire.setCodeLigne(c.getString(mColCodeLigne));
+		commentaire.setCodeSens(c.getString(mColCodeSens));
+		commentaire.setCodeArret(c.getString(mColCodeArret));
+		commentaire.setMessage(c.getString(mColMessage));
+		commentaire.setSource(c.getString(mColSource));
+		commentaire.setTimestamp(c.getLong(mColTimestamp));
+		return commentaire;
+	}
+
+	private ContentValues getContentValues(final Commentaire commentaire) {
+		final ContentValues values = new ContentValues();
+		values.put(CommentaireTable.CODE_LIGNE, commentaire.getCodeLigne());
+		values.put(CommentaireTable.CODE_SENS, commentaire.getCodeSens());
+		values.put(CommentaireTable.CODE_ARRET, commentaire.getCodeArret());
+		values.put(CommentaireTable.MESSAGE, commentaire.getMessage());
+		values.put(CommentaireTable.SOURCE, commentaire.getSource());
+		values.put(CommentaireTable.TIMESTAMP, commentaire.getTimestamp());
+		return values;
+	}
+
+	private void fillDB(final ContentResolver contentResolver, final List<Commentaire> commentaires) {
+		final ContentValues[] values = new ContentValues[commentaires.size()];
+		for (int i = 0; i < commentaires.size(); i++) {
+			values[i] = getContentValues(commentaires.get(i));
+		}
+
+		contentResolver.bulkInsert(CommentaireProvider.CONTENT_URI, values);
 	}
 }

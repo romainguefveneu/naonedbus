@@ -37,34 +37,29 @@ import android.content.ContentResolver;
 import android.os.Handler;
 import android.os.Message;
 
-/**
- * @author romain.guefveneu
- * 
- */
 public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo> {
 
-	private static final String LOG_TAG = ParkingPublicManager.class.getSimpleName();
-
 	private static final int CACHE_LIMITE_MINUTES = 15;
-	private static ParkingPublicManager instance;
-	private List<ParkingPublic> cache;
-	private DateTime dateLimit;
+	private static ParkingPublicManager sInstance;
 
-	private Thread parkingsThread;
-	private final Stack<ParkingPublicTaskInfo> parkingsTasks;
-	private final Object lock = new Object();
+	private List<ParkingPublic> mCache;
+	private DateTime mDateLimit;
 
-	public static ParkingPublicManager getInstance() {
-		if (instance == null) {
-			instance = new ParkingPublicManager();
+	private Thread mParkingsThread;
+	private final Stack<ParkingPublicTaskInfo> mParkingsTasks;
+	private final Object mLock = new Object();
+
+	public static synchronized ParkingPublicManager getInstance() {
+		if (sInstance == null) {
+			sInstance = new ParkingPublicManager();
 		}
 
-		return instance;
+		return sInstance;
 	}
 
 	private ParkingPublicManager() {
-		this.cache = new ArrayList<ParkingPublic>();
-		this.parkingsTasks = new Stack<ParkingPublicTaskInfo>();
+		this.mCache = new ArrayList<ParkingPublic>();
+		this.mParkingsTasks = new Stack<ParkingPublicTaskInfo>();
 	}
 
 	/**
@@ -76,12 +71,12 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	private void init(final ContentResolver contentResolver) throws IOException, JSONException {
 		final DateTime now = new DateTime();
 
-		if (this.cache.isEmpty() || now.isAfter(this.dateLimit)) {
+		if (this.mCache.isEmpty() || now.isAfter(this.mDateLimit)) {
 			final ParkingPublicsController controller = new ParkingPublicsController();
-			this.cache.clear();
-			this.cache = controller.getAll();
-			this.dateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
-			fillParkings(contentResolver, this.cache);
+			this.mCache.clear();
+			this.mCache = controller.getAll();
+			this.mDateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
+			fillParkings(contentResolver, this.mCache);
 		}
 	}
 
@@ -94,7 +89,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 */
 	public List<ParkingPublic> getAll(final ContentResolver contentResolver) throws IOException, JSONException {
 		init(contentResolver);
-		return this.cache;
+		return this.mCache;
 	}
 
 	/**
@@ -105,7 +100,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 * @return Le parking s'il est disponible, {@code null} sinon.
 	 */
 	public ParkingPublic getFromCache(final int id) {
-		for (final ParkingPublic parkingPublic : cache) {
+		for (final ParkingPublic parkingPublic : mCache) {
 			if (parkingPublic.getId().equals(id)) {
 				return parkingPublic;
 			}
@@ -171,14 +166,14 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	public ParkingPublicTaskInfo scheduleGetParkingPublic(final ContentResolver contentResolver, final int idParking,
 			final Handler callback) {
 		final ParkingPublicTaskInfo task = new ParkingPublicTaskInfo(contentResolver, idParking, callback);
-		parkingsTasks.push(task);
+		mParkingsTasks.push(task);
 
-		if (parkingsThread == null || !parkingsThread.isAlive()) {
-			parkingsThread = new Thread(parkingsLoader);
-			parkingsThread.start();
-		} else if (parkingsThread.getState().equals(Thread.State.TIMED_WAITING)) {
-			synchronized (lock) {
-				lock.notify();
+		if (mParkingsThread == null || !mParkingsThread.isAlive()) {
+			mParkingsThread = new Thread(parkingsLoader);
+			mParkingsThread.start();
+		} else if (mParkingsThread.getState().equals(Thread.State.TIMED_WAITING)) {
+			synchronized (mLock) {
+				mLock.notify();
 			}
 		}
 
@@ -187,7 +182,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 
 	@Override
 	public void unschedule(final ParkingPublicTaskInfo task) {
-		parkingsTasks.remove(task);
+		mParkingsTasks.remove(task);
 	}
 
 	/**
@@ -198,14 +193,14 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 		@Override
 		public void run() {
 
-			final Iterator<ParkingPublicTaskInfo> iterator = parkingsTasks.iterator();
+			final Iterator<ParkingPublicTaskInfo> iterator = mParkingsTasks.iterator();
 			ParkingPublic parking;
 			ParkingPublicTaskInfo task;
 			Handler handler;
 			Message message;
 
 			while (iterator.hasNext()) {
-				task = parkingsTasks.pop();
+				task = mParkingsTasks.pop();
 
 				try {
 					init(task.getContentResolver());
@@ -221,10 +216,10 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 				message.obj = parking;
 				message.sendToTarget();
 
-				if (parkingsTasks.isEmpty()) {
-					synchronized (lock) {
+				if (mParkingsTasks.isEmpty()) {
+					synchronized (mLock) {
 						try {
-							lock.wait(2000);
+							mLock.wait(2000);
 						} catch (final InterruptedException e) {
 						}
 					}

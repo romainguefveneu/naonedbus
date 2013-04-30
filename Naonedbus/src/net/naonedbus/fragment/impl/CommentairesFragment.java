@@ -215,8 +215,8 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 
 		try {
 			final CommentaireManager manager = CommentaireManager.getInstance();
-			final List<Commentaire> commentaires = manager.getFromWeb(context, mCodeLigne, mCodeSens, mCodeArret,
-					new DateTime(0));
+			final List<Commentaire> commentaires = manager.getFromWeb(context.getContentResolver(), mCodeLigne,
+					mCodeSens, mCodeArret, new DateTime(0));
 
 			final CommentaireFomatter fomatter = new CommentaireFomatter(context);
 			final CommentaireArrayAdapter adapter = new CommentaireArrayAdapter(context);
@@ -244,6 +244,12 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		public static final int PARAM_CODE_SENS = 1;
 		public static final int PARAM_CODE_ARRET = 2;
 
+		final CommentaireManager commentaireManager;
+
+		public LoadTimeLineCache() {
+			commentaireManager = CommentaireManager.getInstance();
+		}
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -255,14 +261,14 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 
 		@Override
 		protected CommentaireArrayAdapter doInBackground(final String... codes) {
-			final CommentaireManager manager = CommentaireManager.getInstance();
 			final Context context = getActivity();
 			final String codeLigne = codes.length > PARAM_CODE_LIGNE ? codes[PARAM_CODE_LIGNE] : null;
 			final String codeSens = codes.length > PARAM_CODE_SENS ? codes[PARAM_CODE_SENS] : null;
 			final String codeArret = codes.length > PARAM_CODE_ARRET ? codes[PARAM_CODE_ARRET] : null;
 
 			// Charger le cache
-			final List<Commentaire> commentaires = manager.getFromCache(context, codeLigne, codeSens, codeArret);
+			final List<Commentaire> commentaires = commentaireManager.getFromCache(context.getContentResolver(),
+					codeLigne, codeSens, codeArret);
 
 			final CommentaireFomatter fomatter = new CommentaireFomatter(context);
 			final CommentaireArrayAdapter adapter = new CommentaireArrayAdapter(context);
@@ -296,9 +302,10 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 				showContent();
 			}
 
-			// Démarrer la récupérer depuis le web
-			refreshContent();
-
+			if (commentaireManager.isUpToDate() == false) {
+				// Démarrer la récupérer depuis le web
+				refreshContent();
+			}
 		}
 	}
 

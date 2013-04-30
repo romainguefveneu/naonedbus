@@ -27,10 +27,10 @@ import android.net.Uri;
 
 public abstract class SQLiteManager<T> {
 
-	private final Uri contentUri;
+	private final Uri mContentUri;
 
 	protected SQLiteManager(final Uri contentUri) {
-		this.contentUri = contentUri;
+		mContentUri = contentUri;
 	}
 
 	/**
@@ -40,7 +40,7 @@ public abstract class SQLiteManager<T> {
 	 * @return un cursor
 	 */
 	public Cursor getCursor(final ContentResolver contentResolver) {
-		return contentResolver.query(contentUri, null, null, null, null);
+		return contentResolver.query(mContentUri, null, null, null, null);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public abstract class SQLiteManager<T> {
 	 * @return un cursor
 	 */
 	public Cursor getCursor(final ContentResolver contentResolver, final String selection, final String[] selectionArg) {
-		return contentResolver.query(contentUri, null, selection, selectionArg, null);
+		return contentResolver.query(mContentUri, null, selection, selectionArg, null);
 	}
 
 	/**
@@ -126,6 +126,7 @@ public abstract class SQLiteManager<T> {
 	protected List<T> getFromCursor(final Cursor c) {
 		final List<T> items = new ArrayList<T>();
 		if (c.getCount() > 0) {
+			onIndexCursor(c);
 			c.moveToFirst();
 			while (!c.isAfterLast()) {
 				items.add(getSingleFromCursor(c));
@@ -140,11 +141,13 @@ public abstract class SQLiteManager<T> {
 	 * Retourner le premier élément d'un curseur
 	 * 
 	 * @param c
+	 *            le curseur
 	 * @return le premier élément du curseur
 	 */
 	protected T getFirstFromCursor(final Cursor c) {
 		T result = null;
 		if (c.getCount() > 0) {
+			onIndexCursor(c);
 			c.moveToFirst();
 			result = getSingleFromCursor(c);
 		}
@@ -153,7 +156,17 @@ public abstract class SQLiteManager<T> {
 	}
 
 	/**
-	 * Transformer la position courante d'un curseur en élément
+	 * Indexer la position des colonnes pour préparer le
+	 * {@link #getSingleFromCursor(Cursor)}.
+	 * 
+	 * @param c
+	 *            le curseur à indexer.
+	 */
+	public void onIndexCursor(final Cursor c) {
+	}
+
+	/**
+	 * Transformer la position courante d'un curseur en élément.
 	 * 
 	 * @param c
 	 *            le curseur

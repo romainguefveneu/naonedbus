@@ -322,6 +322,7 @@
     <!-- Toasts -->
     <string name="toast_favori_ajout">Favori ajouté</string>
     <string name="toast_favori_retire">Favori retiré</string>
+    <string name="toast_autre_sens">Impossible de trouver l\'arrêt dans l\'autre sens.</string>
 
     <!-- Items -->
     <plurals name="selected_items">

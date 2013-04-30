@@ -36,6 +36,18 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 
 	private static EquipementManager instance;
 
+	private int mColId;
+	private int mColIdType;
+	private int mColIdSousType;
+	private int mColNom;
+	private int mColNormalizedNom;
+	private int mColAdresse;
+	private int mColDetails;
+	private int mColTelephone;
+	private int mColUrl;
+	private int mColLatitude;
+	private int mColLongitude;
+
 	/**
 	 * Sous-type d'équipement
 	 * 
@@ -48,7 +60,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 		private int value;
 		private int drawableRes;
 
-		private SousType(int value, int drawableRes) {
+		private SousType(final int value, final int drawableRes) {
 			this.value = value;
 			this.drawableRes = drawableRes;
 		}
@@ -61,8 +73,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 			return drawableRes;
 		}
 
-		public static SousType getTypeByValue(int id) {
-			for (SousType type : SousType.values()) {
+		public static SousType getTypeByValue(final int id) {
+			for (final SousType type : SousType.values()) {
 				if (type.getValue() == id) {
 					return type;
 				}
@@ -91,7 +103,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param Type
 	 * @return un élément
 	 */
-	public Type getTypeByElementId(ContentResolver contentResolver, int id) {
+	public Type getTypeByElementId(final ContentResolver contentResolver, final int id) {
 		final Equipement equipement = getSingle(contentResolver, id);
 		return equipement.getType();
 	}
@@ -104,7 +116,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param id
 	 * @return un élément
 	 */
-	public Equipement getSingle(ContentResolver contentResolver, Type type, int id) {
+	public Equipement getSingle(final ContentResolver contentResolver, final Type type, final int id) {
 		String selection = null;
 		String[] selectionArgs = null;
 
@@ -128,7 +140,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param type
 	 * @return Les equipements correspondants au type
 	 */
-	public Cursor getEquipementCursorByType(ContentResolver contentResolver, Type type, String sortOrder) {
+	public Cursor getEquipementCursorByType(final ContentResolver contentResolver, final Type type,
+			final String sortOrder) {
 		final Uri.Builder builder = EquipementProvider.CONTENT_URI.buildUpon();
 		builder.path(EquipementProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
 		builder.appendPath(Integer.toString(type.getId()));
@@ -147,7 +160,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @return Les equipements correspondants au type trié par distance comparé
 	 *         à la location.
 	 */
-	public Cursor getEquipementCursorByLocation(ContentResolver contentResolver, Type type, Location location) {
+	public Cursor getEquipementCursorByLocation(final ContentResolver contentResolver, final Type type,
+			final Location location) {
 		final String latitude = String.valueOf(location.getLatitude());
 		final String longitude = String.valueOf(location.getLongitude());
 		String selection = null;
@@ -174,7 +188,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param sortOrder
 	 * @return Les equipements correspondants au type
 	 */
-	public List<Equipement> getEquipementsByType(ContentResolver contentResolver, Type type) {
+	public List<Equipement> getEquipementsByType(final ContentResolver contentResolver, final Type type) {
 		final Cursor c = getEquipementCursorByType(contentResolver, type, null);
 		return getFromCursor(c);
 	}
@@ -187,7 +201,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param sousType
 	 * @return Les equipements correspondants au type et au sous type.
 	 */
-	public List<Equipement> getEquipementsByType(ContentResolver contentResolver, Type type, SousType sousType) {
+	public List<Equipement> getEquipementsByType(final ContentResolver contentResolver, final Type type,
+			final SousType sousType) {
 		final Uri.Builder builder = EquipementProvider.CONTENT_URI.buildUpon();
 		builder.path(EquipementProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
 		builder.appendPath(Integer.toString(type.getId()));
@@ -206,7 +221,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param name
 	 * @return Les équipements dont le nom correspond
 	 */
-	public Cursor getEquipementsCursorByName(ContentResolver contentResolver, Type type, String name) {
+	public Cursor getEquipementsCursorByName(final ContentResolver contentResolver, final Type type, final String name) {
 		String selection = null;
 		String[] selectionArgs = null;
 
@@ -231,7 +246,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param name
 	 * @return Les équipements dont le nom correspond
 	 */
-	public List<Equipement> getEquipementsByName(ContentResolver contentResolver, Type type, String name) {
+	public List<Equipement> getEquipementsByName(final ContentResolver contentResolver, final Type type,
+			final String name) {
 		final Cursor c = getEquipementsCursorByName(contentResolver, type, name);
 		return getFromCursor(c);
 	}
@@ -247,8 +263,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param limit
 	 * @return Les equipements à proximité de location.
 	 */
-	public List<Equipement> getEquipementsByLocation(ContentResolver contentResolver, Type type, Location location,
-			Integer limit) {
+	public List<Equipement> getEquipementsByLocation(final ContentResolver contentResolver, final Type type,
+			final Location location, final Integer limit) {
 		final String latitude = String.valueOf(location.getLatitude());
 		final String longitude = String.valueOf(location.getLongitude());
 		String selection = null;
@@ -282,8 +298,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param limit
 	 * @return Les equipements à proximité de location.
 	 */
-	public List<Equipement> getEquipementsByLocation(ContentResolver contentResolver, Set<Type> types,
-			Location location, Integer limit) {
+	public List<Equipement> getEquipementsByLocation(final ContentResolver contentResolver, final Set<Type> types,
+			final Location location, final Integer limit) {
 		final String latitude = String.valueOf(location.getLatitude());
 		final String longitude = String.valueOf(location.getLongitude());
 		String selection = null;
@@ -301,7 +317,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 			String valueMark = "";
 			selectionArgs = new String[types.size()];
 			int i = 0;
-			for (Type type : types) {
+			for (final Type type : types) {
 				selectionArgs[i++] = String.valueOf(type.getId());
 				valueMark += "?";
 				if (i < types.size()) {
@@ -326,8 +342,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param limit
 	 * @return Les equipements à proximité de location.
 	 */
-	public List<Equipement> getEquipementsByLocationExcludeType(ContentResolver contentResolver, Type excludeType,
-			Location location, Integer limit) {
+	public List<Equipement> getEquipementsByLocationExcludeType(final ContentResolver contentResolver,
+			final Type excludeType, final Location location, final Integer limit) {
 		final String latitude = String.valueOf(location.getLatitude());
 		final String longitude = String.valueOf(location.getLongitude());
 		String selection = null;
@@ -356,7 +372,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return La liste des parking publics et relai
 	 */
-	public List<Equipement> getParkings(ContentResolver contentResolver) {
+	public List<Equipement> getParkings(final ContentResolver contentResolver) {
 		return getEquipementsByType(contentResolver, Type.TYPE_PARKING);
 	}
 
@@ -366,7 +382,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return La liste des parking publics et relai
 	 */
-	public Cursor getParkingsCursor(ContentResolver contentResolver, String sortOrder) {
+	public Cursor getParkingsCursor(final ContentResolver contentResolver, final String sortOrder) {
 		return getEquipementCursorByType(contentResolver, Type.TYPE_PARKING, sortOrder);
 	}
 
@@ -376,7 +392,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return La liste des parking correspondant au tag défini.
 	 */
-	public List<Equipement> getParkings(ContentResolver contentResolver, SousType tag) {
+	public List<Equipement> getParkings(final ContentResolver contentResolver, final SousType tag) {
 		final Uri.Builder builder = EquipementProvider.CONTENT_URI.buildUpon();
 		builder.path(EquipementProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
 		builder.appendPath(Integer.toString(Type.TYPE_PARKING.getId()));
@@ -392,7 +408,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return La liste des stations Bicloo
 	 */
-	public List<Equipement> getBicloos(ContentResolver contentResolver) {
+	public List<Equipement> getBicloos(final ContentResolver contentResolver) {
 		return getEquipementsByType(contentResolver, Type.TYPE_BICLOO);
 	}
 
@@ -402,7 +418,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return Le curseur des stations Bicloo
 	 */
-	public Cursor getBicloosCursor(ContentResolver contentResolver, String sortOrder) {
+	public Cursor getBicloosCursor(final ContentResolver contentResolver, final String sortOrder) {
 		return getEquipementCursorByType(contentResolver, Type.TYPE_BICLOO, sortOrder);
 	}
 
@@ -412,7 +428,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return La liste des stations Marguerite
 	 */
-	public List<Equipement> getMarguerites(ContentResolver contentResolver) {
+	public List<Equipement> getMarguerites(final ContentResolver contentResolver) {
 		return getEquipementsByType(contentResolver, Type.TYPE_MARGUERITE);
 	}
 
@@ -422,7 +438,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return Le curseur stations Marguerite
 	 */
-	public Cursor getMargueritesCursor(ContentResolver contentResolver, String sortOrder) {
+	public Cursor getMargueritesCursor(final ContentResolver contentResolver, final String sortOrder) {
 		return getEquipementCursorByType(contentResolver, Type.TYPE_MARGUERITE, sortOrder);
 	}
 
@@ -432,7 +448,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return La liste des stations de covoiturage
 	 */
-	public List<Equipement> getCovoiturages(ContentResolver contentResolver) {
+	public List<Equipement> getCovoiturages(final ContentResolver contentResolver) {
 		return getEquipementsByType(contentResolver, Type.TYPE_COVOITURAGE);
 	}
 
@@ -442,24 +458,39 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * @param contentResolver
 	 * @return Le cursuer des stations de covoiturage
 	 */
-	public Cursor getCovoituresCursor(ContentResolver contentResolver, String sortOrder) {
+	public Cursor getCovoituresCursor(final ContentResolver contentResolver, final String sortOrder) {
 		return getEquipementCursorByType(contentResolver, Type.TYPE_COVOITURAGE, sortOrder);
 	}
 
 	@Override
-	public Equipement getSingleFromCursor(Cursor c) {
-		Equipement item = new Equipement();
-		item.setId(c.getInt(c.getColumnIndex(EquipementTable._ID)));
-		item.setType(c.getInt(c.getColumnIndex(EquipementTable.ID_TYPE)));
-		item.setSousType(c.getInt(c.getColumnIndex(EquipementTable.ID_SOUS_TYPE)));
-		item.setNom(c.getString(c.getColumnIndex(EquipementTable.NOM)));
-		item.setNormalizedNom(c.getString(c.getColumnIndex(EquipementTable.NORMALIZED_NOM)));
-		item.setAdresse(c.getString(c.getColumnIndex(EquipementTable.ADRESSE)));
-		item.setDetails(c.getString(c.getColumnIndex(EquipementTable.DETAILS)));
-		item.setTelephone(c.getString(c.getColumnIndex(EquipementTable.TELEPHONE)));
-		item.setUrl(c.getString(c.getColumnIndex(EquipementTable.URL)));
-		item.setLatitude(c.getDouble(c.getColumnIndex(EquipementTable.LATITUDE)));
-		item.setLongitude(c.getDouble(c.getColumnIndex(EquipementTable.LONGITUDE)));
+	public void onIndexCursor(final Cursor c) {
+		mColId = c.getColumnIndex(EquipementTable._ID);
+		mColIdType = c.getColumnIndex(EquipementTable.ID_TYPE);
+		mColIdSousType = c.getColumnIndex(EquipementTable.ID_SOUS_TYPE);
+		mColNom = c.getColumnIndex(EquipementTable.NOM);
+		mColNormalizedNom = c.getColumnIndex(EquipementTable.NORMALIZED_NOM);
+		mColAdresse = c.getColumnIndex(EquipementTable.ADRESSE);
+		mColDetails = c.getColumnIndex(EquipementTable.DETAILS);
+		mColTelephone = c.getColumnIndex(EquipementTable.TELEPHONE);
+		mColUrl = c.getColumnIndex(EquipementTable.URL);
+		mColLatitude = c.getColumnIndex(EquipementTable.LATITUDE);
+		mColLongitude = c.getColumnIndex(EquipementTable.LONGITUDE);
+	}
+
+	@Override
+	public Equipement getSingleFromCursor(final Cursor c) {
+		final Equipement item = new Equipement();
+		item.setId(c.getInt(mColId));
+		item.setType(c.getInt(mColIdType));
+		item.setSousType(c.getInt(mColIdSousType));
+		item.setNom(c.getString(mColNom));
+		item.setNormalizedNom(c.getString(mColNormalizedNom));
+		item.setAdresse(c.getString(mColAdresse));
+		item.setDetails(c.getString(mColDetails));
+		item.setTelephone(c.getString(mColTelephone));
+		item.setUrl(c.getString(mColUrl));
+		item.setLatitude(c.getDouble(mColLatitude));
+		item.setLongitude(c.getDouble(mColLongitude));
 		return item;
 	}
 

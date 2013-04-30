@@ -38,182 +38,182 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 	private static final DateTimeFormatter simpleDateParser = DateTimeFormat.forPattern("MM/yyyy").withZoneUTC();
 	private static final DateTimeFormatter timeParser = DateTimeFormat.forPattern("HH:mm").withZoneUTC();
 
-	private String code;
-	private String intitule;
-	private String resume;
-	private String texteVocal;
-	private String dateDebutString;
-	private String dateFinString;
-	private String heureDebutString;
-	private String heureFinString;
-	private boolean perturbationTerminee;
-	private String troncons;
+	private String mCode;
+	private String mIntitule;
+	private String mResume;
+	private String mTexteVocal;
+	private String mDateDebutString;
+	private String mDateFinString;
+	private String mHeureDebutString;
+	private String mHeureFinString;
+	private boolean mPerturbationTerminee;
+	private String mTroncons;
 
-	private List<String> lignes = new ArrayList<String>();
+	private List<String> mLignes = new ArrayList<String>();
 
-	private Object section;
+	private Object mSection;
 
-	private DateTime dateDebut;
-	private DateTime dateFin;
-	private String dateFormated;
+	private DateTime mDateDebut;
+	private DateTime mDateFin;
+	private String mDateFormated;
 
 	public InfoTrafic() {
 
 	}
 
 	public InfoTrafic(final Parcel in) {
-		code = in.readString();
-		dateDebutString = in.readString();
-		dateFinString = in.readString();
-		dateFormated = in.readString();
-		heureDebutString = in.readString();
-		heureFinString = in.readString();
-		intitule = in.readString();
-		perturbationTerminee = in.readInt() == 1;
-		resume = in.readString();
-		texteVocal = in.readString();
-		troncons = in.readString();
-		in.readList(lignes, Ligne.class.getClassLoader());
+		mCode = in.readString();
+		mDateDebutString = in.readString();
+		mDateFinString = in.readString();
+		mDateFormated = in.readString();
+		mHeureDebutString = in.readString();
+		mHeureFinString = in.readString();
+		mIntitule = in.readString();
+		mPerturbationTerminee = in.readInt() == 1;
+		mResume = in.readString();
+		mTexteVocal = in.readString();
+		mTroncons = in.readString();
+		in.readList(mLignes, Ligne.class.getClassLoader());
 	}
 
 	public String getCode() {
-		return code;
+		return mCode;
 	}
 
 	public String getIntitule() {
-		return intitule;
+		return mIntitule;
 	}
 
 	public String getResume() {
-		return resume;
+		return mResume;
 	}
 
 	public void setResume(String resume) {
-		this.resume = resume;
+		this.mResume = resume;
 	}
 
 	public String getTexteVocal() {
-		return texteVocal;
+		return mTexteVocal;
 	}
 
 	public DateTime getDateDebut() {
-		if (this.dateDebut == null) {
-			this.dateDebut = parseDate(this.dateDebutString, this.heureDebutString);
+		if (this.mDateDebut == null) {
+			this.mDateDebut = parseDate(this.mDateDebutString, this.mHeureDebutString);
 		}
-		return this.dateDebut;
+		return this.mDateDebut;
 	}
 
 	public DateTime getDateFin() {
-		if (this.dateFin == null) {
-			this.dateFin = parseDate(this.dateFinString, this.heureFinString);
+		if (this.mDateFin == null) {
+			this.mDateFin = parseDate(this.mDateFinString, this.mHeureFinString);
 		}
-		return this.dateFin;
+		return this.mDateFin;
 	}
 
 	public String getDateFormated() {
-		return dateFormated;
+		return mDateFormated;
 	}
 
 	public void setDateFormated(String dateFormated) {
-		this.dateFormated = dateFormated;
+		this.mDateFormated = dateFormated;
 	}
 
 	public boolean isPerturbationTerminee() {
-		return perturbationTerminee;
+		return mPerturbationTerminee;
 	}
 
 	public String getTroncons() {
-		return troncons;
+		return mTroncons;
 	}
 
 	public void addLignes(String ligne) {
-		this.lignes.add(ligne);
+		this.mLignes.add(ligne);
 	}
 
 	public List<String> getLignes() {
-		return lignes;
+		return mLignes;
 	}
 
 	public void setSection(Object section) {
-		this.section = section;
+		this.mSection = section;
 	}
 
 	public void setCode(String code) {
-		this.code = code;
+		this.mCode = code;
 	}
 
 	public void setIntitule(String intitule) {
-		this.intitule = intitule;
+		this.mIntitule = intitule;
 	}
 
 	public void setTexteVocal(String texteVocal) {
-		this.texteVocal = texteVocal;
+		this.mTexteVocal = texteVocal;
 	}
 
 	public void setDateDebutString(String dateDebutString) {
-		this.dateDebutString = dateDebutString;
+		this.mDateDebutString = dateDebutString;
 	}
 
 	public void setDateFinString(String dateFinString) {
-		this.dateFinString = dateFinString;
+		this.mDateFinString = dateFinString;
 	}
 
 	public void setHeureDebutString(String heureDebutString) {
-		this.heureDebutString = heureDebutString;
+		this.mHeureDebutString = heureDebutString;
 	}
 
 	public void setHeureFinString(String heureFinString) {
-		this.heureFinString = heureFinString;
+		this.mHeureFinString = heureFinString;
 	}
 
 	public void setPerturbationTerminee(boolean perturbationTerminee) {
-		this.perturbationTerminee = perturbationTerminee;
+		this.mPerturbationTerminee = perturbationTerminee;
 	}
 
 	public void setTroncons(String troncons) {
-		this.troncons = troncons;
+		this.mTroncons = troncons;
 	}
 
 	public void setLignes(List<String> lignes) {
-		this.lignes = lignes;
+		this.mLignes = lignes;
 	}
 
 	public void setDateDebut(DateTime dateDebut) {
-		this.dateDebut = dateDebut;
+		this.mDateDebut = dateDebut;
 	}
 
 	public void setDateFin(DateTime dateFin) {
-		this.dateFin = dateFin;
+		this.mDateFin = dateFin;
 	}
 
 	@Override
 	public Object getSection() {
-		return section;
+		return mSection;
 	}
 
 	public InfoTrafic clone() {
 		final InfoTrafic clone = new InfoTrafic();
-		clone.code = code;
-		clone.dateDebut = dateDebut;
-		clone.dateDebutString = dateDebutString;
-		clone.dateFin = dateFin;
-		clone.dateFinString = dateFinString;
-		clone.dateFormated = dateFormated;
-		clone.heureDebutString = heureDebutString;
-		clone.heureFinString = heureFinString;
-		clone.intitule = intitule;
-		clone.lignes = lignes;
-		clone.perturbationTerminee = perturbationTerminee;
-		clone.resume = resume;
-		clone.texteVocal = texteVocal;
-		clone.troncons = troncons;
+		clone.mCode = mCode;
+		clone.mDateDebut = mDateDebut;
+		clone.mDateDebutString = mDateDebutString;
+		clone.mDateFin = mDateFin;
+		clone.mDateFinString = mDateFinString;
+		clone.mDateFormated = mDateFormated;
+		clone.mHeureDebutString = mHeureDebutString;
+		clone.mHeureFinString = mHeureFinString;
+		clone.mIntitule = mIntitule;
+		clone.mLignes = mLignes;
+		clone.mPerturbationTerminee = mPerturbationTerminee;
+		clone.mResume = mResume;
+		clone.mTexteVocal = mTexteVocal;
+		clone.mTroncons = mTroncons;
 		return clone;
 	}
 
 	@Override
 	public String toString() {
-		return new StringBuilder("[").append(this.code).append(";").append(this.intitule).append(";")
-				.append((Ligne) section).append("]").toString();
+		return new StringBuilder("[").append(this.mCode).append(";").append(this.mIntitule).append(";")
+				.append((Ligne) mSection).append("]").toString();
 	}
 
 	/**
@@ -243,18 +243,18 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 	}
 
 	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeString(code);
-		dest.writeString(dateDebutString);
-		dest.writeString(dateFinString);
-		dest.writeString(dateFormated);
-		dest.writeString(heureDebutString);
-		dest.writeString(heureFinString);
-		dest.writeString(intitule);
-		dest.writeInt(perturbationTerminee ? 1 : 0);
-		dest.writeString(resume);
-		dest.writeString(texteVocal);
-		dest.writeString(troncons);
-		dest.writeList(lignes);
+		dest.writeString(mCode);
+		dest.writeString(mDateDebutString);
+		dest.writeString(mDateFinString);
+		dest.writeString(mDateFormated);
+		dest.writeString(mHeureDebutString);
+		dest.writeString(mHeureFinString);
+		dest.writeString(mIntitule);
+		dest.writeInt(mPerturbationTerminee ? 1 : 0);
+		dest.writeString(mResume);
+		dest.writeString(mTexteVocal);
+		dest.writeString(mTroncons);
+		dest.writeList(mLignes);
 	}
 
 	public static final Parcelable.Creator<InfoTrafic> CREATOR = new Parcelable.Creator<InfoTrafic>() {

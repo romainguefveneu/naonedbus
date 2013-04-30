@@ -239,9 +239,11 @@ public class CommentairesCard extends Card<List<Commentaire>> {
 
 			try {
 				if (mForceUpdate) {
-					commentaires = manager.getFromWeb(getContext(), mLigne.code, null, null, new DateTime(0));
+					commentaires = manager.getFromWeb(getContext().getContentResolver(), mLigne.code, null, null,
+							new DateTime(0));
 				} else {
-					commentaires = manager.getAll(getContext(), mLigne.code, null, null, new DateTime(0));
+					commentaires = manager.getAll(getContext().getContentResolver(), mLigne.code, null, null,
+							new DateTime(0));
 				}
 
 				for (int i = commentaires.size() - 1; i > -1; i--) {

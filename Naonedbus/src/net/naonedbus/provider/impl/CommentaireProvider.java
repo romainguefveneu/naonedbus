@@ -1,0 +1,139 @@
+package net.naonedbus.provider.impl;
+
+import java.util.List;
+
+import net.naonedbus.provider.CustomContentProvider;
+import net.naonedbus.provider.table.CommentaireTable;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
+
+public class CommentaireProvider extends CustomContentProvider {
+
+	public static final int COMMENTAIRES = 100;
+
+	public static final int COMMENTAIRE_LIGNE = 200;
+	public static final int COMMENTAIRE_LIGNE_SENS = 210;
+	public static final int COMMENTAIRE_LIGNE_SENS_ARRET = 220;
+
+	private static final String AUTHORITY = "net.naonedbus.provider.CommentaireProvider";
+	private static final String BASE_PATH = "commentaires";
+
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+
+	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+	static {
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH, COMMENTAIRES);
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH + "/*", COMMENTAIRE_LIGNE);
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH + "/*/*", COMMENTAIRE_LIGNE_SENS);
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH + "/*/*/*", COMMENTAIRE_LIGNE_SENS_ARRET);
+	}
+
+	@Override
+	public int delete(final Uri uri, final String selection, final String[] selectionArgs) {
+		final SQLiteDatabase db = getWritableDatabase();
+
+		final List<String> segments = uri.getPathSegments();
+
+		int count;
+		switch (URI_MATCHER.match(uri)) {
+		case COMMENTAIRES:
+			count = db.delete(CommentaireTable.TABLE_NAME, selection, selectionArgs);
+			break;
+		case COMMENTAIRE_LIGNE_SENS_ARRET:
+			count = db.delete(CommentaireTable.TABLE_NAME, CommentaireTable.CODE_LIGNE + "= ?  AND "
+					+ CommentaireTable.CODE_SENS + "= ? AND " + CommentaireTable.CODE_ARRET + "= ?", new String[] {
+					segments.get(1), segments.get(2), segments.get(3) });
+			break;
+		case COMMENTAIRE_LIGNE_SENS:
+			count = db.delete(CommentaireTable.TABLE_NAME, CommentaireTable.CODE_LIGNE + "= ?  AND "
+					+ CommentaireTable.CODE_SENS + "= ? ", new String[] { segments.get(1), segments.get(2) });
+			break;
+		case COMMENTAIRE_LIGNE:
+			count = db.delete(CommentaireTable.TABLE_NAME, CommentaireTable.CODE_LIGNE + "= ?",
+					new String[] { segments.get(1) });
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown URI (" + URI_MATCHER.match(uri) + ") " + uri);
+		}
+
+		if (count > 0)
+			getContext().getContentResolver().notifyChange(uri, null);
+
+		return count;
+	}
+
+	@Override
+	public String getType(final Uri uri) {
+		return null;
+	}
+
+	@Override
+	public Uri insert(final Uri uri, final ContentValues initialValues) {
+		ContentValues values;
+
+		if (initialValues != null) {
+			values = new ContentValues(initialValues);
+		} else {
+			values = new ContentValues();
+		}
+
+		if (URI_MATCHER.match(uri) != COMMENTAIRES) {
+			throw new IllegalArgumentException("Unknown URI " + uri + " (" + URI_MATCHER.match(uri) + ")");
+		}
+
+		final SQLiteDatabase db = getWritableDatabase();
+		final long rowId = db.insert(CommentaireTable.TABLE_NAME, null, values);
+		if (rowId > 0) {
+			final Uri insertUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
+			getContext().getContentResolver().notifyChange(uri, null);
+			return insertUri;
+		}
+
+		throw new SQLException("Failed to insert row into " + uri);
+	}
+
+	@Override
+	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs,
+			final String sortOrder) {
+		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		queryBuilder.setTables(CommentaireTable.TABLE_NAME);
+
+		final int uriType = URI_MATCHER.match(uri);
+		switch (uriType) {
+		case COMMENTAIRE_LIGNE_SENS_ARRET:
+			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + "=" + uri.getPathSegments().get(0));
+			queryBuilder.appendWhere(CommentaireTable.CODE_SENS + "=" + uri.getPathSegments().get(1));
+			queryBuilder.appendWhere(CommentaireTable.CODE_ARRET + "=" + uri.getPathSegments().get(2));
+			break;
+		case COMMENTAIRE_LIGNE_SENS:
+			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + "=" + uri.getPathSegments().get(0));
+			queryBuilder.appendWhere(CommentaireTable.CODE_SENS + "=" + uri.getPathSegments().get(1));
+			break;
+		case COMMENTAIRE_LIGNE:
+			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + "=" + uri.getLastPathSegment());
+			break;
+		case COMMENTAIRES:
+
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown URI (" + uri + ")");
+		}
+
+		final Cursor cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, null,
+				null, sortOrder);
+		cursor.setNotificationUri(getContext().getContentResolver(), uri);
+		return cursor;
+	}
+
+	@Override
+	public int update(final Uri uri, final ContentValues values, final String selection, final String[] selectionArgs) {
+		return 0;
+	}
+
+}

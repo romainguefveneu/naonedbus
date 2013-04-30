@@ -326,29 +326,30 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 			}
 		}
 
-		// Chercher l'arrêt dans le nouveau sens
-		final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code, autreSens.code,
-				mArret.normalizedNom);
+		if (autreSens != null) {
 
-		if (arret != null) {
-			mSens = autreSens;
-			mArret = arret;
+			// Chercher l'arrêt dans le nouveau sens
+			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code,
+					autreSens.code, mArret.normalizedNom);
 
-			mAdapter.clear();
-			mAdapter.notifyDataSetChanged();
+			if (arret != null) {
+				mSens = autreSens;
+				mArret = arret;
 
-			changeDateToNow();
+				mAdapter.clear();
+				mAdapter.notifyDataSetChanged();
 
-			if (mOnSensChangeListener != null) {
-				mOnSensChangeListener.onSensChange(mSens);
+				changeDateToNow();
+
+				if (mOnSensChangeListener != null) {
+					mOnSensChangeListener.onSensChange(mSens);
+				}
+
+				getSherlockActivity().invalidateOptionsMenu();
+				return;
 			}
-
-			getSherlockActivity().invalidateOptionsMenu();
-		} else {
-			Toast.makeText(getActivity(), "Impossible de trouver l'arrêt dans l'autre sens.", Toast.LENGTH_SHORT)
-					.show();
 		}
-
+		Toast.makeText(getActivity(), getString(R.string.toast_autre_sens), Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -370,9 +371,6 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		mIsLoading.set(true);
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-
-		if (DBG)
-			Log.d(LOG_TAG, "\tloadContent " + mLastDayLoaded.toString());
 
 		try {
 
