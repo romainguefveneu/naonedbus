@@ -67,25 +67,6 @@ public class CommentaireManager extends SQLiteManager<Commentaire> {
 	}
 
 	public List<Commentaire> getAll(final ContentResolver contentResolver, final String codeLigne,
-			final String codeSens, final String codeArret) throws IOException, JSONException {
-
-		List<Commentaire> commentaires = null;
-
-		if (!isUpToDate()) {
-			fillCache(contentResolver);
-		}
-
-		commentaires = getFromCache(contentResolver, codeLigne, codeSens, codeArret);
-
-		if (commentaires == null || commentaires.isEmpty()) {
-			fillCache(contentResolver);
-			commentaires = getFromCache(contentResolver, codeLigne, codeSens, codeArret);
-		}
-
-		return commentaires;
-	}
-
-	public List<Commentaire> getFromCache(final ContentResolver contentResolver, final String codeLigne,
 			final String codeSens, final String codeArret) {
 
 		final Uri.Builder builder = CommentaireProvider.CONTENT_URI.buildUpon();
@@ -103,7 +84,7 @@ public class CommentaireManager extends SQLiteManager<Commentaire> {
 		return getFromCursor(c);
 	}
 
-	private void fillCache(final ContentResolver contentResolver) throws IOException, JSONException {
+	public void updateCache(final ContentResolver contentResolver) throws IOException, JSONException {
 		final CommentaireController commentaireController = new CommentaireController();
 		final List<Commentaire> data = commentaireController.getAll(null, null, null);
 

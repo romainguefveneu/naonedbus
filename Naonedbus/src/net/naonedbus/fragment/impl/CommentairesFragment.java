@@ -175,6 +175,13 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 		if (DBG)
 			Log.d(LOG_TAG, "onPostExecute");
 		hideResfrehMenuLoader();
+
+		final CommentaireManager manager = CommentaireManager.getInstance();
+		if (manager.isUpToDate() == false) {
+			final Bundle bundle = new Bundle();
+			bundle.putBoolean(BUNDLE_FORCE_UPDATE, true);
+			refreshContent(bundle);
+		}
 	}
 
 	@Override
@@ -190,7 +197,7 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 			final List<Commentaire> commentaires;
 
 			if (forceUpdate) {
-				manager.clear(context.getContentResolver());
+				manager.updateCache(context.getContentResolver());
 			}
 			commentaires = manager.getAll(context.getContentResolver(), null, null, null);
 
@@ -209,5 +216,4 @@ public class CommentairesFragment extends CustomListFragment implements CustomFr
 
 		return result;
 	}
-
 }

@@ -91,15 +91,18 @@ public class CommentaireProvider extends CustomContentProvider {
 		switch (uriType) {
 		case COMMENTAIRE_LIGNE_SENS:
 			queryBuilder.appendWhere(" ( ");
-			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + "=" + uri.getPathSegments().get(1));
+			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + "=");
+			queryBuilder.appendWhereEscapeString(uri.getPathSegments().get(1));
 			queryBuilder.appendWhere(" AND ");
-			queryBuilder.appendWhere(CommentaireTable.CODE_SENS + "=" + uri.getPathSegments().get(2));
+			queryBuilder.appendWhere(CommentaireTable.CODE_SENS + "=");
+			queryBuilder.appendWhereEscapeString(uri.getPathSegments().get(2));
 			queryBuilder.appendWhere(" ) ");
 			queryBuilder.appendWhere(" OR ");
 			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + " IS NULL");
 			break;
 		case COMMENTAIRE_LIGNE:
-			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + "=" + uri.getLastPathSegment());
+			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + "=");
+			queryBuilder.appendWhereEscapeString(uri.getLastPathSegment());
 			queryBuilder.appendWhere(" OR ");
 			queryBuilder.appendWhere(CommentaireTable.CODE_LIGNE + " IS NULL");
 			break;

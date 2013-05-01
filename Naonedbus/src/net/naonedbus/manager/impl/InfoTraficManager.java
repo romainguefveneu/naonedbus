@@ -46,19 +46,21 @@ import android.util.SparseArray;
 public class InfoTraficManager {
 
 	private static final int CACHE_LIMITE_MINUTES = 15;
-	private static InfoTraficManager instance;
+	private static InfoTraficManager sInstance;
+	
 	private static Map<String, ArrayList<InfoTrafic>> cache = Collections
 			.synchronizedMap(new HashMap<String, ArrayList<InfoTrafic>>());
+	
 	private static SparseArray<InfoTrafic> cacheById = new SparseArray<InfoTrafic>();
 
 	private static DateTime dateLimit;
 
 	public static synchronized InfoTraficManager getInstance() {
-		if (instance == null) {
-			instance = new InfoTraficManager();
+		if (sInstance == null) {
+			sInstance = new InfoTraficManager();
 		}
 
-		return instance;
+		return sInstance;
 	}
 
 	public synchronized List<InfoTrafic> getByLigneCode(final Context context, final String code) throws IOException,
