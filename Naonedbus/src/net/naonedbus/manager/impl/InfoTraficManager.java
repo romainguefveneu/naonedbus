@@ -47,10 +47,10 @@ public class InfoTraficManager {
 
 	private static final int CACHE_LIMITE_MINUTES = 15;
 	private static InfoTraficManager sInstance;
-	
+
 	private static Map<String, ArrayList<InfoTrafic>> cache = Collections
 			.synchronizedMap(new HashMap<String, ArrayList<InfoTrafic>>());
-	
+
 	private static SparseArray<InfoTrafic> cacheById = new SparseArray<InfoTrafic>();
 
 	private static DateTime dateLimit;
@@ -106,7 +106,7 @@ public class InfoTraficManager {
 		if (cache.isEmpty() || now.isAfter(dateLimit)) {
 			cache.clear();
 			final InfoTraficController infoTraficController = new InfoTraficController();
-			populateCache(context, infoTraficController.getAll());
+			populateCache(context, infoTraficController.getAll(context.getResources()));
 			dateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
 		}
 

@@ -18,13 +18,13 @@
  */
 package net.naonedbus.bean.async;
 
-import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Handler;
 
 public class ParkingPublicTaskInfo extends AsyncTaskInfo<Integer> {
 
-	public ParkingPublicTaskInfo(ContentResolver contentResolver, Integer tag, Handler handler) {
-		super(contentResolver, tag, handler);
+	public ParkingPublicTaskInfo(final Context context, final Integer tag, final Handler handler) {
+		super(context, tag, handler);
 	}
 
 }

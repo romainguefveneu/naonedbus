@@ -19,39 +19,42 @@
 package net.naonedbus.bean.async;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Handler;
 
 /**
  * Classe de données pour les chargements asynchrones.
- * 
- * @author romain
  */
 public class AsyncTaskInfo<T> {
-	private T tag;
-	private Handler handler;
-	private ContentResolver contentResolver;
+	private final T mTag;
+	private final Handler mHandler;
+	private final Context mContext;
 
-	public AsyncTaskInfo(ContentResolver contentResolver, T tag, Handler handler) {
-		this.contentResolver = contentResolver;
-		this.tag = tag;
-		this.handler = handler;
+	public AsyncTaskInfo(final Context context, final T tag, final Handler handler) {
+		mContext = context;
+		mTag = tag;
+		mHandler = handler;
+	}
+
+	public Context getContext() {
+		return mContext;
 	}
 
 	public ContentResolver getContentResolver() {
-		return contentResolver;
+		return mContext.getContentResolver();
 	}
 
 	public T getTag() {
-		return tag;
+		return mTag;
 	}
 
 	public Handler getHandler() {
-		return handler;
+		return mHandler;
 	}
 
 	@Override
 	public String toString() {
-		return new StringBuilder("[").append(this.getClass().getSimpleName()).append(";").append(tag.toString())
+		return new StringBuilder("[").append(this.getClass().getSimpleName()).append(";").append(mTag.toString())
 				.append("]").toString();
 	}
 

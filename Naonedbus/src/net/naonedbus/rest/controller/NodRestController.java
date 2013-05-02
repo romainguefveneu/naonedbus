@@ -22,12 +22,15 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import net.naonedbus.R;
+
 import org.json.JSONException;
+
+import android.content.res.Resources;
 
 public abstract class NodRestController<T> extends RestController<T> {
 
 	private static final String PATH = "http://data.nantes.fr/api/%s/1.0/%s/?output=json";
-	private static final String API_KEY = "UWW4DQIDC1OQ8XK";
 
 	public NodRestController(final String... rootNodes) {
 		super(rootNodes);
@@ -39,10 +42,10 @@ public abstract class NodRestController<T> extends RestController<T> {
 	 * @param apiSection
 	 * @return La liste des éléments.
 	 * @throws IOException
-	 * @throws JSONException 
+	 * @throws JSONException
 	 */
-	protected List<T> getAll(final String apiSection) throws IOException, JSONException {
-		final URL url = new URL(String.format(PATH, apiSection, API_KEY));
+	protected List<T> getAll(final Resources res, final String apiSection) throws IOException, JSONException {
+		final URL url = new URL(String.format(PATH, apiSection, res.getString(R.string.nod_key)));
 		return parseJson(url);
 	}
 

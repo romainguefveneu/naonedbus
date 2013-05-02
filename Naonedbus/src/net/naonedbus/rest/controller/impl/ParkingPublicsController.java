@@ -30,6 +30,7 @@ import net.naonedbus.rest.controller.NodRestController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.res.Resources;
 import android.util.SparseArray;
 
 public class ParkingPublicsController extends NodRestController<ParkingPublic> {
@@ -53,8 +54,8 @@ public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 		}
 	}
 
-	public List<ParkingPublic> getAll() throws IOException, JSONException {
-		final List<ParkingPublic> parkings = super.getAll(API);
+	public List<ParkingPublic> getAll(final Resources res) throws IOException, JSONException {
+		final List<ParkingPublic> parkings = super.getAll(res, API);
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 		for (final ParkingPublic parkingPublic : parkings) {

@@ -31,6 +31,7 @@ import net.naonedbus.provider.impl.LigneProvider;
 import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.utils.ColorUtils;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -46,8 +47,8 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	private static LigneManager instance;
 
 	private Thread lignesLoader;
-	private ConcurrentLinkedQueue<LignesTaskInfo> lignesTasks;
-	private Object lock = new Object();
+	private final ConcurrentLinkedQueue<LignesTaskInfo> lignesTasks;
+	private final Object lock = new Object();
 
 	public static synchronized LigneManager getInstance() {
 		if (instance == null) {
@@ -68,12 +69,12 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	 * @param idType
 	 * @return Les lignes correspondants au type
 	 */
-	public List<Ligne> getLignesByType(ContentResolver contentResolver, Integer idType) {
+	public List<Ligne> getLignesByType(final ContentResolver contentResolver, final Integer idType) {
 		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
 		builder.path(LigneProvider.LIGNE_TYPE_URI_PATH_QUERY);
 		builder.appendPath(Integer.toString(idType));
 
-		Cursor c = contentResolver.query(builder.build(), null, null, null, null);
+		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
 		return getFromCursor(c);
 	}
 
@@ -84,7 +85,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	 * @param keyword
 	 * @return Les lignes correspondants au mot clé
 	 */
-	public Cursor getLignesSearch(ContentResolver contentResolver, String keyword) {
+	public Cursor getLignesSearch(final ContentResolver contentResolver, final String keyword) {
 		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
 		builder.appendPath(keyword);
 
@@ -92,7 +93,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	}
 
 	@Override
-	public Ligne getSingleFromCursor(Cursor c) {
+	public Ligne getSingleFromCursor(final Cursor c) {
 		final Ligne ligneItem = new Ligne();
 		ligneItem._id = c.getInt(c.getColumnIndex(LigneTable._ID));
 		ligneItem.code = c.getString(c.getColumnIndex(LigneTable.CODE));
@@ -106,7 +107,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		return ligneItem;
 	}
 
-	public List<Ligne> getLignesFromStation(ContentResolver contentResolver, int idStation) {
+	public List<Ligne> getLignesFromStation(final ContentResolver contentResolver, final int idStation) {
 		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
 		builder.path(LigneProvider.LIGNE_STATION_URI_PATH_QUERY);
 		builder.appendQueryParameter("idStation", String.valueOf(idStation));
@@ -125,9 +126,9 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	 *            Un {@code Handler} receptionnant le resultat dans {@code obj}
 	 *            sous forme de {@code List<Ligne>} .
 	 */
-	public LignesTaskInfo scheduleGetLignesFromStation(final ContentResolver contentResolver, final int idStation,
+	public LignesTaskInfo scheduleGetLignesFromStation(final Context context, final int idStation,
 			final Handler callback) {
-		final LignesTaskInfo task = new LignesTaskInfo(contentResolver, idStation, callback);
+		final LignesTaskInfo task = new LignesTaskInfo(context, idStation, callback);
 		if (DBG)
 			Log.d(LOG_TAG, "schedule :\t" + task);
 
@@ -146,7 +147,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	}
 
 	@Override
-	public void unschedule(LignesTaskInfo task) {
+	public void unschedule(final LignesTaskInfo task) {
 		if (DBG)
 			Log.d(LOG_TAG, "unschedule :\t" + task);
 		lignesTasks.remove(task);
@@ -155,7 +156,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	/**
 	 * Loader pour le chargement des lignes asynchrone.
 	 */
-	private Runnable lignesFromStationLoader = new Runnable() {
+	private final Runnable lignesFromStationLoader = new Runnable() {
 		@Override
 		public void run() {
 			AsyncTaskInfo<Integer> task;
@@ -164,7 +165,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 			Message message;
 
 			while ((task = lignesTasks.poll()) != null) {
-				lignes = getLignesFromStation(task.getContentResolver(), task.getTag());
+				lignes = getLignesFromStation(task.getContext().getContentResolver(), task.getTag());
 
 				handler = task.getHandler();
 				message = new Message();
@@ -175,7 +176,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 					synchronized (lock) {
 						try {
 							lock.wait(2000);
-						} catch (InterruptedException e) {
+						} catch (final InterruptedException e) {
 						}
 					}
 				}

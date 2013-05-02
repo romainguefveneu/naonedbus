@@ -169,7 +169,7 @@ public class ParkingMapLayer implements MapLayer {
 				final ParkingPublicManager publicManager = ParkingPublicManager.getInstance();
 				final ParkingRelaiManager relaiManager = ParkingRelaiManager.getInstance();
 
-				parkings.addAll(publicManager.getAll(context.getContentResolver()));
+				parkings.addAll(publicManager.getAll(context));
 				parkings.addAll(relaiManager.getAll(context.getContentResolver()));
 			}
 		} catch (final IOException e) {
