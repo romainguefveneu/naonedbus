@@ -48,6 +48,10 @@ public abstract class SymbolesUtils {
 		return ligne + " " + DOT + " " + arret + " " + SENS_ARROW + " " + sens;
 	}
 
+	public static String formatWithDot(final String a, final String b) {
+		return a + " " + DOT + " " + b;
+	}
+
 	public static CharSequence formatTime(final Context context, final String time) {
 		if (android.text.format.DateFormat.is24HourFormat(context)) {
 			return time;

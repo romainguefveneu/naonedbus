@@ -1,8 +1,9 @@
 package net.naonedbus.bean;
 
+import net.naonedbus.widget.item.SectionItem;
 import android.location.Location;
 
-public class Bicloo {
+public class Bicloo implements SectionItem, Comparable<Bicloo> {
 	private enum Status {
 		CLOSED, OPEN;
 	}
@@ -18,6 +19,8 @@ public class Bicloo {
 	private int mAvailableBikeStands;
 	private int mAvailableBike;
 	private long mLastUpdate;
+
+	private Object mSection;
 
 	public int getNumber() {
 		return mNumber;
@@ -114,6 +117,23 @@ public class Bicloo {
 
 	public void setLastUpdate(final long lastUpdate) {
 		mLastUpdate = lastUpdate;
+	}
+
+	@Override
+	public int compareTo(final Bicloo another) {
+		if (another == null || another.getName() == null || getName() == null) {
+			return 0;
+		}
+		return getName().compareTo(another.getName());
+	}
+
+	@Override
+	public Object getSection() {
+		return mSection;
+	}
+
+	public void setSection(final Object section) {
+		mSection = section;
 	}
 
 }

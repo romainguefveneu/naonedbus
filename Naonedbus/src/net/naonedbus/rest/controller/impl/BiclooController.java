@@ -7,6 +7,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.rest.controller.RestController;
+import net.naonedbus.utils.WordUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +26,7 @@ public class BiclooController extends RestController<Bicloo> {
 	private static final String TAG_ADDRESS = "address";
 	private static final String TAG_POSITION = "position";
 	private static final String TAG_POSITION_LAT = "lat";
-	private static final String TAG_POSITION_LON = "lon";
+	private static final String TAG_POSITION_LON = "lng";
 	private static final String TAG_BANKING = "banking";
 	private static final String TAG_BONUS = "bonus";
 	private static final String TAG_STATUS = "status";
@@ -44,7 +45,7 @@ public class BiclooController extends RestController<Bicloo> {
 	protected Bicloo parseJsonObject(final JSONObject object) throws JSONException {
 		final Bicloo bicloo = new Bicloo();
 		bicloo.setNumber(object.getInt(TAG_NUMBER));
-		bicloo.setName(object.getString(TAG_NAME));
+		bicloo.setName(getCleanName(object.getString(TAG_NAME)));
 		bicloo.setAddress(object.getString(TAG_ADDRESS));
 		bicloo.setLocation(getLocation(object.getJSONObject(TAG_POSITION)));
 		bicloo.setBanking(object.getBoolean(TAG_BANKING));
@@ -54,7 +55,7 @@ public class BiclooController extends RestController<Bicloo> {
 		bicloo.setAvailableBikeStands(object.getInt(TAG_AVAILABLE_BIKE_STANDS));
 		bicloo.setAvailableBike(object.getInt(TAG_AVAILABLE_BIKES));
 		bicloo.setLastUpdate(object.getLong(TAG_LAST_UPDATE));
-		return null;
+		return bicloo;
 	}
 
 	private Location getLocation(final JSONObject object) throws JSONException {
@@ -62,6 +63,14 @@ public class BiclooController extends RestController<Bicloo> {
 		location.setLatitude(object.getDouble(TAG_POSITION_LAT));
 		location.setLatitude(object.getDouble(TAG_POSITION_LON));
 		return location;
+	}
+
+	private String getCleanName(final String name) {
+		final int index = name.indexOf("-");
+		if (index > -1) {
+			return WordUtils.capitalizeFully(name.split("-")[1].trim(), ' ', '\'');
+		}
+		return name;
 	}
 
 	@Override

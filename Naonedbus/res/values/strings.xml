@@ -281,6 +281,18 @@
         <item quantity="one">1 space left, hurry !</item>
         <item quantity="other">%d spaces left</item>
     </plurals>
+        <!-- Bicloo -->
+    <plurals name="bicloo_places_disponibles">
+        <item quantity="zero">No space left</item>
+        <item quantity="one">1 space</item>
+        <item quantity="other">%d spaces</item>
+    </plurals>
+    <plurals name="bicloo_velos_disponibles">
+        <item quantity="zero">No bicloo left</item>
+        <item quantity="one">1 bicloo</item>
+        <item quantity="other">%d bicloos</item>
+    </plurals>
+    
     <plurals name="selected_items">
         <item quantity="one">1 selected</item>
         <item quantity="other">%d selected</item>

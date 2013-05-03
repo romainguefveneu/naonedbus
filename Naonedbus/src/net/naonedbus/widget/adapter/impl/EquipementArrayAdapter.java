@@ -112,8 +112,7 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 
 	@Override
 	public void bindViewHolder(final View view) {
-		final ViewHolder holder;
-		holder = new ViewHolder();
+		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
