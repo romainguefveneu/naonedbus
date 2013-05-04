@@ -735,7 +735,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		 * @throws IOException
 		 */
 		private void updateAdapter(final int position) throws IOException {
-			if (position >= getListAdapter().getCount() || isDetached() || getActivity() == null)
+			if (position >= getListAdapter().getCount() || !isAdded() || getActivity() == null)
 				return;
 
 			final Favori favori = (Favori) getListAdapter().getItem(position);
@@ -759,6 +759,9 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 		@Override
 		protected void onProgressUpdate(final Void... values) {
+			if (!isAdded() || getActivity() == null)
+				return;
+
 			((FavoriArrayAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 

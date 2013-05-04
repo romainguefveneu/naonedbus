@@ -33,6 +33,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.manager.impl.LigneManager;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -64,13 +65,13 @@ public class PlanFragment extends CustomFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		final Context context = getActivity();
 		final View view = getView();
@@ -90,9 +91,9 @@ public class PlanFragment extends CustomFragment {
 		} else {
 			try {
 				save(mLigne.lettre);
-			} catch (MalformedURLException e) {
+			} catch (final MalformedURLException e) {
 				onError(e);
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				onError(e);
 			}
 		}
@@ -116,7 +117,7 @@ public class PlanFragment extends CustomFragment {
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	private void save(String codeLigne) throws MalformedURLException, IOException {
+	private void save(final String codeLigne) throws MalformedURLException, IOException {
 		final DownloadFile downloadFile = new DownloadFile();
 		downloadFile.execute(codeLigne);
 	}
@@ -146,7 +147,7 @@ public class PlanFragment extends CustomFragment {
 	 * @return L'adresse du fichier dans le cache
 	 */
 
-	private String getLocalPath(String codeLigne) {
+	private String getLocalPath(final String codeLigne) {
 		return getActivity().getCacheDir() + "/" + codeLigne + FILE_EXT;
 	}
 
@@ -157,7 +158,7 @@ public class PlanFragment extends CustomFragment {
 	 *            : code de la ligne
 	 * @return l'url du plan
 	 */
-	private String getRemoteUrl(String codeLigne) {
+	private String getRemoteUrl(final String codeLigne) {
 		return URL.replace("{ligne}", codeLigne);
 	}
 
@@ -167,9 +168,12 @@ public class PlanFragment extends CustomFragment {
 	 * @param e
 	 *            L'exception survenue
 	 */
-	private void onError(Exception e) {
-		Toast.makeText(getActivity(), this.getString(R.string.msg_plan_not_found), Toast.LENGTH_SHORT).show();
-		getActivity().finish();
+	private void onError(final Exception e) {
+		final Activity activity = getActivity();
+		if (isAdded() && isVisible() && activity != null) {
+			Toast.makeText(activity, this.getString(R.string.msg_plan_not_found), Toast.LENGTH_SHORT).show();
+			activity.finish();
+		}
 	}
 
 	/**
@@ -180,11 +184,11 @@ public class PlanFragment extends CustomFragment {
 	private class DownloadFile extends AsyncTask<String, Integer, Boolean> {
 
 		@Override
-		protected Boolean doInBackground(String... codeLigne) {
+		protected Boolean doInBackground(final String... codeLigne) {
 			int count;
 			long total = 0;
 			int lenghtOfFile;
-			byte data[] = new byte[1024];
+			final byte data[] = new byte[1024];
 
 			try {
 				final URL localUrl = new URL(getRemoteUrl(codeLigne[0]));
@@ -205,7 +209,7 @@ public class PlanFragment extends CustomFragment {
 				output.flush();
 				output.close();
 				input.close();
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				BugSenseHandler.sendExceptionMessage("Erreur lors de la récupération du plan.", null, e);
 				return false;
 			}
@@ -213,29 +217,30 @@ public class PlanFragment extends CustomFragment {
 		}
 
 		@Override
-		public void onProgressUpdate(Integer... args) {
+		public void onProgressUpdate(final Integer... args) {
 			mProgressBar.setIndeterminate(false);
 			mProgressBar.setProgress(args[0]);
 		}
 
 		@Override
-		protected void onPostExecute(Boolean result) {
-			super.onPostExecute(result);
-			if (result) {
-				afterLoaded();
-			} else {
-				onError(null);
+		protected void onPostExecute(final Boolean result) {
+			if (getActivity() != null && isVisible()) {
+				if (result) {
+					afterLoaded();
+				} else {
+					onError(null);
+				}
 			}
 		}
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		return false;
 	}
 
 	@Override
-	protected void bindView(View view, Bundle savedInstanceState) {
+	protected void bindView(final View view, final Bundle savedInstanceState) {
 
 	}
 }

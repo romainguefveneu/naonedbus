@@ -28,6 +28,8 @@ import net.naonedbus.rest.controller.NodRestController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.res.Resources;
+
 public class InfoTraficController extends NodRestController<InfoTrafic> {
 
 	public InfoTraficController() {
@@ -48,14 +50,14 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 	private static final String TAG_PERTURBATION_TERMINEE = "PERTURBATION_TERMINEE";
 	private static final String TAG_TRONCONS = "TRONCONS";
 
-	public List<InfoTrafic> getAll() throws IOException, JSONException {
+	public List<InfoTrafic> getAll(final Resources res) throws IOException, JSONException {
 		final List<InfoTrafic> infosTrafics = new ArrayList<InfoTrafic>();
 
-		final List<InfoTrafic> infosReel = super.getAll(API_REEL);
+		final List<InfoTrafic> infosReel = super.getAll(res, API_REEL);
 		if (infosReel != null) {
 			infosTrafics.addAll(infosReel);
 		}
-		final List<InfoTrafic> infosPrevisionnel = super.getAll(API_PREVISIONNEL);
+		final List<InfoTrafic> infosPrevisionnel = super.getAll(res, API_PREVISIONNEL);
 		if (infosPrevisionnel != null) {
 			infosTrafics.addAll(infosPrevisionnel);
 		}

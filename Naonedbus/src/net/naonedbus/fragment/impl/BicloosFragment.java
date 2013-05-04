@@ -18,10 +18,23 @@
  */
 package net.naonedbus.fragment.impl;
 
+import java.util.List;
+
 import net.naonedbus.R;
+import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.comparator.BiclooComparator;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.fragment.EquipementFragment;
+import net.naonedbus.manager.impl.BiclooManager;
+import net.naonedbus.widget.adapter.impl.BiclooArrayAdapter;
+import net.naonedbus.widget.indexer.impl.BiclooNomIndexer;
+import android.content.Context;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 public class BicloosFragment extends EquipementFragment implements CustomFragmentActions {
 
@@ -29,4 +42,26 @@ public class BicloosFragment extends EquipementFragment implements CustomFragmen
 		super(R.string.title_fragment_bicloos, R.layout.fragment_listview_section, Equipement.Type.TYPE_BICLOO);
 	}
 
+	@Override
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
+	}
+
+	@Override
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
+		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
+		try {
+			final BiclooManager biclooManager = BiclooManager.getInstance();
+			final List<Bicloo> bicloos = biclooManager.getAll(context);
+
+			final BiclooArrayAdapter adapter = new BiclooArrayAdapter(context, bicloos);
+			adapter.sort(new BiclooComparator());
+			adapter.setIndexer(new BiclooNomIndexer());
+
+			result.setResult(adapter);
+
+		} catch (final Exception e) {
+			result.setException(e);
+		}
+		return result;
+	}
 }

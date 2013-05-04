@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<project name="naonedbus-profiles">
 
 	<target name="-process-template">
 		<exec executable="git" outputproperty="git.revision">
@@ -16,6 +17,8 @@
 		    <filter token="privatekey.exp" value="${privatekey.exp}"/>
 		    <filter token="git.revision" value="${git.revision}"/>
 		    <filter token="serveur.url" value="${serveur.url}"/>
+		    <filter token="nod.key" value="${nod.key}"/>
+		    <filter token="jcdecaux.key" value="${jcdecaux.key}"/>
 		</filterset>
 		<copy file="ant-templates/keys.xml" todir="./res/values/" overwrite="true" encoding="utf-8">
 			<filterset refid="build-tokens" />

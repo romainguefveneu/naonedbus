@@ -34,6 +34,7 @@ import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
@@ -70,15 +71,15 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	private void init(final ContentResolver contentResolver) throws IOException, JSONException {
+	private void init(final Context context) throws IOException, JSONException {
 		final DateTime now = new DateTime();
 
 		if (this.mCache.isEmpty() || now.isAfter(this.mDateLimit)) {
 			final ParkingPublicsController controller = new ParkingPublicsController();
 			this.mCache.clear();
-			this.mCache = controller.getAll();
+			this.mCache = controller.getAll(context.getResources());
 			this.mDateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
-			fillParkings(contentResolver, this.mCache);
+			fillParkings(context.getContentResolver(), this.mCache);
 		}
 	}
 
@@ -89,9 +90,9 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	public List<ParkingPublic> getAll(final ContentResolver contentResolver) throws IOException, JSONException {
-		init(contentResolver);
-		return this.mCache;
+	public List<ParkingPublic> getAll(final Context context) throws IOException, JSONException {
+		init(context);
+		return mCache;
 	}
 
 	/**
@@ -165,9 +166,9 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 *            sous forme de {@code ParkingPublic} .
 	 * @return
 	 */
-	public ParkingPublicTaskInfo scheduleGetParkingPublic(final ContentResolver contentResolver, final int idParking,
+	public ParkingPublicTaskInfo scheduleGetParkingPublic(final Context context, final int idParking,
 			final Handler callback) {
-		final ParkingPublicTaskInfo task = new ParkingPublicTaskInfo(contentResolver, idParking, callback);
+		final ParkingPublicTaskInfo task = new ParkingPublicTaskInfo(context, idParking, callback);
 		mParkingsTasks.push(task);
 
 		if (mParkingsThread == null || !mParkingsThread.isAlive()) {
@@ -205,7 +206,7 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 				task = mParkingsTasks.pop();
 
 				try {
-					init(task.getContentResolver());
+					init(task.getContext());
 					parking = getFromCache(task.getTag());
 				} catch (final IOException e) {
 					parking = null;

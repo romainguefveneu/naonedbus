@@ -112,8 +112,7 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 
 	@Override
 	public void bindViewHolder(final View view) {
-		final ViewHolder holder;
-		holder = new ViewHolder();
+		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
@@ -226,8 +225,7 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 					holder.task = null;
 				}
 			};
-			holder.task = ligneManager.scheduleGetLignesFromStation(context.getContentResolver(), equipement.getId(),
-					handler);
+			holder.task = ligneManager.scheduleGetLignesFromStation(context, equipement.getId(), handler);
 		} else {
 			bindLignes((List<Ligne>) equipement.getTag(), holder, layoutInflater);
 		}
@@ -290,8 +288,7 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 				}
 			};
 
-			holder.task = parkingPublicManager.scheduleGetParkingPublic(context.getContentResolver(),
-					equipement.getId(), handler);
+			holder.task = parkingPublicManager.scheduleGetParkingPublic(context, equipement.getId(), handler);
 		} else {
 			bindParking(context, holder, (ParkingPublic) equipement.getTag());
 		}

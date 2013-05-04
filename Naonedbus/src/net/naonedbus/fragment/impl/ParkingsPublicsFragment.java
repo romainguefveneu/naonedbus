@@ -180,7 +180,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		try {
 
 			final ParkingPublicManager parkingPublicManager = ParkingPublicManager.getInstance();
-			final List<ParkingPublic> parkings = parkingPublicManager.getAll(context.getContentResolver());
+			final List<ParkingPublic> parkings = parkingPublicManager.getAll(context);
 			Collections.sort(parkings, comparators.get(mCurrentSort));
 			final ParkingPublicArrayAdapter adapter = new ParkingPublicArrayAdapter(context, parkings);
 			adapter.setIndexer(indexers.get(mCurrentSort));
