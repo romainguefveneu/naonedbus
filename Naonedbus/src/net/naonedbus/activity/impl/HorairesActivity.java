@@ -28,7 +28,7 @@ import net.naonedbus.fragment.impl.HorairesFragment.OnSensChangeListener;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -82,12 +82,12 @@ public class HorairesActivity extends OneFragmentActivity implements OnSensChang
 		mHeaderHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
 		mHeaderHelper.setCode(ligne.lettre);
 		mHeaderHelper.setTitle(arret.nomArret);
-		mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
+		mHeaderHelper.setSubTitle(FormatUtils.formatSens(sens.text));
 	}
 
 	@Override
 	public void onSensChange(final Sens newSens) {
-		mHeaderHelper.setSubTitleAnimated(SymbolesUtils.formatSens(newSens.text));
+		mHeaderHelper.setSubTitleAnimated(FormatUtils.formatSens(newSens.text));
 	}
 
 	@Override

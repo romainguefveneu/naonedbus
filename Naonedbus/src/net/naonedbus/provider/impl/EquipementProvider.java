@@ -20,16 +20,21 @@ package net.naonedbus.provider.impl;
 
 import java.util.HashMap;
 
-import net.naonedbus.provider.ReadOnlyContentProvider;
+import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.provider.table.TypeEquipementTable;
 import android.app.SearchManager;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
 
-public class EquipementProvider extends ReadOnlyContentProvider {
+public class EquipementProvider extends CustomContentProvider {
 
 	/**
 	 * Recherche Android.
@@ -100,11 +105,12 @@ public class EquipementProvider extends ReadOnlyContentProvider {
 	}
 
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+	public Cursor query(final Uri uri, String[] projection, final String selection, final String[] selectionArgs,
+			String sortOrder) {
+		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(EquipementTable.TABLE_NAME);
 
-		int uriType = URI_MATCHER.match(uri);
+		final int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
 
 		case SEARCH:
@@ -161,11 +167,64 @@ public class EquipementProvider extends ReadOnlyContentProvider {
 		return cursor;
 	}
 
+	@Override
+	public Uri insert(final Uri uri, final ContentValues initialValues) {
+		ContentValues values;
+
+		if (initialValues != null) {
+			values = new ContentValues(initialValues);
+		} else {
+			values = new ContentValues();
+		}
+
+		if (URI_MATCHER.match(uri) != EQUIPEMENTS) {
+			throw new IllegalArgumentException("Unknown URI " + uri + " (" + URI_MATCHER.match(uri) + ")");
+		}
+
+		final SQLiteDatabase db = getWritableDatabase();
+		final long rowId = db.insert(EquipementTable.TABLE_NAME, null, values);
+		if (rowId > 0) {
+			final Uri insertUri = ContentUris.withAppendedId(CONTENT_URI, rowId);
+			getContext().getContentResolver().notifyChange(uri, null);
+			return insertUri;
+		}
+
+		throw new SQLException("Failed to insert row into " + uri);
+	}
+
+	@Override
+	public int delete(final Uri uri, final String selection, final String[] selectionArgs) {
+		final SQLiteDatabase db = getWritableDatabase();
+
+		int count;
+		switch (URI_MATCHER.match(uri)) {
+		case EQUIPEMENTS_TYPE:
+			final String segment = uri.getPathSegments().get(1);
+			count = db.delete(EquipementTable.TABLE_NAME,
+					EquipementTable.ID_TYPE + "=" + segment
+							+ (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""), selectionArgs);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown URI (" + URI_MATCHER.match(uri) + ") " + uri);
+		}
+
+		getContext().getContentResolver().notifyChange(uri, null);
+
+		return count;
+	}
+
+	@Override
+	public String getType(final Uri uri) {
+		return null;
+	}
+
+	@Override
+	public int update(final Uri uri, final ContentValues values, final String selection, final String[] selectionArgs) {
+		return 0;
+	}
+
 	/**
-	 * Composants de la requête de sélection des equipements à proximité
-	 * 
-	 * @author romain.guefveneu
-	 * 
+	 * Composants de la requête de sélection des equipements à proximité.
 	 */
 	private static interface LocationQuery {
 		public static final String WHERE = EquipementTable.LATITUDE + "  IS NOT NULL AND " + EquipementTable.LONGITUDE

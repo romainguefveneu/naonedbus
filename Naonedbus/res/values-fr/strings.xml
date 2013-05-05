@@ -201,15 +201,23 @@
         <item quantity="other">%d places disponibles</item>
     </plurals>
     <!-- Bicloo -->
+    <string name="bicloo_titre_velos_disponibles">Bicloos disponibles</string>
+    <string name="bicloo_titre_places_disponible">Places disponibles</string>
+    <string name="bicloo_titre_paiement">Paiement</string>
+    <string name="bicloo_paiement_disponible">Oui</string>
+    <string name="bicloo_paiement_indisponible">Non</string>
+
     <plurals name="bicloo_places_disponibles">
-        <item quantity="zero">Aucune place restante</item>
-        <item quantity="one">1 place</item>
+        <item quantity="one">%d place</item>
         <item quantity="other">%d places</item>
     </plurals>
     <plurals name="bicloo_velos_disponibles">
-        <item quantity="zero">Aucun bicloo restant</item>
-        <item quantity="one">1 bicloo </item>
+        <item quantity="one">%d bicloo</item>
         <item quantity="other">%d bicloos</item>
+    </plurals>
+    <plurals name="bicloo">
+        <item quantity="one">%1$s et %2$s restant</item>
+        <item quantity="other">%1$s et %2$s restants</item>
     </plurals>
 
     <!-- Cards -->

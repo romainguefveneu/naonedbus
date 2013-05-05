@@ -2,9 +2,11 @@ package net.naonedbus.bean;
 
 import net.naonedbus.widget.item.SectionItem;
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Bicloo implements SectionItem, Comparable<Bicloo> {
-	private enum Status {
+public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
+	public static enum Status {
 		CLOSED, OPEN;
 	}
 
@@ -21,6 +23,24 @@ public class Bicloo implements SectionItem, Comparable<Bicloo> {
 	private long mLastUpdate;
 
 	private Object mSection;
+	private Float mDistance;
+
+	public Bicloo() {
+	}
+
+	protected Bicloo(final Parcel in) {
+		mNumber = in.readInt();
+		mName = in.readString();
+		mAddress = in.readString();
+		mLocation = in.readParcelable(Location.class.getClassLoader());
+		mBanking = in.readInt() == 1;
+		mBonus = in.readInt() == 1;
+		mStatus = Status.values()[in.readInt()];
+		mBikeStands = in.readInt();
+		mAvailableBikeStands = in.readInt();
+		mAvailableBike = in.readInt();
+		mLastUpdate = in.readLong();
+	}
 
 	public int getNumber() {
 		return mNumber;
@@ -119,6 +139,14 @@ public class Bicloo implements SectionItem, Comparable<Bicloo> {
 		mLastUpdate = lastUpdate;
 	}
 
+	public Float getDistance() {
+		return mDistance;
+	}
+
+	public void setDistance(final Float distance) {
+		mDistance = distance;
+	}
+
 	@Override
 	public int compareTo(final Bicloo another) {
 		if (another == null || another.getName() == null || getName() == null) {
@@ -135,5 +163,37 @@ public class Bicloo implements SectionItem, Comparable<Bicloo> {
 	public void setSection(final Object section) {
 		mSection = section;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
+		dest.writeInt(mNumber);
+		dest.writeString(mName);
+		dest.writeString(mAddress);
+		dest.writeParcelable(mLocation, 0);
+		dest.writeInt(mBanking ? 1 : 0);
+		dest.writeInt(mBonus ? 1 : 0);
+		dest.writeInt(mStatus.ordinal());
+		dest.writeInt(mBikeStands);
+		dest.writeInt(mAvailableBikeStands);
+		dest.writeInt(mAvailableBike);
+		dest.writeLong(mLastUpdate);
+	}
+
+	public static final Parcelable.Creator<Bicloo> CREATOR = new Parcelable.Creator<Bicloo>() {
+		@Override
+		public Bicloo createFromParcel(final Parcel in) {
+			return new Bicloo(in);
+		}
+
+		@Override
+		public Bicloo[] newArray(final int size) {
+			return new Bicloo[size];
+		}
+	};
 
 }

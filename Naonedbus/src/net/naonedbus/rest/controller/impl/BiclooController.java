@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.rest.controller.RestController;
@@ -15,8 +16,12 @@ import org.json.JSONObject;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 
 public class BiclooController extends RestController<Bicloo> {
+
+	private static final String LOG_TAG = "BiclooController";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final String URL = "https://api.jcdecaux.com/vls/v1/stations?contract=Nantes&apiKey=%s";
 
@@ -36,6 +41,9 @@ public class BiclooController extends RestController<Bicloo> {
 	private static final String TAG_LAST_UPDATE = "last_update";
 
 	public List<Bicloo> getAll(final Resources res) throws IOException, JSONException {
+		if (DBG)
+			Log.d(LOG_TAG, "getAll");
+
 		final String url = String.format(URL, res.getString(R.string.jcdecaux_key));
 
 		return parseJson(new URL(url));
@@ -45,8 +53,8 @@ public class BiclooController extends RestController<Bicloo> {
 	protected Bicloo parseJsonObject(final JSONObject object) throws JSONException {
 		final Bicloo bicloo = new Bicloo();
 		bicloo.setNumber(object.getInt(TAG_NUMBER));
-		bicloo.setName(getCleanName(object.getString(TAG_NAME)));
-		bicloo.setAddress(object.getString(TAG_ADDRESS));
+		bicloo.setName(getCleanString(object.getString(TAG_NAME)));
+		bicloo.setAddress(getCleanString(object.getString(TAG_ADDRESS)));
 		bicloo.setLocation(getLocation(object.getJSONObject(TAG_POSITION)));
 		bicloo.setBanking(object.getBoolean(TAG_BANKING));
 		bicloo.setBonus(object.getBoolean(TAG_BONUS));
@@ -61,16 +69,16 @@ public class BiclooController extends RestController<Bicloo> {
 	private Location getLocation(final JSONObject object) throws JSONException {
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
 		location.setLatitude(object.getDouble(TAG_POSITION_LAT));
-		location.setLatitude(object.getDouble(TAG_POSITION_LON));
+		location.setLongitude(object.getDouble(TAG_POSITION_LON));
 		return location;
 	}
 
-	private String getCleanName(final String name) {
+	private String getCleanString(String name) {
 		final int index = name.indexOf("-");
 		if (index > -1) {
-			return WordUtils.capitalizeFully(name.split("-")[1].trim(), ' ', '\'');
+			name = name.split("-")[1];
 		}
-		return name;
+		return WordUtils.capitalizeFully(name.trim(), ' ', '\'');
 	}
 
 	@Override

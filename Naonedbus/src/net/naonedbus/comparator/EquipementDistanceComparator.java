@@ -24,10 +24,6 @@ import net.naonedbus.bean.Equipement;
 import android.location.Location;
 import android.location.LocationManager;
 
-/**
- * @author romain
- * 
- */
 public class EquipementDistanceComparator<T extends Equipement> implements Comparator<T> {
 
 	/**
@@ -36,12 +32,12 @@ public class EquipementDistanceComparator<T extends Equipement> implements Compa
 	 */
 	private Location referentiel;
 
-	public void setReferentiel(Location referentiel) {
+	public void setReferentiel(final Location referentiel) {
 		this.referentiel = referentiel;
 	}
 
 	@Override
-	public int compare(T e1, T e2) {
+	public int compare(final T e1, final T e2) {
 		if (e1 == null || e2 == null)
 			return 0;
 
@@ -60,7 +56,7 @@ public class EquipementDistanceComparator<T extends Equipement> implements Compa
 	 * @param e2
 	 * @return
 	 */
-	private int simpleCompare(T e1, T e2) {
+	private int simpleCompare(final T e1, final T e2) {
 		if (e1.getDistance() == null || e1.getDistance() == null)
 			return 0;
 
@@ -74,7 +70,7 @@ public class EquipementDistanceComparator<T extends Equipement> implements Compa
 	 * @param e2
 	 * @return
 	 */
-	private int referentielCompare(T e1, T e2) {
+	private int referentielCompare(final T e1, final T e2) {
 		if (e1.getLatitude() == null || e1.getLongitude() == null)
 			return 0;
 		if (e2.getLatitude() == null || e2.getLongitude() == null)

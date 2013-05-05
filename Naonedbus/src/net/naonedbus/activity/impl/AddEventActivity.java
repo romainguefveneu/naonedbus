@@ -30,7 +30,7 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.utils.CalendarUtils;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -79,7 +79,7 @@ public class AddEventActivity extends SherlockActivity {
 		headerHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
 		headerHelper.setCode(ligne.lettre);
 		headerHelper.setTitle(arret.nomArret);
-		headerHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
+		headerHelper.setSubTitle(FormatUtils.formatSens(sens.text));
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -121,7 +121,7 @@ public class AddEventActivity extends SherlockActivity {
 		final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.DEFAULT);
 		mDateEvent.setText(dateFormat.format(new Date(timestamp)));
 
-		mCommentText.setText(SymbolesUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, ligne.code),
+		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, ligne.code),
 				arret.nomArret, sens.text));
 
 		fillCalendars();

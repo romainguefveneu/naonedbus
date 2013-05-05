@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@id/menu_sort"
+        android:icon="@drawable/ic_action_sort_by_size"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/action_sort">
+        <menu>
+            <group android:checkableBehavior="single" >
+                <item
+                    android:id="@id/menu_sort_name"
+                    android:checked="true"
+                    android:orderInCategory="100"
+                    android:showAsAction="withText"
+                    android:title="@string/action_sort_name"/>
+                <item
+                    android:id="@id/menu_sort_distance"
+                    android:orderInCategory="300"
+                    android:showAsAction="withText"
+                    android:title="@string/action_sort_distance"/>
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@id/menu_refresh"
+        android:icon="@drawable/ic_action_refresh"
+        android:showAsAction="always"
+        android:title="@string/action_refresh"/>
+
+</menu>

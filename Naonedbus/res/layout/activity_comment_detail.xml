@@ -31,7 +31,7 @@
         android:padding="@dimen/padding_medium" >
 
         <TextView
-            android:id="@+id/itemDate"
+            android:id="@id/itemDate"
             style="@style/BigSubTitle.Time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

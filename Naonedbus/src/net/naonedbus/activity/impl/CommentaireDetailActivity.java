@@ -31,7 +31,7 @@ import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.SmileyParser;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -182,10 +182,10 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			}
 			if (sens != null) {
 				if (arret == null) {
-					mHeaderHelper.setTitle(SymbolesUtils.formatSens(sens.text));
+					mHeaderHelper.setTitle(FormatUtils.formatSens(sens.text));
 					mHeaderHelper.setSubTitle(null);
 				} else {
-					mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
+					mHeaderHelper.setSubTitle(FormatUtils.formatSens(sens.text));
 				}
 			} else {
 				mHeaderHelper.setSubTitle(null);
@@ -225,7 +225,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 					title += ", " + arret.nomArret;
 				}
 				if (sens != null) {
-					title += SymbolesUtils.formatSens(sens.text);
+					title += FormatUtils.formatSens(sens.text);
 				}
 			}
 		}

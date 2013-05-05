@@ -157,13 +157,14 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 		case R.id.menu_sort_name:
 			currentSortPreference = SORT_NOM;
 			sort();
-			break;
+			return true;
 		case R.id.menu_sort_distance:
 			currentSortPreference = SORT_DISTANCE;
 			sort();
-			break;
+			return true;
+		default:
+			return false;
 		}
-		return false;
 	}
 
 	/**

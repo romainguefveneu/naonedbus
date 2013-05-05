@@ -24,7 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Color;
@@ -73,10 +73,10 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 
 		if (item.nomFavori == null) {
 			holder.itemTitle.setText(item.nomArret);
-			holder.itemDescription.setText(SymbolesUtils.formatSens(item.nomSens));
+			holder.itemDescription.setText(FormatUtils.formatSens(item.nomSens));
 		} else {
 			holder.itemTitle.setText(item.nomFavori);
-			holder.itemDescription.setText(SymbolesUtils.formatArretSens(item.nomArret, item.nomSens));
+			holder.itemDescription.setText(FormatUtils.formatArretSens(item.nomArret, item.nomSens));
 		}
 
 		if (item.delay == null) {

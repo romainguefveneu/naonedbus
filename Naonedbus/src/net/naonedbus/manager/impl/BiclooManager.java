@@ -3,21 +3,34 @@ package net.naonedbus.manager.impl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Bicloo;
+import net.naonedbus.bean.Equipement;
+import net.naonedbus.provider.impl.EquipementProvider;
+import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.rest.controller.impl.BiclooController;
 
 import org.joda.time.DateTime;
 import org.json.JSONException;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
+import android.util.Log;
 
 public class BiclooManager {
-	private static final String LOG_TAG = BiclooManager.class.getSimpleName();
 
-	private static final int CACHE_LIMITE_MINUTES = 15;
+	private static final String LOG_TAG = "BiclooManager";
+	private static final boolean DBG = BuildConfig.DEBUG;
+
+	private static final int CACHE_LIMITE_MINUTES = 5;
 	private static BiclooManager sInstance;
 
+	private final ExecutorService mExecutor;
 	private List<Bicloo> mCache;
 	private DateTime mDateLimit;
 
@@ -31,6 +44,7 @@ public class BiclooManager {
 
 	private BiclooManager() {
 		mCache = new ArrayList<Bicloo>();
+		mExecutor = Executors.newSingleThreadExecutor();
 	}
 
 	/**
@@ -47,7 +61,57 @@ public class BiclooManager {
 			mCache.clear();
 			mCache = controller.getAll(context.getResources());
 			mDateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
+			saveToDatabase(context);
 		}
+	}
+
+	public void clearCache() {
+		mCache.clear();
+	}
+
+	private ContentValues getContentValues(final Bicloo bicloo) {
+		final ContentValues values = new ContentValues();
+		values.put(EquipementTable._ID, bicloo.getNumber());
+		values.put(EquipementTable.ID_TYPE, Equipement.Type.TYPE_BICLOO.getId());
+		values.put(EquipementTable.NOM, bicloo.getName());
+		values.put(EquipementTable.NORMALIZED_NOM, bicloo.getName());
+		values.put(EquipementTable.ADRESSE, bicloo.getAddress());
+		values.put(EquipementTable.LATITUDE, bicloo.getLocation().getLatitude());
+		values.put(EquipementTable.LONGITUDE, bicloo.getLocation().getLongitude());
+
+		return values;
+	}
+
+	private void saveToDatabase(final Context context) {
+		final Runnable task = new Runnable() {
+			@Override
+			public void run() {
+				if (DBG)
+					Log.d(LOG_TAG, Integer.toHexString(hashCode()) + "\tDébut de sauvegarde des données bicloos...");
+
+				final Uri.Builder builder = EquipementProvider.CONTENT_URI.buildUpon();
+				builder.path(EquipementProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
+				builder.appendPath(String.valueOf(Equipement.Type.TYPE_BICLOO.getId()));
+				context.getContentResolver().delete(builder.build(), null, null);
+
+				fillDB(context.getContentResolver(), mCache);
+
+				if (DBG)
+					Log.d(LOG_TAG, Integer.toHexString(hashCode()) + "\tFin de sauvegarde des données bicloos.");
+			}
+		};
+
+		mExecutor.submit(task);
+	}
+
+	private void fillDB(final ContentResolver contentResolver, final List<Bicloo> bicloos) {
+		// Ajouter les horaires dans la db
+		final ContentValues[] values = new ContentValues[bicloos.size()];
+		for (int i = 0; i < bicloos.size(); i++) {
+			values[i] = getContentValues(bicloos.get(i));
+		}
+
+		contentResolver.bulkInsert(EquipementProvider.CONTENT_URI, values);
 	}
 
 	/**
@@ -59,7 +123,7 @@ public class BiclooManager {
 	 */
 	public List<Bicloo> getAll(final Context context) throws IOException, JSONException {
 		init(context);
-		return mCache;
+		return new ArrayList<Bicloo>(mCache);
 	}
 
 }

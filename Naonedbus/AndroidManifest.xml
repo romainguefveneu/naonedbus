@@ -68,6 +68,12 @@
             android:label="@string/emptyString"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
         <activity
+            android:name=".activity.impl.BicloosActivity"
+            android:label="@string/title_activity_bicloo" />
+        <activity
+            android:name=".activity.impl.BiclooDetailActivity"
+            android:label="@string/emptyString" />
+        <activity
             android:name=".activity.impl.EquipementsActivity"
             android:label="@string/title_activity_equipements" />
         <activity

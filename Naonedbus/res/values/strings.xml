@@ -54,6 +54,7 @@
     <string name="title_activity_carte">Map</string>
     <string name="title_activity_itineraire">Directions</string>
     <string name="title_activity_equipements">Mobility</string>
+    <string name="title_activity_bicloo">Bicloos</string>
     <string name="title_activity_parkings">Car parks</string>
     <string name="title_activity_recherche">Search</string>
     <string name="title_activity_actu">News</string>
@@ -283,14 +284,16 @@
     </plurals>
         <!-- Bicloo -->
     <plurals name="bicloo_places_disponibles">
-        <item quantity="zero">No space left</item>
-        <item quantity="one">1 space</item>
+        <item quantity="one">%d space</item>
         <item quantity="other">%d spaces</item>
     </plurals>
     <plurals name="bicloo_velos_disponibles">
-        <item quantity="zero">No bicloo left</item>
-        <item quantity="one">1 bicloo</item>
+        <item quantity="one">%d bicloo</item>
         <item quantity="other">%d bicloos</item>
+    </plurals>
+    <plurals name="bicloo">
+        <item quantity="one">%1$s and %2$s left</item>
+        <item quantity="other">%1$s and %2$s left</item>
     </plurals>
     
     <plurals name="selected_items">

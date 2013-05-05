@@ -6,7 +6,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -48,7 +48,17 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 		final String stands = context.getResources().getQuantityString(R.plurals.bicloo_places_disponibles,
 				availableStands, availableStands);
 
-		holder.itemDescription.setText(SymbolesUtils.formatWithDot(bikes, stands));
+		final String description = context.getResources().getQuantityString(R.plurals.bicloo,
+				availableBikes + availableStands, bikes, stands);
+
+		holder.itemDescription.setText(description);
+		// Définir la distance.
+		if (bicloo.getDistance() == null) {
+			holder.itemDistance.setText("");
+		} else {
+			holder.itemDistance.setText(DistanceUtils.formatDist(bicloo.getDistance()));
+		}
+
 	}
 
 	@Override

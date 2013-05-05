@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -27,6 +27,7 @@
     <item name="itemTitle" type="id"/>
     <item name="itemDescription" type="id"/>
     <item name="itemTime" type="id"/>
+    <item name="itemDate" type="id"/>
     <item name="itemDistance" type="id"/>
     <item name="itemLignes" type="id"/>
     <item name="itemTelephone" type="id"/>
@@ -62,6 +63,12 @@
     <item name="placesTotales" type="id"/>
     <item name="placesDisponibles" type="id"/>
     <item name="majDate" type="id"/>
+    <!-- Bicloos -->
+    <item name="bicloosDisponibles" type="id"/>
+    <item name="stationEtat" type="id"/>
+    <item name="stationBonus" type="id"/>
+    <item name="stationPaiement" type="id"/>
+
     <!--  -->
     <item name="colLeft" type="id"/>
     <item name="colRight" type="id"/>

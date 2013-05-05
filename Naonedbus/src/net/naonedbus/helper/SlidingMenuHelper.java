@@ -23,6 +23,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AboutActivity;
+import net.naonedbus.activity.impl.BicloosActivity;
 import net.naonedbus.activity.impl.EquipementsActivity;
 import net.naonedbus.activity.impl.InfosTraficActivity;
 import net.naonedbus.activity.impl.MainActivity;
@@ -67,6 +68,7 @@ public class SlidingMenuHelper {
 		MENU_ITEMS = new ArrayList<MainMenuItem>();
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_main, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_infos_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_bicloo, BicloosActivity.class, R.drawable.ic_action_place, 0));
 //		menuItems.add(new MainMenuItem(R.string.menu_itineraires, ItineraireActivity.class, R.drawable.ic_action_direction, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));

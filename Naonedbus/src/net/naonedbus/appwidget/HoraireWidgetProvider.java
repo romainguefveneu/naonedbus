@@ -34,7 +34,7 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavorisViewManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -247,10 +247,10 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 		if (favori.nomFavori == null) {
 			views.setTextViewText(R.id.itemTitle, favori.nomArret);
-			views.setTextViewText(R.id.itemDescription, SymbolesUtils.formatSens(favori.nomSens));
+			views.setTextViewText(R.id.itemDescription, FormatUtils.formatSens(favori.nomSens));
 		} else {
 			views.setTextViewText(R.id.itemTitle, favori.nomFavori);
-			views.setTextViewText(R.id.itemDescription, SymbolesUtils.formatArretSens(favori.nomArret, favori.nomSens));
+			views.setTextViewText(R.id.itemDescription, FormatUtils.formatArretSens(favori.nomArret, favori.nomSens));
 		}
 
 		views.setViewVisibility(R.id.widgetLoading, View.GONE);
@@ -296,7 +296,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 			for (final Horaire horaire : nextHoraires) {
 				content = TextUtils.concat(content,
-						SymbolesUtils.formatTime(context, timeFormat.format(horaire.getTimestamp())));
+						FormatUtils.formatTime(context, timeFormat.format(horaire.getTimestamp())));
 				if (++count < nextHoraires.size()) {
 					content = TextUtils.concat(content, " \u2022 ");
 				}
@@ -377,7 +377,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				final TextView horairesView = new TextView(context);
 				final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
 				final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-				horairesView.setText(SymbolesUtils.formatTime(context, timeFormat.format(noon.toDate())) + "__");
+				horairesView.setText(FormatUtils.formatTime(context, timeFormat.format(noon.toDate())) + "__");
 
 				final int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 				final int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);

@@ -22,7 +22,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Sens;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -43,7 +43,7 @@ public class SensSpinnerAdapter extends SensArrayAdapter implements SpinnerAdapt
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final TextView view = (TextView) super.getView(position, convertView, parent);
 		final Sens sens = getItem(position);
-		view.setText(SymbolesUtils.formatSens(sens.text));
+		view.setText(FormatUtils.formatSens(sens.text));
 		return view;
 	}
 

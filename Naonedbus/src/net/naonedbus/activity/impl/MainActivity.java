@@ -18,6 +18,7 @@
  */
 package net.naonedbus.activity.impl;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.SlidingMenuActivity;
@@ -89,12 +90,15 @@ public class MainActivity extends SlidingMenuActivity {
 		mMyLocationProvider = NBApplication.getLocationProvider();
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		setTitle(R.string.title_activity_main);
 		super.onCreate(savedInstanceState);
 
-		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
+		if (BuildConfig.DEBUG == false) {
+			BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
+		}
 
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();

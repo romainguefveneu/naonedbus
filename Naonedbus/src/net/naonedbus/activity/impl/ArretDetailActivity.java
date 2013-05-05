@@ -28,7 +28,7 @@ import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
@@ -83,12 +83,12 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 		mHeaderHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
 		mHeaderHelper.setCode(ligne.lettre);
 		mHeaderHelper.setTitle(arret.nomArret);
-		mHeaderHelper.setSubTitle(SymbolesUtils.formatSens(sens.text));
+		mHeaderHelper.setSubTitle(FormatUtils.formatSens(sens.text));
 	}
 
 	@Override
 	public void onSensChange(final Sens newSens) {
-		mHeaderHelper.setSubTitleAnimated(SymbolesUtils.formatSens(newSens.text));
+		mHeaderHelper.setSubTitleAnimated(FormatUtils.formatSens(newSens.text));
 		mSens = newSens;
 	}
 

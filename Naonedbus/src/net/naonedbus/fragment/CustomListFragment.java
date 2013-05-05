@@ -532,7 +532,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (getListAdapter() == null || getListAdapter().getCount() == 0)
 			showLoader();
 		onPreExecute();
-		loader.forceLoad();
 
 		return loader;
 	}

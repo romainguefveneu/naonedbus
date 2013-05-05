@@ -24,7 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Parcours;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
-import net.naonedbus.utils.SymbolesUtils;
+import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -59,7 +59,7 @@ public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 		holder.itemSymbole.setText(parcours.lettre);
 		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(parcours.couleur));
 		holder.itemSymbole.setTextColor(ColorUtils.isLightColor(parcours.couleur) ? Color.BLACK : Color.WHITE);
-		holder.itemTitle.setText(SymbolesUtils.formatSens(parcours.nomSens));
+		holder.itemTitle.setText(FormatUtils.formatSens(parcours.nomSens));
 	}
 
 	protected void bindViewHolder(View view) {
