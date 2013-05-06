@@ -56,7 +56,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class BicloosFragment extends CustomListFragment implements CustomFragmentActions {
 
-	private final static String BUNDKE_KEY_FORCE_UDPATE = "forceUpdate";
+	protected final static String BUNDKE_KEY_FORCE_UDPATE = "forceUpdate";
 
 	private final static int SORT_NOM = 0;
 	private final static int SORT_DISTANCE = 1;
@@ -66,12 +66,11 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 		MENU_MAPPING.append(SORT_DISTANCE, R.id.menu_sort_distance);
 	}
 
-	private final SparseArray<Comparator<Bicloo>> mComparators;
-	private final SparseArray<ArraySectionIndexer<Bicloo>> mIndexers;
+	protected final SparseArray<Comparator<Bicloo>> mComparators;
+	protected final SparseArray<ArraySectionIndexer<Bicloo>> mIndexers;
+	protected int mCurrentSortPreference = SORT_NOM;
 
 	private final MyLocationProvider mLocationProvider;
-
-	private int mCurrentSortPreference = SORT_NOM;
 
 	private MenuItem mRefreshMenuItem;
 	private StateHelper mStateHelper;
@@ -286,7 +285,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 		return result;
 	}
 
-	private void setDistances(final List<Bicloo> bicloos) {
+	protected void setDistances(final List<Bicloo> bicloos) {
 		final Location currentLocation = mLocationProvider.getLastKnownLocation();
 
 		if (currentLocation != null) {

@@ -206,6 +206,8 @@
     <string name="bicloo_titre_paiement">Paiement</string>
     <string name="bicloo_paiement_disponible">Oui</string>
     <string name="bicloo_paiement_indisponible">Non</string>
+    <string name="bicloo_indisponible">Indisponible</string>
+    <string name="bicloo_indisponible_message">Cette station bicloo est pour le moment indisponible</string>
 
     <plurals name="bicloo_places_disponibles">
         <item quantity="one">%d place</item>

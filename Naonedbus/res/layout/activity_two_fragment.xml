@@ -1,4 +1,6 @@
-/**
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*
  *  Copyright (C) 2011 Romain Guefveneu
  *  
  *  This file is part of naonedbus.
@@ -16,17 +18,21 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.rest.controller;
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-import net.naonedbus.security.NaonedbusClient;
+    <FrameLayout
+        android:id="@id/fragmentLeft"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-/**
- * @author romain
- * 
- */
-public class RestConfiguration {
+    <FrameLayout
+        android:id="@id/fragmentRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2" />
 
-	public static final String ID_CLIENT = NaonedbusClient.NAONEDBUS.name();
-	public final static String PATH = "http://naonedbus.netapsys.fr/naonedbus-server/";
-
-}
+</LinearLayout>

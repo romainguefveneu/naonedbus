@@ -38,22 +38,21 @@ import android.widget.TextView;
 
 public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 
-	private final Typeface robotoBold;
+	private final Typeface mRobotoBold;
+	private SparseBooleanArray mCheckedItemPositions = new SparseBooleanArray();
 
-	private SparseBooleanArray checkedItemPositions = new SparseBooleanArray();
-
-	public FavoriArrayAdapter(Context context, List<Favori> objects) {
+	public FavoriArrayAdapter(final Context context, final List<Favori> objects) {
 		super(context, R.layout.list_item_favori, objects);
-		robotoBold = FontUtils.getRobotoBoldCondensed(context);
+		mRobotoBold = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	@Override
-	public void bindView(View view, Context context, int position) {
+	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final Favori item = (Favori) getItem(position);
+		final Favori item = getItem(position);
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-			if (this.checkedItemPositions.get(position)) {
+			if (mCheckedItemPositions.get(position)) {
 				view.setBackgroundResource(R.color.holo_blue_selected);
 			} else {
 				view.setBackgroundResource(android.R.color.transparent);
@@ -61,8 +60,7 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 		}
 
 		if (item.background == null) {
-			final GradientDrawable background = (GradientDrawable) ColorUtils
-					.getRoundedGradiant(item.couleurBackground);
+			final GradientDrawable background = ColorUtils.getRoundedGradiant(item.couleurBackground);
 			item.background = background;
 			item.couleurTexte = (ColorUtils.isLightColor(item.couleurBackground) ? Color.BLACK : Color.WHITE);
 		}
@@ -90,24 +88,24 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 	}
 
 	@Override
-	public void bindViewHolder(View view) {
+	public void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.ligneCode = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.progressBar = (ProgressBar) view.findViewById(R.id.loading);
 		holder.nextHoraire = (TextView) view.findViewById(R.id.itemTime);
-		holder.ligneCode.setTypeface(robotoBold);
+		holder.ligneCode.setTypeface(mRobotoBold);
 
 		view.setTag(holder);
 	}
 
-	public void setCheckedItemPositions(SparseBooleanArray checkedItemPositions) {
-		this.checkedItemPositions = checkedItemPositions;
+	public void setCheckedItemPositions(final SparseBooleanArray checkedItemPositions) {
+		mCheckedItemPositions = checkedItemPositions;
 	}
 
 	public void clearCheckedItemPositions() {
-		this.checkedItemPositions.clear();
+		mCheckedItemPositions.clear();
 	}
 
 	private static class ViewHolder {

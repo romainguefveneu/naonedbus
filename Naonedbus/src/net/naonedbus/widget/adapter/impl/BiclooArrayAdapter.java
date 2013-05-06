@@ -10,6 +10,8 @@ import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 
 	private final Drawable mSymboleBackground;
 	private final int mSymboleResId;
+	private SparseBooleanArray mCheckedItemPositions = new SparseBooleanArray();
 
 	public BiclooArrayAdapter(final Context context, final List<Bicloo> objects) {
 		super(context, R.layout.list_item_equipement, objects);
@@ -39,24 +42,38 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Bicloo bicloo = getItem(position);
 
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+			if (mCheckedItemPositions.get(position)) {
+				view.setBackgroundResource(R.color.holo_blue_selected);
+			} else {
+				view.setBackgroundResource(android.R.color.transparent);
+			}
+		}
+
 		holder.itemTitle.setText(bicloo.getName());
 
-		final int availableBikes = bicloo.getAvailableBike();
-		final int availableStands = bicloo.getAvailableBikeStands();
-		final String bikes = context.getResources().getQuantityString(R.plurals.bicloo_velos_disponibles,
-				availableBikes, availableBikes);
-		final String stands = context.getResources().getQuantityString(R.plurals.bicloo_places_disponibles,
-				availableStands, availableStands);
+		final Bicloo.Status status = bicloo.getStatus();
 
-		final String description = context.getResources().getQuantityString(R.plurals.bicloo,
-				availableBikes + availableStands, bikes, stands);
-
-		holder.itemDescription.setText(description);
-		// Définir la distance.
-		if (bicloo.getDistance() == null) {
-			holder.itemDistance.setText("");
+		if (Bicloo.Status.UNKNOWN.equals(status)) {
+			holder.itemDescription.setText(R.string.bicloo_indisponible);
 		} else {
-			holder.itemDistance.setText(DistanceUtils.formatDist(bicloo.getDistance()));
+			final int availableBikes = bicloo.getAvailableBike();
+			final int availableStands = bicloo.getAvailableBikeStands();
+			final String bikes = context.getResources().getQuantityString(R.plurals.bicloo_velos_disponibles,
+					availableBikes, availableBikes);
+			final String stands = context.getResources().getQuantityString(R.plurals.bicloo_places_disponibles,
+					availableStands, availableStands);
+
+			final String description = context.getResources().getQuantityString(R.plurals.bicloo,
+					availableBikes + availableStands, bikes, stands);
+
+			holder.itemDescription.setText(description);
+			// Définir la distance.
+			if (bicloo.getDistance() == null) {
+				holder.itemDistance.setText("");
+			} else {
+				holder.itemDistance.setText(DistanceUtils.formatDist(bicloo.getDistance()));
+			}
 		}
 
 	}
@@ -72,6 +89,14 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 		holder.itemSymbole.setImageResource(mSymboleResId);
 		holder.itemSymbole.setBackgroundDrawable(mSymboleBackground);
 		view.setTag(holder);
+	}
+
+	public void setCheckedItemPositions(final SparseBooleanArray checkedItemPositions) {
+		mCheckedItemPositions = checkedItemPositions;
+	}
+
+	public void clearCheckedItemPositions() {
+		mCheckedItemPositions.clear();
 	}
 
 }

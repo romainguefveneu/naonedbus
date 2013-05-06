@@ -7,7 +7,7 @@ import android.os.Parcelable;
 
 public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 	public static enum Status {
-		CLOSED, OPEN;
+		UNKNOWN, CLOSED, OPEN;
 	}
 
 	private int mId;
@@ -17,7 +17,7 @@ public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 	private Location mLocation;
 	private boolean mBanking;
 	private boolean mBonus;
-	private Status mStatus;
+	private Status mStatus = Status.UNKNOWN;
 	private int mBikeStands;
 	private int mAvailableBikeStands;
 	private int mAvailableBike;
@@ -42,6 +42,21 @@ public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 		mAvailableBikeStands = in.readInt();
 		mAvailableBike = in.readInt();
 		mLastUpdate = in.readLong();
+	}
+
+	public void set(final Bicloo bicloo) {
+		mId = bicloo.getId();
+		mNumber = bicloo.getNumber();
+		mName = bicloo.getName();
+		mAddress = bicloo.getAddress();
+		mLocation = bicloo.getLocation();
+		mBanking = bicloo.isBanking();
+		mBonus = bicloo.isBonus();
+		mStatus = bicloo.getStatus();
+		mBikeStands = bicloo.getBikeStands();
+		mAvailableBikeStands = bicloo.getAvailableBikeStands();
+		mAvailableBike = bicloo.getAvailableBike();
+		mLastUpdate = bicloo.getLastUpdate();
 	}
 
 	public int getId() {

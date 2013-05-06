@@ -85,9 +85,12 @@ public class FavoriBiclooProvider extends CustomContentProvider {
 
 	@Override
 	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs,
-			final String sortOrder) {
+			String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(FavoriBiclooTable.TABLE_NAME);
+		if (sortOrder == null) {
+			sortOrder = FavoriBiclooTable.NOM_EQUIPEMENT;
+		}
 
 		final int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {

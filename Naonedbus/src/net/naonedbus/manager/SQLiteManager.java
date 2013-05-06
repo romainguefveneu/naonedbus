@@ -39,6 +39,10 @@ public abstract class SQLiteManager<T> {
 		return Long.valueOf(uri.getLastPathSegment());
 	}
 
+	public void remove(final ContentResolver contentResolver, final long id) {
+		contentResolver.delete(mContentUri, "_id = ?", new String[] { String.valueOf(id) });
+	}
+
 	/**
 	 * Récupérer un cursor contenant tous les éléments
 	 * 

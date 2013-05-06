@@ -610,7 +610,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		Log.d(LOG_TAG, "onListItemClick " + mActionMode);
 		if (mActionMode == null) {
 			mListView.setItemChecked(position, false);
 			final Favori item = (Favori) l.getItemAtPosition(position);
@@ -712,7 +711,6 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			Boolean result = true;
 
 			try {
-
 				if (params.length == 0) {
 					for (int i = 0; i < getListAdapter().getCount(); i++) {
 						updateAdapter(i);

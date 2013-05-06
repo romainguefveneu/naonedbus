@@ -4,6 +4,7 @@ import net.naonedbus.R;
 import net.naonedbus.activity.SlidingMenuActivity;
 import net.naonedbus.fragment.impl.BicloosFavorisFragment;
 import net.naonedbus.fragment.impl.BicloosFragment;
+import net.naonedbus.manager.impl.FavoriBiclooManager;
 import android.os.Bundle;
 
 public class BicloosActivity extends SlidingMenuActivity {
@@ -20,6 +21,12 @@ public class BicloosActivity extends SlidingMenuActivity {
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState == null) {
 			addFragments(titles, classes);
+
+			final FavoriBiclooManager favoriManager = FavoriBiclooManager.getInstance();
+			final int count = favoriManager.getAll(getContentResolver()).size();
+			if (count > 0) {
+				setSelectedTab(1);
+			}
 		}
 	}
 

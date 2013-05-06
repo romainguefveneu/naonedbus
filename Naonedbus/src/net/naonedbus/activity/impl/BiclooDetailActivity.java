@@ -241,8 +241,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	}
 
 	private void removeFromFavoris() {
-		// mFavoriBiclooManager.remove(getContentResolver(),
-		// mBicloo.getNumber());
+		mFavoriBiclooManager.remove(getContentResolver(), mBicloo.getNumber());
 	}
 
 	private GeoPoint getGeoPoint(final Bicloo bicloo) {
