@@ -79,16 +79,6 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
-	public Integer add(final ContentResolver contentResolver, final Groupe groupe) {
-		final ContentValues contentValues = new ContentValues();
-		contentValues.put(GroupeTable.NOM, groupe.getNom());
-		contentValues.put(GroupeTable.ORDRE, groupe.getOrdre());
-		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
-
-		final Uri uri = contentResolver.insert(GroupeProvider.CONTENT_URI, contentValues);
-		return Integer.valueOf(uri.getLastPathSegment());
-	}
-
 	public void delete(final ContentResolver contentResolver, final int idGroupe) {
 		final Uri.Builder builder = GroupeProvider.CONTENT_URI.buildUpon();
 		builder.appendPath(String.valueOf(idGroupe));
@@ -97,10 +87,7 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 	}
 
 	public void update(final ContentResolver contentResolver, final Groupe groupe) {
-		final ContentValues contentValues = new ContentValues();
-		contentValues.put(GroupeTable.NOM, groupe.getNom());
-		contentValues.put(GroupeTable.ORDRE, groupe.getOrdre());
-		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(groupe.getVisibility()));
+		final ContentValues contentValues = getContentValues(groupe);
 
 		contentResolver.update(GroupeProvider.CONTENT_URI, contentValues, GroupeTable._ID + "=?",
 				new String[] { String.valueOf(groupe.getId()) });
@@ -158,6 +145,15 @@ public class GroupeManager extends SQLiteManager<Groupe> {
 			position++;
 		}
 
+	}
+
+	@Override
+	protected ContentValues getContentValues(final Groupe item) {
+		final ContentValues contentValues = new ContentValues();
+		contentValues.put(GroupeTable.NOM, item.getNom());
+		contentValues.put(GroupeTable.ORDRE, item.getOrdre());
+		contentValues.put(GroupeTable.VISIBILITE, String.valueOf(item.getVisibility()));
+		return contentValues;
 	}
 
 }

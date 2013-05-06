@@ -201,8 +201,8 @@
         <item quantity="other">%d places disponibles</item>
     </plurals>
     <!-- Bicloo -->
-    <string name="bicloo_titre_velos_disponibles">Bicloos disponibles</string>
-    <string name="bicloo_titre_places_disponible">Places disponibles</string>
+    <string name="bicloo_titre_velos_disponibles">Bicloos</string>
+    <string name="bicloo_titre_places_disponible">Places restantes</string>
     <string name="bicloo_titre_paiement">Paiement</string>
     <string name="bicloo_paiement_disponible">Oui</string>
     <string name="bicloo_paiement_indisponible">Non</string>

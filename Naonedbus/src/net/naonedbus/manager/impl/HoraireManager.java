@@ -48,10 +48,6 @@ import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
 
-/**
- * @author romain
- * 
- */
 public class HoraireManager extends SQLiteManager<Horaire> {
 
 	private static final String LOG_TAG = "HoraireManager";
@@ -391,5 +387,10 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		}
 
 	};
+
+	@Override
+	protected ContentValues getContentValues(final Horaire item) {
+		return null;
+	}
 
 }

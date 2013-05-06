@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -31,6 +32,11 @@ public abstract class SQLiteManager<T> {
 
 	protected SQLiteManager(final Uri contentUri) {
 		mContentUri = contentUri;
+	}
+
+	public Long add(final ContentResolver contentResolver, final T item) {
+		final Uri uri = contentResolver.insert(mContentUri, getContentValues(item));
+		return Long.valueOf(uri.getLastPathSegment());
 	}
 
 	/**
@@ -173,5 +179,7 @@ public abstract class SQLiteManager<T> {
 	 * @return un élément
 	 */
 	public abstract T getSingleFromCursor(Cursor c);
+
+	protected abstract ContentValues getContentValues(final T item);
 
 }

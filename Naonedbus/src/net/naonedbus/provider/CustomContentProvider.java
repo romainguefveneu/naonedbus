@@ -83,7 +83,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final String LOG_TAG = "CoreDatabase";
 		private static final boolean DBG = BuildConfig.DEBUG;
 
-		private static final int DB_VERSION = DatabaseVersions.ACAPULCO_MR1;
+		private static final int DB_VERSION = DatabaseVersions.ACAPULCO_MR2;
 		private static final String DB_NAME = "data.db";
 
 		private final Context mContext;

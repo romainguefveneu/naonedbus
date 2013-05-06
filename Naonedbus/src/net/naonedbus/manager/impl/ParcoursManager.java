@@ -25,13 +25,10 @@ import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.ParcoursProvider;
 import net.naonedbus.provider.impl.ParcoursProvider.ParcoursTable;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-/**
- * @author romain
- * 
- */
 public class ParcoursManager extends SQLiteManager<Parcours> {
 
 	private static ParcoursManager instance;
@@ -47,18 +44,19 @@ public class ParcoursManager extends SQLiteManager<Parcours> {
 		super(ParcoursProvider.CONTENT_URI);
 	}
 
-	public Cursor getParcours(ContentResolver contentResolver, String normalizedNom) {
-		Uri.Builder builder = ParcoursProvider.CONTENT_URI.buildUpon();
+	public Cursor getParcours(final ContentResolver contentResolver, final String normalizedNom) {
+		final Uri.Builder builder = ParcoursProvider.CONTENT_URI.buildUpon();
 		builder.appendQueryParameter("normalizedNom", normalizedNom);
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
-	public List<Parcours> getParcoursList(ContentResolver contentResolver, String normalizedNom) {
+	public List<Parcours> getParcoursList(final ContentResolver contentResolver, final String normalizedNom) {
 		return getFromCursor(getParcours(contentResolver, normalizedNom));
 	}
 
-	public Parcours getSingleFromCursor(Cursor c) {
-		Parcours item = new Parcours();
+	@Override
+	public Parcours getSingleFromCursor(final Cursor c) {
+		final Parcours item = new Parcours();
 		item._id = c.getInt(c.getColumnIndex(ParcoursTable._ID));
 		item.couleur = c.getInt(c.getColumnIndex(ParcoursTable.COULEUR));
 		item.codeLigne = c.getString(c.getColumnIndex(ParcoursTable.CODE_LIGNE));
@@ -66,6 +64,11 @@ public class ParcoursManager extends SQLiteManager<Parcours> {
 		item.nomSens = c.getString(c.getColumnIndex(ParcoursTable.NOM_SENS));
 		item.idLigne = c.getInt(c.getColumnIndex(ParcoursTable.ID_LIGNE));
 		return item;
+	}
+
+	@Override
+	protected ContentValues getContentValues(final Parcours item) {
+		return null;
 	}
 
 }

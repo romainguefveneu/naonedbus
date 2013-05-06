@@ -121,7 +121,8 @@ public class CommentaireManager extends SQLiteManager<Commentaire> {
 		return commentaire;
 	}
 
-	private ContentValues getContentValues(final Commentaire commentaire) {
+	@Override
+	protected ContentValues getContentValues(final Commentaire commentaire) {
 		final ContentValues values = new ContentValues();
 		values.put(CommentaireTable.CODE_LIGNE, commentaire.getCodeLigne());
 		values.put(CommentaireTable.CODE_SENS, commentaire.getCodeSens());

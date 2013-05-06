@@ -27,6 +27,7 @@ import net.naonedbus.provider.table.FavoriViewTable;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.QueryUtils;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -102,5 +103,10 @@ public class FavorisViewManager extends SQLiteManager<Favori> {
 		item.section = item.idGroupe;
 
 		return item;
+	}
+
+	@Override
+	protected ContentValues getContentValues(final Favori item) {
+		return null;
 	}
 }

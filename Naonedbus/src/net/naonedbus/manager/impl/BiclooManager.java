@@ -69,19 +69,6 @@ public class BiclooManager {
 		mCache.clear();
 	}
 
-	private ContentValues getContentValues(final Bicloo bicloo) {
-		final ContentValues values = new ContentValues();
-		values.put(EquipementTable._ID, bicloo.getNumber());
-		values.put(EquipementTable.ID_TYPE, Equipement.Type.TYPE_BICLOO.getId());
-		values.put(EquipementTable.NOM, bicloo.getName());
-		values.put(EquipementTable.NORMALIZED_NOM, bicloo.getName());
-		values.put(EquipementTable.ADRESSE, bicloo.getAddress());
-		values.put(EquipementTable.LATITUDE, bicloo.getLocation().getLatitude());
-		values.put(EquipementTable.LONGITUDE, bicloo.getLocation().getLongitude());
-
-		return values;
-	}
-
 	private void saveToDatabase(final Context context) {
 		final Runnable task = new Runnable() {
 			@Override
@@ -112,6 +99,19 @@ public class BiclooManager {
 		}
 
 		contentResolver.bulkInsert(EquipementProvider.CONTENT_URI, values);
+	}
+
+	private ContentValues getContentValues(final Bicloo bicloo) {
+		final ContentValues values = new ContentValues();
+		values.put(EquipementTable._ID, bicloo.getNumber());
+		values.put(EquipementTable.ID_TYPE, Equipement.Type.TYPE_BICLOO.getId());
+		values.put(EquipementTable.NOM, bicloo.getName());
+		values.put(EquipementTable.NORMALIZED_NOM, bicloo.getName());
+		values.put(EquipementTable.ADRESSE, bicloo.getAddress());
+		values.put(EquipementTable.LATITUDE, bicloo.getLocation().getLatitude());
+		values.put(EquipementTable.LONGITUDE, bicloo.getLocation().getLongitude());
+
+		return values;
 	}
 
 	/**

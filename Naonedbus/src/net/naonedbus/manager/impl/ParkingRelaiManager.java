@@ -26,13 +26,10 @@ import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.EquipementProvider;
 import net.naonedbus.provider.table.EquipementTable;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-/**
- * @author romain.guefveneu
- * 
- */
 public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 
 	private static ParkingRelaiManager instance;
@@ -49,7 +46,7 @@ public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 	}
 
 	@Override
-	public List<ParkingRelai> getAll(ContentResolver contentResolver) {
+	public List<ParkingRelai> getAll(final ContentResolver contentResolver) {
 		final Uri.Builder builder = EquipementProvider.CONTENT_URI.buildUpon();
 		builder.path(EquipementProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
 		builder.appendPath(Integer.toString(Type.TYPE_PARKING.getId()));
@@ -60,7 +57,7 @@ public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 	}
 
 	@Override
-	public ParkingRelai getSingleFromCursor(Cursor c) {
+	public ParkingRelai getSingleFromCursor(final Cursor c) {
 		final ParkingRelai parking = new ParkingRelai();
 		parking.setId(c.getInt(c.getColumnIndex(EquipementTable._ID)));
 		parking.setNom(c.getString(c.getColumnIndex(EquipementTable.NOM)));
@@ -70,6 +67,11 @@ public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 		parking.setLatitude(c.getDouble(c.getColumnIndex(EquipementTable.LATITUDE)));
 		parking.setLongitude(c.getDouble(c.getColumnIndex(EquipementTable.LONGITUDE)));
 		return parking;
+	}
+
+	@Override
+	protected ContentValues getContentValues(final ParkingRelai item) {
+		return null;
 	}
 
 }

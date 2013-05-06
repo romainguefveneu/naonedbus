@@ -31,6 +31,7 @@ import net.naonedbus.provider.impl.LigneProvider;
 import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.utils.ColorUtils;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -184,5 +185,10 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 			}
 		}
 	};
+
+	@Override
+	protected ContentValues getContentValues(final Ligne item) {
+		return null;
+	}
 
 }

@@ -1,10 +1,10 @@
--- Décrire TYPESLIGNES
+-- Table TYPESLIGNES
 CREATE TABLE IF NOT EXISTS typesLignes (
 	_id smallint PRIMARY KEY, 
 	nom text);
 CREATE INDEX IF NOT EXISTS typesLignes_code ON typesLignes (_id);
 
--- Décrire LIGNES
+-- Table LIGNES
 CREATE TABLE IF NOT EXISTS lignes (
 	_id INT PRIMARY KEY, 
 	code TEXT, 
@@ -17,13 +17,13 @@ CREATE INDEX IF NOT EXISTS lignes_id ON lignes (_id);
 CREATE INDEX IF NOT EXISTS lignes_code ON lignes (code);
 CREATE INDEX IF NOT EXISTS lignes_lettre ON lignes (lettre);
 
--- Décrire TYPESEQUIPEMENTS
+-- Table TYPESEQUIPEMENTS
 CREATE TABLE IF NOT EXISTS typesEquipements (
 	_id INT  NOT NULL, 
 	nom TEXT NOT NULL);
 CREATE INDEX IF NOT EXISTS typesEquipements_id ON typesEquipements (_id);
 
--- Décrire EQUIPEMENTS
+-- Table EQUIPEMENTS
 CREATE TABLE IF NOT EXISTS equipements (
 	_id INT NOT NULL, 
 	idType INT NOT NULL,
@@ -46,7 +46,7 @@ CREATE INDEX IF NOT EXISTS equipements_coordonnees ON equipements (latitude, lon
 CREATE INDEX IF NOT EXISTS equipements_code ON equipements (codeEquipement);
 CREATE INDEX IF NOT EXISTS equipements_type_station_code ON equipements (idType, _id, codeEquipement);
   
--- Décrire ARRETS	
+-- Table ARRETS	
 CREATE TABLE IF NOT EXISTS arrets (
   _id INTEGER PRIMARY KEY, 
   code TEXT, 
@@ -61,7 +61,7 @@ CREATE INDEX IF NOT EXISTS arrets_codeSens ON arrets (codeSens);
 CREATE INDEX IF NOT EXISTS arrets_codeLigneSens ON arrets (codeLigne, codeSens);
 CREATE INDEX IF NOT EXISTS arrets_station ON arrets (idStation);
 
--- Décrire SENS
+-- Table SENS
 CREATE TABLE IF NOT EXISTS sens (
 	_id INTEGER PRIMARY KEY, 
 	codeLigne text, 
@@ -71,7 +71,7 @@ CREATE INDEX IF NOT EXISTS sens_id ON sens (_id);
 CREATE INDEX IF NOT EXISTS sens_codeLigne ON sens (codeLigne);
 CREATE INDEX IF NOT EXISTS sens_code ON sens (code);
 
--- Décrire HORAIRES
+-- Table HORAIRES
 CREATE TABLE IF NOT EXISTS horaires (
 	_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	terminus NVARCHAR(255), 
@@ -83,7 +83,7 @@ CREATE INDEX IF NOT EXISTS horaires_dayTrip ON horaires (dayTrip);
 CREATE INDEX IF NOT EXISTS horaires_idArret_dayTrip ON horaires (idArret, dayTrip);
 CREATE INDEX IF NOT EXISTS horaires_idArret_dayTrip_timestamp ON horaires (idArret, dayTrip, timestamp);
 
--- Décrire FAVORIS
+-- Table FAVORIS
 CREATE TABLE IF NOT EXISTS favoris (
 	_id INTEGER PRIMARY KEY, 
 	codeLigne TEXT NOT NULL, 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS favoris (
 	nomFavori TEXT);
 CREATE INDEX IF NOT EXISTS favoris_id ON favoris (_id);
 
--- Décrire GROUPES
+-- Table GROUPES
 CREATE TABLE IF NOT EXISTS groupes (
 	_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	nom TEXT NOT NULL, 
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS groupes (
 	visibilite INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS groupes_id ON groupes (_id);
 
--- Décrire FAVORISGROUPES
+-- Table FAVORISGROUPES
 CREATE TABLE IF NOT EXISTS favorisGroupes (
 	idFavori INTEGER NOT NULL REFERENCES favoris(_id) ON DELETE CASCADE, 
 	idGroupe  INTEGER NOT NULL REFERENCES groupes(_id) ON DELETE CASCADE,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS favorisGroupes (
 CREATE INDEX IF NOT EXISTS favorisGroupes_idFavori ON favorisGroupes (idFavori);
 CREATE INDEX IF NOT EXISTS favorisGroupes_idGroupe ON favorisGroupes (idGroupe);
 
--- Décrire COMMENTAIRES
+-- Table COMMENTAIRES
 CREATE TABLE IF NOT EXISTS commentaires (
     _id INTEGER PRIMARY KEY,
     codeLigne TEXT,
@@ -123,7 +123,13 @@ CREATE INDEX IF NOT EXISTS commentaires_ligne ON commentaires(codeLigne);
 CREATE INDEX IF NOT EXISTS commentaires_ligne_sens ON commentaires(codeLigne, codeSens);
 CREATE INDEX IF NOT EXISTS commentaires_ligne_sens_arret ON commentaires(codeLigne, codeSens, codeArret);
 
--- Décrire FAVORISVIEW
+-- Table FAVORIS_BICLOOS
+CREATE TABLE IF NOT EXISTS favorisBicloos (
+    _id INTEGER PRIMARY KEY,
+    nomEquipement TEXT NOT NULL
+);
+
+-- Table FAVORISVIEW
 CREATE VIEW IF NOT EXISTS favorisView AS
 SELECT
     f._id,

@@ -28,6 +28,7 @@ import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.EquipementProvider;
 import net.naonedbus.provider.table.EquipementTable;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
@@ -492,6 +493,11 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 		item.setLatitude(c.getDouble(mColLatitude));
 		item.setLongitude(c.getDouble(mColLongitude));
 		return item;
+	}
+
+	@Override
+	protected ContentValues getContentValues(final Equipement item) {
+		return null;
 	}
 
 }

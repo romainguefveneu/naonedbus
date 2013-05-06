@@ -22,12 +22,9 @@ import net.naonedbus.bean.TypeLigne;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.TypeLigneProvider;
 import net.naonedbus.provider.table.TypeLigneTable;
+import android.content.ContentValues;
 import android.database.Cursor;
 
-/**
- * @author romain
- * 
- */
 public class TypeLigneManager extends SQLiteManager<TypeLigne> {
 
 	private static TypeLigneManager instance;
@@ -45,11 +42,16 @@ public class TypeLigneManager extends SQLiteManager<TypeLigne> {
 	}
 
 	@Override
-	public TypeLigne getSingleFromCursor(Cursor c) {
+	public TypeLigne getSingleFromCursor(final Cursor c) {
 		final TypeLigne item = new TypeLigne();
 		item._id = c.getInt(c.getColumnIndex(TypeLigneTable._ID));
 		item.nom = c.getString(c.getColumnIndex(TypeLigneTable.NOM));
 		return item;
+	}
+
+	@Override
+	protected ContentValues getContentValues(final TypeLigne item) {
+		return null;
 	}
 
 }

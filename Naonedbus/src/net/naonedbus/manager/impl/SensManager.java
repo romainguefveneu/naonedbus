@@ -25,6 +25,7 @@ import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.SensProvider;
 import net.naonedbus.provider.table.SensTable;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
@@ -49,8 +50,8 @@ public class SensManager extends SQLiteManager<Sens> {
 	 * @param contentResolver
 	 * @param codeLigne
 	 */
-	public List<Sens> getAll(ContentResolver contentResolver, String codeLigne) {
-		Cursor c = getCursor(contentResolver, codeLigne);
+	public List<Sens> getAll(final ContentResolver contentResolver, final String codeLigne) {
+		final Cursor c = getCursor(contentResolver, codeLigne);
 		return getFromCursor(c);
 	}
 
@@ -60,30 +61,35 @@ public class SensManager extends SQLiteManager<Sens> {
 	 * @param contentResolver
 	 * @param codeLigne
 	 */
-	public Cursor getCursor(ContentResolver contentResolver, String codeLigne) {
+	public Cursor getCursor(final ContentResolver contentResolver, final String codeLigne) {
 		final Uri.Builder builder = SensProvider.CONTENT_URI.buildUpon();
 		builder.path(SensProvider.SENS_LIGNE_CODE_URI_PATH_QUERY);
 		builder.appendQueryParameter("codeLigne", codeLigne);
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
-	public Sens getSingle(ContentResolver contentResolver, String codeLigne, String codeSens) {
+	public Sens getSingle(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
 		final Uri.Builder builder = SensProvider.CONTENT_URI.buildUpon();
 		builder.path(SensProvider.SENS_CODE_LIGNE_CODE_URI_PATH_QUERY);
 		builder.appendQueryParameter("codeLigne", codeLigne);
 		builder.appendQueryParameter("codeSens", codeSens);
-		Cursor c = contentResolver.query(builder.build(), null, null, null, null);
+		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
 		return getFirstFromCursor(c);
 	}
 
 	@Override
-	public Sens getSingleFromCursor(Cursor c) {
-		Sens item = new Sens();
+	public Sens getSingleFromCursor(final Cursor c) {
+		final Sens item = new Sens();
 		item._id = c.getInt(c.getColumnIndex(SensTable._ID));
 		item.code = c.getString(c.getColumnIndex(SensTable.CODE));
 		item.codeLigne = c.getString(c.getColumnIndex(SensTable.CODE_LIGNE));
 		item.text = c.getString(c.getColumnIndex(SensTable.NOM));
 		return item;
+	}
+
+	@Override
+	protected ContentValues getContentValues(final Sens item) {
+		return null;
 	}
 
 }

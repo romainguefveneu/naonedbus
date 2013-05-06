@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.Groupe;
@@ -48,9 +47,6 @@ import android.net.Uri;
 import android.util.SparseIntArray;
 
 public class FavoriManager extends SQLiteManager<Favori> {
-
-	private static final String LOG_TAG = "FavoriManager";
-	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private final List<OnFavoriActionListener> mListeners = new ArrayList<OnFavoriActionListener>();
 	private boolean mIsImporting = false;
@@ -182,13 +178,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		return getSingle(contentResolver, arretId) != null;
 	}
 
-	/**
-	 * getContentValues for Favori
-	 * 
-	 * @param item
-	 * @return a ContentValue filled with Favori values
-	 */
-	private ContentValues getContentValues(final Favori item) {
+	@Override
+	protected ContentValues getContentValues(final Favori item) {
 		final ContentValues values = new ContentValues();
 		values.put(FavoriTable._ID, item._id);
 		values.put(FavoriTable.CODE_LIGNE, item.codeLigne);
@@ -276,7 +267,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 			groupe.setNom(g.nom);
 			groupe.setOrdre(g.ordre);
 
-			final int idLocal = groupeManager.add(contentResolver, groupe);
+			final int idLocal = groupeManager.add(contentResolver, groupe).intValue();
 
 			groupeMapping.put(g.id, idLocal);
 		}

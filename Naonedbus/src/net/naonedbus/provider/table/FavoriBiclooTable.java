@@ -16,17 +16,12 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.rest.controller;
+package net.naonedbus.provider.table;
 
-import net.naonedbus.security.NaonedbusClient;
+import android.provider.BaseColumns;
 
-/**
- * @author romain
- * 
- */
-public class RestConfiguration {
+public interface FavoriBiclooTable extends BaseColumns {
+	public static final String TABLE_NAME = "favorisBicloos";
 
-	public static final String ID_CLIENT = NaonedbusClient.NAONEDBUS.name();
-	public final static String PATH = "http://naonedbus.netapsys.fr/naonedbus-test/";
-
+	public static final String NOM_EQUIPEMENT = "nomEquipement";
 }

@@ -22,12 +22,9 @@ import net.naonedbus.bean.TypeEquipement;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.TypeEquipementProvider;
 import net.naonedbus.provider.table.TypeEquipementTable;
+import android.content.ContentValues;
 import android.database.Cursor;
 
-/**
- * @author romain
- * 
- */
 public class TypeEquipementManager extends SQLiteManager<TypeEquipement> {
 
 	private static TypeEquipementManager instance;
@@ -45,11 +42,16 @@ public class TypeEquipementManager extends SQLiteManager<TypeEquipement> {
 	}
 
 	@Override
-	public TypeEquipement getSingleFromCursor(Cursor c) {
+	public TypeEquipement getSingleFromCursor(final Cursor c) {
 		final TypeEquipement item = new TypeEquipement();
 		item._id = c.getInt(c.getColumnIndex(TypeEquipementTable._ID));
 		item.nom = c.getString(c.getColumnIndex(TypeEquipementTable.NOM));
 		return item;
+	}
+
+	@Override
+	protected ContentValues getContentValues(final TypeEquipement item) {
+		return null;
 	}
 
 }

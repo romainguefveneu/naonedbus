@@ -27,7 +27,9 @@ import net.naonedbus.activity.map.overlay.BiclooItemizedOverlay;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.helper.SlidingMenuHelper;
+import net.naonedbus.manager.impl.FavoriBiclooManager;
 import net.naonedbus.utils.FontUtils;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -54,6 +56,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	protected static final String SMS_NAVIGATION_URL = "maps.google.com/?q=%f,%f";
 	protected static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.getDefault());
 
+	private FavoriBiclooManager mFavoriBiclooManager;
 	private SlidingMenuHelper mSlidingMenuHelper;
 
 	protected TextView mTitle;
@@ -77,6 +80,8 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
+
+		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
 
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
@@ -121,7 +126,22 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		final MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.activity_bicloo_detail, menu);
+
+		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
+		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		menuFavori.setIcon(icon);
+
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(final Menu menu) {
+		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
+
+		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		menuFavori.setIcon(icon);
+
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
@@ -135,6 +155,9 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 			break;
 		case R.id.menu_share:
 			shareComment(mBicloo);
+			break;
+		case R.id.menu_favori:
+			onStarClick();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -193,6 +216,33 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		// shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
 		// getParkingInformation(parking));
 		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
+	}
+
+	@SuppressLint("NewApi")
+	private void onStarClick() {
+		if (isFavori()) {
+			removeFromFavoris();
+			Toast.makeText(this, R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
+		} else {
+			addToFavoris();
+			Toast.makeText(this, R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
+		}
+
+		invalidateOptionsMenu();
+	}
+
+	private boolean isFavori() {
+		final Bicloo bicloo = mFavoriBiclooManager.getSingle(getContentResolver(), mBicloo.getNumber());
+		return (bicloo != null);
+	}
+
+	private void addToFavoris() {
+		mFavoriBiclooManager.add(getContentResolver(), mBicloo);
+	}
+
+	private void removeFromFavoris() {
+		// mFavoriBiclooManager.remove(getContentResolver(),
+		// mBicloo.getNumber());
 	}
 
 	private GeoPoint getGeoPoint(final Bicloo bicloo) {
