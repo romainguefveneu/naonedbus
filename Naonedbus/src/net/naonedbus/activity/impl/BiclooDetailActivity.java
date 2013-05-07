@@ -242,7 +242,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 				bikes, stands);
 
 		final double latitude = bicloo.getLocation().getLatitude();
-		final double longitude = bicloo.getLocation().getLatitude();
+		final double longitude = bicloo.getLocation().getLongitude();
 
 		final StringBuilder builder = new StringBuilder();
 		builder.append(bicloo.getName()).append("\n").append(description).append("\n").append(bicloo.getAddress())

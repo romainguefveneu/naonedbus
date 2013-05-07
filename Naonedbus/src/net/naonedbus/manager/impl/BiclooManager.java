@@ -20,15 +20,41 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.Log;
 
 public class BiclooManager {
+
+	public static abstract class BiclooObserver {
+		private final Handler mHandler;
+
+		public BiclooObserver(final Handler handler) {
+			mHandler = handler;
+		}
+
+		private final void dispatchChange() {
+			if (mHandler == null) {
+				onChange();
+			} else {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						BiclooObserver.this.onChange();
+					}
+				});
+			}
+		}
+
+		public abstract void onChange();
+	}
 
 	private static final String LOG_TAG = "BiclooManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int CACHE_LIMITE_MINUTES = 5;
 	private static BiclooManager sInstance;
+
+	private final List<BiclooObserver> mObservers;
 
 	private final ExecutorService mExecutor;
 	private List<Bicloo> mCache;
@@ -45,6 +71,7 @@ public class BiclooManager {
 	private BiclooManager() {
 		mCache = new ArrayList<Bicloo>();
 		mExecutor = Executors.newSingleThreadExecutor();
+		mObservers = new ArrayList<BiclooManager.BiclooObserver>();
 	}
 
 	/**
@@ -53,7 +80,7 @@ public class BiclooManager {
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	private void init(final Context context) throws IOException, JSONException {
+	private synchronized void init(final Context context) throws IOException, JSONException {
 		final DateTime now = new DateTime();
 
 		if (mCache.isEmpty() || now.isAfter(mDateLimit)) {
@@ -61,6 +88,10 @@ public class BiclooManager {
 			mCache.clear();
 			mCache = controller.getAll(context.getResources());
 			mDateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
+
+			for (final BiclooObserver observer : mObservers)
+				observer.dispatchChange();
+
 			saveToDatabase(context);
 		}
 	}
@@ -124,6 +155,14 @@ public class BiclooManager {
 	public List<Bicloo> getAll(final Context context) throws IOException, JSONException {
 		init(context);
 		return new ArrayList<Bicloo>(mCache);
+	}
+
+	public void registerObserver(final BiclooObserver observer) {
+		mObservers.add(observer);
+	}
+
+	public void unregisterObserver(final BiclooObserver observer) {
+		mObservers.remove(observer);
 	}
 
 }

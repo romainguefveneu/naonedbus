@@ -35,6 +35,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 
 	private ListView mListView;
 	private ActionMode mActionMode;
+
 	private final ContentObserver mContentObserver = new ContentObserver(new Handler()) {
 		@Override
 		public void onChange(final boolean selfChange) {
@@ -59,12 +60,14 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 		contentResolver.registerContentObserver(FavoriBiclooProvider.CONTENT_URI, true, mContentObserver);
+
 	}
 
 	@Override
 	public void onDestroy() {
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 		contentResolver.unregisterContentObserver(mContentObserver);
+
 		super.onDestroy();
 	}
 

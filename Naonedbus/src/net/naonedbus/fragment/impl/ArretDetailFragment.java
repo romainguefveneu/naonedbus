@@ -106,7 +106,6 @@ public class ArretDetailFragment extends SherlockFragment {
 		mSens = getArguments().getParcelable(PARAM_SENS);
 		mArret = getArguments().getParcelable(PARAM_ARRET);
 
-		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
 		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);

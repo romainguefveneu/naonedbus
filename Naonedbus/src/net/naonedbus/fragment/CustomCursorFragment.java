@@ -104,7 +104,6 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		super.onActivityCreated(savedInstanceState);
 		if (DBG)
 			Log.d(LOG_TAG, "onActivityCreated");
-		setRetainInstance(true);
 
 		mCursorAdapter = getCursorAdapter(getActivity());
 		setListAdapter(mCursorAdapter);

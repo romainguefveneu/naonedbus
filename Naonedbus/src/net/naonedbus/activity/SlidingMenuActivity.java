@@ -64,9 +64,9 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 
 	/** Layout de l'activitée courante. */
-	private int mLayoutId;
+	private final int mLayoutId;
 	/** Sert à la détection du changement de thème. */
-	private int mCurrentTheme = NBApplication.THEME;
+	private final int mCurrentTheme = NBApplication.THEME;
 
 	/** Titres des fragments. */
 	private int[] mTitles;
@@ -95,12 +95,12 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 */
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 
-	public SlidingMenuActivity(int layoutId) {
+	public SlidingMenuActivity(final int layoutId) {
 		this.mLayoutId = layoutId;
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
 
@@ -129,14 +129,14 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		// a reference to the Tab.
 		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
-			public void onPageSelected(int position) {
+			public void onPageSelected(final int position) {
 				getSupportActionBar().setSelectedNavigationItem(position);
 			}
 		});
 	}
 
 	@Override
-	public void onPostCreate(Bundle savedInstanceState) {
+	public void onPostCreate(final Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
 	}
@@ -145,7 +145,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 * Show the menu when home icon is clicked.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			mMenuDrawer.toggleMenu();
@@ -161,7 +161,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putInt(BUNDLE_TABS_CURRENT, getSupportActionBar().getSelectedNavigationIndex());
 		outState.putIntArray(BUNDLE_TABS_TITLES, mTitles);
@@ -170,7 +170,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
 		if (savedInstanceState.containsKey(BUNDLE_TABS_TITLES)) {
 			final int[] titles = savedInstanceState.getIntArray(BUNDLE_TABS_TITLES);
 			final String[] classes = savedInstanceState.getStringArray(BUNDLE_TABS_CLASSES);
@@ -184,7 +184,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	}
 
 	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
+	public void onWindowFocusChanged(final boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 
 		// Gérer le changement de thème;
@@ -210,7 +210,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 * Show the menu when menu button pressed, hide it when back is pressed
 	 */
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
 			mMenuDrawer.toggleMenu();
 			return true;
@@ -219,7 +219,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	}
 
 	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	public void onTabSelected(final Tab tab, final FragmentTransaction ft) {
 		if (DBG)
 			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
 
@@ -227,18 +227,18 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	}
 
 	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	public void onTabUnselected(final Tab tab, final FragmentTransaction ft) {
 		if (DBG)
 			Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
 	}
 
 	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+	public void onTabReselected(final Tab tab, final FragmentTransaction ft) {
 		if (DBG)
 			Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
 	}
 
-	protected void addFragments(int[] titles, String[] classes) {
+	protected void addFragments(final int[] titles, final String[] classes) {
 		if (DBG)
 			Log.d(LOG_TAG, "addFragments " + titles.length);
 
@@ -265,7 +265,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 * @param classes
 	 *            Les classes des fragments.
 	 */
-	protected void addFragments(int[] titles, Class<?>[] classes) {
+	protected void addFragments(final int[] titles, final Class<?>[] classes) {
 		mClasses = new String[classes.length];
 		for (int i = 0; i < classes.length; i++) {
 			mClasses[i] = classes[i].getName();
@@ -273,7 +273,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		addFragments(titles, mClasses);
 	}
 
-	protected void addDelayedFragments(int[] titles, Class<?>[] classes) {
+	protected void addDelayedFragments(final int[] titles, final Class<?>[] classes) {
 		mClasses = new String[classes.length];
 		for (int i = 0; i < classes.length; i++) {
 			mClasses[i] = classes[i].getName();
@@ -285,7 +285,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		addFragments(mTitles, mClasses);
 	}
 
-	protected void setSelectedTab(int position) {
+	protected void setSelectedTab(final int position) {
 		if (DBG)
 			Log.d(LOG_TAG, "setSelectedTab " + position);
 		getSupportActionBar().setSelectedNavigationItem(position);
@@ -310,7 +310,7 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	 * @param key
 	 * @return
 	 */
-	protected Object getParamValue(IIntentParamKey key) {
+	protected Object getParamValue(final IIntentParamKey key) {
 		return getIntent().getSerializableExtra(key.toString());
 	}
 
@@ -322,25 +322,28 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 		private static final String LOG_TAG = SlidingMenuActivity.LOG_TAG + "$SectionsPagerAdapter";
 
-		public SectionsPagerAdapter(FragmentManager fm) {
+		public SectionsPagerAdapter(final FragmentManager fm) {
 			super(fm);
 		}
 
 		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
+		public Object instantiateItem(final ViewGroup container, final int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "instantiateItem " + position);
 
 			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
+			fragment.setRetainInstance(true);
 			mFragmentsTags[position] = fragment.getTag();
 			return fragment;
 		}
 
 		@Override
-		public Fragment getItem(int position) {
+		public Fragment getItem(final int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "getItem " + position);
-			return Fragment.instantiate(SlidingMenuActivity.this, mClasses[position]);
+			final Fragment fragment = Fragment.instantiate(SlidingMenuActivity.this, mClasses[position]);
+			fragment.setRetainInstance(true);
+			return fragment;
 		}
 
 		@Override
@@ -349,14 +352,14 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		}
 
 		@Override
-		public CharSequence getPageTitle(int position) {
+		public CharSequence getPageTitle(final int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "getPageTitle " + position);
 
 			return getString(mTitles[position]);
 		}
 
-		public String makeFragmentName(int viewId, long id) {
+		public String makeFragmentName(final int viewId, final long id) {
 			return "android:switcher:" + viewId + ":" + id;
 		}
 	}

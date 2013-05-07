@@ -35,6 +35,7 @@ import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.BiclooManager;
+import net.naonedbus.manager.impl.BiclooManager.BiclooObserver;
 import net.naonedbus.manager.impl.FavoriBiclooManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
@@ -47,6 +48,7 @@ import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.ContextMenu;
@@ -64,6 +66,16 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 
 	protected final static String BUNDKE_KEY_FORCE_UDPATE = "forceUpdate";
 
+	private final BiclooObserver mBiclooObserver = new BiclooObserver(new Handler()) {
+		@Override
+		public void onChange() {
+			if (!getLoaderManager().hasRunningLoaders()) {
+				refreshContent();
+			}
+		}
+
+	};
+
 	private final static int SORT_NOM = 0;
 	private final static int SORT_DISTANCE = 1;
 	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
@@ -78,6 +90,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 
 	private final MyLocationProvider mLocationProvider;
 
+	private final BiclooManager mBiclooManager;
 	private FavoriBiclooManager mFavoriBiclooManager;
 	private MenuItem mRefreshMenuItem;
 	private StateHelper mStateHelper;
@@ -85,6 +98,8 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 
 	public BicloosFragment() {
 		super(R.string.title_fragment_bicloos, R.layout.fragment_listview_section);
+
+		mBiclooManager = BiclooManager.getInstance();
 
 		mLocationProvider = NBApplication.getLocationProvider();
 
@@ -101,6 +116,8 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		registerForContextMenu(getListView());
+
+		mBiclooManager.registerObserver(mBiclooObserver);
 	}
 
 	@Override
@@ -133,8 +150,9 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
 		mLocationProvider.removeListener(mLocationListener);
+		mBiclooManager.unregisterObserver(mBiclooObserver);
+		super.onDestroy();
 	}
 
 	@Override

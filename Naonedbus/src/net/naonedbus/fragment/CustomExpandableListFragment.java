@@ -55,15 +55,15 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	private static final String STATE_POSITION = "position";
 	private static final String STATE_TOP = "top";
 
-	private int messageEmptyTitleId = R.string.error_title_empty;
-	private int messageEmptySummaryId = R.string.error_summary_empty;
-	private int messageEmptyDrawableId = R.drawable.sad_face;
+	private final int messageEmptyTitleId = R.string.error_title_empty;
+	private final int messageEmptySummaryId = R.string.error_summary_empty;
+	private final int messageEmptyDrawableId = R.drawable.sad_face;
 
 	private int mListViewStatePosition;
 	private int mListViewStateTop;
 
-	private int titleId;
-	private int layoutId;
+	private final int titleId;
+	private final int layoutId;
 	private ViewGroup fragmentView;
 
 	private ExpandableListView listView;
@@ -85,16 +85,15 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		setRetainInstance(true);
 		if (listAdapter == null) {
 			getLoaderManager().initLoader(LOADER_INIT, null, this);
 		}
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (container == null) // must put this in
 			return null;
 
@@ -107,7 +106,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 		}
 
 		fragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
-		View view = inflater.inflate(this.layoutId, container, false);
+		final View view = inflater.inflate(this.layoutId, container, false);
 		view.setId(R.id.fragmentContent);
 
 		bindView(view, savedInstanceState);
@@ -127,27 +126,27 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 		return listAdapter;
 	}
 
-	public void setAdapter(T adapter) {
+	public void setAdapter(final T adapter) {
 		listAdapter = adapter;
-		listView.setAdapter((ExpandableListAdapter) adapter);
+		listView.setAdapter(adapter);
 	}
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(final Bundle outState) {
 		if (isAdded()) {
-			View v = getListView().getChildAt(0);
-			int top = (v == null) ? 0 : v.getTop();
+			final View v = getListView().getChildAt(0);
+			final int top = (v == null) ? 0 : v.getTop();
 			outState.putInt(STATE_POSITION, getListView().getFirstVisiblePosition());
 			outState.putInt(STATE_TOP, top);
 		}
 		super.onSaveInstanceState(outState);
 	}
 
-	protected void bindView(View view, Bundle savedInstanceState) {
+	protected void bindView(final View view, final Bundle savedInstanceState) {
 
 	}
 
-	private void setupListView(LayoutInflater inflater, View view) {
+	private void setupListView(final LayoutInflater inflater, final View view) {
 		this.listView = (ExpandableListView) fragmentView.findViewById(android.R.id.list);
 
 		// if (listView instanceof PinnedHeaderListView) {
@@ -176,6 +175,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 		// }
 	}
 
+	@Override
 	public int getTitleId() {
 		return titleId;
 	}
@@ -221,7 +221,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	 * @param descriptionRes
 	 *            L'identifiant de la description.
 	 */
-	protected void showError(int titleRes, int descriptionRes) {
+	protected void showError(final int titleRes, final int descriptionRes) {
 		showMessage(getString(titleRes), getString(descriptionRes), R.drawable.warning);
 	}
 
@@ -233,7 +233,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	 * @param description
 	 *            La description.
 	 */
-	protected void showError(String title, String description) {
+	protected void showError(final String title, final String description) {
 		showMessage(title, description, R.drawable.warning);
 	}
 
@@ -247,7 +247,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	 * @param drawableRes
 	 *            L'identifiant du drawable.
 	 */
-	protected void showMessage(int titleRes, int descriptionRes, int drawableRes) {
+	protected void showMessage(final int titleRes, final int descriptionRes, final int drawableRes) {
 		showMessage(getString(titleRes), (descriptionRes != 0) ? getString(descriptionRes) : null, drawableRes);
 	}
 
@@ -261,7 +261,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	 * @param drawableRes
 	 *            L'identifiant du symbole.
 	 */
-	protected void showMessage(String title, String description, int drawableRes) {
+	protected void showMessage(final String title, final String description, final int drawableRes) {
 		fragmentView.findViewById(R.id.fragmentContent).setVisibility(View.GONE);
 		fragmentView.findViewById(R.id.fragmentLoading).setVisibility(View.GONE);
 
@@ -296,7 +296,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	 * @param onClickListener
 	 *            Son action.
 	 */
-	protected void setMessageButton(int title, OnClickListener onClickListener) {
+	protected void setMessageButton(final int title, final OnClickListener onClickListener) {
 		setMessageButton(getString(title), onClickListener);
 	}
 
@@ -308,7 +308,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	 * @param onClickListener
 	 *            Son action.
 	 */
-	protected void setMessageButton(String title, OnClickListener onClickListener) {
+	protected void setMessageButton(final String title, final OnClickListener onClickListener) {
 		final View message = fragmentView.findViewById(R.id.fragmentMessage);
 		if (message != null) {
 			final Button button = (Button) message.findViewById(android.R.id.button1);
@@ -324,7 +324,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	 * 
 	 * @param timeToLive
 	 */
-	protected void setTimeToLive(int timeToLive) {
+	protected void setTimeToLive(final int timeToLive) {
 		this.timeToLive = timeToLive;
 	}
 
@@ -362,7 +362,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	}
 
 	@Override
-	public Loader<AsyncResult<T>> onCreateLoader(int arg0, Bundle arg1) {
+	public Loader<AsyncResult<T>> onCreateLoader(final int arg0, final Bundle arg1) {
 		final Loader<AsyncResult<T>> loader = new AsyncTaskLoader<AsyncResult<T>>(getActivity()) {
 			@Override
 			public AsyncResult<T> loadInBackground() {
@@ -376,7 +376,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	}
 
 	@Override
-	public void onLoadFinished(Loader<AsyncResult<T>> loader, AsyncResult<T> result) {
+	public void onLoadFinished(final Loader<AsyncResult<T>> loader, final AsyncResult<T> result) {
 
 		if (result == null) {
 			showMessage(messageEmptyTitleId, messageEmptySummaryId, messageEmptyDrawableId);
@@ -412,7 +412,7 @@ public abstract class CustomExpandableListFragment<T extends ExpandableListAdapt
 	}
 
 	@Override
-	public void onLoaderReset(Loader<AsyncResult<T>> arg0) {
+	public void onLoaderReset(final Loader<AsyncResult<T>> arg0) {
 
 	}
 

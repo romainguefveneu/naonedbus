@@ -107,8 +107,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (DBG)
 			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onActivityCreated " + mCurrentState);
 
-		setRetainInstance(true);
-
 		if (mCurrentState == State.MESSAGE) {
 			mCurrentState = null;
 			if (getListAdapter() == null || getListAdapter().getCount() == 0) {
@@ -505,7 +503,11 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 				if (isStarted()) {
 					// If the Loader is currently started, we can immediately
 					// deliver its results.
-					super.deliverResult(result);
+					try {
+						super.deliverResult(result);
+					} catch (final NullPointerException e) {
+
+					}
 				}
 			}
 
