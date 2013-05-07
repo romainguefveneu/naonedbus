@@ -69,7 +69,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	private final BiclooObserver mBiclooObserver = new BiclooObserver(new Handler()) {
 		@Override
 		public void onChange() {
-			if (!getLoaderManager().hasRunningLoaders()) {
+			if (isAdded() && !getLoaderManager().hasRunningLoaders()) {
 				refreshContent();
 			}
 		}
