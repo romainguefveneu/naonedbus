@@ -55,10 +55,6 @@ import android.view.ViewGroup;
 import com.bugsense.trace.BugSenseHandler;
 import com.google.android.maps.GeoPoint;
 
-/**
- * @author romain
- * 
- */
 public class ParkingMapLayer implements MapLayer {
 
 	private static EquipementManager equipementManager;

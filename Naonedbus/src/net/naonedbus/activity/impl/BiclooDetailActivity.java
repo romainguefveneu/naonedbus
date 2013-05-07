@@ -213,8 +213,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	private void shareComment(final Bicloo bicloo) {
 		final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
-		// shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-		// getParkingInformation(parking));
+		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getBiclooInformation(bicloo));
 		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
 	}
 
@@ -229,6 +228,27 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		}
 
 		invalidateOptionsMenu();
+	}
+
+	private String getBiclooInformation(final Bicloo bicloo) {
+		final int availableBikes = bicloo.getAvailableBike();
+		final int availableStands = bicloo.getAvailableBikeStands();
+		final String bikes = getResources().getQuantityString(R.plurals.bicloo_velos_disponibles, availableBikes,
+				availableBikes);
+		final String stands = getResources().getQuantityString(R.plurals.bicloo_places_disponibles, availableStands,
+				availableStands);
+
+		final String description = getResources().getQuantityString(R.plurals.bicloo, availableBikes + availableStands,
+				bikes, stands);
+
+		final double latitude = bicloo.getLocation().getLatitude();
+		final double longitude = bicloo.getLocation().getLatitude();
+
+		final StringBuilder builder = new StringBuilder();
+		builder.append(bicloo.getName()).append("\n").append(description).append("\n").append(bicloo.getAddress())
+				.append("\n")
+				.append(String.format(Locale.ENGLISH, ParkingDetailActivity.SMS_NAVIGATION_URL, latitude, longitude));
+		return builder.toString();
 	}
 
 	private boolean isFavori() {

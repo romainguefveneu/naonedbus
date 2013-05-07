@@ -56,9 +56,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class LignesFragment extends CustomCursorFragment implements CustomFragmentActions {
 
-	// private static final String LOG_TAG = "LignesFragment";
-	// private static final boolean DBG = BuildConfig.DEBUG;
-
 	private final static int FILTER_ALL = 0;;
 	private final static int FILTER_FAVORIS = 1;
 	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
