@@ -11,7 +11,6 @@ public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 	}
 
 	private int mId;
-	private int mNumber;
 	private String mName;
 	private String mAddress;
 	private Location mLocation;
@@ -31,7 +30,6 @@ public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 
 	protected Bicloo(final Parcel in) {
 		mId = in.readInt();
-		mNumber = in.readInt();
 		mName = in.readString();
 		mAddress = in.readString();
 		mLocation = in.readParcelable(Location.class.getClassLoader());
@@ -46,7 +44,6 @@ public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 
 	public void set(final Bicloo bicloo) {
 		mId = bicloo.getId();
-		mNumber = bicloo.getNumber();
 		mName = bicloo.getName();
 		mAddress = bicloo.getAddress();
 		mLocation = bicloo.getLocation();
@@ -65,14 +62,6 @@ public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 
 	public void setId(final int id) {
 		mId = id;
-	}
-
-	public int getNumber() {
-		return mNumber;
-	}
-
-	public void setNumber(final int number) {
-		mNumber = number;
 	}
 
 	public String getName() {
@@ -197,7 +186,6 @@ public class Bicloo implements SectionItem, Comparable<Bicloo>, Parcelable {
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeInt(mId);
-		dest.writeInt(mNumber);
 		dest.writeString(mName);
 		dest.writeString(mAddress);
 		dest.writeParcelable(mLocation, 0);

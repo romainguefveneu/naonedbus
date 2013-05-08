@@ -98,7 +98,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	public CustomListFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
 		this(titleId, layoutId);
-		this.mLayoutListHeaderId = layoutListHeaderId;
+		mLayoutListHeaderId = layoutListHeaderId;
 	}
 
 	@Override

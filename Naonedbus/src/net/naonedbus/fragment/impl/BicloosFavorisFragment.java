@@ -60,7 +60,6 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 		contentResolver.registerContentObserver(FavoriBiclooProvider.CONTENT_URI, true, mContentObserver);
-
 	}
 
 	@Override
@@ -69,6 +68,12 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 		contentResolver.unregisterContentObserver(mContentObserver);
 
 		super.onDestroy();
+	}
+
+	@Override
+	public boolean onContextItemSelected(final android.view.MenuItem item) {
+		return false; // Must keep this, otherwise this fragment will handle
+						// onContextItemSelected of other activty's fragments.
 	}
 
 	@Override
@@ -86,7 +91,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 			final List<Bicloo> bicloos = biclooManager.getAll(context);
 			for (final Bicloo bicloo : bicloos) {
 				for (final Bicloo favori : favoris) {
-					if (bicloo.getNumber() == favori.getId()) {
+					if (bicloo.getId() == favori.getId()) {
 						favori.set(bicloo);
 						break;
 					}
@@ -118,8 +123,8 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 
 	@Override
 	public boolean onPrepareActionMode(final ActionMode mode, final Menu menu) {
-		mActionMode = mode;
 		final int checkedItems = getCheckedItemsCount();
+		mActionMode = mode;
 		mActionMode.setTitle(getResources().getQuantityString(R.plurals.selected_items, checkedItems, checkedItems));
 		return false;
 	}
@@ -149,7 +154,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 			if (mListView.isItemChecked(i)) {
 				item = adapter.getItem(i);
 				adapter.remove(item);
-				manager.remove(contentResolver, item.getNumber());
+				manager.remove(contentResolver, item.getId());
 			}
 		}
 

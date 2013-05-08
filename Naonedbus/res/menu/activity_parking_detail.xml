@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_action_direction"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_share"/>
+        android:title="@string/action_navigate"/>
     <item
         android:id="@id/menu_share"
         android:icon="@drawable/ic_action_share"
@@ -17,6 +17,6 @@
         android:icon="@drawable/ic_action_call"
         android:orderInCategory="300"
         android:showAsAction="always"
-        android:title="@string/action_share"/>
+        android:title="@string/action_call"/>
 
 </menu>

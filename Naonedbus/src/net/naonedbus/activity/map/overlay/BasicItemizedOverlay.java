@@ -30,27 +30,21 @@ import com.google.android.maps.MapView;
 
 public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 
-	/**
-	 * Interface d'évenement de sélection d'un item
-	 * 
-	 * @author romain.guefveneu
-	 * 
-	 */
 	public interface OnBasicItemTapListener {
 		void onItemTap(BasicOverlayItem item);
 	}
 
 	private final ArrayList<BasicOverlayItem> mOverlays = new ArrayList<BasicOverlayItem>();
-	private BasicOverlayItem lastSelectedItem;
-	private final Drawable defaultMarker;
-	private OnBasicItemTapListener onBasicItemTapListener;
-	private TypeOverlayItem type;
+	private final Drawable mDefaultMarker;
+	private final TypeOverlayItem mType;
+
+	private BasicOverlayItem mLastSelectedItem;
+	private OnBasicItemTapListener mOnBasicItemTapListener;
 
 	public BasicItemizedOverlay(final TypeOverlayItem type, final MapPinDrawable defaultMarker) {
 		super(boundCenterBottom(defaultMarker));
-		this.defaultMarker = defaultMarker;
-		this.type = type;
-		populate();
+		mDefaultMarker = defaultMarker;
+		mType = type;
 	}
 
 	public void addOverlay(final BasicOverlayItem overlay) {
@@ -62,13 +56,13 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 
 	public void addSelectedOverlay(final BasicOverlayItem overlay) {
 		if (!mOverlays.contains(overlay)) {
-			lastSelectedItem = overlay;
+			mLastSelectedItem = overlay;
 			addOverlay(overlay);
 		}
 	}
 
 	public void setOnBasicItemTapListener(final OnBasicItemTapListener onBasicItemTapeListener) {
-		this.onBasicItemTapListener = onBasicItemTapeListener;
+		mOnBasicItemTapListener = onBasicItemTapeListener;
 	}
 
 	public void clear() {
@@ -79,9 +73,9 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 	 * Annuler la sélection courante.
 	 */
 	public void resetFocus() {
-		if ((lastSelectedItem != null)) {
-			lastSelectedItem.setMarker(defaultMarker);
-			lastSelectedItem = null;
+		if ((mLastSelectedItem != null)) {
+			mLastSelectedItem.setMarker(mDefaultMarker);
+			mLastSelectedItem = null;
 		}
 	}
 
@@ -92,8 +86,8 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 
 		if (localItem != null) {
 			super.setFocus(localItem);
-			if (onBasicItemTapListener != null) {
-				onBasicItemTapListener.onItemTap(localItem);
+			if (mOnBasicItemTapListener != null) {
+				mOnBasicItemTapListener.onItemTap(localItem);
 			}
 		}
 
@@ -132,11 +126,7 @@ public class BasicItemizedOverlay extends ItemizedOverlay<BasicOverlayItem> {
 	}
 
 	public TypeOverlayItem getType() {
-		return type;
-	}
-
-	public void setType(final TypeOverlayItem type) {
-		this.type = type;
+		return mType;
 	}
 
 }

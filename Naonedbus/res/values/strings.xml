@@ -65,6 +65,8 @@
     <string name="menu_don">Make a donation</string>
     <string name="menu_section_naonedbus">Naonedbus</string>
     <string name="menu_section_options">Setting</string>
+    <string name="action_call">Call</string>
+    <string name="action_navigate">Navigate</string>
     <string name="action_share">Share</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_comment">Comment on traffic</string>
@@ -143,7 +145,7 @@
     <string name="title_fragment_trafic_detail">Detail</string>
     <string name="title_fragment_parkings_publics">Public</string>
     <string name="title_fragment_parkings_relais">Relay</string>
-    <string name="title_fragment_bicloos">Bicloos</string>
+    <string name="title_fragment_bicloos">Stations</string>
     <string name="title_fragment_marguerites">Marguerites</string>
     <string name="title_fragment_lila">Lila</string>
     <string name="title_fragment_covoiturage">Carpooling</string>
@@ -282,23 +284,26 @@
         <item quantity="one">1 space left, hurry !</item>
         <item quantity="other">%d spaces left</item>
     </plurals>
-        <!-- Bicloo -->
+    <!-- Bicloo -->
+    <string name="bicloo_titre_velos_disponibles">Bikes</string>
+    <string name="bicloo_titre_places_disponible">Spaces left</string>
+    <string name="bicloo_titre_paiement">Payment terminal</string>
+    <string name="bicloo_paiement_disponible">Yes</string>
+    <string name="bicloo_paiement_indisponible">No</string>
+    <string name="bicloo_indisponible">Unavailable</string>
+    <string name="bicloo_indisponible_message">This bicloo station is currently unavailable</string>
+
     <plurals name="bicloo_places_disponibles">
         <item quantity="one">%d space</item>
         <item quantity="other">%d spaces</item>
     </plurals>
     <plurals name="bicloo_velos_disponibles">
-        <item quantity="one">%d bicloo</item>
-        <item quantity="other">%d bicloos</item>
+        <item quantity="one">%d bike</item>
+        <item quantity="other">%d bikes</item>
     </plurals>
     <plurals name="bicloo">
         <item quantity="one">%1$s and %2$s left</item>
         <item quantity="other">%1$s and %2$s left</item>
-    </plurals>
-    
-    <plurals name="selected_items">
-        <item quantity="one">1 selected</item>
-        <item quantity="other">%d selected</item>
     </plurals>
 
 </resources>

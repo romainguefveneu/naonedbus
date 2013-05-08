@@ -49,6 +49,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.ContextMenu;
@@ -69,11 +70,13 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	private final BiclooObserver mBiclooObserver = new BiclooObserver(new Handler()) {
 		@Override
 		public void onChange() {
-			if (isAdded() && !getLoaderManager().hasRunningLoaders()) {
+			Log.d(BicloosFragment.this.getClass().getSimpleName(), "BiclooObserver.onChange");
+
+			if (isAdded() && !getLoaderManager().hasRunningLoaders() && getListAdapter() != null) {
+				Log.i(BicloosFragment.this.getClass().getSimpleName(), "\t refresh");
 				refreshContent();
 			}
 		}
-
 	};
 
 	private final static int SORT_NOM = 0;
@@ -88,10 +91,10 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	protected final SparseArray<ArraySectionIndexer<Bicloo>> mIndexers;
 	protected int mCurrentSortPreference = SORT_NOM;
 
+	private final BiclooManager mBiclooManager;
+	private final FavoriBiclooManager mFavoriBiclooManager;
 	private final MyLocationProvider mLocationProvider;
 
-	private final BiclooManager mBiclooManager;
-	private FavoriBiclooManager mFavoriBiclooManager;
 	private MenuItem mRefreshMenuItem;
 	private StateHelper mStateHelper;
 	private DistanceTask mLoaderDistance;
@@ -100,6 +103,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 		super(R.string.title_fragment_bicloos, R.layout.fragment_listview_section);
 
 		mBiclooManager = BiclooManager.getInstance();
+		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
 
 		mLocationProvider = NBApplication.getLocationProvider();
 
@@ -125,10 +129,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 
-		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
-
 		mLocationProvider.addListener(mLocationListener);
-		// Initaliser le comparator avec la position actuelle.
 		mLocationListener.onLocationChanged(mLocationProvider.getLastKnownLocation());
 
 		// Gestion du tri par défaut
@@ -239,6 +240,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	@Override
 	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
+
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
 		final Bicloo bicloo = (Bicloo) getListAdapter().getItem(cmi.position);
@@ -246,21 +248,22 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.fragment_bicloos_contextual, menu);
 
+		menu.setHeaderTitle(bicloo.getName());
 		menu.findItem(R.id.menu_favori).setTitle(
 				isFavori(bicloo) ? R.string.action_favori_remove : R.string.action_favori_add);
 
-		menu.setHeaderTitle(bicloo.getName());
 	}
 
 	@Override
 	public boolean onContextItemSelected(final android.view.MenuItem item) {
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
 		final Bicloo bicloo = (Bicloo) getListAdapter().getItem(cmi.position);
 
 		switch (item.getItemId()) {
 		case R.id.menu_show_plan:
 			final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-			intent.putExtra(MapActivity.Param.itemId, bicloo.getNumber());
+			intent.putExtra(MapActivity.Param.itemId, bicloo.getId());
 			intent.putExtra(MapActivity.Param.itemType, Equipement.Type.TYPE_BICLOO.getId());
 			startActivity(intent);
 			break;
@@ -406,7 +409,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	private boolean isFavori(final Bicloo bicloo) {
-		final Bicloo b = mFavoriBiclooManager.getSingle(getActivity().getContentResolver(), bicloo.getNumber());
+		final Bicloo b = mFavoriBiclooManager.getSingle(getActivity().getContentResolver(), bicloo.getId());
 		return (b != null);
 	}
 
@@ -415,6 +418,6 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	}
 
 	private void removeFromFavoris(final Bicloo bicloo) {
-		mFavoriBiclooManager.remove(getActivity().getContentResolver(), bicloo.getNumber());
+		mFavoriBiclooManager.remove(getActivity().getContentResolver(), bicloo.getId());
 	}
 }

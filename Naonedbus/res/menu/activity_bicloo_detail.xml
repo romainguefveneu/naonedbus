@@ -9,7 +9,7 @@
         android:id="@id/menu_navigation"
         android:icon="@drawable/ic_action_direction"
         android:showAsAction="always"
-        android:title="@string/action_share"/>
+        android:title="@string/action_navigate"/>
     <item
         android:id="@id/menu_share"
         android:icon="@drawable/ic_action_share"

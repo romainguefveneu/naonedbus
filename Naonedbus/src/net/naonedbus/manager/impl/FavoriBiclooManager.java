@@ -43,7 +43,7 @@ public class FavoriBiclooManager extends SQLiteManager<Bicloo> {
 	@Override
 	protected ContentValues getContentValues(final Bicloo item) {
 		final ContentValues values = new ContentValues();
-		values.put(FavoriBiclooTable._ID, item.getNumber());
+		values.put(FavoriBiclooTable._ID, item.getId());
 		values.put(FavoriBiclooTable.NOM_EQUIPEMENT, item.getName());
 
 		return values;

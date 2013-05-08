@@ -19,7 +19,6 @@
 package net.naonedbus.activity.map.layerloader.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
@@ -32,8 +31,10 @@ import net.naonedbus.activity.map.overlay.BiclooItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Bicloo;
+import net.naonedbus.bean.Equipement;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.BiclooManager;
+import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.utils.GeoPointUtils;
 
 import org.json.JSONException;
@@ -41,6 +42,7 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,15 +122,10 @@ public class BiclooMapLayer implements MapLayer {
 	}
 
 	@Override
-	public boolean isMoveable() {
-		return false;
-	}
-
-	@Override
 	public BasicItemizedOverlay getOverlay(final Context context, final Location location) {
-		final List<Bicloo> bicloos = new ArrayList<Bicloo>();
+		List<Bicloo> bicloos = null;
 		try {
-			bicloos.addAll(mBiclooManager.getAll(context));
+			bicloos = mBiclooManager.getAll(context);
 		} catch (final IOException e) {
 			BugSenseHandler.sendException(e);
 		} catch (final JSONException e) {
@@ -138,12 +135,14 @@ public class BiclooMapLayer implements MapLayer {
 		final BasicItemizedOverlay newItemizedOverlay = new BiclooItemizedOverlay(context.getResources());
 		BasicOverlayItem overlayItem;
 
-		for (final Bicloo bicloo : bicloos) {
-			overlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(bicloo.getLocation()), bicloo.getName(),
-					TypeOverlayItem.TYPE_BICLOO);
-			overlayItem.setId(bicloo.getNumber());
-			newItemizedOverlay.addOverlay(overlayItem);
-			mBicloos.put(bicloo.getNumber(), bicloo);
+		if (bicloos != null) {
+			for (final Bicloo bicloo : bicloos) {
+				overlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(bicloo.getLocation()), bicloo.getName(),
+						TypeOverlayItem.TYPE_BICLOO);
+				overlayItem.setId(bicloo.getId());
+				newItemizedOverlay.addOverlay(overlayItem);
+				mBicloos.put(bicloo.getId(), bicloo);
+			}
 		}
 
 		return newItemizedOverlay;
@@ -152,13 +151,24 @@ public class BiclooMapLayer implements MapLayer {
 	@Override
 	public BasicItemizedOverlay getOverlay(final Context context, final int defaultItemId) {
 		final BasicItemizedOverlay newItemizedOverlay;
-		final Bicloo item = mBicloos.get(defaultItemId);
+		final EquipementManager equipementManager = EquipementManager.getInstance();
+		final Equipement item = equipementManager.getSingle(context.getContentResolver(), Equipement.Type.TYPE_BICLOO,
+				defaultItemId);
+
 		if (item != null) {
-			newItemizedOverlay = getOverlay(context, item.getLocation());
+			final Location location = new Location(LocationManager.GPS_PROVIDER);
+			location.setLatitude(item.getLatitude());
+			location.setLongitude(item.getLongitude());
+			newItemizedOverlay = getOverlay(context, location);
 		} else {
 			newItemizedOverlay = new BiclooItemizedOverlay(context.getResources());
 		}
 		return newItemizedOverlay;
+	}
+
+	@Override
+	public boolean isMoveable() {
+		return false;
 	}
 
 }

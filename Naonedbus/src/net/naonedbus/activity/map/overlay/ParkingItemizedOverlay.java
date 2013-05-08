@@ -32,7 +32,7 @@ public class ParkingItemizedOverlay extends BasicItemizedOverlay {
 	 * @param defaultMarker
 	 * @param selectedMarker
 	 */
-	public ParkingItemizedOverlay(Resources r) {
+	public ParkingItemizedOverlay(final Resources r) {
 		super(TypeOverlayItem.TYPE_PARKING, new MapPinDrawable(r, R.color.map_pin_parking,
 				R.drawable.gd_map_pin_dot_parking));
 	}

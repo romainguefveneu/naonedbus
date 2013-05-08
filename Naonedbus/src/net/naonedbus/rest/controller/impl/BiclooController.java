@@ -52,7 +52,7 @@ public class BiclooController extends RestController<Bicloo> {
 	@Override
 	protected Bicloo parseJsonObject(final JSONObject object) throws JSONException {
 		final Bicloo bicloo = new Bicloo();
-		bicloo.setNumber(object.getInt(TAG_NUMBER));
+		bicloo.setId(object.getInt(TAG_NUMBER));
 		bicloo.setName(getCleanString(object.getString(TAG_NAME)));
 		bicloo.setAddress(getCleanString(object.getString(TAG_ADDRESS)));
 		bicloo.setLocation(getLocation(object.getJSONObject(TAG_POSITION)));

@@ -134,7 +134,7 @@ public class BiclooManager {
 
 	private ContentValues getContentValues(final Bicloo bicloo) {
 		final ContentValues values = new ContentValues();
-		values.put(EquipementTable._ID, bicloo.getNumber());
+		values.put(EquipementTable._ID, bicloo.getId());
 		values.put(EquipementTable.ID_TYPE, Equipement.Type.TYPE_BICLOO.getId());
 		values.put(EquipementTable.NOM, bicloo.getName());
 		values.put(EquipementTable.NORMALIZED_NOM, bicloo.getName());

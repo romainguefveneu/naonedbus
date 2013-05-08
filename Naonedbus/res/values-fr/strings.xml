@@ -72,6 +72,8 @@
     <string name="menu_section_naonedbus">Naonedbus</string>
     <string name="menu_section_options">Options</string>
     <!-- Actions -->
+    <string name="action_call">Téléphoner</string>
+    <string name="action_navigate">Itinéraire</string>
     <string name="action_share">Partager</string>
     <string name="action_refresh">Actualiser</string>
     <string name="action_comment">Commenter le trafic</string>
@@ -157,7 +159,7 @@
     <!-- Equipements -->
     <string name="title_fragment_parkings_publics">Publics</string>
     <string name="title_fragment_parkings_relais">Relais</string>
-    <string name="title_fragment_bicloos">Bicloos</string>
+    <string name="title_fragment_bicloos">Stations</string>
     <string name="title_fragment_marguerites">Marguerites</string>
     <string name="title_fragment_lila">Lila</string>
     <string name="title_fragment_covoiturage">Co-Voiturage</string>
@@ -204,7 +206,7 @@
     <!-- Bicloo -->
     <string name="bicloo_titre_velos_disponibles">Bicloos</string>
     <string name="bicloo_titre_places_disponible">Places restantes</string>
-    <string name="bicloo_titre_paiement">Paiement</string>
+    <string name="bicloo_titre_paiement">Borne de paiement</string>
     <string name="bicloo_paiement_disponible">Oui</string>
     <string name="bicloo_paiement_indisponible">Non</string>
     <string name="bicloo_indisponible">Indisponible</string>

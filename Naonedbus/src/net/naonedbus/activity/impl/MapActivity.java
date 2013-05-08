@@ -656,13 +656,17 @@ public class MapActivity extends SherlockMapActivity {
 				setLayerPreference(overlayType.getId(), mSelectedLayers.contains(layerType));
 
 				if (mMapOverlays.containsKey(overlayType) && !mSelectedLayers.contains(layerType)) {
+
 					// Effacer les couches
 					mMapView.getOverlays().remove(mMapOverlays.get(overlayType));
 					mMapOverlays.remove(overlayType);
+
 				} else if (mMapOverlays.containsKey(overlayType) == false && mSelectedLayers.contains(layerType)) {
+
 					// Redessiner les couches
 					mMapOverlays.put(overlayType, overlay);
 					mMapView.getOverlays().add(overlay);
+
 				}
 			}
 		}
