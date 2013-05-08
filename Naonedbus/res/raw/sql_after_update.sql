@@ -12,4 +12,5 @@ IF OLD_VERSION > 10
 			ON favoris.codeLigne = favorisGroupes_backup.codeLigne 
 			AND favoris.codeSens = favorisGroupes_backup.codeSens 
 			AND favoris.codeArret = favorisGroupes_backup.codeArret;
+	DROP TABLE favorisGroupes_backup;
 END

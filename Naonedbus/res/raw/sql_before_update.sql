@@ -1,5 +1,6 @@
 IF OLD_VERSION > 10
-	CREATE TABLE favorisGroupes_backup(idFavori, codeLigne, codeSens, codeArret, idGroupe);
+	CREATE TABLE IF NOT EXISTS favorisGroupes_backup(idFavori, codeLigne, codeSens, codeArret, idGroupe);
+	DELETE FROM favorisGroupes_backup;
 	INSERT INTO favorisGroupes_backup 
 		SELECT idFavori, codeLigne, codeSens, codeArret, idGroupe 
 		FROM favorisGroupes 
