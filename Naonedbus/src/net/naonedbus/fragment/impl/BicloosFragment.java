@@ -49,7 +49,6 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.ContextMenu;
@@ -66,14 +65,10 @@ import com.actionbarsherlock.view.MenuItem;
 public class BicloosFragment extends CustomListFragment implements CustomFragmentActions {
 
 	protected final static String BUNDKE_KEY_FORCE_UDPATE = "forceUpdate";
-
 	private final BiclooObserver mBiclooObserver = new BiclooObserver(new Handler()) {
 		@Override
 		public void onChange() {
-			Log.d(BicloosFragment.this.getClass().getSimpleName(), "BiclooObserver.onChange");
-
 			if (isAdded() && !getLoaderManager().hasRunningLoaders() && getListAdapter() != null) {
-				Log.i(BicloosFragment.this.getClass().getSimpleName(), "\t refresh");
 				refreshContent();
 			}
 		}
@@ -141,6 +136,21 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	public void onStart() {
 		super.onStart();
 		loadContent();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		if (isNotUpToDate() && (getListAdapter() != null && getListAdapter().isEmpty())) {
+			final Bundle bundle = new Bundle();
+			bundle.putBoolean(BUNDKE_KEY_FORCE_UDPATE, true);
+			refreshContent(bundle);
+		}
+	}
+
+	@Override
+	protected boolean isNotUpToDate() {
+		return mBiclooManager.isNotUpToDate();
 	}
 
 	@Override
@@ -356,7 +366,6 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 			adapter.sort(mComparators.get(mCurrentSortPreference));
 
 			result.setResult(adapter);
-
 		} catch (final Exception e) {
 			result.setException(e);
 		}

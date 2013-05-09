@@ -96,7 +96,14 @@ public class BiclooManager {
 		}
 	}
 
+	public boolean isNotUpToDate() {
+		final DateTime now = new DateTime();
+		return now.isAfter(mDateLimit);
+	}
+
 	public void clearCache() {
+		if (DBG)
+			Log.d(LOG_TAG, "Suppression du cache des bicloos.");
 		mCache.clear();
 	}
 
