@@ -78,17 +78,17 @@ public class HoraireController extends RestController<HoraireContainer> {
 		final UrlBuilder url = new UrlBuilder(PATH);
 		long timeOffset = date.getMillis();
 		final List<HoraireNode> horaires;
-		final List<Horaire> result = new ArrayList<Horaire>();
+		List<Horaire> result = null;
 
-		url.addSegment(arret.codeArret);
-		url.addSegment(arret.codeLigne);
-		url.addSegment(arret.codeSens);
+		url.addSegment(arret.getCodeArret());
+		url.addSegment(arret.getCodeLigne());
+		url.addSegment(arret.getCodeSens());
 		url.addSegment(mDateFormat.format(date.toDate()));
 		final HoraireContainer content = parseJsonObject(url.getUrl());
 
 		if (content != null) {
 			horaires = content.horaires;
-			// result = new ArrayList<Horaire>();
+			result = new ArrayList<Horaire>();
 			// Transformation des horaires TAN en horaire naonedbus.
 			for (final HoraireNode horaireTan : horaires) {
 				final String heure = horaireTan.heure;

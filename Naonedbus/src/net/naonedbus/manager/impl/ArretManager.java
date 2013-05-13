@@ -46,8 +46,23 @@ public class ArretManager extends SQLiteManager<Arret> {
 		return sInstance;
 	}
 
+	private final Arret.Builder mBuilder;
+	private int mColId;
+	private int mColCodeLigne;
+	private int mColLettre;
+	private int mColCodeSens;
+	private int mColCodeArret;
+	private int mColCodeEquipement;
+	private int mColNormalizedNom;
+	private int mColLatitude;
+	private int mColLongitude;
+	private int mColIdStation;
+	private int mColOrdre;
+	private int mColNomArret;
+
 	private ArretManager() {
 		super(ArretProvider.CONTENT_URI);
+		mBuilder = new Arret.Builder();
 	}
 
 	/**
@@ -80,7 +95,8 @@ public class ArretManager extends SQLiteManager<Arret> {
 	 *            le code de l'arrêt
 	 * @return L'arrêt cherche, ou {@code null} si non trouvé.
 	 */
-	public Arret getSingle(final ContentResolver contentResolver, final String codeLigne, final String codeSens, final String nomArret) {
+	public Arret getSingle(final ContentResolver contentResolver, final String codeLigne, final String codeSens,
+			final String nomArret) {
 		final Cursor c = getCursor(contentResolver, ArretTable.CODE_LIGNE + "=? AND " + ArretTable.CODE_SENS
 				+ "=? AND " + EquipementTable.NORMALIZED_NOM + "=?", new String[] { codeLigne, codeSens, nomArret });
 		return getFirstFromCursor(c);
@@ -96,7 +112,8 @@ public class ArretManager extends SQLiteManager<Arret> {
 	 *            le code du sens
 	 * @return La liste des arrêts favoris de la ligne et du sens donné
 	 */
-	public List<Arret> getArretsFavoris(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
+	public List<Arret> getArretsFavoris(final ContentResolver contentResolver, final String codeLigne,
+			final String codeSens) {
 		final Cursor c = getCursor(contentResolver, ArretTable.CODE_LIGNE + "=? AND " + ArretTable.CODE_SENS
 				+ "=? AND EXISTS (SELECT 1 FROM " + FavoriTable.TABLE_NAME + " WHERE " + FavoriTable.TABLE_NAME + "."
 				+ FavoriTable._ID + "=" + ArretTable.TABLE_NAME + "." + ArretTable._ID + ")", new String[] { codeLigne,
@@ -113,37 +130,51 @@ public class ArretManager extends SQLiteManager<Arret> {
 	}
 
 	@Override
+	public void onIndexCursor(final Cursor c) {
+		mColId = c.getColumnIndex(ArretTable._ID);
+		mColCodeArret = c.getColumnIndex(ArretTable.CODE);
+		mColLettre = c.getColumnIndex(LigneTable.LETTRE);
+		mColCodeEquipement = c.getColumnIndex(EquipementTable.CODE);
+		mColCodeLigne = c.getColumnIndex(ArretTable.CODE_LIGNE);
+		mColCodeSens = c.getColumnIndex(ArretTable.CODE_SENS);
+		mColNomArret = c.getColumnIndex(EquipementTable.NOM);
+		mColNormalizedNom = c.getColumnIndex(EquipementTable.NORMALIZED_NOM);
+		mColLatitude = c.getColumnIndex(EquipementTable.LATITUDE);
+		mColLongitude = c.getColumnIndex(EquipementTable.LONGITUDE);
+		mColIdStation = c.getColumnIndex(ArretTable.ID_STATION);
+		mColOrdre = c.getColumnIndex(ArretTable.ORDRE);
+	}
+
+	@Override
 	public Arret getSingleFromCursor(final Cursor c) {
-		final Arret item = new Arret();
-		item._id = c.getInt(c.getColumnIndex(ArretTable._ID));
-		item.codeArret = c.getString(c.getColumnIndex(ArretTable.CODE));
-		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
-		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
-		item.codeLigne = c.getString(c.getColumnIndex(ArretTable.CODE_LIGNE));
-		item.codeSens = c.getString(c.getColumnIndex(ArretTable.CODE_SENS));
-		item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
-		item.normalizedNom = c.getString(c.getColumnIndex(EquipementTable.NORMALIZED_NOM));
-		item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
-		item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
-		item.idStation = c.getInt(c.getColumnIndex(ArretTable.ID_STATION));
-		item.ordre = c.getInt(c.getColumnIndex(ArretTable.ORDRE));
-		return item;
+		mBuilder.setId(c.getInt(mColId));
+		mBuilder.setCodeArret(c.getString(mColCodeArret));
+		mBuilder.setLettre(c.getString(mColLettre));
+		mBuilder.setCodeEquipement(c.getString(mColCodeEquipement));
+		mBuilder.setCodeLigne(c.getString(mColCodeLigne));
+		mBuilder.setCodeSens(c.getString(mColCodeSens));
+		mBuilder.setNomArret(c.getString(mColNomArret));
+		mBuilder.setNormalizedNom(c.getString(mColNormalizedNom));
+		mBuilder.setLatitude(c.getFloat(mColLatitude));
+		mBuilder.setLongitude(c.getFloat(mColLongitude));
+		mBuilder.setIdStation(c.getInt(mColIdStation));
+		mBuilder.setOrdre(c.getInt(mColOrdre));
+		return mBuilder.build();
 	}
 
 	public Arret getSingleFromCursorWrapper(final CursorWrapper c) {
-		final Arret item = new Arret();
-		item._id = c.getInt(c.getColumnIndex(ArretTable._ID));
-		item.codeArret = c.getString(c.getColumnIndex(ArretTable.CODE));
-		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
-		item.codeEquipement = c.getString(c.getColumnIndex(EquipementTable.CODE));
-		item.codeLigne = c.getString(c.getColumnIndex(ArretTable.CODE_LIGNE));
-		item.codeSens = c.getString(c.getColumnIndex(ArretTable.CODE_SENS));
-		item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
-		item.latitude = c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE));
-		item.longitude = c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE));
-		item.idStation = c.getInt(c.getColumnIndex(ArretTable.ID_STATION));
-		item.ordre = c.getInt(c.getColumnIndex(ArretTable.ORDRE));
-		return item;
+		mBuilder.setId(c.getInt(c.getColumnIndex(ArretTable._ID)));
+		mBuilder.setCodeArret(c.getString(c.getColumnIndex(ArretTable.CODE)));
+		mBuilder.setLettre(c.getString(c.getColumnIndex(LigneTable.LETTRE)));
+		mBuilder.setCodeEquipement(c.getString(c.getColumnIndex(EquipementTable.CODE)));
+		mBuilder.setCodeLigne(c.getString(c.getColumnIndex(ArretTable.CODE_LIGNE)));
+		mBuilder.setCodeSens(c.getString(c.getColumnIndex(ArretTable.CODE_SENS)));
+		mBuilder.setNomArret(c.getString(c.getColumnIndex(EquipementTable.NOM)));
+		mBuilder.setLatitude(c.getFloat(c.getColumnIndex(EquipementTable.LATITUDE)));
+		mBuilder.setLongitude(c.getFloat(c.getColumnIndex(EquipementTable.LONGITUDE)));
+		mBuilder.setIdStation(c.getInt(c.getColumnIndex(ArretTable.ID_STATION)));
+		mBuilder.setOrdre(c.getInt(c.getColumnIndex(ArretTable.ORDRE)));
+		return mBuilder.build();
 	}
 
 	public Integer getIdByFavori(final ContentResolver contentResolver, final Favori favori) {
@@ -151,14 +182,14 @@ public class ArretManager extends SQLiteManager<Arret> {
 
 		final Uri.Builder builder = ArretProvider.CONTENT_URI.buildUpon();
 		builder.path(ArretProvider.ARRET_CODEARRET_CODESENS_CODELIGNE_URI_PATH_QUERY);
-		builder.appendQueryParameter("codeArret", favori.codeArret);
-		builder.appendQueryParameter("codeSens", favori.codeSens);
-		builder.appendQueryParameter("codeLigne", favori.codeLigne);
+		builder.appendQueryParameter("codeArret", favori.getCodeArret());
+		builder.appendQueryParameter("codeSens", favori.getCodeSens());
+		builder.appendQueryParameter("codeLigne", favori.getCodeLigne());
 
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
 		final Arret arretItem = getFirstFromCursor(c);
 		if (arretItem != null) {
-			id = arretItem._id;
+			id = arretItem.getId();
 		}
 
 		return id;
@@ -168,8 +199,8 @@ public class ArretManager extends SQLiteManager<Arret> {
 		Integer id = null;
 
 		final Cursor c = db.query(ArretTable.TABLE_NAME, new String[] { ArretTable._ID }, ArretTable.CODE + "=? AND "
-				+ ArretTable.CODE_SENS + "=? AND " + ArretTable.CODE_LIGNE + "=?", new String[] { favori.codeArret,
-				favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
+				+ ArretTable.CODE_SENS + "=? AND " + ArretTable.CODE_LIGNE + "=?", new String[] {
+				favori.getCodeArret(), favori.getCodeSens(), favori.getCodeLigne() }, null, null, null);
 
 		if (c.getCount() > 0) {
 			c.moveToFirst();
@@ -186,17 +217,17 @@ public class ArretManager extends SQLiteManager<Arret> {
 		return getFirstFromCursor(c);
 	}
 
+	@Override
 	public ContentValues getContentValues(final Arret item) {
 		final ContentValues values = new ContentValues();
-		values.put(ArretTable._ID, item._id);
-		values.put(ArretTable.CODE_LIGNE, item.codeLigne);
-		values.put(ArretTable.CODE_SENS, item.codeSens);
-		values.put(ArretTable.CODE, item.codeArret);
-		values.put(ArretTable.ID_STATION, item.idStation);
-		values.put(ArretTable.ORDRE, item.ordre);
-		values.put(EquipementTable.NOM, item.nomArret);
-		values.put(EquipementTable.NORMALIZED_NOM, item.normalizedNom);
-
+		values.put(ArretTable._ID, item.getId());
+		values.put(ArretTable.CODE_LIGNE, item.getCodeLigne());
+		values.put(ArretTable.CODE_SENS, item.getCodeSens());
+		values.put(ArretTable.CODE, item.getCodeArret());
+		values.put(ArretTable.ID_STATION, item.getIdStation());
+		values.put(ArretTable.ORDRE, item.getOrdre());
+		values.put(EquipementTable.NOM, item.getNomArret());
+		values.put(EquipementTable.NORMALIZED_NOM, item.getNormalizedNom());
 		return values;
 	}
 

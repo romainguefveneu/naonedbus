@@ -439,11 +439,11 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 				@Override
 				public void onFavoriRenamed(final Favori newItem) {
 					final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
-					item.nomFavori = newItem.nomFavori;
+					item.setNomFavori(newItem.getNomFavori());
 					adapter.notifyDataSetChanged();
 				}
 			});
-			favorisUtils.renameFavori(item._id);
+			favorisUtils.renameFavori(item.getId());
 		}
 	}
 
@@ -457,7 +457,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (mListView.isItemChecked(i)) {
 				item = adapter.getItem(i);
 				adapter.remove(item);
-				mFavoriManager.removeFavori(contentResolver, item._id);
+				mFavoriManager.removeFavori(contentResolver, item.getId());
 			}
 		}
 
@@ -468,7 +468,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private void menuPlace() {
 		final Favori item = getFirstSelectedItem();
 		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-		intent.putExtra(MapActivity.Param.itemId, item.idStation);
+		intent.putExtra(MapActivity.Param.itemId, item.getIdStation());
 		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
 		startActivity(intent);
 	}
@@ -476,7 +476,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	private void menuShowPlan() {
 		final Favori item = getFirstSelectedItem();
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, item.codeLigne);
+		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, item.getCodeLigne());
 		startActivity(intent);
 	}
 
@@ -521,7 +521,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		for (int i = 0; i < checked.size(); i++) {
 			if (checked.valueAt(i)) {
 				final Favori item = (Favori) mListView.getItemAtPosition(checked.keyAt(i));
-				ids.add(item._id);
+				ids.add(item.getId());
 			}
 		}
 
@@ -644,10 +644,10 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		int position = 0;
 		for (final Favori favori : favoris) {
 			if (getActivity() != null) {
-				favori.delay = FavorisUtil.formatDelayLoading(getActivity(), favori.nextHoraire);
+				favori.setDelay(FavorisUtil.formatDelayLoading(getActivity(), favori.getNextHoraire()));
 			}
 
-			if (favori.nextHoraire == null) {
+			if (favori.getNextHoraire() == null) {
 				final NextHoraireTask horaireTask = new NextHoraireTask();
 				horaireTask.setContext(context);
 				horaireTask.setArret(favori);
@@ -752,7 +752,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 			if (isDetached() || getActivity() == null)
 				return;
 
-			favori.delay = FavorisUtil.formatDelayNoDeparture(getActivity(), delay);
+			favori.setDelay(FavorisUtil.formatDelayNoDeparture(getActivity(), delay));
 		}
 
 		@Override
@@ -779,7 +779,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 		FavoriArrayAdapter adapter;
 		if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null) {
 			final Favori favori = (Favori) getListAdapter().getItem(position);
-			favori.delay = getString(R.string.msg_horaire_erreur);
+			favori.setDelay(getString(R.string.msg_horaire_erreur));
 			adapter.notifyDataSetChanged();
 		}
 	}

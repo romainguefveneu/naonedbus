@@ -22,9 +22,9 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
@@ -35,51 +35,49 @@ import android.widget.TextView;
 
 public class FavoriCursorAdapter extends CursorAdapter {
 
-	private LayoutInflater mLayoutInflater;
-	private FavoriManager mFavoriManager;
+	private final LayoutInflater mLayoutInflater;
+	private final FavoriManager mFavoriManager;
 
-	public FavoriCursorAdapter(Context context, Cursor c) {
+	public FavoriCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		mLayoutInflater = LayoutInflater.from(context);
 		mFavoriManager = FavoriManager.getInstance();
 	}
 
 	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
+	public void bindView(final View view, final Context context, final Cursor cursor) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Favori item = mFavoriManager.getSingleFromCursor(cursor);
 
-		if (item.background == null) {
-			final GradientDrawable background = (GradientDrawable) ColorUtils
-					.getRoundedGradiant(item.couleurBackground);
-			item.background = background;
-			item.couleurTexte = (ColorUtils.isLightColor(item.couleurBackground) ? Color.BLACK : Color.WHITE);
+		if (item.getBackground() == null) {
+			final GradientDrawable background = ColorUtils.getRoundedGradiant(item.getCouleurBackground());
+			item.setBackground(background);
 		}
 
-		holder.ligneCode.setText(item.lettre);
-		holder.ligneCode.setBackgroundDrawable(item.background);
-		holder.ligneCode.setTextColor(item.couleurTexte);
+		holder.ligneCode.setText(item.getLettre());
+		holder.ligneCode.setBackgroundDrawable(item.getBackground());
+		holder.ligneCode.setTextColor(item.getCouleurTexte());
 
-		if (item.nomFavori == null) {
-			holder.itemTitle.setText(item.nomArret);
-			holder.itemDescription.setText("\u2192 " + item.nomSens);
+		if (item.getNomFavori() == null) {
+			holder.itemTitle.setText(item.getNomArret());
+			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomSens()));
 		} else {
-			holder.itemTitle.setText(item.nomFavori);
-			holder.itemDescription.setText(item.nomArret + " \u2192 " + item.nomSens);
+			holder.itemTitle.setText(item.getNomFavori());
+			holder.itemDescription.setText(FormatUtils.formatArretSens(item.getNomArret(), item.getNomSens()));
 		}
 
-		if (item.delay == null) {
+		if (item.getDelay() == null) {
 			holder.nextHoraire.setVisibility(View.GONE);
 			holder.progressBar.setVisibility(View.VISIBLE);
 		} else {
 			holder.progressBar.setVisibility(View.GONE);
-			holder.nextHoraire.setText(item.delay);
+			holder.nextHoraire.setText(item.getDelay());
 			holder.nextHoraire.setVisibility(View.VISIBLE);
 		}
 	}
 
 	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup root) {
+	public View newView(final Context context, final Cursor cursor, final ViewGroup root) {
 		final View view = mLayoutInflater.inflate(R.layout.list_item_favori, root, false);
 
 		final ViewHolder holder = new ViewHolder();

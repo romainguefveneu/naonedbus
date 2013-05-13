@@ -78,7 +78,7 @@ public class AddEventActivity extends SherlockActivity {
 		final HeaderHelper headerHelper = new HeaderHelper(this);
 		headerHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
 		headerHelper.setCode(ligne.lettre);
-		headerHelper.setTitle(arret.nomArret);
+		headerHelper.setTitle(arret.getNomArret());
 		headerHelper.setSubTitle(FormatUtils.formatSens(sens.text));
 
 		final ActionBar actionBar = getSupportActionBar();
@@ -93,7 +93,7 @@ public class AddEventActivity extends SherlockActivity {
 			@Override
 			public void onClick(final View v) {
 				final String[] delais = AddEventActivity.this.getResources().getStringArray(R.array.delais);
-				addToCalendar(AddEventActivity.this, arret.nomArret, mCommentText.getText().toString(),
+				addToCalendar(AddEventActivity.this, arret.getNomArret(), mCommentText.getText().toString(),
 						getCalendarId(), Integer.valueOf(delais[mSpinnerDelai.getSelectedItemPosition()]), timestamp);
 				Toast.makeText(getApplicationContext(), getString(R.string.add_event_toast), Toast.LENGTH_LONG).show();
 				finish();
@@ -122,7 +122,7 @@ public class AddEventActivity extends SherlockActivity {
 		mDateEvent.setText(dateFormat.format(new Date(timestamp)));
 
 		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, ligne.code),
-				arret.nomArret, sens.text));
+				arret.getNomArret(), sens.text));
 
 		fillCalendars();
 		fillDelais();

@@ -42,16 +42,16 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	private ViewType mViewType = ViewType.TYPE_STANDARD;
 	private int mNearestPosition = -1;
 
-	public ArretArrayAdapter(Context context, List<Arret> objects) {
+	public ArretArrayAdapter(final Context context, final List<Arret> objects) {
 		super(context, 0, objects);
 	}
 
-	public void setViewType(ViewType viewType) {
+	public void setViewType(final ViewType viewType) {
 		this.mViewType = viewType;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_arret, null);
 			bindViewHolder(convertView);
@@ -60,11 +60,11 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		return convertView;
 	}
 
-	public void bindView(View view, int position) {
+	public void bindView(final View view, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Arret arret = getItem(position);
 
-		if (arret._id == -1) {
+		if (arret.getId() == -1) {
 			holder.itemTitle.setTypeface(null, Typeface.BOLD);
 			holder.itemIcon.setVisibility(View.INVISIBLE);
 		} else {
@@ -72,10 +72,10 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 			holder.itemIcon.setVisibility(View.VISIBLE);
 
 			// Définir la distance.
-			if (arret.distance == null) {
+			if (arret.getDistance() == null) {
 				holder.itemDistance.setText("");
 			} else {
-				holder.itemDistance.setText(DistanceUtils.formatDist(arret.distance));
+				holder.itemDistance.setText(DistanceUtils.formatDist(arret.getDistance()));
 			}
 
 			bindDotPosition(holder, position);
@@ -97,11 +97,11 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 			}
 		}
 
-		holder.itemTitle.setText(arret.nomArret);
+		holder.itemTitle.setText(arret.getNomArret());
 
 	}
 
-	private void bindDotPosition(ViewHolder holder, int position) {
+	private void bindDotPosition(final ViewHolder holder, final int position) {
 		final AnimationDrawable animationDrawable = (AnimationDrawable) holder.dotLocation.getDrawable();
 		if (mNearestPosition == position) {
 			holder.dotLocation.setVisibility(View.VISIBLE);
@@ -126,7 +126,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		}
 	}
 
-	public void bindViewHolder(View view) {
+	public void bindViewHolder(final View view) {
 		final ViewHolder holder;
 		holder = new ViewHolder();
 		holder.itemMetroPoint = (ImageView) view.findViewById(R.id.itemMetroPoint);
@@ -138,7 +138,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 		view.setTag(holder);
 	}
 
-	public void setNearestPosition(int position) {
+	public void setNearestPosition(final int position) {
 		mNearestPosition = position;
 	}
 

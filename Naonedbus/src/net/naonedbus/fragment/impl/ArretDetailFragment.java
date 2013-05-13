@@ -253,7 +253,7 @@ public class ArretDetailFragment extends SherlockFragment {
 	}
 
 	private boolean isFavori() {
-		final Favori item = mFavoriManager.getSingle(getActivity().getContentResolver(), mArret._id);
+		final Favori item = mFavoriManager.getSingle(getActivity().getContentResolver(), mArret.getId());
 		return (item != null);
 	}
 
@@ -275,12 +275,12 @@ public class ArretDetailFragment extends SherlockFragment {
 	}
 
 	private void removeFromFavoris() {
-		mFavoriManager.removeFavori(getActivity().getContentResolver(), mArret._id);
+		mFavoriManager.removeFavori(getActivity().getContentResolver(), mArret.getId());
 	}
 
 	protected void showArretPlan() {
 		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-		intent.putExtra(MapActivity.Param.itemId, mArret.idStation);
+		intent.putExtra(MapActivity.Param.itemId, mArret.getIdStation());
 		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
 		startActivity(intent);
 	}
@@ -315,7 +315,7 @@ public class ArretDetailFragment extends SherlockFragment {
 		if (autreSens != null) {
 			// Chercher l'arrêt dans le nouveau sens
 			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code,
-					autreSens.code, mArret.normalizedNom);
+					autreSens.code, mArret.getNormalizedNom());
 
 			if (arret != null) {
 				mSens = autreSens;

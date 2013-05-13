@@ -33,21 +33,21 @@ public class FavoriComparator implements Comparator<Favori> {
 		if (favori1 == null || favori2 == null)
 			return 0;
 
-		if (favori1.section != null && favori2.section != null) {
-			if (!favori1.section.equals(favori2.section)) {
-				return Integer.valueOf(favori1.ordre).compareTo(favori2.ordre);
+		if (favori1.getSection() != null && favori2.getSection() != null) {
+			if (!favori1.getSection().equals(favori2.getSection())) {
+				return Integer.valueOf(favori1.getOrdre()).compareTo(favori2.getOrdre());
 			}
 		}
 
-		if (favori1.codeLigne.equals(favori2.codeLigne)) {
-			final String nom1 = (favori1.nomFavori == null) ? favori1.nomArret : favori1.nomFavori;
-			final String nom2 = (favori2.nomFavori == null) ? favori2.nomArret : favori2.nomFavori;
+		if (favori1.getCodeLigne().equals(favori2.getCodeLigne())) {
+			final String nom1 = (favori1.getNomFavori() == null) ? favori1.getNomArret() : favori1.getNomFavori();
+			final String nom2 = (favori2.getNomFavori() == null) ? favori2.getNomArret() : favori2.getNomFavori();
 			if (nom1 == null || nom2 == null) {
 				return 0;
 			}
 			return nom1.compareTo(nom2);
 		} else {
-			return favori1.codeLigne.compareTo(favori2.codeLigne);
+			return favori1.getCodeLigne().compareTo(favori2.getCodeLigne());
 		}
 	}
 

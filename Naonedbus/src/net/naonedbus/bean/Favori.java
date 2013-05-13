@@ -23,23 +23,147 @@ import android.graphics.drawable.Drawable;
 
 public class Favori extends Arret implements SectionItem {
 
-	public String nomFavori;
-	public String nomSens;
-	public int idGroupe;
-	public String nomGroupe;
+	private final String mNomSens;
+	private final int mIdGroupe;
+	private final String mNomGroupe;
 
-	public Integer nextHoraire;
-	public int couleurBackground;
-	public int couleurTexte;
+	private final Integer mNextHoraire;
+	private final int mCouleurBackground;
+	private final int mCouleurTexte;
 
-	public Drawable background;
-	public String delay;
+	private Drawable mBackground;
+	private String mDelay;
 
-	public Integer section;
+	private String mNomFavori;
+	private Integer mSection;
+
+	public static class Builder extends Arret.Builder {
+
+		private String mNomFavori;
+		private String mNomSens;
+		private int mIdGroupe;
+		private String mNomGroupe;
+
+		private Integer mNextHoraire;
+		private int mCouleurBackground;
+		private int mCouleurTexte;
+
+		private Integer mSection;
+
+		public Builder setIdGroupe(final int idGroupe) {
+			mIdGroupe = idGroupe;
+			return this;
+		}
+
+		public Builder setNomFavori(final String nomFavori) {
+			mNomFavori = nomFavori;
+			return this;
+		}
+
+		public Builder setNomSens(final String nomSens) {
+			mNomSens = nomSens;
+			return this;
+		}
+
+		public Builder setNomGroupe(final String nomGroupe) {
+			mNomGroupe = nomGroupe;
+			return this;
+		}
+
+		public Builder setNextHoraire(final Integer nextHoraire) {
+			mNextHoraire = nextHoraire;
+			return this;
+		}
+
+		public Builder setCouleurBackground(final int couleurBackground) {
+			mCouleurBackground = couleurBackground;
+			return this;
+		}
+
+		public Builder setCouleurTexte(final int couleurTexte) {
+			mCouleurTexte = couleurTexte;
+			return this;
+		}
+
+		public Builder setSection(final Integer section) {
+			mSection = section;
+			return this;
+		}
+
+		@Override
+		public Favori build() {
+			return new Favori(this);
+		}
+
+	}
+
+	private Favori(final Builder builder) {
+		super(builder);
+		mNomFavori = builder.mNomFavori;
+		mNomSens = builder.mNomSens;
+		mIdGroupe = builder.mIdGroupe;
+		mNomGroupe = builder.mNomGroupe;
+		mNextHoraire = builder.mNextHoraire;
+		mCouleurBackground = builder.mCouleurBackground;
+		mCouleurTexte = builder.mCouleurTexte;
+		mSection = builder.mSection;
+	}
+
+	public String getNomFavori() {
+		return mNomFavori;
+	}
+
+	public String getNomSens() {
+		return mNomSens;
+	}
+
+	public int getIdGroupe() {
+		return mIdGroupe;
+	}
+
+	public String getNomGroupe() {
+		return mNomGroupe;
+	}
+
+	public Integer getNextHoraire() {
+		return mNextHoraire;
+	}
+
+	public int getCouleurBackground() {
+		return mCouleurBackground;
+	}
+
+	public int getCouleurTexte() {
+		return mCouleurTexte;
+	}
+
+	public Drawable getBackground() {
+		return mBackground;
+	}
+
+	public String getDelay() {
+		return mDelay;
+	}
+
+	public void setBackground(final Drawable background) {
+		mBackground = background;
+	}
+
+	public void setDelay(final String delay) {
+		mDelay = delay;
+	}
+
+	public void setSection(final Integer section) {
+		mSection = section;
+	}
+
+	public void setNomFavori(final String nomFavori) {
+		mNomFavori = nomFavori;
+	}
 
 	@Override
 	public Object getSection() {
-		return section;
+		return mSection;
 	}
 
 }

@@ -229,15 +229,15 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 * Préparer le widget avec les éléments fixes (nom, ligne, sens...)
 	 */
 	protected void prepareWidgetViewInit(final Context context, final RemoteViews views, final Favori favori) {
-		views.setTextViewText(R.id.itemSymbole, favori.lettre);
+		views.setTextViewText(R.id.itemSymbole, favori.getLettre());
 
 		// Uniquement pour 2.2 et sup
 		if (Build.VERSION.SDK_INT > 7) {
-			views.setTextColor(R.id.itemSymbole, favori.couleurTexte);
-			views.setTextColor(R.id.itemTitle, favori.couleurTexte);
-			views.setTextColor(R.id.itemDescription, favori.couleurTexte);
+			views.setTextColor(R.id.itemSymbole, favori.getCouleurTexte());
+			views.setTextColor(R.id.itemTitle, favori.getCouleurTexte());
+			views.setTextColor(R.id.itemDescription, favori.getCouleurTexte());
 
-			final GradientDrawable gradientDrawable = ColorUtils.getGradiant(favori.couleurBackground);
+			final GradientDrawable gradientDrawable = ColorUtils.getGradiant(favori.getCouleurBackground());
 			final Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
 			final Canvas canvas = new Canvas(bitmap);
 			gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -245,12 +245,13 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			views.setImageViewBitmap(R.id.widgetHeaderBackground, bitmap);
 		}
 
-		if (favori.nomFavori == null) {
-			views.setTextViewText(R.id.itemTitle, favori.nomArret);
-			views.setTextViewText(R.id.itemDescription, FormatUtils.formatSens(favori.nomSens));
+		if (favori.getNomArret() == null) {
+			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
+			views.setTextViewText(R.id.itemDescription, FormatUtils.formatSens(favori.getNomSens()));
 		} else {
-			views.setTextViewText(R.id.itemTitle, favori.nomFavori);
-			views.setTextViewText(R.id.itemDescription, FormatUtils.formatArretSens(favori.nomArret, favori.nomSens));
+			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
+			views.setTextViewText(R.id.itemDescription,
+					FormatUtils.formatArretSens(favori.getNomArret(), favori.getNomSens()));
 		}
 
 		views.setViewVisibility(R.id.widgetLoading, View.GONE);
@@ -270,7 +271,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		intent.setAction(ACTION_APPWIDGET_ON_CLICK);
 		intent.putExtra("favori", favori);
 
-		final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, favori._id, intent,
+		final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, favori.getId(), intent,
 				PendingIntent.FLAG_UPDATE_CURRENT);
 
 		views.setOnClickPendingIntent(R.id.horaireWidget, pendingIntent);

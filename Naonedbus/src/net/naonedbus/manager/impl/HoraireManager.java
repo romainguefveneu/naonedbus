@@ -112,13 +112,13 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 */
 	public boolean isInDB(final ContentResolver contentResolver, final Arret arret, final DateMidnight date,
 			final int count) {
-		final HoraireToken flag = new HoraireToken(date.getMillis(), arret._id);
+		final HoraireToken flag = new HoraireToken(date.getMillis(), arret.getId());
 		if (emptyHoraires.contains(flag))
 			return true;
 
 		final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
 		builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
-		builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret._id));
+		builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
 		builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
 
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
@@ -148,7 +148,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 	private ContentValues getContentValues(final Arret arret, final Horaire horaire) {
 		final ContentValues values = new ContentValues();
-		values.put(HoraireTable.ID_ARRET, arret._id);
+		values.put(HoraireTable.ID_ARRET, arret.getId());
 		values.put(HoraireTable.TERMINUS, horaire.getTerminus());
 		values.put(HoraireTable.DAY_TRIP, horaire.getDayTrip());
 		values.put(HoraireTable.TIMESTAMP, horaire.getTimestamp());
@@ -204,7 +204,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 		if (date.isBefore(dateMax)) {
 
-			final HoraireToken flag = new HoraireToken(date.getMillis(), arret._id);
+			final HoraireToken flag = new HoraireToken(date.getMillis(), arret.getId());
 			List<Horaire> horaires;
 
 			if (!isInDB(contentResolver, arret, date) && (!emptyHoraires.contains(flag))) {
@@ -213,7 +213,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 				if (date.isEqual(currentDay) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
 					// Charger la veille si besoin (pour les horaires passé
 					// minuit)
-					final HoraireToken previousFlag = new HoraireToken(date.minusDays(1).getMillis(), arret._id);
+					final HoraireToken previousFlag = new HoraireToken(date.minusDays(1).getMillis(), arret.getId());
 					if (!isInDB(contentResolver, arret, date.minusDays(1)) && (!emptyHoraires.contains(previousFlag))) {
 						horaires = mController.getAllFromWeb(arret, date.minusDays(1));
 						fillDB(contentResolver, arret, previousFlag, horaires);
@@ -228,7 +228,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			// Charger les horaires depuis la base
 			final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
 			builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
-			builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret._id));
+			builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
 			builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
 			builder.appendQueryParameter(HoraireProvider.PARAM_INCLUDE_LAST_DAY_TRIP, "true");
 
@@ -362,7 +362,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 		private void load(final NextHoraireTask task, final DateMidnight today) {
 			if (DBG)
-				Log.d(LOG_TAG, "Récupération des horaires de l'arrêt " + task.getArret().codeArret);
+				Log.d(LOG_TAG, "Récupération des horaires de l'arrêt " + task.getArret().getCodeArret());
 
 			try {
 
@@ -370,11 +370,13 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 			} catch (final IOException e) {
 				if (DBG)
-					Log.e(LOG_TAG, "Erreur de récupération des horaires de l'arrêt " + task.getArret().codeArret, e);
+					Log.e(LOG_TAG, "Erreur de récupération des horaires de l'arrêt " + task.getArret().getCodeArret(),
+							e);
 				task.setThrowable(e);
 			} catch (final Exception e) {
 				if (DBG)
-					Log.e(LOG_TAG, "Erreur de récupération des horaires de l'arrêt " + task.getArret().codeArret, e);
+					Log.e(LOG_TAG, "Erreur de récupération des horaires de l'arrêt " + task.getArret().getCodeArret(),
+							e);
 				task.setThrowable(e);
 				BugSenseHandler.sendExceptionMessage("Erreur lors du chargement des horaires", null, e);
 			}

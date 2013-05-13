@@ -36,6 +36,8 @@ public class FavorisViewManager extends SQLiteManager<Favori> {
 
 	private static FavorisViewManager instance;
 
+	private final Favori.Builder mBuilder;
+
 	public static synchronized FavorisViewManager getInstance() {
 		if (instance == null) {
 			instance = new FavorisViewManager();
@@ -45,6 +47,7 @@ public class FavorisViewManager extends SQLiteManager<Favori> {
 
 	protected FavorisViewManager() {
 		super(FavorisViewProvider.CONTENT_URI);
+		mBuilder = new Favori.Builder();
 	}
 
 	/**
@@ -69,40 +72,44 @@ public class FavorisViewManager extends SQLiteManager<Favori> {
 
 	@Override
 	public Favori getSingleFromCursor(final Cursor c) {
-		final Favori item = new Favori();
-		item._id = c.getInt(c.getColumnIndex(FavoriViewTable._ID));
-		item.codeLigne = c.getString(c.getColumnIndex(FavoriViewTable.CODE_LIGNE));
-		item.codeEquipement = c.getString(c.getColumnIndex(FavoriViewTable.CODE_EQUIPEMENT));
-		item.codeSens = c.getString(c.getColumnIndex(FavoriViewTable.CODE_SENS));
-		item.codeArret = c.getString(c.getColumnIndex(FavoriViewTable.CODE_ARRET));
-		item.nomFavori = c.getString(c.getColumnIndex(FavoriViewTable.NOM_FAVORI));
-		item.nomSens = c.getString(c.getColumnIndex(FavoriViewTable.NON_SENS));
-		item.idStation = c.getInt(c.getColumnIndex(FavoriViewTable.ID_STATION));
-		item.couleurBackground = c.getInt(c.getColumnIndex(FavoriViewTable.COULEUR));
-		item.lettre = c.getString(c.getColumnIndex(FavoriViewTable.LETTRE));
-		item.couleurTexte = (ColorUtils.isLightColor(item.couleurBackground)) ? Color.BLACK : Color.WHITE;
-		item.nomArret = c.getString(c.getColumnIndex(FavoriViewTable.NOM_ARRET));
-		item.normalizedNom = c.getString(c.getColumnIndex(FavoriViewTable.NOM_NORMALIZED));
-		item.latitude = c.getFloat(c.getColumnIndex(FavoriViewTable.LATITUDE));
-		item.longitude = c.getFloat(c.getColumnIndex(FavoriViewTable.LONGITUDE));
-		item.nomGroupe = c.getString(c.getColumnIndex(FavoriViewTable.NOM_GROUPE));
+
+		mBuilder.setId(c.getInt(c.getColumnIndex(FavoriViewTable._ID)));
+		mBuilder.setCodeLigne(c.getString(c.getColumnIndex(FavoriViewTable.CODE_LIGNE)));
+		mBuilder.setCodeEquipement(c.getString(c.getColumnIndex(FavoriViewTable.CODE_EQUIPEMENT)));
+		mBuilder.setCodeSens(c.getString(c.getColumnIndex(FavoriViewTable.CODE_SENS)));
+		mBuilder.setCodeArret(c.getString(c.getColumnIndex(FavoriViewTable.CODE_ARRET)));
+		mBuilder.setNomFavori(c.getString(c.getColumnIndex(FavoriViewTable.NOM_FAVORI)));
+		mBuilder.setNomSens(c.getString(c.getColumnIndex(FavoriViewTable.NON_SENS)));
+		mBuilder.setIdStation(c.getInt(c.getColumnIndex(FavoriViewTable.ID_STATION)));
+		mBuilder.setLettre(c.getString(c.getColumnIndex(FavoriViewTable.LETTRE)));
+
+		final int couleurBackground = c.getInt(c.getColumnIndex(FavoriViewTable.COULEUR));
+		mBuilder.setCouleurBackground(couleurBackground);
+		mBuilder.setCouleurTexte((ColorUtils.isLightColor(couleurBackground)) ? Color.BLACK : Color.WHITE);
+
+		mBuilder.setNomArret(c.getString(c.getColumnIndex(FavoriViewTable.NOM_ARRET)));
+		mBuilder.setNormalizedNom(c.getString(c.getColumnIndex(FavoriViewTable.NOM_NORMALIZED)));
+		mBuilder.setLatitude(c.getFloat(c.getColumnIndex(FavoriViewTable.LATITUDE)));
+		mBuilder.setLongitude(c.getFloat(c.getColumnIndex(FavoriViewTable.LONGITUDE)));
+		mBuilder.setNomGroupe(c.getString(c.getColumnIndex(FavoriViewTable.NOM_GROUPE)));
 
 		int index = c.getColumnIndex(FavoriViewTable.NEXT_HORAIRE);
 		if (c.isNull(index)) {
-			item.nextHoraire = null;
+			mBuilder.setNextHoraire(null);
 		} else {
-			item.nextHoraire = c.getInt(index);
+			mBuilder.setNextHoraire(c.getInt(index));
 		}
 
 		index = c.getColumnIndex(FavoriViewTable.ID_GROUPE);
-		if (!c.isNull(index)) {
-			item.idGroupe = c.getInt(index);
+		if (c.isNull(index)) {
+			mBuilder.setIdGroupe(-1);
+			mBuilder.setSection(-1);
 		} else {
-			item.idGroupe = -1;
+			mBuilder.setIdGroupe(c.getInt(index));
+			mBuilder.setSection(c.getInt(index));
 		}
-		item.section = item.idGroupe;
 
-		return item;
+		return mBuilder.build();
 	}
 
 	@Override

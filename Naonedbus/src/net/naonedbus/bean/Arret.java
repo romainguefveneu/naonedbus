@@ -41,42 +41,134 @@ import android.os.Parcelable;
 
 public class Arret implements Parcelable {
 
-	public int _id;
-	public String codeLigne;
-	public String lettre;
-	public String codeSens;
-	public String codeArret;
-	public String codeEquipement;
-	public String normalizedNom;
-	public Float latitude;
-	public Float longitude;
-	public int idStation;
-	public int ordre;
-	public String nomArret;
-	public Float distance;
+	private final int mId;
+	private final String mCodeLigne;
+	private final String mLettre;
+	private final String mCodeSens;
+	private final String mCodeArret;
+	private final String mCodeEquipement;
+	private final String mNormalizedNom;
+	private final Float mLatitude;
+	private final Float mLongitude;
+	private final int mIdStation;
+	private final int mOrdre;
+	private final String mNomArret;
+	private Float mDistance;
 
-	public Arret() {
+	public static class Builder {
+		private int mId;
+		private String mCodeLigne;
+		private String mLettre;
+		private String mCodeSens;
+		private String mCodeArret;
+		private String mCodeEquipement;
+		private String mNormalizedNom;
+		private Float mLatitude;
+		private Float mLongitude;
+		private int mIdStation;
+		private int mOrdre;
+		private String mNomArret;
+		private Float mDistance;
+
+		public Builder setId(final int id) {
+			mId = id;
+			return this;
+		}
+
+		public Builder setNomArret(final String nomArret) {
+			mNomArret = nomArret;
+			return this;
+		}
+
+		public Builder setCodeLigne(final String codeLigne) {
+			mCodeLigne = codeLigne;
+			return this;
+		}
+
+		public Builder setLettre(final String lettre) {
+			mLettre = lettre;
+			return this;
+		}
+
+		public Builder setCodeSens(final String codeSens) {
+			mCodeSens = codeSens;
+			return this;
+		}
+
+		public Builder setCodeArret(final String codeArret) {
+			mCodeArret = codeArret;
+			return this;
+		}
+
+		public Builder setCodeEquipement(final String codeEquipement) {
+			mCodeEquipement = codeEquipement;
+			return this;
+		}
+
+		public Builder setNormalizedNom(final String normalizedNom) {
+			mNormalizedNom = normalizedNom;
+			return this;
+		}
+
+		public Builder setLatitude(final Float latitude) {
+			mLatitude = latitude;
+			return this;
+		}
+
+		public Builder setLongitude(final Float longitude) {
+			mLongitude = longitude;
+			return this;
+		}
+
+		public Builder setIdStation(final int idStation) {
+			mIdStation = idStation;
+			return this;
+		}
+
+		public Builder setOrdre(final int ordre) {
+			mOrdre = ordre;
+			return this;
+		}
+
+		public Builder setDistance(final Float distance) {
+			mDistance = distance;
+			return this;
+		}
+
+		public Arret build() {
+			return new Arret(this);
+		}
 	}
 
-	public Arret(final int id, final String nom) {
-		super();
-		this._id = id;
-		this.nomArret = nom;
+	protected Arret(final Builder builder) {
+		mId = builder.mId;
+		mCodeLigne = builder.mCodeLigne;
+		mLettre = builder.mLettre;
+		mCodeSens = builder.mCodeSens;
+		mCodeArret = builder.mCodeArret;
+		mCodeEquipement = builder.mCodeEquipement;
+		mNormalizedNom = builder.mNormalizedNom;
+		mLatitude = builder.mLatitude;
+		mLongitude = builder.mLongitude;
+		mIdStation = builder.mIdStation;
+		mOrdre = builder.mOrdre;
+		mNomArret = builder.mNomArret;
+		mDistance = builder.mDistance;
 	}
 
 	protected Arret(final Parcel in) {
-		_id = in.readInt();
-		codeLigne = in.readString();
-		lettre = in.readString();
-		codeSens = in.readString();
-		codeArret = in.readString();
-		codeEquipement = in.readString();
-		normalizedNom = in.readString();
-		latitude = in.readFloat();
-		longitude = in.readFloat();
-		idStation = in.readInt();
-		ordre = in.readInt();
-		nomArret = in.readString();
+		mId = in.readInt();
+		mCodeLigne = in.readString();
+		mLettre = in.readString();
+		mCodeSens = in.readString();
+		mCodeArret = in.readString();
+		mCodeEquipement = in.readString();
+		mNormalizedNom = in.readString();
+		mLatitude = in.readFloat();
+		mLongitude = in.readFloat();
+		mIdStation = in.readInt();
+		mOrdre = in.readInt();
+		mNomArret = in.readString();
 	}
 
 	@Override
@@ -85,60 +177,68 @@ public class Arret implements Parcelable {
 			return false;
 		}
 		final Arret autreArret = (Arret) o;
-		return autreArret._id == _id;
+		return autreArret.mId == mId;
 	}
 
 	@Override
 	public int hashCode() {
-		return _id * 31;
+		return mId * 31;
 	}
 
 	public int getId() {
-		return _id;
+		return mId;
 	}
 
 	public String getCodeLigne() {
-		return codeLigne;
+		return mCodeLigne;
 	}
 
 	public String getLettre() {
-		return lettre;
+		return mLettre;
 	}
 
 	public String getCodeSens() {
-		return codeSens;
+		return mCodeSens;
 	}
 
-	public String getCode() {
-		return codeArret;
+	public String getCodeArret() {
+		return mCodeArret;
 	}
 
 	public String getCodeEquipement() {
-		return codeEquipement;
+		return mCodeEquipement;
 	}
 
 	public String getNormalizedNom() {
-		return normalizedNom;
+		return mNormalizedNom;
 	}
 
 	public Float getLatitude() {
-		return latitude;
+		return mLatitude;
 	}
 
 	public Float getLongitude() {
-		return longitude;
+		return mLongitude;
 	}
 
 	public int getIdStation() {
-		return idStation;
+		return mIdStation;
 	}
 
-	public String getNom() {
-		return nomArret;
+	public int getOrdre() {
+		return mOrdre;
 	}
 
-	public int getOrder() {
-		return ordre;
+	public String getNomArret() {
+		return mNomArret;
+	}
+
+	public void setDistance(final Float distance) {
+		mDistance = distance;
+	}
+
+	public Float getDistance() {
+		return mDistance;
 	}
 
 	@Override
@@ -148,18 +248,18 @@ public class Arret implements Parcelable {
 
 	@Override
 	public void writeToParcel(final Parcel dest, final int flags) {
-		dest.writeInt(_id);
-		dest.writeString(codeLigne);
-		dest.writeString(lettre);
-		dest.writeString(codeSens);
-		dest.writeString(codeArret);
-		dest.writeString(codeEquipement);
-		dest.writeString(normalizedNom);
-		dest.writeFloat(latitude);
-		dest.writeFloat(longitude);
-		dest.writeInt(idStation);
-		dest.writeInt(ordre);
-		dest.writeString(nomArret);
+		dest.writeInt(mId);
+		dest.writeString(mCodeLigne);
+		dest.writeString(mLettre);
+		dest.writeString(mCodeSens);
+		dest.writeString(mCodeArret);
+		dest.writeString(mCodeEquipement);
+		dest.writeString(mNormalizedNom);
+		dest.writeFloat(mLatitude);
+		dest.writeFloat(mLongitude);
+		dest.writeInt(mIdStation);
+		dest.writeInt(mOrdre);
+		dest.writeString(mNomArret);
 	}
 
 	public static final Parcelable.Creator<Arret> CREATOR = new Parcelable.Creator<Arret>() {
@@ -176,6 +276,6 @@ public class Arret implements Parcelable {
 
 	@Override
 	public String toString() {
-		return "[" + nomArret + ";" + codeArret + ";" + codeSens + ";" + codeLigne + "]";
+		return "[" + mNomArret + ";" + mCodeArret + ";" + mCodeSens + ";" + mCodeLigne + "]";
 	}
 }

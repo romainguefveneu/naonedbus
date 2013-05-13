@@ -62,11 +62,11 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 
 		if (ligne == null) {
 			final LigneManager ligneManager = LigneManager.getInstance();
-			ligne = ligneManager.getSingle(getContentResolver(), arret.codeLigne);
+			ligne = ligneManager.getSingle(getContentResolver(), arret.getCodeLigne());
 		}
 		if (sens == null) {
 			final SensManager sensManager = SensManager.getInstance();
-			sens = sensManager.getSingle(getContentResolver(), arret.codeLigne, arret.codeSens);
+			sens = sensManager.getSingle(getContentResolver(), arret.getCodeLigne(), arret.getCodeSens());
 		}
 		mSens = sens;
 
@@ -82,7 +82,7 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 		mHeaderHelper = new HeaderHelper(this);
 		mHeaderHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
 		mHeaderHelper.setCode(ligne.lettre);
-		mHeaderHelper.setTitle(arret.nomArret);
+		mHeaderHelper.setTitle(arret.getNomArret());
 		mHeaderHelper.setSubTitle(FormatUtils.formatSens(sens.text));
 	}
 

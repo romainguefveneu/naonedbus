@@ -42,24 +42,24 @@ public class FavoriDistanceComparator implements Comparator<Favori> {
 		if (favori1 == null || favori2 == null || referentiel == null)
 			return 0;
 
-		if (favori1.latitude == null || favori1.longitude == null)
+		if (favori1.getLatitude() == null || favori1.getLongitude() == null)
 			return 0;
-		if (favori2.latitude == null || favori2.longitude == null)
+		if (favori2.getLatitude() == null || favori2.getLongitude() == null)
 			return 0;
 
-		if (favori1.section != null && favori2.section != null) {
-			if (!favori1.section.equals(favori2.section)) {
-				return Integer.valueOf(favori1.ordre).compareTo(favori2.ordre);
+		if (favori1.getSection() != null && favori2.getSection() != null) {
+			if (!favori1.getSection().equals(favori2.getSection())) {
+				return Integer.valueOf(favori1.getOrdre()).compareTo(favori2.getOrdre());
 			}
 		}
 
 		final Location location1 = new Location(LocationManager.GPS_PROVIDER);
-		location1.setLatitude(favori1.latitude);
-		location1.setLongitude(favori1.longitude);
+		location1.setLatitude(favori1.getLatitude());
+		location1.setLongitude(favori1.getLongitude());
 
 		final Location location2 = new Location(LocationManager.GPS_PROVIDER);
-		location2.setLatitude(favori2.latitude);
-		location2.setLongitude(favori2.longitude);
+		location2.setLatitude(favori2.getLatitude());
+		location2.setLongitude(favori2.getLongitude());
 
 		final Float distance1 = referentiel.distanceTo(location1);
 		final Float distance2 = referentiel.distanceTo(location2);

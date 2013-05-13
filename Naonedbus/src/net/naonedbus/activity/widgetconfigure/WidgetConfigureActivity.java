@@ -94,7 +94,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 
 		// Stocker dans les préférences l'id du favori associé à l'id du widget
 		final SharedPreferences.Editor prefs = this.getSharedPreferences(PREFS_NAME, 0).edit();
-		prefs.putInt(PREF_PREFIX_KEY + mAppWidgetId, item._id);
+		prefs.putInt(PREF_PREFIX_KEY + mAppWidgetId, item.getId());
 		prefs.commit();
 
 		// Valider la création du widget
@@ -137,7 +137,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 			if (items.isEmpty()) {
 			} else {
 				for (final Favori favoriItem : items) {
-					favoriItem.delay = ""; // Cacher le loader
+					favoriItem.setDelay(""); // Cacher le loader
 				}
 			}
 

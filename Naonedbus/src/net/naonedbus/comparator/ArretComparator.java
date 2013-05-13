@@ -29,11 +29,11 @@ import net.naonedbus.bean.Arret;
 public class ArretComparator implements Comparator<Arret> {
 
 	@Override
-	public int compare(Arret item1, Arret item2) {
-		if (item1 == null || item1.getNom() == null || item2 == null)
+	public int compare(final Arret item1, final Arret item2) {
+		if (item1 == null || item1.getNomArret() == null || item2 == null)
 			return 0;
 
-		return item1.getNom().compareTo(item2.getNom());
+		return item1.getNomArret().compareTo(item2.getNomArret());
 	}
 
 }

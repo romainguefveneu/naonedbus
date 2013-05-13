@@ -74,7 +74,7 @@ public class FavorisHelper {
 		final Favori item = favoriManager.getSingle(mContext.getContentResolver(), favoriId);
 		final View alertDialogView = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
-		input.setText(item.nomFavori);
+		input.setText(item.getNomFavori());
 		input.selectAll();
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -84,7 +84,7 @@ public class FavorisHelper {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
 				final String nom = input.getText().toString().trim();
-				item.nomFavori = (nom.length() == 0) ? null : nom;
+				item.setNomFavori((nom.length() == 0) ? null : nom);
 
 				favoriManager.setFavori(mContext.getContentResolver(), item);
 				if (mFavorisActionListener != null) {

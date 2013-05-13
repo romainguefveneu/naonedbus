@@ -68,6 +68,8 @@ public class FavoriManager extends SQLiteManager<Favori> {
 
 	private static FavoriManager instance;
 
+	private final Favori.Builder mBuilder;
+
 	public static synchronized FavoriManager getInstance() {
 		if (instance == null) {
 			instance = new FavoriManager();
@@ -77,6 +79,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 
 	protected FavoriManager() {
 		super(FavoriProvider.CONTENT_URI);
+		mBuilder = new Favori.Builder();
 	}
 
 	/**
@@ -111,30 +114,37 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	}
 
 	public Favori getSingleFromCursorFull(final Cursor c) {
-		final Favori item = new Favori();
-		item._id = c.getInt(c.getColumnIndex(FavoriTable._ID));
-		item.codeLigne = c.getString(c.getColumnIndex(FavoriTable.CODE_LIGNE));
-		item.codeSens = c.getString(c.getColumnIndex(FavoriTable.CODE_SENS));
-		item.codeArret = c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET));
-		item.nomFavori = c.getString(c.getColumnIndex(FavoriTable.NOM));
-		item.nomArret = c.getString(c.getColumnIndex(EquipementTable.NOM));
-		item.couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR));
-		item.couleurTexte = ColorUtils.isLightColor(item.couleurBackground) ? Color.BLACK : Color.WHITE;
+		mBuilder.setId(c.getInt(c.getColumnIndex(FavoriTable._ID)));
+		mBuilder.setCodeLigne(c.getString(c.getColumnIndex(FavoriTable.CODE_LIGNE)));
+		mBuilder.setCodeSens(c.getString(c.getColumnIndex(FavoriTable.CODE_SENS)));
+		mBuilder.setCodeArret(c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET)));
+		mBuilder.setNomFavori(c.getString(c.getColumnIndex(FavoriTable.NOM)));
+		mBuilder.setNomArret(c.getString(c.getColumnIndex(EquipementTable.NOM)));
 
-		item.nomSens = c.getString(c.getColumnIndex(SensTable.NOM));
-		item.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
-		return item;
+		final int couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR));
+		mBuilder.setCouleurBackground(couleurBackground);
+		mBuilder.setCouleurTexte(ColorUtils.isLightColor(couleurBackground) ? Color.BLACK : Color.WHITE);
+
+		mBuilder.setNomSens(c.getString(c.getColumnIndex(SensTable.NOM)));
+		mBuilder.setLettre(c.getString(c.getColumnIndex(LigneTable.LETTRE)));
+		return mBuilder.build();
 	}
 
 	@Override
 	public Favori getSingleFromCursor(final Cursor c) {
-		final Favori item = new Favori();
-		item._id = c.getInt(c.getColumnIndex(FavoriTable._ID));
-		item.codeLigne = c.getString(c.getColumnIndex(FavoriTable.CODE_LIGNE));
-		item.codeSens = c.getString(c.getColumnIndex(FavoriTable.CODE_SENS));
-		item.codeArret = c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET));
-		item.nomFavori = c.getString(c.getColumnIndex(FavoriTable.NOM));
-		return item;
+		mBuilder.setId(c.getInt(c.getColumnIndex(FavoriTable._ID)));
+		mBuilder.setCodeLigne(c.getString(c.getColumnIndex(FavoriTable.CODE_LIGNE)));
+		mBuilder.setCodeSens(c.getString(c.getColumnIndex(FavoriTable.CODE_SENS)));
+		mBuilder.setCodeArret(c.getString(c.getColumnIndex(FavoriTable.CODE_ARRET)));
+		mBuilder.setNomArret(c.getString(c.getColumnIndex(FavoriTable.NOM)));
+
+		mBuilder.setNomFavori(null);
+		mBuilder.setCouleurBackground(0);
+		mBuilder.setCouleurTexte(0);
+		mBuilder.setNomSens(null);
+		mBuilder.setLettre(null);
+
+		return mBuilder.build();
 	}
 
 	public void addFavori(final ContentResolver contentResolver, final Arret item) {
@@ -171,7 +181,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	public void setFavori(final ContentResolver contentResolver, final Favori item) {
 		final ContentValues values = getContentValues(item);
 		contentResolver.update(FavoriProvider.CONTENT_URI, values, FavoriTable._ID + "=?",
-				new String[] { String.valueOf(item._id) });
+				new String[] { String.valueOf(item.getId()) });
 	}
 
 	public boolean isFavori(final ContentResolver contentResolver, final int arretId) {
@@ -181,11 +191,11 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	@Override
 	protected ContentValues getContentValues(final Favori item) {
 		final ContentValues values = new ContentValues();
-		values.put(FavoriTable._ID, item._id);
-		values.put(FavoriTable.CODE_LIGNE, item.codeLigne);
-		values.put(FavoriTable.CODE_SENS, item.codeSens);
-		values.put(FavoriTable.CODE_ARRET, item.codeArret);
-		values.put(FavoriTable.NOM, item.nomFavori);
+		values.put(FavoriTable._ID, item.getId());
+		values.put(FavoriTable.CODE_LIGNE, item.getCodeLigne());
+		values.put(FavoriTable.CODE_SENS, item.getCodeSens());
+		values.put(FavoriTable.CODE_ARRET, item.getCodeArret());
+		values.put(FavoriTable.NOM, item.getNomFavori());
 
 		return values;
 	}
@@ -199,10 +209,10 @@ public class FavoriManager extends SQLiteManager<Favori> {
 	 */
 	private ContentValues getContentValues(final Arret item) {
 		final ContentValues values = new ContentValues();
-		values.put(FavoriTable._ID, item._id);
-		values.put(FavoriTable.CODE_LIGNE, item.codeLigne);
-		values.put(FavoriTable.CODE_SENS, item.codeSens);
-		values.put(FavoriTable.CODE_ARRET, item.codeArret);
+		values.put(FavoriTable._ID, item.getId());
+		values.put(FavoriTable.CODE_LIGNE, item.getCodeLigne());
+		values.put(FavoriTable.CODE_SENS, item.getCodeSens());
+		values.put(FavoriTable.CODE_ARRET, item.getCodeArret());
 		return values;
 	}
 
@@ -221,12 +231,13 @@ public class FavoriManager extends SQLiteManager<Favori> {
 			container.addGroupe(groupe.getId(), groupe.getNom(), groupe.getOrdre());
 		}
 		for (final Favori favori : favoris) {
-			final List<Groupe> favoriGroupes = groupeManager.getAll(contentResolver, favori._id);
+			final List<Groupe> favoriGroupes = groupeManager.getAll(contentResolver, favori.getId());
 			final List<Integer> idGroupes = new ArrayList<Integer>();
 			for (final Groupe groupe : favoriGroupes) {
 				idGroupes.add(groupe.getId());
 			}
-			container.addFavori(favori.codeLigne, favori.codeSens, favori.codeArret, favori.nomFavori, idGroupes);
+			container.addFavori(favori.getCodeLigne(), favori.getCodeSens(), favori.getCodeArret(),
+					favori.getNomFavori(), idGroupes);
 		}
 
 		final FavoriController controller = new FavoriController();
@@ -268,33 +279,31 @@ public class FavoriManager extends SQLiteManager<Favori> {
 			groupe.setOrdre(g.ordre);
 
 			final int idLocal = groupeManager.add(contentResolver, groupe).intValue();
-
 			groupeMapping.put(g.id, idLocal);
 		}
+
+		Integer itemId;
+		final Favori.Builder builder = new Favori.Builder();
 		for (final net.naonedbus.rest.container.FavoriContainer.Favori f : container.favoris) {
+			builder.setCodeArret(f.codeArret);
+			builder.setCodeSens(f.codeSens);
+			builder.setCodeLigne(f.codeLigne);
+			builder.setNomFavori(f.nomFavori);
 
-			Integer itemId;
-
-			final Favori favori = new Favori();
-			favori.codeArret = f.codeArret;
-			favori.codeSens = f.codeSens;
-			favori.codeLigne = f.codeLigne;
-			favori.nomFavori = f.nomFavori;
-
-			itemId = arretManager.getIdByFavori(contentResolver, favori);
+			itemId = arretManager.getIdByFavori(contentResolver, builder.build());
 			if (itemId != null) {
-				favori._id = itemId;
-				addFavori(contentResolver, favori);
-			}
+				builder.setId(itemId);
+				addFavori(contentResolver, builder.build());
 
-			// Associer aux groupes
-			final List<Integer> favoriGroupes = f.idGroupes;
-			if (favoriGroupes != null)
-				for (final Integer idGroupe : favoriGroupes) {
-					if (groupeMapping.indexOfKey(idGroupe) > -1) {
-						groupeManager.addFavoriToGroup(contentResolver, groupeMapping.get(idGroupe), favori._id);
+				// Associer aux groupes
+				final List<Integer> favoriGroupes = f.idGroupes;
+				if (favoriGroupes != null)
+					for (final Integer idGroupe : favoriGroupes) {
+						if (groupeMapping.indexOfKey(idGroupe) > -1) {
+							groupeManager.addFavoriToGroup(contentResolver, groupeMapping.get(idGroupe), itemId);
+						}
 					}
-				}
+			}
 		}
 	}
 

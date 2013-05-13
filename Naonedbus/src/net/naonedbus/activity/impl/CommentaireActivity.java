@@ -132,7 +132,7 @@ public class CommentaireActivity extends SherlockActivity {
 				getString(R.string.target_toutes_lignes_symbole));
 		mAllLignes.couleurTexte = Color.BLACK;
 		mAllSens = new Sens(-1, getString(R.string.target_tous_sens));
-		mAllArrets = new Arret(-1, getString(R.string.target_tous_arrets));
+		mAllArrets = new Arret.Builder().setId(-1).setNomArret(getString(R.string.target_tous_arrets)).build();
 
 		mLignesAdapter = getLignesAdapter();
 
@@ -277,7 +277,8 @@ public class CommentaireActivity extends SherlockActivity {
 	 * Afficher la dialog de sélection de l'arret.
 	 */
 	private void showSelectArretDialog(final String codeLigne, final String codeSens) {
-		if (!(codeLigne.equals(mArret.codeLigne) && codeSens.equals(mArret.codeSens)) || mArretsAdapter == null) {
+		if (!(codeLigne.equals(mArret.getCodeLigne()) && codeSens.equals(mArret.getCodeSens()))
+				|| mArretsAdapter == null) {
 			mArretsAdapter = getArretsAdapter(codeLigne, codeSens);
 			mSelectedArretPosition = -1;
 		}
@@ -319,7 +320,7 @@ public class CommentaireActivity extends SherlockActivity {
 	private void prepareAndSendComment() {
 		final Commentaire commentaireItem = new Commentaire();
 		if (mArret != null) {
-			commentaireItem.setCodeArret(mArret.codeArret);
+			commentaireItem.setCodeArret(mArret.getCodeArret());
 		}
 		if (mSens != null) {
 			commentaireItem.setCodeSens(mSens.code);
@@ -380,8 +381,8 @@ public class CommentaireActivity extends SherlockActivity {
 	 *            Le nouvel arret
 	 */
 	private void setArret(final Arret arret) {
-		this.mArret = arret;
-		mTextArret.setText(arret.nomArret);
+		mArret = arret;
+		mTextArret.setText(arret.getNomArret());
 	}
 
 	/**

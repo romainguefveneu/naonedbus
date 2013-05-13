@@ -27,7 +27,6 @@ import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
@@ -59,30 +58,29 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 			}
 		}
 
-		if (item.background == null) {
-			final GradientDrawable background = ColorUtils.getRoundedGradiant(item.couleurBackground);
-			item.background = background;
-			item.couleurTexte = (ColorUtils.isLightColor(item.couleurBackground) ? Color.BLACK : Color.WHITE);
+		if (item.getBackground() == null) {
+			final GradientDrawable background = ColorUtils.getRoundedGradiant(item.getCouleurBackground());
+			item.setBackground(background);
 		}
 
-		holder.ligneCode.setText(item.lettre);
-		holder.ligneCode.setBackgroundDrawable(item.background);
-		holder.ligneCode.setTextColor(item.couleurTexte);
+		holder.ligneCode.setText(item.getLettre());
+		holder.ligneCode.setBackgroundDrawable(item.getBackground());
+		holder.ligneCode.setTextColor(item.getCouleurTexte());
 
-		if (item.nomFavori == null) {
-			holder.itemTitle.setText(item.nomArret);
-			holder.itemDescription.setText(FormatUtils.formatSens(item.nomSens));
+		if (item.getNomFavori() == null) {
+			holder.itemTitle.setText(item.getNomArret());
+			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomSens()));
 		} else {
-			holder.itemTitle.setText(item.nomFavori);
-			holder.itemDescription.setText(FormatUtils.formatArretSens(item.nomArret, item.nomSens));
+			holder.itemTitle.setText(item.getNomFavori());
+			holder.itemDescription.setText(FormatUtils.formatArretSens(item.getNomArret(), item.getNomSens()));
 		}
 
-		if (item.delay == null) {
+		if (item.getDelay() == null) {
 			holder.nextHoraire.setVisibility(View.GONE);
 			holder.progressBar.setVisibility(View.VISIBLE);
 		} else {
 			holder.progressBar.setVisibility(View.GONE);
-			holder.nextHoraire.setText(item.delay);
+			holder.nextHoraire.setText(item.getDelay());
 			holder.nextHoraire.setVisibility(View.VISIBLE);
 		}
 	}

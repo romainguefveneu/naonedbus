@@ -163,7 +163,7 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 				title = view.getContext().getString(R.string.commentaire_tout);
 			} else {
 				if (commentaire.getArret() != null) {
-					title = commentaire.getArret().nomArret + " ";
+					title = commentaire.getArret().getNomArret() + " ";
 				}
 				if (commentaire.getSens() != null) {
 					title = title + "\u2192 " + commentaire.getSens().text;

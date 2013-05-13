@@ -249,10 +249,10 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.fragment_arrets_contextual, menu);
 
-		menu.setHeaderTitle(arret.nomArret);
+		menu.setHeaderTitle(arret.getNomArret());
 
 		final android.view.MenuItem menuFavori = menu.findItem(R.id.menu_favori);
-		if (mFavoriManager.isFavori(getActivity().getContentResolver(), arret._id)) {
+		if (mFavoriManager.isFavori(getActivity().getContentResolver(), arret.getId())) {
 			menuFavori.setTitle(R.string.action_favori_remove);
 		} else {
 			menuFavori.setTitle(R.string.action_favori_add);
@@ -269,7 +269,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 			menuShowMap(arret);
 			break;
 		case R.id.menu_favori:
-			if (mFavoriManager.isFavori(getActivity().getContentResolver(), arret._id)) {
+			if (mFavoriManager.isFavori(getActivity().getContentResolver(), arret.getId())) {
 				removeFromFavoris(arret);
 			} else {
 				addToFavoris(arret);
@@ -325,13 +325,13 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	}
 
 	private void removeFromFavoris(final Arret arret) {
-		mFavoriManager.removeFavori(getActivity().getContentResolver(), arret._id);
+		mFavoriManager.removeFavori(getActivity().getContentResolver(), arret.getId());
 		Toast.makeText(getActivity(), R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
 	}
 
 	private void menuShowMap(final Arret arret) {
 		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-		intent.putExtra(MapActivity.Param.itemId, arret.idStation);
+		intent.putExtra(MapActivity.Param.itemId, arret.getIdStation());
 		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
 		startActivity(intent);
 	}
@@ -497,7 +497,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 					equipementLocation.setLongitude(arret.getLongitude());
 
 					distance = mCurrentLocation.distanceTo(equipementLocation);
-					arret.distance = distance;
+					arret.setDistance(distance);
 
 					if (distance < nearestDistance) {
 						nearestDistance = distance;
