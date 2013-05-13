@@ -20,6 +20,7 @@ package net.naonedbus.manager.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -157,19 +158,25 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 	private void fillDB(final ContentResolver contentResolver, final Arret arret, final HoraireToken flag,
 			final List<Horaire> horaires) {
-		if (horaires.size() == 0) {
-			// Ajouter un marqueur pour indiquer que l'on a déjà cherché
-			// les horaires
+		if (DBG)
+			Log.i(LOG_TAG, "Sauvegarde des horaires : " + arret + "\t" + new Date(flag.getDate()) + "\t"
+					+ (horaires == null ? null : horaires.size()));
 
-			emptyHoraires.add(flag);
-		} else {
-			// Ajouter les horaires dans la db
-			final ContentValues[] values = new ContentValues[horaires.size()];
-			for (int i = 0; i < horaires.size(); i++) {
-				values[i] = getContentValues(arret, horaires.get(i));
+		if (horaires != null) {
+			if (horaires.size() == 0) {
+				// Ajouter un marqueur pour indiquer que l'on a déjà cherché
+				// les horaires
+
+				emptyHoraires.add(flag);
+			} else {
+				// Ajouter les horaires dans la db
+				final ContentValues[] values = new ContentValues[horaires.size()];
+				for (int i = 0; i < horaires.size(); i++) {
+					values[i] = getContentValues(arret, horaires.get(i));
+				}
+
+				contentResolver.bulkInsert(HoraireProvider.CONTENT_URI, values);
 			}
-
-			contentResolver.bulkInsert(HoraireProvider.CONTENT_URI, values);
 		}
 	}
 
@@ -201,11 +208,11 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			List<Horaire> horaires;
 
 			if (!isInDB(contentResolver, arret, date) && (!emptyHoraires.contains(flag))) {
-				//
 				// Charger les horaires depuis le web et les stocker en base
 
-				// Charger la veille si besoin (pour les horaires passé minuit)
 				if (date.isEqual(currentDay) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
+					// Charger la veille si besoin (pour les horaires passé
+					// minuit)
 					final HoraireToken previousFlag = new HoraireToken(date.minusDays(1).getMillis(), arret._id);
 					if (!isInDB(contentResolver, arret, date.minusDays(1)) && (!emptyHoraires.contains(previousFlag))) {
 						horaires = mController.getAllFromWeb(arret, date.minusDays(1));

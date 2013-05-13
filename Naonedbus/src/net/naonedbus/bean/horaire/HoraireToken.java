@@ -38,6 +38,10 @@ public class HoraireToken {
 		}
 	}
 
+	public Long getDate() {
+		return mDate;
+	}
+
 	@Override
 	public int hashCode() {
 		return mDate.hashCode() * 31 + mId.hashCode() * 31;

@@ -58,13 +58,13 @@ public class Arret implements Parcelable {
 	public Arret() {
 	}
 
-	public Arret(int id, String nom) {
+	public Arret(final int id, final String nom) {
 		super();
 		this._id = id;
 		this.nomArret = nom;
 	}
 
-	protected Arret(Parcel in) {
+	protected Arret(final Parcel in) {
 		_id = in.readInt();
 		codeLigne = in.readString();
 		lettre = in.readString();
@@ -80,7 +80,7 @@ public class Arret implements Parcelable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (!(o instanceof Arret)) {
 			return false;
 		}
@@ -88,7 +88,12 @@ public class Arret implements Parcelable {
 		return autreArret._id == _id;
 	}
 
-	public int get_id() {
+	@Override
+	public int hashCode() {
+		return _id * 31;
+	}
+
+	public int getId() {
 		return _id;
 	}
 
@@ -136,11 +141,13 @@ public class Arret implements Parcelable {
 		return ordre;
 	}
 
+	@Override
 	public int describeContents() {
 		return 0;
 	}
 
-	public void writeToParcel(Parcel dest, int flags) {
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeInt(_id);
 		dest.writeString(codeLigne);
 		dest.writeString(lettre);
@@ -156,12 +163,19 @@ public class Arret implements Parcelable {
 	}
 
 	public static final Parcelable.Creator<Arret> CREATOR = new Parcelable.Creator<Arret>() {
-		public Arret createFromParcel(Parcel in) {
+		@Override
+		public Arret createFromParcel(final Parcel in) {
 			return new Arret(in);
 		}
 
-		public Arret[] newArray(int size) {
+		@Override
+		public Arret[] newArray(final int size) {
 			return new Arret[size];
 		}
 	};
+
+	@Override
+	public String toString() {
+		return "[" + nomArret + ";" + codeArret + ";" + codeSens + ";" + codeLigne + "]";
+	}
 }

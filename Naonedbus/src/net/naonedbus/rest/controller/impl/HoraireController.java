@@ -59,18 +59,17 @@ public class HoraireController extends RestController<HoraireContainer> {
 	private static final String TAG_HORAIRES_PASSAGE = "passages";
 
 	private static final String PATH = "https://open.tan.fr/ewp/horairesarret.json";
-	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private static final SimpleDateFormat dateDecode = new SimpleDateFormat("H'h'mm");
-	static {
-		dateDecode.setTimeZone(TimeZone.getTimeZone("GMT"));
-	}
+
+	private final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private final SimpleDateFormat mDateDecode = new SimpleDateFormat("H'h'mm");
 
 	public HoraireController() {
 		super("horaires");
+		mDateDecode.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}
 
 	/**
-	 * Récupérer les horaires depuis le WebService
+	 * Récupérer les horaires depuis le WebService.
 	 * 
 	 * @throws IOException
 	 * @throws MalformedURLException
@@ -78,17 +77,18 @@ public class HoraireController extends RestController<HoraireContainer> {
 	public synchronized List<Horaire> getAllFromWeb(final Arret arret, final DateMidnight date) throws IOException {
 		final UrlBuilder url = new UrlBuilder(PATH);
 		long timeOffset = date.getMillis();
-		final List<Horaire> result = new ArrayList<Horaire>();
 		final List<HoraireNode> horaires;
+		final List<Horaire> result = new ArrayList<Horaire>();
 
 		url.addSegment(arret.codeArret);
 		url.addSegment(arret.codeLigne);
 		url.addSegment(arret.codeSens);
-		url.addSegment(dateFormat.format(date.toDate()));
+		url.addSegment(mDateFormat.format(date.toDate()));
 		final HoraireContainer content = parseJsonObject(url.getUrl());
 
 		if (content != null) {
 			horaires = content.horaires;
+			// result = new ArrayList<Horaire>();
 			// Transformation des horaires TAN en horaire naonedbus.
 			for (final HoraireNode horaireTan : horaires) {
 				final String heure = horaireTan.heure;
@@ -114,7 +114,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	private long parseTimestamp(final String heure, final String minute, final long timeOffset) {
 		long timestamp = 0;
 		try {
-			timestamp = timeOffset + dateDecode.parse(heure + minute).getTime();
+			timestamp = timeOffset + mDateDecode.parse(heure + minute).getTime();
 		} catch (final ParseException e) {
 			Log.e(LOG_TAG, "Erreur de convertion.", e);
 		}
