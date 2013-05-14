@@ -13,7 +13,6 @@ import net.naonedbus.provider.impl.EquipementProvider;
 import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.rest.controller.impl.BiclooController;
 
-import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import android.content.ContentResolver;
@@ -51,14 +50,15 @@ public class BiclooManager {
 	private static final String LOG_TAG = "BiclooManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private static final int CACHE_LIMITE_MINUTES = 5;
+	private static final long CACHE_LIMITE_MILLIS = 5l * 60l * 1000l; // 5
+																		// minutes
 	private static BiclooManager sInstance;
 
 	private final List<BiclooObserver> mObservers;
 
 	private final ExecutorService mExecutor;
 	private List<Bicloo> mCache;
-	private DateTime mDateLimit;
+	private long mDateLimit;
 
 	public static synchronized BiclooManager getInstance() {
 		if (sInstance == null) {
@@ -81,13 +81,14 @@ public class BiclooManager {
 	 * @throws JSONException
 	 */
 	private synchronized void init(final Context context) throws IOException, JSONException {
-		final DateTime now = new DateTime();
+		final long now = System.currentTimeMillis();
 
-		if (mCache.isEmpty() || now.isAfter(mDateLimit)) {
+		if (mCache.isEmpty() || now > mDateLimit) {
+			mDateLimit = now + CACHE_LIMITE_MILLIS;
+
 			final BiclooController controller = new BiclooController();
 			mCache.clear();
 			mCache = controller.getAll(context.getResources());
-			mDateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
 
 			for (final BiclooObserver observer : mObservers)
 				observer.dispatchChange();
@@ -97,8 +98,7 @@ public class BiclooManager {
 	}
 
 	public boolean isNotUpToDate() {
-		final DateTime now = new DateTime();
-		return now.isAfter(mDateLimit);
+		return System.currentTimeMillis() > mDateLimit;
 	}
 
 	public void clearCache() {

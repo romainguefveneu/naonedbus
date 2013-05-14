@@ -36,89 +36,212 @@
  */
 package net.naonedbus.bean;
 
+import net.naonedbus.R;
+import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.item.SectionItem;
+import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Ligne implements SectionItem, Parcelable {
 
-	public int _id;
-	public String code;
-	public String lettre;
-	public String depuis;
-	public String vers;
-	public String nom;
-	public Drawable background;
-	public int couleurBackground;
-	public int couleurTexte;
-	public Object section;
+	public static class Builder {
+		private int mId;
+		private String mCode;
+		private String mLettre;
+		private String mDepuis;
+		private String mVers;
+		private int mCouleur;
+		private Object mSection;
 
-	public Ligne() {
+		public Builder setId(final int id) {
+			mId = id;
+			return this;
+		}
+
+		public Builder setCode(final String code) {
+			mCode = code;
+			return this;
+		}
+
+		public Builder setLettre(final String lettre) {
+			mLettre = lettre;
+			return this;
+		}
+
+		public Builder setDepuis(final String depuis) {
+			mDepuis = depuis;
+			return this;
+		}
+
+		public Builder setVers(final String vers) {
+			mVers = vers;
+			return this;
+		}
+
+		public Builder setCouleur(final int couleur) {
+			mCouleur = couleur;
+			return this;
+		}
+
+		public Builder setSection(final Object section) {
+			mSection = section;
+			return this;
+		}
+
+		public Ligne build() {
+			return new Ligne(this);
+		}
 	}
 
-	public Ligne(final int id, final String nom) {
-		this._id = id;
-		this.nom = nom;
+	private final int mId;
+	private final String mCode;
+	private final String mLettre;
+	private final String mDepuis;
+	private final String mVers;
+	private final String mNom;
+	private final int mCouleur;
+	private final int mCouleurTexte;
+
+	private Object mSection;
+	private Drawable mBackground;
+
+	public static Ligne buildAllLigneItem(final Context context) {
+		return new Ligne(context.getString(R.string.target_toutes_lignes),
+				context.getString(R.string.target_toutes_lignes_symbole));
 	}
 
-	public Ligne(final int id, final String nom, final String lettre) {
-		this(id, nom);
-		this.lettre = lettre;
+	private Ligne(final String name, final String letter) {
+		mId = -1;
+		mCode = null;
+		mLettre = letter;
+		mDepuis = null;
+		mVers = null;
+		mNom = name;
+		mCouleur = 0;
+		mCouleurTexte = Color.BLACK;
+		mSection = null;
 	}
 
-	protected Ligne(Parcel in) {
-		_id = in.readInt();
-		code = in.readString();
-		lettre = in.readString();
-		depuis = in.readString();
-		vers = in.readString();
-		nom = in.readString();
-		couleurBackground = in.readInt();
-		couleurTexte = in.readInt();
+	private Ligne(final Builder builder) {
+		mId = builder.mId;
+		mCode = builder.mCode;
+		mLettre = builder.mLettre;
+		mDepuis = builder.mDepuis;
+		mVers = builder.mVers;
+		mNom = mDepuis + " \u2194 " + mVers;
+		mCouleur = builder.mCouleur;
+		mCouleurTexte = ColorUtils.isLightColor(mCouleur) ? Color.BLACK : Color.WHITE;
+		mSection = builder.mSection;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof Ligne))
-			return false;
+	protected Ligne(final Parcel in) {
+		mId = in.readInt();
+		mCode = in.readString();
+		mLettre = in.readString();
+		mDepuis = in.readString();
+		mVers = in.readString();
+		mNom = in.readString();
+		mCouleur = in.readInt();
+		mCouleurTexte = in.readInt();
+	}
 
-		final Ligne autreLigne = (Ligne) o;
-		return autreLigne._id == _id;
+	public int getId() {
+		return mId;
+	}
+
+	public String getCode() {
+		return mCode;
+	}
+
+	public String getLettre() {
+		return mLettre;
+	}
+
+	public String getDepuis() {
+		return mDepuis;
+	}
+
+	public String getVers() {
+		return mVers;
+	}
+
+	public String getNom() {
+		return mNom;
+	}
+
+	public int getCouleur() {
+		return mCouleur;
+	}
+
+	public int getCouleurTexte() {
+		return mCouleurTexte;
+	}
+
+	public Drawable getBackground() {
+		return mBackground;
+	}
+
+	public void setBackground(final Drawable background) {
+		mBackground = background;
+	}
+
+	public void setSection(final Object section) {
+		mSection = section;
 	}
 
 	@Override
 	public Object getSection() {
-		return this.section;
+		return mSection;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (!(o instanceof Ligne))
+			return false;
+
+		final Ligne autreLigne = (Ligne) o;
+		return autreLigne.mId == mId;
+	}
+
+	@Override
+	public int hashCode() {
+		return mId * 31;
 	}
 
 	@Override
 	public String toString() {
-		return new StringBuilder("[").append(_id).append(";").append(code).append(";").append(depuis).append(";")
-				.append(vers).append("]").toString();
+		return new StringBuilder("[").append(mId).append(";").append(mCode).append(";").append(mDepuis).append(";")
+				.append(mVers).append("]").toString();
 	}
 
+	@Override
 	public int describeContents() {
 		return 0;
 	}
 
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeInt(_id);
-		dest.writeString(code);
-		dest.writeString(lettre);
-		dest.writeString(depuis);
-		dest.writeString(vers);
-		dest.writeString(nom);
-		dest.writeInt(couleurBackground);
-		dest.writeInt(couleurTexte);
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
+		dest.writeInt(mId);
+		dest.writeString(mCode);
+		dest.writeString(mLettre);
+		dest.writeString(mDepuis);
+		dest.writeString(mVers);
+		dest.writeString(mNom);
+		dest.writeInt(mCouleur);
+		dest.writeInt(mCouleurTexte);
 	}
 
 	public static final Parcelable.Creator<Ligne> CREATOR = new Parcelable.Creator<Ligne>() {
-		public Ligne createFromParcel(Parcel in) {
+		@Override
+		public Ligne createFromParcel(final Parcel in) {
 			return new Ligne(in);
 		}
 
-		public Ligne[] newArray(int size) {
+		@Override
+		public Ligne[] newArray(final int size) {
 			return new Ligne[size];
 		}
 	};

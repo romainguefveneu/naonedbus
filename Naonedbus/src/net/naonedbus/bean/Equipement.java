@@ -19,18 +19,16 @@
 package net.naonedbus.bean;
 
 import net.naonedbus.R;
+import net.naonedbus.widget.item.SectionItem;
 
 /**
  * @author romain.guefveneu
  * 
  */
-public class Equipement implements IEquipement {
+public class Equipement implements SectionItem, Comparable<Equipement> {
 
 	/**
 	 * Type d'équipement.
-	 * 
-	 * @author romain
-	 * 
 	 */
 	public static enum Type {
 		/**
@@ -59,12 +57,12 @@ public class Equipement implements IEquipement {
 		 */
 		TYPE_LILA(5, R.string.map_calque_lila, R.drawable.map_layer_arret, R.color.map_pin_lila);
 
-		private int id;
-		private int titleRes;
-		private int drawableRes;
-		private int backgroundColorRes;
+		private final int id;
+		private final int titleRes;
+		private final int drawableRes;
+		private final int backgroundColorRes;
 
-		private Type(int id, int titleRes, int drawableRes, int backgroundColorRes) {
+		private Type(final int id, final int titleRes, final int drawableRes, final int backgroundColorRes) {
 			this.id = id;
 			this.titleRes = titleRes;
 			this.drawableRes = drawableRes;
@@ -87,8 +85,8 @@ public class Equipement implements IEquipement {
 			return backgroundColorRes;
 		}
 
-		public static Type getTypeById(int id) {
-			for (Type type : Type.values()) {
+		public static Type getTypeById(final int id) {
+			for (final Type type : Type.values()) {
 				if (type.getId() == id) {
 					return type;
 				}
@@ -97,153 +95,180 @@ public class Equipement implements IEquipement {
 		}
 	}
 
-	private Integer id;
-	private Type type;
-	private Integer sousType;
-	private String nom;
-	private String normalizedNom;
-	private String adresse;
-	private String telephone;
-	private String details;
-	private String url;
-	private Double latitude;
-	private Double longitude;
-	private Float distance;
-	private Object section;
-	private Object tag;
+	private Integer mId;
+	private Type mType;
+	private Integer mSousType;
+	private String mNom;
+	private String mNormalizedNom;
+	private String mAdresse;
+	private String mTelephone;
+	private String mDetails;
+	private String mUrl;
+	private Double mLatitude;
+	private Double mLongitude;
+	private Float mDistance;
+	private Object mSection;
+	private Object mTag;
 
+	
 	public Integer getId() {
-		return id;
+		return mId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	
+	public void setId(final Integer id) {
+		mId = id;
 	}
 
+	
 	public Integer getSousType() {
-		return sousType;
+		return mSousType;
 	}
 
-	public void setSousType(Integer sousType) {
-		this.sousType = sousType;
+	
+	public void setSousType(final Integer sousType) {
+		mSousType = sousType;
 	}
 
+	
 	public Type getType() {
-		return type;
+		return mType;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	
+	public void setType(final Type type) {
+		mType = type;
 	}
 
-	public void setType(int idType) {
-		this.type = Type.getTypeById(idType);
+	
+	public void setType(final int idType) {
+		mType = Type.getTypeById(idType);
 	}
 
+	
 	public String getNom() {
-		return nom;
+		return mNom;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	
+	public void setNom(final String nom) {
+		mNom = nom;
 	}
 
+	
 	public String getNormalizedNom() {
-		return normalizedNom;
+		return mNormalizedNom;
 	}
 
-	public void setNormalizedNom(String normalizedNom) {
-		this.normalizedNom = normalizedNom;
+	
+	public void setNormalizedNom(final String normalizedNom) {
+		mNormalizedNom = normalizedNom;
 	}
 
+	
 	public String getAdresse() {
-		return adresse;
+		return mAdresse;
 	}
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
+	
+	public void setAdresse(final String adresse) {
+		mAdresse = adresse;
 	}
 
+	
 	public String getDetails() {
-		return details;
+		return mDetails;
 	}
 
-	public void setDetails(String details) {
-		this.details = details;
+	
+	public void setDetails(final String details) {
+		mDetails = details;
 	}
 
+	
 	public String getTelephone() {
-		return telephone;
+		return mTelephone;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	
+	public void setTelephone(final String telephone) {
+		mTelephone = telephone;
 	}
 
+	
 	public String getUrl() {
-		return url;
+		return mUrl;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	
+	public void setUrl(final String url) {
+		mUrl = url;
 	}
 
+	
 	public Double getLatitude() {
-		return latitude;
+		return mLatitude;
 	}
 
-	public void setLatitude(Double latitude) {
-		this.latitude = latitude;
+	
+	public void setLatitude(final Double latitude) {
+		mLatitude = latitude;
 	}
 
+	
 	public Double getLongitude() {
-		return longitude;
+		return mLongitude;
 	}
 
-	public void setLongitude(Double longitude) {
-		this.longitude = longitude;
+	
+	public void setLongitude(final Double longitude) {
+		mLongitude = longitude;
 	}
 
 	/**
 	 * @return La distance en mètres.
 	 */
+	
 	public Float getDistance() {
-		return distance;
+		return mDistance;
 	}
 
 	/**
 	 * @param distance
 	 *            La distance en mètres.
 	 */
-	public void setDistance(Float distance) {
-		this.distance = distance;
+	
+	public void setDistance(final Float distance) {
+		mDistance = distance;
 	}
 
-	public void setSection(Object section) {
-		this.section = section;
+	
+	public void setSection(final Object section) {
+		mSection = section;
 	}
 
+	
 	@Override
 	public Object getSection() {
-		return this.section;
+		return mSection;
 	}
 
 	public Object getTag() {
-		return tag;
+		return mTag;
 	}
 
-	public void setTag(Object tag) {
-		this.tag = tag;
+	public void setTag(final Object tag) {
+		mTag = tag;
 	}
 
 	@Override
 	public String toString() {
-		return new StringBuilder("[").append(this.id).append(";").append(this.nom).append(";").append(this.latitude)
-				.append(";").append(this.longitude).append("]").toString();
+		return new StringBuilder("[").append(mId).append(";").append(mNom).append(";").append(mLatitude).append(";")
+				.append(mLongitude).append("]").toString();
 	}
 
 	@Override
-	public int compareTo(Equipement another) {
+	public int compareTo(final Equipement another) {
 		if (another == null || another.getNom() == null || this.getNom() == null) {
 			return 0;
 		}

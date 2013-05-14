@@ -295,7 +295,7 @@ public class ArretDetailFragment extends SherlockFragment {
 
 	private void menuShowPlan() {
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
-		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, mLigne.code);
+		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, mLigne.getCode());
 		startActivity(intent);
 	}
 
@@ -304,7 +304,7 @@ public class ArretDetailFragment extends SherlockFragment {
 		Sens autreSens = null;
 
 		// Inverser le sens
-		final List<Sens> sens = mSensManager.getAll(getActivity().getContentResolver(), mLigne.code);
+		final List<Sens> sens = mSensManager.getAll(getActivity().getContentResolver(), mLigne.getCode());
 		for (final Sens sensItem : sens) {
 			if (sensItem._id != mSens._id) {
 				autreSens = sensItem;
@@ -314,7 +314,7 @@ public class ArretDetailFragment extends SherlockFragment {
 
 		if (autreSens != null) {
 			// Chercher l'arrêt dans le nouveau sens
-			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.code,
+			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.getCode(),
 					autreSens.code, mArret.getNormalizedNom());
 
 			if (arret != null) {

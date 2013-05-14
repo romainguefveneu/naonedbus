@@ -22,7 +22,6 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
-import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
@@ -46,42 +45,42 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 	private final Typeface robotoMedium;
 	private boolean mHideDivider;
 
-	public LignesArrayAdapter(Context context, List<Ligne> lignes) {
+	public LignesArrayAdapter(final Context context, final List<Ligne> lignes) {
 		super(context, R.layout.list_item_ligne, lignes);
 		robotoMedium = FontUtils.getRobotoBoldCondensed(context);
 	}
 
-	public void setHideDivider(boolean hide) {
+	public void setHideDivider(final boolean hide) {
 		mHideDivider = hide;
 	}
 
 	@Override
-	public void bindView(View view, Context context, int position) {
+	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Ligne ligne = getItem(position);
 
-		holder.icon.setText(ligne.lettre);
-		holder.icon.setTextColor(ligne.couleurTexte);
+		holder.icon.setText(ligne.getLettre());
+		holder.icon.setTextColor(ligne.getCouleurTexte());
 
-		if (ligne._id == -1) {
+		if (ligne.getId() == -1) {
 			holder.icon.setBackgroundDrawable(null);
 			holder.sens1.setTypeface(null, Typeface.BOLD);
 		} else {
 			holder.sens1.setTypeface(null, Typeface.NORMAL);
 
-			if (ligne.couleurBackground == 0) {
+			if (ligne.getCouleur() == 0) {
 				holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			} else {
-				holder.icon.setBackgroundColor(ligne.couleurBackground);
+				holder.icon.setBackgroundColor(ligne.getCouleur());
 			}
 		}
 
-		if ((ligne.depuis == null || ligne.depuis.length() == 0 || ligne.depuis.equals(ligne.vers))) {
-			holder.sens1.setText(ligne.nom);
+		if ((ligne.getDepuis() == null || ligne.getDepuis().length() == 0 || ligne.getDepuis().equals(ligne.getVers()))) {
+			holder.sens1.setText(ligne.getNom());
 			holder.sens2.setVisibility(View.GONE);
 		} else {
-			holder.sens1.setText(ligne.depuis);
-			holder.sens2.setText(ligne.vers);
+			holder.sens1.setText(ligne.getDepuis());
+			holder.sens2.setText(ligne.getVers());
 			holder.sens2.setVisibility(View.VISIBLE);
 		}
 
@@ -91,7 +90,7 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 	}
 
 	@Override
-	public void bindViewHolder(View view) {
+	public void bindViewHolder(final View view) {
 		final ViewHolder holder;
 		holder = new ViewHolder();
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);

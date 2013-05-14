@@ -71,8 +71,8 @@ public class ArretsActivity extends OneFragmentActivity {
 
 		mLigne = getIntent().getParcelableExtra(PARAM_LIGNE);
 
-		final List<Sens> sensList = sensManager.getAll(getContentResolver(), mLigne.code);
-		final int idSens = mStateHelper.getSens(mLigne.code, sensList.get(0)._id);
+		final List<Sens> sensList = sensManager.getAll(getContentResolver(), mLigne.getCode());
+		final int idSens = mStateHelper.getSens(mLigne.getCode(), sensList.get(0)._id);
 
 		if (savedInstanceState == null) {
 			final Bundle bundle = new Bundle();
@@ -84,15 +84,15 @@ public class ArretsActivity extends OneFragmentActivity {
 		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
 
 		final View header = findViewById(R.id.headerView);
-		header.setBackgroundDrawable(ColorUtils.getGradiant(mLigne.couleurBackground));
+		header.setBackgroundDrawable(ColorUtils.getGradiant(mLigne.getCouleur()));
 
 		final TextView code = (TextView) findViewById(R.id.itemCode);
-		code.setText(mLigne.lettre);
-		code.setTextColor(mLigne.couleurTexte);
+		code.setText(mLigne.getLettre());
+		code.setTextColor(mLigne.getCouleurTexte());
 		code.setTypeface(robotoBold);
 
 		final Spinner sensTitle = (Spinner) findViewById(R.id.itemTitle);
-		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.couleurTexte, robotoBold));
+		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.getCouleurTexte(), robotoBold));
 		sensTitle.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -132,7 +132,7 @@ public class ArretsActivity extends OneFragmentActivity {
 	@Override
 	protected void onStop() {
 		if (mCurrentSens != null)
-			mStateHelper.setSens(mLigne.code, mCurrentSens._id);
+			mStateHelper.setSens(mLigne.getCode(), mCurrentSens._id);
 		super.onStop();
 	}
 

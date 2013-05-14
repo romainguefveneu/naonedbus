@@ -25,8 +25,8 @@ import net.naonedbus.bean.Ligne;
 public class LigneLettreComparator implements Comparator<Ligne> {
 
 	@Override
-	public int compare(Ligne a, Ligne b) {
-		return a.lettre.compareTo(b.lettre);
+	public int compare(final Ligne a, final Ligne b) {
+		return a.getLettre().compareTo(b.getLettre());
 	}
 
 }

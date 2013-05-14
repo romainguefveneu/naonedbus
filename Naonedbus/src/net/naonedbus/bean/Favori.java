@@ -23,31 +23,14 @@ import android.graphics.drawable.Drawable;
 
 public class Favori extends Arret implements SectionItem {
 
-	private final String mNomSens;
-	private final int mIdGroupe;
-	private final String mNomGroupe;
-
-	private final Integer mNextHoraire;
-	private final int mCouleurBackground;
-	private final int mCouleurTexte;
-
-	private Drawable mBackground;
-	private String mDelay;
-
-	private String mNomFavori;
-	private Integer mSection;
-
 	public static class Builder extends Arret.Builder {
-
 		private String mNomFavori;
 		private String mNomSens;
 		private int mIdGroupe;
 		private String mNomGroupe;
-
 		private Integer mNextHoraire;
 		private int mCouleurBackground;
 		private int mCouleurTexte;
-
 		private Integer mSection;
 
 		public Builder setIdGroupe(final int idGroupe) {
@@ -96,6 +79,20 @@ public class Favori extends Arret implements SectionItem {
 		}
 
 	}
+
+	private final String mNomSens;
+	private final int mIdGroupe;
+	private final String mNomGroupe;
+
+	private final Integer mNextHoraire;
+	private final int mCouleurBackground;
+	private final int mCouleurTexte;
+
+	private Drawable mBackground;
+	private String mDelay;
+
+	private String mNomFavori;
+	private Integer mSection;
 
 	private Favori(final Builder builder) {
 		super(builder);

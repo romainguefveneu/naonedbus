@@ -213,12 +213,12 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 
 			final Ligne ligne = item.getLigne();
 			if (item.getBackground() == null) {
-				item.setBackground(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
+				item.setBackground(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
 			}
 
-			holder.ligneCode.setText(ligne.lettre);
+			holder.ligneCode.setText(ligne.getLettre());
 			holder.ligneCode.setBackgroundDrawable(item.getBackground());
-			holder.ligneCode.setTextColor(ligne.couleurTexte);
+			holder.ligneCode.setTextColor(ligne.getCouleurTexte());
 
 		} else {
 

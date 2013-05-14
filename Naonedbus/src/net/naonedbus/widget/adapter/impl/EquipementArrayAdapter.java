@@ -241,9 +241,9 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, holder.itemLignes,
 					false);
 
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
-			textView.setText(ligne.lettre);
-			textView.setTextColor(ligne.couleurTexte);
+			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligne.getCouleur()));
+			textView.setText(ligne.getLettre());
+			textView.setTextColor(ligne.getCouleurTexte());
 
 			holder.itemLignes.addView(textView);
 		}

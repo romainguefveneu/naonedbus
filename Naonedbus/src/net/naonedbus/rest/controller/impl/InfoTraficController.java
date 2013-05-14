@@ -57,6 +57,7 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 		if (infosReel != null) {
 			infosTrafics.addAll(infosReel);
 		}
+
 		final List<InfoTrafic> infosPrevisionnel = super.getAll(res, API_PREVISIONNEL);
 		if (infosPrevisionnel != null) {
 			infosTrafics.addAll(infosPrevisionnel);

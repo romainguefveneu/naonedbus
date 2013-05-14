@@ -168,8 +168,8 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		final Arret arret = commentaire.getArret();
 
 		if (ligne != null) {
-			setLineColor(ligne.couleurBackground, ligne.lettre);
-			mHeaderHelper.setTitle(ligne.nom);
+			setLineColor(ligne.getCouleur(), ligne.getLettre());
+			mHeaderHelper.setTitle(ligne.getNom());
 		} else {
 			setLineColor(Color.TRANSPARENT, "");
 		}
@@ -220,7 +220,7 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			if (arret == null && sens == null && ligne == null) {
 				title = getString(R.string.commentaire_tout);
 			} else if (ligne != null) {
-				title = getString(R.string.commentaire_ligne) + " " + ligne.lettre;
+				title = getString(R.string.commentaire_ligne) + " " + ligne.getLettre();
 				if (arret != null) {
 					title += ", " + arret.getNomArret();
 				}

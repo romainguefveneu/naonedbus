@@ -86,11 +86,11 @@ public class PlanFragment extends CustomFragment {
 		mGestureView = (GestureImageView) view.findViewById(R.id.planView);
 		mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
 
-		if (isInCache(mLigne.lettre)) {
+		if (isInCache(mLigne.getLettre())) {
 			afterLoaded();
 		} else {
 			try {
-				save(mLigne.lettre);
+				save(mLigne.getLettre());
 			} catch (final MalformedURLException e) {
 				onError(e);
 			} catch (final IOException e) {
@@ -105,9 +105,9 @@ public class PlanFragment extends CustomFragment {
 	private void afterLoaded() {
 		mProgressBar.setVisibility(View.GONE);
 		mGestureView.setVisibility(View.VISIBLE);
-		mGestureView.setImageURI(Uri.parse(getLocalPath(mLigne.code)));
+		mGestureView.setImageURI(Uri.parse(getLocalPath(mLigne.getCode())));
 		if (mSaveToCache == false) {
-			deleteFile(mLigne.code);
+			deleteFile(mLigne.getCode());
 		}
 	}
 

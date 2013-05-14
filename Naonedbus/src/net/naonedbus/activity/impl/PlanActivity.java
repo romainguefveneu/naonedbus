@@ -40,7 +40,7 @@ public class PlanActivity extends OneFragmentActivity {
 		final String codeLigne = getIntent().getStringExtra(PARAM_CODE_LIGNE);
 		final Ligne ligne = LigneManager.getInstance().getSingle(getContentResolver(), codeLigne);
 
-		setTitle(getString(R.string.title_activity_plan, ligne.lettre, ligne.nom));
+		setTitle(getString(R.string.title_activity_plan, ligne.getLettre(), ligne.getNom()));
 
 		final Bundle bundle = new Bundle();
 		bundle.putString(PlanFragment.PARAM_CODE_LIGNE, codeLigne);

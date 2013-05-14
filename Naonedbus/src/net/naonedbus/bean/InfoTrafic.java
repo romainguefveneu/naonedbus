@@ -18,7 +18,6 @@
  */
 package net.naonedbus.bean;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,12 +30,11 @@ import org.joda.time.format.DateTimeFormatter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class InfoTrafic implements Serializable, Parcelable, SectionItem {
+public class InfoTrafic implements Parcelable, SectionItem {
 
-	private static final long serialVersionUID = -2516041836875800927L;
-	private static final DateTimeFormatter fullDateParser = DateTimeFormat.forPattern("dd/MM/yyyy").withZoneUTC();
-	private static final DateTimeFormatter simpleDateParser = DateTimeFormat.forPattern("MM/yyyy").withZoneUTC();
-	private static final DateTimeFormatter timeParser = DateTimeFormat.forPattern("HH:mm").withZoneUTC();
+	private static final DateTimeFormatter sFullDateParser = DateTimeFormat.forPattern("dd/MM/yyyy").withZoneUTC();
+	private static final DateTimeFormatter sSimpleDateParser = DateTimeFormat.forPattern("MM/yyyy").withZoneUTC();
+	private static final DateTimeFormatter sTimeParser = DateTimeFormat.forPattern("HH:mm").withZoneUTC();
 
 	private String mCode;
 	private String mIntitule;
@@ -88,8 +86,8 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 		return mResume;
 	}
 
-	public void setResume(String resume) {
-		this.mResume = resume;
+	public void setResume(final String resume) {
+		mResume = resume;
 	}
 
 	public String getTexteVocal() {
@@ -97,25 +95,25 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 	}
 
 	public DateTime getDateDebut() {
-		if (this.mDateDebut == null) {
-			this.mDateDebut = parseDate(this.mDateDebutString, this.mHeureDebutString);
+		if (mDateDebut == null) {
+			mDateDebut = parseDate(mDateDebutString, mHeureDebutString);
 		}
-		return this.mDateDebut;
+		return mDateDebut;
 	}
 
 	public DateTime getDateFin() {
-		if (this.mDateFin == null) {
-			this.mDateFin = parseDate(this.mDateFinString, this.mHeureFinString);
+		if (mDateFin == null) {
+			mDateFin = parseDate(mDateFinString, mHeureFinString);
 		}
-		return this.mDateFin;
+		return mDateFin;
 	}
 
 	public String getDateFormated() {
 		return mDateFormated;
 	}
 
-	public void setDateFormated(String dateFormated) {
-		this.mDateFormated = dateFormated;
+	public void setDateFormated(final String dateFormated) {
+		mDateFormated = dateFormated;
 	}
 
 	public boolean isPerturbationTerminee() {
@@ -126,64 +124,64 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 		return mTroncons;
 	}
 
-	public void addLignes(String ligne) {
-		this.mLignes.add(ligne);
+	public void addLignes(final String ligne) {
+		mLignes.add(ligne);
 	}
 
 	public List<String> getLignes() {
 		return mLignes;
 	}
 
-	public void setSection(Object section) {
-		this.mSection = section;
+	public void setSection(final Object section) {
+		mSection = section;
 	}
 
-	public void setCode(String code) {
-		this.mCode = code;
+	public void setCode(final String code) {
+		mCode = code;
 	}
 
-	public void setIntitule(String intitule) {
-		this.mIntitule = intitule;
+	public void setIntitule(final String intitule) {
+		mIntitule = intitule;
 	}
 
-	public void setTexteVocal(String texteVocal) {
-		this.mTexteVocal = texteVocal;
+	public void setTexteVocal(final String texteVocal) {
+		mTexteVocal = texteVocal;
 	}
 
-	public void setDateDebutString(String dateDebutString) {
-		this.mDateDebutString = dateDebutString;
+	public void setDateDebutString(final String dateDebutString) {
+		mDateDebutString = dateDebutString;
 	}
 
-	public void setDateFinString(String dateFinString) {
-		this.mDateFinString = dateFinString;
+	public void setDateFinString(final String dateFinString) {
+		mDateFinString = dateFinString;
 	}
 
-	public void setHeureDebutString(String heureDebutString) {
-		this.mHeureDebutString = heureDebutString;
+	public void setHeureDebutString(final String heureDebutString) {
+		mHeureDebutString = heureDebutString;
 	}
 
-	public void setHeureFinString(String heureFinString) {
-		this.mHeureFinString = heureFinString;
+	public void setHeureFinString(final String heureFinString) {
+		mHeureFinString = heureFinString;
 	}
 
-	public void setPerturbationTerminee(boolean perturbationTerminee) {
-		this.mPerturbationTerminee = perturbationTerminee;
+	public void setPerturbationTerminee(final boolean perturbationTerminee) {
+		mPerturbationTerminee = perturbationTerminee;
 	}
 
-	public void setTroncons(String troncons) {
-		this.mTroncons = troncons;
+	public void setTroncons(final String troncons) {
+		mTroncons = troncons;
 	}
 
-	public void setLignes(List<String> lignes) {
-		this.mLignes = lignes;
+	public void setLignes(final List<String> lignes) {
+		mLignes = lignes;
 	}
 
-	public void setDateDebut(DateTime dateDebut) {
-		this.mDateDebut = dateDebut;
+	public void setDateDebut(final DateTime dateDebut) {
+		mDateDebut = dateDebut;
 	}
 
-	public void setDateFin(DateTime dateFin) {
-		this.mDateFin = dateFin;
+	public void setDateFin(final DateTime dateFin) {
+		mDateFin = dateFin;
 	}
 
 	@Override
@@ -191,6 +189,7 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 		return mSection;
 	}
 
+	@Override
 	public InfoTrafic clone() {
 		final InfoTrafic clone = new InfoTrafic();
 		clone.mCode = mCode;
@@ -212,8 +211,8 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 
 	@Override
 	public String toString() {
-		return new StringBuilder("[").append(this.mCode).append(";").append(this.mIntitule).append(";")
-				.append((Ligne) mSection).append("]").toString();
+		return new StringBuilder("[").append(mCode).append(";").append(mIntitule).append(";").append(mSection)
+				.append("]").toString();
 	}
 
 	/**
@@ -224,15 +223,15 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 	 * @param heure
 	 * @return le DateTime correspondant
 	 */
-	private static final DateTime parseDate(String date, String heure) {
+	private static final DateTime parseDate(final String date, final String heure) {
 		DateTime dateTime = null;
 		if (date.length() == 10) {
-			dateTime = fullDateParser.parseDateTime(date);
+			dateTime = sFullDateParser.parseDateTime(date);
 		} else if (date.length() == 7) {
-			dateTime = simpleDateParser.parseDateTime(date);
+			dateTime = sSimpleDateParser.parseDateTime(date);
 		}
 		if (dateTime != null && heure != null && heure.length() == 5) {
-			dateTime = dateTime.plusMinutes(timeParser.parseDateTime(heure).minuteOfDay().get());
+			dateTime = dateTime.plusMinutes(sTimeParser.parseDateTime(heure).minuteOfDay().get());
 		}
 		return dateTime;
 	}
@@ -242,7 +241,8 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 		return 0;
 	}
 
-	public void writeToParcel(Parcel dest, int flags) {
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeString(mCode);
 		dest.writeString(mDateDebutString);
 		dest.writeString(mDateFinString);
@@ -258,11 +258,13 @@ public class InfoTrafic implements Serializable, Parcelable, SectionItem {
 	}
 
 	public static final Parcelable.Creator<InfoTrafic> CREATOR = new Parcelable.Creator<InfoTrafic>() {
-		public InfoTrafic createFromParcel(Parcel in) {
+		@Override
+		public InfoTrafic createFromParcel(final Parcel in) {
 			return new InfoTrafic(in);
 		}
 
-		public InfoTrafic[] newArray(int size) {
+		@Override
+		public InfoTrafic[] newArray(final int size) {
 			return new InfoTrafic[size];
 		}
 	};

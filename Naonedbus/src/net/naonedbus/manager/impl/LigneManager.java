@@ -29,12 +29,10 @@ import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.manager.Unschedulable;
 import net.naonedbus.provider.impl.LigneProvider;
 import net.naonedbus.provider.table.LigneTable;
-import net.naonedbus.utils.ColorUtils;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -45,22 +43,32 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	private static final String LOG_TAG = "LigneManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private static LigneManager instance;
+	private static LigneManager sInstance;
 
-	private Thread lignesLoader;
-	private final ConcurrentLinkedQueue<LignesTaskInfo> lignesTasks;
-	private final Object lock = new Object();
+	private int mColId;
+	private int mColCode;
+	private int mColDepuis;
+	private int mColLettre;
+	private int mColVers;
+	private int mColCouleur;
+	private int mColType;
+
+	private Thread mLignesLoader;
+	private final ConcurrentLinkedQueue<LignesTaskInfo> mLignesTasks;
+	private final Object mLock = new Object();
+	private final Ligne.Builder mBuilder;
 
 	public static synchronized LigneManager getInstance() {
-		if (instance == null) {
-			instance = new LigneManager();
+		if (sInstance == null) {
+			sInstance = new LigneManager();
 		}
-		return instance;
+		return sInstance;
 	}
 
 	protected LigneManager() {
 		super(LigneProvider.CONTENT_URI);
-		lignesTasks = new ConcurrentLinkedQueue<LignesTaskInfo>();
+		mLignesTasks = new ConcurrentLinkedQueue<LignesTaskInfo>();
+		mBuilder = new Ligne.Builder();
 	}
 
 	/**
@@ -94,18 +102,26 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	}
 
 	@Override
+	public void onIndexCursor(final Cursor c) {
+		mColId = c.getColumnIndex(LigneTable._ID);
+		mColCode = c.getColumnIndex(LigneTable.CODE);
+		mColDepuis = c.getColumnIndex(LigneTable.DEPUIS);
+		mColLettre = c.getColumnIndex(LigneTable.LETTRE);
+		mColVers = c.getColumnIndex(LigneTable.VERS);
+		mColCouleur = c.getColumnIndex(LigneTable.COULEUR);
+		mColType = c.getColumnIndex(LigneTable.TYPE);
+	}
+
+	@Override
 	public Ligne getSingleFromCursor(final Cursor c) {
-		final Ligne ligneItem = new Ligne();
-		ligneItem._id = c.getInt(c.getColumnIndex(LigneTable._ID));
-		ligneItem.code = c.getString(c.getColumnIndex(LigneTable.CODE));
-		ligneItem.depuis = c.getString(c.getColumnIndex(LigneTable.DEPUIS));
-		ligneItem.lettre = c.getString(c.getColumnIndex(LigneTable.LETTRE));
-		ligneItem.vers = c.getString(c.getColumnIndex(LigneTable.VERS));
-		ligneItem.nom = ligneItem.depuis + " \u2194 " + ligneItem.vers;
-		ligneItem.couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR));
-		ligneItem.couleurTexte = ColorUtils.isLightColor(ligneItem.couleurBackground) ? Color.BLACK : Color.WHITE;
-		ligneItem.section = c.getInt(c.getColumnIndex(LigneTable.TYPE));
-		return ligneItem;
+		mBuilder.setId(c.getInt(mColId));
+		mBuilder.setCode(c.getString(mColCode));
+		mBuilder.setDepuis(c.getString(mColDepuis));
+		mBuilder.setLettre(c.getString(mColLettre));
+		mBuilder.setVers(c.getString(mColVers));
+		mBuilder.setCouleur(c.getInt(mColCouleur));
+		mBuilder.setSection(c.getInt(mColType));
+		return mBuilder.build();
 	}
 
 	public List<Ligne> getLignesFromStation(final ContentResolver contentResolver, final int idStation) {
@@ -133,14 +149,14 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		if (DBG)
 			Log.d(LOG_TAG, "schedule :\t" + task);
 
-		lignesTasks.add(task);
+		mLignesTasks.add(task);
 
-		if (lignesLoader == null || !lignesLoader.isAlive()) {
-			lignesLoader = new Thread(lignesFromStationLoader);
-			lignesLoader.start();
-		} else if (lignesLoader.getState().equals(Thread.State.TIMED_WAITING)) {
-			synchronized (lock) {
-				lock.notify();
+		if (mLignesLoader == null || !mLignesLoader.isAlive()) {
+			mLignesLoader = new Thread(lignesFromStationLoader);
+			mLignesLoader.start();
+		} else if (mLignesLoader.getState().equals(Thread.State.TIMED_WAITING)) {
+			synchronized (mLock) {
+				mLock.notify();
 			}
 		}
 
@@ -151,7 +167,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	public void unschedule(final LignesTaskInfo task) {
 		if (DBG)
 			Log.d(LOG_TAG, "unschedule :\t" + task);
-		lignesTasks.remove(task);
+		mLignesTasks.remove(task);
 	}
 
 	/**
@@ -165,7 +181,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 			Handler handler;
 			Message message;
 
-			while ((task = lignesTasks.poll()) != null) {
+			while ((task = mLignesTasks.poll()) != null) {
 				lignes = getLignesFromStation(task.getContext().getContentResolver(), task.getTag());
 
 				handler = task.getHandler();
@@ -173,10 +189,10 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 				message.obj = lignes;
 				handler.sendMessage(message);
 
-				if (lignesTasks.isEmpty()) {
-					synchronized (lock) {
+				if (mLignesTasks.isEmpty()) {
+					synchronized (mLock) {
 						try {
-							lock.wait(2000);
+							mLock.wait(2000);
 						} catch (final InterruptedException e) {
 						}
 					}

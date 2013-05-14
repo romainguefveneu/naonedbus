@@ -28,22 +28,22 @@ import android.util.SparseArray;
 
 public class LigneArrayIndexer extends ArraySectionIndexer<Ligne> {
 
-	private SparseArray<String> typesLignes;
+	private final SparseArray<String> mTypesLignes;
 
 	public LigneArrayIndexer(final List<TypeLigne> typesLignes) {
-		this.typesLignes = new SparseArray<String>();
+		mTypesLignes = new SparseArray<String>();
 		for (final TypeLigne typeLigne : typesLignes) {
-			this.typesLignes.put(typeLigne._id, typeLigne.nom);
+			mTypesLignes.put(typeLigne._id, typeLigne.nom);
 		}
 	}
 
 	@Override
-	protected String getSectionLabel(Context context, Ligne item) {
-		return this.typesLignes.get((Integer) item.section);
+	protected String getSectionLabel(final Context context, final Ligne item) {
+		return mTypesLignes.get((Integer) item.getSection());
 	}
 
 	@Override
-	protected void prepareSection(Ligne item) {
+	protected void prepareSection(final Ligne item) {
 	}
 
 }

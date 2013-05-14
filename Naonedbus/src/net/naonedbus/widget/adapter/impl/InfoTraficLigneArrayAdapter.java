@@ -38,12 +38,12 @@ public class InfoTraficLigneArrayAdapter extends ArraySectionAdapter<InfoTrafic>
 		View itemSymbole;
 	}
 
-	public InfoTraficLigneArrayAdapter(Context context, List<InfoTrafic> objects) {
+	public InfoTraficLigneArrayAdapter(final Context context, final List<InfoTrafic> objects) {
 		super(context, R.layout.list_item_trafic_ligne, objects);
 	}
 
 	@Override
-	public void bindView(View view, Context context, int position) {
+	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final InfoTrafic item = getItem(position);
 		final Ligne ligne = (Ligne) item.getSection();
@@ -60,7 +60,7 @@ public class InfoTraficLigneArrayAdapter extends ArraySectionAdapter<InfoTrafic>
 
 			holder.itemTitle.setText(item.getIntitule());
 			holder.itemDate.setText(item.getDateFormated());
-			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getGradiant(ligne.couleurBackground));
+			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getGradiant(ligne.getCouleur()));
 
 			if (isCurrent(item)) {
 				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.info_trafic_on, 0, 0, 0);
@@ -77,7 +77,7 @@ public class InfoTraficLigneArrayAdapter extends ArraySectionAdapter<InfoTrafic>
 	}
 
 	@Override
-	public void bindViewHolder(View view) {
+	public void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDate = (TextView) view.findViewById(R.id.itemDate);
@@ -93,7 +93,7 @@ public class InfoTraficLigneArrayAdapter extends ArraySectionAdapter<InfoTrafic>
 	 * @return <code>true</code> si l'infotrafic est en cours,
 	 *         <code>false</code> sinon.
 	 */
-	private static boolean isCurrent(InfoTrafic infoTrafic) {
+	private static boolean isCurrent(final InfoTrafic infoTrafic) {
 		return (infoTrafic.getDateDebut() != null && infoTrafic.getDateDebut().isBeforeNow() && (infoTrafic
 				.getDateFin() == null || infoTrafic.getDateFin().isAfterNow()));
 	}

@@ -33,46 +33,36 @@ import net.naonedbus.comparator.InfoTraficComparator;
 import net.naonedbus.helper.DateTimeFormatHelper;
 import net.naonedbus.rest.controller.impl.InfoTraficController;
 
-import org.joda.time.DateTime;
 import org.json.JSONException;
 
 import android.content.Context;
 import android.util.SparseArray;
 
-/**
- * @author romain
- * 
- */
 public class InfoTraficManager {
 
-	private static final int CACHE_LIMITE_MINUTES = 15;
+	private static final long CACHE_LIMITE_MILLI = 15l * 60l * 1000l; // 15
+																		// minutes
 	private static InfoTraficManager sInstance;
 
-	private static Map<String, ArrayList<InfoTrafic>> cache = Collections
-			.synchronizedMap(new HashMap<String, ArrayList<InfoTrafic>>());
-
-	private static SparseArray<InfoTrafic> cacheById = new SparseArray<InfoTrafic>();
-
-	private static DateTime dateLimit;
+	private final Map<String, ArrayList<InfoTrafic>> mCache = new HashMap<String, ArrayList<InfoTrafic>>();
+	private final SparseArray<InfoTrafic> mCacheById = new SparseArray<InfoTrafic>();
+	private long mDateLimit;
 
 	public static synchronized InfoTraficManager getInstance() {
 		if (sInstance == null) {
 			sInstance = new InfoTraficManager();
 		}
-
 		return sInstance;
 	}
 
 	public synchronized List<InfoTrafic> getByLigneCode(final Context context, final String code) throws IOException,
 			JSONException {
-		List<InfoTrafic> result = new ArrayList<InfoTrafic>();
 
+		List<InfoTrafic> result = null;
 		init(context);
-
-		if (cache.containsKey(code)) {
-			result = cache.get(code);
+		if (mCache.containsKey(code)) {
+			result = mCache.get(code);
 		}
-
 		return result;
 	}
 
@@ -80,7 +70,7 @@ public class InfoTraficManager {
 		final List<InfoTrafic> result = new ArrayList<InfoTrafic>();
 		init(context);
 
-		for (final Entry<String, ArrayList<InfoTrafic>> item : cache.entrySet()) {
+		for (final Entry<String, ArrayList<InfoTrafic>> item : mCache.entrySet()) {
 			result.addAll(item.getValue());
 		}
 
@@ -91,7 +81,7 @@ public class InfoTraficManager {
 
 	public synchronized InfoTrafic getById(final Context context, final int id) throws IOException, JSONException {
 		init(context);
-		return cacheById.get(id);
+		return mCacheById.get(id);
 	}
 
 	/**
@@ -101,21 +91,21 @@ public class InfoTraficManager {
 	 * @throws JSONException
 	 */
 	public void init(final Context context) throws IOException, JSONException {
-		final DateTime now = new DateTime();
+		final long now = System.currentTimeMillis();
 
-		if (cache.isEmpty() || now.isAfter(dateLimit)) {
-			cache.clear();
+		if (mCache.isEmpty() || now > mDateLimit) {
+			mCache.clear();
 			final InfoTraficController infoTraficController = new InfoTraficController();
-			populateCache(context, infoTraficController.getAll(context.getResources()));
-			dateLimit = now.plusMinutes(CACHE_LIMITE_MINUTES);
+			fillCache(context, infoTraficController.getAll(context.getResources()));
+			mDateLimit = now + CACHE_LIMITE_MILLI;
 		}
 
 	}
 
 	/**
-	 * Ajouter les données au cache, selon les troncons indiqués
+	 * Ajouter les données au cache, selon les troncons indiqués.
 	 */
-	private void populateCache(final Context context, final List<InfoTrafic> infoTrafics) {
+	private void fillCache(final Context context, final List<InfoTrafic> infoTrafics) {
 		final Pattern pattern = Pattern.compile("\\[([0-9A-Z]{1,2})/");
 		final DateTimeFormatHelper dateTimeFormatHelper = new DateTimeFormatHelper(context);
 
@@ -130,18 +120,18 @@ public class InfoTraficManager {
 					final Matcher matcher = pattern.matcher(troncons);
 					while (matcher.find()) {
 						final String key = matcher.group(1);
-						if (!cache.containsKey(key)) {
-							cache.put(key, new ArrayList<InfoTrafic>());
+						if (!mCache.containsKey(key)) {
+							mCache.put(key, new ArrayList<InfoTrafic>());
 						}
-						if (!cache.get(key).contains(infoTrafic)) {
+						if (!mCache.get(key).contains(infoTrafic)) {
 							infoTrafic.addLignes(key);
-							cache.get(key).add(infoTrafic);
+							mCache.get(key).add(infoTrafic);
 						}
 					}
 				}
 			}
 
-			cacheById.put(Integer.valueOf(infoTrafic.getCode()), infoTrafic);
+			mCacheById.put(Integer.valueOf(infoTrafic.getCode()), infoTrafic);
 		}
 
 	}

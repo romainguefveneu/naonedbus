@@ -61,7 +61,7 @@ public class StationMapLayer extends EquipementMapLayer {
 	}
 
 	@Override
-	protected BasicItemizedOverlay getOverlay(Resources resources) {
+	protected BasicItemizedOverlay getOverlay(final Resources resources) {
 		return new StationItemizedOverlay(resources);
 	}
 
@@ -75,7 +75,7 @@ public class StationMapLayer extends EquipementMapLayer {
 			}
 
 			@Override
-			public List<View> getSubview(ViewGroup root) {
+			public List<View> getSubview(final ViewGroup root) {
 				final LayoutInflater layoutInflater = LayoutInflater.from(context);
 				final List<View> subview = new ArrayList<View>();
 				final Equipement station = getItemById(item.getId());
@@ -84,9 +84,9 @@ public class StationMapLayer extends EquipementMapLayer {
 
 				for (final Ligne ligneItem : lignes) {
 					final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, root, false);
-					textView.setTextColor(ligneItem.couleurTexte);
-					textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.couleurBackground));
-					textView.setText(ligneItem.code);
+					textView.setTextColor(ligneItem.getCouleurTexte());
+					textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getCouleur()));
+					textView.setText(ligneItem.getCode());
 					subview.add(textView);
 				}
 
@@ -138,7 +138,7 @@ public class StationMapLayer extends EquipementMapLayer {
 			final List<Equipement> stationsProches = getEquipementManager().getEquipementsByLocation(
 					context.getContentResolver(), Type.TYPE_ARRET, location, MAX_STATIONS);
 
-			for (Equipement station : stationsProches) {
+			for (final Equipement station : stationsProches) {
 				stationOverlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(station), station.getNom(),
 						TypeOverlayItem.TYPE_STATION);
 				stationOverlayItem.setId(station.getId());

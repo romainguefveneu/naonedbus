@@ -36,7 +36,6 @@ import net.naonedbus.widget.adapter.impl.InfoTraficLigneArrayAdapter;
 import net.naonedbus.widget.indexer.impl.InfoTraficIndexer;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -70,7 +69,7 @@ public class TanActuFragment extends CustomListFragment {
 		final InfoTrafic item = (InfoTrafic) getListAdapter().getItem(position);
 
 		final ParamIntent intent = new ParamIntent(getActivity(), InfoTraficDetailActivity.class);
-		intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, (Parcelable) item);
+		intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, item);
 		startActivity(intent);
 	}
 
@@ -102,9 +101,9 @@ public class TanActuFragment extends CustomListFragment {
 				final List<Ligne> lignes = ligneManager.getAll(context.getContentResolver());
 
 				for (final Ligne ligne : lignes) {
-					infoTrafics = infoTraficManager.getByLigneCode(context, ligne.code);
+					infoTrafics = infoTraficManager.getByLigneCode(context, ligne.getCode());
 
-					if (infoTrafics.size() == 0) {
+					if (infoTrafics == null || infoTrafics.isEmpty()) {
 						// Gérer les lignes sans travaux.
 						final InfoTrafic emptyDetail = new EmptyInfoTrafic();
 						emptyDetail.setSection(ligne);

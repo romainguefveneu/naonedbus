@@ -149,7 +149,7 @@ public abstract class RestController<T> {
 	protected String readJsonFromUrl(final URL url) throws IOException {
 		if (DBG)
 			Log.d(LOG_TAG, "readJsonFromUrl " + url.toString());
-		
+
 		final URLConnection conn = url.openConnection();
 		conn.setConnectTimeout(TIMEOUT);
 		conn.setReadTimeout(TIMEOUT);

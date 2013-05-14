@@ -134,9 +134,9 @@ public class InfoTraficDetailFragment extends CustomFragment {
 					for (final Ligne l : listLignes) {
 						final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item_medium,
 								mLignesView, false);
-						textView.setBackgroundDrawable(ColorUtils.getGradiant(l.couleurBackground));
-						textView.setText(l.lettre);
-						textView.setTextColor(l.couleurTexte);
+						textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
+						textView.setText(l.getLettre());
+						textView.setTextColor(l.getCouleurTexte());
 
 						final LayoutParams layoutParams = textView.getLayoutParams();
 						layoutParams.width = newItemWidth;

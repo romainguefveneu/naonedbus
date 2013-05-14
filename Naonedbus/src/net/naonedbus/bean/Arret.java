@@ -41,20 +41,6 @@ import android.os.Parcelable;
 
 public class Arret implements Parcelable {
 
-	private final int mId;
-	private final String mCodeLigne;
-	private final String mLettre;
-	private final String mCodeSens;
-	private final String mCodeArret;
-	private final String mCodeEquipement;
-	private final String mNormalizedNom;
-	private final Float mLatitude;
-	private final Float mLongitude;
-	private final int mIdStation;
-	private final int mOrdre;
-	private final String mNomArret;
-	private Float mDistance;
-
 	public static class Builder {
 		private int mId;
 		private String mCodeLigne;
@@ -139,6 +125,20 @@ public class Arret implements Parcelable {
 			return new Arret(this);
 		}
 	}
+
+	private final int mId;
+	private final String mCodeLigne;
+	private final String mLettre;
+	private final String mCodeSens;
+	private final String mCodeArret;
+	private final String mCodeEquipement;
+	private final String mNormalizedNom;
+	private final Float mLatitude;
+	private final Float mLongitude;
+	private final int mIdStation;
+	private final int mOrdre;
+	private final String mNomArret;
+	private Float mDistance;
 
 	protected Arret(final Builder builder) {
 		mId = builder.mId;

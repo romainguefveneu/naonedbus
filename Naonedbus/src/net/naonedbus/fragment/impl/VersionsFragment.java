@@ -43,22 +43,22 @@ public class VersionsFragment extends CustomFragment {
 	}
 
 	@Override
-	protected void bindView(View view, Bundle savedInstanceState) {
+	protected void bindView(final View view, final Bundle savedInstanceState) {
 		try {
 			final WebView wv = (WebView) view.findViewById(R.id.webView);
 			wv.setBackgroundColor(getResources().getColor(R.color.activity_background_light));
 			final String content = IOUtils.toString(getResources().openRawResource(R.raw.version), ENCODING);
 			// Problème d'encodage avec le loadData.
 			wv.loadDataWithBaseURL("fake://not/needed", content, "text/html", ENCODING, "");
-		} catch (NotFoundException e) {
+		} catch (final NotFoundException e) {
 			Log.e(LOG_TAG, "Erreur de chargement des notes de versions", e);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			Log.e(LOG_TAG, "Erreur de chargement des notes de versions", e);
 		}
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		return true;
 	}
 

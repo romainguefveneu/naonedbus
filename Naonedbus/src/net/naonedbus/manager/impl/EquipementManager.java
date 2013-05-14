@@ -35,19 +35,7 @@ import android.net.Uri;
 
 public class EquipementManager extends SQLiteManager<Equipement> {
 
-	private static EquipementManager instance;
-
-	private int mColId;
-	private int mColIdType;
-	private int mColIdSousType;
-	private int mColNom;
-	private int mColNormalizedNom;
-	private int mColAdresse;
-	private int mColDetails;
-	private int mColTelephone;
-	private int mColUrl;
-	private int mColLatitude;
-	private int mColLongitude;
+	private static EquipementManager sInstance;
 
 	/**
 	 * Sous-type d'équipement
@@ -85,11 +73,23 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 
 	}
 
+	private int mColId;
+	private int mColIdType;
+	private int mColIdSousType;
+	private int mColNom;
+	private int mColNormalizedNom;
+	private int mColAdresse;
+	private int mColDetails;
+	private int mColTelephone;
+	private int mColUrl;
+	private int mColLatitude;
+	private int mColLongitude;
+
 	public static synchronized EquipementManager getInstance() {
-		if (instance == null) {
-			instance = new EquipementManager();
+		if (sInstance == null) {
+			sInstance = new EquipementManager();
 		}
-		return instance;
+		return sInstance;
 	}
 
 	protected EquipementManager() {

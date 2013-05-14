@@ -35,7 +35,6 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -117,7 +116,7 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 			@Override
 			public void onClick(final View v) {
 				final ParamIntent intent = new ParamIntent(getContext(), InfoTraficDetailActivity.class);
-				intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, (Parcelable) infoTrafic);
+				intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, infoTrafic);
 				getContext().startActivity(intent);
 			}
 		});
@@ -151,7 +150,7 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 
 			List<InfoTrafic> infoTrafics = null;
 			try {
-				infoTrafics = manager.getByLigneCode(getContext(), mLigne.code);
+				infoTrafics = manager.getByLigneCode(getContext(), mLigne.getCode());
 			} catch (final IOException e) {
 				if (DBG)
 					Log.e(LOG_TAG, "Erreur de récupération des infos trafic.", e);

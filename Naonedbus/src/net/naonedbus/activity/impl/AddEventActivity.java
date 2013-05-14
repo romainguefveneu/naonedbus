@@ -76,8 +76,8 @@ public class AddEventActivity extends SherlockActivity {
 		final long timestamp = getIntent().getLongExtra(PARAM_TIMESTAMP, 0);
 
 		final HeaderHelper headerHelper = new HeaderHelper(this);
-		headerHelper.setBackgroundColor(ligne.couleurBackground, ligne.couleurTexte);
-		headerHelper.setCode(ligne.lettre);
+		headerHelper.setBackgroundColor(ligne.getCouleur(), ligne.getCouleurTexte());
+		headerHelper.setCode(ligne.getLettre());
 		headerHelper.setTitle(arret.getNomArret());
 		headerHelper.setSubTitle(FormatUtils.formatSens(sens.text));
 
@@ -121,13 +121,11 @@ public class AddEventActivity extends SherlockActivity {
 		final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.DEFAULT);
 		mDateEvent.setText(dateFormat.format(new Date(timestamp)));
 
-		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, ligne.code),
+		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, ligne.getCode()),
 				arret.getNomArret(), sens.text));
 
 		fillCalendars();
 		fillDelais();
-
-		// getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 
 	private void fillCalendars() {

@@ -53,7 +53,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -128,9 +127,7 @@ public class CommentaireActivity extends SherlockActivity {
 		mSensManager = SensManager.getInstance();
 		mArretManager = ArretManager.getInstance();
 
-		mAllLignes = new Ligne(-1, getString(R.string.target_toutes_lignes),
-				getString(R.string.target_toutes_lignes_symbole));
-		mAllLignes.couleurTexte = Color.BLACK;
+		mAllLignes = Ligne.buildAllLigneItem(this);
 		mAllSens = new Sens(-1, getString(R.string.target_tous_sens));
 		mAllArrets = new Arret.Builder().setId(-1).setNomArret(getString(R.string.target_tous_arrets)).build();
 
@@ -152,14 +149,14 @@ public class CommentaireActivity extends SherlockActivity {
 		mBtnChangeSens.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				showSelectSensDialog(mLigne.code);
+				showSelectSensDialog(mLigne.getCode());
 			}
 		});
 		mBtnChangeArret = findViewById(R.id.commentaireArret);
 		mBtnChangeArret.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				showSelectArretDialog(mLigne.code, mSens.code);
+				showSelectArretDialog(mLigne.getCode(), mSens.code);
 			}
 		});
 
@@ -326,7 +323,7 @@ public class CommentaireActivity extends SherlockActivity {
 			commentaireItem.setCodeSens(mSens.code);
 		}
 		if (mLigne != null) {
-			commentaireItem.setCodeLigne(mLigne.code);
+			commentaireItem.setCodeLigne(mLigne.getCode());
 		}
 		commentaireItem.setMessage(mCommentText.getText().toString().trim());
 
@@ -346,12 +343,12 @@ public class CommentaireActivity extends SherlockActivity {
 	 */
 	private void setLigne(final Ligne ligne) {
 		this.mLigne = ligne;
-		mTextLigne.setText(ligne.lettre);
-		mTextLigne.setTextColor(ligne.couleurTexte);
-		if (ligne.couleurBackground == 0) {
+		mTextLigne.setText(ligne.getLettre());
+		mTextLigne.setTextColor(ligne.getCouleurTexte());
+		if (ligne.getCouleur() == 0) {
 			mTextLigne.setBackgroundResource(R.drawable.item_symbole_back);
 		} else {
-			mTextLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.couleurBackground));
+			mTextLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
 		}
 
 		setSens(mAllSens);
