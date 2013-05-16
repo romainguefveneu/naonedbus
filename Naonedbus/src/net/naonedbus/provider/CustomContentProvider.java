@@ -18,6 +18,7 @@
  */
 package net.naonedbus.provider;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -36,10 +37,12 @@ import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
 import android.util.Log;
 
+import com.bugsense.trace.BugSenseHandler;
+
 public abstract class CustomContentProvider extends ContentProvider {
 
 	private static CoreDatabase database;
-	private static DatabaseActionListener databaseActionListener;
+	private static DatabaseActionObserver databaseActionListener;
 
 	@Override
 	public boolean onCreate() {
@@ -72,7 +75,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 		return database.getWritableDatabase();
 	}
 
-	public static synchronized void setDatabaseActionListener(final DatabaseActionListener listener) {
+	public static synchronized void setDatabaseActionListener(final DatabaseActionObserver listener) {
 		CustomContentProvider.databaseActionListener = listener;
 	}
 
@@ -113,7 +116,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 			TimeLogUtils timeLogUtils;
 
 			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.onCreate();
+				CustomContentProvider.databaseActionListener.dispatchCreate();
 			}
 
 			if (DBG) {
@@ -121,11 +124,22 @@ public abstract class CustomContentProvider extends ContentProvider {
 				timeLogUtils.start();
 			}
 
-			execute(db, R.raw.sql_create);
-			executeBulk(db, R.raw.sql_data);
+			createDatabase(db);
 
 			if (DBG) {
 				timeLogUtils.step("Fin d'installation");
+			}
+		}
+
+		private void createDatabase(final SQLiteDatabase db) {
+			try {
+
+				execute(db, R.raw.sql_create);
+				executeBulk(db, R.raw.sql_data);
+
+			} catch (final Exception e) {
+				BugSenseHandler.sendExceptionMessage("Erreur lors de création de la base.", "", e);
+				Log.e(LOG_TAG, "Erreur lors de création de la base.", e);
 			}
 		}
 
@@ -139,7 +153,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 			TimeLogUtils timeLogUtils;
 
 			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.onUpgrade(oldVersion);
+				CustomContentProvider.databaseActionListener.dispatchUpgrade(oldVersion);
 			}
 
 			if (DBG) {
@@ -147,12 +161,39 @@ public abstract class CustomContentProvider extends ContentProvider {
 				timeLogUtils.start();
 			}
 
-			execute(db, R.raw.sql_before_update, R.raw.sql_create);
-			executeBulk(db, R.raw.sql_data);
-			execute(db, R.raw.sql_after_update);
+			try {
 
+				execute(db, R.raw.sql_before_update, R.raw.sql_create);
+				executeBulk(db, R.raw.sql_data);
+				execute(db, R.raw.sql_after_update);
+
+			} catch (final Exception e) {
+				BugSenseHandler.sendExceptionMessage("Erreur lors de la mise à jour de la base.", "", e);
+				Log.e(LOG_TAG, "Erreur lors de la mise à jour de la base.", e);
+				handleUpgradeException();
+			} finally {
+				if (DBG)
+					timeLogUtils.step("Fin de la mise à jour");
+			}
+
+		}
+
+		private void handleUpgradeException() {
 			if (DBG)
-				timeLogUtils.step("Fin de la mise à jour");
+				Log.i(LOG_TAG, "Recréation de la base de donnée.");
+
+			if (CustomContentProvider.databaseActionListener != null) {
+				CustomContentProvider.databaseActionListener.dispatchUpgradeError();
+			}
+
+			final File dbFile = mContext.getDatabasePath(DB_NAME);
+			dbFile.delete();
+
+			final SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile.getAbsolutePath(), null);
+			db.beginTransaction();
+			createDatabase(db);
+			db.setTransactionSuccessful();
+			db.endTransaction();
 		}
 
 		/**
@@ -162,30 +203,27 @@ public abstract class CustomContentProvider extends ContentProvider {
 		 *            La base de données.
 		 * @param resIds
 		 *            Les ids des scripts à exécuter, dans l'ordre.
+		 * @throws IOException
 		 */
-		private void execute(final SQLiteDatabase db, final int... resIds) {
-			try {
-				for (final int resId : resIds) {
-					if (resId == 0)
-						continue;
+		private void execute(final SQLiteDatabase db, final int... resIds) throws IOException {
+			for (final int resId : resIds) {
+				if (resId == 0)
+					continue;
 
+				if (DBG)
+					Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
+
+				final List<String> queries = mCompressedQueriesHelper.getQueries(resId);
+
+				for (final String query : queries) {
 					if (DBG)
-						Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
+						Log.d(LOG_TAG, "\t" + query);
 
-					final List<String> queries = mCompressedQueriesHelper.getQueries(resId);
-
-					for (final String query : queries) {
-						if (DBG)
-							Log.d(LOG_TAG, "\t" + query);
-
-						if (query.trim().length() > 0) {
-							db.execSQL(query);
-						}
+					if (query.trim().length() > 0) {
+						db.execSQL(query);
 					}
-
 				}
-			} catch (final IOException e) {
-				Log.e(LOG_TAG, "Erreur à l'execution", e);
+
 			}
 		}
 
@@ -196,35 +234,30 @@ public abstract class CustomContentProvider extends ContentProvider {
 		 *            La base de données.
 		 * @param resIds
 		 *            Les ids des scripts à exécuter, dans l'ordre.
+		 * @throws IOException
 		 */
-		private void executeBulk(final SQLiteDatabase db, final int... resIds) {
+		private void executeBulk(final SQLiteDatabase db, final int... resIds) throws IOException {
 			SQLiteStatement statement;
 			List<BulkQuery> bulkQueries;
 
-			try {
+			for (final int resId : resIds) {
+				if (DBG)
+					Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
 
-				for (final int resId : resIds) {
-					if (DBG)
-						Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
+				bulkQueries = mCompressedQueriesHelper.getBulkQueries(resId);
 
-					bulkQueries = mCompressedQueriesHelper.getBulkQueries(resId);
-
-					for (final BulkQuery bulkQuery : bulkQueries) {
-						final List<String[]> statementValues = bulkQuery.getValues();
-						statement = db.compileStatement(bulkQuery.getPattern());
-						for (final String[] values : statementValues) {
-							for (int i = 0; i < values.length; i++) {
-								statement.bindString(i + 1, values[i]);
-							}
-							statement.execute();
+				for (final BulkQuery bulkQuery : bulkQueries) {
+					final List<String[]> statementValues = bulkQuery.getValues();
+					statement = db.compileStatement(bulkQuery.getPattern());
+					for (final String[] values : statementValues) {
+						for (int i = 0; i < values.length; i++) {
+							statement.bindString(i + 1, values[i]);
 						}
+						statement.execute();
 					}
-
 				}
-
-			} catch (final IOException e) {
-				Log.e(LOG_TAG, "Erreur à l'execution", e);
 			}
+
 		}
 	}
 

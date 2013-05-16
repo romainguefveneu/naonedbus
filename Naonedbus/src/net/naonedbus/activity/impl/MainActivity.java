@@ -30,13 +30,15 @@ import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
-import net.naonedbus.provider.DatabaseActionListener;
+import net.naonedbus.provider.DatabaseActionObserver;
 import net.naonedbus.provider.DatabaseVersions;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.service.FavoriService;
+import net.naonedbus.utils.InfoDialogUtils;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -54,34 +56,30 @@ public class MainActivity extends SlidingMenuActivity {
 	private boolean mContentLoaded;
 	private boolean mIsFrontActivity;
 	private boolean mFirstLaunch;
+	private boolean mUpgradeError;
 	private final MyLocationProvider mMyLocationProvider;
 
-	private final DatabaseActionListener mListener = new DatabaseActionListener() {
+	private final DatabaseActionObserver mListener = new DatabaseActionObserver(new Handler()) {
 
 		@Override
 		public void onUpgrade(final int oldVersion) {
-			MainActivity.this.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					showSetupView(R.string.updating);
-					if (oldVersion < DatabaseVersions.ACAPULCO) {
-						mFirstLaunch = true;
-						showTutorial();
-					}
-				}
-			});
+			showSetupView(R.string.updating);
+			if (oldVersion < DatabaseVersions.ACAPULCO) {
+				mFirstLaunch = true;
+				showTutorial();
+			}
 		}
 
 		@Override
 		public void onCreate() {
-			MainActivity.this.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					mFirstLaunch = true;
-					showSetupView(R.string.setup);
-					showTutorial();
-				}
-			});
+			mFirstLaunch = true;
+			showSetupView(R.string.setup);
+			showTutorial();
+		}
+
+		@Override
+		public void onUpgradeError() {
+			mUpgradeError = true;
 		}
 	};
 
@@ -164,13 +162,20 @@ public class MainActivity extends SlidingMenuActivity {
 				favorisHelper.showExportKey(key);
 				intent.removeExtra(FavoriService.INTENT_PARAM_KEY);
 			}
+
+			if (mUpgradeError) {
+				InfoDialogUtils.show(this, R.string.error_title_upgrade, R.string.error_summary_upgrade);
+			}
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void showSetupView(final int textResId) {
-		findViewById(R.id.setupViewStub).setVisibility(View.VISIBLE);
-		((TextView) findViewById(R.id.setupViewLabel)).setText(textResId);
+		final View view;
+		if ((view = findViewById(R.id.setupViewStub)) != null) {
+			view.setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.setupViewLabel)).setText(textResId);
+		}
 	}
 
 	private void hideSetupView() {

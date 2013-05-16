@@ -109,6 +109,7 @@
     <string name="action_groupes_manage">Gérer les groupes</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
+    <string name="error_title_upgrade">La mise à jour ne s\'est pas bien passée</string>
     <string name="error_title_webservice_tan">Le service Tan est indisponible</string>
     <string name="error_title_webservice">Le service est indisponible</string>
     <string name="error_title_network">Une erreur réseau est survenue</string>
@@ -117,6 +118,7 @@
     <string name="error_title_empty_groupe">Aucun groupe</string>
     <string name="error_title_selected_groupe">Aucun groupe sélectionné</string>
     <string name="error_summary">Merci de réessayer !</string>
+    <string name="error_summary_upgrade">Vos favoris ont été perdus pendant cette mise à jour, nous sommes désolés !</string>
     <string name="error_summary_network">Vérifiez votre connexion et réessayez</string>
     <string name="error_summary_webservice">Merci de réessayer dans quelques instants</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>

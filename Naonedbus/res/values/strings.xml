@@ -100,7 +100,8 @@
     <string name="action_list_location_center">Center to the closest</string>
     <string name="action_groupes_add">Add group</string>
     <string name="action_groupes_manage">Manage groups</string>
-    <string name="error_title">An error occured</string>
+    <string name="error_title">An error occurred</string>
+    <string name="error_title_upgrade">An error occurred during the update</string>
     <string name="error_title_webservice_tan">The Tan service is unavailable</string>
     <string name="error_title_webservice">Service is unavailable</string>
     <string name="error_title_network">A network error has occurred</string>
@@ -109,6 +110,7 @@
     <string name="error_title_empty_groupe">No group</string>
     <string name="error_title_selected_groupe">No selected group</string>
     <string name="error_summary">Please try again!</string>
+    <string name="error_summary_upgrade">Your bookmarks have disappeared, we\'re sorry !</string>
     <string name="error_summary_network">Check your connection and try again</string>
     <string name="error_summary_webservice">Please try again in a few moments</string>
     <string name="error_summary_empty">“Sorry about this. I know it\'s a bit silly.”</string>
