@@ -29,48 +29,42 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ArretCursorAdapter extends CursorAdapter implements Filterable {
+public class ArretCursorAdapter extends CursorAdapter {
 
-	protected LayoutInflater layoutInflater;
-	private Cursor favoris;
-	private int layoutId = R.layout.list_item_arret;
-	private Drawable iconBackgroundDrawable;
+	protected LayoutInflater mLayoutInflater;
+	private int mLayoutId = R.layout.list_item_arret;
+	private Cursor mFavoris;
+	private Drawable mIconBackgroundDrawable;
 
-	public ArretCursorAdapter(Context context, Cursor arrets, Cursor favoris) {
+	public ArretCursorAdapter(final Context context, final Cursor arrets, final Cursor favoris) {
 		super(context, arrets, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-		this.favoris = favoris;
-		this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mFavoris = favoris;
+		mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
-	public ArretCursorAdapter(Context context, Cursor arrets, Cursor favoris, int colorBack) {
-		this(context, arrets, favoris);
-	}
-
-	protected void setLayoutId(int layoutId) {
-		this.layoutId = layoutId;
+	protected void setLayoutId(final int layoutId) {
+		this.mLayoutId = layoutId;
 	}
 
 	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
+	public void bindView(final View view, final Context context, final Cursor cursor) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final String description = cursor.getString(cursor.getColumnIndex(EquipementTable.NOM));
 		final int id = cursor.getInt(cursor.getColumnIndex(ArretTable._ID));
 
 		holder.iconFavori.setVisibility((isFavori(id)) ? View.VISIBLE : View.GONE);
 		holder.title.setText(description);
-		if (iconBackgroundDrawable != null) {
-			holder.icon.setBackgroundDrawable(iconBackgroundDrawable);
+		if (mIconBackgroundDrawable != null) {
+			holder.icon.setBackgroundDrawable(mIconBackgroundDrawable);
 		}
 	}
 
 	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		final View v = layoutInflater.inflate(this.layoutId, null);
+	public View newView(final Context context, final Cursor cursor, final ViewGroup parent) {
+		final View v = mLayoutInflater.inflate(this.mLayoutId, null);
 
 		final ViewHolder holder = new ViewHolder();
 		holder.iconFavori = (ImageView) v.findViewById(R.id.itemFavori);
@@ -87,39 +81,22 @@ public class ArretCursorAdapter extends CursorAdapter implements Filterable {
 		TextView title = null;
 	}
 
-	private boolean isFavori(int idArret) {
-		if (favoris == null)
+	private boolean isFavori(final int idArret) {
+		if (mFavoris == null)
 			return false;
 
-		final int colIndex = favoris.getColumnIndex(FavoriTable._ID);
-		favoris.moveToFirst();
-		while (favoris.isAfterLast() == false) {
-			if (idArret == favoris.getInt(colIndex))
+		final int colIndex = mFavoris.getColumnIndex(FavoriTable._ID);
+		mFavoris.moveToFirst();
+		while (mFavoris.isAfterLast() == false) {
+			if (idArret == mFavoris.getInt(colIndex))
 				return true;
-			favoris.moveToNext();
+			mFavoris.moveToNext();
 		}
 		return false;
 	}
 
-	public void setFavoris(Cursor favoris) {
-		this.favoris = favoris;
+	public void setFavoris(final Cursor favoris) {
+		this.mFavoris = favoris;
 	}
-
-	@Override
-	public Filter getFilter() {
-		return mFilter;
-	}
-
-	private Filter mFilter = new Filter() {
-		@Override
-		protected void publishResults(CharSequence constraint, FilterResults results) {
-
-		}
-
-		@Override
-		protected FilterResults performFiltering(CharSequence constraint) {
-			return null;
-		}
-	};
 
 }

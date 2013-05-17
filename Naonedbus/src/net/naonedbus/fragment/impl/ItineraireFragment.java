@@ -20,8 +20,8 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.manager.impl.ArretManager;
-import net.naonedbus.widget.adapter.impl.ArretCursorAdapter;
+import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -38,26 +38,26 @@ public class ItineraireFragment extends CustomFragment {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 	}
 
 	@Override
-	protected void bindView(View view, Bundle savedInstanceState) {
+	protected void bindView(final View view, final Bundle savedInstanceState) {
 		mFromTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireFrom);
 		mToTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireTo);
 
-		final ArretManager arretManager = ArretManager.getInstance();
-		final ArretCursorAdapter adapter = new ArretCursorAdapter(getActivity(), arretManager.getCursor(getActivity()
-				.getContentResolver()), null);
+		final EquipementManager equipementManager = EquipementManager.getInstance();
+		final EquipementCursorAdapter adapter = new EquipementCursorAdapter(getActivity(),
+				equipementManager.getCursor(getActivity().getContentResolver()));
 
 		mFromTextView.setAdapter(adapter);
 		mToTextView.setAdapter(adapter);
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		return false;
 	}
 

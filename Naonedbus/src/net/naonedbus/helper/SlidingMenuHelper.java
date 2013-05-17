@@ -26,6 +26,7 @@ import net.naonedbus.activity.impl.AboutActivity;
 import net.naonedbus.activity.impl.BicloosActivity;
 import net.naonedbus.activity.impl.EquipementsActivity;
 import net.naonedbus.activity.impl.InfosTraficActivity;
+import net.naonedbus.activity.impl.ItineraireActivity;
 import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.OldSettingsActivity;
@@ -69,7 +70,7 @@ public class SlidingMenuHelper {
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_main, MainActivity.class, R.drawable.ic_action_view_as_grid, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_infos_trafic, InfosTraficActivity.class,R.drawable.ic_action_warning, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_bicloo, BicloosActivity.class, R.drawable.ic_action_bicloo, 0));
-//		menuItems.add(new MainMenuItem(R.string.menu_itineraires, ItineraireActivity.class, R.drawable.ic_action_direction, 0));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_itineraire, ItineraireActivity.class, R.drawable.ic_action_direction, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));

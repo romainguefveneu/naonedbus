@@ -20,6 +20,7 @@ package net.naonedbus.widget.adapter.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Equipement;
+import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.manager.impl.EquipementManager.SousType;
 import net.naonedbus.provider.table.EquipementTable;
 import net.naonedbus.utils.ColorUtils;
@@ -34,21 +35,27 @@ import android.widget.TextView;
 
 public class EquipementCursorAdapter extends CursorSectionAdapter {
 
+	private final Context mContext;
+	private final EquipementManager mEquipementManager;
+
 	private int mColIdType;
 	private int mColIdSousType;
 	private int mColNom;
 	private int mColAdresse;
 	private int mColDetails;
 
-	public EquipementCursorAdapter(Context context, Cursor c) {
+	public EquipementCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, R.layout.list_item_equipement);
+		mContext = context;
+		mEquipementManager = EquipementManager.getInstance();
+
 		if (c != null) {
 			initColumns();
 		}
 	}
 
 	@Override
-	public void changeCursor(Cursor cursor) {
+	public void changeCursor(final Cursor cursor) {
 		super.changeCursor(cursor);
 		if (cursor != null) {
 			initColumns();
@@ -65,7 +72,7 @@ public class EquipementCursorAdapter extends CursorSectionAdapter {
 	}
 
 	@Override
-	protected void bindViewHolder(View view) {
+	protected void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
@@ -75,7 +82,7 @@ public class EquipementCursorAdapter extends CursorSectionAdapter {
 	}
 
 	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
+	public void bindView(final View view, final Context context, final Cursor cursor) {
 		super.bindView(view, context, cursor);
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
@@ -138,4 +145,18 @@ public class EquipementCursorAdapter extends CursorSectionAdapter {
 		ImageView itemSymbole;
 	}
 
+	@Override
+	public CharSequence convertToString(final Cursor cursor) {
+		return cursor.getString(mColNom);
+	}
+
+	@Override
+	public Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
+		Cursor currentCursor = null;
+		if (constraint != null) {
+			currentCursor = mEquipementManager.getEquipementsCursorByName(mContext.getContentResolver(), null,
+					constraint.toString());
+		}
+		return currentCursor;
+	}
 }

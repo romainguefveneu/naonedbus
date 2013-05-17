@@ -65,6 +65,17 @@ public class ArretManager extends SQLiteManager<Arret> {
 		mBuilder = new Arret.Builder();
 	}
 
+	/***
+	 * Récéruper les arrêt selon un nom.
+	 * 
+	 * @param contentResolver
+	 * @param query
+	 * @return
+	 */
+	public Cursor findByName(final ContentResolver contentResolver, final String query) {
+		return getCursor(contentResolver, EquipementTable.NORMALIZED_NOM + " LIKE %?%", new String[] { query });
+	}
+
 	/**
 	 * Récupérer une liste contenant les arrets de la ligne et du sens sépcifiée
 	 * 
