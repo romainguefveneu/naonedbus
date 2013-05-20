@@ -61,7 +61,7 @@ public class PlanFragment extends CustomFragment {
 	private boolean mSaveToCache;
 
 	public PlanFragment() {
-		super(R.string.title_fragment_plan, R.layout.fragment_plan);
+		super(R.layout.fragment_plan);
 	}
 
 	@Override

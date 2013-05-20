@@ -54,7 +54,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.devspark.appmsg.AppMsg;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public abstract class CustomListFragment extends SherlockListFragment implements CustomFragmentActions,
 		LoaderCallbacks<AsyncResult<ListAdapter>> {
@@ -76,7 +78,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	int mMessageEmptySummaryId = R.string.error_summary_empty;
 	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
-	protected int mTitleId;
 	protected int mLayoutId;
 	protected int mLayoutListHeaderId = R.layout.list_item_header;
 	protected ViewGroup mFragmentView;
@@ -91,13 +92,12 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	/** Minutes pendant lesquelles le contenu est considéré comme à jour. */
 	private int mTimeToLive = 5;
 
-	public CustomListFragment(final int titleId, final int layoutId) {
-		mTitleId = titleId;
+	public CustomListFragment(final int layoutId) {
 		mLayoutId = layoutId;
 	}
 
-	public CustomListFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
-		this(titleId, layoutId);
+	public CustomListFragment(final int layoutId, final int layoutListHeaderId) {
+		this(layoutId);
 		mLayoutListHeaderId = layoutListHeaderId;
 	}
 
@@ -202,11 +202,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 				}
 			});
 		}
-	}
-
-	@Override
-	public int getTitleId() {
-		return mTitleId;
 	}
 
 	public void loadContent() {
@@ -598,7 +593,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			if (getListAdapter() == null || getListAdapter().isEmpty()) {
 				showMessage(titleRes, messageRes, drawableRes);
 			} else {
-				AppMsg.makeText(getActivity(), titleRes, AppMsg.STYLE_ALERT).show();
+				Crouton.makeText(getActivity(), titleRes, Style.ALERT, (ViewGroup) getView()).show();
 			}
 
 			Log.e(getClass().getSimpleName(), "Erreur de chargement.", exception);

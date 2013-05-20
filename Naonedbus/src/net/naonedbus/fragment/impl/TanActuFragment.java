@@ -49,7 +49,7 @@ public class TanActuFragment extends CustomListFragment {
 	private String mCodeLigne;
 
 	public TanActuFragment() {
-		super(R.string.title_fragment_tan_actu, R.layout.fragment_listview_box);
+		super(R.layout.fragment_listview_box);
 	}
 
 	@Override

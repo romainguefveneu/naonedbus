@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ *  Copyright (C) 2011 Romain Guefveneu
+ *  
+ *  This file is part of naonedbus.
+ *  
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="SectionTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!-- See comments for @dimen/list_section_divider_min_height -->
+        <item name="android:minHeight">@dimen/list_section_divider_min_height</item>
+        <item name="android:background">?attr/sectionBackground</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">?attr/sectionColor</item>
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="SectionTitle.Small" parent="ItemPrimaryText.Small">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/secondaryColor</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ItemTime">
+        <item name="android:textColor">?attr/secondaryColor</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="BigSubTitle.Time" parent="BigSubTitle">
+        <item name="android:textColor">@android:color/tertiary_text_light</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="CardDelai" parent="CardHoraire">
+        <item name="android:textColor">@color/card_text_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">-8sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="ButtonFlat">
+        <item name="android:layout_margin">@dimen/padding_small</item>
+        <item name="android:padding">@dimen/padding_tiny</item>
+        <item name="android:minHeight">0dip</item>
+        <item name="android:minWidth">150dip</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+</resources>

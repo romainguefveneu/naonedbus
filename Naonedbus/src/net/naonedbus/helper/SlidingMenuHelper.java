@@ -24,6 +24,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AboutActivity;
 import net.naonedbus.activity.impl.BicloosActivity;
+import net.naonedbus.activity.impl.DonateActivity;
 import net.naonedbus.activity.impl.EquipementsActivity;
 import net.naonedbus.activity.impl.InfosTraficActivity;
 import net.naonedbus.activity.impl.ItineraireActivity;
@@ -35,15 +36,14 @@ import net.naonedbus.activity.impl.SearchActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.indexer.impl.MainMenuIndexer;
-import net.naonedbus.widget.item.impl.LinkMainMenuItem;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import net.simonvt.menudrawer.MenuDrawer;
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -77,7 +77,7 @@ public class SlidingMenuHelper {
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_carte, MapActivity.class, R.drawable.ic_action_map, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parametres, (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) ? OldSettingsActivity.class : SettingsActivity.class, R.drawable.ic_action_settings, 1));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_about, AboutActivity.class, R.drawable.ic_action_info, 1));
-		MENU_ITEMS.add(new LinkMainMenuItem(R.string.menu_don, "http://t.co/4uKK33eu", R.drawable.ic_action_favourite, 1));
+		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_donate, DonateActivity.class, R.drawable.ic_action_favourite, 1));
 		// @formatter:on
 	}
 
@@ -145,6 +145,9 @@ public class SlidingMenuHelper {
 			sAdapter.setIndexer(indexer);
 		}
 
+		final View headerView = LayoutInflater.from(mActivity).inflate(R.layout.list_menu_header, mMenuListView, false);
+		mMenuListView.addHeaderView(headerView);
+
 		sAdapter.setCurrentClass(mActivity.getClass());
 		mMenuListView.setAdapter(sAdapter);
 
@@ -165,33 +168,21 @@ public class SlidingMenuHelper {
 
 				final MainMenuItem item = (MainMenuItem) mMenuListView.getItemAtPosition(position);
 
-				if (item instanceof LinkMainMenuItem) {
-
-					final LinkMainMenuItem linkItem = (LinkMainMenuItem) item;
-					final Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse(linkItem.getUrl()));
-					mActivity.startActivity(intent);
-
+				if (mActivity.getClass().equals(item.getIntentClass())) {
+					// Même activité
+					slidingMenu.closeMenu();
+					mMenuListView.setClickable(true);
 				} else {
+					// Nouvelle activité
+					sAdapter.setCurrentClass(item.getIntentClass());
+					sAdapter.notifyDataSetChanged();
 
-					if (mActivity.getClass().equals(item.getIntentClass())) {
-						// Même activité
-						slidingMenu.closeMenu();
-						mMenuListView.setClickable(true);
-					} else {
-						// Nouvelle activité
-						sAdapter.setCurrentClass(item.getIntentClass());
-						sAdapter.notifyDataSetChanged();
-
-						final Intent intent = new Intent(mActivity, item.getIntentClass());
-						intent.putExtra("fromMenu", true);
-						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-						mActivity.startActivity(intent);
-						mActivity.overridePendingTransition(0, 0);
-					}
-
+					final Intent intent = new Intent(mActivity, item.getIntentClass());
+					intent.putExtra("fromMenu", true);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					mActivity.startActivity(intent);
+					mActivity.overridePendingTransition(0, 0);
 				}
-
 			}
 		});
 

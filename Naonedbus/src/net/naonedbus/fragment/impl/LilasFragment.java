@@ -26,7 +26,7 @@ import net.naonedbus.fragment.EquipementFragment;
 public class LilasFragment extends EquipementFragment implements CustomFragmentActions {
 
 	public LilasFragment() {
-		super(R.string.title_fragment_lila, R.layout.fragment_listview_section, Equipement.Type.TYPE_LILA);
+		super(R.layout.fragment_listview_section, Equipement.Type.TYPE_LILA);
 	}
 
 }

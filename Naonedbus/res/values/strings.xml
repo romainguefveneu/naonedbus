@@ -3,7 +3,7 @@
 
     <string name="app_name">NaonedBus</string>
     <string name="version_number">Version %s</string>
-    <string name="version_name">Acapulco</string>
+    <string name="version_name">Blue Hawaiian</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
     <string name="tomorrow">Tomorrow</string>
@@ -62,7 +62,7 @@
     <string name="title_activity_horaires">Timetables</string>
     <string name="title_activity_about">About</string>
     <string name="title_activity_groupes">Group management</string>
-    <string name="menu_don">Make a donation</string>
+    <string name="title_activity_donate">Make a donation</string>
     <string name="menu_section_naonedbus">Naonedbus</string>
     <string name="menu_section_options">Setting</string>
     <string name="action_call">Call</string>
@@ -139,6 +139,8 @@
     <string name="about_licences_title">Licenses</string>
     <string name="about_licences_libs">Libraries</string>
     <string name="about_licences_icons">Icons</string>
+    <string name="donate_flattr">Flattr</string>
+    <string name="donate_paypal">PayPal</string>
     <string name="title_fragment_plan">Map</string>
     <string name="title_fragment_parcours">Route</string>
     <string name="title_activity_plan">Line %1$s • %2$s</string>

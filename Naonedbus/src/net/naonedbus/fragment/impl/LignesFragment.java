@@ -84,7 +84,7 @@ public class LignesFragment extends CustomCursorFragment implements CustomFragme
 	};
 
 	public LignesFragment() {
-		super(R.string.title_fragment_lignes, R.layout.fragment_listview_section);
+		super(R.layout.fragment_listview_section);
 	}
 
 	@Override

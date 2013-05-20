@@ -21,10 +21,8 @@ package net.naonedbus.widget.adapter.impl;
 import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
-import net.naonedbus.widget.indexer.impl.MainMenuIndexer;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,14 +32,15 @@ public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 
 	private final Typeface mRoboto;
 	private final int mSelectedColor;
+	private final int mOptionsColor;
 
 	private Class<?> mCurrentClass;
 
 	public MainMenuAdapter(final Context context) {
 		super(context, R.layout.list_item_menu);
-		setIndexer(new MainMenuIndexer(context));
 		mRoboto = FontUtils.getRobotoLight(context);
 		mSelectedColor = context.getResources().getColor(R.color.menu_current);
+		mOptionsColor = context.getResources().getColor(R.color.menu_option_background);
 	}
 
 	public void setCurrentClass(final Class<?> currentClass) {
@@ -60,8 +59,19 @@ public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 		if (intentClass != null && intentClass.equals(mCurrentClass)) {
 			holder.view.setBackgroundColor(mSelectedColor);
 		} else {
-			holder.view.setBackgroundColor(Color.TRANSPARENT);
+			if (item.getSection().equals(0)) {
+				setViewBackgroundWithoutResettingPadding(holder.view, R.drawable.item_background_holo_light);
+			} else {
+				setViewBackgroundWithoutResettingPadding(holder.view, R.drawable.item_background_options_holo_light);
+			}
 		}
+	}
+
+	public static void setViewBackgroundWithoutResettingPadding(final View v, final int backgroundResId) {
+		final int paddingBottom = v.getPaddingBottom(), paddingLeft = v.getPaddingLeft();
+		final int paddingRight = v.getPaddingRight(), paddingTop = v.getPaddingTop();
+		v.setBackgroundResource(backgroundResId);
+		v.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 	}
 
 	@Override
@@ -73,6 +83,19 @@ public class MainMenuAdapter extends ArraySectionAdapter<MainMenuItem> {
 		holder.title.setTypeface(mRoboto);
 
 		view.setTag(holder);
+	}
+
+	@Override
+	protected void bindSectionHeader(final View itemView, final int position) {
+		final View headerView = itemView.findViewById(R.id.headerView);
+		if (headerView != null) {
+			final int section = getSectionForPosition(position);
+			if (section == 1 && getPositionForSection(section) == position) {
+				headerView.setVisibility(View.VISIBLE);
+			} else {
+				headerView.setVisibility(View.GONE);
+			}
+		}
 	}
 
 	static class ViewHolder {

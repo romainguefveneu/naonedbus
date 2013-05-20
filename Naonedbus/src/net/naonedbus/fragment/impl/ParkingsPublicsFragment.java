@@ -89,7 +89,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	private int mCurrentSort = SORT_NOM;
 
 	public ParkingsPublicsFragment() {
-		super(R.string.title_fragment_parkings_publics, R.layout.fragment_listview_section);
+		super(R.layout.fragment_listview_section);
 		myLocationProvider = NBApplication.getLocationProvider();
 	}
 

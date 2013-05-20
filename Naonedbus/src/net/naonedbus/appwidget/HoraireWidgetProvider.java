@@ -297,7 +297,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 			for (final Horaire horaire : nextHoraires) {
 				content = TextUtils.concat(content,
-						FormatUtils.formatTime(context, timeFormat.format(horaire.getTimestamp())));
+						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getTimestamp())));
 				if (++count < nextHoraires.size()) {
 					content = TextUtils.concat(content, " \u2022 ");
 				}
@@ -378,7 +378,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				final TextView horairesView = new TextView(context);
 				final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
 				final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-				horairesView.setText(FormatUtils.formatTime(context, timeFormat.format(noon.toDate())) + "__");
+				horairesView.setText(FormatUtils.formatTimeAmPm(context, timeFormat.format(noon.toDate())) + "__");
 
 				final int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 				final int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);

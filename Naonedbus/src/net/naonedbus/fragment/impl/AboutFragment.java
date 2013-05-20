@@ -82,7 +82,7 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 	private String mSha1;
 
 	public AboutFragment() {
-		super(R.string.title_fragment_about, R.layout.fragment_about);
+		super(R.layout.fragment_about);
 	}
 
 	@Override

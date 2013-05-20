@@ -92,6 +92,9 @@
             android:name=".activity.impl.OldSettingsActivity"
             android:label="@string/title_activity_parametres" />
         <activity
+            android:name=".activity.impl.DonateActivity"
+            android:label="@string/title_activity_donate" />
+        <activity
             android:name=".activity.impl.MapActivity"
             android:label="@string/title_activity_carte"
             android:launchMode="singleTop" >

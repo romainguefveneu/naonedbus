@@ -22,49 +22,49 @@ import net.naonedbus.widget.item.SectionItem;
 
 public class MainMenuItem implements SectionItem {
 
-	private int title;
-	private Class<?> intentClass;
-	private int resIcon;
-	private Object section;
+	private int mTitle;
+	private Class<?> mIntentClass;
+	private int mResIcon;
+	private Object mSection;
 
-	public MainMenuItem(int title, Class<?> intentClass, int resIcon, Integer section) {
-		this.title = title;
-		this.intentClass = intentClass;
-		this.resIcon = resIcon;
-		this.section = section;
+	public MainMenuItem(final int title, final Class<?> intentClass, final int resIcon, final Integer section) {
+		mTitle = title;
+		mIntentClass = intentClass;
+		mResIcon = resIcon;
+		mSection = section;
 	}
 
 	@Override
 	public Object getSection() {
-		return this.section;
+		return mSection;
 	}
 
 	public int getTitle() {
-		return title;
+		return mTitle;
 	}
 
-	public void setTitle(int title) {
-		this.title = title;
+	public void setTitle(final int title) {
+		mTitle = title;
 	}
 
 	public Class<?> getIntentClass() {
-		return intentClass;
+		return mIntentClass;
 	}
 
-	public void setIntentClass(Class<?> intentClass) {
-		this.intentClass = intentClass;
+	public void setIntentClass(final Class<?> intentClass) {
+		mIntentClass = intentClass;
 	}
 
 	public int getResIcon() {
-		return resIcon;
+		return mResIcon;
 	}
 
-	public void setResIcon(int resIcon) {
-		this.resIcon = resIcon;
+	public void setResIcon(final int resIcon) {
+		mResIcon = resIcon;
 	}
 
-	public void setSection(Object section) {
-		this.section = section;
+	public void setSection(final Object section) {
+		mSection = section;
 	}
 
 }

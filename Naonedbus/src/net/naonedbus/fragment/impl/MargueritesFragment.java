@@ -26,7 +26,7 @@ import net.naonedbus.fragment.EquipementFragment;
 public class MargueritesFragment extends EquipementFragment implements CustomFragmentActions {
 
 	public MargueritesFragment() {
-		super(R.string.title_fragment_marguerites, R.layout.fragment_listview_section, Equipement.Type.TYPE_MARGUERITE);
+		super(R.layout.fragment_listview_section, Equipement.Type.TYPE_MARGUERITE);
 	}
 
 }

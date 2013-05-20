@@ -78,8 +78,8 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 
 	protected int localCount = -1;
 
-	public EquipementFragment(final int titleId, final int layoutId, final Equipement.Type type) {
-		super(titleId, layoutId);
+	public EquipementFragment(final int layoutId, final Equipement.Type type) {
+		super(layoutId);
 
 		mType = type;
 		myLocationProvider = NBApplication.getLocationProvider();
@@ -95,8 +95,8 @@ public abstract class EquipementFragment extends CustomListFragment implements C
 		localCount = COUNT++;
 	}
 
-	public EquipementFragment(final int titleId, final int layoutId, final Equipement.Type type, final SousType sousType) {
-		this(titleId, layoutId, type);
+	public EquipementFragment(final int layoutId, final Equipement.Type type, final SousType sousType) {
+		this(layoutId, type);
 		mSousType = sousType;
 	}
 

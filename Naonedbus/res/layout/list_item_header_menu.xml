@@ -19,20 +19,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/headerView"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_vertical"
-    android:background="@color/menu_background"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp" >
+    android:background="@drawable/menu_options_first_background"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@id/headerTitle"
-        style="@style/SectionTitle.Menu"
-        android:layout_marginBottom="8dip"
+        style="@style/SectionTitle"
         android:visibility="gone" />
 
-</LinearLayout>
+</FrameLayout>

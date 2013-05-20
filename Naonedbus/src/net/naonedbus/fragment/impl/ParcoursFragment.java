@@ -47,7 +47,7 @@ public class ParcoursFragment extends CustomListFragment {
 	private final EquipementManager mEquipementManager;
 
 	public ParcoursFragment() {
-		super(R.string.title_fragment_parcours, R.layout.fragment_listview);
+		super(R.layout.fragment_listview);
 		mEquipementManager = EquipementManager.getInstance();
 	}
 

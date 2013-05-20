@@ -67,7 +67,6 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	int mMessageEmptySummaryId = R.string.error_summary_empty;
 	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
-	protected int mTitleId;
 	protected int mLayoutId;
 	protected int mLayoutListHeaderId = R.layout.list_item_header;
 	protected ViewGroup mFragmentView;
@@ -89,13 +88,12 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	 */
 	private int timeToLive = 5;
 
-	public CustomCursorFragment(final int titleId, final int layoutId) {
-		mTitleId = titleId;
+	public CustomCursorFragment(final int layoutId) {
 		mLayoutId = layoutId;
 	}
 
-	public CustomCursorFragment(final int titleId, final int layoutId, final int layoutListHeaderId) {
-		this(titleId, layoutId);
+	public CustomCursorFragment(final int layoutId, final int layoutListHeaderId) {
+		this(layoutId);
 		mLayoutListHeaderId = layoutListHeaderId;
 	}
 
@@ -186,11 +184,6 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 				}
 			});
 		}
-	}
-
-	@Override
-	public int getTitleId() {
-		return mTitleId;
 	}
 
 	public void refreshContent() {

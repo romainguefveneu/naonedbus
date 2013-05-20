@@ -17,61 +17,84 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultActivityContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:scrollbarStyle="outsideOverlay" >
 
-    <TextView
-        style="@style/SectionTitle"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_small"
-        android:text="@string/itineraire_section_form" />
-
-    <AutoCompleteTextView
-        android:id="@id/itineraireFrom"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_small"
-        android:contentDescription="@string/abs__searchview_description_query"
-        android:drawableLeft="@drawable/ic_action_place_light"
-        android:drawablePadding="@dimen/padding_tiny"
-        android:dropDownHeight="wrap_content"
-        android:dropDownHorizontalOffset="0dip"
-        android:dropDownVerticalOffset="0dip"
-        android:ellipsize="end"
-        android:hint="@string/search_hint_itineraire_depart"
-        android:inputType="text|textAutoComplete|textNoSuggestions"
-        android:minWidth="@dimen/abs__search_view_text_min_width"
-        android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
-        android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
-        android:singleLine="true" />
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/padding_medium"
+        android:paddingTop="@dimen/padding_medium" >
 
-    <AutoCompleteTextView
-        android:id="@id/itineraireTo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/padding_small"
-        android:contentDescription="@string/abs__searchview_description_query"
-        android:drawableLeft="@drawable/ic_action_place_light"
-        android:drawablePadding="@dimen/padding_tiny"
-        android:dropDownHeight="wrap_content"
-        android:dropDownHorizontalOffset="0dip"
-        android:dropDownVerticalOffset="0dip"
-        android:ellipsize="end"
-        android:hint="@string/search_hint_itineraire_arrivee"
-        android:inputType="text|textAutoComplete|textNoSuggestions"
-        android:minWidth="@dimen/abs__search_view_text_min_width"
-        android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
-        android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
-        android:singleLine="true" />
+        <LinearLayout
+            style="@style/Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_large"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_small" >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="Emmène-moi !" />
+            <AutoCompleteTextView
+                android:id="@id/itineraireFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_small"
+                android:drawablePadding="@dimen/padding_tiny"
+                android:dropDownHeight="wrap_content"
+                android:dropDownHorizontalOffset="0dip"
+                android:dropDownVerticalOffset="0dip"
+                android:ellipsize="end"
+                android:inputType="text|textAutoComplete|textNoSuggestions"
+                android:minWidth="@dimen/abs__search_view_text_min_width"
+                android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+                android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+                android:singleLine="true" />
 
-</LinearLayout>
+            <AutoCompleteTextView
+                android:id="@id/itineraireTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding_small"
+                android:drawablePadding="@dimen/padding_tiny"
+                android:dropDownHeight="wrap_content"
+                android:dropDownHorizontalOffset="0dip"
+                android:dropDownVerticalOffset="0dip"
+                android:ellipsize="end"
+                android:inputType="text|textAutoComplete|textNoSuggestions"
+                android:minWidth="@dimen/abs__search_view_text_min_width"
+                android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+                android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@android:id/button1"
+                style="@style/ButtonFlat.Blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:enabled="false"
+                android:text="Calculer" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@android:id/progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical" />
+    </LinearLayout>
+
+</ScrollView>

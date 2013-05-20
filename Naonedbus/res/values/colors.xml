@@ -24,6 +24,7 @@
     <color name="activity_background_light">#ffefefef</color>
     <color name="pinned_header_menu_text">#90ffffff</color>
     <color name="menu_background">#006699</color>
+    <color name="menu_option_background">#005985</color>
     <color name="menu_current">#1683bc</color>
     <color name="divider_light">#cccccc</color>
     <color name="divider_dark">#333333</color>
@@ -60,5 +61,10 @@
     <!-- Widget -->
     <color name="widget_background">#80000000</color>
     <color name="widget_background_focused">#802F93C5</color>
+
+    <!-- Buttons -->
+    <color name="flat_disabled">#cccccc</color>
+    <color name="flat_blue">#33B5E5</color>
+    <color name="flat_blue_down">#0099CC</color>
 
 </resources>

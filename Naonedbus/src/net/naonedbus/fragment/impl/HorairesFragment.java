@@ -127,7 +127,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	};
 
 	public HorairesFragment() {
-		super(R.string.title_activity_horaires, R.layout.fragment_listview_section);
+		super(R.layout.fragment_listview_section);
 		mHoraireManager = HoraireManager.getInstance();
 		mFavoriManager = FavoriManager.getInstance();
 		mArretManager = ArretManager.getInstance();

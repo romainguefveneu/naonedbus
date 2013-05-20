@@ -110,7 +110,7 @@ public class ArretsFragment extends CustomListFragment implements CustomFragment
 	private Sens mSens;
 
 	public ArretsFragment() {
-		super(R.string.title_fragment_arrets, R.layout.fragment_listview);
+		super(R.layout.fragment_listview);
 		mLocationProvider = NBApplication.getLocationProvider();
 		mLocationProvider.addListener(this);
 

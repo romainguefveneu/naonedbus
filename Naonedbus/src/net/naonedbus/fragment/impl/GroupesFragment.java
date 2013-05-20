@@ -63,7 +63,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	private CursorAdapter mAdapter;
 
 	public GroupesFragment() {
-		super(R.string.title_fragment_lignes, R.layout.fragment_listview_drag_drop);
+		super(R.layout.fragment_listview_drag_drop);
 		mGroupeManager = GroupeManager.getInstance();
 	}
 

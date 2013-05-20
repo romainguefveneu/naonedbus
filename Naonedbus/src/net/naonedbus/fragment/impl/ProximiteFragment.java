@@ -84,7 +84,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	private ImageView imageView;
 
 	public ProximiteFragment() {
-		super(R.string.title_fragment_proximite, R.layout.fragment_proximite);
+		super(R.layout.fragment_proximite);
 		if (DBG)
 			Log.i(LOG_TAG, "ProximiteFragment()");
 

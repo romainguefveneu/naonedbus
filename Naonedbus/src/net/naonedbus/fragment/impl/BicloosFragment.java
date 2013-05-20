@@ -95,7 +95,7 @@ public class BicloosFragment extends CustomListFragment implements CustomFragmen
 	private DistanceTask mLoaderDistance;
 
 	public BicloosFragment() {
-		super(R.string.title_fragment_bicloos, R.layout.fragment_listview_section);
+		super(R.layout.fragment_listview_section);
 
 		mBiclooManager = BiclooManager.getInstance();
 		mFavoriBiclooManager = FavoriBiclooManager.getInstance();

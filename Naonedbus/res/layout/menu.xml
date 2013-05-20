@@ -21,9 +21,8 @@
     android:id="@android:id/list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/menu_background"
+    android:background="@color/menu_option_background"
     android:cacheColorHint="@android:color/transparent"
     android:divider="@null"
     android:dividerHeight="0dp"
-    android:listSelector="@drawable/item_background_holo_light"
     android:scrollbars="none" />

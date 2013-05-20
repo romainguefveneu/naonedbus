@@ -41,7 +41,7 @@ public class WebViewFragment extends CustomFragment {
 	private static final String ENCODING = "UTF-8";
 
 	public WebViewFragment() {
-		super(R.string.title_fragment_versions, R.layout.fragment_webview);
+		super(R.layout.fragment_webview);
 	}
 
 	@Override

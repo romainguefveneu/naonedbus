@@ -26,25 +26,28 @@ import android.view.ViewGroup;
 
 public abstract class CustomFragment extends Fragment implements CustomFragmentActions {
 
-	protected int titleId;
-	protected int layoutId;
+	protected int mLayoutId;
 
-	protected CustomFragment(final int titleId, final int layoutId) {
-		this.titleId = titleId;
-		this.layoutId = layoutId;
+	protected CustomFragment(final int layoutId) {
+		mLayoutId = layoutId;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(this.layoutId, container, false);
+	public void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+	}
+
+	@Override
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+		if (container == null) // must put this in
+			return null;
+
+		final View view = inflater.inflate(mLayoutId, container, false);
 		bindView(view, savedInstanceState);
 		return view;
 	}
 
 	protected abstract void bindView(View view, Bundle savedInstanceState);
-
-	public int getTitleId() {
-		return titleId;
-	}
 
 }

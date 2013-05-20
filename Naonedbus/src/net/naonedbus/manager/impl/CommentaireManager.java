@@ -86,11 +86,15 @@ public class CommentaireManager extends SQLiteManager<Commentaire> {
 
 	public void updateCache(final ContentResolver contentResolver) throws IOException, JSONException {
 		final CommentaireController commentaireController = new CommentaireController();
-		final List<Commentaire> data = commentaireController.getAll(null, null, null);
 
-		clear(contentResolver);
-		fillDB(contentResolver, data);
-		mLastUpdateTimestamp = System.currentTimeMillis();
+		try {
+			final List<Commentaire> data = commentaireController.getAll(null, null, null);
+			clear(contentResolver);
+			fillDB(contentResolver, data);
+		} finally {
+			mLastUpdateTimestamp = System.currentTimeMillis();
+		}
+
 	}
 
 	public void clear(final ContentResolver contentResolver) {

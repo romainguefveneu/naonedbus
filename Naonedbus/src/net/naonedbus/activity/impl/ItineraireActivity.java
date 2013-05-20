@@ -30,9 +30,11 @@ public class ItineraireActivity extends OneFragmentSlidingActivity {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		addFragment(ItineraireFragment.class);
+		if (savedInstanceState == null) {
+			addFragment(ItineraireFragment.class);
+		}
 	}
 
 }

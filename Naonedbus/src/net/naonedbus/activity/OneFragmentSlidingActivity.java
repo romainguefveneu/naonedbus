@@ -40,7 +40,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 	private static String BUNDLE_TABS_BUNDLES = "tabsBundles";
 
-	private final int layoutId;
+	private final int mLayoutId;
 
 	/**
 	 * Liste des fragments
@@ -59,14 +59,14 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	private final int currentTheme = NBApplication.THEME;
 
 	public OneFragmentSlidingActivity(final int layoutId) {
-		this.layoutId = layoutId;
+		mLayoutId = layoutId;
 	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
-		setContentView(layoutId);
+		setContentView(mLayoutId);
 
 		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
 
@@ -116,8 +116,6 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 		if (savedInstanceState.containsKey(BUNDLE_TABS_CLASSES)) {
 			mClasse = savedInstanceState.getString(BUNDLE_TABS_CLASSES);
 			mBundle = savedInstanceState.getParcelable(BUNDLE_TABS_BUNDLES);
-
-			addFragment(mClasse, mBundle);
 		}
 		super.onRestoreInstanceState(savedInstanceState);
 	}
@@ -128,7 +126,7 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 
 		// Gérer le changement de thème;
 		if (hasFocus && (currentTheme != NBApplication.THEME)) {
-			final Intent intent = new Intent(this, this.getClass());
+			final Intent intent = new Intent(this, getClass());
 			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 			overridePendingTransition(0, 0);
 			startActivity(intent);
@@ -152,9 +150,9 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 
 	protected void addFragment(final String classe) {
 		final ActionBar actionBar = getSupportActionBar();
-		this.mClasse = classe;
+		mClasse = classe;
 
-		mFragment = Fragment.instantiate(this, this.mClasse);
+		mFragment = Fragment.instantiate(this, mClasse);
 		mFragment.setRetainInstance(true);
 		getSupportFragmentManager().beginTransaction().add(R.id.fragmentContent, mFragment).commit();
 
@@ -163,8 +161,8 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 
 	protected void addFragment(final String classe, final Bundle bundle) {
 		final ActionBar actionBar = getSupportActionBar();
-		this.mClasse = classe;
-		this.mBundle = bundle;
+		mClasse = classe;
+		mBundle = bundle;
 
 		mFragment = Fragment.instantiate(this, classe, bundle);
 		mFragment.setRetainInstance(true);
@@ -180,8 +178,8 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	 *            Les classes des fragments.
 	 */
 	protected void addFragment(final Class<?> classes) {
-		this.mClasse = classes.getName();
-		addFragment(this.mClasse);
+		mClasse = classes.getName();
+		addFragment(mClasse);
 	}
 
 	/**
@@ -191,8 +189,8 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 	 *            Les classes des fragments.
 	 */
 	protected void addFragment(final Class<?> classe, final Bundle bundle) {
-		this.mClasse = classe.getName();
-		addFragment(this.mClasse, bundle);
+		mClasse = classe.getName();
+		addFragment(mClasse, bundle);
 	}
 
 	/**

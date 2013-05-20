@@ -257,7 +257,7 @@ public class FavorisFragment extends CustomListFragment implements CustomFragmen
 	};
 
 	public FavorisFragment() {
-		super(R.string.title_fragment_favoris, R.layout.fragment_listview_section);
+		super(R.layout.fragment_listview_section);
 
 		if (DBG)
 			Log.i(LOG_TAG, "FavorisFragment()");

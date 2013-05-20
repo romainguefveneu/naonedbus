@@ -193,7 +193,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_text, parent, false);
 		final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
 		final int padding = getContext().getResources().getDimensionPixelSize(R.dimen.padding_medium);
-		textView.setText(FormatUtils.formatTime(getContext(), mTimeFormat.format(noon.toDate())));
+		textView.setText(FormatUtils.formatTimeAmPm(getContext(), mTimeFormat.format(noon.toDate())));
 
 		final int specY = MeasureSpec.makeMeasureSpec(parent.getHeight(), MeasureSpec.UNSPECIFIED);
 		final int specX = MeasureSpec.makeMeasureSpec(parent.getWidth(), MeasureSpec.UNSPECIFIED);
@@ -252,7 +252,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				final Horaire horaire = horaires.get(indexHoraire);
 				final TextView horaireView = mHoraireViews.get(indexView);
 
-				horaireView.setText(FormatUtils.formatTime(getContext(), mTimeFormat.format(horaire.getDate())));
+				horaireView.setText(FormatUtils.formatTimeAmPm(getContext(), mTimeFormat.format(horaire.getDate())));
 
 				if (indexView > 0) {
 					minutes = Minutes.minutesBetween(now,

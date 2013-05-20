@@ -72,7 +72,7 @@ public class DateTimeFormatHelper {
 	}
 
 	/**
-	 * Formatter la date selon on format plus human-friendly.
+	 * Formatter la date selon un format plus human-friendly.
 	 * 
 	 * @param dateTime
 	 * @return La date formattée.

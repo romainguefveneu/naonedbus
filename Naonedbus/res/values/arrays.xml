@@ -106,15 +106,19 @@
         <item>Netapsys</item>
         <item>Benoît Manteau</item>
         <item>Paul Alisir</item>
-        <item>Arzhel</item>
-        <item>Guillaume</item>
     </string-array>
     <string-array name="thanks_urls">
         <item>http://www.netapsys.fr</item>
         <item></item>
         <item></item>
-        <item></item>
-        <item></item>
+    </string-array>
+
+    <!-- Donateurs -->
+    <string-array name="donators">
+        <item>Arzhel</item>
+        <item>Guillaume</item>
+        <item>Stéphane Péchard</item>
+        <item>Jérémy Paul</item>
     </string-array>
 
     <!-- Traducteurs -->

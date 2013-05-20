@@ -56,7 +56,7 @@ public class InfoTraficDetailFragment extends CustomFragment {
 	protected View mFragmentView;
 
 	public InfoTraficDetailFragment() {
-		super(R.string.title_fragment_trafic_detail, R.layout.fragment_infotrafic_detail);
+		super(R.layout.fragment_infotrafic_detail);
 	}
 
 	@Override

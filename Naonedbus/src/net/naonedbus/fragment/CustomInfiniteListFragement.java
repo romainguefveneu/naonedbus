@@ -35,8 +35,8 @@ import android.widget.ListView;
 
 public abstract class CustomInfiniteListFragement extends CustomListFragment {
 
-	public CustomInfiniteListFragement(final int titleId, final int layoutId) {
-		super(titleId, layoutId);
+	public CustomInfiniteListFragement(final int layoutId) {
+		super(layoutId);
 	}
 
 	@Override

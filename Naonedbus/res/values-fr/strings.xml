@@ -2,7 +2,7 @@
 
     <string name="app_name">NaonedBus</string>
     <string name="version_number">Version %s</string>
-    <string name="version_name">Acapulco</string>
+    <string name="version_name">Blue Hawaiian</string>
     <string name="today">Aujourd\'hui</string>
     <string name="yesterday">Hier</string>
     <string name="tomorrow">Demain</string>
@@ -67,8 +67,8 @@
     <string name="title_activity_horaires">Horaires</string>
     <string name="title_activity_about">A propos</string>
     <string name="title_activity_groupes">Gestion des groupes</string>
+    <string name="title_activity_donate">Faire un don</string>
     <!-- Slide menu -->
-    <string name="menu_don">Faire un don</string>
     <string name="menu_section_naonedbus">Naonedbus</string>
     <string name="menu_section_options">Options</string>
     <!-- Actions -->
@@ -150,6 +150,11 @@
     <string name="about_licences_title">Licences</string>
     <string name="about_licences_libs">Librairies</string>
     <string name="about_licences_icons">Icônes</string>
+    <!-- Dons -->
+    <string name="donate_title">Faire un don</string>
+    <string name="donate_via">Faire un don via</string>
+    <string name="donate_summary">Faire un don est un moyen de nous remercier pour notre temps passé à développer cette application ;-)</string>
+    <string name="donate_donators_title">Donateurs</string>
     <!-- Tan -->
     <string name="title_fragment_plan">Plan</string>
     <string name="title_fragment_parcours">Parcours</string>
@@ -253,8 +258,8 @@
     <!-- Search -->
     <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
     <string name="search_empty">Aucun équipement ne correspond à votre recherche</string>
-    <string name="search_hint_itineraire_depart">Arrêt de départ</string>
-    <string name="search_hint_itineraire_arrivee">Arrêt d\'arrivée</string>
+    <string name="search_hint_itineraire_depart">Lieu de départ</string>
+    <string name="search_hint_itineraire_arrivee">Lieu d\'arrivée</string>
 
     <!-- Sections -->
     <string name="section_distance_none">Aucune information de distance</string>

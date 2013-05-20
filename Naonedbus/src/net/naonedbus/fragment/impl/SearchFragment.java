@@ -48,7 +48,7 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 	private EquipementManager mEquipementManager;
 
 	public SearchFragment() {
-		super(0, R.layout.fragment_listview_section);
+		super(R.layout.fragment_listview_section);
 	}
 
 	@Override

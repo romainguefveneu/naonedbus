@@ -52,7 +52,7 @@ public abstract class FormatUtils {
 		return a + " " + DOT + " " + b;
 	}
 
-	public static CharSequence formatTime(final Context context, final String time) {
+	public static CharSequence formatTimeAmPm(final Context context, final String time) {
 		if (android.text.format.DateFormat.is24HourFormat(context)) {
 			return time;
 		} else {
@@ -63,4 +63,5 @@ public abstract class FormatUtils {
 			return spannable;
 		}
 	}
+
 }

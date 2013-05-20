@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -37,6 +37,7 @@
     <item name="itemHoraire" type="id"/>
     <item name="itemDelai" type="id"/>
     <item name="itemAddress" type="id"/>
+    <item name="itemWalkTime" type="id"/>
     <!-- Headers -->
     <item name="headerView" type="id"/>
     <item name="headerTitle" type="id"/>
@@ -59,10 +60,15 @@
     <item name="aboutSectionThanks" type="id"/>
     <item name="aboutSectionTranslators" type="id"/>
 
+    <!-- Donate -->
+    <item name="donatePaypal" type="id"/>
+    <item name="donateFlattr" type="id"/>
+
     <!-- Parking -->
     <item name="placesTotales" type="id"/>
     <item name="placesDisponibles" type="id"/>
     <item name="majDate" type="id"/>
+
     <!-- Bicloos -->
     <item name="bicloosDisponibles" type="id"/>
     <item name="stationEtat" type="id"/>
