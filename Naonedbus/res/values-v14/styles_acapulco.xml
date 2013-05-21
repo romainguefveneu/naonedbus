@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<!--
+     File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -29,10 +30,9 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_acapulco</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
-        
-                <!-- Light.DarkActionBar specific -->
-        <item name="android:actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
 
+        <!-- Light.DarkActionBar specific -->
+        <item name="android:actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
     </style>
 
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
@@ -40,13 +40,15 @@
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_acapulco</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Acapulco</item>
+        <item name="android:icon">@drawable/ic_icon_actionbar</item>
+        <item name="icon">@drawable/ic_icon_actionbar</item>
     </style>
 
     <style name="ActionBar.Transparent.Acapulco" parent="@style/Widget.Sherlock.ActionBar">
         <item name="android:background">@drawable/ab_transparent_acapulco</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Acapulco</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Acapulco.Widget" parent="@style/Theme.Sherlock">
         <item name="android:popupMenuStyle">@style/PopupMenu.Acapulco</item>

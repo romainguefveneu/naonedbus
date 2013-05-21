@@ -73,9 +73,6 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 		mSlidingMenuHelper = new SlidingMenuHelper(this);
 		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
-
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setIcon(R.drawable.ic_launcher);
 	}
 
 	@Override

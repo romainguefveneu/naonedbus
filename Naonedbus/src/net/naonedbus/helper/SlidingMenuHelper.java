@@ -193,6 +193,5 @@ public class SlidingMenuHelper {
 
 	public void setupActionBar(final ActionBar actionBar) {
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setIcon(R.drawable.ic_icon_actionbar);
 	}
 }
