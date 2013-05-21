@@ -1,9 +1,6 @@
 [submodule "ActionBarSherlock"]
 	path = ActionBarSherlock
 	url = https://github.com/JakeWharton/ActionBarSherlock.git
-[submodule "SlidingMenu"]
-	path = SlidingMenu
-	url = https://github.com/jfeinstein10/SlidingMenu.git
 [submodule "ShowcaseView"]
 	path = ShowcaseView
 	url = https://github.com/romainguefveneu/ShowcaseView.git
@@ -19,9 +16,9 @@
 [submodule "android-menudrawer"]
 	path = android-menudrawer
 	url = https://github.com/SimonVT/android-menudrawer.git
-[submodule "Android-AppMsg"]
-	path = Android-AppMsg
-	url = https://github.com/johnkil/Android-AppMsg.git
+[submodule "Crouton"]
+	path = Crouton
+	url = https://github.com/keyboardsurfer/Crouton.git
 [submodule "drag-sort-listview"]
 	path = drag-sort-listview
 	url = https://github.com/bauerca/drag-sort-listview.git
