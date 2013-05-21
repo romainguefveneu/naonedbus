@@ -133,6 +133,8 @@ public class SlidingMenuHelper {
 	public void setupSlidingMenu(final MenuDrawer slidingMenu) {
 		slidingMenu.setMenuView(R.layout.menu);
 		slidingMenu.setDropShadow(R.drawable.shadow);
+		slidingMenu.setSlideDrawable(R.drawable.ic_drawer);
+		slidingMenu.setDrawerIndicatorEnabled(true);
 
 		mMenuListView = (ListView) slidingMenu.findViewById(android.R.id.list);
 		if (sAdapter == null) {
@@ -167,21 +169,22 @@ public class SlidingMenuHelper {
 				sSavedListTop = (firstVisibleView == null) ? 0 : firstVisibleView.getTop();
 
 				final MainMenuItem item = (MainMenuItem) mMenuListView.getItemAtPosition(position);
+				if (item != null) {
+					if (mActivity.getClass().equals(item.getIntentClass())) {
+						// Même activité
+						slidingMenu.closeMenu();
+						mMenuListView.setClickable(true);
+					} else {
+						// Nouvelle activité
+						sAdapter.setCurrentClass(item.getIntentClass());
+						sAdapter.notifyDataSetChanged();
 
-				if (mActivity.getClass().equals(item.getIntentClass())) {
-					// Même activité
-					slidingMenu.closeMenu();
-					mMenuListView.setClickable(true);
-				} else {
-					// Nouvelle activité
-					sAdapter.setCurrentClass(item.getIntentClass());
-					sAdapter.notifyDataSetChanged();
-
-					final Intent intent = new Intent(mActivity, item.getIntentClass());
-					intent.putExtra("fromMenu", true);
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					mActivity.startActivity(intent);
-					mActivity.overridePendingTransition(0, 0);
+						final Intent intent = new Intent(mActivity, item.getIntentClass());
+						intent.putExtra("fromMenu", true);
+						intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						mActivity.startActivity(intent);
+						mActivity.overridePendingTransition(0, 0);
+					}
 				}
 			}
 		});
@@ -190,5 +193,6 @@ public class SlidingMenuHelper {
 
 	public void setupActionBar(final ActionBar actionBar) {
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setIcon(R.drawable.ic_icon_actionbar);
 	}
 }

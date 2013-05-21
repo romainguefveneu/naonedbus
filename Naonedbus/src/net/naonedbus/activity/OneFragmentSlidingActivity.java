@@ -233,4 +233,9 @@ public abstract class OneFragmentSlidingActivity extends SherlockFragmentActivit
 
 	}
 
+	@Override
+	public void onDrawerSlide(final float openRatio, final int offsetPixels) {
+
+	}
+
 }
