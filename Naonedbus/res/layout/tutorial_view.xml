@@ -20,7 +20,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="8dip" >
 
@@ -32,14 +32,16 @@
     <TextView
         android:id="@android:id/summary"
         style="@style/TutorialSummary"
+        android:layout_height="wrap_content"
+        android:lines="5"
         android:text="@android:string/untitled" />
 
     <ImageView
         android:id="@android:id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:scaleType="fitEnd" />
+        android:scaleType="fitCenter" />
 
 </LinearLayout>

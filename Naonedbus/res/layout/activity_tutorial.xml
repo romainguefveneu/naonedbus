@@ -26,34 +26,33 @@
         android:id="@id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tutorialButton" />
+        android:layout_above="@android:id/closeButton"
+        android:layout_below="@id/viewPagerIndicator" />
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@id/viewPagerIndicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@android:id/closeButton"
         android:layout_alignParentTop="true"
-        android:layout_below="@id/viewPager"
         android:layout_marginTop="16dip"
         android:padding="10dip" />
 
-    <Button
+    <ImageButton
         android:id="@android:id/closeButton"
         style="@style/ShowcaseButton.Secondary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="8dip"
         android:layout_marginLeft="8dip"
-        android:text="@string/skip" />
+        android:src="@drawable/ic_action_cancel" />
 
-    <Button
+    <ImageButton
         android:id="@+id/nextButton"
         style="@style/ShowcaseButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="8dip"
         android:layout_marginRight="8dip"
-        android:text="@string/next" />
+        android:src="@drawable/button_forward_selector" />
 
 </RelativeLayout>

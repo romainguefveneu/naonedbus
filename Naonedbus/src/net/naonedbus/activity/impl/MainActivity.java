@@ -34,6 +34,7 @@ import net.naonedbus.provider.DatabaseVersions;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.service.FavoriService;
 import net.naonedbus.utils.InfoDialogUtils;
+import net.naonedbus.utils.VersionUtils;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,7 +63,7 @@ public class MainActivity extends SlidingMenuActivity {
 
 		@Override
 		public void onUpgrade(final int oldVersion) {
-			showSetupView(R.string.updating);
+			showUpdateView();
 			if (oldVersion < DatabaseVersions.ACAPULCO) {
 				mFirstLaunch = true;
 				showTutorial();
@@ -72,7 +73,7 @@ public class MainActivity extends SlidingMenuActivity {
 		@Override
 		public void onCreate() {
 			mFirstLaunch = true;
-			showSetupView(R.string.setup);
+			showSetupView();
 			showTutorial();
 		}
 
@@ -87,7 +88,6 @@ public class MainActivity extends SlidingMenuActivity {
 		mMyLocationProvider = NBApplication.getLocationProvider();
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		setTitle(R.string.title_activity_main);
@@ -165,14 +165,22 @@ public class MainActivity extends SlidingMenuActivity {
 			}
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		showTutorial();
 	}
 
-	private void showSetupView(final int textResId) {
+	private void showSetupView() {
 		final View view;
 		if ((view = findViewById(R.id.setupViewStub)) != null) {
 			view.setVisibility(View.VISIBLE);
-			((TextView) findViewById(R.id.setupViewLabel)).setText(textResId);
+		}
+	}
+
+	private void showUpdateView() {
+		final View view;
+		if ((view = findViewById(R.id.updateViewStub)) != null) {
+			view.setVisibility(View.VISIBLE);
+
+			final String version = getString(R.string.version_number, VersionUtils.getVersion(this));
+			((TextView) findViewById(R.id.version)).setText(version);
 		}
 	}
 
@@ -216,6 +224,7 @@ public class MainActivity extends SlidingMenuActivity {
 			horaireManager.clearOldHoraires(getContentResolver());
 
 			CustomContentProvider.setDatabaseActionListener(null);
+
 			return null;
 		}
 

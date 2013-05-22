@@ -37,7 +37,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,7 +46,7 @@ public class TutorialActivity extends Activity implements OnPageChangeListener {
 
 	private TutorialPagerAdapter mTutorialPagerAdapter;
 
-	private Button mNextButton;
+	private View mNextButton;
 	private ViewPager mViewPager;
 
 	@Override
@@ -84,7 +83,7 @@ public class TutorialActivity extends Activity implements OnPageChangeListener {
 		circlePageIndicator.setViewPager(mViewPager);
 		circlePageIndicator.setOnPageChangeListener(this);
 
-		final Button closeButton = (Button) findViewById(android.R.id.closeButton);
+		final View closeButton = findViewById(android.R.id.closeButton);
 		closeButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -92,7 +91,7 @@ public class TutorialActivity extends Activity implements OnPageChangeListener {
 			}
 		});
 
-		mNextButton = (Button) findViewById(R.id.nextButton);
+		mNextButton = findViewById(R.id.nextButton);
 		mNextButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {

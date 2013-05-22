@@ -38,4 +38,13 @@
         android:inflatedId="@id/setupView"
         android:layout="@layout/setup_view" />
 
+    <ViewStub
+        android:id="@+id/updateViewStub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/padding_large"
+        android:inflatedId="@id/setupView"
+        android:layout="@layout/update_view" />
+
 </RelativeLayout>
