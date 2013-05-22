@@ -31,6 +31,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,25 +43,18 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
-public class TutorialActivity extends Activity {
+public class TutorialActivity extends Activity implements OnPageChangeListener {
 
 	private TutorialPagerAdapter mTutorialPagerAdapter;
 
-	private Button mButtonOk;
+	private Button mNextButton;
+	private ViewPager mViewPager;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tutorial);
-
-		mButtonOk = (Button) findViewById(R.id.tutorialButton);
-		mButtonOk.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				finish();
-			}
-		});
 
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_0_title,
@@ -83,11 +77,46 @@ public class TutorialActivity extends Activity {
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_widgets_title, R.string.tuto_widgets_summary,
 				R.drawable.tuto_widgets));
 
-		final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-		viewPager.setAdapter(mTutorialPagerAdapter);
+		mViewPager = (ViewPager) findViewById(R.id.viewPager);
+		mViewPager.setAdapter(mTutorialPagerAdapter);
 
 		final CirclePageIndicator circlePageIndicator = (CirclePageIndicator) findViewById(R.id.viewPagerIndicator);
-		circlePageIndicator.setViewPager(viewPager);
+		circlePageIndicator.setViewPager(mViewPager);
+		circlePageIndicator.setOnPageChangeListener(this);
+
+		final Button closeButton = (Button) findViewById(android.R.id.closeButton);
+		closeButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				finish();
+			}
+		});
+
+		mNextButton = (Button) findViewById(R.id.nextButton);
+		mNextButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				moveToNext();
+			}
+		});
+	}
+
+	private void moveToNext() {
+		mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
+	}
+
+	@Override
+	public void onPageScrollStateChanged(final int position) {
+
+	}
+
+	@Override
+	public void onPageScrolled(final int from, final float arg1, final int to) {
+	}
+
+	@Override
+	public void onPageSelected(final int position) {
+		mNextButton.setEnabled(position < mTutorialPagerAdapter.getCount() - 1);
 	}
 
 	private static class TutorialPagerAdapter extends PagerAdapter {
@@ -167,4 +196,5 @@ public class TutorialActivity extends Activity {
 		}
 
 	}
+
 }

@@ -12,6 +12,8 @@
     <string name="updating">Update in progress</string>
     <string name="setup">Installation in progress</string>
     <string name="copy">Copy</string>
+    <string name="skip">Skip</string>
+    <string name="next">&#8594;</string>
     <string name="pref_section_plans">Lines maps</string>
     <string name="pref_section_timetable">Schedules</string>
     <string name="pref_section_calendar">Calendar</string>

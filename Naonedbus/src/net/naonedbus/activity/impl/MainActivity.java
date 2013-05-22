@@ -165,6 +165,7 @@ public class MainActivity extends SlidingMenuActivity {
 			}
 		}
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		showTutorial();
 	}
 
 	private void showSetupView(final int textResId) {
