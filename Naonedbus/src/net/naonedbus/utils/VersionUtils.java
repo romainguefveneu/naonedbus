@@ -33,66 +33,37 @@ import net.naonedbus.R;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.res.Resources.NotFoundException;
 
-import com.bugsense.trace.BugSenseHandler;
-
-/**
- * @author romain
- * 
- */
 public class VersionUtils {
 
-	private String assetName;
-	private Context context;
-
-	public VersionUtils(Context context, String assetName) {
-		this.context = context;
-		this.assetName = assetName;
-	}
-
-	/**
-	 * Récupérer le contenu de l'asset avec les tag remplacés.
-	 */
-	public String getFormattedContent() {
-		String content = null;
-		try {
-			content = convertStreamToString(context.getAssets().open(this.assetName));
-
-			content = content.replace("{version}", VersionUtils.getVersion(context));
-			content = content.replace("{codename}", VersionUtils.getVersionName(context));
-
-		} catch (IOException e) {
-			BugSenseHandler.sendExceptionMessage(
-					String.format("Erreur de chargement de l'asset '%s'.", this.assetName), null, e);
-		}
-		return content;
+	private VersionUtils() {
 	}
 
 	/**
 	 * Récupérer les notes de la version actuelle
 	 */
-	public String getCurrentVersionNotes() {
+	public static String getCurrentVersionNotes(final Context context) {
 		String content = null;
 		String notes = "";
 		try {
-			content = convertStreamToString(context.getAssets().open(this.assetName));
+			content = convertStreamToString(context.getResources().openRawResource(R.raw.version));
 
-			Pattern p = Pattern.compile("<!--notes-->(.*)<!--/notes-->", Pattern.DOTALL);
-			Matcher m = p.matcher(content);
+			final Pattern p = Pattern.compile("<!--notes-->(.*)<!--/notes-->", Pattern.DOTALL);
+			final Matcher m = p.matcher(content);
 
 			if (m.find()) {
-				Pattern pLi = Pattern.compile("<li>(.*?)</li>", Pattern.DOTALL);
-				Matcher mLi = pLi.matcher(m.group(1));
+				final Pattern pLi = Pattern.compile("<li>(.*?)</li>", Pattern.DOTALL);
+				final Matcher mLi = pLi.matcher(m.group(1));
 
 				while (mLi.find()) {
 					notes += "\u2022 " + mLi.group(1) + "\n";
 				}
 			}
-
-		} catch (IOException e) {
-			BugSenseHandler.sendExceptionMessage(
-					String.format("Erreur de chargement de l'asset '%s'.", this.assetName), null, e);
+		} catch (final NotFoundException e) {
+		} catch (final IOException e) {
 		}
+
 		return notes;
 	}
 
@@ -101,12 +72,12 @@ public class VersionUtils {
 	 * 
 	 * @return version de l'application
 	 */
-	public static String getVersion(Context context) {
+	public static String getVersion(final Context context) {
 		try {
-			ComponentName comp = new ComponentName(context, NBApplication.class);
-			PackageInfo pinfo = context.getPackageManager().getPackageInfo(comp.getPackageName(), 0);
+			final ComponentName comp = new ComponentName(context, NBApplication.class);
+			final PackageInfo pinfo = context.getPackageManager().getPackageInfo(comp.getPackageName(), 0);
 			return pinfo.versionName;
-		} catch (android.content.pm.PackageManager.NameNotFoundException e) {
+		} catch (final android.content.pm.PackageManager.NameNotFoundException e) {
 			return null;
 		}
 	}
@@ -117,7 +88,7 @@ public class VersionUtils {
 	 * @param context
 	 * @return String
 	 */
-	public static String getVersionName(Context context) {
+	public static String getVersionName(final Context context) {
 		return context.getResources().getString(R.string.version_name);
 	}
 
@@ -127,13 +98,13 @@ public class VersionUtils {
 	 * no more data to read. We use the StringWriter class to produce the
 	 * string.
 	 */
-	private String convertStreamToString(InputStream is) throws IOException {
+	private static String convertStreamToString(final InputStream is) throws IOException {
 		if (is != null) {
-			Writer writer = new StringWriter();
+			final Writer writer = new StringWriter();
 
-			char[] buffer = new char[1024];
+			final char[] buffer = new char[1024];
 			try {
-				Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+				final Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 				int n;
 				while ((n = reader.read(buffer)) != -1) {
 					writer.write(buffer, 0, n);

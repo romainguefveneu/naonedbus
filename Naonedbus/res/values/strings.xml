@@ -9,8 +9,8 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="loading">Loading…</string>
     <string name="emptyString"></string>
-    <string name="updating">Update in progress</string>
-    <string name="setup">Installation in progress</string>
+    <string name="updating">Updating&#8230;</string>
+    <string name="setup">Installation in progress&#8230;</string>
     <string name="copy">Copy</string>
     <string name="skip">Skip</string>
     <string name="next">&#8594;</string>

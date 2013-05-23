@@ -8,7 +8,8 @@
     <string name="tomorrow">Demain</string>
     <string name="loading">Chargement&#8230;</string>
     <string name="emptyString"></string>
-    <string name="updating">Mise à jour en cours&#8230;</string>
+    <string name="updating">Mise à jour&#8230;</string>
+    <string name="updating_complete">Mise à jour terminée</string>
     <string name="setup">Installation en cours&#8230;</string>
     <string name="copy">Copier</string>
     <string name="skip">Passer</string>
