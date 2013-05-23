@@ -29,11 +29,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -168,89 +166,6 @@ public abstract class InfoDialogUtils {
 			e.printStackTrace();
 		} catch (final IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Afficher la dialog d'accueil
-	 * 
-	 * @param context
-	 */
-	public static void showWelcomeDialog(final Context context) {
-		AlertDialog.Builder moreDetailsDialog = null;
-
-		final LayoutInflater factory = LayoutInflater.from(context);
-		final View alertDialogView = factory.inflate(R.layout.dialog_changelog, null);
-		final ScrollView scrollView = new ScrollView(context);
-		final TextView title = (TextView) alertDialogView.findViewById(R.id.title);
-		final TextView codename = (TextView) alertDialogView.findViewById(R.id.codename);
-		final TextView versionNotes = (TextView) alertDialogView.findViewById(R.id.versionNotes);
-		final VersionUtils versionUtils = new VersionUtils(context, "version.html");
-
-		title.setText(context.getString(R.string.version_number, VersionUtils.getVersion(context)));
-		codename.setText(VersionUtils.getVersionName(context));
-		versionNotes.setText(versionUtils.getCurrentVersionNotes());
-
-		scrollView.addView(alertDialogView);
-
-		moreDetailsDialog = new AlertDialog.Builder(context);
-		moreDetailsDialog.setIcon(android.R.drawable.ic_dialog_info);
-		moreDetailsDialog.setTitle("Nouvelle version");
-		moreDetailsDialog.setView(scrollView);
-		moreDetailsDialog.setPositiveButton(android.R.string.ok, null);
-		moreDetailsDialog.show();
-	}
-
-	/**
-	 * Afficher la dialog d'accueil, uniquement si pas déjà affichées.
-	 * 
-	 * @param context
-	 */
-	public static void showWelcomeDialogIfNecessary(final Context context) {
-		final String version = VersionUtils.getVersion(context);
-		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + version);
-
-		createDir(context);
-		if (!dataFile.exists()) {
-			try {
-				showWelcomeDialog(context);
-				dataFile.createNewFile();
-			} catch (final IOException e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
-			}
-		}
-	}
-
-	/**
-	 * Afficher les notes de version, uniquement si pas déjà affichées.
-	 * 
-	 * @param context
-	 * @param fileFromAssets
-	 */
-	public static void showVersionNote(final Context context, final String fileFromAssets) {
-		final VersionUtils versionUtils = new VersionUtils(context, fileFromAssets);
-		showHtml(context, versionUtils.getFormattedContent());
-	}
-
-	/**
-	 * Afficher les notes de version, uniquement si pas déjà affichées.
-	 * 
-	 * @param context
-	 * @param fileFromAssets
-	 */
-	public static void showVersionNoteIfNecessary(final Context context, final String fileFromAssets) {
-		final VersionUtils versionUtils = new VersionUtils(context, fileFromAssets);
-		final String version = VersionUtils.getVersion(context);
-		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + version);
-
-		createDir(context);
-		if (!dataFile.exists()) {
-			try {
-				showHtml(context, versionUtils.getFormattedContent());
-				dataFile.createNewFile();
-			} catch (final IOException e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
-			}
 		}
 	}
 
