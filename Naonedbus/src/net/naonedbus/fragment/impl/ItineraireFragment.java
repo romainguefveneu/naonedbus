@@ -20,6 +20,7 @@ package net.naonedbus.fragment.impl;
 
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomFragment;
@@ -40,6 +41,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -61,6 +63,9 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 
 public class ItineraireFragment extends CustomFragment implements LoaderCallbacks<AsyncResult<List<Itinerary>>> {
+
+	private static final String TAG = "ItineraireFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private AutoCompleteTextView mFromTextView;
 	private AutoCompleteTextView mToTextView;
@@ -170,8 +175,8 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocationEditManager.getLatitude());
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocationEditManager.getLongitude());
 
-		getLoaderManager().initLoader(0, bundle, this);
 		setListShown(false, false);
+		getLoaderManager().initLoader(0, bundle, this);
 	}
 
 	@Override
@@ -278,23 +283,30 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 	@Override
 	public void onLoadFinished(final Loader<AsyncResult<List<Itinerary>>> loader,
 			final AsyncResult<List<Itinerary>> result) {
+		if (DBG)
+			Log.d(TAG, "onLoadFinished");
 
-		mProgressBar.setVisibility(View.GONE);
+		mListContainer.removeAllViews();
 
 		if (result.getException() != null) {
 			final Exception e = result.getException();
 			Crouton.makeText(getActivity(), e.getLocalizedMessage(), Style.ALERT).show();
-			setListShown(false, false);
 
+			e.printStackTrace();
 		} else {
-			mListContainer.removeAllViews();
 			final List<Itinerary> itineraries = result.getResult();
-			for (final Itinerary itinerary : itineraries) {
-				final View view = mItineraryViewHelper.createItineraryView(itinerary, mListContainer);
-				mListContainer.addView(view);
+			if (itineraries != null) {
+				Crouton.makeText(getActivity(), itineraries.size() + " itinéraires", Style.INFO).show();
+
+				for (final Itinerary itinerary : itineraries) {
+					final View view = mItineraryViewHelper.createItineraryView(itinerary, mListContainer);
+					mListContainer.addView(view);
+				}
+			} else {
+				Crouton.makeText(getActivity(), "Aucun itinéraire", Style.ALERT).show();
 			}
-			setListShown(true, false);
 		}
+		setListShown(true, false);
 
 	}
 
@@ -316,12 +328,13 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 	 *            state.
 	 */
 	private void setListShown(final boolean shown, final boolean animate) {
+		if (DBG)
+			Log.d(TAG, "setListShown(" + shown + "," + animate + ")");
+
 		if (mProgressBar == null) {
 			throw new IllegalStateException("Can't be used with a custom content view");
 		}
-		if (mListShown == shown) {
-			return;
-		}
+
 		mListShown = shown;
 		if (shown) {
 			if (animate) {
@@ -345,5 +358,4 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 			mListContainer.setVisibility(View.GONE);
 		}
 	}
-
 }

@@ -10,8 +10,11 @@ import android.support.v4.content.AsyncTaskLoader;
 import fr.ybo.opentripplanner.client.ClientOpenTripPlanner;
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
+import fr.ybo.opentripplanner.client.modele.OptimizeType;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
+import fr.ybo.opentripplanner.client.modele.TraverseMode;
+import fr.ybo.opentripplanner.client.modele.TraverseModeSet;
 
 public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<Itinerary>>> {
 
@@ -40,11 +43,16 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<Itinerary>
 		final double toLongitude = mBundle.getDouble(PARAM_TO_LONGITUDE);
 
 		final Request request = new Request(fromLatitude, fromLongitude, toLatitude, toLongitude, new Date());
+		request.setModes(new TraverseModeSet(TraverseMode.WALK, TraverseMode.TRANSIT));
+		request.setOptimize(OptimizeType.QUICK);
+		request.setMaxWalkDistance(840d);
+		request.setWalkSpeed(1.3d);
+
 		final ClientOpenTripPlanner client = new ClientOpenTripPlanner(URL_WEBSERVICE);
 
 		try {
 			final Response response = client.getItineraries(request);
-			result.setResult(response.getPlan().itineraries.itinerary);
+			result.setResult((response.getPlan() != null) ? response.getPlan().itineraries : null);
 		} catch (final OpenTripPlannerException e) {
 			result.setException(e);
 		}
