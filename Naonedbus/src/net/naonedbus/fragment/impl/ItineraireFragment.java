@@ -79,8 +79,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 	private ProgressBar mProgressBar;
 	private LinearLayout mListContainer;
 
-	private boolean mListShown;
-
 	private final OnLocationEditChange mOnLocationChange = new OnLocationEditChange() {
 
 		@Override
@@ -335,7 +333,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 			throw new IllegalStateException("Can't be used with a custom content view");
 		}
 
-		mListShown = shown;
 		if (shown) {
 			if (animate) {
 				mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));

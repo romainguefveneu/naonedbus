@@ -45,8 +45,8 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<Itinerary>
 		final Request request = new Request(fromLatitude, fromLongitude, toLatitude, toLongitude, new Date());
 		request.setModes(new TraverseModeSet(TraverseMode.WALK, TraverseMode.TRANSIT));
 		request.setOptimize(OptimizeType.QUICK);
-		request.setMaxWalkDistance(840d);
-		request.setWalkSpeed(1.3d);
+		request.setMaxWalkDistance(2000d);
+		request.setWalkSpeed(1.389d);
 
 		final ClientOpenTripPlanner client = new ClientOpenTripPlanner(URL_WEBSERVICE);
 
