@@ -46,7 +46,11 @@ public class ItineraryViewHelper {
 		itemTitle.setText(FormatUtils.formatMinutes(mContext, itinerary.duration));
 		itemDate.setText(mDateTimeFormatHelper.formatDuree(new DateTime(itinerary.startTime), new DateTime(
 				itinerary.endTime)));
-		itemWalkTime.setText(FormatUtils.formatMinutes(mContext, itinerary.walkTime));
+
+		final int walkTime = Math.round(itinerary.walkTime / 60);
+		final String walkTimeText = mContext.getResources().getQuantityString(R.plurals.itinerary_walk_time, walkTime,
+				walkTime);
+		itemWalkTime.setText(walkTimeText);
 
 		final List<Ligne> lignes = new ArrayList<Ligne>();
 		final List<Leg> legs = itinerary.legs;

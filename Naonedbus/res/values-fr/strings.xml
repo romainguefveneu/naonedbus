@@ -367,4 +367,10 @@
         <item quantity="other">%d sélectionnés</item>
     </plurals>
 
+    <!-- Itinéraires -->
+    <plurals name="itinerary_walk_time">
+        <item quantity="one">%d minute de marche</item>
+        <item quantity="other">%d minutes de marche</item>
+    </plurals>
+
 </resources>
