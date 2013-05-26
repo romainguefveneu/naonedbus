@@ -22,6 +22,7 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.helper.ItineraryViewHelper;
@@ -30,6 +31,7 @@ import net.naonedbus.widget.adapter.impl.AddressArrayAdapter;
 import android.animation.LayoutTransition;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.os.Build;
@@ -78,8 +80,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 	private Button mGoButton;
 	private ProgressBar mProgressBar;
 	private LinearLayout mListContainer;
-
-	private boolean mListShown;
 
 	private final OnLocationEditChange mOnLocationChange = new OnLocationEditChange() {
 
@@ -300,6 +300,14 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 
 				for (final Itinerary itinerary : itineraries) {
 					final View view = mItineraryViewHelper.createItineraryView(itinerary, mListContainer);
+					view.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(final View v) {
+							final Intent intent = new Intent(getActivity(), ItineraryDetailActivity.class);
+							intent.putExtra(ItineraryDetailActivity.PARAM_ITINERARY, itinerary);
+							getActivity().startActivity(intent);
+						}
+					});
 					mListContainer.addView(view);
 				}
 			} else {
@@ -335,7 +343,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 			throw new IllegalStateException("Can't be used with a custom content view");
 		}
 
-		mListShown = shown;
 		if (shown) {
 			if (animate) {
 				mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));

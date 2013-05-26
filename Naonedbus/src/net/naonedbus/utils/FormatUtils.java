@@ -18,6 +18,7 @@
  */
 package net.naonedbus.utils;
 
+import net.naonedbus.R;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -62,6 +63,21 @@ public abstract class FormatUtils {
 
 			return spannable;
 		}
+	}
+
+	public static String formatMinutes(final Context context, final long millisecondes) {
+		String delay = "";
+		final int minutes = (int) (millisecondes / 60000);
+
+		if (minutes < 60) {
+			delay = context.getString(R.string.format_minutes, minutes);
+		} else {
+			final int heures = minutes / 60;
+			final int reste = minutes - heures * 60;
+			delay = context.getString(R.string.format_heures, heures, reste);
+		}
+
+		return delay;
 	}
 
 }

@@ -7,11 +7,11 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FormatUtils;
 
 import org.joda.time.DateTime;
 
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +43,10 @@ public class ItineraryViewHelper {
 		final TextView itemWalkTime = (TextView) view.findViewById(R.id.itemWalkTime);
 		final GridLayout gridLayout = (GridLayout) view.findViewById(R.id.lignes);
 
-		itemTitle.setText(DateUtils.formatElapsedTime(itinerary.duration / 1000));
+		itemTitle.setText(FormatUtils.formatMinutes(mContext, itinerary.duration));
 		itemDate.setText(mDateTimeFormatHelper.formatDuree(new DateTime(itinerary.startTime), new DateTime(
 				itinerary.endTime)));
-		itemWalkTime.setText(DateUtils.formatElapsedTime(itinerary.walkTime / 1000));
+		itemWalkTime.setText(FormatUtils.formatMinutes(mContext, itinerary.walkTime));
 
 		final List<Ligne> lignes = new ArrayList<Ligne>();
 		final List<Leg> legs = itinerary.legs;

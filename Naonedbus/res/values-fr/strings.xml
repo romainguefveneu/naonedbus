@@ -14,6 +14,8 @@
     <string name="copy">Copier</string>
     <string name="skip">Passer</string>
     <string name="next">&#8594;</string>
+    <string name="format_minutes">%d min</string>
+    <string name="format_heures">%1$sh%2$s</string>
 
     <!-- Preférences -->
     <string name="pref_section_plans">Plans des lignes</string>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultLine.Content" >
+
+    <RelativeLayout
+        android:id="@id/headerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@id/itemSymbole"
+            style="@style/ItemSymbole.Tiny"
+            android:background="@drawable/item_symbole_back"
+            android:text="@android:color/black" />
+
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/ItemPrimaryText.SingleLine"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding_small"
+            android:layout_marginRight="@dimen/padding_small"
+            android:layout_toLeftOf="@id/itemTime"
+            android:layout_toRightOf="@id/itemSymbole"
+            android:text="Hôtel de Région" />
+
+        <TextView
+            android:id="@id/itemTime"
+            style="@style/ItemTime"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" >
+        </TextView>
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerView"
+        android:layout_marginTop="@dimen/padding_small" >
+
+        <TableRow>
+
+            <ImageView
+                style="@style/ItemSymbole.Tiny"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_arret_first"
+                android:text="@android:color/black" />
+
+            <TextView
+                android:id="@+id/fromTime"
+                style="@style/ItemTime.Medium"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:text="0:00"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/fromPlace"
+                style="@style/ItemPlace"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:padding="@dimen/padding_small"
+                android:text="Rue Félix Lemoine" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                style="@style/ItemSymbole.Tiny"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_arret_last" />
+
+            <TextView
+                android:id="@+id/toTime"
+                style="@style/ItemTime.Medium"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:text="0:00" />
+
+            <TextView
+                android:id="@+id/toPlace"
+                style="@style/ItemPlace"
+                android:layout_marginLeft="@dimen/padding_small"
+                android:padding="@dimen/padding_small"
+                android:text="Trémissinière" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>
