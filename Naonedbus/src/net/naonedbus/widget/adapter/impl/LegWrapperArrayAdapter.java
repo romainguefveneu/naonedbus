@@ -3,22 +3,25 @@ package net.naonedbus.widget.adapter.impl;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.LegWrapper;
+import net.naonedbus.bean.Ligne;
+import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.opentripplanner.client.modele.Leg;
 import fr.ybo.opentripplanner.client.modele.Place;
 
-public class LegArrayAdapter extends ArrayAdapter<Leg> {
+public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 
 	private final LayoutInflater mLayoutInflater;
 
-	public LegArrayAdapter(final Context context, final List<Leg> objects) {
+	public LegWrapperArrayAdapter(final Context context, final List<LegWrapper> objects) {
 		super(context, 0, objects);
 		mLayoutInflater = LayoutInflater.from(context);
 	}
@@ -31,6 +34,8 @@ public class LegArrayAdapter extends ArrayAdapter<Leg> {
 			view = mLayoutInflater.inflate(R.layout.list_item_leg, parent, false);
 
 			viewHolder = new ViewHolder();
+			viewHolder.itemMetroPoint = (ImageView) view.findViewById(R.id.itemMetroPoint);
+			viewHolder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
 			viewHolder.itemSymbole = (TextView) view.findViewById(R.id.itemSymbole);
 			viewHolder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 			viewHolder.itemTime = (TextView) view.findViewById(R.id.itemTime);
@@ -44,26 +49,50 @@ public class LegArrayAdapter extends ArrayAdapter<Leg> {
 			viewHolder = (ViewHolder) view.getTag();
 		}
 
-		final Leg leg = getItem(position);
-		final long startTime = leg.startTime.getTime();
-		final long endTime = leg.endTime.getTime();
+		final LegWrapper legWrapper = getItem(position);
+		final Leg leg = legWrapper.getLeg();
+		final Ligne ligne = legWrapper.getLigne();
 
-		viewHolder.itemTitle.setText(FormatUtils.formatSens(leg.headsign));
-		viewHolder.itemSymbole.setText(leg.route);
-		viewHolder.itemTime.setText(FormatUtils.formatMinutes(getContext(), endTime - startTime));
+		viewHolder.itemTime.setText(legWrapper.getTime());
+
+		if ("WALK".equals(leg.mode)) {
+			viewHolder.itemIcon.setVisibility(View.VISIBLE);
+			viewHolder.itemSymbole.setVisibility(View.INVISIBLE);
+
+			viewHolder.itemTitle.setText("Marche à pied");
+
+		} else if (ligne != null) {
+			viewHolder.itemIcon.setVisibility(View.GONE);
+			viewHolder.itemSymbole.setVisibility(View.VISIBLE);
+
+			viewHolder.itemTitle.setText(FormatUtils.formatSens(leg.headsign));
+			viewHolder.itemSymbole.setText(ligne.getLettre());
+			viewHolder.itemSymbole.setTextColor(ligne.getCouleurTexte());
+			viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
+		}
 
 		final Place from = leg.from;
 		viewHolder.fromPlace.setText(from.name);
-		viewHolder.fromTime.setText(DateUtils.formatDateTime(getContext(), startTime, DateUtils.FORMAT_SHOW_TIME));
+		viewHolder.fromTime.setText(legWrapper.getFromTime());
 
 		final Place to = leg.to;
 		viewHolder.toPlace.setText(to.name);
-		viewHolder.toTime.setText(DateUtils.formatDateTime(getContext(), endTime, DateUtils.FORMAT_SHOW_TIME));
+		viewHolder.toTime.setText(legWrapper.getToTime());
+
+//		if (position == 0) {
+//			viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_first);
+//		} else if (position == getCount() - 1) {
+//			viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_last);
+//		} else {
+//			viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_step);
+//		}
 
 		return view;
 	}
 
 	private static class ViewHolder {
+		ImageView itemMetroPoint;
+		ImageView itemIcon;
 		TextView itemSymbole;
 		TextView itemTitle;
 		TextView itemTime;

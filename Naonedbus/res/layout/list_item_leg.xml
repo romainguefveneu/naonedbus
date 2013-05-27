@@ -7,9 +7,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+        <ImageView
+            android:id="@id/itemIcon"
+            style="@style/ItemSymbole"
+            android:background="@drawable/item_symbole_back"
+            android:scaleType="center"
+            android:src="@drawable/itinerary_leg_walk" />
+
         <TextView
             android:id="@id/itemSymbole"
-            style="@style/ItemSymbole.Tiny"
+            style="@style/ItemSymbole"
             android:background="@drawable/item_symbole_back"
             android:text="@android:color/black" />
 
@@ -39,16 +46,9 @@
 
         <TableRow>
 
-            <ImageView
-                style="@style/ItemSymbole.Tiny"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_arret_first"
-                android:text="@android:color/black" />
-
             <TextView
                 android:id="@+id/fromTime"
                 style="@style/ItemTime.Medium"
-                android:layout_marginLeft="@dimen/padding_small"
                 android:text="0:00"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -62,15 +62,9 @@
 
         <TableRow>
 
-            <ImageView
-                style="@style/ItemSymbole.Tiny"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_arret_last" />
-
             <TextView
                 android:id="@+id/toTime"
                 style="@style/ItemTime.Medium"
-                android:layout_marginLeft="@dimen/padding_small"
                 android:text="0:00" />
 
             <TextView
