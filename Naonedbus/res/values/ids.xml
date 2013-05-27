@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -146,5 +146,13 @@
     <!-- Card -->
     <item name="cardHoraireTag" type="string">tag:Horaire</item>
     <item name="cardDelaiTag" type="string">tag:Delai</item>
+
+    <!-- Itinéraires -->
+    <item name="totalTime" type="id"/>
+    <item name="fromPlace" type="id"/>
+    <item name="fromDirection" type="id"/>
+    <item name="fromTime" type="id"/>
+    <item name="toPlace" type="id"/>
+    <item name="toTime" type="id"/>
 
 </resources>

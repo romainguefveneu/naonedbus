@@ -34,11 +34,12 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 			view = mLayoutInflater.inflate(R.layout.list_item_leg, parent, false);
 
 			viewHolder = new ViewHolder();
-			viewHolder.itemMetroPoint = (ImageView) view.findViewById(R.id.itemMetroPoint);
+			viewHolder.itemMetroPointFrom = view.findViewById(R.id.itemMetroPointFrom);
+			viewHolder.itemMetroPointTo = view.findViewById(R.id.itemMetroPointTo);
 			viewHolder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
 			viewHolder.itemSymbole = (TextView) view.findViewById(R.id.itemSymbole);
-			viewHolder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
-			viewHolder.itemTime = (TextView) view.findViewById(R.id.itemTime);
+			viewHolder.fromDirection = (TextView) view.findViewById(R.id.fromDirection);
+			viewHolder.totalTime = (TextView) view.findViewById(R.id.totalTime);
 			viewHolder.fromTime = (TextView) view.findViewById(R.id.fromTime);
 			viewHolder.fromPlace = (TextView) view.findViewById(R.id.fromPlace);
 			viewHolder.toTime = (TextView) view.findViewById(R.id.toTime);
@@ -53,19 +54,17 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		final Leg leg = legWrapper.getLeg();
 		final Ligne ligne = legWrapper.getLigne();
 
-		viewHolder.itemTime.setText(legWrapper.getTime());
-
 		if ("WALK".equals(leg.mode)) {
 			viewHolder.itemIcon.setVisibility(View.VISIBLE);
 			viewHolder.itemSymbole.setVisibility(View.INVISIBLE);
 
-			viewHolder.itemTitle.setText("Marche à pied");
+			viewHolder.fromDirection.setText("Marche à pied");
 
 		} else if (ligne != null) {
 			viewHolder.itemIcon.setVisibility(View.GONE);
 			viewHolder.itemSymbole.setVisibility(View.VISIBLE);
 
-			viewHolder.itemTitle.setText(FormatUtils.formatSens(leg.headsign));
+			viewHolder.fromDirection.setText(FormatUtils.formatSens(leg.headsign));
 			viewHolder.itemSymbole.setText(ligne.getLettre());
 			viewHolder.itemSymbole.setTextColor(ligne.getCouleurTexte());
 			viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
@@ -79,23 +78,27 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		viewHolder.toPlace.setText(to.name);
 		viewHolder.toTime.setText(legWrapper.getToTime());
 
-//		if (position == 0) {
-//			viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_first);
-//		} else if (position == getCount() - 1) {
-//			viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_last);
-//		} else {
-//			viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_step);
-//		}
+		if (position == 0) {
+			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_first);
+			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step);
+		} else if (position == getCount() - 1) {
+			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step);
+			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_last);
+		} else {
+			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step);
+			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step);
+		}
 
 		return view;
 	}
 
 	private static class ViewHolder {
-		ImageView itemMetroPoint;
+		View itemMetroPointFrom;
+		View itemMetroPointTo;
 		ImageView itemIcon;
 		TextView itemSymbole;
-		TextView itemTitle;
-		TextView itemTime;
+		TextView totalTime;
+		TextView fromDirection;
 		TextView fromTime;
 		TextView fromPlace;
 		TextView toTime;

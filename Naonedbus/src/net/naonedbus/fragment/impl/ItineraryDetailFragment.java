@@ -37,6 +37,13 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	}
 
 	@Override
+	public void onActivityCreated(final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		getListView().setDivider(null);
+		getListView().setDividerHeight(0);
+	}
+
+	@Override
 	public void onStart() {
 		super.onStart();
 		loadContent();
