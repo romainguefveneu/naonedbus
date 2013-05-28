@@ -8,6 +8,7 @@
     android:paddingTop="0dip" >
 
     <RelativeLayout
+        android:id="@id/rowTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -23,13 +24,13 @@
         <View
             android:id="@+id/itemMetroPointFrom"
             android:layout_width="40dip"
-            android:layout_height="60dip"
+            android:layout_height="65dip"
             android:layout_toRightOf="@id/fromTime"
-            android:background="@drawable/ic_arret_step" />
+            android:background="@drawable/ic_arret_step_silver" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/fromTime"
             android:orientation="horizontal" >
@@ -37,33 +38,39 @@
             <TextView
                 android:id="@id/itemSymbole"
                 style="@style/ItemSymbole"
+                android:layout_marginRight="@dimen/padding_small"
                 android:background="@drawable/item_symbole_back" />
 
             <ImageView
                 android:id="@id/itemIcon"
                 style="@style/ItemSymbole"
-                android:background="@drawable/item_symbole_back"
+                android:background="@drawable/item_leg_walk_back"
                 android:scaleType="center"
                 android:src="@drawable/itinerary_leg_walk" />
 
             <TextView
-                android:id="@id/fromPlace"
-                style="@style/ItemPrimaryText.SingleLine"
-                android:layout_toRightOf="@id/itemSymbole"
-                android:paddingLeft="@dimen/padding_small"
-                android:text="Trémissinière" />
-
-            <TextView
                 android:id="@id/fromDirection"
                 style="@style/ItemSecondaryText.SingleLine"
-                android:layout_below="@id/fromPlace"
+                android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/itemSymbole"
-                android:paddingLeft="@dimen/padding_small"
-                android:text="-> Hôtel de région" />
+                android:padding="0dip"
+                android:text="-> Hôtel de région"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@id/fromPlace"
+                style="@style/ItemPrimaryText.SingleLine"
+                android:layout_above="@id/fromDirection"
+                android:layout_alignParentTop="true"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_toRightOf="@id/itemSymbole"
+                android:padding="0dip"
+                android:text="Trémissinière" />
         </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@id/rowBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -79,13 +86,13 @@
         <View
             android:id="@+id/itemMetroPointTo"
             android:layout_width="40dip"
-            android:layout_height="60dip"
+            android:layout_height="65dip"
             android:layout_toRightOf="@id/toTime"
-            android:background="@drawable/ic_arret_step" />
+            android:background="@drawable/ic_arret_step_silver" />
 
         <TextView
             android:id="@id/toPlace"
-            style="@style/ItemSecondaryText.SingleLine"
+            style="@style/ItemPrimaryText.SingleLine"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/itemMetroPointTo"
             android:paddingLeft="@dimen/padding_small"

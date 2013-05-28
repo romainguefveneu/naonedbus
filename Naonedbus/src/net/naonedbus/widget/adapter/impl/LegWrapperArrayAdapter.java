@@ -34,6 +34,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 			view = mLayoutInflater.inflate(R.layout.list_item_leg, parent, false);
 
 			viewHolder = new ViewHolder();
+			viewHolder.rowBottom = view.findViewById(R.id.rowBottom);
 			viewHolder.itemMetroPointFrom = view.findViewById(R.id.itemMetroPointFrom);
 			viewHolder.itemMetroPointTo = view.findViewById(R.id.itemMetroPointTo);
 			viewHolder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
@@ -53,46 +54,48 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		final LegWrapper legWrapper = getItem(position);
 		final Leg leg = legWrapper.getLeg();
 		final Ligne ligne = legWrapper.getLigne();
+		final Place from = leg.from;
+		final Place to = leg.to;
 
 		if ("WALK".equals(leg.mode)) {
 			viewHolder.itemIcon.setVisibility(View.VISIBLE);
 			viewHolder.itemSymbole.setVisibility(View.INVISIBLE);
+			viewHolder.fromDirection.setVisibility(View.VISIBLE);
 
-			viewHolder.fromDirection.setText("Marche à pied");
+			viewHolder.fromPlace.setText("Aller à " + to.name);
+			viewHolder.fromDirection.setText(legWrapper.getTime());
 
 		} else if (ligne != null) {
 			viewHolder.itemIcon.setVisibility(View.GONE);
 			viewHolder.itemSymbole.setVisibility(View.VISIBLE);
+			viewHolder.fromDirection.setVisibility(View.GONE);
 
-			viewHolder.fromDirection.setText(FormatUtils.formatSens(leg.headsign));
+			viewHolder.fromPlace.setText(FormatUtils.formatSens(leg.headsign));
 			viewHolder.itemSymbole.setText(ligne.getLettre());
 			viewHolder.itemSymbole.setTextColor(ligne.getCouleurTexte());
 			viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
 		}
 
-		final Place from = leg.from;
-		viewHolder.fromPlace.setText(from.name);
-		viewHolder.fromTime.setText(legWrapper.getFromTime());
-
-		final Place to = leg.to;
 		viewHolder.toPlace.setText(to.name);
+		viewHolder.fromTime.setText(legWrapper.getFromTime());
 		viewHolder.toTime.setText(legWrapper.getToTime());
 
 		if (position == 0) {
-			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_first);
-			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step);
+			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_first_silver);
+			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step_silver);
 		} else if (position == getCount() - 1) {
-			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step);
-			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_last);
+			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step_silver);
+			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_last_silver);
 		} else {
-			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step);
-			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step);
+			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step_silver);
+			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step_silver);
 		}
 
 		return view;
 	}
 
 	private static class ViewHolder {
+		View rowBottom;
 		View itemMetroPointFrom;
 		View itemMetroPointTo;
 		ImageView itemIcon;

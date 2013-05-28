@@ -56,6 +56,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 		final List<LegWrapper> legWrappers = new ArrayList<LegWrapper>();
 		for (final Leg leg : mItinerary.legs) {
+			boolean add = true;
 			final LegWrapper wrapper = new LegWrapper(leg);
 
 			final long startTime = leg.startTime.getTime();
@@ -68,9 +69,12 @@ public class ItineraryDetailFragment extends CustomListFragment {
 			if (!"WALK".equals(leg.mode) && !TextUtils.isEmpty(leg.route)) {
 				final Ligne ligne = ligneManager.getSingle(context.getContentResolver(), leg.route);
 				wrapper.setLigne(ligne);
+			} else if ("WALK".equals(leg.mode) && leg.distance < 100) {
+				add = false;
 			}
 
-			legWrappers.add(wrapper);
+			if (add)
+				legWrappers.add(wrapper);
 		}
 
 		final LegWrapperArrayAdapter adapter = new LegWrapperArrayAdapter(context, legWrappers);

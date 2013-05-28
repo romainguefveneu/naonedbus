@@ -50,6 +50,7 @@
             android:layout_marginTop="4dp"
             android:clipChildren="true"
             android:gravity="left|center_vertical"
+            android:orientation="horizontal"
             android:visibility="gone" />
     </FrameLayout>
 
