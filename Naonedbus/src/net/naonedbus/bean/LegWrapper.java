@@ -10,6 +10,7 @@ public class LegWrapper {
 	private String mTime;
 	private String mFromTime;
 	private String mToTime;
+	private String mDistance;
 
 	public LegWrapper(final Leg leg) {
 		mLeg = leg;
@@ -49,6 +50,14 @@ public class LegWrapper {
 
 	public void setToTime(final String toTime) {
 		mToTime = toTime;
+	}
+
+	public String getDistance() {
+		return mDistance;
+	}
+
+	public void setDistance(final String distance) {
+		mDistance = distance;
 	}
 
 }

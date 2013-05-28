@@ -2,6 +2,7 @@ package net.naonedbus.loader;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import net.naonedbus.bean.async.AsyncResult;
 import android.content.Context;
@@ -44,6 +45,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<Itinerary>
 
 		final Request request = new Request(fromLatitude, fromLongitude, toLatitude, toLongitude, new Date());
 		request.setModes(new TraverseModeSet(TraverseMode.WALK, TraverseMode.TRANSIT));
+		request.setLocale(Locale.getDefault().toString());
 		request.setOptimize(OptimizeType.QUICK);
 		request.setMaxWalkDistance(2000d);
 		request.setWalkSpeed(1.389d);

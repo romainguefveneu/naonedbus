@@ -80,4 +80,16 @@ public abstract class FormatUtils {
 		return delay;
 	}
 
+	public static String formatMetres(final Context context, final double metres) {
+		String result = "";
+
+		if (metres < 1000) {
+			result = context.getString(R.string.format_metres, Math.round(metres));
+		} else {
+			result = context.getString(R.string.format_km, metres / 1000);
+		}
+
+		return result;
+	}
+
 }

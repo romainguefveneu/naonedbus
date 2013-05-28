@@ -65,11 +65,12 @@ public class ItineraryDetailFragment extends CustomListFragment {
 			wrapper.setTime(FormatUtils.formatMinutes(context, endTime - startTime));
 			wrapper.setFromTime(DateUtils.formatDateTime(context, startTime, DateUtils.FORMAT_SHOW_TIME));
 			wrapper.setToTime(DateUtils.formatDateTime(context, endTime, DateUtils.FORMAT_SHOW_TIME));
+			wrapper.setDistance(FormatUtils.formatMetres(context, leg.distance));
 
 			if (!"WALK".equals(leg.mode) && !TextUtils.isEmpty(leg.route)) {
-				final Ligne ligne = ligneManager.getSingle(context.getContentResolver(), leg.route);
+				final Ligne ligne = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
 				wrapper.setLigne(ligne);
-			} else if ("WALK".equals(leg.mode) && leg.distance < 100) {
+			} else if ("WALK".equals(leg.mode) && leg.distance < 50) {
 				add = false;
 			}
 

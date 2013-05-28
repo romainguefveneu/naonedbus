@@ -176,7 +176,7 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocationEditManager.getLongitude());
 
 		setListShown(false, false);
-		getLoaderManager().initLoader(0, bundle, this);
+		getLoaderManager().restartLoader(0, bundle, this);
 	}
 
 	@Override
@@ -296,8 +296,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 		} else {
 			final List<Itinerary> itineraries = result.getResult();
 			if (itineraries != null) {
-				Crouton.makeText(getActivity(), itineraries.size() + " itinéraires", Style.INFO).show();
-
 				for (final Itinerary itinerary : itineraries) {
 					final View view = mItineraryViewHelper.createItineraryView(itinerary, mListContainer);
 					view.setOnClickListener(new OnClickListener() {
@@ -310,8 +308,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 					});
 					mListContainer.addView(view);
 				}
-			} else {
-				Crouton.makeText(getActivity(), "Aucun itinéraire", Style.ALERT).show();
 			}
 		}
 		setListShown(true, false);

@@ -24,7 +24,7 @@
         <View
             android:id="@+id/itemMetroPointFrom"
             android:layout_width="40dip"
-            android:layout_height="65dip"
+            android:layout_height="55dip"
             android:layout_toRightOf="@id/fromTime"
             android:background="@drawable/ic_arret_step_silver" />
 
@@ -86,7 +86,7 @@
         <View
             android:id="@+id/itemMetroPointTo"
             android:layout_width="40dip"
-            android:layout_height="65dip"
+            android:layout_height="55dip"
             android:layout_toRightOf="@id/toTime"
             android:background="@drawable/ic_arret_step_silver" />
 

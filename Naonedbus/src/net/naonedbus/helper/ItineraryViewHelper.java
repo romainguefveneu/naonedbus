@@ -56,7 +56,7 @@ public class ItineraryViewHelper {
 		final List<Leg> legs = itinerary.legs;
 		for (final Leg leg : legs) {
 			if ("BUS".equalsIgnoreCase(leg.mode) || "TRAM".equalsIgnoreCase(leg.mode)) {
-				final Ligne ligne = ligneManager.getSingle(mContext.getContentResolver(), leg.route);
+				final Ligne ligne = ligneManager.getSingleByLetter(mContext.getContentResolver(), leg.route);
 				if (ligne != null) {
 					lignes.add(ligne);
 				}

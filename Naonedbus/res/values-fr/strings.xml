@@ -14,6 +14,8 @@
     <string name="copy">Copier</string>
     <string name="skip">Passer</string>
     <string name="next">&#8594;</string>
+    <string name="format_metres">%d mètres</string>
+    <string name="format_km">%1$.0f km</string>
     <string name="format_minutes">%d min</string>
     <string name="format_heures">%1$sh%2$s</string>
 
