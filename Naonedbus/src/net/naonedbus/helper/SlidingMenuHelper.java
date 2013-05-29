@@ -25,7 +25,6 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.AboutActivity;
 import net.naonedbus.activity.impl.BicloosActivity;
 import net.naonedbus.activity.impl.DonateActivity;
-import net.naonedbus.activity.impl.EquipementsActivity;
 import net.naonedbus.activity.impl.InfosTraficActivity;
 import net.naonedbus.activity.impl.ItineraireActivity;
 import net.naonedbus.activity.impl.MainActivity;
@@ -72,7 +71,7 @@ public class SlidingMenuHelper {
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_bicloo, BicloosActivity.class, R.drawable.ic_action_bicloo, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_itineraire, ItineraireActivity.class, R.drawable.ic_action_direction, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parkings, ParkingsActivity.class, R.drawable.ic_action_parking, 0));
-		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
+//		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_equipements, EquipementsActivity.class, R.drawable.ic_action_place, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_recherche, SearchActivity.class, R.drawable.ic_action_search, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_carte, MapActivity.class, R.drawable.ic_action_map, 0));
 		MENU_ITEMS.add(new MainMenuItem(R.string.title_activity_parametres, (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) ? OldSettingsActivity.class : SettingsActivity.class, R.drawable.ic_action_settings, 1));

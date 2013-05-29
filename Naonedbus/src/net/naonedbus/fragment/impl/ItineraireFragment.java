@@ -18,53 +18,50 @@
  */
 package net.naonedbus.fragment.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.ItineraryDetailActivity;
+import net.naonedbus.bean.ItineraryWrapper;
+import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.helper.ItineraryViewHelper;
+import net.naonedbus.fragment.CustomListFragment;
+import net.naonedbus.helper.DateTimeFormatHelper;
 import net.naonedbus.loader.ItineraryLoader;
+import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter;
-import android.animation.LayoutTransition;
-import android.annotation.TargetApi;
+import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
+
+import org.joda.time.DateTime;
+
 import android.app.Activity;
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.MenuItem;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
+import fr.ybo.opentripplanner.client.modele.Leg;
 
-public class ItineraireFragment extends CustomFragment implements LoaderCallbacks<AsyncResult<List<Itinerary>>> {
+public class ItineraireFragment extends CustomListFragment {
 
 	private static final String TAG = "ItineraireFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -72,14 +69,10 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 	private AutoCompleteTextView mFromTextView;
 	private AutoCompleteTextView mToTextView;
 
-	private ItineraryViewHelper mItineraryViewHelper;
-
 	private LocationEditManager mFromLocationEditManager;
 	private LocationEditManager mToLocationEditManager;
 
 	private Button mGoButton;
-	private ProgressBar mProgressBar;
-	private LinearLayout mListContainer;
 
 	private final OnLocationEditChange mOnLocationChange = new OnLocationEditChange() {
 
@@ -105,9 +98,9 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 	}
 
 	@Override
-	public void onAttach(final Activity activity) {
-		super.onAttach(activity);
-		mItineraryViewHelper = new ItineraryViewHelper(activity);
+	public void onActivityCreated(final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		showContent();
 	}
 
 	@Override
@@ -117,31 +110,23 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 		super.onSaveInstanceState(outState);
 	}
 
-	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@Override
 	protected void bindView(final View view, final Bundle savedInstanceState) {
+
 		mGoButton = (Button) view.findViewById(android.R.id.button1);
+		mFromTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireFrom);
+		mToTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireTo);
+
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
+				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+						Activity.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
 				sendRequest();
 			}
 		});
-
-		mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
-		mListContainer = (LinearLayout) view.findViewById(android.R.id.list);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			final LayoutTransition layoutTransition = mListContainer.getLayoutTransition();
-			layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
-		}
-		final Animation slide = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_in_from_bottom);
-		final LayoutAnimationController controller = new LayoutAnimationController(slide);
-		controller.setInterpolator(new DecelerateInterpolator());
-		controller.setDelay(0.1f);
-		mListContainer.setLayoutAnimation(controller);
-
-		mFromTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireFrom);
-		mToTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireTo);
 
 		setDecoratedHint(mFromTextView, getString(R.string.search_hint_itineraire_depart));
 		setDecoratedHint(mToTextView, getString(R.string.search_hint_itineraire_arrivee));
@@ -151,7 +136,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 
 		mFromTextView.setAdapter(new AddressArrayAdapter(getActivity()));
 		mToTextView.setAdapter(new AddressArrayAdapter(getActivity()));
-
 	}
 
 	private void setDecoratedHint(final TextView textview, final CharSequence hintText) {
@@ -175,7 +159,6 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocationEditManager.getLatitude());
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocationEditManager.getLongitude());
 
-		setListShown(false, false);
 		getLoaderManager().restartLoader(0, bundle, this);
 	}
 
@@ -188,6 +171,51 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 		void onLocationFound();
 
 		void onLocationNotFound();
+	}
+
+	@Override
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
+		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
+		final ItineraryLoader loader = new ItineraryLoader(context, bundle);
+		final AsyncResult<List<Itinerary>> loaderResult = loader.loadInBackground();
+
+		Exception e;
+		if ((e = loaderResult.getException()) != null) {
+			result.setException(e);
+		} else {
+			final List<ItineraryWrapper> wrappers = new ArrayList<ItineraryWrapper>();
+
+			final DateTimeFormatHelper formatHelper = new DateTimeFormatHelper(context);
+			final LigneManager ligneManager = LigneManager.getInstance();
+			for (final Itinerary itinerary : loaderResult.getResult()) {
+				final ItineraryWrapper wrapper = new ItineraryWrapper(itinerary);
+				wrapper.setTitle(FormatUtils.formatMinutes(context, itinerary.duration));
+				wrapper.setDate(formatHelper.formatDuree(new DateTime(itinerary.startTime), new DateTime(
+						itinerary.endTime)));
+
+				final int walkTime = Math.round(itinerary.walkTime / 60);
+				final String walkTimeText = context.getResources().getQuantityString(R.plurals.itinerary_walk_time,
+						walkTime, walkTime);
+				wrapper.setWalkTime(walkTimeText);
+
+				final List<Ligne> lignes = new ArrayList<Ligne>();
+				final List<Leg> legs = itinerary.legs;
+				for (final Leg leg : legs) {
+					if ("BUS".equalsIgnoreCase(leg.mode) || "TRAM".equalsIgnoreCase(leg.mode)) {
+						final Ligne ligne = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
+						if (ligne != null) {
+							lignes.add(ligne);
+						}
+					}
+				}
+				wrapper.setLignes(lignes);
+				wrappers.add(wrapper);
+			}
+
+			result.setResult(new ItineraryWrapperArrayAdapter(context, wrappers));
+		}
+
+		return result;
 	}
 
 	private static class LocationEditManager implements TextWatcher, OnItemClickListener {
@@ -275,90 +303,4 @@ public class ItineraireFragment extends CustomFragment implements LoaderCallback
 		}
 	}
 
-	@Override
-	public Loader<AsyncResult<List<Itinerary>>> onCreateLoader(final int idLoader, final Bundle bundle) {
-		return new ItineraryLoader(getActivity(), bundle);
-	}
-
-	@Override
-	public void onLoadFinished(final Loader<AsyncResult<List<Itinerary>>> loader,
-			final AsyncResult<List<Itinerary>> result) {
-		if (DBG)
-			Log.d(TAG, "onLoadFinished");
-
-		mListContainer.removeAllViews();
-
-		if (result.getException() != null) {
-			final Exception e = result.getException();
-			Crouton.makeText(getActivity(), e.getLocalizedMessage(), Style.ALERT).show();
-
-			e.printStackTrace();
-		} else {
-			final List<Itinerary> itineraries = result.getResult();
-			if (itineraries != null) {
-				for (final Itinerary itinerary : itineraries) {
-					final View view = mItineraryViewHelper.createItineraryView(itinerary, mListContainer);
-					view.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(final View v) {
-							final Intent intent = new Intent(getActivity(), ItineraryDetailActivity.class);
-							intent.putExtra(ItineraryDetailActivity.PARAM_ITINERARY, itinerary);
-							getActivity().startActivity(intent);
-						}
-					});
-					mListContainer.addView(view);
-				}
-			}
-		}
-		setListShown(true, false);
-
-	}
-
-	@Override
-	public void onLoaderReset(final Loader<AsyncResult<List<Itinerary>>> loader) {
-
-	}
-
-	/**
-	 * Control whether the list is being displayed. You can make it not
-	 * displayed if you are waiting for the initial data to show in it. During
-	 * this time an indeterminant progress indicator will be shown instead.
-	 * 
-	 * @param shown
-	 *            If true, the list view is shown; if false, the progress
-	 *            indicator. The initial value is true.
-	 * @param animate
-	 *            If true, an animation will be used to transition to the new
-	 *            state.
-	 */
-	private void setListShown(final boolean shown, final boolean animate) {
-		if (DBG)
-			Log.d(TAG, "setListShown(" + shown + "," + animate + ")");
-
-		if (mProgressBar == null) {
-			throw new IllegalStateException("Can't be used with a custom content view");
-		}
-
-		if (shown) {
-			if (animate) {
-				mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-				mListContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-			} else {
-				mProgressBar.clearAnimation();
-				mListContainer.clearAnimation();
-			}
-			mProgressBar.setVisibility(View.GONE);
-			mListContainer.setVisibility(View.VISIBLE);
-		} else {
-			if (animate) {
-				mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
-				mListContainer.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-			} else {
-				mProgressBar.clearAnimation();
-				mListContainer.clearAnimation();
-			}
-			mProgressBar.setVisibility(View.VISIBLE);
-			mListContainer.setVisibility(View.GONE);
-		}
-	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.utils.ColorUtils;
@@ -12,8 +13,10 @@ import net.naonedbus.utils.FormatUtils;
 import org.joda.time.DateTime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -73,6 +76,14 @@ public class ItineraryViewHelper {
 			gridLayout.addView(textView);
 		}
 
+		view.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				final Intent intent = new Intent(mContext, ItineraryDetailActivity.class);
+				intent.putExtra(ItineraryDetailActivity.PARAM_ITINERARY, itinerary);
+				mContext.startActivity(intent);
+			}
+		});
 		return view;
 	}
 }

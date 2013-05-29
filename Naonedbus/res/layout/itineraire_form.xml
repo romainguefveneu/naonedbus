@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_medium"
+    android:paddingTop="@dimen/padding_medium" >
+
+    <LinearLayout
+        style="@style/Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_small" >
+
+        <AutoCompleteTextView
+            android:id="@id/itineraireFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:drawablePadding="@dimen/padding_tiny"
+            android:dropDownHeight="wrap_content"
+            android:dropDownHorizontalOffset="0dip"
+            android:dropDownVerticalOffset="0dip"
+            android:ellipsize="end"
+            android:inputType="text|textAutoComplete|textNoSuggestions"
+            android:minWidth="@dimen/abs__search_view_text_min_width"
+            android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+            android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+            android:singleLine="true" />
+
+        <AutoCompleteTextView
+            android:id="@id/itineraireTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:drawablePadding="@dimen/padding_tiny"
+            android:dropDownHeight="wrap_content"
+            android:dropDownHorizontalOffset="0dip"
+            android:dropDownVerticalOffset="0dip"
+            android:ellipsize="end"
+            android:inputType="text|textAutoComplete|textNoSuggestions"
+            android:minWidth="@dimen/abs__search_view_text_min_width"
+            android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+            android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@android:id/button1"
+            style="@style/ButtonFlat.Blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:enabled="false"
+            android:text="Calculer" />
+    </LinearLayout>
+
+</LinearLayout>
