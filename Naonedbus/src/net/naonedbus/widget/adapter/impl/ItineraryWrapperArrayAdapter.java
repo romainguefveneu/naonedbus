@@ -49,6 +49,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		viewHolder.itemWalkTime.setText(wrapper.getWalkTime());
 
 		final List<Ligne> lignes = wrapper.getLignes();
+		viewHolder.gridLayout.removeAllViews();
 		for (final Ligne l : lignes) {
 			final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.ligne_code_item_medium,
 					viewHolder.gridLayout, false);

@@ -23,6 +23,7 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncResult;
@@ -38,6 +39,7 @@ import org.joda.time.DateTime;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.os.Bundle;
@@ -54,6 +56,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.MenuItem;
@@ -108,6 +111,16 @@ public class ItineraireFragment extends CustomListFragment {
 		mFromLocationEditManager.saveInstanceState(outState);
 		mToLocationEditManager.saveInstanceState(outState);
 		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
+		super.onListItemClick(l, v, position, id);
+
+		final ItineraryWrapper wrapper = (ItineraryWrapper) getListView().getItemAtPosition(position);
+		final Intent intent = new Intent(getActivity(), ItineraryDetailActivity.class);
+		intent.putExtra(ItineraryDetailActivity.PARAM_ITINERARY, wrapper.getItinerary());
+		getActivity().startActivity(intent);
 	}
 
 	@Override

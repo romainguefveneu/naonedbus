@@ -20,7 +20,6 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultActivityContent"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -32,8 +31,8 @@
 
     <ListView
         android:id="@id/android:list"
-        style="@style/Listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+       style="@style/Listview"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp" />
 
 </LinearLayout>
