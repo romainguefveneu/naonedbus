@@ -25,49 +25,46 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
-import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.helper.DateTimeFormatHelper;
 import net.naonedbus.loader.ItineraryLoader;
-import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
-
-import org.joda.time.DateTime;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.Loader;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
+import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
-import fr.ybo.opentripplanner.client.modele.Itinerary;
-import fr.ybo.opentripplanner.client.modele.Leg;
-
-public class ItineraireFragment extends CustomListFragment {
+public class ItineraireFragment extends SherlockListFragment implements
+		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>> {
 
 	private static final String TAG = "ItineraireFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
+
+	private ItineraryWrapperArrayAdapter mAdapter;
+	private ViewGroup mFragmentView;
 
 	private AutoCompleteTextView mFromTextView;
 	private AutoCompleteTextView mToTextView;
@@ -90,20 +87,37 @@ public class ItineraireFragment extends CustomListFragment {
 		}
 	};
 
-	public ItineraireFragment() {
-		super(R.layout.fragment_itineraire);
-	}
+	private final OnClickListener mOnLocationEditClickListener = new OnClickListener() {
+		@Override
+		public void onClick(final View v) {
+			mGoButton.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					mGoButton.setVisibility(View.VISIBLE);
+				}
+			}, 200);
+		}
+	};
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(false);
+
 	}
 
 	@Override
-	public void onActivityCreated(final Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		showContent();
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+		if (container == null) // must put this in
+			return null;
+
+		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
+		final View view = inflater.inflate(R.layout.fragment_itineraire, container, false);
+		bindView(view, savedInstanceState);
+
+		mFragmentView.addView(view);
+
+		return mFragmentView;
 	}
 
 	@Override
@@ -123,21 +137,36 @@ public class ItineraireFragment extends CustomListFragment {
 		getActivity().startActivity(intent);
 	}
 
-	@Override
 	protected void bindView(final View view, final Bundle savedInstanceState) {
+		final ListView listView = (ListView) view.findViewById(android.R.id.list);
 
-		mGoButton = (Button) view.findViewById(android.R.id.button1);
-		mFromTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireFrom);
-		mToTextView = (AutoCompleteTextView) view.findViewById(R.id.itineraireTo);
+		mAdapter = new ItineraryWrapperArrayAdapter(getActivity(), new ArrayList<ItineraryWrapper>());
+		final SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
+		swingBottomInAnimationAdapter.setListView(listView);
+
+		final View formView = LayoutInflater.from(getActivity()).inflate(R.layout.itineraire_form, listView, false);
+		listView.addHeaderView(formView);
+		listView.setAdapter(swingBottomInAnimationAdapter);
+
+		mGoButton = (Button) formView.findViewById(android.R.id.button1);
+		mFromTextView = (AutoCompleteTextView) formView.findViewById(R.id.itineraireFrom);
+		mToTextView = (AutoCompleteTextView) formView.findViewById(R.id.itineraireTo);
 
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
+				sendRequest();
+
 				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
 						Activity.INPUT_METHOD_SERVICE);
 				imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
-				sendRequest();
+				mGoButton.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						mGoButton.setVisibility(View.GONE);
+					}
+				}, 100);
 			}
 		});
 
@@ -149,6 +178,9 @@ public class ItineraireFragment extends CustomListFragment {
 
 		mFromTextView.setAdapter(new AddressArrayAdapter(getActivity()));
 		mToTextView.setAdapter(new AddressArrayAdapter(getActivity()));
+
+		mFromTextView.setOnClickListener(mOnLocationEditClickListener);
+		mToTextView.setOnClickListener(mOnLocationEditClickListener);
 	}
 
 	private void setDecoratedHint(final TextView textview, final CharSequence hintText) {
@@ -180,55 +212,32 @@ public class ItineraireFragment extends CustomListFragment {
 		return false;
 	}
 
+	@Override
+	public Loader<AsyncResult<List<ItineraryWrapper>>> onCreateLoader(final int loaderId, final Bundle bundle) {
+		return new ItineraryLoader(getActivity(), bundle);
+	}
+
+	@Override
+	public void onLoadFinished(final Loader<AsyncResult<List<ItineraryWrapper>>> loader,
+			final AsyncResult<List<ItineraryWrapper>> result) {
+
+		if (result.getException() == null) {
+			mAdapter.clear();
+			mAdapter.addAll(result.getResult());
+			mAdapter.notifyDataSetChanged();
+			getListView().smoothScrollToPosition(1);
+		}
+	}
+
+	@Override
+	public void onLoaderReset(final Loader<AsyncResult<List<ItineraryWrapper>>> arg0) {
+
+	}
+
 	public interface OnLocationEditChange {
 		void onLocationFound();
 
 		void onLocationNotFound();
-	}
-
-	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
-		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		final ItineraryLoader loader = new ItineraryLoader(context, bundle);
-		final AsyncResult<List<Itinerary>> loaderResult = loader.loadInBackground();
-
-		Exception e;
-		if ((e = loaderResult.getException()) != null) {
-			result.setException(e);
-		} else {
-			final List<ItineraryWrapper> wrappers = new ArrayList<ItineraryWrapper>();
-
-			final DateTimeFormatHelper formatHelper = new DateTimeFormatHelper(context);
-			final LigneManager ligneManager = LigneManager.getInstance();
-			for (final Itinerary itinerary : loaderResult.getResult()) {
-				final ItineraryWrapper wrapper = new ItineraryWrapper(itinerary);
-				wrapper.setTitle(FormatUtils.formatMinutes(context, itinerary.duration));
-				wrapper.setDate(formatHelper.formatDuree(new DateTime(itinerary.startTime), new DateTime(
-						itinerary.endTime)));
-
-				final int walkTime = Math.round(itinerary.walkTime / 60);
-				final String walkTimeText = context.getResources().getQuantityString(R.plurals.itinerary_walk_time,
-						walkTime, walkTime);
-				wrapper.setWalkTime(walkTimeText);
-
-				final List<Ligne> lignes = new ArrayList<Ligne>();
-				final List<Leg> legs = itinerary.legs;
-				for (final Leg leg : legs) {
-					if ("BUS".equalsIgnoreCase(leg.mode) || "TRAM".equalsIgnoreCase(leg.mode)) {
-						final Ligne ligne = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
-						if (ligne != null) {
-							lignes.add(ligne);
-						}
-					}
-				}
-				wrapper.setLignes(lignes);
-				wrappers.add(wrapper);
-			}
-
-			result.setResult(new ItineraryWrapperArrayAdapter(context, wrappers));
-		}
-
-		return result;
 	}
 
 	private static class LocationEditManager implements TextWatcher, OnItemClickListener {

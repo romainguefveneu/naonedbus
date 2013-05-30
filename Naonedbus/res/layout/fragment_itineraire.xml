@@ -24,14 +24,9 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/itineraire_form" />
-
     <ListView
         android:id="@id/android:list"
-       style="@style/Listview"
+        style="@style/Listview"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp" />
 

@@ -74,7 +74,7 @@ public abstract class FormatUtils {
 		} else {
 			final int heures = minutes / 60;
 			final int reste = minutes - heures * 60;
-			delay = context.getString(R.string.format_heures, heures, reste);
+			delay = context.getString(R.string.format_heures, heures, (reste < 10) ? "0" + reste : reste);
 		}
 
 		return delay;
