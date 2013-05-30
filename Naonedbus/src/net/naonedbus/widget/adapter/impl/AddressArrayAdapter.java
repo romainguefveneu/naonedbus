@@ -7,6 +7,7 @@ import java.util.List;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -53,6 +54,9 @@ public class AddressArrayAdapter extends ArrayAdapter<Address> {
 		final Filter myFilter = new Filter() {
 			@Override
 			protected FilterResults performFiltering(final CharSequence constraint) {
+
+				Log.d("AddressArrayAdapter", "performFiltering " + constraint);
+
 				List<Address> addressList = null;
 				if (constraint != null) {
 					try {

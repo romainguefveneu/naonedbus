@@ -119,7 +119,8 @@
             android:label="@string/emptyString" />
         <activity
             android:name=".activity.impl.ItineraireActivity"
-            android:label="@string/title_activity_itineraire" />
+            android:label="@string/title_activity_itineraire"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".activity.impl.ItineraryDetailActivity"
             android:label="@string/emptyString" />

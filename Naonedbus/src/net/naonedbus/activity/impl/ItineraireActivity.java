@@ -21,7 +21,10 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentSlidingActivity;
 import net.naonedbus.fragment.impl.ItineraireFragment;
+import net.simonvt.menudrawer.MenuDrawer;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
 
 public class ItineraireActivity extends OneFragmentSlidingActivity {
 
@@ -37,4 +40,11 @@ public class ItineraireActivity extends OneFragmentSlidingActivity {
 		}
 	}
 
+	@Override
+	public void onDrawerStateChange(final int oldState, final int newState) {
+		if (newState == MenuDrawer.STATE_CLOSED) {
+			final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
 }

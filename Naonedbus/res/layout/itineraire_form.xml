@@ -23,12 +23,14 @@
             android:dropDownHorizontalOffset="0dip"
             android:dropDownVerticalOffset="0dip"
             android:ellipsize="end"
-            android:imeOptions="actionGo"
-            android:inputType="text|textAutoComplete|textNoSuggestions"
+            android:imeOptions="actionNext"
+            android:inputType="textAutoComplete|textNoSuggestions|textPostalAddress"
             android:minWidth="@dimen/abs__search_view_text_min_width"
+            android:nextFocusDown="@id/itineraireTo"
             android:nextFocusForward="@id/itineraireTo"
             android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
             android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+            android:selectAllOnFocus="true"
             android:singleLine="true" >
 
             <requestFocus />
@@ -44,11 +46,14 @@
             android:dropDownHorizontalOffset="0dip"
             android:dropDownVerticalOffset="0dip"
             android:ellipsize="end"
-            android:imeOptions="actionGo"
-            android:inputType="text|textAutoComplete|textNoSuggestions"
+            android:imeOptions="actionNext"
+            android:inputType="text|textAutoComplete|textNoSuggestions|textPostalAddress"
             android:minWidth="@dimen/abs__search_view_text_min_width"
+            android:nextFocusDown="@android:id/button1"
+            android:nextFocusForward="@android:id/button1"
             android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
             android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
+            android:selectAllOnFocus="true"
             android:singleLine="true" />
 
         <Button

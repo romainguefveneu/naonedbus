@@ -65,6 +65,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private ItineraryWrapperArrayAdapter mAdapter;
 	private ViewGroup mFragmentView;
+	private View mProgressView;
 
 	private AutoCompleteTextView mFromTextView;
 	private AutoCompleteTextView mToTextView;
@@ -103,19 +104,15 @@ public class ItineraireFragment extends SherlockListFragment implements
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(false);
-
-	}
+	};
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (container == null) // must put this in
 			return null;
 
-		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
-		final View view = inflater.inflate(R.layout.fragment_itineraire, container, false);
-		bindView(view, savedInstanceState);
-
-		mFragmentView.addView(view);
+		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_itineraire, container, false);
+		bindView(mFragmentView, savedInstanceState);
 
 		return mFragmentView;
 	}
@@ -139,6 +136,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	protected void bindView(final View view, final Bundle savedInstanceState) {
 		final ListView listView = (ListView) view.findViewById(android.R.id.list);
+		mProgressView = view.findViewById(android.R.id.progress);
 
 		mAdapter = new ItineraryWrapperArrayAdapter(getActivity(), new ArrayList<ItineraryWrapper>());
 		final SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
@@ -155,6 +153,8 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
+				mAdapter.clear();
+				showProgress();
 				sendRequest();
 
 				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
@@ -175,6 +175,9 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		mFromLocationEditManager = new LocationEditManager(mFromTextView, mOnLocationChange, savedInstanceState);
 		mToLocationEditManager = new LocationEditManager(mToTextView, mOnLocationChange, savedInstanceState);
+
+		mFromLocationEditManager.setNextFocusView(mToTextView);
+		mToLocationEditManager.setNextFocusView(mGoButton);
 
 		mFromTextView.setAdapter(new AddressArrayAdapter(getActivity()));
 		mToTextView.setAdapter(new AddressArrayAdapter(getActivity()));
@@ -207,6 +210,14 @@ public class ItineraireFragment extends SherlockListFragment implements
 		getLoaderManager().restartLoader(0, bundle, this);
 	}
 
+	private void showProgress() {
+		mProgressView.setVisibility(View.VISIBLE);
+	}
+
+	private void hideProgress() {
+		mProgressView.setVisibility(View.GONE);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		return false;
@@ -221,12 +232,14 @@ public class ItineraireFragment extends SherlockListFragment implements
 	public void onLoadFinished(final Loader<AsyncResult<List<ItineraryWrapper>>> loader,
 			final AsyncResult<List<ItineraryWrapper>> result) {
 
+		hideProgress();
 		if (result.getException() == null) {
 			mAdapter.clear();
 			mAdapter.addAll(result.getResult());
 			mAdapter.notifyDataSetChanged();
 			getListView().smoothScrollToPosition(1);
 		}
+
 	}
 
 	@Override
@@ -244,9 +257,11 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		private static final String BUNDLE_LATITUDE = "LocationEditManager:latitude";
 		private static final String BUNDLE_LONGITUDE = "LocationEditManager:longitude";
+		private static final String BUNDLE_ADDRESS = "LocationEditManager:address";
 
 		private final AutoCompleteTextView mAutoCompleteTextView;
 		private final OnLocationEditChange mOnLocationEditChange;
+		private View mNextFocusView;
 		private double mLatitude;
 		private double mLongitude;
 		private boolean mFirstUse = true;
@@ -254,12 +269,9 @@ public class ItineraireFragment extends SherlockListFragment implements
 		public LocationEditManager(final AutoCompleteTextView autoCompleteTextView,
 				final OnLocationEditChange onLocationEditChange, final Bundle saveInstanceState) {
 			mAutoCompleteTextView = autoCompleteTextView;
-			mAutoCompleteTextView.addTextChangedListener(this);
-			mAutoCompleteTextView.setOnItemClickListener(this);
-
-			mOnLocationEditChange = onLocationEditChange;
 
 			if (saveInstanceState != null) {
+				mAutoCompleteTextView.setText(saveInstanceState.getString(BUNDLE_ADDRESS));
 				mLatitude = saveInstanceState.getDouble(getBundleKeyLatitude(), 0);
 				mLongitude = saveInstanceState.getDouble(getBundleKeyLongitude(), 0);
 				if (mLatitude != 0 && mLongitude != 0) {
@@ -267,6 +279,15 @@ public class ItineraireFragment extends SherlockListFragment implements
 							R.drawable.ic_checkmark_holo_light, 0);
 				}
 			}
+
+			mAutoCompleteTextView.addTextChangedListener(this);
+			mAutoCompleteTextView.setOnItemClickListener(this);
+
+			mOnLocationEditChange = onLocationEditChange;
+		}
+
+		public void setNextFocusView(final View nextFocusView) {
+			mNextFocusView = nextFocusView;
 		}
 
 		private String getBundleKeyLatitude() {
@@ -277,9 +298,14 @@ public class ItineraireFragment extends SherlockListFragment implements
 			return BUNDLE_LONGITUDE + mAutoCompleteTextView.getId();
 		}
 
+		private String getBundleKeyAddress() {
+			return BUNDLE_ADDRESS + mAutoCompleteTextView.getId();
+		}
+
 		public void saveInstanceState(final Bundle outState) {
 			outState.putDouble(getBundleKeyLatitude(), mLatitude);
 			outState.putDouble(getBundleKeyLongitude(), mLongitude);
+			outState.putString(getBundleKeyAddress(), mAutoCompleteTextView.getText().toString());
 		}
 
 		public boolean hasLocation() {
@@ -322,6 +348,9 @@ public class ItineraireFragment extends SherlockListFragment implements
 			mAutoCompleteTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_checkmark_holo_light, 0);
 			mOnLocationEditChange.onLocationFound();
 			mFirstUse = false;
+
+			if (mNextFocusView != null)
+				mNextFocusView.requestFocus();
 		}
 	}
 
