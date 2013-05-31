@@ -83,12 +83,15 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		if (position == 0) {
 			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_first_silver);
 			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step_silver);
-		} else if (position == getCount() - 1) {
-			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step_silver);
-			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_last_silver);
-		} else {
+		}
+
+		if (position > 0 && position < getCount() - 1) {
 			viewHolder.itemMetroPointFrom.setBackgroundResource(R.drawable.ic_arret_step_silver);
 			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_step_silver);
+		}
+
+		if (position == getCount() - 1) {
+			viewHolder.itemMetroPointTo.setBackgroundResource(R.drawable.ic_arret_last_silver);
 		}
 
 		return view;

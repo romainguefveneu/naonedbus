@@ -44,6 +44,7 @@ import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -88,15 +89,18 @@ public class ItineraireFragment extends SherlockListFragment implements
 		}
 	};
 
-	private final OnClickListener mOnLocationEditClickListener = new OnClickListener() {
+	private final OnFocusChangeListener mOnLocationFocusChangeListener = new OnFocusChangeListener() {
+
 		@Override
-		public void onClick(final View v) {
-			mGoButton.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					mGoButton.setVisibility(View.VISIBLE);
-				}
-			}, 200);
+		public void onFocusChange(final View v, final boolean hasFocus) {
+			if (hasFocus && mGoButton.getVisibility() != View.VISIBLE) {
+				mGoButton.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						mGoButton.setVisibility(View.VISIBLE);
+					}
+				}, 200);
+			}
 		}
 	};
 
@@ -153,6 +157,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
+				formView.requestFocus();
 				mAdapter.clear();
 				showProgress();
 				sendRequest();
@@ -182,8 +187,8 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mFromTextView.setAdapter(new AddressArrayAdapter(getActivity()));
 		mToTextView.setAdapter(new AddressArrayAdapter(getActivity()));
 
-		mFromTextView.setOnClickListener(mOnLocationEditClickListener);
-		mToTextView.setOnClickListener(mOnLocationEditClickListener);
+		mFromTextView.setOnFocusChangeListener(mOnLocationFocusChangeListener);
+		mToTextView.setOnFocusChangeListener(mOnLocationFocusChangeListener);
 	}
 
 	private void setDecoratedHint(final TextView textview, final CharSequence hintText) {
@@ -264,7 +269,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 		private View mNextFocusView;
 		private double mLatitude;
 		private double mLongitude;
-		private boolean mFirstUse = true;
 
 		public LocationEditManager(final AutoCompleteTextView autoCompleteTextView,
 				final OnLocationEditChange onLocationEditChange, final Bundle saveInstanceState) {
@@ -321,22 +325,8 @@ public class ItineraireFragment extends SherlockListFragment implements
 		}
 
 		@Override
-		public void afterTextChanged(final Editable s) {
-
-		}
-
-		@Override
-		public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-
-		}
-
-		@Override
 		public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
 			mLatitude = 0;
-			if (mFirstUse == false) {
-				mAutoCompleteTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-						R.drawable.ic_dialog_alert_holo_light, 0);
-			}
 			mOnLocationEditChange.onLocationNotFound();
 		}
 
@@ -345,12 +335,20 @@ public class ItineraireFragment extends SherlockListFragment implements
 			final Address address = (Address) adapter.getItemAtPosition(position);
 			mLatitude = address.getLatitude();
 			mLongitude = address.getLongitude();
-			mAutoCompleteTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_checkmark_holo_light, 0);
 			mOnLocationEditChange.onLocationFound();
-			mFirstUse = false;
-
+			mAutoCompleteTextView.setSelection(0);
 			if (mNextFocusView != null)
 				mNextFocusView.requestFocus();
+		}
+
+		@Override
+		public void afterTextChanged(final Editable s) {
+
+		}
+
+		@Override
+		public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
+
 		}
 	}
 
