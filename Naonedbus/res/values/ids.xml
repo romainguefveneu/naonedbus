@@ -84,8 +84,6 @@
     <item name="pager" type="id"/>
     <item name="setupView" type="id"/>
     <item name="setupViewLabel" type="id"/>
-    <item name="itineraireFrom" type="id"/>
-    <item name="itineraireTo" type="id"/>
     <item name="actionDrag" type="id"/>
 
     <!-- Fragments -->
@@ -150,9 +148,12 @@
     <!-- Itinéraires -->
     <item name="totalTime" type="id"/>
     <item name="fromPlace" type="id"/>
+    <item name="fromLocateMe" type="id"/>
     <item name="fromDirection" type="id"/>
     <item name="fromTime" type="id"/>
+    <item name="fromLocateMe" type="id"/>
     <item name="toPlace" type="id"/>
     <item name="toTime" type="id"/>
+    <item name="toLocateMe" type="id"/>
 
 </resources>

@@ -22,11 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.loader.ItineraryLoader;
+import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 import android.app.Activity;
@@ -76,6 +78,8 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private Button mGoButton;
 
+	private MyLocationProvider mLocationProvider;
+
 	private final OnLocationEditChange mOnLocationChange = new OnLocationEditChange() {
 
 		@Override
@@ -104,10 +108,23 @@ public class ItineraireFragment extends SherlockListFragment implements
 		}
 	};
 
+	private final OnClickListener mOnLocateMeClickListener = new OnClickListener() {
+		@Override
+		public void onClick(final View v) {
+			if (v.getId() == R.id.fromLocateMe) {
+				mFromLocationEditManager.setLocation(mLocationProvider.getLastKnownAddress());
+			} else {
+				mToLocationEditManager.setLocation(mLocationProvider.getLastKnownAddress());
+			}
+		}
+	};
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(false);
+
+		mLocationProvider = NBApplication.getLocationProvider();
 	};
 
 	@Override
@@ -151,8 +168,11 @@ public class ItineraireFragment extends SherlockListFragment implements
 		listView.setAdapter(swingBottomInAnimationAdapter);
 
 		mGoButton = (Button) formView.findViewById(android.R.id.button1);
-		mFromTextView = (AutoCompleteTextView) formView.findViewById(R.id.itineraireFrom);
-		mToTextView = (AutoCompleteTextView) formView.findViewById(R.id.itineraireTo);
+		mFromTextView = (AutoCompleteTextView) formView.findViewById(R.id.fromPlace);
+		mToTextView = (AutoCompleteTextView) formView.findViewById(R.id.toPlace);
+
+		formView.findViewById(R.id.fromLocateMe).setOnClickListener(mOnLocateMeClickListener);
+		formView.findViewById(R.id.toLocateMe).setOnClickListener(mOnLocateMeClickListener);
 
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -324,6 +344,29 @@ public class ItineraireFragment extends SherlockListFragment implements
 			return mLongitude;
 		}
 
+		public void setLocation(final Address address) {
+			final StringBuilder builder = new StringBuilder();
+			final int addressLineSize = address.getMaxAddressLineIndex();
+			for (int i = 0; i < addressLineSize; i++) {
+				builder.append(address.getAddressLine(i));
+				if (i != addressLineSize - 1) {
+					builder.append(", ");
+				}
+			}
+			mAutoCompleteTextView.setText(builder);
+
+			setAddress(address);
+		}
+
+		private void setAddress(final Address address) {
+			mLatitude = address.getLatitude();
+			mLongitude = address.getLongitude();
+			mOnLocationEditChange.onLocationFound();
+			mAutoCompleteTextView.setSelection(0);
+			if (mNextFocusView != null)
+				mNextFocusView.requestFocus();
+		}
+
 		@Override
 		public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
 			mLatitude = 0;
@@ -333,12 +376,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		@Override
 		public void onItemClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
 			final Address address = (Address) adapter.getItemAtPosition(position);
-			mLatitude = address.getLatitude();
-			mLongitude = address.getLongitude();
-			mOnLocationEditChange.onLocationFound();
-			mAutoCompleteTextView.setSelection(0);
-			if (mNextFocusView != null)
-				mNextFocusView.requestFocus();
+			setAddress(address);
 		}
 
 		@Override
