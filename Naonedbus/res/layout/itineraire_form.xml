@@ -39,17 +39,6 @@
             <requestFocus />
         </AutoCompleteTextView>
 
-        <ImageButton
-            android:id="@id/fromLocateMe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/fromPlace"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/fromPlace"
-            android:background="?attr/selectableItemBackground"
-            android:padding="@dimen/padding_small"
-            android:src="@drawable/ic_action_locate_me_dark" />
-
         <AutoCompleteTextView
             android:id="@id/toPlace"
             android:layout_width="match_parent"
@@ -71,17 +60,6 @@
             android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
             android:selectAllOnFocus="true"
             android:singleLine="true" />
-
-        <ImageButton
-            android:id="@id/toLocateMe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/toPlace"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/toPlace"
-            android:background="?attr/selectableItemBackground"
-            android:padding="@dimen/padding_small"
-            android:src="@drawable/ic_action_locate_me_dark" />
 
         <ImageButton
             android:layout_width="wrap_content"

@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.widget.adapter.impl.AddressArrayAdapter.AddressWrapper;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 
-public class AddressArrayAdapter extends ArrayAdapter<Address> {
+public class AddressArrayAdapter extends ArrayAdapter<AddressWrapper> {
 
 	private final static double LOWER_LEFT_LATITUDE = 47.081d;
 	private final static double LOWER_LEFT_LONGITUDE = -1.843d;
@@ -26,14 +26,14 @@ public class AddressArrayAdapter extends ArrayAdapter<Address> {
 
 	public AddressArrayAdapter(final Context context) {
 		super(context, android.R.layout.simple_dropdown_item_1line);
+		add(AddressWrapper.createLocateMe("Locate me"));
 		mGeocoder = new Geocoder(context);
 	}
 
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		final TextView view = (TextView) super.getView(position, convertView, parent);
-		final Address address = getItem(position);
-		view.setText(createFormattedAddressFromAddress(address));
+		view.setText(getItem(position).title);
 		return view;
 	}
 
@@ -54,8 +54,6 @@ public class AddressArrayAdapter extends ArrayAdapter<Address> {
 		final Filter myFilter = new Filter() {
 			@Override
 			protected FilterResults performFiltering(final CharSequence constraint) {
-
-				Log.d("AddressArrayAdapter", "performFiltering " + constraint);
 
 				List<Address> addressList = null;
 				if (constraint != null) {
@@ -80,9 +78,15 @@ public class AddressArrayAdapter extends ArrayAdapter<Address> {
 			@Override
 			protected void publishResults(final CharSequence contraint, final FilterResults results) {
 				clear();
+
+				AddressWrapper wrapper = AddressWrapper.createLocateMe("Locate me");
+				add(wrapper);
+
 				for (final Address address : (List<Address>) results.values) {
-					add(address);
+					wrapper = AddressWrapper.createAddressWrapper(address, createFormattedAddressFromAddress(address));
+					add(wrapper);
 				}
+
 				if (results.count > 0) {
 					notifyDataSetChanged();
 				} else {
@@ -92,10 +96,47 @@ public class AddressArrayAdapter extends ArrayAdapter<Address> {
 
 			@Override
 			public CharSequence convertResultToString(final Object resultValue) {
-				return resultValue == null ? "" : createFormattedAddressFromAddress((Address) resultValue);
+				return resultValue == null ? "" : ((AddressWrapper) resultValue).title;
 			}
 		};
 		return myFilter;
+	}
+
+	public static class AddressWrapper {
+		private boolean locateMe;
+		private String title;
+		private Address address;
+
+		private AddressWrapper() {
+		}
+
+		public static AddressWrapper createAddressWrapper(final Address address, final String title) {
+			final AddressWrapper wrapper = new AddressWrapper();
+			wrapper.title = title;
+			wrapper.address = address;
+			wrapper.locateMe = false;
+			return wrapper;
+		}
+
+		public static AddressWrapper createLocateMe(final String title) {
+			final AddressWrapper wrapper = new AddressWrapper();
+			wrapper.title = title;
+			wrapper.locateMe = true;
+			return wrapper;
+		}
+
+		public boolean isLocateMe() {
+			return locateMe;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public Address getAddress() {
+			return address;
+		}
+
 	}
 
 }

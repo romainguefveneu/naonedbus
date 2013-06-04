@@ -30,6 +30,7 @@ import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.loader.ItineraryLoader;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter;
+import net.naonedbus.widget.adapter.impl.AddressArrayAdapter.AddressWrapper;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 import android.app.Activity;
 import android.content.Intent;
@@ -108,17 +109,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 		}
 	};
 
-	private final OnClickListener mOnLocateMeClickListener = new OnClickListener() {
-		@Override
-		public void onClick(final View v) {
-			if (v.getId() == R.id.fromLocateMe) {
-				mFromLocationEditManager.setLocation(mLocationProvider.getLastKnownAddress());
-			} else {
-				mToLocationEditManager.setLocation(mLocationProvider.getLastKnownAddress());
-			}
-		}
-	};
-
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -171,9 +161,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mFromTextView = (AutoCompleteTextView) formView.findViewById(R.id.fromPlace);
 		mToTextView = (AutoCompleteTextView) formView.findViewById(R.id.toPlace);
 
-		formView.findViewById(R.id.fromLocateMe).setOnClickListener(mOnLocateMeClickListener);
-		formView.findViewById(R.id.toLocateMe).setOnClickListener(mOnLocateMeClickListener);
-
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -200,6 +187,9 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		mFromLocationEditManager = new LocationEditManager(mFromTextView, mOnLocationChange, savedInstanceState);
 		mToLocationEditManager = new LocationEditManager(mToTextView, mOnLocationChange, savedInstanceState);
+
+		mFromLocationEditManager.setLocationProvider(mLocationProvider);
+		mToLocationEditManager.setLocationProvider(mLocationProvider);
 
 		mFromLocationEditManager.setNextFocusView(mToTextView);
 		mToLocationEditManager.setNextFocusView(mGoButton);
@@ -278,7 +268,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		void onLocationNotFound();
 	}
 
-	private static class LocationEditManager implements TextWatcher, OnItemClickListener {
+	private static class LocationEditManager implements TextWatcher, OnItemClickListener, OnClickListener {
 
 		private static final String BUNDLE_LATITUDE = "LocationEditManager:latitude";
 		private static final String BUNDLE_LONGITUDE = "LocationEditManager:longitude";
@@ -286,6 +276,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		private final AutoCompleteTextView mAutoCompleteTextView;
 		private final OnLocationEditChange mOnLocationEditChange;
+		private MyLocationProvider mLocationProvider;
 		private View mNextFocusView;
 		private double mLatitude;
 		private double mLongitude;
@@ -306,8 +297,13 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 			mAutoCompleteTextView.addTextChangedListener(this);
 			mAutoCompleteTextView.setOnItemClickListener(this);
+			mAutoCompleteTextView.setOnClickListener(this);
 
 			mOnLocationEditChange = onLocationEditChange;
+		}
+
+		public void setLocationProvider(final MyLocationProvider locationProvider) {
+			mLocationProvider = locationProvider;
 		}
 
 		public void setNextFocusView(final View nextFocusView) {
@@ -344,7 +340,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 			return mLongitude;
 		}
 
-		public void setLocation(final Address address) {
+		private void setLocation(final Address address) {
 			final StringBuilder builder = new StringBuilder();
 			final int addressLineSize = address.getMaxAddressLineIndex();
 			for (int i = 0; i < addressLineSize; i++) {
@@ -368,6 +364,11 @@ public class ItineraireFragment extends SherlockListFragment implements
 		}
 
 		@Override
+		public void onClick(final View v) {
+			mAutoCompleteTextView.showDropDown();
+		}
+
+		@Override
 		public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
 			mLatitude = 0;
 			mOnLocationEditChange.onLocationNotFound();
@@ -375,8 +376,12 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		@Override
 		public void onItemClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
-			final Address address = (Address) adapter.getItemAtPosition(position);
-			setAddress(address);
+			final AddressWrapper wrapper = (AddressWrapper) adapter.getItemAtPosition(position);
+			if (wrapper.isLocateMe()) {
+				setLocation(mLocationProvider.getLastKnownAddress());
+			} else {
+				setAddress(wrapper.getAddress());
+			}
 		}
 
 		@Override
