@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -140,6 +140,7 @@
     <item name="menu_location" type="id"/>
     <item name="menu_layers" type="id"/>
     <item name="menu_add" type="id"/>
+    <item name="menu_reverse" type="id"/>
 
     <!-- Card -->
     <item name="cardHoraireTag" type="string">tag:Horaire</item>
@@ -151,9 +152,8 @@
     <item name="fromLocateMe" type="id"/>
     <item name="fromDirection" type="id"/>
     <item name="fromTime" type="id"/>
-    <item name="fromLocateMe" type="id"/>
     <item name="toPlace" type="id"/>
     <item name="toTime" type="id"/>
-    <item name="toLocateMe" type="id"/>
+    <item name="dateAndTime" type="id"/>
 
 </resources>

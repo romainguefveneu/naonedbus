@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.R;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter.AddressWrapper;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.location.Address;
 import android.location.Geocoder;
 import android.view.View;
@@ -23,17 +25,38 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressWrapper> {
 
 	private final StringBuilder mSb = new StringBuilder();
 	private final Geocoder mGeocoder;
+	private final AddressWrapper mCurrenPositionWrapper;
+	private final ColorStateList mHoloBlueColor;
+	private final ColorStateList mTextColorColor;
+	private final int mPadding;
 
 	public AddressArrayAdapter(final Context context) {
 		super(context, android.R.layout.simple_dropdown_item_1line);
-		add(AddressWrapper.createLocateMe("Locate me"));
 		mGeocoder = new Geocoder(context);
+		mCurrenPositionWrapper = AddressWrapper.createLocateMe(context.getString(R.string.itineraire_current_location));
+		mHoloBlueColor = context.getResources().getColorStateList(R.color.card_selectable_text);
+		mTextColorColor = context.getResources().getColorStateList(android.R.color.primary_text_light);
+		mPadding = context.getResources().getDimensionPixelSize(R.dimen.padding_small);
+
+		add(mCurrenPositionWrapper);
 	}
 
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		final TextView view = (TextView) super.getView(position, convertView, parent);
-		view.setText(getItem(position).title);
+
+		final AddressWrapper item = getItem(position);
+		view.setText(item.getTitle());
+
+		if (item.isLocateMe()) {
+			view.setTextColor(mHoloBlueColor);
+			view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_locate, 0, 0, 0);
+			view.setCompoundDrawablePadding(mPadding);
+		} else {
+			view.setTextColor(mTextColorColor);
+			view.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+		}
+
 		return view;
 	}
 
@@ -79,12 +102,10 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressWrapper> {
 			protected void publishResults(final CharSequence contraint, final FilterResults results) {
 				clear();
 
-				AddressWrapper wrapper = AddressWrapper.createLocateMe("Locate me");
-				add(wrapper);
+				add(mCurrenPositionWrapper);
 
 				for (final Address address : (List<Address>) results.values) {
-					wrapper = AddressWrapper.createAddressWrapper(address, createFormattedAddressFromAddress(address));
-					add(wrapper);
+					add(AddressWrapper.createAddressWrapper(address, createFormattedAddressFromAddress(address)));
 				}
 
 				if (results.count > 0) {

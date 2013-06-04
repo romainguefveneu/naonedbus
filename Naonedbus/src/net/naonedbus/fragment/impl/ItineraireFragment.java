@@ -34,16 +34,12 @@ import net.naonedbus.widget.adapter.impl.AddressArrayAdapter.AddressWrapper;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,9 +51,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
@@ -112,10 +109,16 @@ public class ItineraireFragment extends SherlockListFragment implements
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(false);
+		setHasOptionsMenu(true);
 
 		mLocationProvider = NBApplication.getLocationProvider();
 	};
+
+	@Override
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.fragment_itineraire, menu);
+	}
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
@@ -182,9 +185,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 			}
 		});
 
-		setDecoratedHint(mFromTextView, getString(R.string.search_hint_itineraire_depart));
-		setDecoratedHint(mToTextView, getString(R.string.search_hint_itineraire_arrivee));
-
 		mFromLocationEditManager = new LocationEditManager(mFromTextView, mOnLocationChange, savedInstanceState);
 		mToLocationEditManager = new LocationEditManager(mToTextView, mOnLocationChange, savedInstanceState);
 
@@ -199,20 +199,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		mFromTextView.setOnFocusChangeListener(mOnLocationFocusChangeListener);
 		mToTextView.setOnFocusChangeListener(mOnLocationFocusChangeListener);
-	}
-
-	private void setDecoratedHint(final TextView textview, final CharSequence hintText) {
-		final SpannableStringBuilder ssb = new SpannableStringBuilder("   "); // for
-																				// the
-																				// icon
-		ssb.append(hintText);
-
-		final Drawable searchIcon = getActivity().getResources().getDrawable(R.drawable.ic_action_location_gray);
-		final int textSize = (int) (textview.getTextSize() * 1.25);
-		searchIcon.setBounds(0, 0, textSize, textSize);
-		ssb.setSpan(new ImageSpan(searchIcon), 1, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-		textview.setHint(ssb);
 	}
 
 	private void sendRequest() {

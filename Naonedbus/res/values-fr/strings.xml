@@ -114,6 +114,7 @@
     <string name="action_list_location_center">Centrer au plus proche</string>
     <string name="action_groupes_add">Ajouter un groupe</string>
     <string name="action_groupes_manage">Gérer les groupes</string>
+    <string name="action_reverse">Inverser</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
     <string name="error_title_upgrade">La mise à jour ne s\'est pas bien passée</string>
@@ -250,7 +251,10 @@
     <string name="card_horaire_previous">Précédent</string>
 
     <!-- Itinéraires -->
-    <string name="itineraire_section_form">Trajet</string>
+    <string name="itineraire_current_location">Position courante</string>
+    <string name="itineraire_hint_depart">D\'où partez-vous ?</string>
+    <string name="itineraire_hint_arrive">Où allez-vous ?</string>
+    <string name="itineraire_hint_date">Partir maintenant</string>
     <!-- Carte -->
     <string name="map_calques">Calques</string>
     <string name="map_calque_arret">Arrêt Tan</string>
@@ -265,8 +269,6 @@
     <!-- Search -->
     <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
     <string name="search_empty">Aucun équipement ne correspond à votre recherche</string>
-    <string name="search_hint_itineraire_depart">Lieu de départ</string>
-    <string name="search_hint_itineraire_arrivee">Lieu d\'arrivée</string>
 
     <!-- Sections -->
     <string name="section_distance_none">Aucune information de distance</string>
