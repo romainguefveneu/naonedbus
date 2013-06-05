@@ -43,6 +43,8 @@ public class ItineraireActivity extends OneFragmentSlidingActivity {
 	@Override
 	public void onDrawerStateChange(final int oldState, final int newState) {
 		if (newState == MenuDrawer.STATE_CLOSED) {
+			((ItineraireFragment) getCurrentFragment()).onDrawerStateChange(oldState, newState);
+
 			final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
 		}

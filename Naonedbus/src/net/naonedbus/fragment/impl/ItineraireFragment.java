@@ -22,36 +22,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.loader.ItineraryLoader;
-import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.task.AddressResolverTask;
-import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
-import net.naonedbus.utils.FormatUtils;
-import net.naonedbus.widget.adapter.impl.AddressArrayAdapter;
-import net.naonedbus.widget.adapter.impl.AddressArrayAdapter.AddressWrapper;
+import net.naonedbus.widget.AddressTextView;
+import net.naonedbus.widget.AddressTextView.OnLocationEditChange;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
+import net.simonvt.menudrawer.MenuDrawer;
 import android.app.Activity;
 import android.content.Intent;
-import android.location.Address;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -71,15 +61,10 @@ public class ItineraireFragment extends SherlockListFragment implements
 	private ViewGroup mFragmentView;
 	private View mProgressView;
 
-	private AutoCompleteTextView mFromTextView;
-	private AutoCompleteTextView mToTextView;
-
-	private LocationEditManager mFromLocationEditManager;
-	private LocationEditManager mToLocationEditManager;
+	private AddressTextView mFromAddressTextView;
+	private AddressTextView mToAddressTextView;
 
 	private Button mGoButton;
-
-	private MyLocationProvider mLocationProvider;
 
 	private final OnLocationEditChange mOnLocationChange = new OnLocationEditChange() {
 
@@ -90,7 +75,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		@Override
 		public void onLocationFound() {
-			mGoButton.setEnabled(mFromLocationEditManager.hasLocation() && mToLocationEditManager.hasLocation());
+			mGoButton.setEnabled(mFromAddressTextView.hasLocation() && mToAddressTextView.hasLocation());
 		}
 	};
 
@@ -113,8 +98,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-
-		mLocationProvider = NBApplication.getLocationProvider();
 	};
 
 	@Override
@@ -132,13 +115,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 		bindView(mFragmentView, savedInstanceState);
 
 		return mFragmentView;
-	}
-
-	@Override
-	public void onSaveInstanceState(final Bundle outState) {
-		mFromLocationEditManager.saveInstanceState(outState);
-		mToLocationEditManager.saveInstanceState(outState);
-		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -164,8 +140,14 @@ public class ItineraireFragment extends SherlockListFragment implements
 		listView.setAdapter(swingBottomInAnimationAdapter);
 
 		mGoButton = (Button) formView.findViewById(android.R.id.button1);
-		mFromTextView = (AutoCompleteTextView) formView.findViewById(R.id.fromPlace);
-		mToTextView = (AutoCompleteTextView) formView.findViewById(R.id.toPlace);
+		mFromAddressTextView = (AddressTextView) formView.findViewById(R.id.formFrom);
+		mToAddressTextView = (AddressTextView) formView.findViewById(R.id.formTo);
+
+		mFromAddressTextView.setOnLocationEditChange(mOnLocationChange);
+		mFromAddressTextView.setNextFocusView(mToAddressTextView);
+
+		mToAddressTextView.setOnLocationEditChange(mOnLocationChange);
+		mToAddressTextView.setNextFocusView(mGoButton);
 
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -188,25 +170,14 @@ public class ItineraireFragment extends SherlockListFragment implements
 			}
 		});
 
-		mFromLocationEditManager = new LocationEditManager(mFromTextView, mOnLocationChange, savedInstanceState);
-		mToLocationEditManager = new LocationEditManager(mToTextView, mOnLocationChange, savedInstanceState);
-
-		mFromLocationEditManager.setNextFocusView(mToTextView);
-		mToLocationEditManager.setNextFocusView(mGoButton);
-
-		mFromTextView.setAdapter(new AddressArrayAdapter(getActivity()));
-		mToTextView.setAdapter(new AddressArrayAdapter(getActivity()));
-
-		mFromTextView.setOnFocusChangeListener(mOnLocationFocusChangeListener);
-		mToTextView.setOnFocusChangeListener(mOnLocationFocusChangeListener);
 	}
 
 	private void sendRequest() {
 		final Bundle bundle = new Bundle();
-		bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE, mFromLocationEditManager.getLatitude());
-		bundle.putDouble(ItineraryLoader.PARAM_FROM_LONGITUDE, mFromLocationEditManager.getLongitude());
-		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocationEditManager.getLatitude());
-		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocationEditManager.getLongitude());
+		bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE, mFromAddressTextView.getLatitude());
+		bundle.putDouble(ItineraryLoader.PARAM_FROM_LONGITUDE, mFromAddressTextView.getLongitude());
+		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToAddressTextView.getLatitude());
+		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToAddressTextView.getLongitude());
 
 		getLoaderManager().restartLoader(0, bundle, this);
 	}
@@ -217,6 +188,12 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private void hideProgress() {
 		mProgressView.setVisibility(View.GONE);
+	}
+
+	public void onDrawerStateChange(final int oldState, final int newState) {
+		if (newState == MenuDrawer.STATE_CLOSED) {
+			mFromAddressTextView.requestFocus();
+		}
 	}
 
 	@Override
@@ -246,137 +223,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 	@Override
 	public void onLoaderReset(final Loader<AsyncResult<List<ItineraryWrapper>>> arg0) {
 
-	}
-
-	public interface OnLocationEditChange {
-		void onLocationFound();
-
-		void onLocationNotFound();
-	}
-
-	private static class LocationEditManager implements TextWatcher, OnItemClickListener, OnClickListener,
-			AddressTaskListener {
-
-		private static final String BUNDLE_LATITUDE = "LocationEditManager:latitude";
-		private static final String BUNDLE_LONGITUDE = "LocationEditManager:longitude";
-		private static final String BUNDLE_ADDRESS = "LocationEditManager:address";
-
-		private final AutoCompleteTextView mAutoCompleteTextView;
-		private final OnLocationEditChange mOnLocationEditChange;
-		private View mNextFocusView;
-		private double mLatitude;
-		private double mLongitude;
-
-		public LocationEditManager(final AutoCompleteTextView autoCompleteTextView,
-				final OnLocationEditChange onLocationEditChange, final Bundle saveInstanceState) {
-			mAutoCompleteTextView = autoCompleteTextView;
-
-			if (saveInstanceState != null) {
-				mAutoCompleteTextView.setText(saveInstanceState.getString(BUNDLE_ADDRESS));
-				mLatitude = saveInstanceState.getDouble(getBundleKeyLatitude(), 0);
-				mLongitude = saveInstanceState.getDouble(getBundleKeyLongitude(), 0);
-				if (mLatitude != 0 && mLongitude != 0) {
-					mAutoCompleteTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0,
-							R.drawable.ic_checkmark_holo_light, 0);
-				}
-			}
-
-			mAutoCompleteTextView.addTextChangedListener(this);
-			mAutoCompleteTextView.setOnItemClickListener(this);
-			mAutoCompleteTextView.setOnClickListener(this);
-
-			mOnLocationEditChange = onLocationEditChange;
-		}
-
-		public void setNextFocusView(final View nextFocusView) {
-			mNextFocusView = nextFocusView;
-		}
-
-		private String getBundleKeyLatitude() {
-			return BUNDLE_LATITUDE + mAutoCompleteTextView.getId();
-		}
-
-		private String getBundleKeyLongitude() {
-			return BUNDLE_LONGITUDE + mAutoCompleteTextView.getId();
-		}
-
-		private String getBundleKeyAddress() {
-			return BUNDLE_ADDRESS + mAutoCompleteTextView.getId();
-		}
-
-		public void saveInstanceState(final Bundle outState) {
-			outState.putDouble(getBundleKeyLatitude(), mLatitude);
-			outState.putDouble(getBundleKeyLongitude(), mLongitude);
-			outState.putString(getBundleKeyAddress(), mAutoCompleteTextView.getText().toString());
-		}
-
-		public boolean hasLocation() {
-			return mLatitude != 0;
-		}
-
-		public double getLatitude() {
-			return mLatitude;
-		}
-
-		public double getLongitude() {
-			return mLongitude;
-		}
-
-		private void setLocation(final Address address) {
-			mAutoCompleteTextView.setText(FormatUtils.formatAddress(address, null));
-
-			setAddress(address);
-		}
-
-		private void setAddress(final Address address) {
-			mLatitude = address.getLatitude();
-			mLongitude = address.getLongitude();
-			mOnLocationEditChange.onLocationFound();
-			mAutoCompleteTextView.setSelection(0);
-			if (mNextFocusView != null)
-				mNextFocusView.requestFocus();
-		}
-
-		@Override
-		public void onClick(final View v) {
-			mAutoCompleteTextView.showDropDown();
-		}
-
-		@Override
-		public void onTextChanged(final CharSequence s, final int start, final int before, final int count) {
-			mLatitude = 0;
-			mOnLocationEditChange.onLocationNotFound();
-		}
-
-		@Override
-		public void onItemClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
-			final AddressWrapper wrapper = (AddressWrapper) adapter.getItemAtPosition(position);
-			if (wrapper.isLocateMe()) {
-				new AddressResolverTask(this).execute();
-			} else {
-				setAddress(wrapper.getAddress());
-			}
-		}
-
-		@Override
-		public void afterTextChanged(final Editable s) {
-
-		}
-
-		@Override
-		public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
-
-		}
-
-		@Override
-		public void onAddressTaskPreExecute() {
-			mAutoCompleteTextView.setText("...");
-		}
-
-		@Override
-		public void onAddressTaskResult(final Address address) {
-			setLocation(address);
-		}
 	}
 
 }

@@ -15,57 +15,22 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_small" >
 
-        <AutoCompleteTextView
-            android:id="@id/fromPlace"
+        <net.naonedbus.widget.AddressTextView
+            android:id="@id/formFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <net.naonedbus.widget.AddressTextView
+            android:id="@id/formTo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/padding_small"
-            android:drawableLeft="@drawable/ic_action_location"
-            android:dropDownHeight="wrap_content"
-            android:dropDownHorizontalOffset="0dip"
-            android:dropDownVerticalOffset="0dip"
-            android:ellipsize="end"
-            android:hint="@string/itineraire_hint_depart"
-            android:imeOptions="actionNext"
-            android:inputType="textAutoComplete|textNoSuggestions|textPostalAddress"
-            android:minWidth="@dimen/abs__search_view_text_min_width"
-            android:nextFocusDown="@id/toPlace"
-            android:nextFocusForward="@id/toPlace"
-            android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
-            android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
-            android:selectAllOnFocus="true"
-            android:singleLine="true" >
-
-            <requestFocus />
-        </AutoCompleteTextView>
-
-        <AutoCompleteTextView
-            android:id="@id/toPlace"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/fromPlace"
-            android:layout_marginBottom="@dimen/padding_small"
-            android:drawableLeft="@drawable/ic_action_location"
-            android:dropDownHeight="wrap_content"
-            android:dropDownHorizontalOffset="0dip"
-            android:dropDownVerticalOffset="0dip"
-            android:ellipsize="end"
-            android:hint="@string/itineraire_hint_arrive"
-            android:imeOptions="actionNext"
-            android:inputType="text|textAutoComplete|textNoSuggestions|textPostalAddress"
-            android:minWidth="@dimen/abs__search_view_text_min_width"
-            android:nextFocusDown="@id/dateAndTime"
-            android:nextFocusForward="@id/dateAndTime"
-            android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
-            android:paddingRight="@dimen/abs__dropdownitem_text_padding_right"
-            android:selectAllOnFocus="true"
-            android:singleLine="true" />
+            android:layout_below="@id/formFrom" />
 
         <EditText
             android:id="@id/dateAndTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toPlace"
+            android:layout_below="@id/formTo"
             android:drawableLeft="@drawable/ic_action_clock"
             android:editable="false"
             android:hint="@string/itineraire_hint_date"

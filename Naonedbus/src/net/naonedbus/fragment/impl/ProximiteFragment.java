@@ -340,7 +340,7 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 			headerTextView.setText(FormatUtils.formatAddress(address, null));
 			imageView.setVisibility(View.VISIBLE);
 		} else {
-			headerTextView.setText("Adresse inconnue.");
+			headerTextView.setText(R.string.error_current_address);
 		}
 	}
 }
