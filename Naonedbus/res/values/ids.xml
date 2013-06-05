@@ -152,8 +152,10 @@
     <item name="fromLocateMe" type="id"/>
     <item name="fromDirection" type="id"/>
     <item name="fromTime" type="id"/>
+    <item name="fromOptions" type="id"/>
     <item name="toPlace" type="id"/>
     <item name="toTime" type="id"/>
+    <item name="toOptions" type="id"/>
     <item name="dateAndTime" type="id"/>
 
 </resources>

@@ -41,10 +41,12 @@ import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.task.AddressResolverTask;
 import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -333,13 +335,12 @@ public class ProximiteFragment extends CustomListFragment implements CustomFragm
 	}
 
 	@Override
-	public void onAddressTaskResult(final String address) {
+	public void onAddressTaskResult(final Address address) {
 		if (address != null) {
-			headerTextView.setText(address);
+			headerTextView.setText(FormatUtils.formatAddress(address, null));
 			imageView.setVisibility(View.VISIBLE);
 		} else {
 			headerTextView.setText("Adresse inconnue.");
 		}
 	}
-
 }

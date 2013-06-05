@@ -20,6 +20,7 @@ package net.naonedbus.utils;
 
 import net.naonedbus.R;
 import android.content.Context;
+import android.location.Address;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
@@ -90,6 +91,22 @@ public abstract class FormatUtils {
 		}
 
 		return result;
+	}
+
+	public static String formatAddress(final Address address, StringBuilder stringBuilder) {
+		if (stringBuilder == null) {
+			stringBuilder = new StringBuilder();
+		}
+
+		stringBuilder.setLength(0);
+		final int addressLineSize = address.getMaxAddressLineIndex();
+		for (int i = 0; i < addressLineSize; i++) {
+			stringBuilder.append(address.getAddressLine(i));
+			if (i != addressLineSize - 1) {
+				stringBuilder.append(", ");
+			}
+		}
+		return stringBuilder.toString();
 	}
 
 }

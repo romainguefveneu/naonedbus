@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter.AddressWrapper;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -60,18 +61,6 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressWrapper> {
 		return view;
 	}
 
-	private String createFormattedAddressFromAddress(final Address address) {
-		mSb.setLength(0);
-		final int addressLineSize = address.getMaxAddressLineIndex();
-		for (int i = 0; i < addressLineSize; i++) {
-			mSb.append(address.getAddressLine(i));
-			if (i != addressLineSize - 1) {
-				mSb.append(", ");
-			}
-		}
-		return mSb.toString();
-	}
-
 	@Override
 	public Filter getFilter() {
 		final Filter myFilter = new Filter() {
@@ -105,7 +94,7 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressWrapper> {
 				add(mCurrenPositionWrapper);
 
 				for (final Address address : (List<Address>) results.values) {
-					add(AddressWrapper.createAddressWrapper(address, createFormattedAddressFromAddress(address)));
+					add(AddressWrapper.createAddressWrapper(address, FormatUtils.formatAddress(address, mSb)));
 				}
 
 				if (results.count > 0) {

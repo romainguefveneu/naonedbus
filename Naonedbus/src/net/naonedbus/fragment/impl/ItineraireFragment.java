@@ -29,6 +29,9 @@ import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.loader.ItineraryLoader;
 import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.task.AddressResolverTask;
+import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter;
 import net.naonedbus.widget.adapter.impl.AddressArrayAdapter.AddressWrapper;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
@@ -188,9 +191,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mFromLocationEditManager = new LocationEditManager(mFromTextView, mOnLocationChange, savedInstanceState);
 		mToLocationEditManager = new LocationEditManager(mToTextView, mOnLocationChange, savedInstanceState);
 
-		mFromLocationEditManager.setLocationProvider(mLocationProvider);
-		mToLocationEditManager.setLocationProvider(mLocationProvider);
-
 		mFromLocationEditManager.setNextFocusView(mToTextView);
 		mToLocationEditManager.setNextFocusView(mGoButton);
 
@@ -254,7 +254,8 @@ public class ItineraireFragment extends SherlockListFragment implements
 		void onLocationNotFound();
 	}
 
-	private static class LocationEditManager implements TextWatcher, OnItemClickListener, OnClickListener {
+	private static class LocationEditManager implements TextWatcher, OnItemClickListener, OnClickListener,
+			AddressTaskListener {
 
 		private static final String BUNDLE_LATITUDE = "LocationEditManager:latitude";
 		private static final String BUNDLE_LONGITUDE = "LocationEditManager:longitude";
@@ -262,7 +263,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		private final AutoCompleteTextView mAutoCompleteTextView;
 		private final OnLocationEditChange mOnLocationEditChange;
-		private MyLocationProvider mLocationProvider;
 		private View mNextFocusView;
 		private double mLatitude;
 		private double mLongitude;
@@ -286,10 +286,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 			mAutoCompleteTextView.setOnClickListener(this);
 
 			mOnLocationEditChange = onLocationEditChange;
-		}
-
-		public void setLocationProvider(final MyLocationProvider locationProvider) {
-			mLocationProvider = locationProvider;
 		}
 
 		public void setNextFocusView(final View nextFocusView) {
@@ -327,15 +323,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		}
 
 		private void setLocation(final Address address) {
-			final StringBuilder builder = new StringBuilder();
-			final int addressLineSize = address.getMaxAddressLineIndex();
-			for (int i = 0; i < addressLineSize; i++) {
-				builder.append(address.getAddressLine(i));
-				if (i != addressLineSize - 1) {
-					builder.append(", ");
-				}
-			}
-			mAutoCompleteTextView.setText(builder);
+			mAutoCompleteTextView.setText(FormatUtils.formatAddress(address, null));
 
 			setAddress(address);
 		}
@@ -364,7 +352,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		public void onItemClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
 			final AddressWrapper wrapper = (AddressWrapper) adapter.getItemAtPosition(position);
 			if (wrapper.isLocateMe()) {
-				setLocation(mLocationProvider.getLastKnownAddress());
+				new AddressResolverTask(this).execute();
 			} else {
 				setAddress(wrapper.getAddress());
 			}
@@ -378,6 +366,16 @@ public class ItineraireFragment extends SherlockListFragment implements
 		@Override
 		public void beforeTextChanged(final CharSequence s, final int start, final int count, final int after) {
 
+		}
+
+		@Override
+		public void onAddressTaskPreExecute() {
+			mAutoCompleteTextView.setText("...");
+		}
+
+		@Override
+		public void onAddressTaskResult(final Address address) {
+			setLocation(address);
 		}
 	}
 

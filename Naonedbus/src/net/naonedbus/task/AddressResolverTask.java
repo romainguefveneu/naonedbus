@@ -26,18 +26,18 @@ import android.os.AsyncTask;
 /**
  * Classe de chargement de l'adresse postale courante.
  */
-public class AddressResolverTask extends AsyncTask<Void, Void, String> {
+public class AddressResolverTask extends AsyncTask<Void, Void, Address> {
 
 	public static interface AddressTaskListener {
 		void onAddressTaskPreExecute();
 
-		void onAddressTaskResult(String address);
+		void onAddressTaskResult(Address address);
 	}
 
 	private AddressTaskListener mAddressTaskListener;
 	private MyLocationProvider mLocationProvider;
 
-	public AddressResolverTask(AddressTaskListener listener) {
+	public AddressResolverTask(final AddressTaskListener listener) {
 		mAddressTaskListener = listener;
 		mLocationProvider = NBApplication.getLocationProvider();
 	}
@@ -50,21 +50,11 @@ public class AddressResolverTask extends AsyncTask<Void, Void, String> {
 	}
 
 	@Override
-	protected String doInBackground(Void... params) {
+	protected Address doInBackground(final Void... params) {
 		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
-		String result = null;
+		Address result = null;
 		if (mLocationProvider != null) {
-			final Address address = mLocationProvider.getLastKnownAddress();
-
-			if (address != null) {
-				final StringBuilder builder = new StringBuilder();
-				if (address.getMaxAddressLineIndex() > 0) {
-					builder.append(address.getAddressLine(0));
-					builder.append(" - ");
-				}
-				builder.append(address.getLocality());
-				result = builder.toString();
-			}
+			result = mLocationProvider.getLastKnownAddress();
 		}
 		return result;
 	}
@@ -77,7 +67,7 @@ public class AddressResolverTask extends AsyncTask<Void, Void, String> {
 	}
 
 	@Override
-	protected void onPostExecute(String result) {
+	protected void onPostExecute(final Address result) {
 		if (!isCancelled() && mAddressTaskListener != null) {
 			mAddressTaskListener.onAddressTaskResult(result);
 		}
