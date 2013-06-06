@@ -19,13 +19,11 @@
 package net.naonedbus.activity;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.fragment.CustomFragmentActions;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.simonvt.menudrawer.MenuDrawer;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -65,8 +63,6 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 
 	/** Layout de l'activitée courante. */
 	private final int mLayoutId;
-	/** Sert à la détection du changement de thème. */
-	private final int mCurrentTheme = NBApplication.THEME;
 
 	/** Titres des fragments. */
 	private int[] mTitles;
@@ -104,7 +100,6 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
 
-		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		getWindow().setBackgroundDrawable(null);
 
 		super.onCreate(savedInstanceState);
@@ -186,15 +181,6 @@ public abstract class SlidingMenuActivity extends SherlockFragmentActivity imple
 	@Override
 	public void onWindowFocusChanged(final boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-
-		// Gérer le changement de thème;
-		if (hasFocus && (mCurrentTheme != NBApplication.THEME)) {
-			final Intent intent = new Intent(this, this.getClass());
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			overridePendingTransition(0, 0);
-			startActivity(intent);
-			finish();
-		}
 
 		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
 	}

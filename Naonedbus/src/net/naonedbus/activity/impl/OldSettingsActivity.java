@@ -37,7 +37,6 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -52,7 +51,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
 @SuppressWarnings("deprecation")
-public class OldSettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
+public class OldSettingsActivity extends SherlockPreferenceActivity {
 
 	/**
 	 * Gestion du menu latéral.
@@ -66,7 +65,6 @@ public class OldSettingsActivity extends SherlockPreferenceActivity implements O
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 
 		addPreferencesFromResource(R.xml.preferences);
@@ -129,13 +127,6 @@ public class OldSettingsActivity extends SherlockPreferenceActivity implements O
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
-		if (key.equals(NBApplication.PREF_THEME)) {
-			restart();
-		}
 	}
 
 	public void restart() {

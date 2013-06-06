@@ -39,7 +39,6 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -79,13 +78,10 @@ public class ItineraireFragment extends SherlockListFragment implements
 		public void onLocationFound() {
 			mGoButton.setEnabled(mFromAddressTextView.hasLocation() && mToAddressTextView.hasLocation());
 		}
-	};
-
-	private final OnFocusChangeListener mOnLocationFocusChangeListener = new OnFocusChangeListener() {
 
 		@Override
-		public void onFocusChange(final View v, final boolean hasFocus) {
-			if (hasFocus && mGoButton.getVisibility() != View.VISIBLE) {
+		public void onFocus() {
+			if (mGoButton.getVisibility() != View.VISIBLE) {
 				mGoButton.postDelayed(new Runnable() {
 					@Override
 					public void run() {

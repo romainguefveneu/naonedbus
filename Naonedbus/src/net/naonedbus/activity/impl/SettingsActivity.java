@@ -18,15 +18,12 @@
  */
 package net.naonedbus.activity.impl;
 
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.fragment.impl.SettingsFragments;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.simonvt.menudrawer.MenuDrawer;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -35,7 +32,7 @@ import android.view.KeyEvent;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class SettingsActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
+public class SettingsActivity extends SherlockPreferenceActivity {
 
 	/**
 	 * Gestion du menu latéral.
@@ -46,7 +43,6 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsFragments.class.getName());
 		getIntent().putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
 
@@ -103,13 +99,6 @@ public class SettingsActivity extends SherlockPreferenceActivity implements OnSh
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
-		if (key.equals(NBApplication.PREF_THEME)) {
-			restart();
-		}
 	}
 
 	public void restart() {

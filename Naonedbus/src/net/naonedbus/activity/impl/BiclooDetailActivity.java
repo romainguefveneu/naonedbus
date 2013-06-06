@@ -21,7 +21,6 @@ package net.naonedbus.activity.impl;
 import java.util.Date;
 import java.util.Locale;
 
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.map.overlay.BiclooItemizedOverlay;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
@@ -73,7 +72,6 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		setTheme(NBApplication.THEME);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bicloo_detail);
 

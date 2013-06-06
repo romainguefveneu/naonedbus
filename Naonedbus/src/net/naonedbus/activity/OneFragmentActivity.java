@@ -18,11 +18,9 @@
  */
 package net.naonedbus.activity;
 
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,7 +34,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
 	private static String BUNDLE_TABS_BUNDLES = "tabsBundles";
 
-	private int layoutId;
+	private final int layoutId;
 
 	/**
 	 * Liste des fragments
@@ -48,16 +46,12 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 
 	private SlidingMenuHelper mSlidingMenuHelper;
 
-	/** Sert à la détection du changement de thème. */
-	private int currentTheme = NBApplication.THEME;
-
-	public OneFragmentActivity(int layoutId) {
+	public OneFragmentActivity(final int layoutId) {
 		this.layoutId = layoutId;
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		setTheme(NBApplication.THEMES_RES[NBApplication.THEME]);
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
 
@@ -72,7 +66,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	 * Show the menu when home icon is clicked.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
 			finish();
 		}
@@ -80,14 +74,14 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(final Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putString(BUNDLE_TABS_CLASSES, mClasse);
 		outState.putParcelable(BUNDLE_TABS_BUNDLES, mBundle);
 	}
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
 		if (savedInstanceState.containsKey(BUNDLE_TABS_CLASSES)) {
 			mClasse = savedInstanceState.getString(BUNDLE_TABS_CLASSES);
 			mBundle = savedInstanceState.getParcelable(BUNDLE_TABS_BUNDLES);
@@ -97,22 +91,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		super.onRestoreInstanceState(savedInstanceState);
 	}
 
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-
-		// Gérer le changement de thème;
-		if (hasFocus && (currentTheme != NBApplication.THEME)) {
-			final Intent intent = new Intent(this, this.getClass());
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			overridePendingTransition(0, 0);
-			startActivity(intent);
-			finish();
-		}
-
-	}
-
-	protected void addFragment(String classe) {
+	protected void addFragment(final String classe) {
 		mClasse = classe;
 
 		final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -123,7 +102,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	protected void addFragment(String classe, Bundle bundle) {
+	protected void addFragment(final String classe, final Bundle bundle) {
 		mClasse = classe;
 		mBundle = bundle;
 
@@ -170,7 +149,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	 * @param key
 	 * @return
 	 */
-	protected Object getParamValue(IIntentParamKey key) {
+	protected Object getParamValue(final IIntentParamKey key) {
 		return getIntent().getSerializableExtra(key.toString());
 	}
 

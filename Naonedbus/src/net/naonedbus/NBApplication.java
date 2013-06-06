@@ -27,15 +27,6 @@ public class NBApplication extends Application {
 
 	public static final String LOG_TAG = "naonedbus";
 
-	public static final int THEME_LIGHT = 0;
-	public static final int THEME_DARK = 1;
-	public static final int[] THEMES_RES = new int[] { R.style.Theme_Acapulco_Light, R.style.Theme_Acapulco_Dark };
-	public static final int[] THEMES_MENU_RES = new int[] { R.style.Theme_Acapulco_Light_HomeAsMenu,
-			R.style.Theme_Acapulco_Dark_HomeAsMenu };
-
-	public static int THEME = THEME_LIGHT;
-
-	public static final String PREF_THEME = "theme";
 	public static final String PREF_PARKINGS_SORT = "parkings.sort";
 	public static final String PREF_FAVORIS_SORT = "favoris.sort";
 	public static final String PREF_FAVORIS_IMPORT = "favoris.import";
@@ -64,8 +55,6 @@ public class NBApplication extends Application {
 			sPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		}
 
-		// Définir le thème
-		NBApplication.THEME = Integer.valueOf(sPreferences.getString(PREF_THEME, "0"));
 	}
 
 	public static MyLocationProvider getLocationProvider() {
@@ -76,7 +65,7 @@ public class NBApplication extends Application {
 		return sPreferences;
 	}
 
-	public static void setSetup(boolean setup) {
+	public static void setSetup(final boolean setup) {
 		sIsSetup = setup;
 	}
 

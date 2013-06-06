@@ -24,7 +24,6 @@ import java.util.Locale;
 
 import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -36,13 +35,14 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.viewpagerindicator.CirclePageIndicator;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.viewpagerindicator.PageIndicator;
 
-public class TutorialActivity extends Activity implements OnPageChangeListener {
+public class TutorialActivity extends SherlockActivity implements OnPageChangeListener {
 
 	private TutorialPagerAdapter mTutorialPagerAdapter;
 
@@ -51,13 +51,14 @@ public class TutorialActivity extends Activity implements OnPageChangeListener {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tutorial);
 
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayUseLogoEnabled(true);
+		actionBar.setLogo(R.drawable.ic_logo);
+
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
-		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_0_title,
-				R.string.tuto_0_summary, R.drawable.logo));
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_simple, R.string.tuto_about_title,
 				R.string.tuto_about_summary, 0));
 
@@ -79,25 +80,29 @@ public class TutorialActivity extends Activity implements OnPageChangeListener {
 		mViewPager = (ViewPager) findViewById(R.id.viewPager);
 		mViewPager.setAdapter(mTutorialPagerAdapter);
 
-		final CirclePageIndicator circlePageIndicator = (CirclePageIndicator) findViewById(R.id.viewPagerIndicator);
-		circlePageIndicator.setViewPager(mViewPager);
-		circlePageIndicator.setOnPageChangeListener(this);
+		final PageIndicator pageIndicator = (PageIndicator) findViewById(R.id.viewPagerIndicator);
+		pageIndicator.setViewPager(mViewPager);
+		pageIndicator.setOnPageChangeListener(this);
 
-		final View closeButton = findViewById(android.R.id.closeButton);
-		closeButton.setOnClickListener(new OnClickListener() {
+		final View previousButton = findViewById(R.id.tutorialPrevious);
+		previousButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				finish();
+				moveToPrevious();
 			}
 		});
 
-		mNextButton = findViewById(R.id.nextButton);
+		mNextButton = findViewById(R.id.tutorialNext);
 		mNextButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				moveToNext();
 			}
 		});
+	}
+
+	private void moveToPrevious() {
+		mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
 	}
 
 	private void moveToNext() {

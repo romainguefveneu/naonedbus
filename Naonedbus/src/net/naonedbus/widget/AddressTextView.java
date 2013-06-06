@@ -28,6 +28,8 @@ public class AddressTextView extends RelativeLayout implements TextWatcher, OnIt
 		void onLocationFound();
 
 		void onLocationNotFound();
+
+		void onFocus();
 	}
 
 	private OnLocationEditChange mOnLocationEditChange;
@@ -126,6 +128,10 @@ public class AddressTextView extends RelativeLayout implements TextWatcher, OnIt
 
 			if (!mAutoCompleteTextView.isPopupShowing()) {
 				mAutoCompleteTextView.showDropDown();
+			}
+
+			if (mOnLocationEditChange != null) {
+				mOnLocationEditChange.onFocus();
 			}
 		} else {
 			mFormattedText.setVisibility(View.VISIBLE);

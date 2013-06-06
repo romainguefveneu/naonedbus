@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.map.overlay.ParkingItemizedOverlay;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
@@ -92,7 +91,6 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		setTheme(NBApplication.THEME);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parking_detail);
 

@@ -19,10 +19,8 @@
 package net.naonedbus.activity;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.intent.IIntentParamKey;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,8 +47,6 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 
 	/** Layout de l'activitée courante. */
 	private final int mLayoutId;
-	/** Sert à la détection du changement de thème. */
-	private final int mCurrentTheme = NBApplication.THEME;
 
 	/** Titres des fragments. */
 	private int[] mTitles;
@@ -83,7 +79,6 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		if (DBG)
 			Log.d(LOG_TAG, "onCreate");
 
-		setTheme(NBApplication.THEMES_RES[NBApplication.THEME]);
 		getWindow().setBackgroundDrawable(null);
 
 		super.onCreate(savedInstanceState);
@@ -142,21 +137,6 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 			getSupportActionBar().setSelectedNavigationItem(selectedPosition > -1 ? selectedPosition : 0);
 		}
 		super.onRestoreInstanceState(savedInstanceState);
-	}
-
-	@Override
-	public void onWindowFocusChanged(final boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-
-		// Gérer le changement de thème;
-		if (hasFocus && (mCurrentTheme != NBApplication.THEME)) {
-			final Intent intent = new Intent(this, this.getClass());
-			intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-			overridePendingTransition(0, 0);
-			startActivity(intent);
-			finish();
-		}
-
 	}
 
 	@Override

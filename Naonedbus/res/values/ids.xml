@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -47,7 +47,9 @@
     <item name="headerCode" type="id"/>
 
     <!-- Tutorial -->
-    <item name="tutorialButton" type="id"/>
+    <item name="tutorialNext" type="id"/>
+    <item name="tutorialPrevious" type="id"/>
+    <item name="tutorialButtonBar" type="id"/>
 
     <!-- About -->
     <item name="aboutTwitterRomain" type="id"/>

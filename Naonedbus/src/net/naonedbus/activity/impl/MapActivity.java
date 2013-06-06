@@ -165,7 +165,6 @@ public class MapActivity extends SherlockMapActivity {
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		setTheme(NBApplication.THEMES_MENU_RES[NBApplication.THEME]);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 

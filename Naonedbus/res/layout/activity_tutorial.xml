@@ -18,41 +18,52 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/net.naonedbus"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/background_dark" >
+    android:layout_height="match_parent" >
 
     <android.support.v4.view.ViewPager
         android:id="@id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@android:id/closeButton"
+        android:layout_above="@id/tutorialButtonBar"
         android:layout_below="@id/viewPagerIndicator" />
 
-    <com.viewpagerindicator.CirclePageIndicator
+    <com.viewpagerindicator.LinePageIndicator
         android:id="@id/viewPagerIndicator"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="16dip"
-        android:padding="10dip" />
+        android:layout_marginLeft="@dimen/padding_medium"
+        android:layout_marginTop="@dimen/padding_medium"
+        app:lineWidth="38dip"
+        app:strokeWidth="3dip" />
 
-    <ImageButton
-        android:id="@android:id/closeButton"
-        style="@style/ShowcaseButton.Secondary"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="8dip"
-        android:layout_marginLeft="8dip"
-        android:src="@drawable/ic_action_cancel" />
-
-    <ImageButton
-        android:id="@+id/nextButton"
-        style="@style/ShowcaseButton"
+    <LinearLayout
+        android:id="@id/tutorialButtonBar"
+        style="@style/ButtonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="8dip"
-        android:layout_marginRight="8dip"
-        android:src="@drawable/button_forward_selector" />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@id/tutorialPrevious"
+            style="@style/ButtonBarButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="Previous" />
+
+        <Button
+            android:id="@id/tutorialNext"
+            style="@style/ButtonBarButton"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="Next" />
+    </LinearLayout>
 
 </RelativeLayout>
