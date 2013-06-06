@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/formTo"
             android:drawableLeft="@drawable/ic_action_clock"
-            android:editable="false"
             android:hint="@string/itineraire_hint_date"
             android:nextFocusDown="@android:id/button1"
             android:nextFocusForward="@android:id/button1"

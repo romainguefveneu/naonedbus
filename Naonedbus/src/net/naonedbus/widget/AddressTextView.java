@@ -19,6 +19,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class AddressTextView extends RelativeLayout implements TextWatcher, OnItemClickListener, OnFocusChangeListener,
 		AddressTaskListener {
@@ -32,9 +33,11 @@ public class AddressTextView extends RelativeLayout implements TextWatcher, OnIt
 	private OnLocationEditChange mOnLocationEditChange;
 
 	private final AutoCompleteTextView mAutoCompleteTextView;
+	private final TextView mFormattedText;
 	private final ProgressBar mProgressBar;
 
 	private View mNextFocusView;
+	private String mAddressString = "";
 	private double mLatitude;
 	private double mLongitude;
 
@@ -49,6 +52,8 @@ public class AddressTextView extends RelativeLayout implements TextWatcher, OnIt
 		mAutoCompleteTextView.setOnItemClickListener(this);
 
 		mProgressBar = (ProgressBar) findViewById(R.id.formItemProgress);
+
+		mFormattedText = (TextView) findViewById(R.id.formItemAddressFormatted);
 	}
 
 	@Override
@@ -61,20 +66,18 @@ public class AddressTextView extends RelativeLayout implements TextWatcher, OnIt
 		mOnLocationEditChange = onLocationEditChange;
 	}
 
-	private void setLocation(final Address address) {
-		mAutoCompleteTextView.setText(FormatUtils.formatAddress(address, null));
-
-		setAddress(address);
-	}
-
 	public void setNextFocusView(final View nextFocusView) {
 		mNextFocusView = nextFocusView;
 	}
 
 	private void setAddress(final Address address) {
+		mAddressString = FormatUtils.formatAddress(address, null);
+
+		mFormattedText.setText(FormatUtils.formatAddressTwoLine(address));
+		mFormattedText.setVisibility(View.VISIBLE);
+
 		mLatitude = address.getLatitude();
 		mLongitude = address.getLongitude();
-		mAutoCompleteTextView.setSelection(0);
 
 		if (mOnLocationEditChange != null)
 			mOnLocationEditChange.onLocationFound();
@@ -107,7 +110,7 @@ public class AddressTextView extends RelativeLayout implements TextWatcher, OnIt
 		mAutoCompleteTextView.setEnabled(true);
 		mProgressBar.setVisibility(View.GONE);
 		if (address != null) {
-			setLocation(address);
+			setAddress(address);
 		} else {
 			mAutoCompleteTextView.setText("");
 		}
@@ -115,8 +118,18 @@ public class AddressTextView extends RelativeLayout implements TextWatcher, OnIt
 
 	@Override
 	public void onFocusChange(final View v, final boolean hasFocus) {
-		if (hasFocus && !mAutoCompleteTextView.isPopupShowing())
-			mAutoCompleteTextView.showDropDown();
+		if (hasFocus) {
+			mFormattedText.setVisibility(View.GONE);
+			mAutoCompleteTextView.setVisibility(View.VISIBLE);
+
+			mAutoCompleteTextView.setText(mAddressString);
+
+			if (!mAutoCompleteTextView.isPopupShowing()) {
+				mAutoCompleteTextView.showDropDown();
+			}
+		} else {
+			mFormattedText.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override

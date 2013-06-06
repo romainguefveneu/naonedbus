@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -148,6 +148,7 @@
 
     <!-- Itinéraires -->
     <item name="formItemAddress" type="id"/>
+    <item name="formItemAddressFormatted" type="id"/>
     <item name="formItemProgress" type="id"/>
     <item name="formFrom" type="id"/>
     <item name="formTo" type="id"/>

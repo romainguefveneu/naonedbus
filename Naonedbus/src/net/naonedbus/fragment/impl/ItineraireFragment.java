@@ -43,6 +43,7 @@ import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -63,6 +64,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private AddressTextView mFromAddressTextView;
 	private AddressTextView mToAddressTextView;
+	private EditText mDateAndTime;
 
 	private Button mGoButton;
 
@@ -142,12 +144,13 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mGoButton = (Button) formView.findViewById(android.R.id.button1);
 		mFromAddressTextView = (AddressTextView) formView.findViewById(R.id.formFrom);
 		mToAddressTextView = (AddressTextView) formView.findViewById(R.id.formTo);
+		mDateAndTime = (EditText) formView.findViewById(R.id.dateAndTime);
 
 		mFromAddressTextView.setOnLocationEditChange(mOnLocationChange);
 		mFromAddressTextView.setNextFocusView(mToAddressTextView);
 
 		mToAddressTextView.setOnLocationEditChange(mOnLocationChange);
-		mToAddressTextView.setNextFocusView(mGoButton);
+		mToAddressTextView.setNextFocusView(mDateAndTime);
 
 		mGoButton.setOnClickListener(new OnClickListener() {
 			@Override

@@ -20,9 +20,11 @@ package net.naonedbus.utils;
 
 import net.naonedbus.R;
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Address;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 
 public abstract class FormatUtils {
@@ -109,4 +111,35 @@ public abstract class FormatUtils {
 		return stringBuilder.toString();
 	}
 
+	public static CharSequence formatAddressTwoLine(final Address address) {
+
+		final int addressLineSize = address.getMaxAddressLineIndex();
+		final StringBuilder stringBuilder = new StringBuilder();
+		String firstLine = "";
+		SpannableString spannable = null;
+
+		if (addressLineSize > 0) {
+			for (int i = 0; i < addressLineSize; i++) {
+				if (i == 0) {
+					firstLine = address.getAddressLine(i) + "\n";
+					stringBuilder.append(firstLine);
+				} else {
+					stringBuilder.append(address.getAddressLine(i));
+				}
+
+				if (i > 0 && i != addressLineSize - 1) {
+					stringBuilder.append(", ");
+				}
+			}
+
+			spannable = new SpannableString(stringBuilder.toString());
+			spannable.setSpan(new RelativeSizeSpan(0.8f), firstLine.length(), stringBuilder.length(),
+					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			spannable.setSpan(new ForegroundColorSpan(Color.GRAY), firstLine.length(), stringBuilder.length(),
+					Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		}
+
+		return spannable;
+
+	}
 }
