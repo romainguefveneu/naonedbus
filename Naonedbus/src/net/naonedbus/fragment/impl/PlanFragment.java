@@ -44,7 +44,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 import com.polites.android.GestureImageView;
 
@@ -232,11 +231,6 @@ public class PlanFragment extends CustomFragment {
 				}
 			}
 		}
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		return false;
 	}
 
 	@Override

@@ -18,6 +18,8 @@
     <string name="format_km">%1$.0f km</string>
     <string name="format_minutes">%d min</string>
     <string name="format_heures">%1$sh%2$s</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
     <!-- Preférences -->
     <string name="pref_section_plans">Plans des lignes</string>

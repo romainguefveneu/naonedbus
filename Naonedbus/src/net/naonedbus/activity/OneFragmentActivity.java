@@ -19,13 +19,10 @@
 package net.naonedbus.activity;
 
 import net.naonedbus.R;
-import net.naonedbus.helper.SlidingMenuHelper;
-import net.naonedbus.intent.IIntentParamKey;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -44,8 +41,6 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 
 	private Fragment mFragment;
 
-	private SlidingMenuHelper mSlidingMenuHelper;
-
 	public OneFragmentActivity(final int layoutId) {
 		this.layoutId = layoutId;
 	}
@@ -54,12 +49,6 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
-
-		final ActionBar actionBar = getSupportActionBar();
-		mSlidingMenuHelper = new SlidingMenuHelper(this);
-		mSlidingMenuHelper.setupActionBar(actionBar);
-
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 	}
 
 	/**
@@ -141,20 +130,6 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	 */
 	protected Fragment getCurrentFragment() {
 		return mFragment;
-	}
-
-	/**
-	 * Renvoyer la valeur du paramètre de l'intent
-	 * 
-	 * @param key
-	 * @return
-	 */
-	protected Object getParamValue(final IIntentParamKey key) {
-		return getIntent().getSerializableExtra(key.toString());
-	}
-
-	protected SlidingMenuHelper getSlidingMenuHelper() {
-		return mSlidingMenuHelper;
 	}
 
 }

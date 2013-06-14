@@ -51,8 +51,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public abstract class CustomCursorFragment extends SherlockListFragment implements CustomFragmentActions,
-		LoaderCallbacks<Cursor> {
+public abstract class CustomCursorFragment extends SherlockListFragment implements LoaderCallbacks<Cursor> {
 
 	private static final String LOG_TAG = "CustomCursorFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;

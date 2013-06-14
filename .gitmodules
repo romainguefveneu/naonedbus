@@ -22,3 +22,6 @@
 [submodule "drag-sort-listview"]
 	path = drag-sort-listview
 	url = https://github.com/bauerca/drag-sort-listview.git
+[submodule "PagerSlidingTabStrip"]
+	path = PagerSlidingTabStrip
+	url = https://github.com/astuetz/PagerSlidingTabStrip.git

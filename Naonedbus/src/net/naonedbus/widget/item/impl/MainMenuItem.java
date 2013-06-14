@@ -19,17 +19,19 @@
 package net.naonedbus.widget.item.impl;
 
 import net.naonedbus.widget.item.SectionItem;
+import android.support.v4.app.Fragment;
 
 public class MainMenuItem implements SectionItem {
 
-	private int mTitle;
-	private Class<?> mIntentClass;
-	private int mResIcon;
-	private Object mSection;
+	private final int mTitle;
+	private final Class<? extends Fragment> mFragmentClass;
+	private final int mResIcon;
+	private final Object mSection;
 
-	public MainMenuItem(final int title, final Class<?> intentClass, final int resIcon, final Integer section) {
+	public MainMenuItem(final int title, final Class<? extends Fragment> fragmentClass, final int resIcon,
+			final Integer section) {
 		mTitle = title;
-		mIntentClass = intentClass;
+		mFragmentClass = fragmentClass;
 		mResIcon = resIcon;
 		mSection = section;
 	}
@@ -43,28 +45,12 @@ public class MainMenuItem implements SectionItem {
 		return mTitle;
 	}
 
-	public void setTitle(final int title) {
-		mTitle = title;
-	}
-
-	public Class<?> getIntentClass() {
-		return mIntentClass;
-	}
-
-	public void setIntentClass(final Class<?> intentClass) {
-		mIntentClass = intentClass;
+	public Class<? extends Fragment> getFragmentClass() {
+		return mFragmentClass;
 	}
 
 	public int getResIcon() {
 		return mResIcon;
-	}
-
-	public void setResIcon(final int resIcon) {
-		mResIcon = resIcon;
-	}
-
-	public void setSection(final Object section) {
-		mSection = section;
 	}
 
 }

@@ -19,11 +19,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine" >
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/text1"
+    style="@style/ItemMenuTitle"
+    android:background="?attr/selectableItemBackground"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp" />
 
-    <include layout="@layout/list_item_header_menu" />
 
-    <include layout="@layout/list_item_menu_content" />
-
-</LinearLayout>

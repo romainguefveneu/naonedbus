@@ -30,7 +30,6 @@ import net.naonedbus.loader.ItineraryLoader;
 import net.naonedbus.widget.AddressTextView;
 import net.naonedbus.widget.AddressTextView.OnLocationEditChange;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
-import net.simonvt.menudrawer.MenuDrawer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -190,9 +189,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 	}
 
 	public void onDrawerStateChange(final int oldState, final int newState) {
-		if (newState == MenuDrawer.STATE_CLOSED) {
-			mFromAddressTextView.requestFocus();
-		}
 	}
 
 	@Override

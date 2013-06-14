@@ -31,7 +31,6 @@ import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
-import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
@@ -119,9 +118,6 @@ public class CommentaireActivity extends SherlockActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
-
-		final SlidingMenuHelper slidingMenuHelper = new SlidingMenuHelper(this);
-		slidingMenuHelper.setupActionBar(getSupportActionBar());
 
 		mLigneManager = LigneManager.getInstance();
 		mSensManager = SensManager.getInstance();

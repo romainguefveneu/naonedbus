@@ -58,7 +58,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public abstract class CustomListFragment extends SherlockListFragment implements CustomFragmentActions,
+public abstract class CustomListFragment extends SherlockListFragment implements
 		LoaderCallbacks<AsyncResult<ListAdapter>> {
 
 	private static enum State {

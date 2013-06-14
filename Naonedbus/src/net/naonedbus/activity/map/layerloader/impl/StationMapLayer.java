@@ -116,7 +116,7 @@ public class StationMapLayer extends EquipementMapLayer {
 			@Override
 			public Intent getIntent(final Context context) {
 				final ParamIntent intent = new ParamIntent(context, ParcoursActivity.class);
-				intent.putExtra(ParcoursActivity.Param.idStation, item.getId());
+				intent.putExtra(ParcoursActivity.PARAM_ID_SATION, item.getId());
 				return intent;
 			}
 

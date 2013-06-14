@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.MenuItem;
-
 public class DonateFragment extends CustomFragment implements OnClickListener {
 
 	private static String URL_FLATTR = "https://flattr.com/thing/1059601/naonedbus";
@@ -19,11 +17,6 @@ public class DonateFragment extends CustomFragment implements OnClickListener {
 
 	public DonateFragment() {
 		super(R.layout.fragment_donate);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		return false;
 	}
 
 	@Override

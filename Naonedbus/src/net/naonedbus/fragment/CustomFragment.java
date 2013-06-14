@@ -24,18 +24,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class CustomFragment extends Fragment implements CustomFragmentActions {
+public abstract class CustomFragment extends Fragment {
 
 	protected int mLayoutId;
 
 	protected CustomFragment(final int layoutId) {
 		mLayoutId = layoutId;
-	}
-
-	@Override
-	public void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
 	}
 
 	@Override

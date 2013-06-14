@@ -24,7 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
-import net.naonedbus.fragment.impl.ArretsFragment;
+import net.naonedbus.fragment.impl.nested.ArretsFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.ColorUtils;

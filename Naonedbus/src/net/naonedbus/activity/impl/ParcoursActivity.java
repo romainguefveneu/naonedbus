@@ -20,30 +20,26 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.fragment.impl.ParcoursFragment;
-import net.naonedbus.intent.IIntentParamKey;
+import net.naonedbus.fragment.impl.nested.ParcoursFragment;
 import android.os.Bundle;
 
 public class ParcoursActivity extends OneFragmentActivity {
 
-	public static enum Param implements IIntentParamKey {
-		idStation
-	};
+	public static final String PARAM_ID_SATION = "idStation";
 
 	public ParcoursActivity() {
 		super(R.layout.activity_one_fragment);
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		int idStation = (Integer) getParamValue(Param.idStation);
-
-		final Bundle bundle = new Bundle();
-		bundle.putInt(ParcoursFragment.PARAM_ID_STATION, idStation);
-
 		if (savedInstanceState == null) {
+			final int idStation = getIntent().getIntExtra(PARAM_ID_SATION, -1);
+
+			final Bundle bundle = new Bundle();
+			bundle.putInt(ParcoursFragment.PARAM_ID_STATION, idStation);
 			addFragment(ParcoursFragment.class, bundle);
 		}
 	}

@@ -41,7 +41,6 @@ import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
-import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
@@ -49,7 +48,6 @@ import net.naonedbus.utils.DpiUtils;
 import net.naonedbus.utils.GeoPointUtils;
 import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.widget.BalloonOverlayView;
-import net.simonvt.menudrawer.MenuDrawer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.SearchManager;
@@ -64,7 +62,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -106,12 +103,6 @@ public class MapActivity extends SherlockMapActivity {
 
 	private Integer mSelectedItemId;
 	private TypeOverlayItem mSelectedItemType;
-
-	/**
-	 * Gestion du menu latéral.
-	 */
-	private MenuDrawer mMenuDrawer;
-	private SlidingMenuHelper mSlidingMenuHelper;
 
 	private final MyLocationProvider mLocationProvider;
 
@@ -167,12 +158,6 @@ public class MapActivity extends SherlockMapActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
-
-		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
-
-		mSlidingMenuHelper = new SlidingMenuHelper(this);
-		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
-		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
 
 		final Location location = mLocationProvider.getLastKnownLocation();
 
@@ -285,7 +270,6 @@ public class MapActivity extends SherlockMapActivity {
 
 			switch (item.getItemId()) {
 			case android.R.id.home:
-				mMenuDrawer.toggleMenu();
 				break;
 			case R.id.menu_location:
 				final Location location = mLocationProvider.getLastKnownLocation();
@@ -309,24 +293,6 @@ public class MapActivity extends SherlockMapActivity {
 	}
 
 	@Override
-	public void onPostCreate(final Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(final Bundle outState) {
-		super.onSaveInstanceState(outState);
-		mSlidingMenuHelper.onSaveInstanceState(outState);
-	}
-
-	@Override
-	public void onWindowFocusChanged(final boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
-	}
-
-	@Override
 	protected void onDestroy() {
 		mLocationOverlay.disableMyLocation();
 		super.onDestroy();
@@ -342,18 +308,6 @@ public class MapActivity extends SherlockMapActivity {
 	protected void onResume() {
 		mLocationProvider.start();
 		super.onResume();
-	}
-
-	/**
-	 * Show the menu when menu button pressed, hide it when back is pressed
-	 */
-	@Override
-	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
-			mMenuDrawer.toggleMenu();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

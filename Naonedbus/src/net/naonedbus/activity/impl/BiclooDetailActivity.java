@@ -25,7 +25,6 @@ import net.naonedbus.R;
 import net.naonedbus.activity.map.overlay.BiclooItemizedOverlay;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.manager.impl.FavoriBiclooManager;
 import net.naonedbus.utils.FontUtils;
 import android.annotation.SuppressLint;
@@ -56,7 +55,6 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	protected static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.getDefault());
 
 	private FavoriBiclooManager mFavoriBiclooManager;
-	private SlidingMenuHelper mSlidingMenuHelper;
 
 	protected TextView mTitle;
 	protected TextView mAdresse;
@@ -80,9 +78,6 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 
 		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
-
-		mSlidingMenuHelper = new SlidingMenuHelper(this);
-		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 
 		getSupportActionBar().setIcon(R.drawable.ic_launcher);
 

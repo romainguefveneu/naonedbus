@@ -53,7 +53,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public abstract class EquipementFragment extends CustomListFragment implements CustomFragmentActions {
+public abstract class EquipementFragment extends CustomListFragment {
 
 	private final static int SORT_NOM = 0;
 	private final static int SORT_DISTANCE = 1;

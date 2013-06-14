@@ -20,12 +20,9 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.SlidingMenuActivity;
-import net.naonedbus.fragment.impl.FavorisFragment;
-import net.naonedbus.fragment.impl.LignesFragment;
-import net.naonedbus.fragment.impl.ProximiteFragment;
+import net.naonedbus.activity.MenuDrawerActivity;
+import net.naonedbus.fragment.impl.MainRootFragment;
 import net.naonedbus.helper.FavorisHelper;
-import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
@@ -48,13 +45,7 @@ import android.widget.TextView;
 
 import com.bugsense.trace.BugSenseHandler;
 
-public class MainActivity extends SlidingMenuActivity {
-
-	private static int[] titles = new int[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
-			R.string.title_fragment_proximite };
-
-	private static Class<?>[] classes = new Class<?>[] { LignesFragment.class, FavorisFragment.class,
-			ProximiteFragment.class };
+public class MainActivity extends MenuDrawerActivity {
 
 	private boolean mHasSetup;
 	private boolean mContentLoaded;
@@ -91,13 +82,11 @@ public class MainActivity extends SlidingMenuActivity {
 	};
 
 	public MainActivity() {
-		super(R.layout.activity_main);
 		mMyLocationProvider = NBApplication.getLocationProvider();
 	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		setTitle(R.string.title_activity_main);
 		super.onCreate(savedInstanceState);
 
 		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
@@ -105,7 +94,6 @@ public class MainActivity extends SlidingMenuActivity {
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();
 		}
-		addDelayedFragments(titles, classes);
 	}
 
 	@Override
@@ -114,7 +102,6 @@ public class MainActivity extends SlidingMenuActivity {
 		mMyLocationProvider.start();
 		if (mHasSetup && mContentLoaded == false) {
 			hideSetupView();
-			loadContent();
 		}
 		super.onResume();
 	}
@@ -124,22 +111,6 @@ public class MainActivity extends SlidingMenuActivity {
 		mIsFrontActivity = false;
 		mMyLocationProvider.stop();
 		super.onStop();
-	}
-
-	private void loadContent() {
-		if (mFirstLaunch) {
-			peekSlidingMenu();
-		}
-
-		loadDelayedFragments();
-
-		final FavoriManager favoriManager = FavoriManager.getInstance();
-		final int count = favoriManager.getAll(getContentResolver()).size();
-		if (count > 0) {
-			setSelectedTab(1);
-		}
-
-		mContentLoaded = true;
 	}
 
 	/**
@@ -155,8 +126,10 @@ public class MainActivity extends SlidingMenuActivity {
 	private void afterUpdate() {
 		mHasSetup = true;
 		if (mIsFrontActivity && mContentLoaded == false) {
+
+			setFragment(MainRootFragment.class, R.string.title_activity_main);
+
 			hideSetupView();
-			loadContent();
 
 			final Intent intent = getIntent();
 
@@ -170,8 +143,9 @@ public class MainActivity extends SlidingMenuActivity {
 			if (mUpgradeError) {
 				InfoDialogUtils.show(this, R.string.error_title_upgrade, R.string.error_summary_upgrade);
 			}
+
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void showSetupView() {

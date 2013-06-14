@@ -27,7 +27,6 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.helper.HeaderHelper;
-import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
@@ -47,7 +46,6 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 	public static final String PARAM_COMMENTAIRE = "commentaire";
 
-	private SlidingMenuHelper mSlidingMenuHelper;
 	private HeaderHelper mHeaderHelper;
 
 	private Commentaire mCommentaire;
@@ -59,9 +57,6 @@ public class CommentaireDetailActivity extends SherlockActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment_detail);
-
-		mSlidingMenuHelper = new SlidingMenuHelper(this);
-		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
 
 		final DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getApplicationContext());
 		final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getApplicationContext());

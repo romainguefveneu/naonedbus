@@ -27,10 +27,8 @@ import java.util.Map.Entry;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.helper.SlidingMenuHelper;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.CalendarUtils;
-import net.simonvt.menudrawer.MenuDrawer;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
@@ -43,21 +41,13 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
-import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
 @SuppressWarnings("deprecation")
 public class OldSettingsActivity extends SherlockPreferenceActivity {
-
-	/**
-	 * Gestion du menu latéral.
-	 */
-	private MenuDrawer mMenuDrawer;
-	private SlidingMenuHelper mSlidingMenuHelper;
 
 	private ListPreference calendrierDefaut;
 	private Preference clearCachePlan;
@@ -69,12 +59,6 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 
 		addPreferencesFromResource(R.xml.preferences);
 
-		mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
-
-		mSlidingMenuHelper = new SlidingMenuHelper(this);
-		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
-		mSlidingMenuHelper.setupSlidingMenu(mMenuDrawer);
-
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		calendrierDefaut = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_CALENDRIER_DEFAUT);
@@ -83,50 +67,6 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 
 		initCalendar(preferences);
 		initClearCache(preferences);
-	}
-
-	@Override
-	public void onPostCreate(final Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		mSlidingMenuHelper.onPostCreate(getIntent(), mMenuDrawer, savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(final Bundle outState) {
-		super.onSaveInstanceState(outState);
-		mSlidingMenuHelper.onSaveInstanceState(outState);
-	}
-
-	@Override
-	public void onWindowFocusChanged(final boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		mSlidingMenuHelper.onWindowFocusChanged(hasFocus, mMenuDrawer);
-	}
-
-	/**
-	 * Show the menu when home icon is clicked.
-	 */
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			mMenuDrawer.toggleMenu();
-			return true;
-		default:
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * Show the menu when menu button pressed, hide it when back is pressed
-	 */
-	@Override
-	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_MENU || (mMenuDrawer.isMenuVisible() && keyCode == KeyEvent.KEYCODE_BACK)) {
-			mMenuDrawer.toggleMenu();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 	public void restart() {

@@ -31,7 +31,7 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.formatter.CommentaireFomatter;
-import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
+import net.naonedbus.fragment.impl.nested.ArretDetailFragment.OnSensChangeListener;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
 import net.naonedbus.security.NaonedbusClient;

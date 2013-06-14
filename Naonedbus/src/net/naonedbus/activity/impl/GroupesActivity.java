@@ -20,7 +20,7 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.fragment.impl.GroupesFragment;
+import net.naonedbus.fragment.impl.nested.GroupesFragment;
 import android.os.Bundle;
 
 public class GroupesActivity extends OneFragmentActivity {

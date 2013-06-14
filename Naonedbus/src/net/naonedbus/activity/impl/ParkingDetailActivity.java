@@ -29,8 +29,6 @@ import net.naonedbus.bean.parking.Parking;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.bean.parking.relai.ParkingRelai;
-import net.naonedbus.helper.SlidingMenuHelper;
-import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.ParkingUtils;
@@ -53,23 +51,15 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.ocpsoft.pretty.time.PrettyTime;
 
-/**
- * @author romain.guefveneu
- * 
- */
 public class ParkingDetailActivity extends SherlockMapActivity {
 
-	public static enum Param implements IIntentParamKey {
-		parking, parkingRelai
-	};
+	public static final String PARAM_PARKING = "parking";
 
 	protected static final String NAVIGATION_INTENT = "google.navigation:q=%f,%f";
 	protected static final String SMS_NAVIGATION_URL = "maps.google.com/?q=%f,%f";
 	protected static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.getDefault());
 
 	private final Map<Class<?>, ParkingDetailAdapter> mAadapterMap = new HashMap<Class<?>, ParkingDetailAdapter>();
-
-	private SlidingMenuHelper mSlidingMenuHelper;
 
 	protected TextView mParkingTitle;
 	protected TextView mParkingAdresse;
@@ -98,9 +88,6 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 
-		mSlidingMenuHelper = new SlidingMenuHelper(this);
-		mSlidingMenuHelper.setupActionBar(getSupportActionBar());
-
 		getSupportActionBar().setIcon(R.drawable.ic_launcher);
 
 		mItemTelephone = (TextView) findViewById(R.id.itemTelephone);
@@ -125,7 +112,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		mMapController = mMapView.getController();
 		mMapController.setZoom(17);
 
-		mParking = (Parking) getIntent().getSerializableExtra(Param.parking.toString());
+		mParking = (Parking) getIntent().getSerializableExtra(PARAM_PARKING);
 		if (mParking != null) {
 			loadParking(mParking);
 		} else {
