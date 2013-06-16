@@ -167,10 +167,10 @@ public abstract class ViewPagerFragment extends SherlockFragment implements TabL
 	 * 
 	 * @return the current Fragment, or <code>null</code> if we can't find it.
 	 */
-	protected Fragment getCurrentFragment() {
+	protected SherlockFragment getCurrentFragment() {
 		final int currentTab = mViewPager.getCurrentItem();
 		if (currentTab != -1) {
-			return getChildFragmentManager().findFragmentByTag(mFragmentsTags[currentTab]);
+			return (SherlockFragment) getChildFragmentManager().findFragmentByTag(mFragmentsTags[currentTab]);
 		}
 		return null;
 	}

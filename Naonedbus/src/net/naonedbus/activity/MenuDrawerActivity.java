@@ -23,14 +23,20 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.BicloosRootFragment;
-import net.naonedbus.fragment.impl.EquipementsRootFragment;
-import net.naonedbus.fragment.impl.InfoTraficRootFragment;
 import net.naonedbus.fragment.impl.ItineraireFragment;
-import net.naonedbus.fragment.impl.MainRootFragment;
-import net.naonedbus.fragment.impl.MapFragment;
-import net.naonedbus.fragment.impl.ParkingsRootFragment;
 import net.naonedbus.fragment.impl.SearchFragment;
+import net.naonedbus.fragment.impl.nested.BicloosFavorisFragment;
+import net.naonedbus.fragment.impl.nested.BicloosFragment;
+import net.naonedbus.fragment.impl.nested.CoVoituragesFragment;
+import net.naonedbus.fragment.impl.nested.CommentairesFragment;
+import net.naonedbus.fragment.impl.nested.FavorisFragment;
+import net.naonedbus.fragment.impl.nested.LignesFragment;
+import net.naonedbus.fragment.impl.nested.LilasFragment;
+import net.naonedbus.fragment.impl.nested.MargueritesFragment;
+import net.naonedbus.fragment.impl.nested.ParkingsPublicsFragment;
+import net.naonedbus.fragment.impl.nested.ParkingsRelaisFragment;
+import net.naonedbus.fragment.impl.nested.ProximiteFragment;
+import net.naonedbus.fragment.impl.nested.TanActuFragment;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.annotation.SuppressLint;
@@ -40,19 +46,27 @@ import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 
 @SuppressLint("NewApi")
-public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
+public abstract class MenuDrawerActivity extends SherlockFragmentActivity implements TabListener {
 
 	private static final String LOG_TAG = "MenuDrawerActivity";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -62,6 +76,19 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private ListView mDrawerList;
 	private CharSequence mTitle;
 	private MainMenuAdapter mAdapter;
+	private List<Class<?>[]> mFragmentsClasses;
+	private List<Integer[]> mFragmentsTitles;
+
+	/** Titres des fragments. */
+	private Integer[] mTitles;
+	/** Classes des fragments */
+	private String[] mClasses = new String[0];
+	/** Fragments tags. */
+	private String[] mFragmentsTags;
+
+	private PagerSlidingTabStrip mTabs;
+	private ViewPager mViewPager;
+	private SectionsPagerAdapter mSectionsPagerAdapter;
 
 	private final OnItemClickListener mOnMenuItemCliclListener = new OnItemClickListener() {
 		@Override
@@ -75,6 +102,9 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_drawer_base);
+
+		buildFragmentsClasses();
+		buildFragmentsTitles();
 
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -103,6 +133,21 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+			@Override
+			public void onPageSelected(final int position) {
+				getSupportActionBar().setSelectedNavigationItem(position);
+			}
+		});
+
+		mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+		mTabs.setViewPager(mViewPager);
+
 	}
 
 	/**
@@ -124,6 +169,28 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
+	@SuppressLint("NewApi")
+	@Override
+	public void onTabSelected(final Tab tab, final FragmentTransaction ft) {
+		if (DBG)
+			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
+
+		mViewPager.setCurrentItem(tab.getPosition());
+		invalidateOptionsMenu();
+	}
+
+	@Override
+	public void onTabUnselected(final Tab tab, final FragmentTransaction ft) {
+		if (DBG)
+			Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
+	}
+
+	@Override
+	public void onTabReselected(final Tab tab, final FragmentTransaction ft) {
+		if (DBG)
+			Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
@@ -140,25 +207,46 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	@Override
 	public void setTitle(final CharSequence title) {
 		mTitle = title;
-		getActionBar().setTitle(mTitle);
+		getSupportActionBar().setTitle(mTitle);
 	}
 
 	private MainMenuAdapter buildMainMenuAdapter() {
 		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
-		// @formatter:off
-		items.add(new MainMenuItem(R.string.title_activity_main, MainRootFragment.class, R.drawable.ic_action_home, 0));
-		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, InfoTraficRootFragment.class,R.drawable.ic_action_warning, 0));
-		items.add(new MainMenuItem(R.string.title_activity_bicloo, BicloosRootFragment.class, R.drawable.ic_action_bicloo, 0));
-		items.add(new MainMenuItem(R.string.title_activity_itineraire, ItineraireFragment.class, R.drawable.ic_action_direction, 0));
-		items.add(new MainMenuItem(R.string.title_activity_parkings, ParkingsRootFragment.class, R.drawable.ic_action_parking, 0));
-		items.add(new MainMenuItem(R.string.title_activity_equipements, EquipementsRootFragment.class, R.drawable.ic_action_place, 0));
-		items.add(new MainMenuItem(R.string.title_activity_recherche, SearchFragment.class, R.drawable.ic_action_search, 0));
-		items.add(new MainMenuItem(R.string.title_activity_carte, MapFragment.class, R.drawable.ic_action_map, 0));
-//		items.add(new MainMenuItem(R.string.title_activity_parametres, (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) ? OldSettingsFragment.class : SettingsFragment.class, R.drawable.ic_action_settings, 1));
-//		items.add(new MainMenuItem(R.string.title_activity_about, AboutRootFragment.class, R.drawable.ic_action_info, 1));
-//		items.add(new MainMenuItem(R.string.title_activity_donate, DonateFragment.class, R.drawable.ic_action_favourite, 1));
-		// @formatter:on
+		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home));
+		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning));
+		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo));
+		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction));
+		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking));
+		items.add(new MainMenuItem(R.string.title_activity_equipements, R.drawable.ic_action_place));
+		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_action_search));
+		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_action_map));
 		return new MainMenuAdapter(this, items);
+	}
+
+	private void buildFragmentsClasses() {
+		mFragmentsClasses = new ArrayList<Class<?>[]>();
+		mFragmentsClasses.add(new Class<?>[] { LignesFragment.class, FavorisFragment.class, ProximiteFragment.class });
+		mFragmentsClasses.add(new Class<?>[] { CommentairesFragment.class, TanActuFragment.class });
+		mFragmentsClasses.add(new Class<?>[] { BicloosFragment.class, BicloosFavorisFragment.class });
+		mFragmentsClasses.add(new Class<?>[] { ItineraireFragment.class });
+		mFragmentsClasses.add(new Class<?>[] { ParkingsPublicsFragment.class, ParkingsRelaisFragment.class });
+		mFragmentsClasses.add(new Class<?>[] { MargueritesFragment.class, CoVoituragesFragment.class,
+				LilasFragment.class });
+		mFragmentsClasses.add(new Class<?>[] { SearchFragment.class });
+	}
+
+	private void buildFragmentsTitles() {
+		mFragmentsTitles = new ArrayList<Integer[]>();
+		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
+				R.string.title_fragment_proximite });
+		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_en_direct, R.string.title_fragment_tan_actu });
+		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_bicloos, R.string.title_fragment_favoris });
+		mFragmentsTitles.add(new Integer[] { R.string.title_activity_itineraire });
+		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_parkings_publics,
+				R.string.title_fragment_parkings_relais });
+		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_marguerites, R.string.title_fragment_covoiturage,
+				R.string.title_fragment_lila });
+		mFragmentsTitles.add(new Integer[] { R.string.title_activity_recherche });
 	}
 
 	private void selectItem(final int position) {
@@ -166,23 +254,84 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		mDrawerList.setItemChecked(position, true);
 
-		setFragment(item.getFragmentClass(), item.getTitle());
+		setFragment(mFragmentsClasses.get(position), mFragmentsTitles.get(position), item.getTitle());
 
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				// update selected item and title, then close the drawer
 				mDrawerLayout.closeDrawer(mDrawerList);
 			}
 		}, 100);
 	}
 
-	protected void setFragment(final Class<? extends Fragment> fragementClass, final int title) {
+	protected void setSelectedTab(final int position) {
+		if (DBG)
+			Log.d(LOG_TAG, "setSelectedTab " + position);
+	}
+
+	protected void setFragment(final Class<?>[] fragementsClasses, final Integer[] fragmentsTitles, final int title) {
 		setTitle(title);
 
-		final Fragment fragment = Fragment.instantiate(this, fragementClass.getName());
-		final FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+		mTitles = fragmentsTitles;
+		mClasses = new String[fragementsClasses.length];
+		for (int i = 0; i < fragementsClasses.length; i++) {
+			mClasses[i] = fragementsClasses[i].getName();
+		}
+		mFragmentsTags = new String[fragementsClasses.length];
+
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setOffscreenPageLimit(mClasses.length);
+		mTabs.notifyDataSetChanged();
+	}
+
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+		private static final String LOG_TAG = MenuDrawerActivity.LOG_TAG + "$SectionsPagerAdapter";
+
+		public SectionsPagerAdapter(final FragmentManager fm) {
+			super(fm);
+		}
+
+		@Override
+		public Object instantiateItem(final ViewGroup container, final int position) {
+			if (DBG)
+				Log.d(LOG_TAG, "instantiateItem " + position);
+
+			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
+			fragment.setRetainInstance(true);
+			mFragmentsTags[position] = fragment.getTag();
+			return fragment;
+		}
+
+		@Override
+		public Fragment getItem(final int position) {
+			if (DBG)
+				Log.d(LOG_TAG, "getItem " + position + " : " + mClasses[position]);
+			final Fragment fragment = Fragment.instantiate(MenuDrawerActivity.this, mClasses[position]);
+			fragment.setRetainInstance(true);
+			return fragment;
+		}
+
+		@Override
+		public int getCount() {
+			return mClasses.length;
+		}
+
+		@Override
+		public CharSequence getPageTitle(final int position) {
+			if (DBG)
+				Log.d(LOG_TAG, "getPageTitle " + position);
+
+			return getString(mTitles[position]);
+		}
+
+		public String makeFragmentName(final int viewId, final long id) {
+			return "android:switcher:" + viewId + ":" + id;
+		}
 	}
 
 }

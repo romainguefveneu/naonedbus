@@ -18,35 +18,19 @@
  */
 package net.naonedbus.widget.item.impl;
 
-import net.naonedbus.widget.item.SectionItem;
-import android.support.v4.app.Fragment;
 
-public class MainMenuItem implements SectionItem {
+public class MainMenuItem {
 
 	private final int mTitle;
-	private final Class<? extends Fragment> mFragmentClass;
 	private final int mResIcon;
-	private final Object mSection;
 
-	public MainMenuItem(final int title, final Class<? extends Fragment> fragmentClass, final int resIcon,
-			final Integer section) {
+	public MainMenuItem(final int title, final int resIcon) {
 		mTitle = title;
-		mFragmentClass = fragmentClass;
 		mResIcon = resIcon;
-		mSection = section;
-	}
-
-	@Override
-	public Object getSection() {
-		return mSection;
 	}
 
 	public int getTitle() {
 		return mTitle;
-	}
-
-	public Class<? extends Fragment> getFragmentClass() {
-		return mFragmentClass;
 	}
 
 	public int getResIcon() {

@@ -120,9 +120,9 @@ public class LignesFragment extends CustomCursorFragment {
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_lignes, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
-		super.onCreateOptionsMenu(menu, inflater);
 	}
 
 	@Override

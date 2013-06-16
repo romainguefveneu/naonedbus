@@ -21,7 +21,6 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
-import net.naonedbus.fragment.impl.MainRootFragment;
 import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
@@ -126,8 +125,6 @@ public class MainActivity extends MenuDrawerActivity {
 	private void afterUpdate() {
 		mHasSetup = true;
 		if (mIsFrontActivity && mContentLoaded == false) {
-
-			setFragment(MainRootFragment.class, R.string.title_activity_main);
 
 			hideSetupView();
 
