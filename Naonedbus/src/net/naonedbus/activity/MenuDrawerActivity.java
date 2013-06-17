@@ -23,23 +23,22 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.ItineraireFragment;
-import net.naonedbus.fragment.impl.SearchFragment;
-import net.naonedbus.fragment.impl.nested.BicloosFavorisFragment;
-import net.naonedbus.fragment.impl.nested.BicloosFragment;
-import net.naonedbus.fragment.impl.nested.CoVoituragesFragment;
-import net.naonedbus.fragment.impl.nested.CommentairesFragment;
-import net.naonedbus.fragment.impl.nested.FavorisFragment;
-import net.naonedbus.fragment.impl.nested.LignesFragment;
-import net.naonedbus.fragment.impl.nested.LilasFragment;
-import net.naonedbus.fragment.impl.nested.MargueritesFragment;
-import net.naonedbus.fragment.impl.nested.ParkingsPublicsFragment;
-import net.naonedbus.fragment.impl.nested.ParkingsRelaisFragment;
-import net.naonedbus.fragment.impl.nested.ProximiteFragment;
-import net.naonedbus.fragment.impl.nested.TanActuFragment;
+import net.naonedbus.activity.impl.AboutActivity;
+import net.naonedbus.activity.impl.DonateActivity;
+import net.naonedbus.activity.impl.SettingsActivity;
+import net.naonedbus.fragment.header.BicloosFragmentHeader;
+import net.naonedbus.fragment.header.EquipementsFragmentHeader;
+import net.naonedbus.fragment.header.FragmentHeader;
+import net.naonedbus.fragment.header.InfosTraficFragmentHeader;
+import net.naonedbus.fragment.header.ItineraireFragmentHeader;
+import net.naonedbus.fragment.header.MainFragmentHeader;
+import net.naonedbus.fragment.header.MapFragmentHeader;
+import net.naonedbus.fragment.header.ParkingsFragmentHeader;
+import net.naonedbus.fragment.header.SearchFragmentHeader;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +61,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 
@@ -76,15 +76,13 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 	private ListView mDrawerList;
 	private CharSequence mTitle;
 	private MainMenuAdapter mAdapter;
-	private List<Class<?>[]> mFragmentsClasses;
-	private List<Integer[]> mFragmentsTitles;
 
 	/** Titres des fragments. */
-	private Integer[] mTitles;
+	private int[] mTitles;
 	/** Classes des fragments */
 	private String[] mClasses = new String[0];
 	/** Fragments tags. */
-	private String[] mFragmentsTags;
+	private String[] mFragmentsTags = new String[0];
 
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
@@ -102,9 +100,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_drawer_base);
-
-		buildFragmentsClasses();
-		buildFragmentsTitles();
 
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -169,6 +164,37 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(final Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_base, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+				mDrawerLayout.closeDrawer(GravityCompat.START);
+			} else {
+				mDrawerLayout.openDrawer(GravityCompat.START);
+			}
+			return true;
+		case R.id.menu_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			return true;
+		case R.id.menu_about:
+			startActivity(new Intent(this, AboutActivity.class));
+			return true;
+		case R.id.menu_donate:
+			startActivity(new Intent(this, DonateActivity.class));
+			return true;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	@SuppressLint("NewApi")
 	@Override
 	public void onTabSelected(final Tab tab, final FragmentTransaction ft) {
@@ -192,19 +218,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		if (item.getItemId() == android.R.id.home) {
-			if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-				mDrawerLayout.closeDrawer(GravityCompat.START);
-			} else {
-				mDrawerLayout.openDrawer(GravityCompat.START);
-			}
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public void setTitle(final CharSequence title) {
 		mTitle = title;
 		getSupportActionBar().setTitle(mTitle);
@@ -212,49 +225,30 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 
 	private MainMenuAdapter buildMainMenuAdapter() {
 		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
-		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home));
-		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning));
-		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo));
-		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction));
-		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking));
-		items.add(new MainMenuItem(R.string.title_activity_equipements, R.drawable.ic_action_place));
-		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_action_search));
-		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_action_map));
+		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home, new MainFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning,
+				new InfosTraficFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo,
+				new BicloosFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction,
+				new ItineraireFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking,
+				new ParkingsFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_equipements, R.drawable.ic_action_place,
+				new EquipementsFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_action_search,
+				new SearchFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_action_map, new MapFragmentHeader()));
 		return new MainMenuAdapter(this, items);
-	}
-
-	private void buildFragmentsClasses() {
-		mFragmentsClasses = new ArrayList<Class<?>[]>();
-		mFragmentsClasses.add(new Class<?>[] { LignesFragment.class, FavorisFragment.class, ProximiteFragment.class });
-		mFragmentsClasses.add(new Class<?>[] { CommentairesFragment.class, TanActuFragment.class });
-		mFragmentsClasses.add(new Class<?>[] { BicloosFragment.class, BicloosFavorisFragment.class });
-		mFragmentsClasses.add(new Class<?>[] { ItineraireFragment.class });
-		mFragmentsClasses.add(new Class<?>[] { ParkingsPublicsFragment.class, ParkingsRelaisFragment.class });
-		mFragmentsClasses.add(new Class<?>[] { MargueritesFragment.class, CoVoituragesFragment.class,
-				LilasFragment.class });
-		mFragmentsClasses.add(new Class<?>[] { SearchFragment.class });
-	}
-
-	private void buildFragmentsTitles() {
-		mFragmentsTitles = new ArrayList<Integer[]>();
-		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
-				R.string.title_fragment_proximite });
-		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_en_direct, R.string.title_fragment_tan_actu });
-		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_bicloos, R.string.title_fragment_favoris });
-		mFragmentsTitles.add(new Integer[] { R.string.title_activity_itineraire });
-		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_parkings_publics,
-				R.string.title_fragment_parkings_relais });
-		mFragmentsTitles.add(new Integer[] { R.string.title_fragment_marguerites, R.string.title_fragment_covoiturage,
-				R.string.title_fragment_lila });
-		mFragmentsTitles.add(new Integer[] { R.string.title_activity_recherche });
 	}
 
 	private void selectItem(final int position) {
 		final MainMenuItem item = mAdapter.getItem(position);
+		final FragmentHeader fragmentHeader = item.getFragmentHeader();
 
 		mDrawerList.setItemChecked(position, true);
 
-		setFragment(mFragmentsClasses.get(position), mFragmentsTitles.get(position), item.getTitle());
+		setFragment(fragmentHeader, item.getTitle());
 
 		new Handler().postDelayed(new Runnable() {
 			@Override
@@ -269,19 +263,32 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 			Log.d(LOG_TAG, "setSelectedTab " + position);
 	}
 
-	protected void setFragment(final Class<?>[] fragementsClasses, final Integer[] fragmentsTitles, final int title) {
+	protected void setFragment(final FragmentHeader fragments, final int title) {
 		setTitle(title);
 
-		mTitles = fragmentsTitles;
-		mClasses = new String[fragementsClasses.length];
-		for (int i = 0; i < fragementsClasses.length; i++) {
-			mClasses[i] = fragementsClasses[i].getName();
+		clearFragments();
+
+		final Class<?>[] classes = fragments.getFragmentsClasses();
+
+		mTitles = fragments.getFragmentsTitles();
+		mClasses = new String[classes.length];
+		for (int i = 0; i < classes.length; i++) {
+			mClasses[i] = classes[i].getName();
 		}
-		mFragmentsTags = new String[fragementsClasses.length];
+		mFragmentsTags = new String[classes.length];
 
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mViewPager.setOffscreenPageLimit(mClasses.length);
 		mTabs.notifyDataSetChanged();
+	}
+
+	private void clearFragments() {
+		final FragmentManager fragmentManager = getSupportFragmentManager();
+		final FragmentTransaction transaction = fragmentManager.beginTransaction();
+		for (final String tag : mFragmentsTags) {
+			transaction.remove(fragmentManager.findFragmentByTag(tag));
+		}
+		transaction.commit();
 	}
 
 	/**

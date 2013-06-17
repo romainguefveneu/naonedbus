@@ -57,9 +57,6 @@
         <activity
             android:name=".activity.impl.AboutActivity"
             android:label="@string/title_activity_about" />
-        <activity
-            android:name=".activity.impl.InfosTraficActivity"
-            android:label="@string/title_activity_infos_trafic" />
         <activity android:name=".activity.impl.SensActivity" />
         <activity android:name=".activity.impl.ArretsActivity" />
         <activity android:name=".activity.impl.HorairesActivity" />
@@ -68,17 +65,8 @@
             android:label="@string/emptyString"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
         <activity
-            android:name=".activity.impl.BicloosActivity"
-            android:label="@string/title_activity_bicloo" />
-        <activity
             android:name=".activity.impl.BiclooDetailActivity"
             android:label="@string/emptyString" />
-        <activity
-            android:name=".activity.impl.EquipementsActivity"
-            android:label="@string/title_activity_equipements" />
-        <activity
-            android:name=".activity.impl.ParkingsActivity"
-            android:label="@string/title_activity_parkings" />
         <activity
             android:name=".activity.impl.CommentaireDetailActivity"
             android:label="@string/emptyString" />

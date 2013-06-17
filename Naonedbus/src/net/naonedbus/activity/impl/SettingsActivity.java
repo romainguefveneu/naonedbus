@@ -21,12 +21,12 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.R;
 import net.naonedbus.fragment.impl.nested.SettingsFragments;
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public class SettingsActivity extends SherlockPreferenceActivity {
 
@@ -38,14 +38,22 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 
 		setContentView(R.layout.fragment_listview);
 
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		super.onCreate(savedInstanceState);
 
 	}
 
-	public void restart() {
-		startActivity(new Intent(this, this.getClass()));
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-		finish();
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

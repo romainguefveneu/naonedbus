@@ -21,6 +21,7 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
+import net.naonedbus.fragment.header.MainFragmentHeader;
 import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
@@ -141,6 +142,7 @@ public class MainActivity extends MenuDrawerActivity {
 				InfoDialogUtils.show(this, R.string.error_title_upgrade, R.string.error_summary_upgrade);
 			}
 
+			setFragment(new MainFragmentHeader(), R.string.title_activity_main);
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}

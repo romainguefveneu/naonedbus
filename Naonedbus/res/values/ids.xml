@@ -144,6 +144,9 @@
     <item name="menu_layers" type="id"/>
     <item name="menu_add" type="id"/>
     <item name="menu_reverse" type="id"/>
+    <item name="menu_donate" type="id"/>
+    <item name="menu_settings" type="id"/>
+    <item name="menu_about" type="id"/>
 
     <!-- Card -->
     <item name="cardHoraireTag" type="string">tag:Horaire</item>

@@ -18,15 +18,18 @@
  */
 package net.naonedbus.widget.item.impl;
 
+import net.naonedbus.fragment.header.FragmentHeader;
 
 public class MainMenuItem {
 
 	private final int mTitle;
 	private final int mResIcon;
+	private final FragmentHeader mFragmentHeader;
 
-	public MainMenuItem(final int title, final int resIcon) {
+	public MainMenuItem(final int title, final int resIcon, final FragmentHeader fragmentHeader) {
 		mTitle = title;
 		mResIcon = resIcon;
+		mFragmentHeader = fragmentHeader;
 	}
 
 	public int getTitle() {
@@ -35,6 +38,10 @@ public class MainMenuItem {
 
 	public int getResIcon() {
 		return mResIcon;
+	}
+
+	public FragmentHeader getFragmentHeader() {
+		return mFragmentHeader;
 	}
 
 }

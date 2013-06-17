@@ -49,6 +49,7 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(layoutId);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**

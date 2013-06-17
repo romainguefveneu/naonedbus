@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@id/menu_settings"
+        android:orderInCategory="1000"
+        android:showAsAction="never"
+        android:title="@string/title_activity_parametres"/>
+    <item
+        android:id="@id/menu_about"
+        android:orderInCategory="1100"
+        android:showAsAction="never"
+        android:title="@string/title_activity_about"/>
+    <item
+        android:id="@id/menu_donate"
+        android:orderInCategory="1200"
+        android:showAsAction="never"
+        android:title="@string/title_activity_donate"/>
+
+</menu>
