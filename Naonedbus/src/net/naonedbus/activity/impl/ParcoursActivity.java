@@ -20,7 +20,7 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.fragment.impl.nested.ParcoursFragment;
+import net.naonedbus.fragment.impl.ParcoursFragment;
 import android.os.Bundle;
 
 public class ParcoursActivity extends OneFragmentActivity {

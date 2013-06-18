@@ -65,6 +65,8 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		mHeaderHelper = new HeaderHelper(this);
 
 		mItemDescription = (TextView) findViewById(R.id.itemDescription);

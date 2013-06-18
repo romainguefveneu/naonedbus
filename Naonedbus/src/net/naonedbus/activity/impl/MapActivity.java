@@ -158,6 +158,7 @@ public class MapActivity extends SherlockMapActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		final Location location = mLocationProvider.getLastKnownLocation();
 
@@ -270,6 +271,7 @@ public class MapActivity extends SherlockMapActivity {
 
 			switch (item.getItemId()) {
 			case android.R.id.home:
+				finish();
 				break;
 			case R.id.menu_location:
 				final Location location = mLocationProvider.getLastKnownLocation();

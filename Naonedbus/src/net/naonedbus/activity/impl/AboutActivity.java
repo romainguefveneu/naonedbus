@@ -2,8 +2,8 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.FragmentsActivity;
-import net.naonedbus.fragment.impl.nested.AboutFragment;
-import net.naonedbus.fragment.impl.nested.VersionsFragment;
+import net.naonedbus.fragment.impl.AboutFragment;
+import net.naonedbus.fragment.impl.VersionsFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;

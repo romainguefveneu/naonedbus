@@ -1,9 +1,9 @@
 package net.naonedbus.fragment.header;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.nested.CoVoituragesFragment;
-import net.naonedbus.fragment.impl.nested.LilasFragment;
-import net.naonedbus.fragment.impl.nested.MargueritesFragment;
+import net.naonedbus.fragment.impl.CoVoituragesFragment;
+import net.naonedbus.fragment.impl.LilasFragment;
+import net.naonedbus.fragment.impl.MargueritesFragment;
 import android.content.Context;
 
 public class EquipementsFragmentHeader implements FragmentHeader {

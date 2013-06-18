@@ -29,7 +29,7 @@ import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.fragment.header.BicloosFragmentHeader;
 import net.naonedbus.fragment.header.EquipementsFragmentHeader;
 import net.naonedbus.fragment.header.FragmentHeader;
-import net.naonedbus.fragment.header.InfosTraficFragmentHeader;
+import net.naonedbus.fragment.header.InfoTraficFragmentHeader;
 import net.naonedbus.fragment.header.ItineraireFragmentHeader;
 import net.naonedbus.fragment.header.MainFragmentHeader;
 import net.naonedbus.fragment.header.MapFragmentHeader;
@@ -171,13 +171,27 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 	}
 
 	@Override
+	public boolean onPrepareOptionsMenu(final Menu menu) {
+		final boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		final int itemCount = menu.size();
+		for (int i = 0; i < itemCount; i++) {
+			final MenuItem item = menu.getItem(i);
+			final int itemId = item.getItemId();
+			final boolean isGlobalMenuItem = (itemId == R.id.menu_about || itemId == R.id.menu_settings || itemId == R.id.menu_donate);
+
+			item.setVisible(!drawerOpen || isGlobalMenuItem);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-				mDrawerLayout.closeDrawer(GravityCompat.START);
+			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+				mDrawerLayout.closeDrawer(mDrawerList);
 			} else {
-				mDrawerLayout.openDrawer(GravityCompat.START);
+				mDrawerLayout.openDrawer(mDrawerList);
 			}
 			return true;
 		case R.id.menu_settings:
@@ -227,7 +241,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
 		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home, new MainFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning,
-				new InfosTraficFragmentHeader()));
+				new InfoTraficFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo,
 				new BicloosFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction,
@@ -258,19 +272,14 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		}, 100);
 	}
 
-	protected void setSelectedTab(final int position) {
-		if (DBG)
-			Log.d(LOG_TAG, "setSelectedTab " + position);
-	}
-
-	protected void setFragment(final FragmentHeader fragments, final int title) {
+	protected void setFragment(final FragmentHeader fragmentHeader, final int title) {
 		setTitle(title);
 
 		clearFragments();
 
-		final Class<?>[] classes = fragments.getFragmentsClasses();
+		final Class<?>[] classes = fragmentHeader.getFragmentsClasses();
 
-		mTitles = fragments.getFragmentsTitles();
+		mTitles = fragmentHeader.getFragmentsTitles();
 		mClasses = new String[classes.length];
 		for (int i = 0; i < classes.length; i++) {
 			mClasses[i] = classes[i].getName();
@@ -279,7 +288,16 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mViewPager.setOffscreenPageLimit(mClasses.length);
+
+		if (mTitles.length == 1) {
+			mTabs.setVisibility(View.GONE);
+		} else {
+			mTabs.setVisibility(View.VISIBLE);
+		}
+
 		mTabs.notifyDataSetChanged();
+
+		mViewPager.setCurrentItem(fragmentHeader.getSelectedPosition(this));
 	}
 
 	private void clearFragments() {

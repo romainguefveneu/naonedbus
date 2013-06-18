@@ -20,7 +20,7 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.fragment.impl.nested.WebViewFragment;
+import net.naonedbus.fragment.impl.WebViewFragment;
 import android.os.Bundle;
 
 public class WebViewActivity extends OneFragmentActivity {

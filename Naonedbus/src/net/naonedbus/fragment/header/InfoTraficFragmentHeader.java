@@ -1,11 +1,11 @@
 package net.naonedbus.fragment.header;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.nested.CommentairesFragment;
-import net.naonedbus.fragment.impl.nested.TanActuFragment;
+import net.naonedbus.fragment.impl.CommentairesFragment;
+import net.naonedbus.fragment.impl.TanActuFragment;
 import android.content.Context;
 
-public class InfosTraficFragmentHeader implements FragmentHeader {
+public class InfoTraficFragmentHeader implements FragmentHeader {
 
 	private final Class<?>[] mFragments = new Class<?>[] { CommentairesFragment.class, TanActuFragment.class };
 

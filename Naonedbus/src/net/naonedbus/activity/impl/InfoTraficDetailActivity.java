@@ -21,7 +21,7 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
 import net.naonedbus.bean.InfoTrafic;
-import net.naonedbus.fragment.impl.nested.InfoTraficDetailFragment;
+import net.naonedbus.fragment.impl.InfoTraficDetailFragment;
 import android.os.Bundle;
 
 public class InfoTraficDetailActivity extends OneFragmentActivity {

@@ -21,7 +21,8 @@
 -->
 <resources>
 
-    <color name="activity_background_light">#e5e5e5</color>
+    <color name="tabs_background_light">#e5e5e5</color>
+    <color name="activity_background_light">#eeeeee</color>
     <color name="pinned_header_menu_text">#90ffffff</color>
     <color name="menu_background">#006699</color>
     <color name="menu_option_background">#005985</color>

@@ -19,7 +19,7 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.nested.SettingsFragments;
+import net.naonedbus.fragment.impl.SettingsFragments;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;

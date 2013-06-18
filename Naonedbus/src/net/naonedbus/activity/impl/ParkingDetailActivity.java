@@ -88,7 +88,7 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 
-		getSupportActionBar().setIcon(R.drawable.ic_launcher);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mItemTelephone = (TextView) findViewById(R.id.itemTelephone);
 

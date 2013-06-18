@@ -36,6 +36,7 @@ public class PlanActivity extends OneFragmentActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		final String codeLigne = getIntent().getStringExtra(PARAM_CODE_LIGNE);
 		final Ligne ligne = LigneManager.getInstance().getSingle(getContentResolver(), codeLigne);

@@ -79,7 +79,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 
 		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
 
-		getSupportActionBar().setIcon(R.drawable.ic_launcher);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mTitle = (TextView) findViewById(R.id.itemTitle);
 		mAdresse = (TextView) findViewById(R.id.itemAddress);

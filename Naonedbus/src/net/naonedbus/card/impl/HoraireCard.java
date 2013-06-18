@@ -29,7 +29,7 @@ import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.card.Card;
-import net.naonedbus.fragment.impl.nested.ArretDetailFragment.OnArretChangeListener;
+import net.naonedbus.fragment.impl.ArretDetailFragment.OnArretChangeListener;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.utils.ViewHelper;

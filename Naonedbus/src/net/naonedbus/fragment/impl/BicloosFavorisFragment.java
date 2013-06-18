@@ -1,4 +1,4 @@
-package net.naonedbus.fragment.impl.nested;
+package net.naonedbus.fragment.impl;
 
 import java.io.IOException;
 import java.util.List;

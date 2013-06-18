@@ -118,6 +118,7 @@ public class CommentaireActivity extends SherlockActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mLigneManager = LigneManager.getInstance();
 		mSensManager = SensManager.getInstance();

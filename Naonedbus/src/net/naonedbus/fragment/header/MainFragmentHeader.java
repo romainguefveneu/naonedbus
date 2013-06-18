@@ -1,9 +1,10 @@
 package net.naonedbus.fragment.header;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.nested.FavorisFragment;
-import net.naonedbus.fragment.impl.nested.LignesFragment;
-import net.naonedbus.fragment.impl.nested.ProximiteFragment;
+import net.naonedbus.fragment.impl.FavorisFragment;
+import net.naonedbus.fragment.impl.LignesFragment;
+import net.naonedbus.fragment.impl.ProximiteFragment;
+import net.naonedbus.manager.impl.FavoriManager;
 import android.content.Context;
 
 public class MainFragmentHeader implements FragmentHeader {
@@ -26,7 +27,9 @@ public class MainFragmentHeader implements FragmentHeader {
 
 	@Override
 	public int getSelectedPosition(final Context context) {
-		return 0;
+		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final int count = favoriManager.getAll(context.getContentResolver()).size();
+		return count > 0 ? 1 : 0;
 	}
 
 }

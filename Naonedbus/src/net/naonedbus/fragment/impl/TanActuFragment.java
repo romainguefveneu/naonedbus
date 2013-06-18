@@ -16,12 +16,13 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.fragment.impl.nested;
+package net.naonedbus.fragment.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.InfoTraficDetailActivity;
 import net.naonedbus.bean.EmptyInfoTrafic;
 import net.naonedbus.bean.InfoTrafic;
@@ -35,21 +36,31 @@ import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import net.naonedbus.widget.adapter.impl.InfoTraficLigneArrayAdapter;
 import net.naonedbus.widget.indexer.impl.InfoTraficIndexer;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class TanActuFragment extends CustomListFragment {
 
 	public static final String PARAM_CODE_LIGNE = "codeLigne";
 
+	private MenuItem mRefreshMenuItem;
 	private String mCodeLigne;
 
 	public TanActuFragment() {
 		super(R.layout.fragment_listview_box);
+	}
+
+	@Override
+	public void onCreate(final Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -61,6 +72,28 @@ public class TanActuFragment extends CustomListFragment {
 		}
 
 		loadContent();
+	}
+
+	@Override
+	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.activity_en_direct, menu);
+		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
+
+		if (getLoaderManager().hasRunningLoaders())
+			showResfrehMenuLoader();
+	}
+
+	private void showResfrehMenuLoader() {
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setActionView(R.layout.action_item_refresh);
+		}
+	}
+
+	private void hideResfrehMenuLoader() {
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setActionView(null);
+		}
 	}
 
 	@Override
@@ -79,8 +112,21 @@ public class TanActuFragment extends CustomListFragment {
 		case R.id.menu_refresh:
 			refreshContent();
 			break;
+		case R.id.menu_comment:
+			startActivity(new Intent(getActivity(), CommentaireActivity.class));
+			return true;
 		}
 		return true;
+	}
+
+	@Override
+	protected void onPreExecute() {
+		showResfrehMenuLoader();
+	}
+
+	@Override
+	protected void onPostExecute() {
+		hideResfrehMenuLoader();
 	}
 
 	@Override

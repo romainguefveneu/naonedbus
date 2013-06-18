@@ -1,8 +1,9 @@
 package net.naonedbus.fragment.header;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.nested.BicloosFavorisFragment;
-import net.naonedbus.fragment.impl.nested.BicloosFragment;
+import net.naonedbus.fragment.impl.BicloosFavorisFragment;
+import net.naonedbus.fragment.impl.BicloosFragment;
+import net.naonedbus.manager.impl.FavoriBiclooManager;
 import android.content.Context;
 
 public class BicloosFragmentHeader implements FragmentHeader {
@@ -23,7 +24,9 @@ public class BicloosFragmentHeader implements FragmentHeader {
 
 	@Override
 	public int getSelectedPosition(final Context context) {
-		return 0;
+		final FavoriBiclooManager favoriManager = FavoriBiclooManager.getInstance();
+		final int count = favoriManager.getAll(context.getContentResolver()).size();
+		return count > 0 ? 1 : 0;
 	}
 
 }

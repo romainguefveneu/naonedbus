@@ -33,6 +33,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 public class EquipementProvider extends CustomContentProvider {
 
@@ -110,7 +111,10 @@ public class EquipementProvider extends CustomContentProvider {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(EquipementTable.TABLE_NAME);
 
+		Log.d("EquipementProvider", uri.toString());
 		final int uriType = URI_MATCHER.match(uri);
+		Log.d("EquipementProvider uriType", String.valueOf(uriType));
+
 		switch (uriType) {
 
 		case SEARCH:

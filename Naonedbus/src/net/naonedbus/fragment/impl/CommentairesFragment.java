@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.fragment.impl.nested;
+package net.naonedbus.fragment.impl;
 
 import java.util.List;
 
@@ -119,6 +119,8 @@ public class CommentairesFragment extends CustomListFragment {
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateOptionsMenu");
+
+		inflater.inflate(R.menu.activity_en_direct, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 
 		if (getLoaderManager().hasRunningLoaders())
@@ -135,6 +137,9 @@ public class CommentairesFragment extends CustomListFragment {
 			bundle.putBoolean(BUNDLE_FORCE_UPDATE, true);
 			refreshContent(bundle);
 			break;
+		case R.id.menu_comment:
+			startActivity(new Intent(getActivity(), CommentaireActivity.class));
+			return true;
 		}
 		return true;
 	}

@@ -1,8 +1,8 @@
 package net.naonedbus.fragment.header;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.nested.ParkingsPublicsFragment;
-import net.naonedbus.fragment.impl.nested.ParkingsRelaisFragment;
+import net.naonedbus.fragment.impl.ParkingsPublicsFragment;
+import net.naonedbus.fragment.impl.ParkingsRelaisFragment;
 import android.content.Context;
 
 public class ParkingsFragmentHeader implements FragmentHeader {

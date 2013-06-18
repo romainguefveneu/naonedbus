@@ -16,16 +16,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.fragment.impl.nested;
+package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.fragment.EquipementFragment;
+import net.naonedbus.manager.impl.EquipementManager.SousType;
 
-public class LilasFragment extends EquipementFragment {
+public class ParkingsRelaisFragment extends EquipementFragment {
 
-	public LilasFragment() {
-		super(R.layout.fragment_listview_section, Equipement.Type.TYPE_LILA);
+	public ParkingsRelaisFragment() {
+		super(R.layout.fragment_listview_section, Type.TYPE_PARKING, SousType.PARKING_RELAI);
 	}
 
 }
