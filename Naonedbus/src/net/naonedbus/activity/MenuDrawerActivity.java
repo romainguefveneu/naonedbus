@@ -58,15 +58,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 
 @SuppressLint("NewApi")
-public abstract class MenuDrawerActivity extends SherlockFragmentActivity implements TabListener {
+public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 	private static final String LOG_TAG = "MenuDrawerActivity";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -86,12 +84,12 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
-	private SectionsPagerAdapter mSectionsPagerAdapter;
+	private TabsAdapter mSectionsPagerAdapter;
 
 	private final OnItemClickListener mOnMenuItemCliclListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
-			selectItem(position);
+			selectNavigationItem(position);
 		}
 	};
 
@@ -105,6 +103,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
 
+		mTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -129,7 +128,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		mSectionsPagerAdapter = new TabsAdapter(getSupportFragmentManager());
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -142,7 +141,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 
 		mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		mTabs.setViewPager(mViewPager);
-
 	}
 
 	/**
@@ -209,28 +207,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		return super.onOptionsItemSelected(item);
 	}
 
-	@SuppressLint("NewApi")
-	@Override
-	public void onTabSelected(final Tab tab, final FragmentTransaction ft) {
-		if (DBG)
-			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
-
-		mViewPager.setCurrentItem(tab.getPosition());
-		invalidateOptionsMenu();
-	}
-
-	@Override
-	public void onTabUnselected(final Tab tab, final FragmentTransaction ft) {
-		if (DBG)
-			Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
-	}
-
-	@Override
-	public void onTabReselected(final Tab tab, final FragmentTransaction ft) {
-		if (DBG)
-			Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
-	}
-
 	@Override
 	public void setTitle(final CharSequence title) {
 		mTitle = title;
@@ -256,11 +232,15 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		return new MainMenuAdapter(this, items);
 	}
 
-	private void selectItem(final int position) {
+	protected void selectNavigationItem(final int position) {
+		if (DBG)
+			Log.d(LOG_TAG, "selectItem " + position);
+
 		final MainMenuItem item = mAdapter.getItem(position);
 		final FragmentHeader fragmentHeader = item.getFragmentHeader();
 
 		mDrawerList.setItemChecked(position, true);
+		mAdapter.setCurrentItem(position);
 
 		setFragment(fragmentHeader, item.getTitle());
 
@@ -273,12 +253,13 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 	}
 
 	protected void setFragment(final FragmentHeader fragmentHeader, final int title) {
-		setTitle(title);
+		if (DBG)
+			Log.d(LOG_TAG, "setFragment " + getString(title));
 
 		clearFragments();
+		setTitle(title);
 
 		final Class<?>[] classes = fragmentHeader.getFragmentsClasses();
-
 		mTitles = fragmentHeader.getFragmentsTitles();
 		mClasses = new String[classes.length];
 		for (int i = 0; i < classes.length; i++) {
@@ -296,7 +277,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		}
 
 		mTabs.notifyDataSetChanged();
-
 		mViewPager.setCurrentItem(fragmentHeader.getSelectedPosition(this));
 	}
 
@@ -309,15 +289,10 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		transaction.commit();
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+	public class TabsAdapter extends FragmentPagerAdapter {
+		private static final String LOG_TAG = MenuDrawerActivity.LOG_TAG + "$TabsAdapter";
 
-		private static final String LOG_TAG = MenuDrawerActivity.LOG_TAG + "$SectionsPagerAdapter";
-
-		public SectionsPagerAdapter(final FragmentManager fm) {
+		public TabsAdapter(final FragmentManager fm) {
 			super(fm);
 		}
 
@@ -336,6 +311,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 		public Fragment getItem(final int position) {
 			if (DBG)
 				Log.d(LOG_TAG, "getItem " + position + " : " + mClasses[position]);
+
 			final Fragment fragment = Fragment.instantiate(MenuDrawerActivity.this, mClasses[position]);
 			fragment.setRetainInstance(true);
 			return fragment;
@@ -352,10 +328,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity implem
 				Log.d(LOG_TAG, "getPageTitle " + position);
 
 			return getString(mTitles[position]);
-		}
-
-		public String makeFragmentName(final int viewId, final long id) {
-			return "android:switcher:" + viewId + ":" + id;
 		}
 	}
 

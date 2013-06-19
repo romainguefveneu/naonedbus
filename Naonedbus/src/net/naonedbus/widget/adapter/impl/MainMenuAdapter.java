@@ -33,10 +33,15 @@ import android.widget.TextView;
 public class MainMenuAdapter extends ArrayAdapter<MainMenuItem> {
 
 	private final Typeface mRoboto;
+	private int mCurrentItem;
 
 	public MainMenuAdapter(final Context context, final List<MainMenuItem> items) {
 		super(context, R.layout.list_item_menu, items);
 		mRoboto = FontUtils.getRobotoLight(context);
+	}
+
+	public void setCurrentItem(final int currentItem) {
+		mCurrentItem = currentItem;
 	}
 
 	@Override
@@ -48,7 +53,20 @@ public class MainMenuAdapter extends ArrayAdapter<MainMenuItem> {
 		textview.setCompoundDrawablesWithIntrinsicBounds(item.getResIcon(), 0, 0, 0);
 		textview.setTypeface(mRoboto);
 
+		if (mCurrentItem == position) {
+			setViewBackgroundWithoutResettingPadding(textview, R.drawable.list_pressed_holo_light);
+		} else {
+			setViewBackgroundWithoutResettingPadding(textview, android.R.color.transparent);
+		}
+
 		return textview;
+	}
+
+	public static void setViewBackgroundWithoutResettingPadding(final View v, final int backgroundResId) {
+		final int paddingBottom = v.getPaddingBottom(), paddingLeft = v.getPaddingLeft();
+		final int paddingRight = v.getPaddingRight(), paddingTop = v.getPaddingTop();
+		v.setBackgroundResource(backgroundResId);
+		v.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
 	}
 
 }
