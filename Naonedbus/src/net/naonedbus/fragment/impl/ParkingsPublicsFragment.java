@@ -83,6 +83,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		indexers.append(SORT_PLACES, new ParkingPlaceIndexer());
 	}
 
+	private MenuItem mRefreshMenuItem;
 	private StateHelper mStateHelper;
 	private final MyLocationProvider myLocationProvider;
 	private ParkingDistance loaderDistance;
@@ -129,7 +130,12 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_parkings_publics, menu);
+		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
+
+		if (getLoaderManager().hasRunningLoaders())
+			showResfrehMenuLoader();
+
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -157,6 +163,18 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		return false;
 	}
 
+	private void showResfrehMenuLoader() {
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setActionView(R.layout.action_item_refresh);
+		}
+	}
+
+	private void hideResfrehMenuLoader() {
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setActionView(null);
+		}
+	}
+
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
@@ -172,6 +190,14 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 				&& (loaderDistance == null || loaderDistance.getStatus() == AsyncTask.Status.FINISHED)) {
 			loaderDistance = (ParkingDistance) new ParkingDistance().execute();
 		}
+	}
+
+	@Override
+	protected void onPreExecute() {
+		if (getListAdapter() == null) {
+			showLoader();
+		}
+		showResfrehMenuLoader();
 	}
 
 	@Override
@@ -195,6 +221,8 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	@Override
 	protected void onPostExecute() {
 		refreshDistance();
+		hideResfrehMenuLoader();
+
 	}
 
 	/**

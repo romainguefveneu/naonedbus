@@ -34,7 +34,7 @@
             android:layout_height="48dip"
             app:indicatorColor="@color/holo_blue_dark"
             app:shouldExpand="true"
-            app:tabBackground="@drawable/tab_indicator_ab_acapulco" />
+            app:tabBackground="@drawable/background_tab" />
 
         <android.support.v4.view.ViewPager
             android:id="@id/pager"

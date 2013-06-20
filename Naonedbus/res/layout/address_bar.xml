@@ -26,7 +26,7 @@
     android:background="@color/adressbar_color"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="horizontal"
-    android:padding="5dip" >
+    android:padding="@dimen/padding_tiny" >
 
     <ImageView
         android:id="@+id/icon"
@@ -38,11 +38,8 @@
 
     <TextView
         android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ItemPrimaryText.SingleLine.Small"
         android:layout_gravity="fill"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="@color/item_primary_text_dark"
-        android:textSize="14dip" />
+        android:gravity="center_vertical|center_horizontal" />
 
 </LinearLayout>

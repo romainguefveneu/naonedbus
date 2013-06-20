@@ -21,7 +21,6 @@
 -->
 <resources>
 
-    <color name="tabs_background_light">#e5e5e5</color>
     <color name="activity_background_light">#eeeeee</color>
     <color name="pinned_header_menu_text">#90ffffff</color>
     <color name="menu_background">#006699</color>
@@ -40,7 +39,9 @@
     <color name="message_tan_header">#358243</color>
     <color name="message_taninfos_header">#01001f</color>
     <color name="query_hint_color">#9bc9e1</color>
-    <color name="adressbar_color">#ff147cad</color>
+    <color name="adressbar_color">#dddddd</color>
+    <color name="background_tab_pressed">#6633B5E5</color>
+    <color name="background_tab">#66aaaaaa</color>
     <color name="card_text_color">#707070</color>
 
     <!-- Parkings -->

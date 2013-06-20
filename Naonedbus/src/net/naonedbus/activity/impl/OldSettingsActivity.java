@@ -33,7 +33,6 @@ import net.naonedbus.utils.CalendarUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -56,8 +55,8 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		addPreferencesFromResource(R.xml.preferences);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -67,12 +66,6 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 
 		initCalendar(preferences);
 		initClearCache(preferences);
-	}
-
-	public void restart() {
-		startActivity(new Intent(this, this.getClass()));
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-		finish();
 	}
 
 	/**

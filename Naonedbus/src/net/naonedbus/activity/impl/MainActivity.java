@@ -21,8 +21,10 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
+import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.fragment.header.MainFragmentHeader;
 import net.naonedbus.helper.FavorisHelper;
+import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
@@ -33,6 +35,7 @@ import net.naonedbus.service.FavoriService;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.utils.VersionUtils;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -42,6 +45,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bugsense.trace.BugSenseHandler;
 
@@ -94,6 +98,8 @@ public class MainActivity extends MenuDrawerActivity {
 		if (savedInstanceState == null) {
 			new UpdateAndCleanTask().execute();
 		}
+
+		handleSearchResult();
 	}
 
 	@Override
@@ -174,6 +180,36 @@ public class MainActivity extends MenuDrawerActivity {
 	private void showTutorial() {
 		startActivity(new Intent(MainActivity.this, TutorialActivity.class));
 		overridePendingTransition(0, 0);
+	}
+
+	private void handleSearchResult() {
+		final Intent queryIntent = getIntent();
+		final String queryAction = queryIntent.getAction();
+		if (Intent.ACTION_SEARCH.equals(queryAction)) {
+			if (queryIntent.getData() == null) {
+				// Lancer la recherche
+				final String query = queryIntent.getStringExtra(SearchManager.QUERY);
+				Toast.makeText(this, query, Toast.LENGTH_SHORT).show();
+			} else {
+				final Integer selectedItemId = Integer.valueOf(queryIntent.getStringExtra(SearchManager.QUERY));
+				final TypeOverlayItem selectedItemType = TypeOverlayItem.getById(Integer.valueOf(queryIntent
+						.getStringExtra(SearchManager.EXTRA_DATA_KEY)));
+
+				if (selectedItemType.equals(TypeOverlayItem.TYPE_STATION)) {
+					// Afficher les parcours de l'arrêt sélectionné
+					final ParamIntent intent = new ParamIntent(this, ParcoursActivity.class);
+					intent.putExtra(ParcoursActivity.PARAM_ID_SATION, selectedItemId);
+					startActivity(intent);
+				} else {
+					// Afficher l'élément sur la carte
+					final ParamIntent intent = new ParamIntent(this, MapActivity.class);
+					intent.putExtra(MapActivity.Param.itemId, selectedItemId);
+					intent.putExtra(MapActivity.Param.itemType, selectedItemType.getId());
+					startActivity(intent);
+				}
+			}
+			queryIntent.setAction(null);
+		}
 	}
 
 	/**

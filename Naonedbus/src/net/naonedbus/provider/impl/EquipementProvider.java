@@ -101,8 +101,6 @@ public class EquipementProvider extends CustomContentProvider {
 				+ EquipementTable.ID_TYPE + " AS " + SearchManager.SUGGEST_COLUMN_INTENT_EXTRA_DATA);
 		SUGGESTION_PROJECTION_MAP.put(EquipementTable.TABLE_NAME + "." + EquipementTable._ID,
 				EquipementTable.TABLE_NAME + "." + EquipementTable._ID);
-		SUGGESTION_PROJECTION_MAP.put(SearchManager.SUGGEST_COLUMN_ICON_1,
-				String.valueOf(android.R.drawable.ic_menu_recent_history));
 	}
 
 	@Override

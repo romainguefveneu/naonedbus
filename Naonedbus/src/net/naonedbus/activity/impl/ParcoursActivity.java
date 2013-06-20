@@ -34,6 +34,7 @@ public class ParcoursActivity extends OneFragmentActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		if (savedInstanceState == null) {
 			final int idStation = getIntent().getIntExtra(PARAM_ID_SATION, -1);

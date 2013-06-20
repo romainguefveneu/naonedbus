@@ -25,6 +25,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AboutActivity;
 import net.naonedbus.activity.impl.DonateActivity;
+import net.naonedbus.activity.impl.OldSettingsActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.fragment.header.BicloosFragmentHeader;
 import net.naonedbus.fragment.header.EquipementsFragmentHeader;
@@ -40,6 +41,7 @@ import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -69,6 +71,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private static final String LOG_TAG = "MenuDrawerActivity";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
+	private static final String BUNDLE_MENU_POSITION = "MenuDrawerActivity:menuPosition";
+
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ListView mDrawerList;
@@ -82,6 +86,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	/** Fragments tags. */
 	private String[] mFragmentsTags = new String[0];
 
+	private int mCurrentMenuItem;
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
 	private TabsAdapter mSectionsPagerAdapter;
@@ -141,6 +146,17 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		mTabs.setViewPager(mViewPager);
+
+		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_MENU_POSITION)) {
+			mCurrentMenuItem = savedInstanceState.getInt(BUNDLE_MENU_POSITION);
+			selectNavigationItem(mCurrentMenuItem);
+		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(final Bundle outState) {
+		outState.putInt(BUNDLE_MENU_POSITION, mCurrentMenuItem);
+		super.onSaveInstanceState(outState);
 	}
 
 	/**
@@ -193,7 +209,11 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 			}
 			return true;
 		case R.id.menu_settings:
-			startActivity(new Intent(this, SettingsActivity.class));
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				startActivity(new Intent(this, SettingsActivity.class));
+			} else {
+				startActivity(new Intent(this, OldSettingsActivity.class));
+			}
 			return true;
 		case R.id.menu_about:
 			startActivity(new Intent(this, AboutActivity.class));
@@ -235,6 +255,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	protected void selectNavigationItem(final int position) {
 		if (DBG)
 			Log.d(LOG_TAG, "selectItem " + position);
+
+		mCurrentMenuItem = position;
 
 		final MainMenuItem item = mAdapter.getItem(position);
 		final FragmentHeader fragmentHeader = item.getFragmentHeader();
