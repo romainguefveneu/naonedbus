@@ -20,7 +20,6 @@ package net.naonedbus.activity;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.intent.IIntentParamKey;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,13 +29,11 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.ActionBar.TabListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 
-public abstract class FragmentsActivity extends SherlockFragmentActivity implements TabListener {
+public abstract class FragmentsActivity extends SherlockFragmentActivity {
 
 	private static final String LOG_TAG = "FragmentsActivity";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -51,24 +48,13 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	/** Titres des fragments. */
 	private int[] mTitles;
 	/** Classes des fragments */
-	private String[] mClasses;
-	/** Bundles des fragments. */
-	private Bundle[] mBundles;
+	private String[] mClasses = new String[0];
 	/** Fragments tags. */
-	private String[] mFragmentsTags;
+	private String[] mFragmentsTags = new String[0];
 
-	/** The {@link ViewPager} that will host the section contents. */
+	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
-
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a
-	 * {@link android.support.v4.app.FragmentPagerAdapter} derivative, which
-	 * will keep every loaded fragment in memory. If this becomes too memory
-	 * intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
-	private SectionsPagerAdapter mSectionsPagerAdapter;
+	private TabsAdapter mSectionsPagerAdapter;
 
 	public FragmentsActivity(final int layoutId) {
 		this.mLayoutId = layoutId;
@@ -76,33 +62,17 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		if (DBG)
-			Log.d(LOG_TAG, "onCreate");
-
-		getWindow().setBackgroundDrawable(null);
-
 		super.onCreate(savedInstanceState);
-
 		setContentView(mLayoutId);
-
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		mSectionsPagerAdapter = new TabsAdapter(getSupportFragmentManager());
 
-		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
 
-		// When swiping between different sections, select the corresponding
-		// tab. We can also use ActionBar.Tab#select() to do this if we have
-		// a reference to the Tab.
-		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-			@Override
-			public void onPageSelected(final int position) {
-				getSupportActionBar().setSelectedNavigationItem(position);
-			}
-		});
+		mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+		mTabs.setViewPager(mViewPager);
 	}
 
 	/**
@@ -119,10 +89,10 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 
 	@Override
 	protected void onSaveInstanceState(final Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(BUNDLE_TABS_CURRENT, getSupportActionBar().getSelectedNavigationIndex());
+		outState.putInt(BUNDLE_TABS_CURRENT, mViewPager.getCurrentItem());
 		outState.putIntArray(BUNDLE_TABS_TITLES, mTitles);
 		outState.putStringArray(BUNDLE_TABS_CLASSES, mClasses);
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -133,49 +103,9 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 			final int selectedPosition = savedInstanceState.getInt(BUNDLE_TABS_CURRENT);
 
 			addFragments(titles, classes);
-
-			getSupportActionBar().setSelectedNavigationItem(selectedPosition > -1 ? selectedPosition : 0);
+			mViewPager.setCurrentItem(selectedPosition);
 		}
 		super.onRestoreInstanceState(savedInstanceState);
-	}
-
-	@Override
-	public void onTabSelected(final Tab tab, final FragmentTransaction ft) {
-		if (DBG)
-			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
-
-		mViewPager.setCurrentItem(tab.getPosition());
-	}
-
-	@Override
-	public void onTabUnselected(final Tab tab, final FragmentTransaction ft) {
-		if (DBG)
-			Log.d(LOG_TAG, "onTabUnselected " + tab.getPosition());
-	}
-
-	@Override
-	public void onTabReselected(final Tab tab, final FragmentTransaction ft) {
-		if (DBG)
-			Log.d(LOG_TAG, "onTabReselected " + tab.getPosition());
-	}
-
-	protected void addFragments(final int[] titles, final String[] classes) {
-		if (DBG)
-			Log.d(LOG_TAG, "addFragments " + titles.length);
-
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		mClasses = classes;
-		mTitles = titles;
-		mFragmentsTags = new String[classes.length];
-
-		mViewPager.setOffscreenPageLimit(classes.length);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-
-		for (int i = 0; i < titles.length; i++) {
-			actionBar.addTab(actionBar.newTab().setText(titles[i]).setTabListener(this));
-		}
 	}
 
 	/**
@@ -186,66 +116,43 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 	 * @param classes
 	 *            Les classes des fragments.
 	 */
-	protected void addFragments(final int[] titles, final Class<?>[] classes, final Bundle[] bundles) {
+	protected void addFragments(final int[] titles, final Class<?>[] classes) {
 		mClasses = new String[classes.length];
-		mBundles = bundles;
 		for (int i = 0; i < classes.length; i++) {
 			mClasses[i] = classes[i].getName();
 		}
 		addFragments(titles, mClasses);
 	}
 
-	protected void addDelayedFragments(final int[] titles, final Class<?>[] classes, final Bundle[] bundles) {
-		mClasses = new String[classes.length];
-		mBundles = bundles;
-		for (int i = 0; i < classes.length; i++) {
-			mClasses[i] = classes[i].getName();
-		}
-		mTitles = titles;
-	}
-
-	protected void loadDelayedFragments() {
-		addFragments(mTitles, mClasses);
-	}
-
-	protected void setSelectedTab(final int position) {
+	protected void addFragments(final int[] titles, final String[] classes) {
 		if (DBG)
-			Log.d(LOG_TAG, "setSelectedTab " + position);
-		getSupportActionBar().setSelectedNavigationItem(position);
+			Log.d(LOG_TAG, "addFragments " + titles.length);
+
+		clearFragments();
+
+		mClasses = classes;
+		mTitles = titles;
+		mFragmentsTags = new String[classes.length];
+
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setOffscreenPageLimit(classes.length);
+
+		mTabs.notifyDataSetChanged();
 	}
 
-	/**
-	 * Get the current Fragment.
-	 * 
-	 * @return the current Fragment, or <code>null</code> if we can't find it.
-	 */
-	public Fragment getCurrentFragment() {
-		final Tab tab = getSupportActionBar().getSelectedTab();
-		if (tab != null) {
-			return getSupportFragmentManager().findFragmentByTag(mFragmentsTags[tab.getPosition()]);
+	protected void clearFragments() {
+		final FragmentManager fragmentManager = getSupportFragmentManager();
+		final FragmentTransaction transaction = fragmentManager.beginTransaction();
+		for (final String tag : mFragmentsTags) {
+			transaction.remove(fragmentManager.findFragmentByTag(tag));
 		}
-		return null;
+		transaction.commit();
 	}
 
-	/**
-	 * Renvoyer la valeur du paramètre de l'intent
-	 * 
-	 * @param key
-	 * @return
-	 */
-	protected Object getParamValue(final IIntentParamKey key) {
-		return getIntent().getSerializableExtra(key.toString());
-	}
+	public class TabsAdapter extends FragmentPagerAdapter {
+		private static final String LOG_TAG = FragmentsActivity.LOG_TAG + "$TabsAdapter";
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-		private static final String LOG_TAG = FragmentsActivity.LOG_TAG + "$SectionsPagerAdapter";
-
-		public SectionsPagerAdapter(final FragmentManager fm) {
+		public TabsAdapter(final FragmentManager fm) {
 			super(fm);
 		}
 
@@ -255,6 +162,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 				Log.d(LOG_TAG, "instantiateItem " + position);
 
 			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
+			fragment.setRetainInstance(true);
 			mFragmentsTags[position] = fragment.getTag();
 			return fragment;
 		}
@@ -262,9 +170,11 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 		@Override
 		public Fragment getItem(final int position) {
 			if (DBG)
-				Log.d(LOG_TAG, "getItem " + position);
-			return Fragment.instantiate(FragmentsActivity.this, mClasses[position],
-					(mBundles != null) ? mBundles[position] : null);
+				Log.d(LOG_TAG, "getItem " + position + " : " + mClasses[position]);
+
+			final Fragment fragment = Fragment.instantiate(FragmentsActivity.this, mClasses[position]);
+			fragment.setRetainInstance(true);
+			return fragment;
 		}
 
 		@Override
@@ -279,10 +189,5 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity impleme
 
 			return getString(mTitles[position]);
 		}
-
-		public String makeFragmentName(final int viewId, final long id) {
-			return "android:switcher:" + viewId + ":" + id;
-		}
 	}
-
 }

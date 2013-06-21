@@ -26,7 +26,7 @@ public class AboutActivity extends FragmentsActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if (savedInstanceState == null) {
-			addFragments(titles, classes, null);
+			addFragments(titles, classes);
 		}
 	}
 

@@ -71,8 +71,6 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 			final Intent intent = new Intent(getActivity(), WebViewActivity.class);
 			intent.putExtra(WebViewActivity.PARAM_RAW_ID, id);
 			startActivity(intent);
-
-			// InfoDialogUtils.showHtmlFromRaw(getActivity(), id);
 		}
 	};
 
