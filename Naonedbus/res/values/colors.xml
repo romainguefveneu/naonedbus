@@ -41,7 +41,7 @@
     <color name="query_hint_color">#9bc9e1</color>
     <color name="adressbar_color">#dddddd</color>
     <color name="background_tab_pressed">#6633B5E5</color>
-    <color name="background_tab">#66aaaaaa</color>
+    <color name="background_tab">@android:color/transparent</color>
     <color name="card_text_color">#707070</color>
 
     <!-- Parkings -->

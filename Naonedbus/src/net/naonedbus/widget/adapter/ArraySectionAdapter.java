@@ -140,7 +140,7 @@ public abstract class ArraySectionAdapter<T extends SectionItem> extends ArrayAd
 			} else {
 				headerTextView.setVisibility(View.GONE);
 				if (divider != null) {
-					divider.setVisibility(View.VISIBLE);
+					divider.setVisibility(position != 0 ? View.VISIBLE : View.GONE);
 				}
 			}
 

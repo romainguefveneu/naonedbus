@@ -26,5 +26,7 @@
     <dimen name="bigsubtitlesmall_text_size">16sp</dimen>
     <!-- HoraireCard -->
     <dimen name="horaire_huge">48sp</dimen>
+    <!-- ListView -->
+    <dimen name="padding_listview">18dp</dimen>
 
 </resources>

@@ -20,26 +20,9 @@
  */
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/adressbar_color"
-    android:gravity="center_horizontal|center_vertical"
-    android:orientation="horizontal"
-    android:padding="@dimen/padding_tiny" >
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
-        android:gravity="center_vertical|center_horizontal"
-        android:src="@drawable/ic_my_location_small" />
-
-    <TextView
-        android:id="@+id/text"
-        style="@style/ItemPrimaryText.SingleLine.Small"
-        android:layout_gravity="fill"
-        android:gravity="center_vertical|center_horizontal" />
-
-</LinearLayout>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text"
+    style="@style/SectionTitle"
+    android:layout_gravity="fill"
+    android:drawablePadding="@dimen/padding_small"
+    android:paddingLeft="@dimen/padding_small" />

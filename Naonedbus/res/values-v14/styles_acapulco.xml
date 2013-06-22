@@ -35,6 +35,12 @@
         <item name="android:actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
     </style>
 
+    <style name="Theme.Acapulco.Light.Logo">
+        <item name="android:icon">@drawable/logo</item>
+        <item name="displayOptions">useLogo</item>
+        <item name="android:displayOptions">useLogo</item>
+    </style>
+
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_solid_acapulco</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>

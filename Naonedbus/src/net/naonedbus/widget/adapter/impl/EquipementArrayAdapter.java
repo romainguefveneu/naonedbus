@@ -51,8 +51,6 @@ import android.widget.TextView;
 
 public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 
-	private static final String LOG_TAG = EquipementArrayAdapter.class.getSimpleName();
-
 	private SparseArray<EquipementTypeAdapter> adapters;
 	private Map<Class<? extends AsyncTaskInfo<?>>, Unschedulable<?>> unschedulers;
 

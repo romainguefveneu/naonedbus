@@ -52,6 +52,7 @@
         android:cacheColorHint="@android:color/transparent"
         android:choiceMode="singleChoice"
         android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:dividerHeight="0dp"
+        android:listSelector="@drawable/selectable_background_acapulco" />
 
 </android.support.v4.widget.DrawerLayout>

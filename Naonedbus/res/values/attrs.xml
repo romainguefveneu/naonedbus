@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources>
 
@@ -26,5 +26,6 @@
     <attr name="secondaryColor" format="color|reference" />
     <attr name="sectionColor" format="color|reference" />
     <attr name="blockBackground" format="reference" />
-	<attr name="sectionBackground" format="reference" />
+    <attr name="sectionBackground" format="reference" />
+
 </resources>

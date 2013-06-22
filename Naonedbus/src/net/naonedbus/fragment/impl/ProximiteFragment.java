@@ -55,7 +55,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -81,7 +80,6 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	private AddressResolverTask mAddressResolverTask;
 
 	private TextView headerTextView;
-	private ImageView imageView;
 
 	public ProximiteFragment() {
 		super(R.layout.fragment_proximite);
@@ -115,7 +113,6 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 
 		final View view = super.onCreateView(inflater, container, savedInstanceState);
 		headerTextView = (TextView) view.findViewById(R.id.text);
-		imageView = (ImageView) view.findViewById(R.id.icon);
 
 		return view;
 	}
@@ -328,7 +325,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 
 	@Override
 	public void onAddressTaskPreExecute() {
-		imageView.setVisibility(View.INVISIBLE);
+		headerTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 		headerTextView.setText(R.string.msg_loading_address);
 	}
 
@@ -336,7 +333,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	public void onAddressTaskResult(final Address address) {
 		if (address != null) {
 			headerTextView.setText(FormatUtils.formatAddress(address, null));
-			imageView.setVisibility(View.VISIBLE);
+			headerTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_location_small, 0, 0, 0);
 		} else {
 			headerTextView.setText(R.string.error_current_address);
 		}

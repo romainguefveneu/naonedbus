@@ -47,7 +47,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Acapulco.Light" >
-        <activity android:name=".activity.impl.MainActivity" >
+        <activity
+            android:name=".activity.impl.MainActivity"
+            android:theme="@style/Theme.Acapulco.Light.Main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

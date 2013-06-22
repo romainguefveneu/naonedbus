@@ -32,6 +32,7 @@ import net.naonedbus.widget.ModalSearchView;
 import net.naonedbus.widget.ModalSearchView.OnQueryTextListener;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import net.naonedbus.widget.indexer.impl.EquipementCursorIndexer;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -39,6 +40,7 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
@@ -126,9 +128,32 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 		setListAdapter(mAdapter);
 
 		mModalSearchView.requestFocus();
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				final Activity activity = getActivity();
+				if (activity != null) {
+					final InputMethodManager imm = (InputMethodManager) activity
+							.getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+				}
+			}
+		}, 500);
+
+	}
+
+	@Override
+	public void onDestroy() {
+		final ActionBar actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+		actionBar.setCustomView(null);
+		actionBar.setDisplayShowCustomEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(true);
+
 		final InputMethodManager imm = (InputMethodManager) getActivity()
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+		imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, InputMethodManager.HIDE_NOT_ALWAYS);
+		super.onDestroy();
 	}
 
 	@Override
