@@ -54,14 +54,14 @@ public abstract class DatabaseActionObserver {
 		}
 	}
 
-	/* package */final void dispatchUpgradeError() {
+	/* package */final void dispatchUpgradeDone(final boolean success) {
 		if (mHandler == null) {
-			onUpgradeError();
+			onUpgradeDone(success);
 		} else {
 			mHandler.post(new Runnable() {
 				@Override
 				public void run() {
-					DatabaseActionObserver.this.onUpgradeError();
+					DatabaseActionObserver.this.onUpgradeDone(success);
 				}
 			});
 		}
@@ -78,8 +78,8 @@ public abstract class DatabaseActionObserver {
 	public abstract void onUpgrade(int oldVersion);
 
 	/**
-	 * Indique qu'une erreur à eu lieu lors de la mise à jour.
+	 * Indique que la mise à jour est terminée.
 	 */
-	public abstract void onUpgradeError();
+	public abstract void onUpgradeDone(boolean success);
 
 }

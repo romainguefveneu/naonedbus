@@ -9,6 +9,9 @@ public final class DatabaseVersions {
 	/** Version 3.1. */
 	public static int ACAPULCO_MR2 = 13;
 
+	/** Current version. */
+	public static int CURRENT = ACAPULCO_MR2;
+
 	private DatabaseVersions() {
 	}
 }

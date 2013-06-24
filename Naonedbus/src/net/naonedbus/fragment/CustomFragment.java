@@ -19,12 +19,13 @@
 package net.naonedbus.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class CustomFragment extends Fragment {
+import com.actionbarsherlock.app.SherlockFragment;
+
+public abstract class CustomFragment extends SherlockFragment {
 
 	protected int mLayoutId;
 

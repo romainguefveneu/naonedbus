@@ -86,11 +86,13 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final String LOG_TAG = "CoreDatabase";
 		private static final boolean DBG = BuildConfig.DEBUG;
 
-		private static final int DB_VERSION = DatabaseVersions.ACAPULCO_MR2;
+		private static final int DB_VERSION = DatabaseVersions.CURRENT;
 		private static final String DB_NAME = "data.db";
 
 		private final Context mContext;
 		private final CompressedQueriesHelper mCompressedQueriesHelper;
+
+		private boolean mSuccess = true;
 
 		public CoreDatabase(final Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
@@ -125,6 +127,10 @@ public abstract class CustomContentProvider extends ContentProvider {
 			}
 
 			createDatabase(db);
+
+			if (CustomContentProvider.databaseActionListener != null) {
+				CustomContentProvider.databaseActionListener.dispatchUpgradeDone(mSuccess);
+			}
 
 			if (DBG) {
 				timeLogUtils.step("Fin d'installation");
@@ -182,9 +188,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 			if (DBG)
 				Log.i(LOG_TAG, "Recréation de la base de donnée.");
 
-			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.dispatchUpgradeError();
-			}
+			mSuccess = false;
 
 			final File dbFile = mContext.getDatabasePath(DB_NAME);
 			dbFile.delete();

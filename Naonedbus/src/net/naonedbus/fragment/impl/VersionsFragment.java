@@ -53,6 +53,11 @@ public class VersionsFragment extends CustomFragment {
 		} catch (final IOException e) {
 			Log.e(LOG_TAG, "Erreur de chargement des notes de versions", e);
 		}
+
+		// if (mUpgradeError) {
+		// InfoDialogUtils.show(this, R.string.error_title_upgrade,
+		// R.string.error_summary_upgrade);
+		// }
 	}
 
 }

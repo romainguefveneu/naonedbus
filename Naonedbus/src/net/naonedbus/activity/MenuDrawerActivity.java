@@ -266,12 +266,14 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		setFragment(fragmentHeader, item.getTitle());
 
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				mDrawerLayout.closeDrawer(mDrawerList);
-			}
-		}, 100);
+		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					mDrawerLayout.closeDrawer(mDrawerList);
+				}
+			}, 100);
+		}
 	}
 
 	protected void setFragment(final FragmentHeader fragmentHeader, final int title) {
@@ -349,7 +351,11 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 			if (DBG)
 				Log.d(LOG_TAG, "getPageTitle " + position);
 
-			return getString(mTitles[position]);
+			if (mTitles[position] == 0) {
+				return "";
+			} else {
+				return getString(mTitles[position]);
+			}
 		}
 	}
 

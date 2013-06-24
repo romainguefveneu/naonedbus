@@ -146,7 +146,7 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 	@Override
 	public void onPageSelected(final int position) {
 		if (position == mTutorialPagerAdapter.getCount() - 1) {
-			mNextButton.setText(R.string.skip);
+			mNextButton.setText(android.R.string.ok);
 			if (mSkipMenuItem != null)
 				mSkipMenuItem.setVisible(false);
 		} else {

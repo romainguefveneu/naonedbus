@@ -1,14 +1,13 @@
 package net.naonedbus.fragment.header;
 
-import net.naonedbus.R;
-import net.naonedbus.fragment.impl.MapFragment;
+import net.naonedbus.fragment.impl.UpdateFragment;
 import android.content.Context;
 
-public class MapFragmentHeader implements FragmentHeader {
+public class UpdateFragmentHeader implements FragmentHeader {
 
-	private final Class<?>[] mFragments = new Class<?>[] { MapFragment.class };
+	private final Class<?>[] mFragments = new Class<?>[] { UpdateFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_activity_recherche };
+	private final int[] mTitles = new int[] { 0 };
 
 	@Override
 	public int[] getFragmentsTitles() {
@@ -24,5 +23,4 @@ public class MapFragmentHeader implements FragmentHeader {
 	public int getSelectedPosition(final Context context) {
 		return 0;
 	}
-
 }
