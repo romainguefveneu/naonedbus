@@ -147,6 +147,7 @@
     <item name="menu_donate" type="id"/>
     <item name="menu_settings" type="id"/>
     <item name="menu_about" type="id"/>
+    <item name="menu_skip" type="id"/>
 
     <!-- Card -->
     <item name="cardHoraireTag" type="string">tag:Horaire</item>
