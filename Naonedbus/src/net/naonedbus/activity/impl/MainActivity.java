@@ -131,7 +131,6 @@ public class MainActivity extends MenuDrawerActivity {
 	 */
 	private void afterUpdate() {
 		mHasSetup = true;
-		showTutorial();
 		if (mIsFrontActivity && mContentLoaded == false) {
 
 			hideSetupView();

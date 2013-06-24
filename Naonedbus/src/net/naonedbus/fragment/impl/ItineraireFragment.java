@@ -141,6 +141,14 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mToAddressTextView = (AddressTextView) formView.findViewById(R.id.formTo);
 		mDateAndTime = (EditText) formView.findViewById(R.id.dateAndTime);
 
+		mDateAndTime.setKeyListener(null);
+		mDateAndTime.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				showDateTimePicker();
+			}
+		});
+
 		mFromAddressTextView.setOnLocationEditChange(mOnLocationChange);
 		mFromAddressTextView.setNextFocusView(mToAddressTextView);
 
@@ -186,6 +194,10 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private void hideProgress() {
 		mProgressView.setVisibility(View.GONE);
+	}
+
+	private void showDateTimePicker() {
+
 	}
 
 	public void onDrawerStateChange(final int oldState, final int newState) {

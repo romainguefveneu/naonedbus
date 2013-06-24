@@ -22,32 +22,14 @@
         android:singleLine="true" >
     </AutoCompleteTextView>
 
-    <TextView
-        android:id="@id/formItemAddressFormatted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/formItemAddress"
-        android:layout_alignLeft="@id/formItemAddress"
-        android:layout_alignRight="@id/formItemAddress"
-        android:layout_alignTop="@id/formItemAddress"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/white"
-        android:ellipsize="end"
-        android:lines="2"
-        android:textAppearance="@android:style/TextAppearance.Medium"
-        android:visibility="visible" />
-
     <ProgressBar
         android:id="@id/formItemProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dip"
+        android:layout_height="20dip"
         android:layout_alignBottom="@id/formItemAddress"
         android:layout_alignRight="@id/formItemAddress"
         android:layout_alignTop="@id/formItemAddress"
-        android:layout_marginBottom="@dimen/padding_tiny"
-        android:layout_marginTop="@dimen/padding_tiny"
+        android:layout_marginRight="@dimen/padding_small"
         android:visibility="gone" />
 
 </merge>
