@@ -35,18 +35,23 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.PageIndicator;
 
 public class TutorialActivity extends SherlockActivity implements OnPageChangeListener {
 
 	private TutorialPagerAdapter mTutorialPagerAdapter;
 
-	private View mNextButton;
+	private MenuItem mSkipMenuItem;
+	private Button mNextButton;
+	private Button mPreviousButton;
 	private ViewPager mViewPager;
 
 	@Override
@@ -84,21 +89,41 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 		pageIndicator.setViewPager(mViewPager);
 		pageIndicator.setOnPageChangeListener(this);
 
-		final View previousButton = findViewById(R.id.tutorialPrevious);
-		previousButton.setOnClickListener(new OnClickListener() {
+		mNextButton = (Button) findViewById(R.id.tutorialNext);
+		mNextButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				if (mViewPager.getCurrentItem() == mTutorialPagerAdapter.getCount() - 1) {
+					finish();
+				} else {
+					moveToNext();
+				}
+			}
+		});
+		mPreviousButton = (Button) findViewById(R.id.tutorialPrevious);
+		mPreviousButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				moveToPrevious();
 			}
 		});
 
-		mNextButton = findViewById(R.id.tutorialNext);
-		mNextButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				moveToNext();
-			}
-		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(final Menu menu) {
+		getSupportMenuInflater().inflate(R.menu.activity_tutorial, menu);
+		mSkipMenuItem = menu.findItem(R.id.menu_skip);
+		mSkipMenuItem.setVisible(mViewPager.getCurrentItem() < mTutorialPagerAdapter.getCount() - 1);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		if (item.getItemId() == R.id.menu_skip) {
+			finish();
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void moveToPrevious() {
@@ -120,7 +145,16 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 
 	@Override
 	public void onPageSelected(final int position) {
-		mNextButton.setEnabled(position < mTutorialPagerAdapter.getCount() - 1);
+		if (position == mTutorialPagerAdapter.getCount() - 1) {
+			mNextButton.setText(R.string.skip);
+			if (mSkipMenuItem != null)
+				mSkipMenuItem.setVisible(false);
+		} else {
+			mNextButton.setText(R.string.next);
+			if (mSkipMenuItem != null)
+				mSkipMenuItem.setVisible(true);
+		}
+		mPreviousButton.setEnabled(position > 0);
 	}
 
 	private static class TutorialPagerAdapter extends PagerAdapter {

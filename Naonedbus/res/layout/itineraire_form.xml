@@ -33,6 +33,7 @@
             android:layout_below="@id/formTo"
             android:drawableLeft="@drawable/ic_action_clock"
             android:hint="@string/itineraire_hint_date"
+            android:inputType="none"
             android:nextFocusDown="@android:id/button1"
             android:nextFocusForward="@android:id/button1"
             android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
