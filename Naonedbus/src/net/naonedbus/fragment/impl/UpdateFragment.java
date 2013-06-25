@@ -18,7 +18,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class UpdateFragment extends SherlockFragment {
@@ -44,7 +43,6 @@ public class UpdateFragment extends SherlockFragment {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
 		new UpdateAndCleanTask().execute();
 	}
 
@@ -57,19 +55,10 @@ public class UpdateFragment extends SherlockFragment {
 		mUpdateCard = new UpdateCard(getActivity(), view.findViewById(R.id.updateView), new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-				actionBar.setDisplayUseLogoEnabled(false);
-				actionBar.setDisplayShowHomeEnabled(true);
-
 				((MainActivity) getActivity()).onUpgradeDone();
 			}
 		});
 		mUpdateCard.show();
-
-		final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-		actionBar.setDisplayShowHomeEnabled(false);
-		actionBar.setDisplayUseLogoEnabled(true);
-		actionBar.setLogo(R.drawable.ic_logo);
 
 		return view;
 	}

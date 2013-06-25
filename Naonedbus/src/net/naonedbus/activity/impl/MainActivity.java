@@ -35,6 +35,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.bugsense.trace.BugSenseHandler;
 
 public class MainActivity extends MenuDrawerActivity {
@@ -53,16 +54,20 @@ public class MainActivity extends MenuDrawerActivity {
 		handleSearchResult();
 		handleFavoriExport();
 
-		final UpdaterManager updaterManager = new UpdaterManager();
-		final UpdateType updateType = updaterManager.needUpdate(this);
+		if (savedInstanceState == null) {
+			final UpdaterManager updaterManager = new UpdaterManager();
+			final UpdateType updateType = updaterManager.needUpdate(this);
 
-		if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
-			showTutorial();
-			setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
-		} else if (UpdateType.UPGRADE.equals(updateType)) {
-			setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
-		} else {
-			setFragment(new MainFragmentHeader(), R.string.title_activity_main);
+			if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
+				setBaseMenuVisible(false);
+				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
+				showTutorial();
+			} else if (UpdateType.UPGRADE.equals(updateType)) {
+				setBaseMenuVisible(false);
+				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
+			} else {
+				setFragment(new MainFragmentHeader(), R.string.title_activity_main);
+			}
 		}
 
 	}
@@ -74,11 +79,23 @@ public class MainActivity extends MenuDrawerActivity {
 	}
 
 	private void showTutorial() {
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayShowTitleEnabled(false);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+		actionBar.setDisplayUseLogoEnabled(true);
+		actionBar.setLogo(R.drawable.ic_logo);
+
 		startActivity(new Intent(MainActivity.this, TutorialActivity.class));
-		overridePendingTransition(0, 0);
+		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
 
 	public void onUpgradeDone() {
+		final ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayShowTitleEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayUseLogoEnabled(false);
+
+		setBaseMenuVisible(true);
 		selectNavigationItem(0);
 	}
 

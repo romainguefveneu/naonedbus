@@ -79,6 +79,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private CharSequence mTitle;
 	private MainMenuAdapter mAdapter;
 
+	private boolean mBaseMenuVisible = true;
+
 	/** Titres des fragments. */
 	private int[] mTitles;
 	/** Classes des fragments */
@@ -180,7 +182,9 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.activity_base, menu);
+		if (mBaseMenuVisible) {
+			getSupportMenuInflater().inflate(R.menu.activity_base, menu);
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -308,9 +312,16 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		final FragmentManager fragmentManager = getSupportFragmentManager();
 		final FragmentTransaction transaction = fragmentManager.beginTransaction();
 		for (final String tag : mFragmentsTags) {
-			transaction.remove(fragmentManager.findFragmentByTag(tag));
+			final Fragment fragment = fragmentManager.findFragmentByTag(tag);
+			if (fragment != null) {
+				transaction.remove(fragment);
+			}
 		}
 		transaction.commit();
+	}
+
+	public void setBaseMenuVisible(final boolean baseMenuVisible) {
+		mBaseMenuVisible = baseMenuVisible;
 	}
 
 	public class TabsAdapter extends FragmentPagerAdapter {
