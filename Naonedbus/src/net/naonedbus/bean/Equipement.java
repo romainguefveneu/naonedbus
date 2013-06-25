@@ -110,117 +110,94 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 	private Object mSection;
 	private Object mTag;
 
-	
 	public Integer getId() {
 		return mId;
 	}
 
-	
 	public void setId(final Integer id) {
 		mId = id;
 	}
 
-	
 	public Integer getSousType() {
 		return mSousType;
 	}
 
-	
 	public void setSousType(final Integer sousType) {
 		mSousType = sousType;
 	}
 
-	
 	public Type getType() {
 		return mType;
 	}
 
-	
 	public void setType(final Type type) {
 		mType = type;
 	}
 
-	
 	public void setType(final int idType) {
 		mType = Type.getTypeById(idType);
 	}
 
-	
 	public String getNom() {
 		return mNom;
 	}
 
-	
 	public void setNom(final String nom) {
 		mNom = nom;
 	}
 
-	
 	public String getNormalizedNom() {
 		return mNormalizedNom;
 	}
 
-	
 	public void setNormalizedNom(final String normalizedNom) {
 		mNormalizedNom = normalizedNom;
 	}
 
-	
 	public String getAdresse() {
 		return mAdresse;
 	}
 
-	
 	public void setAdresse(final String adresse) {
 		mAdresse = adresse;
 	}
 
-	
 	public String getDetails() {
 		return mDetails;
 	}
 
-	
 	public void setDetails(final String details) {
 		mDetails = details;
 	}
 
-	
 	public String getTelephone() {
 		return mTelephone;
 	}
 
-	
 	public void setTelephone(final String telephone) {
 		mTelephone = telephone;
 	}
 
-	
 	public String getUrl() {
 		return mUrl;
 	}
 
-	
 	public void setUrl(final String url) {
 		mUrl = url;
 	}
 
-	
 	public Double getLatitude() {
 		return mLatitude;
 	}
 
-	
 	public void setLatitude(final Double latitude) {
 		mLatitude = latitude;
 	}
 
-	
 	public Double getLongitude() {
 		return mLongitude;
 	}
 
-	
 	public void setLongitude(final Double longitude) {
 		mLongitude = longitude;
 	}
@@ -228,7 +205,7 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 	/**
 	 * @return La distance en mètres.
 	 */
-	
+
 	public Float getDistance() {
 		return mDistance;
 	}
@@ -237,17 +214,15 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 	 * @param distance
 	 *            La distance en mètres.
 	 */
-	
+
 	public void setDistance(final Float distance) {
 		mDistance = distance;
 	}
 
-	
 	public void setSection(final Object section) {
 		mSection = section;
 	}
 
-	
 	@Override
 	public Object getSection() {
 		return mSection;

@@ -139,6 +139,10 @@
             android:name=".activity.impl.AddEventActivity"
             android:label="@string/emptyString"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.impl.AddressSearchActivity"
+            android:label="@string/emptyString"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <provider
             android:name=".provider.impl.LigneProvider"

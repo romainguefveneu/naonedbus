@@ -69,6 +69,10 @@ public abstract class ColorUtils {
 	}
 
 	public static synchronized GradientDrawable getRoundedGradiant(final int color) {
+		if (color == Color.TRANSPARENT) {
+			return null;
+		}
+
 		final GradientDrawable d = getGradiant(color);
 		d.setCornerRadius(3);
 		return d;

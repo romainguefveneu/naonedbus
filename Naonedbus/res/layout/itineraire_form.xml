@@ -15,16 +15,28 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_small" >
 
-        <net.naonedbus.widget.AddressTextView
+        <EditText
             android:id="@id/formFrom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_action_location"
+            android:inputType="none"
+            android:nextFocusDown="@id/formTo"
+            android:nextFocusForward="@id/formTo"
+            android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+            android:paddingRight="@dimen/abs__dropdownitem_text_padding_right" />
 
-        <net.naonedbus.widget.AddressTextView
+        <EditText
             android:id="@id/formTo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/formFrom" />
+            android:layout_below="@id/formFrom"
+            android:drawableLeft="@drawable/ic_action_location"
+            android:inputType="none"
+            android:nextFocusDown="@id/dateAndTime"
+            android:nextFocusForward="@id/dateAndTime"
+            android:paddingLeft="@dimen/abs__dropdownitem_text_padding_left"
+            android:paddingRight="@dimen/abs__dropdownitem_text_padding_right" />
 
         <EditText
             android:id="@id/dateAndTime"
