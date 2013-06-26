@@ -51,7 +51,7 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressWrapper> {
 
 		if (item.isLocateMe()) {
 			view.setTextColor(mHoloBlueColor);
-			view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_locate, 0, 0, 0);
+			view.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_action_locate_selector, 0, 0, 0);
 			view.setCompoundDrawablePadding(mPadding);
 		} else {
 			view.setTextColor(mTextColorColor);

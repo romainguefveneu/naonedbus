@@ -42,7 +42,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 
 	@Override
 	public AsyncResult<List<AddressResult>> loadInBackground() {
-		final String filter = mBundle.getString(PARAM_FILTER);
+		final String filter = mBundle == null ? null : mBundle.getString(PARAM_FILTER);
 		final AsyncResult<List<AddressResult>> result = new AsyncResult<List<AddressResult>>();
 		final List<AddressResult> addressResults = new ArrayList<AddressResult>();
 
@@ -53,13 +53,12 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 		}
 
 		result.setResult(addressResults);
-
 		return result;
 	}
 
 	private void addCurrentLocation(final List<AddressResult> result) {
 		final String title = getContext().getString(R.string.itineraire_current_location);
-		final int icon = R.drawable.ic_action_locate;
+		final int icon = R.drawable.ic_action_locate_selector;
 		final AddressResult addressResult = new AddressResult(title, null, icon, Color.TRANSPARENT, null, null);
 		addressResult.setSection(0);
 
@@ -72,9 +71,12 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 					LOWER_LEFT_LONGITUDE, UPPER_RIGHT_LATITUDE, UPPER_RIGHT_LONGITUDE);
 
 			for (final Address address : addresses) {
-				final String title = FormatUtils.formatAddress(address, null);
-				final AddressResult addressResult = new AddressResult(title, null, 0, Color.WHITE,
-						address.getLatitude(), address.getLongitude());
+				final String[] title = FormatUtils.formatAddressTwoLine(address);
+				final AddressResult addressResult = new AddressResult(title[0], title[1],
+						R.drawable.ic_action_location_selector, Color.TRANSPARENT, address.getLatitude(),
+						address.getLongitude());
+
+				addressResult.setAddress(title[0] + ", " + title[1]);
 				addressResult.setSection(0);
 				result.add(addressResult);
 			}
@@ -90,7 +92,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 		for (final Equipement equipement : equipements) {
 			final Type type = equipement.getType();
 			final String title = equipement.getNom();
-			final String description = getContext().getString(type.getTitleRes());
+			final String description = equipement.getAdresse();
 			final int color = getContext().getResources().getColor(type.getBackgroundColorRes());
 			final AddressResult addressResult = new AddressResult(title, description, type.getDrawableRes(), color,
 					equipement.getLatitude(), equipement.getLongitude());

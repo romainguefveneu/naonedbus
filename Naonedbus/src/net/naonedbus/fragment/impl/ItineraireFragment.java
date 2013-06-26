@@ -28,11 +28,11 @@ import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.loader.ItineraryLoader;
-import net.naonedbus.widget.AddressTextView.OnLocationEditChange;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -59,6 +59,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 	private static final int REQUEST_CODE_FROM = 1;
 	private static final int REQUEST_CODE_TO = 2;
 
+	private final List<ItineraryWrapper> mItineraryWrappers = new ArrayList<ItineraryWrapper>();
 	private ItineraryWrapperArrayAdapter mAdapter;
 	private ViewGroup mFragmentView;
 	private View mProgressView;
@@ -71,32 +72,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 	private TextView mDateAndTime;
 
 	private Button mGoButton;
-
-	private final OnLocationEditChange mOnLocationChange = new OnLocationEditChange() {
-
-		@Override
-		public void onLocationNotFound() {
-			mGoButton.setEnabled(false);
-		}
-
-		@Override
-		public void onLocationFound() {
-			// mGoButton.setEnabled(mFromAddressTextView.hasLocation() &&
-			// mToAddressTextView.hasLocation());
-		}
-
-		@Override
-		public void onFocus() {
-			if (mGoButton.getVisibility() != View.VISIBLE) {
-				mGoButton.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						mGoButton.setVisibility(View.VISIBLE);
-					}
-				}, 200);
-			}
-		}
-	};
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -135,7 +110,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		final ListView listView = (ListView) view.findViewById(android.R.id.list);
 		mProgressView = view.findViewById(android.R.id.progress);
 
-		mAdapter = new ItineraryWrapperArrayAdapter(getActivity(), new ArrayList<ItineraryWrapper>());
+		mAdapter = new ItineraryWrapperArrayAdapter(getActivity(), mItineraryWrappers);
 		final SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 		swingBottomInAnimationAdapter.setListView(listView);
 
@@ -192,18 +167,18 @@ public class ItineraireFragment extends SherlockListFragment implements
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (data != null) {
-			final String title = data.getStringExtra("title");
+			final String address = data.getStringExtra("address");
 			final double latitude = data.getDoubleExtra("latitude", 0d);
 			final double longitude = data.getDoubleExtra("longitude", 0d);
 
 			if (requestCode == REQUEST_CODE_FROM) {
 				mFromLocation.setLatitude(latitude);
 				mFromLocation.setLongitude(longitude);
-				mFromAddressTextView.setText(title);
+				mFromAddressTextView.setText(address);
 			} else {
 				mToLocation.setLatitude(latitude);
 				mToLocation.setLongitude(longitude);
-				mToAddressTextView.setText(title);
+				mToAddressTextView.setText(address);
 			}
 
 			mGoButton.setEnabled(mFromLocation.getLatitude() != 0 && mToLocation.getLatitude() != 0);
@@ -223,7 +198,8 @@ public class ItineraireFragment extends SherlockListFragment implements
 		final Intent intent = new Intent(getActivity(), AddressSearchActivity.class);
 
 		startActivityForResult(intent, requestCode);
-		getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 	}
 
 	private void sendRequest() {
@@ -267,8 +243,8 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 		hideProgress();
 		if (result.getException() == null) {
-			mAdapter.clear();
-			mAdapter.addAll(result.getResult());
+			mItineraryWrappers.clear();
+			mItineraryWrappers.addAll(result.getResult());
 			mAdapter.notifyDataSetChanged();
 			getListView().smoothScrollToPosition(1);
 		}

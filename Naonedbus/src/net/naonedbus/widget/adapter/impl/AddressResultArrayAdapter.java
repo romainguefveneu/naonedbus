@@ -7,6 +7,7 @@ import net.naonedbus.bean.AddressResult;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,12 @@ public class AddressResultArrayAdapter extends ArraySectionAdapter<AddressResult
 
 		final AddressResult addressResult = getItem(position);
 		holder.itemTitle.setText(addressResult.getTitle());
-		holder.itemDescription.setText(addressResult.getDescription());
+		if (TextUtils.isEmpty(addressResult.getDescription())) {
+			holder.itemDescription.setVisibility(View.GONE);
+		} else {
+			holder.itemDescription.setText(addressResult.getDescription());
+			holder.itemDescription.setVisibility(View.VISIBLE);
+		}
 		holder.itemSymbole.setImageResource(addressResult.getIcon());
 		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(addressResult.getColor()));
 	}

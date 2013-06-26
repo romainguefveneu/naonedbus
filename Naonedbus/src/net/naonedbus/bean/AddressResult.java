@@ -11,6 +11,7 @@ public class AddressResult implements SectionItem {
 	private final Double mLatitude;
 	private final Double mLongitude;
 
+	private String mAddress;
 	private Object mSection;
 
 	public AddressResult(final String title, final String description, final int icon, final int color,
@@ -45,6 +46,14 @@ public class AddressResult implements SectionItem {
 
 	public Double getLongitude() {
 		return mLongitude;
+	}
+
+	public String getAddress() {
+		return mAddress == null ? mTitle : mAddress;
+	}
+
+	public void setAddress(final String address) {
+		mAddress = address;
 	}
 
 	public void setSection(final Object section) {

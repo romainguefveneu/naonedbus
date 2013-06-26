@@ -24,6 +24,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.AddressResult;
 import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.fragment.AbstractListFragment;
 import net.naonedbus.loader.AddressLoader;
 import net.naonedbus.widget.ModalSearchView;
 import net.naonedbus.widget.ModalSearchView.OnQueryTextListener;
@@ -39,46 +40,49 @@ import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
 
-public class AddressSearchFragment extends SherlockListFragment implements OnQueryTextListener,
+public class AddressSearchFragment extends AbstractListFragment implements OnQueryTextListener,
 		LoaderCallbacks<AsyncResult<List<AddressResult>>> {
 
 	private AddressResultArrayAdapter mAdapter;
-
+	private final ArrayList<AddressResult> mResults = new ArrayList<AddressResult>();
 	private ModalSearchView mModalSearchView;
+
+	public AddressSearchFragment() {
+		super(R.layout.fragment_listview_section);
+	}
+
+	@Override
+	public void onActivityCreated(final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		final ActionBar actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
+
+		mModalSearchView = (ModalSearchView) actionBar.getCustomView();
+		mModalSearchView.setOnQueryTextListener(this);
+		mModalSearchView.requestFocus();
+	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		final ActionBar actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setDisplayShowHomeEnabled(true);
-		actionBar.setCustomView(R.layout.search_view);
-
-		mModalSearchView = (ModalSearchView) actionBar.getCustomView();
-		mModalSearchView.setOnQueryTextListener(this);
-
 		final String[] types = getResources().getStringArray(R.array.types_equipements_recherche);
 		final AddressResultArrayIndexer indexer = new AddressResultArrayIndexer(types);
 
-		mAdapter = new AddressResultArrayAdapter(getActivity(), new ArrayList<AddressResult>());
+		mAdapter = new AddressResultArrayAdapter(getActivity(), mResults);
 		mAdapter.setIndexer(indexer);
 
-		// Associate the (now empty) adapter with the ListView.
 		setListAdapter(mAdapter);
 
-		mModalSearchView.requestFocus();
+		getLoaderManager().initLoader(0, null, this);
 	}
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		final AddressResult item = (AddressResult) l.getItemAtPosition(position);
+		final AddressResult item = mAdapter.getItem(position);
 
 		final Intent data = new Intent();
-		data.putExtra("title", item.getTitle());
+		data.putExtra("address", item.getAddress());
 		data.putExtra("latitude", item.getLatitude());
 		data.putExtra("longitude", item.getLongitude());
 
@@ -97,9 +101,15 @@ public class AddressSearchFragment extends SherlockListFragment implements OnQue
 	public void onLoadFinished(final Loader<AsyncResult<List<AddressResult>>> loader,
 			final AsyncResult<List<AddressResult>> result) {
 
-		mAdapter.clear();
-		mAdapter.addAll(result.getResult());
-		setListShown(true);
+		mResults.clear();
+		mResults.addAll(result.getResult());
+		mAdapter.notifyDataSetChanged();
+
+		if (mResults.size() == 0) {
+			showMessage();
+		} else {
+			showContent();
+		}
 	}
 
 	@Override
@@ -114,7 +124,7 @@ public class AddressSearchFragment extends SherlockListFragment implements OnQue
 		getLoaderManager().restartLoader(0, bundle, this);
 
 		if (mAdapter.getCount() == 0)
-			setListShown(false);
+			showLoader();
 	}
 
 }
