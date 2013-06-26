@@ -30,8 +30,9 @@ import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.loader.ItineraryLoader;
 import net.naonedbus.widget.AddressTextView.OnLocationEditChange;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
-import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -39,10 +40,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -63,9 +63,12 @@ public class ItineraireFragment extends SherlockListFragment implements
 	private ViewGroup mFragmentView;
 	private View mProgressView;
 
-	private EditText mFromAddressTextView;
-	private EditText mToAddressTextView;
-	private EditText mDateAndTime;
+	private final Location mFromLocation = new Location(LocationManager.GPS_PROVIDER);
+	private final Location mToLocation = new Location(LocationManager.GPS_PROVIDER);
+
+	private TextView mFromAddressTextView;
+	private TextView mToAddressTextView;
+	private TextView mDateAndTime;
 
 	private Button mGoButton;
 
@@ -140,8 +143,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		listView.addHeaderView(formView);
 		listView.setAdapter(swingBottomInAnimationAdapter);
 
-		mFromAddressTextView = (EditText) formView.findViewById(R.id.formFrom);
-		mFromAddressTextView.setKeyListener(null);
+		mFromAddressTextView = (TextView) formView.findViewById(R.id.formFrom);
 		mFromAddressTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -149,8 +151,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 			}
 		});
 
-		mToAddressTextView = (EditText) formView.findViewById(R.id.formTo);
-		mToAddressTextView.setKeyListener(null);
+		mToAddressTextView = (TextView) formView.findViewById(R.id.formTo);
 		mToAddressTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -158,8 +159,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 			}
 		});
 
-		mDateAndTime = (EditText) formView.findViewById(R.id.dateAndTime);
-		mDateAndTime.setKeyListener(null);
+		mDateAndTime = (TextView) formView.findViewById(R.id.dateAndTime);
 		mDateAndTime.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -175,10 +175,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 				mAdapter.clear();
 				showProgress();
 				sendRequest();
-
-				final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-						Activity.INPUT_METHOD_SERVICE);
-				imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
 				mGoButton.postDelayed(new Runnable() {
 					@Override
@@ -201,34 +197,41 @@ public class ItineraireFragment extends SherlockListFragment implements
 			final double longitude = data.getDoubleExtra("longitude", 0d);
 
 			if (requestCode == REQUEST_CODE_FROM) {
+				mFromLocation.setLatitude(latitude);
+				mFromLocation.setLongitude(longitude);
 				mFromAddressTextView.setText(title);
 			} else {
+				mToLocation.setLatitude(latitude);
+				mToLocation.setLongitude(longitude);
 				mToAddressTextView.setText(title);
 			}
+
+			mGoButton.setEnabled(mFromLocation.getLatitude() != 0 && mToLocation.getLatitude() != 0);
 		}
 
 	}
 
 	private void requestFromAddress() {
-		final Intent intent = new Intent(getActivity(), AddressSearchActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_FROM);
+		requestAddress(REQUEST_CODE_FROM);
 	}
 
 	private void requestToAddress() {
+		requestAddress(REQUEST_CODE_TO);
+	}
+
+	private void requestAddress(final int requestCode) {
 		final Intent intent = new Intent(getActivity(), AddressSearchActivity.class);
-		startActivityForResult(intent, REQUEST_CODE_TO);
+
+		startActivityForResult(intent, requestCode);
+		getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 	}
 
 	private void sendRequest() {
 		final Bundle bundle = new Bundle();
-		// bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE,
-		// mFromAddressTextView.getLatitude());
-		// bundle.putDouble(ItineraryLoader.PARAM_FROM_LONGITUDE,
-		// mFromAddressTextView.getLongitude());
-		// bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE,
-		// mToAddressTextView.getLatitude());
-		// bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE,
-		// mToAddressTextView.getLongitude());
+		bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE, mFromLocation.getLatitude());
+		bundle.putDouble(ItineraryLoader.PARAM_FROM_LONGITUDE, mFromLocation.getLongitude());
+		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocation.getLatitude());
+		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocation.getLongitude());
 
 		getLoaderManager().restartLoader(0, bundle, this);
 	}

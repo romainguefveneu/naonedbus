@@ -1,7 +1,8 @@
 package net.naonedbus.bean;
 
+import net.naonedbus.widget.item.SectionItem;
 
-public class AddressResult {
+public class AddressResult implements SectionItem {
 
 	private final String mTitle;
 	private final String mDescription;
@@ -9,6 +10,8 @@ public class AddressResult {
 	private final int mColor;
 	private final Double mLatitude;
 	private final Double mLongitude;
+
+	private Object mSection;
 
 	public AddressResult(final String title, final String description, final int icon, final int color,
 			final Double latitude, final Double longitude) {
@@ -42,6 +45,15 @@ public class AddressResult {
 
 	public Double getLongitude() {
 		return mLongitude;
+	}
+
+	public void setSection(final Object section) {
+		mSection = section;
+	}
+
+	@Override
+	public Object getSection() {
+		return mSection;
 	}
 
 }

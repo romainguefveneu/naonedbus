@@ -271,6 +271,7 @@
     <!-- Search -->
     <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
     <string name="search_empty">Aucun équipement ne correspond à votre recherche</string>
+    <string name="search_address">Adresse</string>
 
     <!-- Sections -->
     <string name="section_distance_none">Aucune information de distance</string>

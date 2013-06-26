@@ -22,7 +22,7 @@ public class AddressSearchActivity extends OneFragmentActivity {
 
 	@Override
 	public void finish() {
-		overridePendingTransition(0, R.anim.slide_in_from_right);
 		super.finish();
+		overridePendingTransition(R.anim.half_fade_in, R.anim.slide_out_to_right);
 	}
 }

@@ -17,43 +17,9 @@
  *
  *  You should have received a copy of the GNU General Public License
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultActivity" >
 
-    <fragment
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.google.android.gms.maps.SupportMapFragment" />
-
-    <LinearLayout
-        android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/toast_frame"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="20dp"
-        android:paddingTop="10dp"
-        android:visibility="visible" >
-
-        <ProgressBar
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_margin="5dp"
-            android:indeterminate="true"
-            android:indeterminateOnly="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/loading"
-            android:textColor="@android:color/primary_text_dark" />
-    </LinearLayout>
-
-</FrameLayout>
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    class="com.google.android.gms.maps.SupportMapFragment" />

@@ -22,38 +22,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.MapActivity;
-import net.naonedbus.activity.impl.ParcoursActivity;
-import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.AddressResult;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.loader.AddressLoader;
-import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.widget.ModalSearchView;
 import net.naonedbus.widget.ModalSearchView.OnQueryTextListener;
-import net.naonedbus.widget.adapter.impl.AdressResultArrayAdapter;
+import net.naonedbus.widget.adapter.impl.AddressResultArrayAdapter;
+import net.naonedbus.widget.indexer.impl.AddressResultArrayIndexer;
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.View;
-import android.widget.FilterQueryProvider;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 
-public class AddressSearchFragment extends SherlockListFragment implements OnQueryTextListener, FilterQueryProvider,
+public class AddressSearchFragment extends SherlockListFragment implements OnQueryTextListener,
 		LoaderCallbacks<AsyncResult<List<AddressResult>>> {
 
-	private AdressResultArrayAdapter mAdapter;
-	private EquipementManager mEquipementManager;
+	private AddressResultArrayAdapter mAdapter;
 
 	private ModalSearchView mModalSearchView;
 
@@ -70,39 +61,11 @@ public class AddressSearchFragment extends SherlockListFragment implements OnQue
 		mModalSearchView = (ModalSearchView) actionBar.getCustomView();
 		mModalSearchView.setOnQueryTextListener(this);
 
-		final Intent queryIntent = getActivity().getIntent();
-		final String queryAction = queryIntent.getAction();
-		if (Intent.ACTION_SEARCH.equals(queryAction)) {
-			if (queryIntent.getData() == null) {
-				// Lancer la recherche
-				final String query = queryIntent.getStringExtra(SearchManager.QUERY);
-				mModalSearchView.setText(query);
-				Toast.makeText(getActivity(), query, Toast.LENGTH_SHORT).show();
-			} else {
-				final Integer selectedItemId = Integer.valueOf(queryIntent.getStringExtra(SearchManager.QUERY));
-				final TypeOverlayItem selectedItemType = TypeOverlayItem.getById(Integer.valueOf(queryIntent
-						.getStringExtra(SearchManager.EXTRA_DATA_KEY)));
+		final String[] types = getResources().getStringArray(R.array.types_equipements_recherche);
+		final AddressResultArrayIndexer indexer = new AddressResultArrayIndexer(types);
 
-				if (selectedItemType.equals(TypeOverlayItem.TYPE_STATION)) {
-					// Afficher les parcours de l'arrêt sélectionné
-					final Intent intent = new Intent(getActivity(), ParcoursActivity.class);
-					intent.putExtra(ParcoursActivity.PARAM_ID_SATION, selectedItemId);
-					startActivity(intent);
-				} else {
-					// Afficher l'élément sur la carte
-					final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-					intent.putExtra(MapActivity.Param.itemId, selectedItemId);
-					intent.putExtra(MapActivity.Param.itemType, selectedItemType.getId());
-					startActivity(intent);
-				}
-				getActivity().finish();
-			}
-		}
-
-		mEquipementManager = EquipementManager.getInstance();
-		final String[] types = getResources().getStringArray(R.array.types_equipements);
-
-		mAdapter = new AdressResultArrayAdapter(getActivity(), new ArrayList<AddressResult>());
+		mAdapter = new AddressResultArrayAdapter(getActivity(), new ArrayList<AddressResult>());
+		mAdapter.setIndexer(indexer);
 
 		// Associate the (now empty) adapter with the ListView.
 		setListAdapter(mAdapter);
@@ -136,6 +99,7 @@ public class AddressSearchFragment extends SherlockListFragment implements OnQue
 
 		mAdapter.clear();
 		mAdapter.addAll(result.getResult());
+		setListShown(true);
 	}
 
 	@Override
@@ -148,12 +112,9 @@ public class AddressSearchFragment extends SherlockListFragment implements OnQue
 		final Bundle bundle = new Bundle();
 		bundle.putString(AddressLoader.PARAM_FILTER, newText);
 		getLoaderManager().restartLoader(0, bundle, this);
-	}
 
-	@Override
-	public Cursor runQuery(final CharSequence constraint) {
-		return mEquipementManager.getEquipementsCursorByName(getActivity().getContentResolver(), null,
-				constraint.toString());
+		if (mAdapter.getCount() == 0)
+			setListShown(false);
 	}
 
 }
