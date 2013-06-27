@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AddressSearchActivity;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
@@ -176,6 +177,12 @@ public class ItineraireFragment extends SherlockListFragment implements
 				}, 100);
 			}
 		});
+
+		final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
+		if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
+			mFromLocation.set(currentLocation);
+			mFromAddressTextView.setText(R.string.itineraire_current_location);
+		}
 
 	}
 

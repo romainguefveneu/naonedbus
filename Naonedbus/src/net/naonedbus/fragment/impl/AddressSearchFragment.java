@@ -36,6 +36,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -124,6 +125,7 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		getActivity().setProgressBarIndeterminateVisibility(false);
 
 		mProgressBar.setVisibility(View.GONE);
+		mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.AddressResult;
 import net.naonedbus.bean.Equipement;
@@ -15,6 +16,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.text.TextUtils;
@@ -57,12 +59,18 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 	}
 
 	private void addCurrentLocation(final List<AddressResult> result) {
-		final String title = getContext().getString(R.string.itineraire_current_location);
-		final int icon = R.drawable.ic_action_locate_selector;
-		final AddressResult addressResult = new AddressResult(title, null, icon, Color.TRANSPARENT, null, null);
-		addressResult.setSection(0);
+		final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
 
-		result.add(addressResult);
+		if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
+			final String title = getContext().getString(R.string.itineraire_current_location);
+			final int icon = R.drawable.ic_action_locate_selector;
+
+			final AddressResult addressResult = new AddressResult(title, null, icon, Color.TRANSPARENT,
+					currentLocation.getLatitude(), currentLocation.getLongitude());
+			addressResult.setSection(0);
+
+			result.add(addressResult);
+		}
 	}
 
 	private void addAddresses(final String filter, final List<AddressResult> result) {
