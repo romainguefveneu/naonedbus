@@ -37,6 +37,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -48,8 +49,10 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 	private final ArrayList<AddressResult> mResults = new ArrayList<AddressResult>();
 	private ModalSearchView mModalSearchView;
 
+	private ProgressBar mProgressBar;
+
 	public AddressSearchFragment() {
-		super(R.layout.fragment_listview_section);
+		super(R.layout.fragment_address_search);
 	}
 
 	@Override
@@ -75,6 +78,13 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		setListAdapter(mAdapter);
 
 		getLoaderManager().initLoader(0, null, this);
+	}
+
+	@Override
+	protected void bindView(final View view, final Bundle savedInstanceState) {
+		super.bindView(view, savedInstanceState);
+
+		mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
 	}
 
 	@Override
@@ -110,6 +120,10 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		} else {
 			showContent();
 		}
+
+		getActivity().setProgressBarIndeterminateVisibility(false);
+
+		mProgressBar.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -122,6 +136,8 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		final Bundle bundle = new Bundle();
 		bundle.putString(AddressLoader.PARAM_FILTER, newText);
 		getLoaderManager().restartLoader(0, bundle, this);
+
+		mProgressBar.setVisibility(View.VISIBLE);
 
 		if (mAdapter.getCount() == 0)
 			showLoader();

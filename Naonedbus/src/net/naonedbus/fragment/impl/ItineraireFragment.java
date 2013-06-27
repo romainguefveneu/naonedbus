@@ -18,6 +18,7 @@
  */
 package net.naonedbus.fragment.impl;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,13 @@ import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.loader.ItineraryLoader;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
+
+import org.joda.time.MutableDateTime;
+
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -41,8 +49,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -51,7 +61,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends SherlockListFragment implements
-		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>> {
+		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener {
 
 	private static final String TAG = "ItineraireFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -64,8 +74,11 @@ public class ItineraireFragment extends SherlockListFragment implements
 	private ViewGroup mFragmentView;
 	private View mProgressView;
 
+	private DateFormat mDateFormat;
+
 	private final Location mFromLocation = new Location(LocationManager.GPS_PROVIDER);
 	private final Location mToLocation = new Location(LocationManager.GPS_PROVIDER);
+	private final MutableDateTime mDateTime = new MutableDateTime();
 
 	private TextView mFromAddressTextView;
 	private TextView mToAddressTextView;
@@ -73,10 +86,14 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private Button mGoButton;
 
+	private boolean mDialogLock;
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+
+		mDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT);
 	};
 
 	@Override
@@ -138,7 +155,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		mDateAndTime.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				showDateTimePicker();
+				showDatePicker();
 			}
 		});
 
@@ -181,7 +198,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 				mToAddressTextView.setText(address);
 			}
 
-			mGoButton.setEnabled(mFromLocation.getLatitude() != 0 && mToLocation.getLatitude() != 0);
+			onFormValueChange();
 		}
 
 	}
@@ -202,12 +219,58 @@ public class ItineraireFragment extends SherlockListFragment implements
 			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 	}
 
+	private void showDatePicker() {
+		final DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, mDateTime.getYear(),
+				mDateTime.getMonthOfYear(), mDateTime.getDayOfMonth());
+		dialog.show();
+	}
+
+	private void showTimePicker() {
+		final TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, mDateTime.getHourOfDay(),
+				mDateTime.getMinuteOfHour(), true);
+		dialog.show();
+	}
+
+	@Override
+	public void onDateSet(final DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
+		mDateTime.setYear(year);
+		mDateTime.setMonthOfYear(monthOfYear);
+		mDateTime.setDayOfMonth(dayOfMonth);
+
+		if (!mDialogLock) {
+			showTimePicker();
+			mDialogLock = true;
+		}
+	}
+
+	@Override
+	public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
+		mDateTime.setHourOfDay(hourOfDay);
+		mDateTime.setMinuteOfHour(minute);
+
+		mDateAndTime.setText(mDateFormat.format(mDateTime.toDate()));
+
+		onFormValueChange();
+		mDialogLock = false;
+	}
+
+	private void onFormValueChange() {
+		final boolean hasLocations = mFromLocation.getLatitude() != 0 && mToLocation.getLatitude() != 0;
+		mGoButton.setEnabled(hasLocations);
+
+		if (hasLocations && mGoButton.getVisibility() != View.VISIBLE) {
+			mGoButton.setVisibility(View.VISIBLE);
+			mAdapter.clear();
+		}
+	}
+
 	private void sendRequest() {
 		final Bundle bundle = new Bundle();
 		bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE, mFromLocation.getLatitude());
 		bundle.putDouble(ItineraryLoader.PARAM_FROM_LONGITUDE, mFromLocation.getLongitude());
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocation.getLatitude());
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocation.getLongitude());
+		bundle.putLong(ItineraryLoader.PARAM_TIME, mDateTime.getMillis());
 
 		getLoaderManager().restartLoader(0, bundle, this);
 	}
@@ -218,10 +281,6 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private void hideProgress() {
 		mProgressView.setVisibility(View.GONE);
-	}
-
-	private void showDateTimePicker() {
-
 	}
 
 	public void onDrawerStateChange(final int oldState, final int newState) {

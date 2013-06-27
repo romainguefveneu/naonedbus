@@ -18,6 +18,8 @@ public class AddressSearchActivity extends OneFragmentActivity {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		setProgressBarIndeterminate(true);
+
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		actionBar.setDisplayHomeAsUpEnabled(true);
