@@ -26,6 +26,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AddressSearchActivity;
+import net.naonedbus.activity.impl.DatePickerActivity;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
@@ -34,10 +35,6 @@ import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 
 import org.joda.time.MutableDateTime;
 
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.TimePickerDialog;
-import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -50,10 +47,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -62,13 +57,14 @@ import com.actionbarsherlock.view.MenuItem;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends SherlockListFragment implements
-		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener {
+		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>> {
 
 	private static final String TAG = "ItineraireFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final int REQUEST_CODE_FROM = 1;
 	private static final int REQUEST_CODE_TO = 2;
+	private static final int REQUEST_CODE_DATE = 3;
 
 	private final List<ItineraryWrapper> mItineraryWrappers = new ArrayList<ItineraryWrapper>();
 	private ItineraryWrapperArrayAdapter mAdapter;
@@ -191,18 +187,31 @@ public class ItineraireFragment extends SherlockListFragment implements
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (data != null) {
-			final String address = data.getStringExtra("address");
-			final double latitude = data.getDoubleExtra("latitude", 0d);
-			final double longitude = data.getDoubleExtra("longitude", 0d);
 
-			if (requestCode == REQUEST_CODE_FROM) {
-				mFromLocation.setLatitude(latitude);
-				mFromLocation.setLongitude(longitude);
-				mFromAddressTextView.setText(address);
+			if (requestCode == REQUEST_CODE_DATE) {
+				mDateTime.setYear(data.getIntExtra(DatePickerActivity.PARAM_YEAR, 0));
+				mDateTime.setMonthOfYear(data.getIntExtra(DatePickerActivity.PARAM_MONTH, 0));
+				mDateTime.setDayOfMonth(data.getIntExtra(DatePickerActivity.PARAM_DAY, 0));
+				mDateTime.setHourOfDay(data.getIntExtra(DatePickerActivity.PARAM_HOUR, 0));
+				mDateTime.setMinuteOfHour(data.getIntExtra(DatePickerActivity.PARAM_MINUTE, 0));
+
+				mDateAndTime.setText(mDateFormat.format(mDateTime.toDate()));
+
+				onFormValueChange();
 			} else {
-				mToLocation.setLatitude(latitude);
-				mToLocation.setLongitude(longitude);
-				mToAddressTextView.setText(address);
+				final String address = data.getStringExtra("address");
+				final double latitude = data.getDoubleExtra("latitude", 0d);
+				final double longitude = data.getDoubleExtra("longitude", 0d);
+
+				if (requestCode == REQUEST_CODE_FROM) {
+					mFromLocation.setLatitude(latitude);
+					mFromLocation.setLongitude(longitude);
+					mFromAddressTextView.setText(address);
+				} else {
+					mToLocation.setLatitude(latitude);
+					mToLocation.setLongitude(longitude);
+					mToAddressTextView.setText(address);
+				}
 			}
 
 			onFormValueChange();
@@ -227,38 +236,16 @@ public class ItineraireFragment extends SherlockListFragment implements
 	}
 
 	private void showDatePicker() {
-		final DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, mDateTime.getYear(),
-				mDateTime.getMonthOfYear(), mDateTime.getDayOfMonth());
-		dialog.show();
-	}
+		final Intent intent = new Intent(getActivity(), DatePickerActivity.class);
+		intent.putExtra(DatePickerActivity.PARAM_YEAR, mDateTime.getYear());
+		intent.putExtra(DatePickerActivity.PARAM_MONTH, mDateTime.getMonthOfYear() - 1);
+		intent.putExtra(DatePickerActivity.PARAM_DAY, mDateTime.getDayOfMonth());
+		intent.putExtra(DatePickerActivity.PARAM_HOUR, mDateTime.getHourOfDay());
+		intent.putExtra(DatePickerActivity.PARAM_MINUTE, mDateTime.getMinuteOfHour());
 
-	private void showTimePicker() {
-		final TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, mDateTime.getHourOfDay(),
-				mDateTime.getMinuteOfHour(), true);
-		dialog.show();
-	}
-
-	@Override
-	public void onDateSet(final DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
-		mDateTime.setYear(year);
-		mDateTime.setMonthOfYear(monthOfYear);
-		mDateTime.setDayOfMonth(dayOfMonth);
-
-		if (!mDialogLock) {
-			showTimePicker();
-			mDialogLock = true;
-		}
-	}
-
-	@Override
-	public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
-		mDateTime.setHourOfDay(hourOfDay);
-		mDateTime.setMinuteOfHour(minute);
-
-		mDateAndTime.setText(mDateFormat.format(mDateTime.toDate()));
-
-		onFormValueChange();
-		mDialogLock = false;
+		startActivityForResult(intent, REQUEST_CODE_DATE);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 	}
 
 	private void onFormValueChange() {

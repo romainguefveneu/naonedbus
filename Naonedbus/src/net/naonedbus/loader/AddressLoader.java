@@ -24,6 +24,7 @@ import android.text.TextUtils;
 public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResult>>> {
 
 	public final static String PARAM_FILTER = "filter";
+	public final static String PARAM_LOAD_ADDRESS = "loadAddress";
 
 	private final static double LOWER_LEFT_LATITUDE = 47.081d;
 	private final static double LOWER_LEFT_LONGITUDE = -1.843d;
@@ -44,13 +45,19 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 
 	@Override
 	public AsyncResult<List<AddressResult>> loadInBackground() {
+
 		final String filter = mBundle == null ? null : mBundle.getString(PARAM_FILTER);
+		final boolean loadAddress = mBundle == null ? false : mBundle.getBoolean(PARAM_LOAD_ADDRESS, false);
+
 		final AsyncResult<List<AddressResult>> result = new AsyncResult<List<AddressResult>>();
 		final List<AddressResult> addressResults = new ArrayList<AddressResult>();
 
 		addCurrentLocation(addressResults);
+
 		if (!TextUtils.isEmpty(filter)) {
-			addAddresses(filter, addressResults);
+			if (loadAddress) {
+				addAddresses(filter, addressResults);
+			}
 			addEquipements(filter, addressResults);
 		}
 

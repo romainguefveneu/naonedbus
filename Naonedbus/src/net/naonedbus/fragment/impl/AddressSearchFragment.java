@@ -46,11 +46,15 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 public class AddressSearchFragment extends AbstractListFragment implements OnQueryTextListener,
 		LoaderCallbacks<AsyncResult<List<AddressResult>>> {
 
+	private static final int LOADER_EQUIPEMENTS = 0;
+	private static final int LOADER_FULL = 1;
+
 	private AddressResultArrayAdapter mAdapter;
 	private final ArrayList<AddressResult> mResults = new ArrayList<AddressResult>();
 	private ModalSearchView mModalSearchView;
 
 	private ProgressBar mProgressBar;
+	private String mCurrentFilter;
 
 	public AddressSearchFragment() {
 		super(R.layout.fragment_address_search);
@@ -78,7 +82,9 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 
 		setListAdapter(mAdapter);
 
-		getLoaderManager().initLoader(0, null, this);
+		final Bundle bundle = new Bundle();
+		bundle.putBoolean(AddressLoader.PARAM_LOAD_ADDRESS, true);
+		getLoaderManager().initLoader(LOADER_EQUIPEMENTS, bundle, this);
 	}
 
 	@Override
@@ -126,6 +132,13 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 
 		mProgressBar.setVisibility(View.GONE);
 		mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
+
+		if (loader.getId() == LOADER_EQUIPEMENTS) {
+			final Bundle bundle = new Bundle();
+			bundle.putBoolean(AddressLoader.PARAM_LOAD_ADDRESS, true);
+			bundle.putString(AddressLoader.PARAM_FILTER, mCurrentFilter);
+			getLoaderManager().restartLoader(LOADER_FULL, bundle, this);
+		}
 	}
 
 	@Override
@@ -135,9 +148,11 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 
 	@Override
 	public void onQueryTextChange(final String newText) {
+		mCurrentFilter = newText;
+
 		final Bundle bundle = new Bundle();
 		bundle.putString(AddressLoader.PARAM_FILTER, newText);
-		getLoaderManager().restartLoader(0, bundle, this);
+		getLoaderManager().restartLoader(LOADER_EQUIPEMENTS, bundle, this);
 
 		mProgressBar.setVisibility(View.VISIBLE);
 
