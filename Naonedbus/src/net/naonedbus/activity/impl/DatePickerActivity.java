@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -24,14 +25,16 @@ public class DatePickerActivity extends SherlockActivity {
 	public static final String PARAM_DAY = "day";
 	public static final String PARAM_HOUR = "hour";
 	public static final String PARAM_MINUTE = "minute";
+	public static final String PARAM_ARRIVE_BY = "arriveBy";
 
+	private Spinner mKind;
 	private DatePicker mDatePicker;
 	private TimePicker mTimePicker;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_date_picker);
+		setContentView(R.layout.activity_date_picker);
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -50,6 +53,7 @@ public class DatePickerActivity extends SherlockActivity {
 				data.putExtra(PARAM_DAY, mDatePicker.getDayOfMonth());
 				data.putExtra(PARAM_HOUR, mTimePicker.getCurrentHour());
 				data.putExtra(PARAM_MINUTE, mTimePicker.getCurrentMinute());
+				data.putExtra(PARAM_ARRIVE_BY, mKind.getSelectedItemPosition() == 1);
 
 				setResult(1, data);
 				finish();
@@ -69,10 +73,12 @@ public class DatePickerActivity extends SherlockActivity {
 		actionBar.setCustomView(customActionBarView, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 
+		mKind = (Spinner) findViewById(R.id.dateKind);
 		mDatePicker = (DatePicker) findViewById(R.id.datePicker);
 		mTimePicker = (TimePicker) findViewById(R.id.timePicker);
 
 		initDateTime();
+		initSpinner();
 	}
 
 	private void initDateTime() {
@@ -90,6 +96,11 @@ public class DatePickerActivity extends SherlockActivity {
 		mTimePicker.setIs24HourView(DateFormat.is24HourFormat(this));
 		mTimePicker.setCurrentHour(hour);
 		mTimePicker.setCurrentMinute(minute);
+	}
+
+	private void initSpinner() {
+		final Intent intent = getIntent();
+		mKind.setSelection(intent.getBooleanExtra(PARAM_ARRIVE_BY, false) ? 1 : 0);
 	}
 
 	@Override

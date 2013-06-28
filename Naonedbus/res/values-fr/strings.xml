@@ -66,7 +66,7 @@
     <string name="title_activity_main">Accueil</string>
     <string name="title_activity_infos_trafic">Infos trafic</string>
     <string name="title_activity_carte">Carte</string>
-    <string name="title_activity_itineraire">Itinéraire</string>
+    <string name="title_activity_itineraire">Itinéraires</string>
     <string name="title_activity_equipements">Mobilité</string>
     <string name="title_activity_parkings">Parkings</string>
     <string name="title_activity_recherche">Recherche</string>
@@ -375,6 +375,12 @@
     </plurals>
 
     <!-- Itinéraires -->
+    <string name="itinerary_kind">Type d\'itinéraire</string>
+    <string name="itinerary_kind_arrival">Arrivée</string>
+    <string name="itinerary_kind_departure">Départ</string>
+    <string name="itinerary_date">Date</string>
+    <string name="itinerary_time">Heure</string>
+
     <plurals name="itinerary_walk_time">
         <item quantity="one">%d minute de marche</item>
         <item quantity="other">%d minutes de marche</item>

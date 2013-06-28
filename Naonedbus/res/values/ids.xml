@@ -170,6 +170,7 @@
     <item name="dateAndTime" type="id"/>
 
     <!-- Date Picker -->
+    <item name="dateKind" type="id"/>
     <item name="datePicker" type="id"/>
     <item name="timePicker" type="id"/>
 

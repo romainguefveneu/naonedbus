@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultActivityContent"
+    android:scrollbarStyle="outsideOverlay" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/section1"
+            style="@style/ModernSectionTitle"
+            android:text="@string/itinerary_kind" />
+
+        <Spinner
+            android:id="@id/dateKind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/datePicker"
+            android:layout_alignRight="@id/datePicker"
+            android:layout_below="@id/section1"
+            android:entries="@array/itinerary_kind_labels" />
+
+        <TextView
+            android:id="@+id/section2"
+            style="@style/ModernSectionTitle"
+            android:layout_below="@id/dateKind"
+            android:text="@string/itinerary_date" />
+
+        <DatePicker
+            android:id="@id/datePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/section2"
+            android:calendarViewShown="false"
+            android:spinnersShown="true" />
+
+        <TextView
+            android:id="@+id/section3"
+            style="@style/ModernSectionTitle"
+            android:layout_below="@id/datePicker"
+            android:text="@string/itinerary_time" />
+
+        <TimePicker
+            android:id="@id/timePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/section3" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -37,6 +37,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 	public static final String PARAM_TO_LONGITUDE = "toLongitude";
 
 	public static final String PARAM_TIME = "time";
+	public static final String PARAM_ARRIVE_BY = "arriveBy";
 
 	private static final String URL_WEBSERVICE = "http://naonedbus.netapsys.fr/opentripplanner-api-webapp";
 
@@ -56,6 +57,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 		final double toLatitude = mBundle.getDouble(PARAM_TO_LATITUDE);
 		final double toLongitude = mBundle.getDouble(PARAM_TO_LONGITUDE);
 		final long time = mBundle.getLong(PARAM_TIME);
+		final boolean arriveBy = mBundle.getBoolean(PARAM_ARRIVE_BY);
 
 		final Request request = new Request(fromLatitude, fromLongitude, toLatitude, toLongitude, new Date(time));
 		request.setModes(new TraverseModeSet(TraverseMode.WALK, TraverseMode.TRANSIT));
@@ -63,6 +65,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 		request.setOptimize(OptimizeType.QUICK);
 		request.setMaxWalkDistance(2000d);
 		request.setWalkSpeed(1.389d);
+		request.setArriveBy(arriveBy);
 
 		final ClientOpenTripPlanner client = new ClientOpenTripPlanner(URL_WEBSERVICE);
 

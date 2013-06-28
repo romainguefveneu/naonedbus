@@ -112,6 +112,12 @@
         <item>Confused</item> <!-- 16: o_O -->
     </string-array>
 
+    <!-- Itinéraires -->
+    <string-array name="itinerary_kind_labels">
+        <item>@string/itinerary_kind_departure</item>
+        <item>@string/itinerary_kind_arrival</item>
+    </string-array>
+
     <!-- Remerciements -->
     <string-array name="thanks">
         <item>Netapsys</item>

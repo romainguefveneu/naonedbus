@@ -21,6 +21,7 @@ package net.naonedbus.fragment.impl;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
@@ -30,7 +31,9 @@ import net.naonedbus.activity.impl.DatePickerActivity;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.fragment.AbstractListFragment;
 import net.naonedbus.loader.ItineraryLoader;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 
 import org.joda.time.MutableDateTime;
@@ -50,13 +53,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
-public class ItineraireFragment extends SherlockListFragment implements
+public class ItineraireFragment extends AbstractListFragment implements
 		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>> {
 
 	private static final String TAG = "ItineraireFragment";
@@ -76,6 +78,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 	private final Location mFromLocation = new Location(LocationManager.GPS_PROVIDER);
 	private final Location mToLocation = new Location(LocationManager.GPS_PROVIDER);
 	private final MutableDateTime mDateTime = new MutableDateTime();
+	private boolean mArriveBy;
 
 	private TextView mFromAddressTextView;
 	private TextView mToAddressTextView;
@@ -83,31 +86,22 @@ public class ItineraireFragment extends SherlockListFragment implements
 
 	private Button mGoButton;
 
-	private boolean mDialogLock;
+	public ItineraireFragment() {
+		super(R.layout.fragment_itineraire);
+	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
 
-		mDateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.SHORT);
+		mDateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
 	};
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_itineraire, menu);
-	}
-
-	@Override
-	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		if (container == null) // must put this in
-			return null;
-
-		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_itineraire, container, false);
-		bindView(mFragmentView, savedInstanceState);
-
-		return mFragmentView;
 	}
 
 	@Override
@@ -120,6 +114,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		getActivity().startActivity(intent);
 	}
 
+	@Override
 	protected void bindView(final View view, final Bundle savedInstanceState) {
 		final ListView listView = (ListView) view.findViewById(android.R.id.list);
 		mProgressView = view.findViewById(android.R.id.progress);
@@ -180,6 +175,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 			mFromAddressTextView.setText(R.string.itineraire_current_location);
 		}
 
+		setDateValue();
 	}
 
 	@Override
@@ -195,8 +191,9 @@ public class ItineraireFragment extends SherlockListFragment implements
 				mDateTime.setHourOfDay(data.getIntExtra(DatePickerActivity.PARAM_HOUR, 0));
 				mDateTime.setMinuteOfHour(data.getIntExtra(DatePickerActivity.PARAM_MINUTE, 0));
 
-				mDateAndTime.setText(mDateFormat.format(mDateTime.toDate()));
+				mArriveBy = data.getBooleanExtra(DatePickerActivity.PARAM_ARRIVE_BY, false);
 
+				setDateValue();
 				onFormValueChange();
 			} else {
 				final String address = data.getStringExtra("address");
@@ -242,6 +239,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		intent.putExtra(DatePickerActivity.PARAM_DAY, mDateTime.getDayOfMonth());
 		intent.putExtra(DatePickerActivity.PARAM_HOUR, mDateTime.getHourOfDay());
 		intent.putExtra(DatePickerActivity.PARAM_MINUTE, mDateTime.getMinuteOfHour());
+		intent.putExtra(DatePickerActivity.PARAM_ARRIVE_BY, mArriveBy);
 
 		startActivityForResult(intent, REQUEST_CODE_DATE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -258,6 +256,15 @@ public class ItineraireFragment extends SherlockListFragment implements
 		}
 	}
 
+	private void setDateValue() {
+		final String label = mArriveBy ? getString(R.string.itinerary_kind_arrival)
+				: getString(R.string.itinerary_kind_departure);
+
+		mDateAndTime.setText(FormatUtils.addLabelBefore(mDateFormat.format(mDateTime.toDate()),
+				label.toUpperCase(Locale.getDefault())));
+
+	}
+
 	private void sendRequest() {
 		final Bundle bundle = new Bundle();
 		bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE, mFromLocation.getLatitude());
@@ -265,6 +272,7 @@ public class ItineraireFragment extends SherlockListFragment implements
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocation.getLatitude());
 		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocation.getLongitude());
 		bundle.putLong(ItineraryLoader.PARAM_TIME, mDateTime.getMillis());
+		bundle.putBoolean(ItineraryLoader.PARAM_ARRIVE_BY, mArriveBy);
 
 		getLoaderManager().restartLoader(0, bundle, this);
 	}
@@ -297,7 +305,12 @@ public class ItineraireFragment extends SherlockListFragment implements
 		hideProgress();
 		if (result.getException() == null) {
 			mItineraryWrappers.clear();
-			mItineraryWrappers.addAll(result.getResult());
+			if (result.getResult() == null) {
+				mItineraryWrappers.add(new ItineraryWrapper(null));
+			} else {
+				mItineraryWrappers.addAll(result.getResult());
+			}
+
 			mAdapter.notifyDataSetChanged();
 			getListView().smoothScrollToPosition(1);
 		}

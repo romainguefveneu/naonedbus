@@ -91,7 +91,12 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 						R.drawable.ic_action_location_selector, Color.TRANSPARENT, address.getLatitude(),
 						address.getLongitude());
 
-				addressResult.setAddress(title[0] + ", " + title[1]);
+				String addressString = title[0];
+				if (!TextUtils.isEmpty(title[1])) {
+					addressString += ", " + title[1];
+				}
+
+				addressResult.setAddress(addressString);
 				addressResult.setSection(0);
 				result.add(addressResult);
 			}

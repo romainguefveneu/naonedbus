@@ -43,6 +43,19 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="ModernSectionTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_marginTop">@dimen/padding_medium</item>
+        <item name="android:layout_marginBottom">@dimen/padding_tiny</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/modern_section__color</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
     <style name="ItemTime">
         <item name="android:textColor">?attr/secondaryColor</item>
         <item name="android:layout_centerVertical">true</item>
