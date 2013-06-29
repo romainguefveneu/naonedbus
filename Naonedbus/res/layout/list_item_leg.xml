@@ -16,10 +16,12 @@
         <TextView
             android:id="@id/fromTime"
             style="@style/ItemTime.Medium"
+            android:layout_width="50sp"
             android:layout_alignParentRight="false"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/padding_small"
-            android:text="0:00" />
+            android:gravity="right"
+            android:text="00:00" />
 
         <View
             android:id="@+id/itemMetroPointFrom"
@@ -78,9 +80,11 @@
         <TextView
             android:id="@id/toTime"
             style="@style/ItemTime.Medium"
+            android:layout_width="50sp"
             android:layout_alignParentRight="false"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/padding_small"
+            android:gravity="right"
             android:text="0:00" />
 
         <View

@@ -88,7 +88,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 	}
 
 	private void bindNormalView(final ItineraryWrapper wrapper, final ViewHolder viewHolder) {
-		viewHolder.itemTitle.setText(wrapper.getTitle());
+		viewHolder.itemTitle.setText(wrapper.getTime());
 		viewHolder.itemDate.setText(wrapper.getDate());
 		viewHolder.itemWalkTime.setText(wrapper.getWalkTime());
 

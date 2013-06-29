@@ -130,14 +130,14 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 
 		getActivity().setProgressBarIndeterminateVisibility(false);
 
-		mProgressBar.setVisibility(View.GONE);
-		mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
-
 		if (loader.getId() == LOADER_EQUIPEMENTS) {
 			final Bundle bundle = new Bundle();
 			bundle.putBoolean(AddressLoader.PARAM_LOAD_ADDRESS, true);
 			bundle.putString(AddressLoader.PARAM_FILTER, mCurrentFilter);
 			getLoaderManager().restartLoader(LOADER_FULL, bundle, this);
+		} else {
+			mProgressBar.setVisibility(View.GONE);
+			mProgressBar.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_out));
 		}
 	}
 

@@ -86,7 +86,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 		final LigneManager ligneManager = LigneManager.getInstance();
 		for (final Itinerary itinerary : itineraries) {
 			final ItineraryWrapper wrapper = new ItineraryWrapper(itinerary);
-			wrapper.setTitle(FormatUtils.formatMinutes(getContext(), itinerary.duration));
+			wrapper.setTime(FormatUtils.formatMinutes(getContext(), itinerary.duration));
 			wrapper.setDate(formatHelper
 					.formatDuree(new DateTime(itinerary.startTime), new DateTime(itinerary.endTime)));
 

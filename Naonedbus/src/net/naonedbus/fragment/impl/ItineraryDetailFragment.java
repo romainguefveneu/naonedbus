@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.LegWrapper;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncResult;
@@ -15,15 +16,24 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
 
 public class ItineraryDetailFragment extends CustomListFragment {
 
-	public static final String PARAM_ITINERARY = "itinerary";
+	public static final String PARAM_ITINERARY_WRAPPER = "itineraryWrapper";
+	public static final String PARAM_FROM_PLACE = "fromPlace";
+	public static final String PARAM_TO_PLACE = "toPlace";
 
+	private ItineraryWrapper mItineraryWrapper;
 	private Itinerary mItinerary;
+	private String mFromPlace;
+	private String mToPlace;
 
 	public ItineraryDetailFragment() {
 		super(R.layout.fragment_listview);
@@ -33,7 +43,11 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mItinerary = (Itinerary) getArguments().getSerializable(PARAM_ITINERARY);
+		final Bundle arguments = getArguments();
+		mItineraryWrapper = (ItineraryWrapper) arguments.getSerializable(PARAM_ITINERARY_WRAPPER);
+		mItinerary = mItineraryWrapper.getItinerary();
+		mFromPlace = arguments.getString(PARAM_FROM_PLACE);
+		mToPlace = arguments.getString(PARAM_TO_PLACE);
 	}
 
 	@Override
@@ -41,6 +55,27 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		super.onActivityCreated(savedInstanceState);
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);
+	}
+
+	@Override
+	protected void bindView(final View view, final Bundle savedInstanceState) {
+		super.bindView(view, savedInstanceState);
+
+		final ListView listView = (ListView) view.findViewById(android.R.id.list);
+
+		final View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.itineraire_header, listView, false);
+		listView.addHeaderView(headerView);
+
+		final TextView fromPlace = (TextView) headerView.findViewById(R.id.fromPlace);
+		final TextView toPlace = (TextView) headerView.findViewById(R.id.toPlace);
+		final TextView itemTime = (TextView) headerView.findViewById(R.id.itemTime);
+		final TextView itemDate = (TextView) headerView.findViewById(R.id.itemDate);
+
+		fromPlace.setText(mFromPlace);
+		toPlace.setText(mToPlace);
+		itemTime.setText(mItineraryWrapper.getTime());
+		itemDate.setText(mItineraryWrapper.getDate());
+
 	}
 
 	@Override

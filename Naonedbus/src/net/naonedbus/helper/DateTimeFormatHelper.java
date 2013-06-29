@@ -105,15 +105,13 @@ public class DateTimeFormatHelper {
 	}
 
 	/**
-	 * Formatter l'heure, si différent de 0.
+	 * Formatter l'heure.
 	 * 
 	 * @param dateTime
 	 * @return L'heure formattée.
 	 */
 	public void formatTime(final BaseDateTime dateTime, final StringBuilder builder) {
-		if (dateTime.getHourOfDay() > 0) {
-			builder.append(dateTime.getHourOfDay()).append("h").append(twoDigitFormat(dateTime.getMinuteOfHour()));
-		}
+		builder.append(dateTime.getHourOfDay()).append("h").append(twoDigitFormat(dateTime.getMinuteOfHour()));
 	}
 
 	/**

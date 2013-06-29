@@ -27,6 +27,16 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 	}
 
 	@Override
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled(final int position) {
+		return false;
+	}
+
+	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View view = convertView;
 		ViewHolder viewHolder;

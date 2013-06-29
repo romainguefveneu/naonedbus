@@ -143,9 +143,6 @@
             android:name=".activity.impl.AddressSearchActivity"
             android:label="@string/emptyString"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
-            android:name=".activity.impl.DatePickerActivity"
-            android:label="@string/emptyString" />
 
         <provider
             android:name=".provider.impl.LigneProvider"

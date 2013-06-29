@@ -21,23 +21,23 @@ package net.naonedbus.fragment.impl;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AddressSearchActivity;
-import net.naonedbus.activity.impl.DatePickerActivity;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
 import net.naonedbus.loader.ItineraryLoader;
-import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 
 import org.joda.time.MutableDateTime;
 
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
@@ -48,10 +48,14 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -59,18 +63,13 @@ import com.actionbarsherlock.view.MenuItem;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends AbstractListFragment implements
-		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>> {
-
-	private static final String TAG = "ItineraireFragment";
-	private static final boolean DBG = BuildConfig.DEBUG;
+		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener {
 
 	private static final int REQUEST_CODE_FROM = 1;
 	private static final int REQUEST_CODE_TO = 2;
-	private static final int REQUEST_CODE_DATE = 3;
 
 	private final List<ItineraryWrapper> mItineraryWrappers = new ArrayList<ItineraryWrapper>();
 	private ItineraryWrapperArrayAdapter mAdapter;
-	private ViewGroup mFragmentView;
 	private View mProgressView;
 
 	private DateFormat mDateFormat;
@@ -82,9 +81,12 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	private TextView mFromAddressTextView;
 	private TextView mToAddressTextView;
-	private TextView mDateAndTime;
+	private TextView mDateAndTimeLabel;
+	private Spinner mDateKindSpinner;
 
 	private Button mGoButton;
+
+	private boolean mDialogLock;
 
 	public ItineraireFragment() {
 		super(R.layout.fragment_itineraire);
@@ -109,8 +111,13 @@ public class ItineraireFragment extends AbstractListFragment implements
 		super.onListItemClick(l, v, position, id);
 
 		final ItineraryWrapper wrapper = (ItineraryWrapper) getListView().getItemAtPosition(position);
+		final Bundle bundle = new Bundle();
+		bundle.putSerializable(ItineraryDetailFragment.PARAM_ITINERARY_WRAPPER, wrapper);
+		bundle.putString(ItineraryDetailFragment.PARAM_FROM_PLACE, mFromAddressTextView.getText().toString());
+		bundle.putString(ItineraryDetailFragment.PARAM_TO_PLACE, mToAddressTextView.getText().toString());
+
 		final Intent intent = new Intent(getActivity(), ItineraryDetailActivity.class);
-		intent.putExtra(ItineraryDetailActivity.PARAM_ITINERARY, wrapper.getItinerary());
+		intent.putExtra(ItineraryDetailActivity.PARAM_BUNDLE, bundle);
 		getActivity().startActivity(intent);
 	}
 
@@ -143,8 +150,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 			}
 		});
 
-		mDateAndTime = (TextView) formView.findViewById(R.id.dateAndTime);
-		mDateAndTime.setOnClickListener(new OnClickListener() {
+		mDateAndTimeLabel = (TextView) formView.findViewById(R.id.dateAndTimeLabel);
+		formView.findViewById(R.id.dateAndTime).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				showDatePicker();
@@ -169,6 +176,20 @@ public class ItineraireFragment extends AbstractListFragment implements
 			}
 		});
 
+		mDateKindSpinner = (Spinner) formView.findViewById(R.id.dateKind);
+		mDateKindSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+				mArriveBy = position == 1;
+				onFormValueChange();
+			}
+
+			@Override
+			public void onNothingSelected(final AdapterView<?> parent) {
+
+			}
+		});
+
 		final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
 		if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
 			mFromLocation.set(currentLocation);
@@ -183,36 +204,22 @@ public class ItineraireFragment extends AbstractListFragment implements
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (data != null) {
+			final String address = data.getStringExtra("address");
+			final double latitude = data.getDoubleExtra("latitude", 0d);
+			final double longitude = data.getDoubleExtra("longitude", 0d);
 
-			if (requestCode == REQUEST_CODE_DATE) {
-				mDateTime.setYear(data.getIntExtra(DatePickerActivity.PARAM_YEAR, 0));
-				mDateTime.setMonthOfYear(data.getIntExtra(DatePickerActivity.PARAM_MONTH, 0));
-				mDateTime.setDayOfMonth(data.getIntExtra(DatePickerActivity.PARAM_DAY, 0));
-				mDateTime.setHourOfDay(data.getIntExtra(DatePickerActivity.PARAM_HOUR, 0));
-				mDateTime.setMinuteOfHour(data.getIntExtra(DatePickerActivity.PARAM_MINUTE, 0));
-
-				mArriveBy = data.getBooleanExtra(DatePickerActivity.PARAM_ARRIVE_BY, false);
-
-				setDateValue();
-				onFormValueChange();
+			if (requestCode == REQUEST_CODE_FROM) {
+				mFromLocation.setLatitude(latitude);
+				mFromLocation.setLongitude(longitude);
+				mFromAddressTextView.setText(address);
 			} else {
-				final String address = data.getStringExtra("address");
-				final double latitude = data.getDoubleExtra("latitude", 0d);
-				final double longitude = data.getDoubleExtra("longitude", 0d);
-
-				if (requestCode == REQUEST_CODE_FROM) {
-					mFromLocation.setLatitude(latitude);
-					mFromLocation.setLongitude(longitude);
-					mFromAddressTextView.setText(address);
-				} else {
-					mToLocation.setLatitude(latitude);
-					mToLocation.setLongitude(longitude);
-					mToAddressTextView.setText(address);
-				}
+				mToLocation.setLatitude(latitude);
+				mToLocation.setLongitude(longitude);
+				mToAddressTextView.setText(address);
 			}
-
-			onFormValueChange();
 		}
+
+		onFormValueChange();
 
 	}
 
@@ -233,17 +240,38 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	private void showDatePicker() {
-		final Intent intent = new Intent(getActivity(), DatePickerActivity.class);
-		intent.putExtra(DatePickerActivity.PARAM_YEAR, mDateTime.getYear());
-		intent.putExtra(DatePickerActivity.PARAM_MONTH, mDateTime.getMonthOfYear() - 1);
-		intent.putExtra(DatePickerActivity.PARAM_DAY, mDateTime.getDayOfMonth());
-		intent.putExtra(DatePickerActivity.PARAM_HOUR, mDateTime.getHourOfDay());
-		intent.putExtra(DatePickerActivity.PARAM_MINUTE, mDateTime.getMinuteOfHour());
-		intent.putExtra(DatePickerActivity.PARAM_ARRIVE_BY, mArriveBy);
+		final DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, mDateTime.getYear(),
+				mDateTime.getMonthOfYear() - 1, mDateTime.getDayOfMonth());
+		dialog.show();
+	}
 
-		startActivityForResult(intent, REQUEST_CODE_DATE);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
+	private void showTimePicker() {
+		final TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, mDateTime.getHourOfDay(),
+				mDateTime.getMinuteOfHour(), true);
+		dialog.show();
+	}
+
+	@Override
+	public void onDateSet(final DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
+		mDateTime.setYear(year);
+		mDateTime.setMonthOfYear(monthOfYear + 1);
+		mDateTime.setDayOfMonth(dayOfMonth);
+
+		if (!mDialogLock) {
+			showTimePicker();
+			mDialogLock = true;
+		}
+	}
+
+	@Override
+	public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
+		mDateTime.setHourOfDay(hourOfDay);
+		mDateTime.setMinuteOfHour(minute);
+
+		mDateAndTimeLabel.setText(mDateFormat.format(mDateTime.toDate()));
+
+		onFormValueChange();
+		mDialogLock = false;
 	}
 
 	private void onFormValueChange() {
@@ -257,12 +285,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	private void setDateValue() {
-		final String label = mArriveBy ? getString(R.string.itinerary_kind_arrival)
-				: getString(R.string.itinerary_kind_departure);
-
-		mDateAndTime.setText(FormatUtils.addLabelBefore(mDateFormat.format(mDateTime.toDate()),
-				label.toUpperCase(Locale.getDefault())));
-
+		mDateAndTimeLabel.setText(mDateFormat.format(mDateTime.toDate()));
 	}
 
 	private void sendRequest() {

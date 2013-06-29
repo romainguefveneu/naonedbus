@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@drawable/block_light"
+    android:padding="@dimen/padding_small" >
 
     <TextView
         android:id="@id/fromPlace"
-        style="@style/BigTitle" />
+        style="@style/ItemPrimaryText"
+        android:drawableLeft="@drawable/ic_action_location_gray"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="From" />
 
     <TextView
         android:id="@id/toPlace"
-        style="@style/BigTitle" />
-
-    <TextView
-        android:id="@id/itemTime"
-        style="@style/ItemPrimaryText" />
+        style="@style/ItemPrimaryText"
+        android:layout_below="@id/fromPlace"
+        android:drawableLeft="@drawable/ic_action_location_gray"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:text="To" />
 
     <TextView
         android:id="@id/itemDate"
-        style="@style/ItemPrimaryText" />
+        style="@style/ItemPrimaryText"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/toPlace"
+        android:layout_toLeftOf="@id/itemTime"
+        android:drawableLeft="@drawable/ic_action_clock"
+        android:text="Date" />
 
-</LinearLayout>
+    <TextView
+        android:id="@id/itemTime"
+        style="@style/ItemTime.Medium"
+        android:layout_alignBaseline="@id/itemDate"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/toPlace"
+        android:text="Time" />
+
+</RelativeLayout>

@@ -1,27 +1,30 @@
 package net.naonedbus.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 
-public class ItineraryWrapper {
+public class ItineraryWrapper implements Serializable {
+
+	private static final long serialVersionUID = 5387553827665311443L;
 
 	private final Itinerary mItinerary;
-	private String mTitle;
+	private String mTime;
 	private String mDate;
 	private String mWalkTime;
-	private List<Ligne> mLignes;
+	private transient List<Ligne> mLignes;
 
 	public ItineraryWrapper(final Itinerary itinerary) {
 		mItinerary = itinerary;
 	}
 
-	public String getTitle() {
-		return mTitle;
+	public String getTime() {
+		return mTime;
 	}
 
-	public void setTitle(final String title) {
-		mTitle = title;
+	public void setTime(final String time) {
+		mTime = time;
 	}
 
 	public String getDate() {

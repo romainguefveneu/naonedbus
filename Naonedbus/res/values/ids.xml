@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -168,6 +168,7 @@
     <item name="toTime" type="id"/>
     <item name="toProgress" type="id"/>
     <item name="dateAndTime" type="id"/>
+    <item name="dateAndTimeLabel" type="id"/>
 
     <!-- Date Picker -->
     <item name="dateKind" type="id"/>
