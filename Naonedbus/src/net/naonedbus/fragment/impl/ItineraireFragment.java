@@ -107,6 +107,28 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		if (item.getItemId() == R.id.menu_reverse) {
+			final CharSequence fromText = mFromAddressTextView.getText();
+			final CharSequence toText = mToAddressTextView.getText();
+			final Location temp = new Location(LocationManager.GPS_PROVIDER);
+
+			mToAddressTextView.setText(fromText);
+			mFromAddressTextView.setText(toText);
+
+			temp.set(mFromLocation);
+			mFromLocation.set(mToLocation);
+			mToLocation.set(temp);
+
+			onFormValueChange();
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 
@@ -306,14 +328,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	private void hideProgress() {
 		mProgressView.setVisibility(View.GONE);
-	}
-
-	public void onDrawerStateChange(final int oldState, final int newState) {
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		return false;
 	}
 
 	@Override
