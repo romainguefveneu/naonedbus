@@ -8,6 +8,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.manager.impl.ArretManager;
+import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.twotoasters.clusterkraf.Clusterkraf;
 import com.twotoasters.clusterkraf.InputPoint;
+import com.twotoasters.clusterkraf.MarkerOptionsChooser;
 
 public class MapFragment extends SherlockFragment {
 
@@ -122,6 +124,9 @@ public class MapFragment extends SherlockFragment {
 		}
 
 		if (mGoogleMap != null && mInputPoints != null && mInputPoints.size() > 0) {
+
+			final MarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
+			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
 
 			// customize the options before you construct a Clusterkraf instance
 			mClusterkraf = new Clusterkraf(mGoogleMap, mOptions, mInputPoints);
