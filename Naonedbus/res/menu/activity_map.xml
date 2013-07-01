@@ -6,11 +6,6 @@
         android:showAsAction="always"
         android:title="@string/action_search"/>
     <item
-        android:id="@id/menu_location"
-        android:icon="@drawable/ic_action_location_found"
-        android:showAsAction="always"
-        android:title="@string/action_location_center"/>
-    <item
         android:id="@id/menu_layers"
         android:icon="@drawable/ic_action_labels"
         android:showAsAction="always"
