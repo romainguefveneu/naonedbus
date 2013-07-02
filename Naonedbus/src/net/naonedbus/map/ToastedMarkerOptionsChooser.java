@@ -3,6 +3,7 @@ package net.naonedbus.map;
 import java.lang.ref.WeakReference;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.Equipement;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -62,28 +63,15 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 						clusterSize));
 				title = String.valueOf(clusterSize);
 			} else {
-				icon = BitmapDescriptorFactory.fromBitmap(getBitmap(res, R.drawable.map_layer_arret,
-						R.color.map_pin_arret));
+				final MarkerInfo markerInfo = (MarkerInfo) clusterPoint.getPointAtOffset(0).getTag();
+				final Equipement.Type type = markerInfo.getType();
+				icon = BitmapDescriptorFactory.fromResource(type.getMapPin());
+				title = markerInfo.getTitle();
 			}
 			markerOptions.icon(icon);
 			markerOptions.title(title);
 			markerOptions.anchor(0.5f, 1.0f);
 		}
-	}
-
-	@SuppressLint("NewApi")
-	private Bitmap getBitmap(final Resources res, final int colorResId, final int iconResId) {
-		final BitmapFactory.Options options = new BitmapFactory.Options();
-
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			options.inMutable = true;
-		}
-		Bitmap bitmap = BitmapFactory.decodeResource(res, R.drawable.map_pin_arret, options);
-		if (bitmap.isMutable() == false) {
-			bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-		}
-
-		return bitmap;
 	}
 
 	@SuppressLint("NewApi")

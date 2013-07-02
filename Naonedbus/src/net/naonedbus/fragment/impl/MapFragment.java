@@ -1,13 +1,13 @@
 package net.naonedbus.fragment.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.intent.IIntentParamKey;
-import net.naonedbus.manager.impl.ArretManager;
+import net.naonedbus.loader.MapLoader;
+import net.naonedbus.loader.MapLoader.MapLoaderCallback;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import android.content.SharedPreferences;
@@ -24,12 +24,11 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.LatLng;
 import com.twotoasters.clusterkraf.Clusterkraf;
 import com.twotoasters.clusterkraf.InputPoint;
 import com.twotoasters.clusterkraf.MarkerOptionsChooser;
 
-public class MapFragment extends SherlockFragment {
+public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 
 	private static final String LOG_TAG = "MapActivity";
 
@@ -48,6 +47,7 @@ public class MapFragment extends SherlockFragment {
 	private SupportMapFragment mSupportMapFragment;
 	private GoogleMap mGoogleMap;
 	private Clusterkraf mClusterkraf;
+	private MapLoader mMapLoader;
 
 	private final MyLocationProvider mLocationProvider;
 
@@ -114,23 +114,22 @@ public class MapFragment extends SherlockFragment {
 	}
 
 	private void initClusterkraf() {
-
-		final ArretManager manager = ArretManager.getInstance();
-		final List<Arret> items = manager.getAll(getActivity().getContentResolver());
-
-		for (final Arret item : items) {
-			final LatLng latLng = new LatLng(item.getLatitude(), item.getLongitude());
-			mInputPoints.add(new InputPoint(latLng));
-		}
-
-		if (mGoogleMap != null && mInputPoints != null && mInputPoints.size() > 0) {
-
+		if (mGoogleMap != null) {
 			final MarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
 			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
+			mOptions.setPixelDistanceToJoinCluster(100);
 
 			// customize the options before you construct a Clusterkraf instance
-			mClusterkraf = new Clusterkraf(mGoogleMap, mOptions, mInputPoints);
+			mClusterkraf = new Clusterkraf(mGoogleMap, mOptions, null);
+
+			mMapLoader = new MapLoader(getActivity(), this);
+			mMapLoader.execute(Type.TYPE_BICLOO, Type.TYPE_MARGUERITE, Type.TYPE_PARKING);
 		}
+	}
+
+	@Override
+	public void onLayerLoaded(final ArrayList<InputPoint> result) {
+		mClusterkraf.addAll(result);
 	}
 
 }

@@ -34,39 +34,47 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 		/**
 		 * Défini le type Arrêt Tan.
 		 */
-		TYPE_ARRET(0, R.string.map_calque_arret, R.drawable.map_layer_arret, R.color.map_pin_arret),
+		TYPE_ARRET(0, R.string.map_calque_arret, R.drawable.map_layer_arret, R.color.map_pin_arret,
+				R.drawable.map_pin_arret),
 		/**
 		 * Défini le type Parking.
 		 */
-		TYPE_PARKING(1, R.string.map_calque_parkings, R.drawable.map_layer_parking, R.color.map_pin_parking),
+		TYPE_PARKING(1, R.string.map_calque_parkings, R.drawable.map_layer_parking, R.color.map_pin_parking,
+				R.drawable.map_pin_parking),
 		/**
 		 * Défini le type Bicloo.
 		 */
-		TYPE_BICLOO(2, R.string.map_calque_bicloo, R.drawable.map_layer_bicloo, R.color.map_pin_bicloo),
+		TYPE_BICLOO(2, R.string.map_calque_bicloo, R.drawable.map_layer_bicloo, R.color.map_pin_bicloo,
+				R.drawable.map_pin_bicloo),
 		/**
 		 * Défini le type Marguerite.
 		 */
-		TYPE_MARGUERITE(3, R.string.map_calque_marguerite, R.drawable.map_layer_marguerite, R.color.map_pin_marguerite),
+		TYPE_MARGUERITE(3, R.string.map_calque_marguerite, R.drawable.map_layer_marguerite, R.color.map_pin_marguerite,
+				R.drawable.map_pin_marguerite),
 		/**
 		 * Défini le type Covoiturage.
 		 */
 		TYPE_COVOITURAGE(4, R.string.map_calque_covoiturage, R.drawable.map_layer_covoiturage,
-				R.color.map_pin_covoiturage),
+				R.color.map_pin_covoiturage, R.drawable.map_pin_covoiturage),
 		/**
 		 * Défini le type Lila.
 		 */
-		TYPE_LILA(5, R.string.map_calque_lila, R.drawable.map_layer_arret, R.color.map_pin_lila);
+		TYPE_LILA(5, R.string.map_calque_lila, R.drawable.map_layer_arret, R.color.map_pin_lila,
+				R.drawable.map_pin_lila);
 
 		private final int id;
 		private final int titleRes;
 		private final int drawableRes;
 		private final int backgroundColorRes;
+		private final int mapPin;
 
-		private Type(final int id, final int titleRes, final int drawableRes, final int backgroundColorRes) {
+		private Type(final int id, final int titleRes, final int drawableRes, final int backgroundColorRes,
+				final int mapPin) {
 			this.id = id;
 			this.titleRes = titleRes;
 			this.drawableRes = drawableRes;
 			this.backgroundColorRes = backgroundColorRes;
+			this.mapPin = mapPin;
 		}
 
 		public int getId() {
@@ -83,6 +91,10 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 
 		public int getBackgroundColorRes() {
 			return backgroundColorRes;
+		}
+
+		public int getMapPin() {
+			return mapPin;
 		}
 
 		public static Type getTypeById(final int id) {
