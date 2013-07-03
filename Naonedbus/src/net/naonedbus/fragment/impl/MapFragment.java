@@ -1,7 +1,10 @@
 package net.naonedbus.fragment.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.naonedbus.NBApplication;
@@ -10,6 +13,7 @@ import net.naonedbus.bean.Equipement;
 import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
+import net.naonedbus.map.MarkerInfo;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import android.content.SharedPreferences;
@@ -47,7 +51,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	private static final int MENU_ID_SATELLITE = Integer.MAX_VALUE;
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
-	final ArrayList<InputPoint> mInputPoints = new ArrayList<InputPoint>();
+	final Map<Equipement.Type, List<InputPoint>> mInputPoints = new HashMap<Equipement.Type, List<InputPoint>>();
 	final com.twotoasters.clusterkraf.Options mOptions = new com.twotoasters.clusterkraf.Options();
 
 	private SharedPreferences mPreferences;
@@ -71,17 +75,21 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	}
 
 	@Override
-	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater,
+			final ViewGroup container, final Bundle savedInstanceState) {
 		if (container == null) // must put this in
 			return null;
 
-		final View view = inflater.inflate(R.layout.fragment_map, container, false);
+		final View view = inflater.inflate(R.layout.fragment_map, container,
+				false);
 
-		mSupportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
+		mSupportMapFragment = (SupportMapFragment) getFragmentManager()
+				.findFragmentById(R.id.map);
 		mGoogleMap = mSupportMapFragment.getMap();
 		mGoogleMap.setMyLocationEnabled(true);
 
-		mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		mPreferences = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
 
 		final Equipement.Type[] types = Equipement.Type.values();
 		for (final Equipement.Type type : types) {
@@ -106,10 +114,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 		// menu.findItem(R.id.menu_location).setVisible(false);
 		// }
 
-		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
+		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers)
+				.getSubMenu();
 		final Equipement.Type[] types = Equipement.Type.values();
 		for (final Equipement.Type type : types) {
-			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES,
+					type.getId(), 0, type.getTitleRes());
 			item.setCheckable(true);
 		}
 
@@ -122,7 +132,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	@Override
 	public void onPrepareOptionsMenu(final Menu menu) {
 		final Equipement.Type[] types = Equipement.Type.values();
-		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
+		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers)
+				.getSubMenu();
 
 		for (final Equipement.Type type : types) {
 			final MenuItem item = filterSubMenu.findItem(type.getId());
@@ -134,7 +145,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getGroupId() == MENU_GROUP_TYPES) {
-			final Equipement.Type type = Equipement.Type.getTypeById(item.getItemId());
+			final Equipement.Type type = Equipement.Type.getTypeById(item
+					.getItemId());
 
 			item.setChecked(!item.isChecked());
 
@@ -142,11 +154,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 
 			if (item.isChecked()) {
 				mSelectedTypes.add(type);
+				loadMarkers(type);
 			} else {
 				mSelectedTypes.remove(type);
+				removeMarkers(type);
 			}
-
-			loadMarkers();
 
 		} else {
 
@@ -160,17 +172,20 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 		uiSettings.setZoomGesturesEnabled(true);
 		uiSettings.setCompassEnabled(true);
 
-		final Location currenLocation = mLocationProvider.getLastKnownLocation();
+		final Location currenLocation = mLocationProvider
+				.getLastKnownLocation();
 		if (currenLocation != null) {
-			final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
-					currenLocation.getLatitude(), currenLocation.getLongitude()), 15);
+			final CameraUpdate cameraUpdate = CameraUpdateFactory
+					.newLatLngZoom(new LatLng(currenLocation.getLatitude(),
+							currenLocation.getLongitude()), 15);
 			mGoogleMap.animateCamera(cameraUpdate);
 		}
 	}
 
 	private void initClusterkraf() {
 		if (mGoogleMap != null) {
-			final MarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
+			final MarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(
+					getActivity());
 			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
 			mOptions.setPixelDistanceToJoinCluster(100);
 
@@ -186,9 +201,20 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 			mClusterkraf.clear();
 		}
 
-		final Equipement.Type[] types = mSelectedTypes.toArray(new Equipement.Type[mSelectedTypes.size()]);
+		final Equipement.Type[] types = mSelectedTypes
+				.toArray(new Equipement.Type[mSelectedTypes.size()]);
 		mMapLoader = new MapLoader(getActivity(), this);
 		mMapLoader.execute(types);
+	}
+
+	private void loadMarkers(Equipement.Type type) {
+		mMapLoader = new MapLoader(getActivity(), this);
+		mMapLoader.execute(type);
+	}
+
+	private void removeMarkers(Equipement.Type type) {
+		List<InputPoint> inputPoints = mInputPoints.get(type);
+		mClusterkraf.removeAll(inputPoints);
 	}
 
 	/**
@@ -217,8 +243,13 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 
 	@Override
 	public void onLayerLoaded(final ArrayList<InputPoint> result) {
-		synchronized (mClusterkraf) {
-			mClusterkraf.addAll(result);
+		if (result != null && !result.isEmpty()) {
+			MarkerInfo markerInfo = (MarkerInfo) result.get(0).getTag();
+			mInputPoints.put(markerInfo.getType(), result);
+
+			synchronized (mClusterkraf) {
+				mClusterkraf.addAll(result);
+			}
 		}
 	}
 
