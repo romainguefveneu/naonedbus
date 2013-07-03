@@ -27,4 +27,4 @@
 	url = https://github.com/astuetz/PagerSlidingTabStrip.git
 [submodule "clusterkraf"]
 	path = clusterkraf
-	url = https://github.com/twotoasters/clusterkraf.git
+url=https://github.com/romainguefveneu/clusterkraf.git
