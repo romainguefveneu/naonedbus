@@ -59,6 +59,10 @@
     <style name="Theme.Acapulco.Widget" parent="@style/Theme.Sherlock">
         <item name="android:popupMenuStyle">@style/PopupMenu.Acapulco</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Acapulco</item>
+
+        <!-- <item name="searchDropdownBackground">@drawable/abs__search_dropdown_light</item> -->
+        <item name="searchAutoCompleteTextView">@style/Widget.Sherlock.Light.SearchAutoCompleteTextView</item>
+        <item name="dropDownHintAppearance">@style/TextAppearance.Sherlock.Widget.DropDownHint</item>
     </style>
 
 </resources>

@@ -10,13 +10,15 @@ import java.util.Set;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.Equipement;
-import net.naonedbus.intent.IIntentParamKey;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
+import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.map.MarkerInfo;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,10 +29,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
+import com.actionbarsherlock.widget.SearchView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,12 +49,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 
 	private static final String LOG_TAG = "MapActivity";
 
-	public static enum Param implements IIntentParamKey {
-		itemId, itemType
-	};
-
 	private static final int MENU_GROUP_TYPES = 1;
-	private static final int MENU_ID_SATELLITE = Integer.MAX_VALUE;
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
 	final Map<Equipement.Type, List<InputPoint>> mInputPoints = new HashMap<Equipement.Type, List<InputPoint>>();
@@ -116,6 +115,14 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 		super.onCreateOptionsMenu(menu, inflater);
 
 		inflater.inflate(R.menu.fragment_map, menu);
+
+		EquipementManager manager = EquipementManager.getInstance();
+		Cursor cursor = manager.getCursor(getActivity().getContentResolver());
+		EquipementCursorAdapter adapter = new EquipementCursorAdapter(getActivity(), cursor);
+
+		MenuItemWrapper menuItemWrapper = (MenuItemWrapper) menu.findItem(R.id.menu_search);
+		SearchView searchView = (SearchView) menuItemWrapper.getActionView();
+		searchView.setSuggestionsAdapter(adapter);
 
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
 		final Equipement.Type[] types = Equipement.Type.values();

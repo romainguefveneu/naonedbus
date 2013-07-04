@@ -51,7 +51,7 @@
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_acapulco</item>
     </style>
 
-    <style name="DropDownListView.Acapulco" parent="@style/Widget.Sherlock.ListView.DropDown">
+    <style name="DropDownListView.Acapulco" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_acapulco</item>
     </style>
 
