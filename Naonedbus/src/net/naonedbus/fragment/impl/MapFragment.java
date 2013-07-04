@@ -19,6 +19,7 @@ import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,6 +36,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView.OnSuggestionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,7 +47,7 @@ import com.twotoasters.clusterkraf.Clusterkraf;
 import com.twotoasters.clusterkraf.InputPoint;
 import com.twotoasters.clusterkraf.MarkerOptionsChooser;
 
-public class MapFragment extends SherlockFragment implements MapLoaderCallback {
+public class MapFragment extends SherlockFragment implements MapLoaderCallback, OnSuggestionListener {
 
 	private static final String LOG_TAG = "MapActivity";
 
@@ -60,6 +62,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	private GoogleMap mGoogleMap;
 	private Clusterkraf mClusterkraf;
 	private MapLoader mMapLoader;
+
+	private EquipementCursorAdapter mSearchAdapter;
 
 	private final Set<Equipement.Type> mSelectedTypes = new HashSet<Equipement.Type>();
 
@@ -118,11 +122,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 
 		EquipementManager manager = EquipementManager.getInstance();
 		Cursor cursor = manager.getCursor(getActivity().getContentResolver());
-		EquipementCursorAdapter adapter = new EquipementCursorAdapter(getActivity(), cursor);
+		mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
 
 		MenuItemWrapper menuItemWrapper = (MenuItemWrapper) menu.findItem(R.id.menu_search);
 		SearchView searchView = (SearchView) menuItemWrapper.getActionView();
-		searchView.setSuggestionsAdapter(adapter);
+		searchView.setSuggestionsAdapter(mSearchAdapter);
+		searchView.setOnSuggestionListener(this);
 
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
 		final Equipement.Type[] types = Equipement.Type.values();
@@ -173,6 +178,18 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public boolean onSuggestionSelect(int position) {
+		onSearchItemClick(position);
+		return true;
+	}
+
+	@Override
+	public boolean onSuggestionClick(int position) {
+		onSearchItemClick(position);
+		return true;
+	}
+
 	private void initMap() {
 		final UiSettings uiSettings = mGoogleMap.getUiSettings();
 		uiSettings.setScrollGesturesEnabled(true);
@@ -198,6 +215,36 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 
 			loadMarkers();
 		}
+	}
+
+	private void onSearchItemClick(int position) {
+		EquipementManager manager = EquipementManager.getInstance();
+		CursorWrapper cursorWrapper = (CursorWrapper) mSearchAdapter.getItem(position);
+		Equipement equipement = manager.getSingleFromCursorWrapper(cursorWrapper);
+		selectEquipement(equipement);
+	}
+
+	private void selectEquipement(Equipement equipement) {
+		InputPoint inputPoint = findInputPoint(equipement);
+		if (inputPoint != null) {
+			mClusterkraf.zoomToBounds(inputPoint);
+		} else {
+
+		}
+
+	}
+
+	private InputPoint findInputPoint(Equipement equipement) {
+		List<InputPoint> inputPoints = mInputPoints.get(equipement.getType());
+		if (inputPoints != null) {
+			for (InputPoint inputPoint : inputPoints) {
+				MarkerInfo info = (MarkerInfo) inputPoint.getTag();
+				if (info.getId() == equipement.getId()) {
+					return inputPoint;
+				}
+			}
+		}
+		return null;
 	}
 
 	private void loadMarkers() {

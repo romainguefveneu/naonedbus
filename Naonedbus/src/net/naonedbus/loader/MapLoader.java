@@ -48,7 +48,7 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 	private InputPoint createInputPoint(final Equipement equipement) {
 		final LatLng latLng = new LatLng(equipement.getLatitude(), equipement.getLongitude());
 		final InputPoint inputPoint = new InputPoint(latLng);
-		final MarkerInfo markerInfo = new MarkerInfo(equipement.getNom(), equipement.getType());
+		final MarkerInfo markerInfo = new MarkerInfo(equipement.getId(), equipement.getNom(), equipement.getType());
 		inputPoint.setTag(markerInfo);
 
 		return inputPoint;

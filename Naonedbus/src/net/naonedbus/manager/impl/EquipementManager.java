@@ -30,6 +30,7 @@ import net.naonedbus.provider.table.EquipementTable;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.CursorWrapper;
 import android.location.Location;
 import android.net.Uri;
 
@@ -493,6 +494,11 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 		item.setLatitude(c.getDouble(mColLatitude));
 		item.setLongitude(c.getDouble(mColLongitude));
 		return item;
+	}
+
+	public Equipement getSingleFromCursorWrapper(final CursorWrapper c) {
+		onIndexCursor(c);
+		return getSingleFromCursor(c);
 	}
 
 	@Override
