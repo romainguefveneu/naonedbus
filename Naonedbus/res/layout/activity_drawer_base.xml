@@ -43,6 +43,11 @@
             android:layout_below="@+id/tabs" />
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/singleFragmentContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ListView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"

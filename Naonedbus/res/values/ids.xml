@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -148,6 +148,7 @@
     <item name="menu_settings" type="id"/>
     <item name="menu_about" type="id"/>
     <item name="menu_skip" type="id"/>
+    <item name="menu_satellite" type="id"/>
 
     <!-- Card -->
     <item name="cardHoraireTag" type="string">tag:Horaire</item>
@@ -174,5 +175,7 @@
     <item name="dateKind" type="id"/>
     <item name="datePicker" type="id"/>
     <item name="timePicker" type="id"/>
+    <!-- Map -->
+    <item name="map" type="id"/>
 
 </resources>

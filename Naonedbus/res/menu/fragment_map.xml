@@ -13,5 +13,10 @@
         <menu>
         </menu>
     </item>
+    <item
+        android:id="@id/menu_satellite"
+        android:checkable="true"
+        android:showAsAction="never"
+        android:title="@string/action_view_satellite"/>
 
 </menu>

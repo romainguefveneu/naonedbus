@@ -92,6 +92,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
 	private TabsAdapter mSectionsPagerAdapter;
+	private ViewGroup mSingleFragmentContent;
 
 	private final OnItemClickListener mOnMenuItemCliclListener = new OnItemClickListener() {
 		@Override
@@ -134,6 +135,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 			}
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+		mSingleFragmentContent = (ViewGroup) findViewById(R.id.singleFragmentContent);
 
 		mSectionsPagerAdapter = new TabsAdapter(getSupportFragmentManager());
 
@@ -295,6 +298,28 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		}
 		mFragmentsTags = new String[classes.length];
 
+		if (classes.length == 1) {
+			setSingleFragment();
+		} else {
+			setMultipleFragments(fragmentHeader.getSelectedPosition(this));
+		}
+	}
+
+	private void setSingleFragment() {
+		final String fragmentTag = mClasses[0];
+		final FragmentManager fragmentManager = getSupportFragmentManager();
+		final FragmentTransaction transaction = fragmentManager.beginTransaction();
+		transaction.add(R.id.singleFragmentContent, Fragment.instantiate(MenuDrawerActivity.this, mClasses[0]),
+				fragmentTag);
+		transaction.commit();
+
+		mFragmentsTags[0] = fragmentTag;
+
+		mTabs.setVisibility(View.GONE);
+		mViewPager.setVisibility(View.GONE);
+	}
+
+	private void setMultipleFragments(final int selectedPosition) {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mViewPager.setOffscreenPageLimit(mClasses.length);
 
@@ -305,7 +330,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		}
 
 		mTabs.notifyDataSetChanged();
-		mViewPager.setCurrentItem(fragmentHeader.getSelectedPosition(this));
+		mViewPager.setCurrentItem(selectedPosition);
+		mViewPager.setVisibility(View.VISIBLE);
 	}
 
 	private void clearFragments() {

@@ -216,7 +216,7 @@ public class MapActivity extends SherlockMapActivity {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		final MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.activity_map, menu);
+		inflater.inflate(R.menu.fragment_map, menu);
 
 		if (mLocationProvider.isProviderEnabled() == false) {
 			menu.findItem(R.id.menu_location).setVisible(false);

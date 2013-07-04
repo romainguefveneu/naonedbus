@@ -116,6 +116,7 @@
     <string name="action_groupes_add">Ajouter un groupe</string>
     <string name="action_groupes_manage">Gérer les groupes</string>
     <string name="action_reverse">Inverser</string>
+    <string name="action_view_satellite">Vue satellite</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
     <string name="error_title_upgrade">La mise à jour ne s\'est pas bien passée</string>

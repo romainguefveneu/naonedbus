@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,21 +77,17 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	}
 
 	@Override
-	public View onCreateView(final LayoutInflater inflater,
-			final ViewGroup container, final Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (container == null) // must put this in
 			return null;
 
-		final View view = inflater.inflate(R.layout.fragment_map, container,
-				false);
+		final View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-		mSupportMapFragment = (SupportMapFragment) getFragmentManager()
-				.findFragmentById(R.id.map);
+		mSupportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
 		mGoogleMap = mSupportMapFragment.getMap();
 		mGoogleMap.setMyLocationEnabled(true);
 
-		mPreferences = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
+		mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 		final Equipement.Type[] types = Equipement.Type.values();
 		for (final Equipement.Type type : types) {
@@ -105,48 +103,43 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	}
 
 	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
+		final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+		ft.remove(fragment);
+		ft.commit();
+	}
+
+	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 
-		inflater.inflate(R.menu.activity_map, menu);
+		inflater.inflate(R.menu.fragment_map, menu);
 
-		// if (mLocationProvider.isProviderEnabled() == false) {
-		// menu.findItem(R.id.menu_location).setVisible(false);
-		// }
-
-		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers)
-				.getSubMenu();
+		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
 		final Equipement.Type[] types = Equipement.Type.values();
 		for (final Equipement.Type type : types) {
-			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES,
-					type.getId(), 0, type.getTitleRes());
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
 			item.setCheckable(true);
 		}
-
-		// final MenuItem item = filterSubMenu.add(0, MENU_ID_SATELLITE, 0,
-		// R.string.map_calque_satellite);
-		// item.setCheckable(true);
-		// item.setChecked(mMapView.isSatellite());
 	}
 
 	@Override
 	public void onPrepareOptionsMenu(final Menu menu) {
 		final Equipement.Type[] types = Equipement.Type.values();
-		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers)
-				.getSubMenu();
+		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
 
 		for (final Equipement.Type type : types) {
 			final MenuItem item = filterSubMenu.findItem(type.getId());
 			item.setChecked(mSelectedTypes.contains(type));
 		}
-
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getGroupId() == MENU_GROUP_TYPES) {
-			final Equipement.Type type = Equipement.Type.getTypeById(item
-					.getItemId());
+			final Equipement.Type type = Equipement.Type.getTypeById(item.getItemId());
 
 			item.setChecked(!item.isChecked());
 
@@ -161,7 +154,14 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 			}
 
 		} else {
-
+			if (item.getItemId() == R.id.menu_satellite) {
+				item.setChecked(!item.isChecked());
+				if (item.isChecked()) {
+					mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+				} else {
+					mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+				}
+			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -172,20 +172,17 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 		uiSettings.setZoomGesturesEnabled(true);
 		uiSettings.setCompassEnabled(true);
 
-		final Location currenLocation = mLocationProvider
-				.getLastKnownLocation();
+		final Location currenLocation = mLocationProvider.getLastKnownLocation();
 		if (currenLocation != null) {
-			final CameraUpdate cameraUpdate = CameraUpdateFactory
-					.newLatLngZoom(new LatLng(currenLocation.getLatitude(),
-							currenLocation.getLongitude()), 15);
+			final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
+					currenLocation.getLatitude(), currenLocation.getLongitude()), 15);
 			mGoogleMap.animateCamera(cameraUpdate);
 		}
 	}
 
 	private void initClusterkraf() {
 		if (mGoogleMap != null) {
-			final MarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(
-					getActivity());
+			final MarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
 			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
 			mOptions.setPixelDistanceToJoinCluster(100);
 
@@ -201,19 +198,18 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 			mClusterkraf.clear();
 		}
 
-		final Equipement.Type[] types = mSelectedTypes
-				.toArray(new Equipement.Type[mSelectedTypes.size()]);
+		final Equipement.Type[] types = mSelectedTypes.toArray(new Equipement.Type[mSelectedTypes.size()]);
 		mMapLoader = new MapLoader(getActivity(), this);
 		mMapLoader.execute(types);
 	}
 
-	private void loadMarkers(Equipement.Type type) {
+	private void loadMarkers(final Equipement.Type type) {
 		mMapLoader = new MapLoader(getActivity(), this);
 		mMapLoader.execute(type);
 	}
 
-	private void removeMarkers(Equipement.Type type) {
-		List<InputPoint> inputPoints = mInputPoints.get(type);
+	private void removeMarkers(final Equipement.Type type) {
+		final List<InputPoint> inputPoints = mInputPoints.get(type);
 		mClusterkraf.removeAll(inputPoints);
 	}
 
@@ -244,7 +240,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback {
 	@Override
 	public void onLayerLoaded(final ArrayList<InputPoint> result) {
 		if (result != null && !result.isEmpty()) {
-			MarkerInfo markerInfo = (MarkerInfo) result.get(0).getTag();
+			final MarkerInfo markerInfo = (MarkerInfo) result.get(0).getTag();
 			mInputPoints.put(markerInfo.getType(), result);
 
 			synchronized (mClusterkraf) {
