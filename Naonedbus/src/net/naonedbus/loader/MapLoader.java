@@ -2,16 +2,17 @@ package net.naonedbus.loader;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
-import net.naonedbus.manager.impl.EquipementManager;
-import net.naonedbus.map.MarkerInfo;
+import net.naonedbus.map.layerloader.BiclooMapLayer;
+import net.naonedbus.map.layerloader.EquipementMapLayer;
+import net.naonedbus.map.layerloader.MapLayer;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.twotoasters.clusterkraf.InputPoint;
 
 public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>, Void> {
@@ -19,39 +20,32 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 	private final WeakReference<MapLoaderCallback> mCallback;
 	private final WeakReference<Context> mContext;
 
+	private Map<Equipement.Type, MapLayer<?>> mLoaders;
+
 	public MapLoader(final Context context, final MapLoaderCallback callback) {
 		mContext = new WeakReference<Context>(context);
 		mCallback = new WeakReference<MapLoaderCallback>(callback);
+
+		mLoaders = new HashMap<Equipement.Type, MapLayer<?>>();
+		mLoaders.put(Type.TYPE_ARRET, new EquipementMapLayer(Type.TYPE_ARRET));
+		mLoaders.put(Type.TYPE_BICLOO, new BiclooMapLayer());
+		mLoaders.put(Type.TYPE_COVOITURAGE, new EquipementMapLayer(Type.TYPE_COVOITURAGE));
+		mLoaders.put(Type.TYPE_LILA, new EquipementMapLayer(Type.TYPE_LILA));
+		mLoaders.put(Type.TYPE_MARGUERITE, new EquipementMapLayer(Type.TYPE_MARGUERITE));
+		mLoaders.put(Type.TYPE_PARKING, new EquipementMapLayer(Type.TYPE_PARKING));
 	}
 
 	@Override
 	protected Void doInBackground(final Equipement.Type... types) {
-
-		final EquipementManager manager = EquipementManager.getInstance();
 		final Context context = mContext.get();
 		if (context != null) {
 			for (final Type type : types) {
-				final List<Equipement> equipements = manager.getEquipementsByType(context.getContentResolver(), type);
-				final ArrayList<InputPoint> inputPoints = new ArrayList<InputPoint>(equipements.size());
+				MapLayer<?> layer = mLoaders.get(type);
 
-				for (final Equipement equipement : equipements) {
-					final InputPoint inputPoint = createInputPoint(equipement);
-					inputPoints.add(inputPoint);
-				}
-
-				publishProgress(inputPoints);
+				publishProgress(layer.getInputPoints(context));
 			}
 		}
 		return null;
-	}
-
-	private InputPoint createInputPoint(final Equipement equipement) {
-		final LatLng latLng = new LatLng(equipement.getLatitude(), equipement.getLongitude());
-		final InputPoint inputPoint = new InputPoint(latLng);
-		final MarkerInfo markerInfo = new MarkerInfo(equipement.getId(), equipement.getNom(), equipement.getType());
-		inputPoint.setTag(markerInfo);
-
-		return inputPoint;
 	}
 
 	@Override

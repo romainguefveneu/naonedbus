@@ -14,7 +14,6 @@ import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.map.EquipementInfoWindowAdapter;
-import net.naonedbus.map.MarkerInfo;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
@@ -245,8 +244,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		final List<InputPoint> inputPoints = mInputPoints.get(equipement.getType());
 		if (inputPoints != null) {
 			for (final InputPoint inputPoint : inputPoints) {
-				final MarkerInfo info = (MarkerInfo) inputPoint.getTag();
-				if (info.getId() == equipement.getId()) {
+				final Equipement item = (Equipement) inputPoint.getTag();
+				if (item.getId() == equipement.getId()) {
 					return inputPoint;
 				}
 			}
@@ -301,8 +300,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onLayerLoaded(final ArrayList<InputPoint> result) {
 		if (result != null && !result.isEmpty()) {
-			final MarkerInfo markerInfo = (MarkerInfo) result.get(0).getTag();
-			mInputPoints.put(markerInfo.getType(), result);
+//			final Equipement markerInfo = (Equipement) result.get(0).getTag();
+//			mInputPoints.put(markerInfo.getType(), result);
 
 			synchronized (mClusterkraf) {
 				mClusterkraf.addAll(result);

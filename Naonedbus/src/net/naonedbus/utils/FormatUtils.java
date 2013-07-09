@@ -20,11 +20,9 @@ package net.naonedbus.utils;
 
 import net.naonedbus.R;
 import android.content.Context;
-import android.graphics.Color;
 import android.location.Address;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 
 public abstract class FormatUtils {
@@ -134,12 +132,15 @@ public abstract class FormatUtils {
 		return result;
 	}
 
-	public static CharSequence addLabelBefore(final String text, final String label) {
-		final SpannableString spannable = new SpannableString(text + "  " + label);
-		spannable.setSpan(new ForegroundColorSpan(Color.GRAY), text.length(), spannable.length(),
-				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		spannable.setSpan(new RelativeSizeSpan(0.7f), text.length(), spannable.length(),
-				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		return spannable;
+	public static String formatBicloos(Context context, int availableBikes, int availableStands) {
+		final String bikes = context.getResources().getQuantityString(R.plurals.bicloo_velos_disponibles,
+				availableBikes, availableBikes);
+		final String stands = context.getResources().getQuantityString(R.plurals.bicloo_places_disponibles,
+				availableStands, availableStands);
+
+		final String description = context.getResources().getQuantityString(R.plurals.bicloo,
+				availableBikes + availableStands, bikes, stands);
+
+		return description;
 	}
 }

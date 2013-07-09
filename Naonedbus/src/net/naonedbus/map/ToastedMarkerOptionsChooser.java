@@ -63,10 +63,11 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 						clusterSize));
 				title = String.valueOf(clusterSize);
 			} else {
-				final MarkerInfo markerInfo = (MarkerInfo) clusterPoint.getPointAtOffset(0).getTag();
-				final Equipement.Type type = markerInfo.getType();
+				//TODO : Utiliser le map layer pour récupérer le markeroption.
+				final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
+				final Equipement.Type type = equipement.getType();
 				icon = BitmapDescriptorFactory.fromResource(type.getMapPin());
-				title = markerInfo.getTitle();
+				title = equipement.getNom();
 			}
 			markerOptions.icon(icon);
 			markerOptions.title(title);

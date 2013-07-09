@@ -3,6 +3,7 @@ package net.naonedbus.map;
 import java.util.HashMap;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.Equipement;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -28,10 +29,10 @@ public class EquipementInfoWindowAdapter implements ClusterkrafInfoWindowAdapter
 	@Override
 	public View getInfoContents(final Marker marker) {
 		final ClusterPoint clusterPoint = mMarkerClusterPoints.get(marker);
-		final MarkerInfo markerInfo = (MarkerInfo) clusterPoint.getPointAtOffset(0).getTag();
+		final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
 
-		((TextView) mContentView.findViewById(R.id.itemTitle)).setText(markerInfo.getTitle());
-		((TextView) mContentView.findViewById(R.id.itemDescription)).setText(markerInfo.getType().name());
+		((TextView) mContentView.findViewById(R.id.itemTitle)).setText(equipement.getNom());
+		((TextView) mContentView.findViewById(R.id.itemDescription)).setText(equipement.getDetails());
 
 		return mContentView;
 	}
