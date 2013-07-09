@@ -129,10 +129,10 @@ public class MainActivity extends MenuDrawerActivity {
 					startActivity(intent);
 				} else {
 					// Afficher l'élément sur la carte
-					final ParamIntent intent = new ParamIntent(this, MapActivity.class);
-					intent.putExtra(MapActivity.Param.itemId, selectedItemId);
-					intent.putExtra(MapActivity.Param.itemType, selectedItemType.getId());
-					startActivity(intent);
+//					final ParamIntent intent = new ParamIntent(this, MapActivity.class);
+//					intent.putExtra(MapActivity.Param.itemId, selectedItemId);
+//					intent.putExtra(MapActivity.Param.itemType, selectedItemType.getId());
+//					startActivity(intent);
 				}
 			}
 			queryIntent.setAction(null);

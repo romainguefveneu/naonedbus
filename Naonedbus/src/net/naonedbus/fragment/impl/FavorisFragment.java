@@ -30,9 +30,7 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretDetailActivity;
 import net.naonedbus.activity.impl.GroupesActivity;
-import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
-import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.Groupe;
@@ -45,7 +43,6 @@ import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.helper.FavorisHelper.FavorisActionListener;
 import net.naonedbus.helper.GroupesHelper;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
 import net.naonedbus.manager.impl.FavorisViewManager;
@@ -465,11 +462,11 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	private void menuPlace() {
-		final Favori item = getFirstSelectedItem();
-		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-		intent.putExtra(MapActivity.Param.itemId, item.getIdStation());
-		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
-		startActivity(intent);
+//		final Favori item = getFirstSelectedItem();
+//		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+//		intent.putExtra(MapActivity.Param.itemId, item.getIdStation());
+//		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
+//		startActivity(intent);
 	}
 
 	private void menuShowPlan() {

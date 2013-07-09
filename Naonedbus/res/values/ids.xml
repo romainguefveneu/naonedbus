@@ -177,5 +177,6 @@
     <item name="timePicker" type="id"/>
     <!-- Map -->
     <item name="map" type="id"/>
+    <item name="moreAction" type="id"/>
 
 </resources>

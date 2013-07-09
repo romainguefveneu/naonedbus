@@ -24,9 +24,7 @@ import java.util.List;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.BiclooDetailActivity;
-import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.BiclooComparator;
 import net.naonedbus.comparator.BiclooDistanceComparator;
@@ -271,10 +269,10 @@ public class BicloosFragment extends CustomListFragment {
 
 		switch (item.getItemId()) {
 		case R.id.menu_show_plan:
-			final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-			intent.putExtra(MapActivity.Param.itemId, bicloo.getId());
-			intent.putExtra(MapActivity.Param.itemType, Equipement.Type.TYPE_BICLOO.getId());
-			startActivity(intent);
+//			final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+//			intent.putExtra(MapActivity.Param.itemId, bicloo.getId());
+//			intent.putExtra(MapActivity.Param.itemType, Equipement.Type.TYPE_BICLOO.getId());
+//			startActivity(intent);
 			break;
 		case R.id.menu_favori:
 			if (isFavori(bicloo)) {

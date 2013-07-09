@@ -13,6 +13,7 @@ import net.naonedbus.bean.Equipement;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
 import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.map.EquipementInfoWindowAdapter;
 import net.naonedbus.map.MarkerInfo;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.provider.impl.MyLocationProvider;
@@ -49,8 +50,6 @@ import com.twotoasters.clusterkraf.MarkerOptionsChooser;
 
 public class MapFragment extends SherlockFragment implements MapLoaderCallback, OnSuggestionListener {
 
-	private static final String LOG_TAG = "MapActivity";
-
 	private static final int MENU_GROUP_TYPES = 1;
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
@@ -62,6 +61,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private GoogleMap mGoogleMap;
 	private Clusterkraf mClusterkraf;
 	private MapLoader mMapLoader;
+	private MenuItemWrapper mSearchMenuItem;
+	private EquipementInfoWindowAdapter mEquipementInfoWindowAdapter;
 
 	private EquipementCursorAdapter mSearchAdapter;
 
@@ -86,9 +87,10 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 		final View view = inflater.inflate(R.layout.fragment_map, container, false);
 
+		mEquipementInfoWindowAdapter = new EquipementInfoWindowAdapter(inflater);
+
 		mSupportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
 		mGoogleMap = mSupportMapFragment.getMap();
-		mGoogleMap.setMyLocationEnabled(true);
 
 		mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
@@ -107,11 +109,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onDestroyView() {
-		super.onDestroyView();
 		final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
 		final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 		ft.remove(fragment);
 		ft.commit();
+		super.onDestroyView();
 	}
 
 	@Override
@@ -120,12 +122,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 		inflater.inflate(R.menu.fragment_map, menu);
 
-		EquipementManager manager = EquipementManager.getInstance();
-		Cursor cursor = manager.getCursor(getActivity().getContentResolver());
+		final EquipementManager manager = EquipementManager.getInstance();
+		final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
 		mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
 
-		MenuItemWrapper menuItemWrapper = (MenuItemWrapper) menu.findItem(R.id.menu_search);
-		SearchView searchView = (SearchView) menuItemWrapper.getActionView();
+		mSearchMenuItem = (MenuItemWrapper) menu.findItem(R.id.menu_search);
+		final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 		searchView.setSuggestionsAdapter(mSearchAdapter);
 		searchView.setOnSuggestionListener(this);
 
@@ -179,13 +181,13 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	}
 
 	@Override
-	public boolean onSuggestionSelect(int position) {
+	public boolean onSuggestionSelect(final int position) {
 		onSearchItemClick(position);
 		return true;
 	}
 
 	@Override
-	public boolean onSuggestionClick(int position) {
+	public boolean onSuggestionClick(final int position) {
 		onSearchItemClick(position);
 		return true;
 	}
@@ -195,6 +197,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		uiSettings.setScrollGesturesEnabled(true);
 		uiSettings.setZoomGesturesEnabled(true);
 		uiSettings.setCompassEnabled(true);
+
+		mGoogleMap.setMyLocationEnabled(true);
 
 		final Location currenLocation = mLocationProvider.getLastKnownLocation();
 		if (currenLocation != null) {
@@ -212,33 +216,36 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 			// customize the options before you construct a Clusterkraf instance
 			mClusterkraf = new Clusterkraf(mGoogleMap, mOptions, null);
+			mClusterkraf.setClusterkrafInfoWindowAdapter(mEquipementInfoWindowAdapter);
 
 			loadMarkers();
 		}
 	}
 
-	private void onSearchItemClick(int position) {
-		EquipementManager manager = EquipementManager.getInstance();
-		CursorWrapper cursorWrapper = (CursorWrapper) mSearchAdapter.getItem(position);
-		Equipement equipement = manager.getSingleFromCursorWrapper(cursorWrapper);
+	private void onSearchItemClick(final int position) {
+		final EquipementManager manager = EquipementManager.getInstance();
+		final CursorWrapper cursorWrapper = (CursorWrapper) mSearchAdapter.getItem(position);
+		final Equipement equipement = manager.getSingleFromCursorWrapper(cursorWrapper);
 		selectEquipement(equipement);
+
+		mSearchMenuItem.collapseActionView();
 	}
 
-	private void selectEquipement(Equipement equipement) {
-		InputPoint inputPoint = findInputPoint(equipement);
+	private void selectEquipement(final Equipement equipement) {
+		final InputPoint inputPoint = findInputPoint(equipement);
 		if (inputPoint != null) {
-			mClusterkraf.zoomToBounds(inputPoint);
+			mClusterkraf.showInfoWindow(inputPoint);
 		} else {
 
 		}
 
 	}
 
-	private InputPoint findInputPoint(Equipement equipement) {
-		List<InputPoint> inputPoints = mInputPoints.get(equipement.getType());
+	private InputPoint findInputPoint(final Equipement equipement) {
+		final List<InputPoint> inputPoints = mInputPoints.get(equipement.getType());
 		if (inputPoints != null) {
-			for (InputPoint inputPoint : inputPoints) {
-				MarkerInfo info = (MarkerInfo) inputPoint.getTag();
+			for (final InputPoint inputPoint : inputPoints) {
+				final MarkerInfo info = (MarkerInfo) inputPoint.getTag();
 				if (info.getId() == equipement.getId()) {
 					return inputPoint;
 				}

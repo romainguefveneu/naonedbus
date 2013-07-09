@@ -23,13 +23,11 @@ import java.util.List;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.EquipementComparator;
 import net.naonedbus.comparator.EquipementDistanceComparator;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.manager.impl.EquipementManager.SousType;
 import net.naonedbus.provider.impl.MyLocationProvider;
@@ -135,11 +133,11 @@ public abstract class EquipementFragment extends CustomListFragment {
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
-		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-		intent.putExtra(MapActivity.Param.itemId, equipement.getId());
-		intent.putExtra(MapActivity.Param.itemType, equipement.getType().getId());
-		startActivity(intent);
+//		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
+//		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+//		intent.putExtra(MapActivity.Param.itemId, equipement.getId());
+//		intent.putExtra(MapActivity.Param.itemType, equipement.getType().getId());
+//		startActivity(intent);
 	}
 
 	@Override

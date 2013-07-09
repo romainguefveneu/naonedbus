@@ -27,9 +27,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AddEventActivity;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
-import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.Ligne;
@@ -297,10 +295,10 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	}
 
 	protected void showArretPlan() {
-		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-		intent.putExtra(MapActivity.Param.itemId, mArret.getIdStation());
-		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
-		startActivity(intent);
+//		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+//		intent.putExtra(MapActivity.Param.itemId, mArret.getIdStation());
+//		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
+//		startActivity(intent);
 	}
 
 	private void menuComment() {

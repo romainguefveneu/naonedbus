@@ -25,7 +25,6 @@ import java.net.URL;
 import java.util.Locale;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.card.Card;
 import android.content.Context;
 import android.content.Intent;
@@ -66,10 +65,12 @@ public class MapCard extends Card<Bitmap> {
 
 	@Override
 	protected Intent getMoreIntent() {
-		final Intent intent = new Intent(getContext(), MapActivity.class);
-		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_map);
-		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_navigate);
-		return intent;
+		// final Intent intent = new Intent(getContext(), MapActivity.class);
+		// intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_map);
+		// intent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
+		// R.drawable.ic_card_navigate);
+		// return intent;
+		return null;
 	}
 
 	@Override
