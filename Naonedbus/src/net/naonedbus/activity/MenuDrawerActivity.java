@@ -92,7 +92,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
 	private TabsAdapter mSectionsPagerAdapter;
-	private ViewGroup mSingleFragmentContent;
 
 	private final OnItemClickListener mOnMenuItemCliclListener = new OnItemClickListener() {
 		@Override
@@ -136,8 +135,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		mSingleFragmentContent = (ViewGroup) findViewById(R.id.singleFragmentContent);
-
 		mSectionsPagerAdapter = new TabsAdapter(getSupportFragmentManager());
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -151,6 +148,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		mTabs.setViewPager(mViewPager);
+		mTabs.setShouldExpand(!getResources().getBoolean(R.bool.isTablet));
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_MENU_POSITION)) {
 			mCurrentMenuItem = savedInstanceState.getInt(BUNDLE_MENU_POSITION);

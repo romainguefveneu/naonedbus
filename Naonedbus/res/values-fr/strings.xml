@@ -11,6 +11,7 @@
     <string name="updating">Mise à jour&#8230;</string>
     <string name="updating_complete">Mise à jour terminée</string>
     <string name="setup">Installation en cours&#8230;</string>
+    <string name="setup_complete">Installation terminée</string>
     <string name="copy">Copier</string>
     <string name="skip">Passer</string>
     <string name="next">Suivant</string>

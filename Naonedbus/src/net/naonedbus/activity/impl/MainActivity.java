@@ -59,10 +59,12 @@ public class MainActivity extends MenuDrawerActivity {
 			final UpdateType updateType = updaterManager.needUpdate(this);
 
 			if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
+				hideActionBar();
 				setBaseMenuVisible(false);
 				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
 				showTutorial();
 			} else if (UpdateType.UPGRADE.equals(updateType)) {
+				hideActionBar();
 				setBaseMenuVisible(false);
 				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
 			} else {
@@ -78,13 +80,15 @@ public class MainActivity extends MenuDrawerActivity {
 		super.onStop();
 	}
 
-	private void showTutorial() {
+	private void hideActionBar() {
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setDisplayHomeAsUpEnabled(false);
 		actionBar.setDisplayUseLogoEnabled(true);
 		actionBar.setLogo(R.drawable.ic_logo);
+	}
 
+	private void showTutorial() {
 		startActivity(new Intent(MainActivity.this, TutorialActivity.class));
 		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 	}
@@ -129,10 +133,13 @@ public class MainActivity extends MenuDrawerActivity {
 					startActivity(intent);
 				} else {
 					// Afficher l'élément sur la carte
-//					final ParamIntent intent = new ParamIntent(this, MapActivity.class);
-//					intent.putExtra(MapActivity.Param.itemId, selectedItemId);
-//					intent.putExtra(MapActivity.Param.itemType, selectedItemType.getId());
-//					startActivity(intent);
+					// final ParamIntent intent = new ParamIntent(this,
+					// MapActivity.class);
+					// intent.putExtra(MapActivity.Param.itemId,
+					// selectedItemId);
+					// intent.putExtra(MapActivity.Param.itemType,
+					// selectedItemType.getId());
+					// startActivity(intent);
 				}
 			}
 			queryIntent.setAction(null);

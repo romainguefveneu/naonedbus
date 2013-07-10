@@ -4,40 +4,23 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
-import net.naonedbus.provider.DatabaseActionObserver;
+import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.VersionUtils;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
 public class UpdateFragment extends SherlockFragment {
-	private final DatabaseActionObserver mListener = new DatabaseActionObserver(new Handler()) {
-
-		@Override
-		public void onUpgrade(final int oldVersion) {
-		}
-
-		@Override
-		public void onCreate() {
-
-		}
-
-		@Override
-		public void onUpgradeDone(final boolean success) {
-
-		}
-	};
-
 	private UpdateCard mUpdateCard;
 
 	@Override
@@ -58,8 +41,16 @@ public class UpdateFragment extends SherlockFragment {
 				((MainActivity) getActivity()).onUpgradeDone();
 			}
 		});
-		mUpdateCard.show();
 
+		final UpdaterManager updaterManager = new UpdaterManager();
+		final UpdateType updateType = updaterManager.needUpdate(getActivity());
+		if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
+			mUpdateCard.setTitles(R.string.setup, R.string.setup_complete);
+		} else {
+			mUpdateCard.setTitles(R.string.updating, R.string.updating_complete);
+		}
+
+		mUpdateCard.show();
 		return view;
 	}
 
@@ -68,6 +59,9 @@ public class UpdateFragment extends SherlockFragment {
 		private final Context mContext;
 		private final OnClickListener mOnNextClickListener;
 		private final View mUpdateView;
+
+		private int mTitleProgressId;
+		private int mTitleCompleteId;
 
 		public UpdateCard(final Context context, final View view, final OnClickListener onNextClickListener) {
 			mContext = context;
@@ -82,6 +76,8 @@ public class UpdateFragment extends SherlockFragment {
 			((TextView) mUpdateView.findViewById(android.R.id.title)).setTypeface(robotoTypeface);
 			((TextView) mUpdateView.findViewById(R.id.codename)).setTypeface(robotoTypeface);
 
+			((TextView) mUpdateView.findViewById(android.R.id.title)).setText(mTitleProgressId);
+
 			final String version = mContext.getString(R.string.version_number, VersionUtils.getVersion(mContext));
 			((TextView) mUpdateView.findViewById(R.id.version)).setText(version);
 
@@ -89,13 +85,20 @@ public class UpdateFragment extends SherlockFragment {
 			((TextView) mUpdateView.findViewById(R.id.versionNotes)).setText(versionNotes);
 
 			mUpdateView.findViewById(R.id.nextButton).setOnClickListener(mOnNextClickListener);
-			mUpdateView.findViewById(R.id.nextButton).setEnabled(false);
 		}
 
 		public void setComplete() {
-			((TextView) mUpdateView.findViewById(android.R.id.title)).setText(R.string.updating_complete);
+			((TextView) mUpdateView.findViewById(android.R.id.title)).setText(mTitleCompleteId);
 			mUpdateView.findViewById(android.R.id.progress).setVisibility(View.GONE);
-			mUpdateView.findViewById(R.id.nextButton).setEnabled(true);
+
+			final View nextButton = mUpdateView.findViewById(R.id.nextButton);
+			nextButton.setVisibility(View.VISIBLE);
+			nextButton.startAnimation(AnimationUtils.loadAnimation(mContext, android.R.anim.fade_in));
+		}
+
+		public void setTitles(final int titleProgressId, final int titleCompleteId) {
+			mTitleProgressId = titleProgressId;
+			mTitleCompleteId = titleCompleteId;
 		}
 
 	}

@@ -90,7 +90,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:enabled="false"
-            android:src="@drawable/ic_action_done" />
+            android:src="@drawable/ic_action_done"
+            android:visibility="invisible" />
     </RelativeLayout>
 
 </LinearLayout>

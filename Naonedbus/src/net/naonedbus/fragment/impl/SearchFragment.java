@@ -96,10 +96,13 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 					startActivity(intent);
 				} else {
 					// Afficher l'élément sur la carte
-//					final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-//					intent.putExtra(MapActivity.Param.itemId, selectedItemId);
-//					intent.putExtra(MapActivity.Param.itemType, selectedItemType.getId());
-//					startActivity(intent);
+					// final ParamIntent intent = new ParamIntent(getActivity(),
+					// MapActivity.class);
+					// intent.putExtra(MapActivity.Param.itemId,
+					// selectedItemId);
+					// intent.putExtra(MapActivity.Param.itemType,
+					// selectedItemType.getId());
+					// startActivity(intent);
 				}
 				getActivity().finish();
 			}
@@ -133,9 +136,9 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 			public void run() {
 				final Activity activity = getActivity();
 				if (activity != null) {
-					final InputMethodManager imm = (InputMethodManager) activity
-							.getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_NOT_ALWAYS);
+					final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+							Context.INPUT_METHOD_SERVICE);
+					imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
 				}
 			}
 		}, 500);
@@ -151,7 +154,7 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 
 		final InputMethodManager imm = (InputMethodManager) getActivity()
 				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, InputMethodManager.HIDE_NOT_ALWAYS);
+		imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 		super.onDestroy();
 	}
 
@@ -165,11 +168,11 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 			intent = new ParamIntent(getActivity(), ParcoursActivity.class);
 			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, (int) id);
 		} else {
-//			intent = new ParamIntent(getActivity(), MapActivity.class);
-//			intent.putExtra(MapActivity.Param.itemId, (int) id);
-//			intent.putExtra(MapActivity.Param.itemType, idType);
+			// intent = new ParamIntent(getActivity(), MapActivity.class);
+			// intent.putExtra(MapActivity.Param.itemId, (int) id);
+			// intent.putExtra(MapActivity.Param.itemType, idType);
 		}
-//		startActivity(intent);
+		// startActivity(intent);
 	}
 
 	@Override

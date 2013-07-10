@@ -166,6 +166,7 @@ public class FavorisHelper {
 		adb.setView(alertDialogView);
 		adb.setTitle(R.string.dialog_title_export);
 		adb.setPositiveButton(android.R.string.ok, null);
+		adb.setCancelable(false);
 		adb.setNeutralButton(R.string.copy, new OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
