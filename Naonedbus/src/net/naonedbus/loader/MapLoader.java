@@ -10,6 +10,7 @@ import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.map.layer.loader.BiclooMapLoader;
 import net.naonedbus.map.layer.loader.EquipementMapLoader;
 import net.naonedbus.map.layer.loader.MapLayerLoader;
+import net.naonedbus.map.layer.loader.ParkingMapLoader;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -32,7 +33,7 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 		mLoaders.put(Type.TYPE_COVOITURAGE, new EquipementMapLoader(Type.TYPE_COVOITURAGE));
 		mLoaders.put(Type.TYPE_LILA, new EquipementMapLoader(Type.TYPE_LILA));
 		mLoaders.put(Type.TYPE_MARGUERITE, new EquipementMapLoader(Type.TYPE_MARGUERITE));
-		mLoaders.put(Type.TYPE_PARKING, new EquipementMapLoader(Type.TYPE_PARKING));
+		mLoaders.put(Type.TYPE_PARKING, new ParkingMapLoader());
 	}
 
 	@Override

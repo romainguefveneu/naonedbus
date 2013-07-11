@@ -1,25 +1,20 @@
 package net.naonedbus.map.layer;
 
-import java.util.HashMap;
-
 import net.naonedbus.R;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.twotoasters.clusterkraf.ClusterPoint;
-import com.twotoasters.clusterkraf.ClusterkrafInfoWindowAdapter;
 
-public abstract class MapLayer<T> implements ClusterkrafInfoWindowAdapter {
+public abstract class MapLayer<T> {
 
 	private final View mContentView;
 	private final TextView mTitle;
 	private final TextView mDescription;
-
-	private HashMap<Marker, ClusterPoint> mMarkerClusterPoints;
 
 	public MapLayer(final LayoutInflater inflater) {
 		mContentView = inflater.inflate(R.layout.map_info_window, null);
@@ -28,24 +23,10 @@ public abstract class MapLayer<T> implements ClusterkrafInfoWindowAdapter {
 		mDescription = ((TextView) mContentView.findViewById(R.id.itemDescription));
 	}
 
-	@Override
-	public final void setMarkersClustersMap(final HashMap<Marker, ClusterPoint> map) {
-		mMarkerClusterPoints = map;
-	}
-
-	@Override
-	public final View getInfoContents(final Marker marker) {
-		final ClusterPoint clusterPoint = mMarkerClusterPoints.get(marker);
-		@SuppressWarnings("unchecked")
-		final T tag = (T) clusterPoint.getPointAtOffset(0).getTag();
-		bindInfoContents(mContentView.getContext(), tag);
-
+	@SuppressWarnings("unchecked")
+	public final View getInfoContents(final Object item) {
+		bindInfoContents(mContentView.getContext(), (T) item);
 		return mContentView;
-	}
-
-	@Override
-	public final View getInfoWindow(final Marker marker) {
-		return null;
 	}
 
 	protected abstract void bindInfoContents(Context context, final T item);
@@ -58,6 +39,11 @@ public abstract class MapLayer<T> implements ClusterkrafInfoWindowAdapter {
 
 	protected final void setInfoDescription(final CharSequence description) {
 		mDescription.setText(description);
+		if (TextUtils.isEmpty(description)) {
+			mDescription.setVisibility(View.GONE);
+		} else {
+			mDescription.setVisibility(View.VISIBLE);
+		}
 	}
 
 }

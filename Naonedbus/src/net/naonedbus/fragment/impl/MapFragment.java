@@ -11,12 +11,15 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.parking.Parking;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.map.layer.BiclooMapLayer;
 import net.naonedbus.map.layer.EquipementMapLayer;
+import net.naonedbus.map.layer.ParkingMapLayer;
+import net.naonedbus.map.layer.ProxyInfoWindowAdapter;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import android.content.SharedPreferences;
@@ -106,10 +109,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onDestroyView() {
-		final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-		final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-		ft.remove(fragment);
-		ft.commit();
+		if (isResumed()) {
+			final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
+			final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+			ft.remove(fragment);
+			ft.commit();
+		}
 		super.onDestroyView();
 	}
 
@@ -210,13 +215,19 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			final ToastedMarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
 			markerOptionsChooser.registerMapLayer(Equipement.class, new EquipementMapLayer(inflater));
 			markerOptionsChooser.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
+			markerOptionsChooser.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
+
+			ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter();
+			infoWindowAdapter.registerMapLayer(Equipement.class, new EquipementMapLayer(inflater));
+			infoWindowAdapter.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
+			infoWindowAdapter.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
 
 			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
-			mOptions.setPixelDistanceToJoinCluster(100);
+			mOptions.setPixelDistanceToJoinCluster(80);
 
 			// customize the options before you construct a Clusterkraf instance
 			mClusterkraf = new Clusterkraf(mGoogleMap, mOptions, null);
-			// mClusterkraf.setClusterkrafInfoWindowAdapter(mEquipementInfoWindowAdapter);
+			mClusterkraf.setClusterkrafInfoWindowAdapter(infoWindowAdapter);
 
 			loadMarkers();
 		}

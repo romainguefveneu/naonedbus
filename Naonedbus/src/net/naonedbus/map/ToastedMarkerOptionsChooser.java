@@ -3,6 +3,7 @@ package net.naonedbus.map;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.naonedbus.R;
 import net.naonedbus.map.layer.MapLayer;
@@ -42,7 +43,7 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 		mClusterPaintMedium.setColor(Color.WHITE);
 		mClusterPaintMedium.setAlpha(255);
 		mClusterPaintMedium.setTextAlign(Paint.Align.CENTER);
-		mClusterPaintMedium.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC));
+		mClusterPaintMedium.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD));
 		mClusterPaintMedium.setTextSize(res.getDimension(R.dimen.cluster_text_size_medium));
 		mClusterPaintMedium.setAntiAlias(true);
 
@@ -72,11 +73,18 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 				markerOptions.title(title);
 			} else {
 				final Object tag = clusterPoint.getPointAtOffset(0).getTag();
+				Class<?> tagClass = tag.getClass();
 
-				final MapLayer<?> mapLayer = mLayerChoosers.get(tag.getClass());
-				if (mapLayer != null) {
-					mapLayer.chooseMarker(markerOptions, clusterPoint);
+				MapLayer<?> mapLayer = null;
+				for (Entry<Class<?>, MapLayer<?>> item : mLayerChoosers.entrySet()) {
+					Class<?> key = item.getKey();
+					if (tagClass.isAssignableFrom(key) || key.isAssignableFrom(tagClass)) {
+						mapLayer = item.getValue();
+						break;
+					}
 				}
+
+				mapLayer.chooseMarker(markerOptions, clusterPoint);
 			}
 			markerOptions.anchor(0.5f, 1.0f);
 		}
@@ -100,16 +108,16 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 		float originY;
 		if (clusterSize < 100) {
 			paint = mClusterPaintLarge;
-			originY = bitmap.getHeight() * 0.64f;
+			originY = bitmap.getHeight() * 0.72f;
 		} else if (clusterSize < 1000) {
 			paint = mClusterPaintMedium;
-			originY = bitmap.getHeight() * 0.6f;
+			originY = bitmap.getHeight() * 0.72f;
 		} else {
 			paint = mClusterPaintSmall;
-			originY = bitmap.getHeight() * 0.56f;
+			originY = bitmap.getHeight() * 0.72f;
 		}
 
-		canvas.drawText(String.valueOf(clusterSize), bitmap.getWidth() * 0.5f, originY, paint);
+		canvas.drawText(String.valueOf(clusterSize), bitmap.getWidth() * 0.52f, originY, paint);
 
 		return bitmap;
 	}

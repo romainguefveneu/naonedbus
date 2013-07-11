@@ -19,6 +19,7 @@
 package net.naonedbus.utils;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import android.content.Context;
 import android.location.Address;
 import android.text.Spannable;
@@ -142,5 +143,21 @@ public abstract class FormatUtils {
 				availableBikes + availableStands, bikes, stands);
 
 		return description;
+	}
+
+	public static String formatParkingPublic(Context context, ParkingPublicStatut status, int placesDisponibles) {
+		String detail;
+		if (status == ParkingPublicStatut.OUVERT) {
+			if (placesDisponibles > 0) {
+				detail = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
+						placesDisponibles, placesDisponibles);
+			} else {
+				detail = context.getString(R.string.parking_places_disponibles_zero);
+			}
+		} else {
+			detail = context.getString(status.getTitleRes());
+		}
+
+		return detail;
 	}
 }
