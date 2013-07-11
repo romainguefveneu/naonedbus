@@ -1,9 +1,11 @@
 package net.naonedbus.map;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.map.layer.MapLayer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,54 +25,59 @@ import com.twotoasters.clusterkraf.MarkerOptionsChooser;
 
 public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 
-	private final WeakReference<Context> contextRef;
-	private final Paint clusterPaintLarge;
-	private final Paint clusterPaintMedium;
-	private final Paint clusterPaintSmall;
+	private final WeakReference<Context> mContextRef;
+	private final Paint mClusterPaintLarge;
+	private final Paint mClusterPaintMedium;
+	private final Paint mClusterPaintSmall;
+	private final Map<Class<?>, MapLayer<?>> mLayerChoosers;
 
 	public ToastedMarkerOptionsChooser(final Context context) {
-		this.contextRef = new WeakReference<Context>(context);
+		mContextRef = new WeakReference<Context>(context);
+
+		mLayerChoosers = new HashMap<Class<?>, MapLayer<?>>();
 
 		final Resources res = context.getResources();
 
-		clusterPaintMedium = new Paint();
-		clusterPaintMedium.setColor(Color.WHITE);
-		clusterPaintMedium.setAlpha(255);
-		clusterPaintMedium.setTextAlign(Paint.Align.CENTER);
-		clusterPaintMedium.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC));
-		clusterPaintMedium.setTextSize(res.getDimension(R.dimen.cluster_text_size_medium));
-		clusterPaintMedium.setAntiAlias(true);
+		mClusterPaintMedium = new Paint();
+		mClusterPaintMedium.setColor(Color.WHITE);
+		mClusterPaintMedium.setAlpha(255);
+		mClusterPaintMedium.setTextAlign(Paint.Align.CENTER);
+		mClusterPaintMedium.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD_ITALIC));
+		mClusterPaintMedium.setTextSize(res.getDimension(R.dimen.cluster_text_size_medium));
+		mClusterPaintMedium.setAntiAlias(true);
 
-		clusterPaintSmall = new Paint(clusterPaintMedium);
-		clusterPaintSmall.setTextSize(res.getDimension(R.dimen.cluster_text_size_small));
+		mClusterPaintSmall = new Paint(mClusterPaintMedium);
+		mClusterPaintSmall.setTextSize(res.getDimension(R.dimen.cluster_text_size_small));
 
-		clusterPaintLarge = new Paint(clusterPaintMedium);
-		clusterPaintLarge.setTextSize(res.getDimension(R.dimen.cluster_text_size_large));
+		mClusterPaintLarge = new Paint(mClusterPaintMedium);
+		mClusterPaintLarge.setTextSize(res.getDimension(R.dimen.cluster_text_size_large));
+	}
+
+	public void registerMapLayer(final Class<?> layerTagClass, final MapLayer<?> mapLayer) {
+		mLayerChoosers.put(layerTagClass, mapLayer);
 	}
 
 	@Override
 	public void choose(final MarkerOptions markerOptions, final ClusterPoint clusterPoint) {
-		final Context context = contextRef.get();
+		final Context context = mContextRef.get();
 		if (context != null) {
 			final Resources res = context.getResources();
 			final boolean isCluster = clusterPoint.size() > 1;
-			BitmapDescriptor icon;
-			String title = "";
 			if (isCluster) {
-				title = String.valueOf(clusterPoint.size());
 				final int clusterSize = clusterPoint.size();
-				icon = BitmapDescriptorFactory.fromBitmap(getClusterBitmap(res, R.drawable.ic_map_pin_cluster,
-						clusterSize));
-				title = String.valueOf(clusterSize);
+				final BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(getClusterBitmap(res,
+						R.drawable.ic_map_pin_cluster, clusterSize));
+				final String title = String.valueOf(clusterSize);
+				markerOptions.icon(icon);
+				markerOptions.title(title);
 			} else {
-				//TODO : Utiliser le map layer pour récupérer le markeroption.
-				final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
-				final Equipement.Type type = equipement.getType();
-				icon = BitmapDescriptorFactory.fromResource(type.getMapPin());
-				title = equipement.getNom();
+				final Object tag = clusterPoint.getPointAtOffset(0).getTag();
+
+				final MapLayer<?> mapLayer = mLayerChoosers.get(tag.getClass());
+				if (mapLayer != null) {
+					mapLayer.chooseMarker(markerOptions, clusterPoint);
+				}
 			}
-			markerOptions.icon(icon);
-			markerOptions.title(title);
 			markerOptions.anchor(0.5f, 1.0f);
 		}
 	}
@@ -92,13 +99,13 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 		Paint paint = null;
 		float originY;
 		if (clusterSize < 100) {
-			paint = clusterPaintLarge;
+			paint = mClusterPaintLarge;
 			originY = bitmap.getHeight() * 0.64f;
 		} else if (clusterSize < 1000) {
-			paint = clusterPaintMedium;
+			paint = mClusterPaintMedium;
 			originY = bitmap.getHeight() * 0.6f;
 		} else {
-			paint = clusterPaintSmall;
+			paint = mClusterPaintSmall;
 			originY = bitmap.getHeight() * 0.56f;
 		}
 

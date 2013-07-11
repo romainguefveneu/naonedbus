@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package net.naonedbus.map.layerloader;
+package net.naonedbus.map.layer.loader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,35 +24,23 @@ import java.util.List;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.manager.impl.EquipementManager;
 import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.twotoasters.clusterkraf.InputPoint;
 
-/**
- * @author romain.guefveneu
- * 
- */
-public class EquipementMapLayer implements MapLayer<Equipement> {
+public class EquipementMapLoader implements MapLayerLoader {
 
-	private EquipementManager mEquipementManager;
-	private Equipement.Type mTypeEquipement;
+	private final EquipementManager mEquipementManager;
+	private final Equipement.Type mTypeEquipement;
 
-	public EquipementMapLayer(final Equipement.Type typeEquipement) {
+	public EquipementMapLoader(final Equipement.Type typeEquipement) {
 		mEquipementManager = EquipementManager.getInstance();
 		mTypeEquipement = typeEquipement;
+
 	}
 
 	@Override
-	public View getInfoContents(Marker marker) {
-		return null;
-	}
-
-	@Override
-	public ArrayList<InputPoint> getInputPoints(Context context) {
+	public ArrayList<InputPoint> getInputPoints(final Context context) {
 		final List<Equipement> equipements = mEquipementManager.getEquipementsByType(context.getContentResolver(),
 				mTypeEquipement);
 		final ArrayList<InputPoint> result = new ArrayList<InputPoint>(equipements.size());
@@ -62,30 +50,6 @@ public class EquipementMapLayer implements MapLayer<Equipement> {
 		}
 
 		return result;
-	}
-
-	public String getTitle(Context context, Equipement item) {
-		return item.getNom();
-	};
-
-	@Override
-	public String getDescription(Context context, Equipement item) {
-		return item.getDetails();
-	}
-
-	@Override
-	public Integer getResourceAction(Equipement item) {
-		return null;
-	}
-
-	@Override
-	public List<View> getSubview(ViewGroup root) {
-		return null;
-	}
-
-	@Override
-	public Intent getIntent(Context context, Equipement item) {
-		return null;
 	}
 
 	private InputPoint createInputPoint(final Equipement equipement) {

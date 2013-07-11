@@ -7,9 +7,9 @@ import java.util.Map;
 
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
-import net.naonedbus.map.layerloader.BiclooMapLayer;
-import net.naonedbus.map.layerloader.EquipementMapLayer;
-import net.naonedbus.map.layerloader.MapLayer;
+import net.naonedbus.map.layer.loader.BiclooMapLoader;
+import net.naonedbus.map.layer.loader.EquipementMapLoader;
+import net.naonedbus.map.layer.loader.MapLayerLoader;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -20,19 +20,19 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 	private final WeakReference<MapLoaderCallback> mCallback;
 	private final WeakReference<Context> mContext;
 
-	private Map<Equipement.Type, MapLayer<?>> mLoaders;
+	private final Map<Equipement.Type, MapLayerLoader> mLoaders;
 
 	public MapLoader(final Context context, final MapLoaderCallback callback) {
 		mContext = new WeakReference<Context>(context);
 		mCallback = new WeakReference<MapLoaderCallback>(callback);
 
-		mLoaders = new HashMap<Equipement.Type, MapLayer<?>>();
-		mLoaders.put(Type.TYPE_ARRET, new EquipementMapLayer(Type.TYPE_ARRET));
-		mLoaders.put(Type.TYPE_BICLOO, new BiclooMapLayer());
-		mLoaders.put(Type.TYPE_COVOITURAGE, new EquipementMapLayer(Type.TYPE_COVOITURAGE));
-		mLoaders.put(Type.TYPE_LILA, new EquipementMapLayer(Type.TYPE_LILA));
-		mLoaders.put(Type.TYPE_MARGUERITE, new EquipementMapLayer(Type.TYPE_MARGUERITE));
-		mLoaders.put(Type.TYPE_PARKING, new EquipementMapLayer(Type.TYPE_PARKING));
+		mLoaders = new HashMap<Equipement.Type, MapLayerLoader>();
+		mLoaders.put(Type.TYPE_ARRET, new EquipementMapLoader(Type.TYPE_ARRET));
+		mLoaders.put(Type.TYPE_BICLOO, new BiclooMapLoader());
+		mLoaders.put(Type.TYPE_COVOITURAGE, new EquipementMapLoader(Type.TYPE_COVOITURAGE));
+		mLoaders.put(Type.TYPE_LILA, new EquipementMapLoader(Type.TYPE_LILA));
+		mLoaders.put(Type.TYPE_MARGUERITE, new EquipementMapLoader(Type.TYPE_MARGUERITE));
+		mLoaders.put(Type.TYPE_PARKING, new EquipementMapLoader(Type.TYPE_PARKING));
 	}
 
 	@Override
@@ -40,9 +40,9 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 		final Context context = mContext.get();
 		if (context != null) {
 			for (final Type type : types) {
-				MapLayer<?> layer = mLoaders.get(type);
+				final MapLayerLoader loader = mLoaders.get(type);
 
-				publishProgress(layer.getInputPoints(context));
+				publishProgress(loader.getInputPoints(context));
 			}
 		}
 		return null;

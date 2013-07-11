@@ -9,12 +9,14 @@ import java.util.Set;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
 import net.naonedbus.manager.impl.EquipementManager;
-import net.naonedbus.map.EquipementInfoWindowAdapter;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
+import net.naonedbus.map.layer.BiclooMapLayer;
+import net.naonedbus.map.layer.EquipementMapLayer;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import android.content.SharedPreferences;
@@ -45,7 +47,6 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.twotoasters.clusterkraf.Clusterkraf;
 import com.twotoasters.clusterkraf.InputPoint;
-import com.twotoasters.clusterkraf.MarkerOptionsChooser;
 
 public class MapFragment extends SherlockFragment implements MapLoaderCallback, OnSuggestionListener {
 
@@ -61,7 +62,6 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private Clusterkraf mClusterkraf;
 	private MapLoader mMapLoader;
 	private MenuItemWrapper mSearchMenuItem;
-	private EquipementInfoWindowAdapter mEquipementInfoWindowAdapter;
 
 	private EquipementCursorAdapter mSearchAdapter;
 
@@ -86,8 +86,6 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 		final View view = inflater.inflate(R.layout.fragment_map, container, false);
 
-		mEquipementInfoWindowAdapter = new EquipementInfoWindowAdapter(inflater);
-
 		mSupportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.map);
 		mGoogleMap = mSupportMapFragment.getMap();
 
@@ -101,7 +99,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		}
 
 		initMap();
-		initClusterkraf();
+		initClusterkraf(inflater);
 
 		return view;
 	}
@@ -207,15 +205,18 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		}
 	}
 
-	private void initClusterkraf() {
+	private void initClusterkraf(final LayoutInflater inflater) {
 		if (mGoogleMap != null) {
-			final MarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
+			final ToastedMarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
+			markerOptionsChooser.registerMapLayer(Equipement.class, new EquipementMapLayer(inflater));
+			markerOptionsChooser.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
+
 			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
 			mOptions.setPixelDistanceToJoinCluster(100);
 
 			// customize the options before you construct a Clusterkraf instance
 			mClusterkraf = new Clusterkraf(mGoogleMap, mOptions, null);
-			mClusterkraf.setClusterkrafInfoWindowAdapter(mEquipementInfoWindowAdapter);
+			// mClusterkraf.setClusterkrafInfoWindowAdapter(mEquipementInfoWindowAdapter);
 
 			loadMarkers();
 		}
@@ -300,8 +301,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onLayerLoaded(final ArrayList<InputPoint> result) {
 		if (result != null && !result.isEmpty()) {
-//			final Equipement markerInfo = (Equipement) result.get(0).getTag();
-//			mInputPoints.put(markerInfo.getType(), result);
+			// final Equipement markerInfo = (Equipement)
+			// result.get(0).getTag();
+			// mInputPoints.put(markerInfo.getType(), result);
 
 			synchronized (mClusterkraf) {
 				mClusterkraf.addAll(result);
