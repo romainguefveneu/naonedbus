@@ -2,6 +2,7 @@ package net.naonedbus.map.layer;
 
 import net.naonedbus.R;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,13 @@ public abstract class MapLayer<T> {
 
 	public abstract void chooseMarker(final MarkerOptions markerOptions, final ClusterPoint clusterPoint);
 
+	@SuppressWarnings("unchecked")
+	public final Intent getClickIntent(final Context context, final Object tag){
+		return getIntent(context, (T) tag); 
+	}
+
+	public abstract Intent getIntent(final Context context, final T item);
+	
 	protected final void setInfoTitle(final CharSequence title) {
 		mTitle.setText(title);
 	}

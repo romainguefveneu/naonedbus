@@ -1,9 +1,12 @@
 package net.naonedbus.map.layer;
 
+import net.naonedbus.activity.impl.BiclooDetailActivity;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
+import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -35,6 +38,13 @@ public class BiclooMapLayer extends MapLayer<Bicloo> {
 		final int availableStands = item.getAvailableBikeStands();
 		final String description = FormatUtils.formatBicloos(context, availableBikes, availableStands);
 		setInfoDescription(description);
+	}
+
+	@Override
+	public Intent getIntent(Context context, Bicloo bicloo) {
+		final ParamIntent intent = new ParamIntent(context, BiclooDetailActivity.class);
+		intent.putExtra(BiclooDetailActivity.PARAM_BICLOO, bicloo);
+		return intent;
 	}
 
 }
