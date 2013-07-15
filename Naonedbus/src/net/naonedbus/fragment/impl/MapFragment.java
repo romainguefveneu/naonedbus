@@ -35,7 +35,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.internal.view.menu.MenuItemWrapper;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -64,7 +63,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private GoogleMap mGoogleMap;
 	private Clusterkraf mClusterkraf;
 	private MapLoader mMapLoader;
-	private MenuItemWrapper mSearchMenuItem;
+	private MenuItem mSearchMenuItem;
 
 	private EquipementCursorAdapter mSearchAdapter;
 
@@ -128,7 +127,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
 		mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
 
-		mSearchMenuItem = (MenuItemWrapper) menu.findItem(R.id.menu_search);
+		mSearchMenuItem = (MenuItem) menu.findItem(R.id.menu_search);
 		final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 		searchView.setSuggestionsAdapter(mSearchAdapter);
 		searchView.setOnSuggestionListener(this);
@@ -217,13 +216,14 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			markerOptionsChooser.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
 			markerOptionsChooser.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
 
-			ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter();
+			ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter(getActivity());
 			infoWindowAdapter.registerMapLayer(Equipement.class, new EquipementMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
 
-			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
 			mOptions.setPixelDistanceToJoinCluster(80);
+			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
+			mOptions.setOnInfoWindowClickDownstreamListener(infoWindowAdapter);
 
 			// customize the options before you construct a Clusterkraf instance
 			mClusterkraf = new Clusterkraf(mGoogleMap, mOptions, null);

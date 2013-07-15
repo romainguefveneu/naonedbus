@@ -2,10 +2,12 @@ package net.naonedbus.map.layer;
 
 import net.naonedbus.bean.Equipement;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.twotoasters.clusterkraf.ClusterPoint;
 
@@ -30,6 +32,12 @@ public class EquipementMapLayer extends MapLayer<Equipement> {
 	protected void bindInfoContents(final Context context, final Equipement item) {
 		setInfoTitle(item.getNom());
 		setInfoDescription(item.getDetails());
+	}
+
+
+	@Override
+	public Intent getIntent(Context context, Equipement equipement) {
+		return null;
 	}
 
 }
