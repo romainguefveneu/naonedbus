@@ -27,7 +27,11 @@ public class AddressSearchActivity extends OneFragmentActivity {
 		actionBar.setCustomView(R.layout.search_view);
 
 		if (savedInstanceState == null) {
-			addFragment(AddressSearchFragment.class);
+
+			final Bundle bundle = new Bundle();
+			bundle.putString(AddressSearchFragment.PARAM_QUERY,
+					getIntent().getStringExtra(AddressSearchFragment.PARAM_QUERY));
+			addFragment(AddressSearchFragment.class, bundle);
 		}
 	}
 

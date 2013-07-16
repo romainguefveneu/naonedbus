@@ -255,10 +255,9 @@
     <string name="card_horaire_previous">Précédent</string>
 
     <!-- Itinéraires -->
-    <string name="itineraire_current_location">Position courante</string>
-    <string name="itineraire_hint_depart">D\'où partez-vous ?</string>
-    <string name="itineraire_hint_arrive">Où allez-vous ?</string>
-    <string name="itineraire_hint_date">Partir maintenant</string>
+    <string name="itineraire_current_location">Ma position</string>
+    <string name="itineraire_hint_depart">Choisissez un point de départ&#8230;</string>
+    <string name="itineraire_hint_arrive">Choisissez une destination&#8230;</string>
     <!-- Carte -->
     <string name="map_calques">Calques</string>
     <string name="map_calque_arret">Arrêt Tan</string>

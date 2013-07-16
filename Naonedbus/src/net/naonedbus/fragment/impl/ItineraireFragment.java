@@ -45,21 +45,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends AbstractListFragment implements
@@ -84,8 +79,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private TextView mDateAndTimeLabel;
 	private Spinner mDateKindSpinner;
 
-	private Button mGoButton;
-
 	private boolean mDialogLock;
 
 	public ItineraireFragment() {
@@ -95,38 +88,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setHasOptionsMenu(true);
 
 		mDateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
 	};
-
-	@Override
-	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.fragment_itineraire, menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		if (item.getItemId() == R.id.menu_reverse) {
-			final CharSequence fromText = mFromAddressTextView.getText();
-			final CharSequence toText = mToAddressTextView.getText();
-			final Location temp = new Location(LocationManager.GPS_PROVIDER);
-
-			mToAddressTextView.setText(fromText);
-			mFromAddressTextView.setText(toText);
-
-			temp.set(mFromLocation);
-			mFromLocation.set(mToLocation);
-			mToLocation.set(temp);
-
-			onFormValueChange();
-
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
@@ -152,11 +116,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 		final SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 		swingBottomInAnimationAdapter.setListView(listView);
 
-		final View formView = LayoutInflater.from(getActivity()).inflate(R.layout.itineraire_form, listView, false);
-		listView.addHeaderView(formView);
 		listView.setAdapter(swingBottomInAnimationAdapter);
 
-		mFromAddressTextView = (TextView) formView.findViewById(R.id.formFrom);
+		mFromAddressTextView = (TextView) view.findViewById(R.id.formFrom);
 		mFromAddressTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -164,7 +126,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 			}
 		});
 
-		mToAddressTextView = (TextView) formView.findViewById(R.id.formTo);
+		mToAddressTextView = (TextView) view.findViewById(R.id.formTo);
 		mToAddressTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -172,33 +134,15 @@ public class ItineraireFragment extends AbstractListFragment implements
 			}
 		});
 
-		mDateAndTimeLabel = (TextView) formView.findViewById(R.id.dateAndTimeLabel);
-		formView.findViewById(R.id.dateAndTime).setOnClickListener(new OnClickListener() {
+		mDateAndTimeLabel = (TextView) view.findViewById(R.id.dateAndTimeLabel);
+		mDateAndTimeLabel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				showDatePicker();
 			}
 		});
 
-		mGoButton = (Button) formView.findViewById(android.R.id.button1);
-		mGoButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				formView.requestFocus();
-				mAdapter.clear();
-				showProgress();
-				sendRequest();
-
-				mGoButton.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						mGoButton.setVisibility(View.GONE);
-					}
-				}, 100);
-			}
-		});
-
-		mDateKindSpinner = (Spinner) formView.findViewById(R.id.dateKind);
+		mDateKindSpinner = (Spinner) view.findViewById(R.id.dateKind);
 		mDateKindSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
@@ -209,6 +153,13 @@ public class ItineraireFragment extends AbstractListFragment implements
 			@Override
 			public void onNothingSelected(final AdapterView<?> parent) {
 
+			}
+		});
+
+		view.findViewById(R.id.formReverse).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				reverse();
 			}
 		});
 
@@ -246,15 +197,18 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	private void requestFromAddress() {
-		requestAddress(REQUEST_CODE_FROM);
+		requestAddress(REQUEST_CODE_FROM, mFromAddressTextView.getText());
 	}
 
 	private void requestToAddress() {
-		requestAddress(REQUEST_CODE_TO);
+		requestAddress(REQUEST_CODE_TO, mToAddressTextView.getText());
 	}
 
-	private void requestAddress(final int requestCode) {
+	private void requestAddress(final int requestCode, final CharSequence query) {
 		final Intent intent = new Intent(getActivity(), AddressSearchActivity.class);
+		if (query != getString(R.string.itineraire_current_location)) {
+			intent.putExtra(AddressSearchFragment.PARAM_QUERY, query);
+		}
 
 		startActivityForResult(intent, requestCode);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -271,6 +225,21 @@ public class ItineraireFragment extends AbstractListFragment implements
 		final TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, mDateTime.getHourOfDay(),
 				mDateTime.getMinuteOfHour(), true);
 		dialog.show();
+	}
+
+	private void reverse() {
+		final CharSequence fromText = mFromAddressTextView.getText();
+		final CharSequence toText = mToAddressTextView.getText();
+		final Location temp = new Location(LocationManager.GPS_PROVIDER);
+
+		mToAddressTextView.setText(fromText);
+		mFromAddressTextView.setText(toText);
+
+		temp.set(mFromLocation);
+		mFromLocation.set(mToLocation);
+		mToLocation.set(temp);
+
+		onFormValueChange();
 	}
 
 	@Override
@@ -298,11 +267,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	private void onFormValueChange() {
 		final boolean hasLocations = mFromLocation.getLatitude() != 0 && mToLocation.getLatitude() != 0;
-		mGoButton.setEnabled(hasLocations);
-
-		if (hasLocations && mGoButton.getVisibility() != View.VISIBLE) {
-			mGoButton.setVisibility(View.VISIBLE);
-			mAdapter.clear();
+		if (hasLocations) {
+			showProgress();
+			sendRequest();
 		}
 	}
 
@@ -324,6 +291,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	private void showProgress() {
 		mProgressView.setVisibility(View.VISIBLE);
+		mAdapter.clear();
 	}
 
 	private void hideProgress() {

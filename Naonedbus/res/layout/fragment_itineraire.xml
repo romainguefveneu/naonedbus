@@ -24,17 +24,26 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <include
+        android:id="@+id/form"
+        layout="@layout/itineraire_form" />
+
     <ListView
         android:id="@id/android:list"
         style="@style/Listview"
+        android:layout_below="@id/form"
+        android:clipToPadding="false"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10dp" />
+        android:dividerHeight="10dp"
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingTop="@dimen/padding_small" />
 
     <ProgressBar
         android:id="@android:id/progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/form"
         android:layout_centerInParent="true"
         android:visibility="gone" />
 

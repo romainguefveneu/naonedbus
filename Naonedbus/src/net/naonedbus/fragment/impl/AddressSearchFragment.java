@@ -46,6 +46,8 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 public class AddressSearchFragment extends AbstractListFragment implements OnQueryTextListener,
 		LoaderCallbacks<AsyncResult<List<AddressResult>>> {
 
+	public static final String PARAM_QUERY = "query";
+
 	private static final int LOADER_EQUIPEMENTS = 0;
 	private static final int LOADER_FULL = 1;
 
@@ -68,6 +70,11 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		mModalSearchView = (ModalSearchView) actionBar.getCustomView();
 		mModalSearchView.setOnQueryTextListener(this);
 		mModalSearchView.requestFocus();
+
+		final String query = getArguments().getString(PARAM_QUERY);
+		if (query != null) {
+			mModalSearchView.setText(query);
+		}
 	}
 
 	@Override
