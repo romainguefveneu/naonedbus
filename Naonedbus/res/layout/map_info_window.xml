@@ -44,6 +44,14 @@
             android:layout_below="@id/itemTitle"
             android:text="Description"
             android:textColor="@color/map_pane_text_color" />
+
+        <LinearLayout
+            android:id="@id/lignes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemTitle"
+            android:orientation="horizontal"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ImageView

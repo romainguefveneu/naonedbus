@@ -1,13 +1,18 @@
 package net.naonedbus.map.layer;
 
+import java.util.List;
+
 import net.naonedbus.activity.impl.BiclooDetailActivity;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.intent.ParamIntent;
+import net.naonedbus.map.ItemSelectedInfo;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -31,20 +36,40 @@ public class BiclooMapLayer extends MapLayer<Bicloo> {
 	}
 
 	@Override
-	protected void bindInfoContents(final Context context, final Bicloo item) {
-		setInfoTitle(item.getName());
+	protected ItemSelectedInfo getItemSelectedInfo(final Context context, final Bicloo item) {
+		return new ItemSelectedInfo() {
 
-		final int availableBikes = item.getAvailableBike();
-		final int availableStands = item.getAvailableBikeStands();
-		final String description = FormatUtils.formatBicloos(context, availableBikes, availableStands);
-		setInfoDescription(description);
-	}
+			@Override
+			public String getTitle() {
+				return item.getName();
+			}
 
-	@Override
-	public Intent getIntent(Context context, Bicloo bicloo) {
-		final ParamIntent intent = new ParamIntent(context, BiclooDetailActivity.class);
-		intent.putExtra(BiclooDetailActivity.PARAM_BICLOO, bicloo);
-		return intent;
+			@Override
+			public String getDescription(final Context context) {
+				final int availableBikes = item.getAvailableBike();
+				final int availableStands = item.getAvailableBikeStands();
+				final String description = FormatUtils.formatBicloos(context, availableBikes, availableStands);
+				return description;
+			}
+
+			@Override
+			public List<View> getSubview(final ViewGroup root) {
+				return null;
+			}
+
+			@Override
+			public Integer getResourceAction() {
+				return null;
+			}
+
+			@Override
+			public Intent getIntent(final Context context) {
+				final ParamIntent intent = new ParamIntent(context, BiclooDetailActivity.class);
+				intent.putExtra(BiclooDetailActivity.PARAM_BICLOO, item);
+				return intent;
+			}
+
+		};
 	}
 
 }
