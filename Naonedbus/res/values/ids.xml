@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -161,7 +161,8 @@
     <item name="formFrom" type="id"/>
     <item name="formTo" type="id"/>
     <item name="formReverse" type="id"/>
-
+    <item name="formIconFrom" type="id"/>
+    <item name="formIconTo" type="id"/>
     <!--  -->
     <item name="fromTime" type="id"/>
     <item name="fromPlace" type="id"/>

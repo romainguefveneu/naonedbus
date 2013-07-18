@@ -1,5 +1,6 @@
 package net.naonedbus.bean;
 
+import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.widget.item.SectionItem;
 
 public class AddressResult implements SectionItem {
@@ -10,14 +11,16 @@ public class AddressResult implements SectionItem {
 	private final int mColor;
 	private final Double mLatitude;
 	private final Double mLongitude;
-
+	private final Equipement.Type mType;
+	
 	private String mAddress;
 	private Object mSection;
 
-	public AddressResult(final String title, final String description, final int icon, final int color,
+	public AddressResult(final String title, final String description, Type type, final int icon, final int color,
 			final Double latitude, final Double longitude) {
 		mTitle = title;
 		mDescription = description;
+		mType = type;
 		mIcon = icon;
 		mColor = color;
 		mLatitude = latitude;
@@ -30,6 +33,10 @@ public class AddressResult implements SectionItem {
 
 	public String getDescription() {
 		return mDescription;
+	}
+	
+	public Equipement.Type getType(){
+		return mType;
 	}
 
 	public int getIcon() {

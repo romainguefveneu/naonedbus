@@ -39,6 +39,7 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 	@Override
 	protected Void doInBackground(final Equipement.Type... types) {
 		final Context context = mContext.get();
+
 		if (context != null) {
 			for (final Type type : types) {
 				final MapLayerLoader loader = mLoaders.get(type);
@@ -59,7 +60,27 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 		}
 	}
 
+	@Override
+	protected void onPreExecute() {
+		MapLoaderCallback callback = mCallback.get();
+		if (callback != null) {
+			callback.onMapLoaderStart();
+		}
+	}
+
+	@Override
+	protected void onPostExecute(Void result) {
+		MapLoaderCallback callback = mCallback.get();
+		if (callback != null) {
+			callback.onMapLoaderEnd();
+		}
+	}
+
 	public interface MapLoaderCallback {
+		void onMapLoaderStart();
+
+		void onMapLoaderEnd();
+
 		void onLayerLoaded(ArrayList<InputPoint> result);
 	}
 }

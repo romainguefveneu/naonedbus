@@ -72,7 +72,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 			final String title = getContext().getString(R.string.itineraire_current_location);
 			final int icon = R.drawable.ic_action_locate_selector;
 
-			final AddressResult addressResult = new AddressResult(title, null, icon, Color.TRANSPARENT,
+			final AddressResult addressResult = new AddressResult(title, null, null, icon, Color.TRANSPARENT,
 					currentLocation.getLatitude(), currentLocation.getLongitude());
 			addressResult.setSection(0);
 
@@ -87,7 +87,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 
 			for (final Address address : addresses) {
 				final String[] title = FormatUtils.formatAddressTwoLine(address);
-				final AddressResult addressResult = new AddressResult(title[0], title[1],
+				final AddressResult addressResult = new AddressResult(title[0], title[1], null,
 						R.drawable.ic_action_location_selector, Color.TRANSPARENT, address.getLatitude(),
 						address.getLongitude());
 
@@ -114,7 +114,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 			final String title = equipement.getNom();
 			final String description = equipement.getAdresse();
 			final int color = getContext().getResources().getColor(type.getBackgroundColorRes());
-			final AddressResult addressResult = new AddressResult(title, description, type.getDrawableRes(), color,
+			final AddressResult addressResult = new AddressResult(title, description, type, type.getDrawableRes(), color,
 					equipement.getLatitude(), equipement.getLongitude());
 
 			addressResult.setSection(type.getId() + 1);

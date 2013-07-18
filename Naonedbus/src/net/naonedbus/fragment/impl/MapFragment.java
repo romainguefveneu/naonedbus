@@ -26,6 +26,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.location.Location;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -64,6 +65,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private Clusterkraf mClusterkraf;
 	private MapLoader mMapLoader;
 	private MenuItem mSearchMenuItem;
+	private MenuItem mRefreshMenuItem;
 
 	private EquipementCursorAdapter mSearchAdapter;
 
@@ -122,6 +124,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		super.onCreateOptionsMenu(menu, inflater);
 
 		inflater.inflate(R.menu.fragment_map, menu);
+		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
+		mRefreshMenuItem.setVisible(mMapLoader != null && mMapLoader.getStatus() == Status.RUNNING);
 
 		final EquipementManager manager = EquipementManager.getInstance();
 		final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
@@ -319,6 +323,20 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			synchronized (mClusterkraf) {
 				mClusterkraf.addAll(result);
 			}
+		}
+	}
+
+	@Override
+	public void onMapLoaderStart() {
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setVisible(true);
+		}
+	}
+
+	@Override
+	public void onMapLoaderEnd() {
+		if (mRefreshMenuItem != null) {
+			mRefreshMenuItem.setVisible(false);
 		}
 	}
 

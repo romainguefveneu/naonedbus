@@ -26,6 +26,8 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AddressSearchActivity;
 import net.naonedbus.activity.impl.ItineraryDetailActivity;
+import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
@@ -50,6 +52,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -78,6 +81,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private TextView mToAddressTextView;
 	private TextView mDateAndTimeLabel;
 	private Spinner mDateKindSpinner;
+	private ImageView mIconFrom;
+	private ImageView mIconTo;
 
 	private boolean mDialogLock;
 
@@ -117,6 +122,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 		swingBottomInAnimationAdapter.setListView(listView);
 
 		listView.setAdapter(swingBottomInAnimationAdapter);
+
+		mIconFrom = (ImageView) view.findViewById(R.id.formIconFrom);
+		mIconTo = (ImageView) view.findViewById(R.id.formIconTo);
 
 		mFromAddressTextView = (TextView) view.findViewById(R.id.formFrom);
 		mFromAddressTextView.setOnClickListener(new OnClickListener() {
@@ -180,15 +188,26 @@ public class ItineraireFragment extends AbstractListFragment implements
 			final String address = data.getStringExtra("address");
 			final double latitude = data.getDoubleExtra("latitude", 0d);
 			final double longitude = data.getDoubleExtra("longitude", 0d);
+			final Equipement.Type type = (Type) data.getSerializableExtra("type");
 
 			if (requestCode == REQUEST_CODE_FROM) {
 				mFromLocation.setLatitude(latitude);
 				mFromLocation.setLongitude(longitude);
 				mFromAddressTextView.setText(address);
+				if (type == null) {
+					mIconFrom.setImageResource(R.drawable.ic_directions_form_destination_notselected);
+				} else {
+					mIconFrom.setImageResource(type.getMapPin());
+				}
 			} else {
 				mToLocation.setLatitude(latitude);
 				mToLocation.setLongitude(longitude);
 				mToAddressTextView.setText(address);
+				if (type == null) {
+					mIconTo.setImageResource(R.drawable.ic_directions_form_destination_notselected);
+				} else {
+					mIconTo.setImageResource(type.getMapPin());
+				}
 			}
 		}
 

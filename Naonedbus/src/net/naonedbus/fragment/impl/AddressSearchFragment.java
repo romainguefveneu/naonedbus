@@ -109,6 +109,7 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		data.putExtra("address", item.getAddress());
 		data.putExtra("latitude", item.getLatitude());
 		data.putExtra("longitude", item.getLongitude());
+		data.putExtra("type", item.getType());
 
 		final Activity activity = getActivity();
 

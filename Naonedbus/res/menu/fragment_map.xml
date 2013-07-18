@@ -1,6 +1,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@id/menu_refresh"
+        android:actionLayout="@layout/action_item_refresh"
+        android:showAsAction="always"
+        android:title="@string/loading"
+        android:visible="false"/>
+    <item
         android:id="@id/menu_search"
         android:actionViewClass="com.actionbarsherlock.widget.SearchView"
         android:icon="@drawable/ic_action_search"
