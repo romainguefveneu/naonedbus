@@ -16,10 +16,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
@@ -36,7 +34,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	private String mToPlace;
 
 	public ItineraryDetailFragment() {
-		super(R.layout.fragment_listview);
+		super(R.layout.fragment_itineraire_detail);
 	}
 
 	@Override
@@ -61,21 +59,15 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	protected void bindView(final View view, final Bundle savedInstanceState) {
 		super.bindView(view, savedInstanceState);
 
-		final ListView listView = (ListView) view.findViewById(android.R.id.list);
-
-		final View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.itineraire_header, listView, false);
-		listView.addHeaderView(headerView);
-
-		final TextView fromPlace = (TextView) headerView.findViewById(R.id.fromPlace);
-		final TextView toPlace = (TextView) headerView.findViewById(R.id.toPlace);
-		final TextView itemTime = (TextView) headerView.findViewById(R.id.itemTime);
-		final TextView itemDate = (TextView) headerView.findViewById(R.id.itemDate);
+		final TextView fromPlace = (TextView) view.findViewById(R.id.fromPlace);
+		final TextView toPlace = (TextView) view.findViewById(R.id.toPlace);
+		final TextView itemTime = (TextView) view.findViewById(R.id.itemTime);
+		final TextView itemDate = (TextView) view.findViewById(R.id.itemDate);
 
 		fromPlace.setText(mFromPlace);
 		toPlace.setText(mToPlace);
 		itemTime.setText(mItineraryWrapper.getTime());
 		itemDate.setText(mItineraryWrapper.getDate());
-
 	}
 
 	@Override

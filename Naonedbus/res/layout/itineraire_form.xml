@@ -23,7 +23,7 @@
                 android:id="@id/formIconFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_directions_form_destination_notselected" />
+                android:src="@drawable/ic_action_locate_blue" />
 
             <ImageView
                 android:layout_width="wrap_content"

@@ -12,11 +12,12 @@ public class AddressResult implements SectionItem {
 	private final Double mLatitude;
 	private final Double mLongitude;
 	private final Equipement.Type mType;
-	
+	private boolean mCurrentLocation;
+
 	private String mAddress;
 	private Object mSection;
 
-	public AddressResult(final String title, final String description, Type type, final int icon, final int color,
+	public AddressResult(final String title, final String description, final Type type, final int icon, final int color,
 			final Double latitude, final Double longitude) {
 		mTitle = title;
 		mDescription = description;
@@ -34,8 +35,8 @@ public class AddressResult implements SectionItem {
 	public String getDescription() {
 		return mDescription;
 	}
-	
-	public Equipement.Type getType(){
+
+	public Equipement.Type getType() {
 		return mType;
 	}
 
@@ -65,6 +66,14 @@ public class AddressResult implements SectionItem {
 
 	public void setSection(final Object section) {
 		mSection = section;
+	}
+
+	public boolean isCurrentLocation() {
+		return mCurrentLocation;
+	}
+
+	public void setCurrentLocation(final boolean currentLocation) {
+		mCurrentLocation = currentLocation;
 	}
 
 	@Override

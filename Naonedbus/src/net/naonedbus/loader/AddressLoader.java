@@ -74,6 +74,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 
 			final AddressResult addressResult = new AddressResult(title, null, null, icon, Color.TRANSPARENT,
 					currentLocation.getLatitude(), currentLocation.getLongitude());
+			addressResult.setCurrentLocation(true);
 			addressResult.setSection(0);
 
 			result.add(addressResult);
@@ -114,8 +115,8 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 			final String title = equipement.getNom();
 			final String description = equipement.getAdresse();
 			final int color = getContext().getResources().getColor(type.getBackgroundColorRes());
-			final AddressResult addressResult = new AddressResult(title, description, type, type.getDrawableRes(), color,
-					equipement.getLatitude(), equipement.getLongitude());
+			final AddressResult addressResult = new AddressResult(title, description, type, type.getDrawableRes(),
+					color, equipement.getLatitude(), equipement.getLongitude());
 
 			addressResult.setSection(type.getId() + 1);
 			result.add(addressResult);

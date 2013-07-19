@@ -84,6 +84,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private ImageView mIconFrom;
 	private ImageView mIconTo;
 
+	private int mIconFromResId = R.drawable.ic_action_locate_blue;
+	private int mIconToResId = R.drawable.ic_directions_form_destination_notselected;
+
 	private boolean mDialogLock;
 
 	public ItineraireFragment() {
@@ -189,25 +192,36 @@ public class ItineraireFragment extends AbstractListFragment implements
 			final double latitude = data.getDoubleExtra("latitude", 0d);
 			final double longitude = data.getDoubleExtra("longitude", 0d);
 			final Equipement.Type type = (Type) data.getSerializableExtra("type");
+			final boolean currentLocation = data.getBooleanExtra("isCurrentLocation", false);
 
 			if (requestCode == REQUEST_CODE_FROM) {
 				mFromLocation.setLatitude(latitude);
 				mFromLocation.setLongitude(longitude);
 				mFromAddressTextView.setText(address);
 				if (type == null) {
-					mIconFrom.setImageResource(R.drawable.ic_directions_form_destination_notselected);
+					if (currentLocation) {
+						mIconFromResId = R.drawable.ic_action_locate_blue;
+					} else {
+						mIconFromResId = R.drawable.ic_directions_form_destination_notselected;
+					}
 				} else {
-					mIconFrom.setImageResource(type.getMapPin());
+					mIconFromResId = type.getMapPin();
 				}
+				mIconFrom.setImageResource(mIconFromResId);
 			} else {
 				mToLocation.setLatitude(latitude);
 				mToLocation.setLongitude(longitude);
 				mToAddressTextView.setText(address);
 				if (type == null) {
-					mIconTo.setImageResource(R.drawable.ic_directions_form_destination_notselected);
+					if (currentLocation) {
+						mIconToResId = R.drawable.ic_action_locate_blue;
+					} else {
+						mIconToResId = R.drawable.ic_directions_form_destination_notselected;
+					}
 				} else {
-					mIconTo.setImageResource(type.getMapPin());
+					mIconToResId = type.getMapPin();
 				}
+				mIconTo.setImageResource(type.getMapPin());
 			}
 		}
 
@@ -257,6 +271,13 @@ public class ItineraireFragment extends AbstractListFragment implements
 		temp.set(mFromLocation);
 		mFromLocation.set(mToLocation);
 		mToLocation.set(temp);
+
+		mIconTo.setImageResource(mIconFromResId);
+		mIconFrom.setImageResource(mIconToResId);
+
+		final int t = mIconToResId;
+		mIconToResId = mIconFromResId;
+		mIconFromResId = t;
 
 		onFormValueChange();
 	}
