@@ -46,6 +46,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		mItinerary = mItineraryWrapper.getItinerary();
 		mFromPlace = arguments.getString(PARAM_FROM_PLACE);
 		mToPlace = arguments.getString(PARAM_TO_PLACE);
+
 	}
 
 	@Override
@@ -53,6 +54,8 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		super.onActivityCreated(savedInstanceState);
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);
+
+		getActivity().setTitle(mItineraryWrapper.getTime());
 	}
 
 	@Override
@@ -61,12 +64,11 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 		final TextView fromPlace = (TextView) view.findViewById(R.id.fromPlace);
 		final TextView toPlace = (TextView) view.findViewById(R.id.toPlace);
-		final TextView itemTime = (TextView) view.findViewById(R.id.itemTime);
 		final TextView itemDate = (TextView) view.findViewById(R.id.itemDate);
 
 		fromPlace.setText(mFromPlace);
 		toPlace.setText(mToPlace);
-		itemTime.setText(mItineraryWrapper.getTime());
+
 		itemDate.setText(mItineraryWrapper.getDate());
 	}
 

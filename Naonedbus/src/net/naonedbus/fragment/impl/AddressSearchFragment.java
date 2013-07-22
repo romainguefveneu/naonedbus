@@ -74,6 +74,8 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		final String query = getArguments().getString(PARAM_QUERY);
 		if (query != null) {
 			mModalSearchView.setText(query);
+			mModalSearchView.setSelected(true);
+			mModalSearchView.selectAll();
 		}
 	}
 

@@ -130,4 +130,8 @@ public class ModalSearchView extends LinearLayout implements TextWatcher {
 		mQueryTextView.setText(text);
 	}
 
+	public void selectAll() {
+		mQueryTextView.selectAll();
+	}
+
 }

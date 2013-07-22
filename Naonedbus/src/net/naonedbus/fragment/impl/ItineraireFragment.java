@@ -32,6 +32,7 @@ import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
 import net.naonedbus.loader.ItineraryLoader;
+import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 
 import org.joda.time.MutableDateTime;
@@ -41,6 +42,7 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -63,6 +65,17 @@ import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnim
 public class ItineraireFragment extends AbstractListFragment implements
 		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener {
 
+	private static final String BUNDLE_LOCATION_FROM = "ItineraireFragment:locationFrom";
+	private static final String BUNDLE_LOCATION_TO = "ItineraireFragment:locationTo";
+	private static final String BUNDLE_ADDRESS_FROM = "ItineraireFragment:addressFrom";
+	private static final String BUNDLE_ADDRESS_TO = "ItineraireFragment:addressTo";
+	private static final String BUNDLE_DATE_TIME = "ItineraireFragment:dateTime";
+	private static final String BUNDLE_ARRIVE_BY = "ItineraireFragment:arriveBy";
+	private static final String BUNDLE_ICON_FROM = "ItineraireFragment:iconFrom";
+	private static final String BUNDLE_ICON_TO = "ItineraireFragment:iconTo";
+	private static final String BUNDLE_COLOR_FROM = "ItineraireFragment:colorFrom";
+	private static final String BUNDLE_COLOR_TO = "ItineraireFragment:colorTo";
+
 	private static final int REQUEST_CODE_FROM = 1;
 	private static final int REQUEST_CODE_TO = 2;
 
@@ -81,8 +94,11 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private TextView mToAddressTextView;
 	private TextView mDateAndTimeLabel;
 	private Spinner mDateKindSpinner;
+
 	private ImageView mIconFrom;
+	private int mIconColorFrom;
 	private ImageView mIconTo;
+	private int mIconColorTo;
 
 	private int mIconFromResId = R.drawable.ic_action_locate_blue;
 	private int mIconToResId = R.drawable.ic_directions_form_destination_notselected;
@@ -98,7 +114,34 @@ public class ItineraireFragment extends AbstractListFragment implements
 		super.onCreate(savedInstanceState);
 
 		mDateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+
+		if (savedInstanceState != null) {
+			mFromLocation.set((Location) savedInstanceState.getParcelable(BUNDLE_LOCATION_FROM));
+			mToLocation.set((Location) savedInstanceState.getParcelable(BUNDLE_LOCATION_TO));
+
+			mDateTime.setMillis(savedInstanceState.getLong(BUNDLE_DATE_TIME));
+			mArriveBy = savedInstanceState.getBoolean(BUNDLE_ARRIVE_BY);
+			mIconFromResId = savedInstanceState.getInt(BUNDLE_ICON_FROM);
+			mIconToResId = savedInstanceState.getInt(BUNDLE_ICON_TO);
+			mIconColorFrom = savedInstanceState.getInt(BUNDLE_COLOR_FROM);
+			mIconColorTo = savedInstanceState.getInt(BUNDLE_COLOR_TO);
+		}
 	};
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putParcelable(BUNDLE_LOCATION_FROM, mFromLocation);
+		outState.putParcelable(BUNDLE_LOCATION_TO, mToLocation);
+		outState.putString(BUNDLE_ADDRESS_FROM, mFromAddressTextView.getText().toString());
+		outState.putString(BUNDLE_ADDRESS_TO, mToAddressTextView.getText().toString());
+		outState.putLong(BUNDLE_DATE_TIME, mDateTime.getMillis());
+		outState.putBoolean(BUNDLE_ARRIVE_BY, mArriveBy);
+		outState.putInt(BUNDLE_ICON_FROM, mIconFromResId);
+		outState.putInt(BUNDLE_ICON_TO, mIconToResId);
+		outState.putInt(BUNDLE_COLOR_FROM, mIconColorFrom);
+		outState.putInt(BUNDLE_COLOR_TO, mIconColorTo);
+		super.onSaveInstanceState(outState);
+	}
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
@@ -180,6 +223,12 @@ public class ItineraireFragment extends AbstractListFragment implements
 			mFromAddressTextView.setText(R.string.itineraire_current_location);
 		}
 
+		if (savedInstanceState != null) {
+			mFromAddressTextView.setText(savedInstanceState.getString(BUNDLE_ADDRESS_FROM));
+			mToAddressTextView.setText(savedInstanceState.getString(BUNDLE_ADDRESS_TO));
+			notifyIconsChanged();
+		}
+
 		setDateValue();
 	}
 
@@ -204,10 +253,11 @@ public class ItineraireFragment extends AbstractListFragment implements
 					} else {
 						mIconFromResId = R.drawable.ic_directions_form_destination_notselected;
 					}
+					mIconColorFrom = Color.TRANSPARENT;
 				} else {
-					mIconFromResId = type.getMapPin();
+					mIconFromResId = type.getDrawableRes();
+					mIconColorFrom = getActivity().getResources().getColor(type.getBackgroundColorRes());
 				}
-				mIconFrom.setImageResource(mIconFromResId);
 			} else {
 				mToLocation.setLatitude(latitude);
 				mToLocation.setLongitude(longitude);
@@ -218,15 +268,17 @@ public class ItineraireFragment extends AbstractListFragment implements
 					} else {
 						mIconToResId = R.drawable.ic_directions_form_destination_notselected;
 					}
+					mIconColorFrom = Color.TRANSPARENT;
 				} else {
-					mIconToResId = type.getMapPin();
+					mIconToResId = type.getDrawableRes();
+					mIconColorTo = getActivity().getResources().getColor(type.getBackgroundColorRes());
 				}
-				mIconTo.setImageResource(type.getMapPin());
 			}
+
+			notifyIconsChanged();
 		}
 
 		onFormValueChange();
-
 	}
 
 	private void requestFromAddress() {
@@ -272,14 +324,24 @@ public class ItineraireFragment extends AbstractListFragment implements
 		mFromLocation.set(mToLocation);
 		mToLocation.set(temp);
 
-		mIconTo.setImageResource(mIconFromResId);
-		mIconFrom.setImageResource(mIconToResId);
-
-		final int t = mIconToResId;
+		int t = mIconToResId;
 		mIconToResId = mIconFromResId;
 		mIconFromResId = t;
 
+		t = mIconColorFrom;
+		mIconColorFrom = mIconColorTo;
+		mIconColorTo = t;
+
+		notifyIconsChanged();
 		onFormValueChange();
+	}
+
+	private void notifyIconsChanged() {
+		mIconTo.setImageResource(mIconToResId);
+		mIconTo.setBackgroundDrawable(ColorUtils.getRoundedGradiant(mIconColorTo));
+
+		mIconFrom.setImageResource(mIconFromResId);
+		mIconFrom.setBackgroundDrawable(ColorUtils.getRoundedGradiant(mIconColorFrom));
 	}
 
 	@Override

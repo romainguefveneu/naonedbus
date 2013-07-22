@@ -1,44 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/block_light"
+    android:orientation="vertical"
     android:padding="@dimen/padding_small" >
 
-    <TextView
-        android:id="@id/fromPlace"
-        style="@style/ItemPrimaryText"
-        android:drawableLeft="@drawable/ic_action_location_gray"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="From" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-    <TextView
-        android:id="@id/toPlace"
-        style="@style/ItemPrimaryText"
-        android:layout_below="@id/fromPlace"
-        android:drawableLeft="@drawable/ic_action_location_gray"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="To" />
+        <LinearLayout
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@id/itemDate"
-        style="@style/ItemPrimaryText"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/toPlace"
-        android:layout_toLeftOf="@id/itemTime"
-        android:drawableLeft="@drawable/ic_action_clock"
-        android:text="Date" />
+            <ImageView
+                android:id="@id/formIconFrom"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_action_locate_blue" />
 
-    <TextView
-        android:id="@id/itemTime"
-        style="@style/ItemTime.Medium"
-        android:layout_alignBaseline="@id/itemDate"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/toPlace"
-        android:text="Time" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_directions_form_dots" />
 
-</RelativeLayout>
+            <ImageView
+                android:id="@id/formIconTo"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_directions_form_destination_notselected" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:layout_weight="10"
+            android:divider="@android:drawable/divider_horizontal_bright"
+            android:orientation="vertical"
+            android:showDividers="middle" >
+
+            <TextView
+                android:id="@id/fromPlace"
+                style="@style/ItemPrimaryText"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_small"
+                android:singleLine="true"
+                android:text="From" />
+
+            <TextView
+                android:id="@id/toPlace"
+                style="@style/ItemPrimaryText"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_small"
+                android:singleLine="true"
+                android:text="To" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_clock" />
+
+        <TextView
+            android:id="@id/itemDate"
+            style="@style/ItemPrimaryText"
+            android:layout_marginLeft="@dimen/padding_medium"
+            android:text="Date" />
+    </LinearLayout>
+
+</LinearLayout>
