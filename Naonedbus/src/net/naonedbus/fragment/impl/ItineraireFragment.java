@@ -129,7 +129,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	};
 
 	@Override
-	public void onSaveInstanceState(Bundle outState) {
+	public void onSaveInstanceState(final Bundle outState) {
 		outState.putParcelable(BUNDLE_LOCATION_FROM, mFromLocation);
 		outState.putParcelable(BUNDLE_LOCATION_TO, mToLocation);
 		outState.putString(BUNDLE_ADDRESS_FROM, mFromAddressTextView.getText().toString());
@@ -224,8 +224,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 		}
 
 		if (savedInstanceState != null) {
-			mFromAddressTextView.setText(savedInstanceState.getString(BUNDLE_ADDRESS_FROM));
-			mToAddressTextView.setText(savedInstanceState.getString(BUNDLE_ADDRESS_TO));
 			notifyIconsChanged();
 		}
 

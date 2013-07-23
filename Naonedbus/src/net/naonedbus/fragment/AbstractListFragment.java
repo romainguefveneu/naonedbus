@@ -176,9 +176,9 @@ public abstract class AbstractListFragment extends SherlockListFragment {
 	 *            L'identifiant du drawable.
 	 */
 	protected void setEmptyMessageValues(final int titleId, final int summaryId, final int drawableId) {
-		this.mMessageEmptyTitleId = titleId;
-		this.mMessageEmptySummaryId = summaryId;
-		this.mMessageEmptyDrawableId = drawableId;
+		mMessageEmptyTitleId = titleId;
+		mMessageEmptySummaryId = summaryId;
+		mMessageEmptyDrawableId = drawableId;
 	}
 
 	/**

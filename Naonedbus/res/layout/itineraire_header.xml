@@ -24,7 +24,7 @@
                 android:layout_height="20dip"
                 android:padding="3dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_action_locate_blue" />
+                android:src="@drawable/ic_directions_form_destination_notselected" />
 
             <ImageView
                 android:layout_width="wrap_content"

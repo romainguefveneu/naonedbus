@@ -60,6 +60,7 @@
                 android:layout_marginBottom="@dimen/padding_tiny"
                 android:ellipsize="end"
                 android:focusableInTouchMode="false"
+                android:freezesText="true"
                 android:gravity="center_vertical"
                 android:hint="@string/itineraire_hint_depart"
                 android:maxLines="1"
@@ -76,6 +77,7 @@
                 android:layout_marginTop="@dimen/padding_tiny"
                 android:ellipsize="end"
                 android:focusableInTouchMode="false"
+                android:freezesText="true"
                 android:gravity="center_vertical"
                 android:hint="@string/itineraire_hint_arrive"
                 android:maxLines="1"
@@ -115,6 +117,7 @@
             android:layout_marginLeft="@dimen/padding_medium"
             android:layout_weight="2"
             android:focusableInTouchMode="false"
+            android:freezesText="true"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner

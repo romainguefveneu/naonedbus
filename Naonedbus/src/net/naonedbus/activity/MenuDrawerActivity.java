@@ -72,6 +72,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private static final String BUNDLE_MENU_POSITION = "MenuDrawerActivity:menuPosition";
+	private static final String BUNDLE_FRAGMENTS_TAGS = "MenuDrawerActivity:fragmentsTags";
 
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -151,21 +152,22 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		mTabs.setShouldExpand(!getResources().getBoolean(R.bool.isTablet));
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_MENU_POSITION)) {
+			final String[] fragmentsTags = savedInstanceState.getStringArray(BUNDLE_FRAGMENTS_TAGS);
+			final boolean singleFragmentMode = fragmentsTags.length == 1;
+			if (singleFragmentMode) {
+				mFragmentsTags = fragmentsTags;
+			}
 			mCurrentMenuItem = savedInstanceState.getInt(BUNDLE_MENU_POSITION);
-			selectNavigationItem(mCurrentMenuItem);
+			selectNavigationItem(mCurrentMenuItem, !singleFragmentMode);
 		}
 	}
 
 	@Override
 	protected void onSaveInstanceState(final Bundle outState) {
 		outState.putInt(BUNDLE_MENU_POSITION, mCurrentMenuItem);
+		outState.putStringArray(BUNDLE_FRAGMENTS_TAGS, mFragmentsTags);
 		super.onSaveInstanceState(outState);
 	}
-
-	/**
-	 * When using the ActionBarDrawerToggle, you must call it during
-	 * onPostCreate() and onConfigurationChanged()...
-	 */
 
 	@Override
 	protected void onPostCreate(final Bundle savedInstanceState) {
@@ -258,6 +260,10 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	}
 
 	protected void selectNavigationItem(final int position) {
+		selectNavigationItem(position, true);
+	}
+
+	private void selectNavigationItem(final int position, final boolean setFragment) {
 		if (DBG)
 			Log.d(LOG_TAG, "selectItem " + position);
 
@@ -269,7 +275,9 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		mDrawerList.setItemChecked(position, true);
 		mAdapter.setCurrentItem(position);
 
-		setFragment(fragmentHeader, item.getTitle());
+		if (setFragment) {
+			setFragment(fragmentHeader, item.getTitle());
+		}
 
 		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
 			new Handler().postDelayed(new Runnable() {
