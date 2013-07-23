@@ -33,6 +33,7 @@ import net.naonedbus.service.FavoriService;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -89,15 +90,20 @@ public class MainActivity extends MenuDrawerActivity {
 	}
 
 	private void showTutorial() {
-		startActivity(new Intent(MainActivity.this, TutorialActivity.class));
-		overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+		new Handler().post(new Runnable() {
+			@Override
+			public void run() {
+				startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+			}
+		});
 	}
 
 	public void onUpgradeDone() {
 		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setDisplayUseLogoEnabled(false);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayShowTitleEnabled(true);
 
 		setBaseMenuVisible(true);
 		selectNavigationItem(0);

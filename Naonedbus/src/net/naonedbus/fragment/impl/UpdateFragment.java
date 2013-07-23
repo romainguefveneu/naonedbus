@@ -2,6 +2,7 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.MainActivity;
+import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
@@ -11,16 +12,16 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
+public class UpdateFragment extends CustomFragment {
+	public UpdateFragment() {
+		super(R.layout.fragment_update);
+	}
 
-public class UpdateFragment extends SherlockFragment {
 	private UpdateCard mUpdateCard;
 
 	@Override
@@ -30,15 +31,12 @@ public class UpdateFragment extends SherlockFragment {
 	}
 
 	@Override
-	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		if (container == null) // must put this in
-			return null;
-
-		final View view = inflater.inflate(R.layout.fragment_update, container, false);
+	protected void bindView(View view, Bundle savedInstanceState) {
 		mUpdateCard = new UpdateCard(getActivity(), view.findViewById(R.id.updateView), new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				((MainActivity) getActivity()).onUpgradeDone();
+				final MainActivity mainActivity = (MainActivity) getActivity();
+				mainActivity.onUpgradeDone();
 			}
 		});
 
@@ -51,7 +49,6 @@ public class UpdateFragment extends SherlockFragment {
 		}
 
 		mUpdateCard.show();
-		return view;
 	}
 
 	private static class UpdateCard {

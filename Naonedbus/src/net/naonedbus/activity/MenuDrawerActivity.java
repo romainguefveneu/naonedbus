@@ -57,6 +57,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -93,6 +94,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
 	private TabsAdapter mSectionsPagerAdapter;
+	private FrameLayout mSingleFragmentContent;
 
 	private final OnItemClickListener mOnMenuItemCliclListener = new OnItemClickListener() {
 		@Override
@@ -150,6 +152,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		mTabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
 		mTabs.setViewPager(mViewPager);
 		mTabs.setShouldExpand(!getResources().getBoolean(R.bool.isTablet));
+
+		mSingleFragmentContent = (FrameLayout) findViewById(R.id.singleFragmentContent);
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_MENU_POSITION)) {
 			final String[] fragmentsTags = savedInstanceState.getStringArray(BUNDLE_FRAGMENTS_TAGS);
@@ -323,6 +327,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		mTabs.setVisibility(View.GONE);
 		mViewPager.setVisibility(View.GONE);
+		mSingleFragmentContent.setVisibility(View.VISIBLE);
 	}
 
 	private void setMultipleFragments(final int selectedPosition) {
@@ -338,6 +343,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		mTabs.notifyDataSetChanged();
 		mViewPager.setCurrentItem(selectedPosition);
 		mViewPager.setVisibility(View.VISIBLE);
+		mSingleFragmentContent.setVisibility(View.GONE);
 	}
 
 	private void clearFragments() {

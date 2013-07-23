@@ -33,7 +33,6 @@ import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.EquipementDistanceComparator;
 import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
@@ -200,16 +199,18 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
 
-		final ParamIntent intent;
+		final Intent intent;
 		if (equipement.getType().equals(Type.TYPE_ARRET)) {
-			intent = new ParamIntent(getActivity(), ParcoursActivity.class);
+			intent = new Intent(getActivity(), ParcoursActivity.class);
 			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, equipement.getId());
 		} else {
-//			intent = new ParamIntent(getActivity(), MapActivity.class);
-//			intent.putExtra(MapActivity.Param.itemId, equipement.getId());
-//			intent.putExtra(MapActivity.Param.itemType, equipement.getType().getId());
+			intent = null;
+			// intent = new Intent(getActivity(), MapActivity.class);
+			// intent.putExtra(MapActivity.Param.itemId, equipement.getId());
+			// intent.putExtra(MapActivity.Param.itemType,
+			// equipement.getType().getId());
 		}
-//		startActivity(intent);
+		startActivity(intent);
 
 	}
 
