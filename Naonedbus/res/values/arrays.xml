@@ -150,4 +150,14 @@
         <item></item>
     </string-array>
 
+    <!-- Unicorn -->
+    <string-array name="unicorn">
+        <item>No, Charlie!</item>
+        <item>We have to take the amulet to the Banana King.</item>
+        <item>Ah! All right, fine! I\'ll go! I\'ll go!</item>
+        <item>Just keep walking, Charlie, keep walking&#8230;</item>
+        <item>We\'re from the future, Charlie!</item>
+        <item>Hey, Charlie. Hey Charlie wake up.</item>
+    </string-array>
+
 </resources>

@@ -219,14 +219,14 @@ public class ItineraireFragment extends AbstractListFragment implements
 			}
 		});
 
-		final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
-		if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
-			mFromLocation.set(currentLocation);
-			mFromAddressTextView.setText(R.string.itineraire_current_location);
-		}
-
 		if (savedInstanceState != null) {
 			notifyIconsChanged();
+		} else {
+			final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
+			if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
+				mFromLocation.set(currentLocation);
+				mFromAddressTextView.setText(R.string.itineraire_current_location);
+			}
 		}
 
 		setDateValue();
@@ -388,15 +388,21 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	private void sendRequest() {
-		final Bundle bundle = new Bundle();
-		bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE, mFromLocation.getLatitude());
-		bundle.putDouble(ItineraryLoader.PARAM_FROM_LONGITUDE, mFromLocation.getLongitude());
-		bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocation.getLatitude());
-		bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocation.getLongitude());
-		bundle.putLong(ItineraryLoader.PARAM_TIME, mDateTime.getMillis());
-		bundle.putBoolean(ItineraryLoader.PARAM_ARRIVE_BY, mArriveBy);
+		if (mFromLocation.bearingTo(mToLocation) == 0.0f) {
+			hideProgress();
+			mItineraryWrappers.add(ItineraryWrapper.getUnicornItinerary());
+			mAdapter.notifyDataSetChanged();
+		} else {
+			final Bundle bundle = new Bundle();
+			bundle.putDouble(ItineraryLoader.PARAM_FROM_LATITUDE, mFromLocation.getLatitude());
+			bundle.putDouble(ItineraryLoader.PARAM_FROM_LONGITUDE, mFromLocation.getLongitude());
+			bundle.putDouble(ItineraryLoader.PARAM_TO_LATITUDE, mToLocation.getLatitude());
+			bundle.putDouble(ItineraryLoader.PARAM_TO_LONGITUDE, mToLocation.getLongitude());
+			bundle.putLong(ItineraryLoader.PARAM_TIME, mDateTime.getMillis());
+			bundle.putBoolean(ItineraryLoader.PARAM_ARRIVE_BY, mArriveBy);
 
-		getLoaderManager().restartLoader(0, bundle, this);
+			getLoaderManager().restartLoader(0, bundle, this);
+		}
 	}
 
 	private void showProgress() {
@@ -421,11 +427,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		if (result.getException() == null) {
 			mItineraryWrappers.clear();
 			if (result.getResult() == null) {
-				if (mFromLocation.bearingTo(mToLocation) == 0.0f) {
-					mItineraryWrappers.add(ItineraryWrapper.getUnicornItinerary());
-				} else {
-					mItineraryWrappers.add(ItineraryWrapper.getEmptyItinerary());
-				}
+				mItineraryWrappers.add(ItineraryWrapper.getEmptyItinerary());
 			} else {
 				mItineraryWrappers.addAll(result.getResult());
 			}

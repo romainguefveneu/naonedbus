@@ -1,6 +1,7 @@
 package net.naonedbus.widget.adapter.impl;
 
 import java.util.List;
+import java.util.Random;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.ItineraryWrapper;
@@ -110,6 +111,11 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 	private void bindEmptyView(final ItineraryWrapper wrapper, final ViewHolder viewHolder) {
 		if (wrapper.isUnicorn()) {
 			viewHolder.itemTitle.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.unicorn, 0, 0);
+
+			String[] strings = getContext().getResources().getStringArray(R.array.unicorn);
+			Random rand = new Random();
+			int position = rand.nextInt(strings.length);
+			viewHolder.itemTitle.setText(strings[position]);
 		}
 	}
 
