@@ -23,7 +23,6 @@
                 android:id="@id/formIconFrom"
                 android:layout_width="20dip"
                 android:layout_height="20dip"
-                android:padding="3dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_action_locate_blue" />
 
@@ -39,7 +38,6 @@
                 android:id="@id/formIconTo"
                 android:layout_width="20dip"
                 android:layout_height="20dip"
-                android:padding="3dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_directions_form_destination_notselected" />
         </LinearLayout>

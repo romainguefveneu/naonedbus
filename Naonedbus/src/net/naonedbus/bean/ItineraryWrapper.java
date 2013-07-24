@@ -13,7 +13,19 @@ public class ItineraryWrapper implements Serializable {
 	private String mTime;
 	private String mDate;
 	private String mWalkTime;
+	private boolean mIsUnicorn;
 	private transient List<Ligne> mLignes;
+
+	public static ItineraryWrapper getEmptyItinerary() {
+		return new ItineraryWrapper(null);
+	}
+
+	public static ItineraryWrapper getUnicornItinerary() {
+		final ItineraryWrapper wrapper = new ItineraryWrapper(null);
+		wrapper.mIsUnicorn = true;
+
+		return wrapper;
+	}
 
 	public ItineraryWrapper(final Itinerary itinerary) {
 		mItinerary = itinerary;
@@ -53,6 +65,10 @@ public class ItineraryWrapper implements Serializable {
 
 	public Itinerary getItinerary() {
 		return mItinerary;
+	}
+
+	public boolean isUnicorn() {
+		return mIsUnicorn;
 	}
 
 }

@@ -51,4 +51,7 @@
     <dimen name="cluster_text_size_medium">11sp</dimen>
     <dimen name="cluster_text_size_large">13sp</dimen>
 
+    <!-- Itineraries -->
+    <dimen name="itinerary_icon_padding">3dp</dimen>
+
 </resources>

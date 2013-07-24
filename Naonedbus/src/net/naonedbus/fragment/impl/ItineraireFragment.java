@@ -96,12 +96,13 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private Spinner mDateKindSpinner;
 
 	private ImageView mIconFrom;
-	private int mIconColorFrom;
 	private ImageView mIconTo;
-	private int mIconColorTo;
-
+	private int mIconFromColor = Color.TRANSPARENT;
+	private int mIconToColor = Color.TRANSPARENT;
 	private int mIconFromResId = R.drawable.ic_action_locate_blue;
 	private int mIconToResId = R.drawable.ic_directions_form_destination_notselected;
+
+	private int mIconPadding;
 
 	private boolean mDialogLock;
 
@@ -114,6 +115,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		super.onCreate(savedInstanceState);
 
 		mDateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+		mIconPadding = getResources().getDimensionPixelSize(R.dimen.itinerary_icon_padding);
 
 		if (savedInstanceState != null) {
 			mFromLocation.set((Location) savedInstanceState.getParcelable(BUNDLE_LOCATION_FROM));
@@ -123,8 +125,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 			mArriveBy = savedInstanceState.getBoolean(BUNDLE_ARRIVE_BY);
 			mIconFromResId = savedInstanceState.getInt(BUNDLE_ICON_FROM);
 			mIconToResId = savedInstanceState.getInt(BUNDLE_ICON_TO);
-			mIconColorFrom = savedInstanceState.getInt(BUNDLE_COLOR_FROM);
-			mIconColorTo = savedInstanceState.getInt(BUNDLE_COLOR_TO);
+			mIconFromColor = savedInstanceState.getInt(BUNDLE_COLOR_FROM);
+			mIconToColor = savedInstanceState.getInt(BUNDLE_COLOR_TO);
 		}
 	};
 
@@ -138,8 +140,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 		outState.putBoolean(BUNDLE_ARRIVE_BY, mArriveBy);
 		outState.putInt(BUNDLE_ICON_FROM, mIconFromResId);
 		outState.putInt(BUNDLE_ICON_TO, mIconToResId);
-		outState.putInt(BUNDLE_COLOR_FROM, mIconColorFrom);
-		outState.putInt(BUNDLE_COLOR_TO, mIconColorTo);
+		outState.putInt(BUNDLE_COLOR_FROM, mIconFromColor);
+		outState.putInt(BUNDLE_COLOR_TO, mIconToColor);
 		super.onSaveInstanceState(outState);
 	}
 
@@ -251,10 +253,10 @@ public class ItineraireFragment extends AbstractListFragment implements
 					} else {
 						mIconFromResId = R.drawable.ic_directions_form_destination_notselected;
 					}
-					mIconColorFrom = Color.TRANSPARENT;
+					mIconFromColor = Color.TRANSPARENT;
 				} else {
 					mIconFromResId = type.getDrawableRes();
-					mIconColorFrom = getActivity().getResources().getColor(type.getBackgroundColorRes());
+					mIconFromColor = getActivity().getResources().getColor(type.getBackgroundColorRes());
 				}
 			} else {
 				mToLocation.setLatitude(latitude);
@@ -266,10 +268,10 @@ public class ItineraireFragment extends AbstractListFragment implements
 					} else {
 						mIconToResId = R.drawable.ic_directions_form_destination_notselected;
 					}
-					mIconColorFrom = Color.TRANSPARENT;
+					mIconToColor = Color.TRANSPARENT;
 				} else {
 					mIconToResId = type.getDrawableRes();
-					mIconColorTo = getActivity().getResources().getColor(type.getBackgroundColorRes());
+					mIconToColor = getActivity().getResources().getColor(type.getBackgroundColorRes());
 				}
 			}
 
@@ -326,20 +328,28 @@ public class ItineraireFragment extends AbstractListFragment implements
 		mIconToResId = mIconFromResId;
 		mIconFromResId = t;
 
-		t = mIconColorFrom;
-		mIconColorFrom = mIconColorTo;
-		mIconColorTo = t;
+		t = mIconFromColor;
+		mIconFromColor = mIconToColor;
+		mIconToColor = t;
 
 		notifyIconsChanged();
 		onFormValueChange();
 	}
 
 	private void notifyIconsChanged() {
-		mIconTo.setImageResource(mIconToResId);
-		mIconTo.setBackgroundDrawable(ColorUtils.getRoundedGradiant(mIconColorTo));
+		setIcon(mIconFrom, mIconFromResId, mIconFromColor);
+		setIcon(mIconTo, mIconToResId, mIconToColor);
+	}
 
-		mIconFrom.setImageResource(mIconFromResId);
-		mIconFrom.setBackgroundDrawable(ColorUtils.getRoundedGradiant(mIconColorFrom));
+	private void setIcon(final ImageView imageView, final int icoRes, final int color) {
+		imageView.setImageResource(icoRes);
+		if (color == Color.TRANSPARENT) {
+			imageView.setBackgroundDrawable(null);
+			imageView.setPadding(0, 0, 0, 0);
+		} else {
+			imageView.setBackgroundDrawable(ColorUtils.getRoundedGradiant(color));
+			imageView.setPadding(mIconPadding, mIconPadding, mIconPadding, mIconPadding);
+		}
 	}
 
 	@Override
@@ -411,7 +421,11 @@ public class ItineraireFragment extends AbstractListFragment implements
 		if (result.getException() == null) {
 			mItineraryWrappers.clear();
 			if (result.getResult() == null) {
-				mItineraryWrappers.add(new ItineraryWrapper(null));
+				if (mFromLocation.bearingTo(mToLocation) == 0.0f) {
+					mItineraryWrappers.add(ItineraryWrapper.getUnicornItinerary());
+				} else {
+					mItineraryWrappers.add(ItineraryWrapper.getEmptyItinerary());
+				}
 			} else {
 				mItineraryWrappers.addAll(result.getResult());
 			}

@@ -68,6 +68,8 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		viewHolder = (ViewHolder) view.getTag();
 		if (viewType == VIEW_TYPE_NORMAL) {
 			bindNormalView(getItem(position), viewHolder);
+		} else {
+			bindEmptyView(getItem(position), viewHolder);
 		}
 
 		return view;
@@ -105,9 +107,21 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		}
 	}
 
+	private void bindEmptyView(final ItineraryWrapper wrapper, final ViewHolder viewHolder) {
+		if (wrapper.isUnicorn()) {
+			viewHolder.itemTitle.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.unicorn, 0, 0);
+		}
+	}
+
 	private View inflateEmptyView(final ViewGroup parent) {
 		final View view = mLayoutInflater.inflate(R.layout.item_itineraire_empty, parent, false);
-		((TextView) view.findViewById(R.id.itemTitle)).setTypeface(mRobotoCondensed);
+
+		final ViewHolder viewHolder = new ViewHolder();
+		viewHolder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
+		viewHolder.itemTitle.setTypeface(mRobotoCondensed);
+
+		view.setTag(viewHolder);
+
 		return view;
 	}
 
