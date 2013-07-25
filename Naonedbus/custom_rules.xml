@@ -44,6 +44,10 @@
 		<property file="./ant-profiles/alpha.properties" />
 	</target>
 	
+	<target name="-read-beta-properties">
+		<property file="./ant-profiles/beta.properties" />
+	</target>
+	
 	
 	<target name="make-debug" depends="-read-debug-properties,-process-template">
 	    <property name="out.final.file" location="${ant.project.name}-debug.apk" />
@@ -54,6 +58,11 @@
 	    <property name="out.final.file" location="${ant.project.name}-alpha.apk" />
 		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-alpha-unsigned.apk" />
 		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-alpha-unsigned-aligned.apk" />
+	</target>
+	<target name="make-beta" depends="-read-beta-properties,-process-template">
+	    <property name="out.final.file" location="${ant.project.name}-beta.apk" />
+		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-beta-unsigned.apk" />
+		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-beta-unsigned-aligned.apk" />
 	</target>
 	<target name="make-integ" depends="-read-integ-properties,-process-template">
 	    <property name="out.final.file" location="${ant.project.name}-integ.apk" />

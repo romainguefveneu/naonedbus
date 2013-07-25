@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">NaonedBus</string>
@@ -118,7 +119,6 @@
     <string name="action_list_location_center">Centrer au plus proche</string>
     <string name="action_groupes_add">Ajouter un groupe</string>
     <string name="action_groupes_manage">Gérer les groupes</string>
-    <string name="action_reverse">Inverser</string>
     <string name="action_view_satellite">Vue satellite</string>
     <!-- Erreurs -->
     <string name="error_title">Une erreur est survenue</string>
