@@ -81,6 +81,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	private final List<ItineraryWrapper> mItineraryWrappers = new ArrayList<ItineraryWrapper>();
 	private ItineraryWrapperArrayAdapter mAdapter;
+	private SwingBottomInAnimationAdapter mAnimationAdapter;
 	private View mProgressView;
 
 	private DateFormat mDateFormat;
@@ -99,7 +100,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private ImageView mIconTo;
 	private int mIconFromColor = Color.TRANSPARENT;
 	private int mIconToColor = Color.TRANSPARENT;
-	private int mIconFromResId = R.drawable.ic_action_locate_blue;
+	private int mIconFromResId = R.drawable.ic_directions_form_destination_notselected;
 	private int mIconToResId = R.drawable.ic_directions_form_destination_notselected;
 
 	private int mIconPadding;
@@ -166,10 +167,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 		mProgressView = view.findViewById(android.R.id.progress);
 
 		mAdapter = new ItineraryWrapperArrayAdapter(getActivity(), mItineraryWrappers);
-		final SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
-		swingBottomInAnimationAdapter.setListView(listView);
-
-		listView.setAdapter(swingBottomInAnimationAdapter);
+		mAnimationAdapter= new SwingBottomInAnimationAdapter(mAdapter);
+		mAnimationAdapter.setListView(listView);
+		listView.setAdapter(mAnimationAdapter);
 
 		mIconFrom = (ImageView) view.findViewById(R.id.formIconFrom);
 		mIconTo = (ImageView) view.findViewById(R.id.formIconTo);
@@ -226,6 +226,10 @@ public class ItineraireFragment extends AbstractListFragment implements
 			if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
 				mFromLocation.set(currentLocation);
 				mFromAddressTextView.setText(R.string.itineraire_current_location);
+
+				mIconFromResId = R.drawable.ic_action_locate_blue;
+
+				notifyIconsChanged();
 			}
 		}
 
@@ -388,6 +392,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	private void sendRequest() {
+		mAnimationAdapter.reset();
 		if (mFromLocation.bearingTo(mToLocation) == 0.0f) {
 			hideProgress();
 			mItineraryWrappers.add(ItineraryWrapper.getUnicornItinerary());
