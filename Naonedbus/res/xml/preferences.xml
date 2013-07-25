@@ -3,20 +3,12 @@
     android:key="first_preferencescreen"
     android:title="@string/app_name" >
 
-    <!-- <PreferenceCategory android:title="Thème" > -->
-    <!-- <ListPreference -->
-    <!-- android:entries="@array/themeOptions" -->
-    <!-- android:entryValues="@array/themeValues" -->
-    <!-- android:key="theme" -->
-    <!-- android:persistent="true" -->
-    <!-- android:title="Thème de l&apos;application" /> -->
-    <!-- </PreferenceCategory> -->
-    <!-- <PreferenceCategory android:title="Favoris" > -->
-    <!-- <Preference -->
-    <!-- android:key="favoris.import" -->
-    <!-- android:title="Importer mes anciens favoris avec ma clé" /> -->
-    <!-- </PreferenceCategory> -->
-
+    <PreferenceCategory android:title="@string/pref_section_navigation" >
+        <ListPreference
+            android:defaultValue="0"
+            android:key="navigation.home"
+            android:title="@string/pref_navigation_home" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_section_plans" >
         <CheckBoxPreference
             android:defaultValue="true"

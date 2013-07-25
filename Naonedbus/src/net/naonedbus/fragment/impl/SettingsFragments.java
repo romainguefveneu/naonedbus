@@ -22,13 +22,16 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.MenuDrawerActivity;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.CalendarUtils;
+import net.naonedbus.widget.item.impl.MainMenuItem;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
@@ -50,9 +53,10 @@ import com.bugsense.trace.BugSenseHandler;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SettingsFragments extends PreferenceFragment {
 
-	private ListPreference calendrierDefaut;
-	private Preference clearCachePlan;
-	private Preference clearCacheHoraires;
+	private ListPreference mNavigationHome;
+	private ListPreference mCalendrierDefaut;
+	private Preference mClearCachePlan;
+	private Preference mClearCacheHoraires;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -61,21 +65,56 @@ public class SettingsFragments extends PreferenceFragment {
 
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-		calendrierDefaut = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_CALENDRIER_DEFAUT);
-		clearCachePlan = getPreferenceScreen().findPreference("plan.cache.clear");
-		clearCacheHoraires = getPreferenceScreen().findPreference("horaires.cache.clear");
+		mNavigationHome = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_NAVIGATION_HOME);
+		mCalendrierDefaut = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_CALENDRIER_DEFAUT);
+		mClearCachePlan = getPreferenceScreen().findPreference("plan.cache.clear");
+		mClearCacheHoraires = getPreferenceScreen().findPreference("horaires.cache.clear");
 
+		initNavigationHome(preferences);
 		initCalendar(preferences);
 		initClearCache(preferences);
 	}
 
 	/**
-	 * Initier la liste des calendriers
+	 * Initier la liste des sections.
+	 * 
+	 * @param preferences
+	 */
+	private void initNavigationHome(final SharedPreferences preferences) {
+		final List<MainMenuItem> items = MenuDrawerActivity.getMainMenuItems();
+
+		final CharSequence[] entriesName = new CharSequence[items.size()];
+		final CharSequence[] entriesId = new CharSequence[items.size()];
+
+		for (int i = 0; i < items.size(); i++) {
+			final MainMenuItem item = items.get(i);
+			entriesName[i] = getString(item.getTitle());
+			entriesId[i] = String.valueOf(i);
+		}
+
+		final int section = Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0"));
+		final MainMenuItem item = items.get(section);
+		mNavigationHome.setSummary(getString(item.getTitle()));
+
+		mNavigationHome.setEntries(entriesName);
+		mNavigationHome.setEntryValues(entriesId);
+		mNavigationHome.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+			@Override
+			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
+				final MainMenuItem item = items.get(Integer.parseInt((String) newValue));
+				mNavigationHome.setSummary(getString(item.getTitle()));
+				return true;
+			}
+		});
+	}
+
+	/**
+	 * Initier la liste des calendriers.
 	 * 
 	 * @param preferences
 	 */
 	private void initCalendar(final SharedPreferences preferences) {
-		calendrierDefaut.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+		mCalendrierDefaut.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
 				setCalendarSummary((String) newValue);
@@ -83,24 +122,24 @@ public class SettingsFragments extends PreferenceFragment {
 			}
 		});
 		setCalendarSummary(preferences);
-		fillCalendars(calendrierDefaut);
+		fillCalendars(mCalendrierDefaut);
 	}
 
 	/**
-	 * Initier le vidage du cache
+	 * Initier le vidage du cache.
 	 * 
 	 * @param preferences
 	 */
 	private void initClearCache(final SharedPreferences preferences) {
-		clearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
+		mClearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
 
-		clearCachePlan.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+		mClearCachePlan.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
 				try {
 					clearCache();
-					clearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
+					mClearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
 				} catch (final IOException e) {
 					BugSenseHandler.sendExceptionMessage("Erreur lors de la suppression du cache des plans", null, e);
 				}
@@ -109,7 +148,7 @@ public class SettingsFragments extends PreferenceFragment {
 			}
 		});
 
-		clearCacheHoraires.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+		mClearCacheHoraires.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
@@ -121,7 +160,7 @@ public class SettingsFragments extends PreferenceFragment {
 	}
 
 	/**
-	 * Vider le cache des plans
+	 * Vider le cache des plans.
 	 * 
 	 * @throws IOException
 	 */
@@ -131,7 +170,7 @@ public class SettingsFragments extends PreferenceFragment {
 	}
 
 	/**
-	 * Vider le cache horaires
+	 * Vider le cache horaires.
 	 */
 	private void clearCacheHoraires() {
 		final HoraireManager horaireManager = HoraireManager.getInstance();
@@ -140,7 +179,7 @@ public class SettingsFragments extends PreferenceFragment {
 	}
 
 	/**
-	 * Supprimer le cache webView
+	 * Supprimer le cache webView.
 	 */
 	private void clearWebviewCache() {
 		final File directory = getActivity().getFilesDir();
@@ -166,7 +205,7 @@ public class SettingsFragments extends PreferenceFragment {
 	};
 
 	/**
-	 * Lister les calendrier dans la ListPreference passée en paramètre
+	 * Lister les calendrier dans la ListPreference passée en paramètre.
 	 * 
 	 * @param list
 	 */
@@ -204,9 +243,9 @@ public class SettingsFragments extends PreferenceFragment {
 	 */
 	private void setCalendarSummary(final String id) {
 		if (id != null) {
-			calendrierDefaut.setSummary(CalendarUtils.getCalendarName(getActivity().getContentResolver(), id));
+			mCalendrierDefaut.setSummary(CalendarUtils.getCalendarName(getActivity().getContentResolver(), id));
 		} else {
-			calendrierDefaut.setSummary(R.string.pref_calendar_summary);
+			mCalendrierDefaut.setSummary(R.string.pref_calendar_summary);
 		}
 	}
 

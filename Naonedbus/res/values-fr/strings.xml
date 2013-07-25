@@ -24,9 +24,11 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <!-- Preférences -->
+    <string name="pref_section_navigation">Navigation</string>
     <string name="pref_section_plans">Plans des lignes</string>
     <string name="pref_section_timetable">Horaires</string>
     <string name="pref_section_calendar">Calendrier</string>
+    <string name="pref_navigation_home">Section de démarrage</string>
     <string name="pref_cache_enable">Activer le cache</string>
     <string name="pref_cache_clear">Vider le cache</string>
     <string name="pref_cache_size">Taille du cache : %s</string>

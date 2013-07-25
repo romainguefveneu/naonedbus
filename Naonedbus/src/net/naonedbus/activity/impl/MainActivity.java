@@ -22,7 +22,6 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
-import net.naonedbus.fragment.header.MainFragmentHeader;
 import net.naonedbus.fragment.header.UpdateFragmentHeader;
 import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.intent.ParamIntent;
@@ -32,8 +31,10 @@ import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.service.FavoriService;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -69,7 +70,8 @@ public class MainActivity extends MenuDrawerActivity {
 				setBaseMenuVisible(false);
 				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
 			} else {
-				setFragment(new MainFragmentHeader(), R.string.title_activity_main);
+				final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+				selectNavigationItem(Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0")));
 			}
 		}
 
