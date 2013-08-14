@@ -34,7 +34,6 @@ import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.provider.table.SensTable;
 import net.naonedbus.rest.container.FavoriContainer;
 import net.naonedbus.rest.controller.impl.FavoriController;
-import net.naonedbus.utils.ColorUtils;
 
 import org.json.JSONException;
 
@@ -42,9 +41,10 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.net.Uri;
 import android.util.SparseIntArray;
+
+import com.google.gson.JsonParseException;
 
 public class FavoriManager extends SQLiteManager<Favori> {
 
@@ -122,8 +122,9 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		mBuilder.setNomArret(c.getString(c.getColumnIndex(EquipementTable.NOM)));
 
 		final int couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR));
+		final int couleurFront = c.getInt(c.getColumnIndex(LigneTable.COULEUR_FRONT));
 		mBuilder.setCouleurBackground(couleurBackground);
-		mBuilder.setCouleurTexte(ColorUtils.isLightColor(couleurBackground) ? Color.BLACK : Color.WHITE);
+		mBuilder.setCouleurTexte(couleurFront);
 
 		mBuilder.setNomSens(c.getString(c.getColumnIndex(SensTable.NOM)));
 		mBuilder.setLettre(c.getString(c.getColumnIndex(LigneTable.LETTRE)));

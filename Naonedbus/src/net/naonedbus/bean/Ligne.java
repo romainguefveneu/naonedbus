@@ -53,7 +53,8 @@ public class Ligne implements SectionItem, Parcelable {
 		private String mLettre;
 		private String mDepuis;
 		private String mVers;
-		private int mCouleur;
+		private int mCouleurBack;
+		private int mCouleurFront;
 		private Object mSection;
 
 		public Builder setId(final int id) {
@@ -81,8 +82,13 @@ public class Ligne implements SectionItem, Parcelable {
 			return this;
 		}
 
-		public Builder setCouleur(final int couleur) {
-			mCouleur = couleur;
+		public Builder setCouleurBack(final int couleur) {
+			mCouleurBack = couleur;
+			return this;
+		}
+
+		public Builder setCouleurFront(final int couleur) {
+			mCouleurFront = couleur;
 			return this;
 		}
 
@@ -132,8 +138,8 @@ public class Ligne implements SectionItem, Parcelable {
 		mDepuis = builder.mDepuis;
 		mVers = builder.mVers;
 		mNom = mDepuis + " \u2194 " + mVers;
-		mCouleur = builder.mCouleur;
-		mCouleurTexte = ColorUtils.isLightColor(mCouleur) ? Color.BLACK : Color.WHITE;
+		mCouleur = builder.mCouleurBack;
+		mCouleurTexte = builder.mCouleurFront;
 		mSection = builder.mSection;
 	}
 

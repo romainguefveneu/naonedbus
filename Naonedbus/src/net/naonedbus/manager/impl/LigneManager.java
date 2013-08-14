@@ -50,7 +50,8 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	private int mColDepuis;
 	private int mColLettre;
 	private int mColVers;
-	private int mColCouleur;
+	private int mColCouleurBack;
+	private int mColCouleurFront;
 	private int mColType;
 
 	private Thread mLignesLoader;
@@ -108,7 +109,8 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		mColDepuis = c.getColumnIndex(LigneTable.DEPUIS);
 		mColLettre = c.getColumnIndex(LigneTable.LETTRE);
 		mColVers = c.getColumnIndex(LigneTable.VERS);
-		mColCouleur = c.getColumnIndex(LigneTable.COULEUR);
+		mColCouleurBack = c.getColumnIndex(LigneTable.COULEUR);
+		mColCouleurFront = c.getColumnIndex(LigneTable.COULEUR_FRONT);
 		mColType = c.getColumnIndex(LigneTable.TYPE);
 	}
 
@@ -119,7 +121,8 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		mBuilder.setDepuis(c.getString(mColDepuis));
 		mBuilder.setLettre(c.getString(mColLettre));
 		mBuilder.setVers(c.getString(mColVers));
-		mBuilder.setCouleur(c.getInt(mColCouleur));
+		mBuilder.setCouleurBack(c.getInt(mColCouleurBack));
+		mBuilder.setCouleurFront(c.getInt(mColCouleurFront));
 		mBuilder.setSection(c.getInt(mColType));
 		return mBuilder.build();
 	}

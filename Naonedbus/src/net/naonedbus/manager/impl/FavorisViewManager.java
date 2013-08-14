@@ -24,12 +24,10 @@ import net.naonedbus.bean.Favori;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.FavorisViewProvider;
 import net.naonedbus.provider.table.FavoriViewTable;
-import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.QueryUtils;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 
 public class FavorisViewManager extends SQLiteManager<Favori> {
@@ -84,8 +82,9 @@ public class FavorisViewManager extends SQLiteManager<Favori> {
 		mBuilder.setLettre(c.getString(c.getColumnIndex(FavoriViewTable.LETTRE)));
 
 		final int couleurBackground = c.getInt(c.getColumnIndex(FavoriViewTable.COULEUR));
+		final int couleurFront = c.getInt(c.getColumnIndex(FavoriViewTable.COULEUR_FRONT));
 		mBuilder.setCouleurBackground(couleurBackground);
-		mBuilder.setCouleurTexte((ColorUtils.isLightColor(couleurBackground)) ? Color.BLACK : Color.WHITE);
+		mBuilder.setCouleurTexte(couleurFront);
 
 		mBuilder.setNomArret(c.getString(c.getColumnIndex(FavoriViewTable.NOM_ARRET)));
 		mBuilder.setNormalizedNom(c.getString(c.getColumnIndex(FavoriViewTable.NOM_NORMALIZED)));

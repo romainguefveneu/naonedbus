@@ -39,7 +39,8 @@ public interface FavoriViewTable extends BaseColumns {
 
 	public static final String LATITUDE = "latitude";
 	public static final String LONGITUDE = "longitude";
-	public static final String COULEUR = "ligneCouleur";
+	public static final String COULEUR = "ligneCouleurBack";
+	public static final String COULEUR_FRONT = "ligneCouleurFront";
 	public static final String LETTRE = "ligneLettre";
 	public static final String TYPE = "ligneType";
 

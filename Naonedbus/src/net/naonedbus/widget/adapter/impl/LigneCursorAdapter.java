@@ -33,14 +33,15 @@ import android.widget.TextView;
 public class LigneCursorAdapter extends CursorSectionAdapter {
 
 	private int COL_LETTRE;
-	private int COL_COLOR;
+	private int COL_COLOR_BACK;
+	private int COL_COLOR_FRONT;
 	private int COL_SENS1;
 	private int COL_SENS2;
 
 	private final Typeface mRoboto;
 	private boolean mHideDivider;
 
-	public LigneCursorAdapter(Context context, Cursor c) {
+	public LigneCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, R.layout.list_item_ligne);
 		mRoboto = FontUtils.getRobotoBoldCondensed(context);
 		if (c != null) {
@@ -48,12 +49,12 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 		}
 	}
 
-	public void setHideDivider(boolean hide) {
+	public void setHideDivider(final boolean hide) {
 		mHideDivider = hide;
 	}
 
 	@Override
-	public void changeCursor(Cursor cursor) {
+	public void changeCursor(final Cursor cursor) {
 		super.changeCursor(cursor);
 		if (cursor != null) {
 			initColumns(cursor);
@@ -61,7 +62,7 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 	}
 
 	@Override
-	public Cursor swapCursor(Cursor newCursor) {
+	public Cursor swapCursor(final Cursor newCursor) {
 		final Cursor oldCursor = super.swapCursor(newCursor);
 		if (newCursor != null) {
 			initColumns(newCursor);
@@ -69,22 +70,24 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 		return oldCursor;
 	}
 
-	private void initColumns(Cursor c) {
+	private void initColumns(final Cursor c) {
 		COL_LETTRE = c.getColumnIndex(LigneTable.LETTRE);
-		COL_COLOR = c.getColumnIndex(LigneTable.COULEUR);
+		COL_COLOR_BACK = c.getColumnIndex(LigneTable.COULEUR);
+		COL_COLOR_FRONT = c.getColumnIndex(LigneTable.COULEUR_FRONT);
 		COL_SENS1 = c.getColumnIndex(LigneTable.DEPUIS);
 		COL_SENS2 = c.getColumnIndex(LigneTable.VERS);
 	}
 
 	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
+	public void bindView(final View view, final Context context, final Cursor cursor) {
 		super.bindView(view, context, cursor);
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final String lettre = cursor.getString(COL_LETTRE);
 		final String depuis = cursor.getString(COL_SENS1);
 		final String vers = cursor.getString(COL_SENS2);
-		final int color = cursor.getInt(COL_COLOR);
+		final int color = cursor.getInt(COL_COLOR_BACK);
+		final int colorFront = cursor.getInt(COL_COLOR_FRONT);
 
 		holder.icon.setText(lettre);
 
@@ -93,7 +96,7 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 			holder.icon.setTextColor(Color.WHITE);
 		} else {
 			holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(color));
-			holder.icon.setTextColor(ColorUtils.isLightColor(color) ? Color.BLACK : Color.WHITE);
+			holder.icon.setTextColor(colorFront);
 		}
 		if ((depuis == null || depuis.length() == 0 || depuis.equals(vers))) {
 			holder.sens1.setText(depuis + " \u2194 " + vers);
@@ -110,7 +113,7 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 	}
 
 	@Override
-	protected void bindViewHolder(View view) {
+	protected void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
