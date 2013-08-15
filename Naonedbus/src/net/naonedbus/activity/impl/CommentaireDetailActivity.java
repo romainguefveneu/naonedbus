@@ -90,28 +90,28 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_info_trafic));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.BLACK);
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.WHITE);
 
 		} else if (NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_actus));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.BLACK);
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.WHITE);
 
 		} else if (NaonedbusClient.TWITTER_TAN_INFOS.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.logo_taninfos);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_infos));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_taninfos_header), Color.BLACK);
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_taninfos_header), Color.WHITE);
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.ic_launcher);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_message_service));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header), Color.BLACK);
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header), Color.WHITE);
 
 		} else {
 

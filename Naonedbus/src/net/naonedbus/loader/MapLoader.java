@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.map.layer.loader.BiclooMapLoader;
@@ -13,10 +14,14 @@ import net.naonedbus.map.layer.loader.MapLayerLoader;
 import net.naonedbus.map.layer.loader.ParkingMapLoader;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.twotoasters.clusterkraf.InputPoint;
 
 public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>, Void> {
+
+	private static String LOG_TAG = "MapLoader";
+	private static boolean DBG = BuildConfig.DEBUG;
 
 	private final WeakReference<MapLoaderCallback> mCallback;
 	private final WeakReference<Context> mContext;
@@ -46,6 +51,9 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 
 				publishProgress(loader.getInputPoints(context));
 			}
+		} else {
+			if (DBG)
+				Log.w(LOG_TAG, "doInBackground context null");
 		}
 		return null;
 	}
@@ -57,6 +65,9 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 			for (final ArrayList<InputPoint> value : values) {
 				callback.onLayerLoaded(value);
 			}
+		} else {
+			if (DBG)
+				Log.w(LOG_TAG, "onProgressUpdate callback null");
 		}
 	}
 
@@ -65,6 +76,9 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 		MapLoaderCallback callback = mCallback.get();
 		if (callback != null) {
 			callback.onMapLoaderStart();
+		} else {
+			if (DBG)
+				Log.w(LOG_TAG, "onPreExecute callback null");
 		}
 	}
 
@@ -73,6 +87,9 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 		MapLoaderCallback callback = mCallback.get();
 		if (callback != null) {
 			callback.onMapLoaderEnd();
+		} else {
+			if (DBG)
+				Log.w(LOG_TAG, "onPostExecute callback null");
 		}
 	}
 

@@ -83,6 +83,7 @@ public abstract class MapLayer {
 		} else {
 			mDescription.setVisibility(View.VISIBLE);
 		}
+		mSubView.setVisibility(View.GONE);
 	}
 
 	private final void setSubViews(final List<View> views) {

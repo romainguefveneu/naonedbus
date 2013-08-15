@@ -137,12 +137,13 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateOptionsMenu");
-
 		inflater.inflate(R.menu.fragment_map, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
-		mRefreshMenuItem.setVisible(mMapLoader != null && mMapLoader.getStatus() == Status.RUNNING);
+		mRefreshMenuItem.setVisible(mMapLoader != null && mMapLoader.getStatus() != Status.FINISHED);
+
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateOptionsMenu " + mRefreshMenuItem.isVisible() + " "
+					+ (mMapLoader == null ? null : mMapLoader.getStatus()));
 
 		final EquipementManager manager = EquipementManager.getInstance();
 		final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
@@ -295,6 +296,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			mClusterkraf.clear();
 		}
 
+		if (DBG)
+			Log.d(LOG_TAG, "loadMarkers " + mSelectedTypes);
+
 		final Equipement.Type[] types = mSelectedTypes.toArray(new Equipement.Type[mSelectedTypes.size()]);
 		mMapLoader = new MapLoader(getActivity(), this);
 		mMapLoader.execute(types);
@@ -346,6 +350,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 				final Equipement markerInfo = (Equipement) tag;
 				type = markerInfo.getType();
 			}
+
+			if (DBG)
+				Log.d(LOG_TAG, "onLayerLoaded " + type);
 
 			mInputPoints.put(type, result);
 

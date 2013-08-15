@@ -215,7 +215,7 @@ public class InfoTraficDetailFragment extends CustomFragment {
 		if (message == null) {
 			final ViewStub messageStrub = (ViewStub) mFragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
-			final Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto-Light.ttf");
+			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
 			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
 		}
 

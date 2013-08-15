@@ -16,6 +16,7 @@ import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,14 @@ public class EquipementMapLayer extends MapLayer {
 
 			@Override
 			public String getDescription(final Context context) {
-				return item.getDetails();
+				String description = item.getDetails();
+				if (TextUtils.isEmpty(description)) {
+					description = item.getAdresse();
+				}
+				if (TextUtils.isEmpty(description)) {
+					description = context.getString(item.getType().getTitleRes());
+				}
+				return description;
 			}
 
 			@Override
