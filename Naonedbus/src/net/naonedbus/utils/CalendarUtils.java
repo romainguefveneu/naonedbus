@@ -21,6 +21,7 @@ package net.naonedbus.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.annotation.TargetApi;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,6 +39,7 @@ public class CalendarUtils {
 	 * 
 	 * @return Liste des calendriers
 	 */
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	public static Map<Integer, String> getCalendars(ContentResolver contentResolver) {
 		Map<Integer, String> calendars = new HashMap<Integer, String>();
 		String[] projection;
@@ -79,13 +81,14 @@ public class CalendarUtils {
 	 * @param id
 	 * @return
 	 */
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	public static String getCalendarName(ContentResolver contentResolver, String id) {
 		String name = null;
 		Cursor cursor;
 		String[] projection;
 		Uri calendarUri;
 
-		if (Integer.parseInt(Build.VERSION.SDK) >= 14) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			calendarUri = CalendarContract.Calendars.CONTENT_URI;
 			projection = new String[] { CalendarContract.Calendars._ID,
 					CalendarContract.Calendars.CALENDAR_DISPLAY_NAME };

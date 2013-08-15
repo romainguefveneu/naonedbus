@@ -58,7 +58,8 @@ public class ParcoursManager extends SQLiteManager<Parcours> {
 	public Parcours getSingleFromCursor(final Cursor c) {
 		final Parcours item = new Parcours();
 		item._id = c.getInt(c.getColumnIndex(ParcoursTable._ID));
-		item.couleur = c.getInt(c.getColumnIndex(ParcoursTable.COULEUR));
+		item.couleurBack = c.getInt(c.getColumnIndex(ParcoursTable.COULEUR_BACK));
+		item.couleurFront = c.getInt(c.getColumnIndex(ParcoursTable.COULEUR_FRONT));
 		item.codeLigne = c.getString(c.getColumnIndex(ParcoursTable.CODE_LIGNE));
 		item.lettre = c.getString(c.getColumnIndex(ParcoursTable.LETTRE));
 		item.nomSens = c.getString(c.getColumnIndex(ParcoursTable.NOM_SENS));

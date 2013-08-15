@@ -7,11 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.parking.Parking;
+import net.naonedbus.bean.parking.pub.ParkingPublic;
+import net.naonedbus.bean.parking.relai.ParkingRelai;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
 import net.naonedbus.manager.impl.EquipementManager;
@@ -31,6 +35,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +58,13 @@ import com.twotoasters.clusterkraf.InputPoint;
 
 public class MapFragment extends SherlockFragment implements MapLoaderCallback, OnSuggestionListener {
 
+	private static String LOG_TAG = "MapFragment";
+	private static boolean DBG = BuildConfig.DEBUG;
+
 	private static final int MENU_GROUP_TYPES = 1;
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
+	final Map<Class<?>, Equipement.Type> mTypeMap = new HashMap<Class<?>, Equipement.Type>();
 	final Map<Equipement.Type, List<InputPoint>> mInputPoints = new HashMap<Equipement.Type, List<InputPoint>>();
 	final com.twotoasters.clusterkraf.Options mOptions = new com.twotoasters.clusterkraf.Options();
 
@@ -75,6 +84,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	public MapFragment() {
 		mLocationProvider = NBApplication.getLocationProvider();
+
+		mTypeMap.put(Bicloo.class, Type.TYPE_BICLOO);
+		mTypeMap.put(Parking.class, Type.TYPE_PARKING);
+		mTypeMap.put(ParkingPublic.class, Type.TYPE_PARKING);
+		mTypeMap.put(ParkingRelai.class, Type.TYPE_PARKING);
 	}
 
 	@Override
@@ -122,6 +136,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
+
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateOptionsMenu");
 
 		inflater.inflate(R.menu.fragment_map, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
@@ -216,14 +233,14 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private void initClusterkraf(final LayoutInflater inflater) {
 		if (mGoogleMap != null) {
 			final ToastedMarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
-			markerOptionsChooser.registerMapLayer(Equipement.class, new EquipementMapLayer(inflater));
-			markerOptionsChooser.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
-			markerOptionsChooser.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
+			markerOptionsChooser.setDefaultMapLayer(new EquipementMapLayer(inflater));
+			markerOptionsChooser.registerMapLayer(Type.TYPE_BICLOO, new BiclooMapLayer(inflater));
+			markerOptionsChooser.registerMapLayer(Type.TYPE_PARKING, new ParkingMapLayer(inflater));
 
 			ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter(getActivity());
-			infoWindowAdapter.registerMapLayer(Equipement.class, new EquipementMapLayer(inflater));
-			infoWindowAdapter.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
-			infoWindowAdapter.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
+			infoWindowAdapter.setDefaultMapLayer(new EquipementMapLayer(inflater));
+			infoWindowAdapter.registerMapLayer(Type.TYPE_BICLOO, new BiclooMapLayer(inflater));
+			infoWindowAdapter.registerMapLayer(Type.TYPE_PARKING, new ParkingMapLayer(inflater));
 
 			mOptions.setPixelDistanceToJoinCluster(80);
 			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
@@ -248,6 +265,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	private void selectEquipement(final Equipement equipement) {
 		final InputPoint inputPoint = findInputPoint(equipement);
+
+		Log.d(LOG_TAG, "selectEquipement " + equipement + " = " + inputPoint);
+
 		if (inputPoint != null) {
 			mClusterkraf.showInfoWindow(inputPoint);
 		} else {
@@ -258,10 +278,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	private InputPoint findInputPoint(final Equipement equipement) {
 		final List<InputPoint> inputPoints = mInputPoints.get(equipement.getType());
+
 		if (inputPoints != null) {
 			for (final InputPoint inputPoint : inputPoints) {
 				final Equipement item = (Equipement) inputPoint.getTag();
-				if (item.getId() == equipement.getId()) {
+				if (item.getNormalizedNom().equals(equipement.getNormalizedNom())) {
 					return inputPoint;
 				}
 			}
@@ -316,9 +337,17 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onLayerLoaded(final ArrayList<InputPoint> result) {
 		if (result != null && !result.isEmpty()) {
-			// final Equipement markerInfo = (Equipement)
-			// result.get(0).getTag();
-			// mInputPoints.put(markerInfo.getType(), result);
+
+			Type type;
+			Object tag = result.get(0).getTag();
+			if (mTypeMap.containsKey(tag.getClass())) {
+				type = mTypeMap.get(tag.getClass());
+			} else {
+				final Equipement markerInfo = (Equipement) tag;
+				type = markerInfo.getType();
+			}
+
+			mInputPoints.put(type, result);
 
 			synchronized (mClusterkraf) {
 				mClusterkraf.addAll(result);
@@ -328,6 +357,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onMapLoaderStart() {
+		if (DBG)
+			Log.d(LOG_TAG, "onMapLoaderStart " + mRefreshMenuItem);
+
 		if (mRefreshMenuItem != null) {
 			mRefreshMenuItem.setVisible(true);
 		}
@@ -335,6 +367,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onMapLoaderEnd() {
+		if (DBG)
+			Log.d(LOG_TAG, "onMapLoaderEnd " + mRefreshMenuItem);
+
 		if (mRefreshMenuItem != null) {
 			mRefreshMenuItem.setVisible(false);
 		}

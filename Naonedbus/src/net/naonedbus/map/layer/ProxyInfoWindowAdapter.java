@@ -3,8 +3,8 @@ package net.naonedbus.map.layer;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import net.naonedbus.bean.Equipement;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -16,28 +16,33 @@ import com.twotoasters.clusterkraf.OnInfoWindowClickDownstreamListener;
 
 public class ProxyInfoWindowAdapter implements ClusterkrafInfoWindowAdapter, OnInfoWindowClickDownstreamListener {
 
-	private final Map<Class<?>, MapLayer<?>> mLayerChoosers;
+	private final Map<Equipement.Type, MapLayer> mLayerChoosers;
 	private HashMap<Marker, ClusterPoint> mMarkerClusterPoints;
 	private WeakReference<Context> mContext;
+	private MapLayer mDefaultLayer;
 
 	public ProxyInfoWindowAdapter(Context context) {
-		mLayerChoosers = new HashMap<Class<?>, MapLayer<?>>();
+		mLayerChoosers = new HashMap<Equipement.Type, MapLayer>();
 		mContext = new WeakReference<Context>(context);
 	}
 
-	public void registerMapLayer(final Class<?> layerTagClass, final MapLayer<?> mapLayer) {
-		mLayerChoosers.put(layerTagClass, mapLayer);
+	public void registerMapLayer(final Equipement.Type type, final MapLayer mapLayer) {
+		mLayerChoosers.put(type, mapLayer);
+	}
+
+	public void setDefaultMapLayer(final MapLayer mapLayer) {
+		mDefaultLayer = mapLayer;
 	}
 
 	@Override
 	public View getInfoContents(Marker marker) {
 		final ClusterPoint clusterPoint = mMarkerClusterPoints.get(marker);
-		final Object tag = clusterPoint.getPointAtOffset(0).getTag();
-
-		Class<?> tagClass = tag.getClass();
-		MapLayer<?> mapLayer = getMapLayer(tagClass);
-
-		return mapLayer.getInfoContents(tag);
+		final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
+		MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
+		if (mapLayer == null) {
+			mapLayer = mDefaultLayer;
+		}
+		return mapLayer.getInfoContents(equipement);
 	}
 
 	@Override
@@ -52,33 +57,21 @@ public class ProxyInfoWindowAdapter implements ClusterkrafInfoWindowAdapter, OnI
 
 	@Override
 	public boolean onInfoWindowClick(Marker marker, ClusterPoint clusterPoint) {
-		final Object tag = clusterPoint.getPointAtOffset(0).getTag();
+		final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
+		MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
+		if (mapLayer == null) {
+			mapLayer = mDefaultLayer;
+		}
+		final Context context = mContext.get();
 
-		Class<?> tagClass = tag.getClass();
-		MapLayer<?> mapLayer = getMapLayer(tagClass);
-
-		Context context = mContext.get();
 		if (context != null) {
-			Intent intent = mapLayer.getClickIntent(context, tag);
+			Intent intent = mapLayer.getClickIntent(context, equipement);
 			if (intent != null) {
 				context.startActivity(intent);
 				return true;
 			}
 		}
 		return false;
-	}
-
-	private MapLayer getMapLayer(Class<?> tagClass) {
-		MapLayer<?> mapLayer = null;
-		for (Entry<Class<?>, MapLayer<?>> item : mLayerChoosers.entrySet()) {
-			Class<?> key = item.getKey();
-			if (tagClass.isAssignableFrom(key) || key.isAssignableFrom(tagClass)) {
-				mapLayer = item.getValue();
-				break;
-			}
-		}
-
-		return mapLayer;
 	}
 
 }

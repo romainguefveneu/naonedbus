@@ -25,7 +25,7 @@ public interface LigneTable extends BaseColumns {
 
 	public static final String CODE = "code";
 	public static final String LETTRE = "lettre";
-	public static final String COULEUR = "couleurBack";
+	public static final String COULEUR_BACK = "couleurBack";
 	public static final String COULEUR_FRONT = "couleurFront";
 	public static final String DEPUIS = "depuis";
 	public static final String VERS = "vers";

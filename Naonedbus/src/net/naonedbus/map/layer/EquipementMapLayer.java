@@ -12,8 +12,10 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.map.ItemSelectedInfo;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.twotoasters.clusterkraf.ClusterPoint;
 
-public class EquipementMapLayer extends MapLayer<Equipement> {
+public class EquipementMapLayer extends MapLayer {
 
 	public EquipementMapLayer(final LayoutInflater inflater) {
 		super(inflater);
@@ -89,8 +91,11 @@ public class EquipementMapLayer extends MapLayer<Equipement> {
 		final LigneManager ligneManager = LigneManager.getInstance();
 		final List<Ligne> lignes = ligneManager.getLignesFromStation(context.getContentResolver(), station.getId());
 
+		Typeface roboto = FontUtils.getRobotoBoldCondensed(context);
+
 		for (final Ligne ligneItem : lignes) {
 			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, root, false);
+			textView.setTypeface(roboto);
 			textView.setTextColor(ligneItem.getCouleurTexte());
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getCouleur()));
 			textView.setText(ligneItem.getCode());

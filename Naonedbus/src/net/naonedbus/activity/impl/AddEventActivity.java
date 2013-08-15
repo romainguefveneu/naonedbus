@@ -76,7 +76,7 @@ public class AddEventActivity extends SherlockActivity {
 		final long timestamp = getIntent().getLongExtra(PARAM_TIMESTAMP, 0);
 
 		final HeaderHelper headerHelper = new HeaderHelper(this);
-		headerHelper.setBackgroundColor(ligne.getCouleur(), ligne.getCouleurTexte());
+		headerHelper.setColor(ligne.getCouleur(), ligne.getCouleurTexte());
 		headerHelper.setCode(ligne.getLettre());
 		headerHelper.setTitle(arret.getNomArret());
 		headerHelper.setSubTitle(FormatUtils.formatSens(sens.text));

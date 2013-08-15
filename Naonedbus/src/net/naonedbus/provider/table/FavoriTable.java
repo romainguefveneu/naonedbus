@@ -50,7 +50,7 @@ public interface FavoriTable extends BaseColumns {
 			"f." + FavoriTable.NOM, 
 			"st." + EquipementTable.NOM, 
 			"s." + SensTable.NOM,
-			"l." + LigneTable.COULEUR, 
+			"l." + LigneTable.COULEUR_BACK, 
 			"l." + LigneTable.LETTRE
 			};
 

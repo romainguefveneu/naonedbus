@@ -72,7 +72,7 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 
 	private void initColumns(final Cursor c) {
 		COL_LETTRE = c.getColumnIndex(LigneTable.LETTRE);
-		COL_COLOR_BACK = c.getColumnIndex(LigneTable.COULEUR);
+		COL_COLOR_BACK = c.getColumnIndex(LigneTable.COULEUR_BACK);
 		COL_COLOR_FRONT = c.getColumnIndex(LigneTable.COULEUR_FRONT);
 		COL_SENS1 = c.getColumnIndex(LigneTable.DEPUIS);
 		COL_SENS2 = c.getColumnIndex(LigneTable.VERS);
@@ -99,7 +99,7 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 			holder.icon.setTextColor(colorFront);
 		}
 		if ((depuis == null || depuis.length() == 0 || depuis.equals(vers))) {
-			holder.sens1.setText(depuis + " \u2194 " + vers);
+			holder.sens1.setText(vers);
 			holder.sens2.setVisibility(View.GONE);
 		} else {
 			holder.sens1.setText(depuis);

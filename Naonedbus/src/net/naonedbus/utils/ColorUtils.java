@@ -89,13 +89,4 @@ public abstract class ColorUtils {
 		return d;
 	}
 
-	public static boolean isLightColor(final int color) {
-		if (color == -4204410 || color == -1457269) // Vert clair et marron
-													// clair
-			return true;
-		final float[] hsv = new float[3];
-		Color.colorToHSV(color, hsv);
-		return (hsv[2] > 0.94);
-	}
-
 }

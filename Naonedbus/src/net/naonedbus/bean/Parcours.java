@@ -25,5 +25,6 @@ public class Parcours {
 	public String nomSens;
 	public String codeLigne;
 	public String lettre;
-	public int couleur;
+	public int couleurBack;
+	public int couleurFront;
 }

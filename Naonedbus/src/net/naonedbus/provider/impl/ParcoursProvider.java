@@ -19,6 +19,8 @@
 package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.ReadOnlyContentProvider;
+import net.naonedbus.provider.table.ArretTable;
+import net.naonedbus.provider.table.LigneTable;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
@@ -43,7 +45,24 @@ public class ParcoursProvider extends ReadOnlyContentProvider {
 		URI_MATCHER.addURI(AUTHORITY, BASE_PATH + "/#", PARCOURS_ID);
 	}
 
-	private static final String SQL_SELECT = "SELECT a._id, l.code AS codeLigne, l._id AS idLigne, l.lettre as lettre, l.couleur AS couleur, s.nomSens AS nomSens, s._id AS idSens FROM equipements st LEFT JOIN arrets a ON a.idStation = st._id LEFT JOIN sens s ON s.code = a.codeSens AND s.codeLigne = a.codeLigne LEFT JOIN lignes l ON l.code = a.codeLigne WHERE l.code IS NOT NULL AND st.idType = 0 AND st.normalizedNom = ? GROUP BY l._id, s._id ORDER BY l.type, CAST(a.codeLigne AS numeric)";
+	private static final String SQL_SELECT = "SELECT a."
+			+ ArretTable._ID
+			+ ", l."
+			+ LigneTable.CODE
+			+ " AS codeLigne, l."
+			+ LigneTable._ID
+			+ " AS idLigne, l."
+			+ LigneTable.LETTRE
+			+ " as lettre"
+			+ ", l."
+			+ LigneTable.COULEUR_BACK
+			+ " as "
+			+ ParcoursTable.COULEUR_BACK
+			+ ", l."
+			+ LigneTable.COULEUR_FRONT
+			+ " as "
+			+ ParcoursTable.COULEUR_FRONT
+			+ ", s.nomSens AS nomSens, s._id AS idSens FROM equipements st LEFT JOIN arrets a ON a.idStation = st._id LEFT JOIN sens s ON s.code = a.codeSens AND s.codeLigne = a.codeLigne LEFT JOIN lignes l ON l.code = a.codeLigne WHERE l.code IS NOT NULL AND st.idType = 0 AND st.normalizedNom = ? GROUP BY l._id, s._id ORDER BY l.type, CAST(a.codeLigne AS numeric)";
 
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
@@ -55,7 +74,8 @@ public class ParcoursProvider extends ReadOnlyContentProvider {
 	public class ParcoursTable implements BaseColumns {
 		public static final String CODE_LIGNE = "codeLigne";
 		public static final String LETTRE = "lettre";
-		public static final String COULEUR = "couleur";
+		public static final String COULEUR_BACK = "couleurBack";
+		public static final String COULEUR_FRONT = "couleurFront";
 		public static final String NOM_SENS = "nomSens";
 		public static final String ID_LIGNE = "idLigne";
 		public static final String ID_SENS = "idSens";

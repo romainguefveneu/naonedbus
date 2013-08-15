@@ -80,7 +80,7 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 		}
 
 		mHeaderHelper = new HeaderHelper(this);
-		mHeaderHelper.setBackgroundColor(ligne.getCouleur(), ligne.getCouleurTexte());
+		mHeaderHelper.setColor(ligne.getCouleur(), ligne.getCouleurTexte());
 		mHeaderHelper.setCode(ligne.getLettre());
 		mHeaderHelper.setTitle(arret.getNomArret());
 		mHeaderHelper.setSubTitle(FormatUtils.formatSens(sens.text));

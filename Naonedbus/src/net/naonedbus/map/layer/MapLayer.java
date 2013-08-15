@@ -3,9 +3,12 @@ package net.naonedbus.map.layer;
 import java.util.List;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.Equipement;
 import net.naonedbus.map.ItemSelectedInfo;
+import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +19,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.twotoasters.clusterkraf.ClusterPoint;
 
-public abstract class MapLayer<T> {
+public abstract class MapLayer {
 
 	private final View mContentView;
 	private final TextView mTitle;
@@ -33,15 +36,17 @@ public abstract class MapLayer<T> {
 		mDescription = (TextView) mContentView.findViewById(R.id.itemDescription);
 		mSubView = (LinearLayout) mContentView.findViewById(R.id.lignes);
 		mMoreAction = (ImageView) mContentView.findViewById(R.id.moreAction);
+
+		Typeface roboto = FontUtils.getRobotoBoldCondensed(inflater.getContext());
+		mTitle.setTypeface(roboto);
 	}
 
 	public LayoutInflater getLayoutInflater() {
 		return mLayoutInflater;
 	}
 
-	@SuppressWarnings("unchecked")
 	public final View getInfoContents(final Object item) {
-		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (T) item);
+		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (Equipement) item);
 
 		mTitle.setText(itemSelectedInfo.getTitle());
 
@@ -66,9 +71,8 @@ public abstract class MapLayer<T> {
 		return mContentView;
 	}
 
-	@SuppressWarnings("unchecked")
 	public final Intent getClickIntent(final Context context, final Object tag) {
-		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (T) tag);
+		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (Equipement) tag);
 		return itemSelectedInfo.getIntent(context);
 	}
 
@@ -90,7 +94,7 @@ public abstract class MapLayer<T> {
 		mSubView.setVisibility(View.VISIBLE);
 	}
 
-	protected abstract ItemSelectedInfo getItemSelectedInfo(Context context, final T item);
+	protected abstract ItemSelectedInfo getItemSelectedInfo(Context context, final Equipement item);
 
 	public abstract void chooseMarker(final MarkerOptions markerOptions, final ClusterPoint clusterPoint);
 

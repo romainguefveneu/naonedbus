@@ -22,7 +22,6 @@ import net.naonedbus.R;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.animation.Animation;
@@ -46,7 +45,6 @@ public class HeaderHelper {
 
 	private void init() {
 		final View view = mActivity.getWindow().getDecorView();
-		final Typeface robotoMedium = FontUtils.getRobotoMedium(mActivity);
 		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(mActivity);
 
 		mHeader = view.findViewById(R.id.headerView);
@@ -60,13 +58,8 @@ public class HeaderHelper {
 		mLigneCode.setTypeface(robotoBold);
 	}
 
-	public void setBackgroundColor(final int color) {
-		final int textColor = ColorUtils.isLightColor(color) ? Color.BLACK : Color.WHITE;
-		setBackgroundColor(color, textColor);
-	}
-
-	public void setBackgroundColor(final int color, final int textColor) {
-		mHeader.setBackgroundDrawable(ColorUtils.getGradiant(color));
+	public void setColor(final int backColor, final int textColor) {
+		mHeader.setBackgroundDrawable(ColorUtils.getGradiant(backColor));
 
 		mTitle.setTextColor(textColor);
 		mSubTitle.setTextColor(textColor);

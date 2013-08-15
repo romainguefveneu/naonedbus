@@ -121,7 +121,7 @@ public class FavoriManager extends SQLiteManager<Favori> {
 		mBuilder.setNomFavori(c.getString(c.getColumnIndex(FavoriTable.NOM)));
 		mBuilder.setNomArret(c.getString(c.getColumnIndex(EquipementTable.NOM)));
 
-		final int couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR));
+		final int couleurBackground = c.getInt(c.getColumnIndex(LigneTable.COULEUR_BACK));
 		final int couleurFront = c.getInt(c.getColumnIndex(LigneTable.COULEUR_FRONT));
 		mBuilder.setCouleurBackground(couleurBackground);
 		mBuilder.setCouleurTexte(couleurFront);

@@ -19,23 +19,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/fragmentLoading"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:indeterminate="true"
+    android:indeterminateOnly="true"
+    android:maxHeight="76dip"
+    android:maxWidth="76dip"
+    android:minHeight="76dip"
+    android:minWidth="76dip"
     android:orientation="horizontal"
-    android:visibility="gone" >
-
-    <ProgressBar
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:text="@string/loading"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-</LinearLayout>
+    android:visibility="gone" />

@@ -1247,9 +1247,9 @@ INSERT INTO lignes(_id, code, lettre, depuis, vers, couleurBack, couleurFront, t
 52;E4;E4;Porte de Vertou;Vertou;-1758408;-1;4
 53;E5;E5;Carquefou;Fac de Droit;-1758408;-1;4
 54;E8;E8;Le Pellerin;Greneraie;-1758408;-1;4
-55;LU;LU;Luciole;Luciole;0;0;5
-56;NA;NA;Nantes Atlantique;Commerce;0;0;6
-57;NL;NL;Trentemoult;Roquios;0;0;6
+55;LU;LU;;Luciole;-16751194;-1;5
+56;NA;NA;Nantes Atlantique;Commerce;-15383149;-1;6
+57;NL;NL;Trentemoult;Roquios;-15383149;-1;6
 
 # Stations
 INSERT INTO equipements(_id, idType, codeEquipement, nomEquipement, normalizedNom, latitude, longitude) VALUES (?,?,?,?,?,?,?);

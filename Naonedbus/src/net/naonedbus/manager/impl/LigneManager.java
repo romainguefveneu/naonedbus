@@ -109,7 +109,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		mColDepuis = c.getColumnIndex(LigneTable.DEPUIS);
 		mColLettre = c.getColumnIndex(LigneTable.LETTRE);
 		mColVers = c.getColumnIndex(LigneTable.VERS);
-		mColCouleurBack = c.getColumnIndex(LigneTable.COULEUR);
+		mColCouleurBack = c.getColumnIndex(LigneTable.COULEUR_BACK);
 		mColCouleurFront = c.getColumnIndex(LigneTable.COULEUR_FRONT);
 		mColType = c.getColumnIndex(LigneTable.TYPE);
 	}

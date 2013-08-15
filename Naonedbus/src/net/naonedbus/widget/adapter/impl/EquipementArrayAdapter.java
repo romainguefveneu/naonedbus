@@ -36,9 +36,11 @@ import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.ParkingUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
@@ -190,11 +192,13 @@ class DefaultTypeAdapter extends EquipementTypeAdapter {
 
 class ArretTypeAdapter extends EquipementTypeAdapter {
 
-	private final LigneManager ligneManager;
+	private final LigneManager mLigneManager;
+	private final Typeface mRoboto;
 
 	public ArretTypeAdapter(final EquipementArrayAdapter equipementArrayAdapter) {
 		super(equipementArrayAdapter);
-		ligneManager = LigneManager.getInstance();
+		mLigneManager = LigneManager.getInstance();
+		mRoboto = FontUtils.getRobotoBoldCondensed(equipementArrayAdapter.getContext());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -223,7 +227,7 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 					holder.task = null;
 				}
 			};
-			holder.task = ligneManager.scheduleGetLignesFromStation(context, equipement.getId(), handler);
+			holder.task = mLigneManager.scheduleGetLignesFromStation(context, equipement.getId(), handler);
 		} else {
 			bindLignes((List<Ligne>) equipement.getTag(), holder, layoutInflater);
 		}
@@ -239,6 +243,7 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, holder.itemLignes,
 					false);
 
+			textView.setTypeface(mRoboto);
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligne.getCouleur()));
 			textView.setText(ligne.getLettre());
 			textView.setTextColor(ligne.getCouleurTexte());

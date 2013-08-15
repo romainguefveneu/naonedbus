@@ -3,9 +3,9 @@ package net.naonedbus.map;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import net.naonedbus.R;
+import net.naonedbus.bean.Equipement;
 import net.naonedbus.map.layer.MapLayer;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -30,12 +30,13 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 	private final Paint mClusterPaintLarge;
 	private final Paint mClusterPaintMedium;
 	private final Paint mClusterPaintSmall;
-	private final Map<Class<?>, MapLayer<?>> mLayerChoosers;
+	private final Map<Equipement.Type, MapLayer> mLayerChoosers;
+	private MapLayer mDefaultLayer;
 
 	public ToastedMarkerOptionsChooser(final Context context) {
 		mContextRef = new WeakReference<Context>(context);
 
-		mLayerChoosers = new HashMap<Class<?>, MapLayer<?>>();
+		mLayerChoosers = new HashMap<Equipement.Type, MapLayer>();
 
 		final Resources res = context.getResources();
 
@@ -54,8 +55,12 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 		mClusterPaintLarge.setTextSize(res.getDimension(R.dimen.cluster_text_size_large));
 	}
 
-	public void registerMapLayer(final Class<?> layerTagClass, final MapLayer<?> mapLayer) {
-		mLayerChoosers.put(layerTagClass, mapLayer);
+	public void registerMapLayer(final Equipement.Type type, final MapLayer mapLayer) {
+		mLayerChoosers.put(type, mapLayer);
+	}
+
+	public void setDefaultMapLayer(final MapLayer mapLayer) {
+		mDefaultLayer = mapLayer;
 	}
 
 	@Override
@@ -72,18 +77,11 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 				markerOptions.icon(icon);
 				markerOptions.title(title);
 			} else {
-				final Object tag = clusterPoint.getPointAtOffset(0).getTag();
-				Class<?> tagClass = tag.getClass();
-
-				MapLayer<?> mapLayer = null;
-				for (Entry<Class<?>, MapLayer<?>> item : mLayerChoosers.entrySet()) {
-					Class<?> key = item.getKey();
-					if (tagClass.isAssignableFrom(key) || key.isAssignableFrom(tagClass)) {
-						mapLayer = item.getValue();
-						break;
-					}
+				final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
+				MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
+				if (mapLayer == null) {
+					mapLayer = mDefaultLayer;
 				}
-
 				mapLayer.chooseMarker(markerOptions, clusterPoint);
 			}
 			markerOptions.anchor(0.5f, 1.0f);

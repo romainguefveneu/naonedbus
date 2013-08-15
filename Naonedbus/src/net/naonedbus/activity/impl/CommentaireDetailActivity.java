@@ -90,28 +90,28 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_info_trafic));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.BLACK);
 
 		} else if (NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_actus));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header));
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.BLACK);
 
 		} else if (NaonedbusClient.TWITTER_TAN_INFOS.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.logo_taninfos);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_infos));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_taninfos_header));
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_taninfos_header), Color.BLACK);
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(source)) {
 
 			mHeaderHelper.setTitleIcon(R.drawable.ic_launcher);
 			mHeaderHelper.setTitle(getString(R.string.commentaire_message_service));
 			mHeaderHelper.setCode(null);
-			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header));
+			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header), Color.BLACK);
 
 		} else {
 
@@ -165,10 +165,10 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		final Arret arret = commentaire.getArret();
 
 		if (ligne != null) {
-			setLineColor(ligne.getCouleur(), ligne.getLettre());
+			setLineColor(ligne.getCouleur(), ligne.getCouleurTexte(), ligne.getLettre());
 			mHeaderHelper.setTitle(ligne.getNom());
 		} else {
-			setLineColor(Color.TRANSPARENT, "");
+			setLineColor(Color.TRANSPARENT, Color.BLACK, "");
 		}
 
 		if (arret == null && sens == null && ligne == null) {
@@ -191,14 +191,14 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 	}
 
-	public void setLineColor(final int color, final String lettre) {
-		setHeaderBackgroundColor(color);
+	public void setLineColor(final int backColor, final int textColor, final String lettre) {
+		setHeaderBackgroundColor(backColor, textColor);
 		mHeaderHelper.setCode(lettre);
 	}
 
-	private void setHeaderBackgroundColor(final int color) {
-		if (color != Color.TRANSPARENT) {
-			mHeaderHelper.setBackgroundColor(color);
+	private void setHeaderBackgroundColor(final int backColor, final int textColor) {
+		if (backColor != Color.TRANSPARENT) {
+			mHeaderHelper.setColor(backColor, textColor);
 		}
 	}
 
