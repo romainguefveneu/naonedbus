@@ -278,6 +278,10 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		}
 	}
 
+	protected void openDrawer() {
+		mDrawerLayout.openDrawer(mDrawerList);
+	}
+
 	protected void setFragment(final FragmentHeader fragmentHeader, final int title) {
 		if (DBG)
 			Log.d(LOG_TAG, "setFragment " + getString(title));

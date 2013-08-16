@@ -72,7 +72,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 			viewHolder.itemSymbole.setVisibility(View.INVISIBLE);
 			viewHolder.fromDirection.setVisibility(View.VISIBLE);
 
-			viewHolder.fromPlace.setText("Aller à " + to.name);
+			viewHolder.fromPlace.setText(getContext().getString(R.string.itinerary_go_to, to.name));
 			viewHolder.fromDirection.setText(FormatUtils.formatWithDot(legWrapper.getTime(), legWrapper.getDistance()));
 
 		} else if (ligne != null) {

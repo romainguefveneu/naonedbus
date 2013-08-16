@@ -70,7 +70,6 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private EquipementCursorAdapter mSearchAdapter;
 
 	private final Set<Equipement.Type> mSelectedTypes = new HashSet<Equipement.Type>();
-
 	private final MyLocationProvider mLocationProvider;
 
 	public MapFragment() {
@@ -81,6 +80,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
+
 	}
 
 	@Override
@@ -110,12 +110,10 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onDestroyView() {
-		if (isResumed()) {
-			final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-			final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-			ft.remove(fragment);
-			ft.commit();
-		}
+		final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
+		final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+		ft.remove(fragment);
+		ft.commitAllowingStateLoss();
 		super.onDestroyView();
 	}
 
@@ -131,7 +129,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
 		mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
 
-		mSearchMenuItem = (MenuItem) menu.findItem(R.id.menu_search);
+		mSearchMenuItem = menu.findItem(R.id.menu_search);
 		final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 		searchView.setSuggestionsAdapter(mSearchAdapter);
 		searchView.setOnSuggestionListener(this);
@@ -220,7 +218,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			markerOptionsChooser.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
 			markerOptionsChooser.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
 
-			ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter(getActivity());
+			final ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter(getActivity());
 			infoWindowAdapter.registerMapLayer(Equipement.class, new EquipementMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Bicloo.class, new BiclooMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Parking.class, new ParkingMapLayer(inflater));
