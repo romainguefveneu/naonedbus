@@ -56,7 +56,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/itemSymbole"
                 android:padding="0dip"
-                android:text="-> Hôtel de région"
                 android:visibility="visible" />
 
             <TextView
@@ -66,8 +65,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignWithParentIfMissing="true"
                 android:layout_toRightOf="@id/itemSymbole"
-                android:padding="0dip"
-                android:text="Trémissinière" />
+                android:padding="0dip" />
         </RelativeLayout>
     </RelativeLayout>
 

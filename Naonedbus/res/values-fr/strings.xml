@@ -383,6 +383,7 @@
     <string name="itinerary_kind_departure">Départ</string>
     <string name="itinerary_date">Date</string>
     <string name="itinerary_time">Heure</string>
+    <string name="itinerary_go_to">Aller à %s</string>
 
     <plurals name="itinerary_walk_time">
         <item quantity="one">%d minute de marche</item>

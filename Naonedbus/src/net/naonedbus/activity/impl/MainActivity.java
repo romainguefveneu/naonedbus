@@ -109,6 +109,7 @@ public class MainActivity extends MenuDrawerActivity {
 
 		setBaseMenuVisible(true);
 		selectNavigationItem(0);
+		openDrawer();
 	}
 
 	private void handleFavoriExport() {

@@ -108,6 +108,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 			wrapper.setLignes(lignes);
 			wrappers.add(wrapper);
 		}
+
 		return wrappers;
 	}
 

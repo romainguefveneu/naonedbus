@@ -10,12 +10,8 @@ import java.util.Set;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
-import net.naonedbus.bean.parking.Parking;
-import net.naonedbus.bean.parking.pub.ParkingPublic;
-import net.naonedbus.bean.parking.relai.ParkingRelai;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
 import net.naonedbus.manager.impl.EquipementManager;
@@ -30,7 +26,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.location.Location;
-import android.os.AsyncTask.Status;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -39,6 +34,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
@@ -64,9 +60,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private static final int MENU_GROUP_TYPES = 1;
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
-	final Map<Class<?>, Equipement.Type> mTypeMap = new HashMap<Class<?>, Equipement.Type>();
-	final Map<Equipement.Type, List<InputPoint>> mInputPoints = new HashMap<Equipement.Type, List<InputPoint>>();
-	final com.twotoasters.clusterkraf.Options mOptions = new com.twotoasters.clusterkraf.Options();
+	private final Map<Equipement.Type, List<InputPoint>> mInputPoints = new HashMap<Equipement.Type, List<InputPoint>>();
+	private final com.twotoasters.clusterkraf.Options mOptions = new com.twotoasters.clusterkraf.Options();
+
+	private final Set<Equipement.Type> mSelectedTypes = new HashSet<Equipement.Type>();
+	private final MyLocationProvider mLocationProvider;
 
 	private SharedPreferences mPreferences;
 	private SupportMapFragment mSupportMapFragment;
@@ -78,22 +76,16 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	private EquipementCursorAdapter mSearchAdapter;
 
-	private final Set<Equipement.Type> mSelectedTypes = new HashSet<Equipement.Type>();
-
-	private final MyLocationProvider mLocationProvider;
+	private Equipement mLastSearchedItem;
 
 	public MapFragment() {
 		mLocationProvider = NBApplication.getLocationProvider();
-
-		mTypeMap.put(Bicloo.class, Type.TYPE_BICLOO);
-		mTypeMap.put(Parking.class, Type.TYPE_PARKING);
-		mTypeMap.put(ParkingPublic.class, Type.TYPE_PARKING);
-		mTypeMap.put(ParkingRelai.class, Type.TYPE_PARKING);
 	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 		setHasOptionsMenu(true);
 	}
 
@@ -124,12 +116,10 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onDestroyView() {
-		if (isResumed()) {
-			final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-			final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-			ft.remove(fragment);
-			ft.commit();
-		}
+		final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
+		final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+		ft.remove(fragment);
+		ft.commitAllowingStateLoss();
 		super.onDestroyView();
 	}
 
@@ -139,17 +129,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 		inflater.inflate(R.menu.fragment_map, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
-		mRefreshMenuItem.setVisible(mMapLoader != null && mMapLoader.getStatus() != Status.FINISHED);
-
-		if (DBG)
-			Log.d(LOG_TAG, "onCreateOptionsMenu " + mRefreshMenuItem.isVisible() + " "
-					+ (mMapLoader == null ? null : mMapLoader.getStatus()));
 
 		final EquipementManager manager = EquipementManager.getInstance();
 		final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
 		mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
 
-		mSearchMenuItem = (MenuItem) menu.findItem(R.id.menu_search);
+		mSearchMenuItem = menu.findItem(R.id.menu_search);
 		final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
 		searchView.setSuggestionsAdapter(mSearchAdapter);
 		searchView.setOnSuggestionListener(this);
@@ -238,7 +223,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			markerOptionsChooser.registerMapLayer(Type.TYPE_BICLOO, new BiclooMapLayer(inflater));
 			markerOptionsChooser.registerMapLayer(Type.TYPE_PARKING, new ParkingMapLayer(inflater));
 
-			ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter(getActivity());
+			final ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter(getActivity());
 			infoWindowAdapter.setDefaultMapLayer(new EquipementMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Type.TYPE_BICLOO, new BiclooMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Type.TYPE_PARKING, new ParkingMapLayer(inflater));
@@ -265,16 +250,22 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	}
 
 	private void selectEquipement(final Equipement equipement) {
-		final InputPoint inputPoint = findInputPoint(equipement);
+		final Type type = equipement.getType();
 
-		Log.d(LOG_TAG, "selectEquipement " + equipement + " = " + inputPoint);
-
-		if (inputPoint != null) {
-			mClusterkraf.showInfoWindow(inputPoint);
+		if (mInputPoints.get(type) == null) {
+			mLastSearchedItem = equipement;
+			mSelectedTypes.add(type);
+			setLayerPreference(type.getId(), true);
+			loadMarkers();
 		} else {
+			final InputPoint inputPoint = findInputPoint(equipement);
 
+			if (inputPoint != null) {
+				mClusterkraf.showInfoWindow(inputPoint);
+			} else {
+				Toast.makeText(getActivity(), getString(R.string.msg_element_not_localized), Toast.LENGTH_LONG).show();
+			}
 		}
-
 	}
 
 	private InputPoint findInputPoint(final Equipement equipement) {
@@ -292,12 +283,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	}
 
 	private void loadMarkers() {
+		if (DBG)
+			Log.d(LOG_TAG, "loadMarkers " + mSelectedTypes);
+
 		synchronized (mClusterkraf) {
 			mClusterkraf.clear();
 		}
-
-		if (DBG)
-			Log.d(LOG_TAG, "loadMarkers " + mSelectedTypes);
 
 		final Equipement.Type[] types = mSelectedTypes.toArray(new Equipement.Type[mSelectedTypes.size()]);
 		mMapLoader = new MapLoader(getActivity(), this);
@@ -342,14 +333,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	public void onLayerLoaded(final ArrayList<InputPoint> result) {
 		if (result != null && !result.isEmpty()) {
 
-			Type type;
-			Object tag = result.get(0).getTag();
-			if (mTypeMap.containsKey(tag.getClass())) {
-				type = mTypeMap.get(tag.getClass());
-			} else {
-				final Equipement markerInfo = (Equipement) tag;
-				type = markerInfo.getType();
-			}
+			final Equipement tag = (Equipement) result.get(0).getTag();
+			final Type type = tag.getType();
 
 			if (DBG)
 				Log.d(LOG_TAG, "onLayerLoaded " + type);
@@ -379,6 +364,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 		if (mRefreshMenuItem != null) {
 			mRefreshMenuItem.setVisible(false);
+		}
+
+		if (mLastSearchedItem != null) {
+			selectEquipement(mLastSearchedItem);
+			mLastSearchedItem = null;
 		}
 	}
 

@@ -36,7 +36,7 @@ public final class R {
  16: Confused 
          */
         public static final int default_smiley_texts=0x7f0e0005;
-        public static final int delais=0x7f0e000d;
+        public static final int delais=0x7f0e000e;
         /**  Donateurs 
          */
         public static final int donators=0x7f0e000a;
@@ -62,6 +62,9 @@ public final class R {
         /**  Types de lignes 
          */
         public static final int types_lignes=0x7f0e0002;
+        /**  Unicorn 
+         */
+        public static final int unicorn=0x7f0e000d;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1533,7 +1536,8 @@ containing a value of this type.
         public static final int default_line_indicator_centered=0x7f0c0002;
         public static final int default_title_indicator_selected_bold=0x7f0c0003;
         public static final int default_underline_indicator_fades=0x7f0c0004;
-        public static final int showLargeWidget=0x7f0c000b;
+        public static final int isTablet=0x7f0c000b;
+        public static final int showLargeWidget=0x7f0c000c;
     }
     public static final class color {
         public static final int abs__background_holo_dark=0x7f07001c;
@@ -1784,6 +1788,9 @@ containing a value of this type.
  HoraireCard 
          */
         public static final int horaire_huge=0x7f0b0032;
+        /**  Itineraries 
+         */
+        public static final int itinerary_icon_padding=0x7f0b0037;
         /**  Dimensions for PagerHeaders 
          */
         public static final int list_section_divider_min_height=0x7f0b002c;
@@ -2066,106 +2073,110 @@ containing a value of this type.
         public static final int ic_card_send=0x7f020108;
         public static final int ic_checkmark_holo_light=0x7f020109;
         public static final int ic_dialog_alert_holo_light=0x7f02010a;
-        public static final int ic_drawer=0x7f02010b;
-        public static final int ic_icon_actionbar=0x7f02010c;
-        public static final int ic_launcher=0x7f02010d;
-        public static final int ic_leg_step=0x7f02010e;
-        public static final int ic_logo=0x7f02010f;
-        public static final int ic_map_pin=0x7f020110;
-        public static final int ic_map_pin_cluster=0x7f020111;
-        public static final int ic_map_pin_cluster_toaster=0x7f020112;
-        public static final int ic_map_pin_toaster=0x7f020113;
-        public static final int ic_menu_emoticons=0x7f020114;
-        public static final int ic_menu_info_details=0x7f020115;
-        public static final int ic_menu_preferences=0x7f020116;
-        public static final int ic_menu_search=0x7f020117;
-        public static final int ic_my_location_small=0x7f020118;
-        public static final int ic_notification=0x7f020119;
-        public static final int info_trafic_off=0x7f02011a;
-        public static final int info_trafic_on=0x7f02011b;
-        public static final int item_background_holo_light=0x7f02011c;
-        public static final int item_background_options_holo_light=0x7f02011d;
-        public static final int item_block_background=0x7f02011e;
-        public static final int item_leg_walk_back=0x7f02011f;
-        public static final int item_symbole_back=0x7f020120;
-        public static final int itinerary_leg_walk=0x7f020121;
-        public static final int list_focused_acapulco=0x7f020122;
-        public static final int list_longpressed_holo=0x7f020123;
-        public static final int list_pressed_holo_light=0x7f020124;
-        public static final int list_section_menu_underline=0x7f020125;
-        public static final int list_section_underline_dark=0x7f020126;
-        public static final int list_section_underline_light=0x7f020127;
-        public static final int list_selector_background_transition_holo_light=0x7f020128;
-        public static final int list_selector_disabled_holo_light=0x7f020129;
-        public static final int location=0x7f02012a;
-        public static final int logo=0x7f02012b;
-        public static final int logo_large=0x7f02012c;
-        public static final int logo_tan=0x7f02012d;
-        public static final int logo_taninfos=0x7f02012e;
-        public static final int logo_taninfos_background=0x7f02012f;
-        public static final int map=0x7f020130;
-        public static final int map_layer_arret=0x7f020131;
-        public static final int map_layer_bicloo=0x7f020132;
-        public static final int map_layer_covoiturage=0x7f020133;
-        public static final int map_layer_marguerite=0x7f020134;
-        public static final int map_layer_parking=0x7f020135;
-        public static final int map_layer_parking_relai=0x7f020136;
-        public static final int map_pin_arret=0x7f020137;
-        public static final int map_pin_bicloo=0x7f020138;
-        public static final int map_pin_covoiturage=0x7f020139;
-        public static final int map_pin_lila=0x7f02013a;
-        public static final int map_pin_marguerite=0x7f02013b;
-        public static final int map_pin_parking=0x7f02013c;
-        public static final int menu_dropdown_panel_acapulco=0x7f02013d;
-        public static final int menu_options_first_background=0x7f02013e;
-        public static final int orage=0x7f02013f;
-        public static final int pressed_background_acapulco=0x7f020140;
-        public static final int progress_bg_acapulco=0x7f020141;
-        public static final int progress_horizontal_acapulco=0x7f020142;
-        public static final int progress_primary_acapulco=0x7f020143;
-        public static final int progress_secondary_acapulco=0x7f020144;
-        public static final int quote_left=0x7f020145;
-        public static final int quote_right=0x7f020146;
-        public static final int romain=0x7f020147;
-        public static final int sad_face=0x7f020148;
-        public static final int selectable_background_acapulco=0x7f020149;
-        public static final int shadow=0x7f02014a;
-        public static final int spinner_ab_default_acapulco=0x7f02014b;
-        public static final int spinner_ab_disabled_acapulco=0x7f02014c;
-        public static final int spinner_ab_focused_acapulco=0x7f02014d;
-        public static final int spinner_ab_pressed_acapulco=0x7f02014e;
-        public static final int spinner_background_ab_acapulco=0x7f02014f;
-        public static final int spinner_background_holo_light=0x7f020150;
-        public static final int spinner_default_holo_light=0x7f020151;
-        public static final int spinner_disabled_holo_light=0x7f020152;
-        public static final int spinner_focused_holo_light=0x7f020153;
-        public static final int spinner_pressed_holo_light=0x7f020154;
-        public static final int tab_indicator_ab_acapulco=0x7f020155;
-        public static final int tab_selected_acapulco=0x7f020156;
-        public static final int tab_selected_focused_acapulco=0x7f020157;
-        public static final int tab_selected_pressed_acapulco=0x7f020158;
-        public static final int tab_unselected_focused_acapulco=0x7f020159;
-        public static final int tab_unselected_pressed_acapulco=0x7f02015a;
-        public static final int toast_frame=0x7f02015b;
-        public static final int tuto_favoris=0x7f02015c;
-        public static final int tuto_infotrafic=0x7f02015d;
-        public static final int tuto_menu=0x7f02015e;
-        public static final int tuto_mobilite=0x7f02015f;
-        public static final int tuto_parkings=0x7f020160;
-        public static final int tuto_widgets=0x7f020161;
-        public static final int twitter_account=0x7f020162;
-        public static final int vm_blue_dot_off=0x7f020163;
-        public static final int vm_blue_dot_on=0x7f020164;
-        public static final int vpi__tab_indicator=0x7f020165;
-        public static final int vpi__tab_selected_focused_holo=0x7f020166;
-        public static final int vpi__tab_selected_holo=0x7f020167;
-        public static final int vpi__tab_selected_pressed_holo=0x7f020168;
-        public static final int vpi__tab_unselected_focused_holo=0x7f020169;
-        public static final int vpi__tab_unselected_holo=0x7f02016a;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f02016b;
-        public static final int warning=0x7f02016c;
-        public static final int widget_large=0x7f02016d;
-        public static final int widget_small=0x7f02016e;
+        public static final int ic_directions_form_destination_notselected=0x7f02010b;
+        public static final int ic_directions_form_dots=0x7f02010c;
+        public static final int ic_directions_form_swap=0x7f02010d;
+        public static final int ic_drawer=0x7f02010e;
+        public static final int ic_icon_actionbar=0x7f02010f;
+        public static final int ic_launcher=0x7f020110;
+        public static final int ic_leg_step=0x7f020111;
+        public static final int ic_logo=0x7f020112;
+        public static final int ic_map_pin=0x7f020113;
+        public static final int ic_map_pin_cluster=0x7f020114;
+        public static final int ic_map_pin_cluster_toaster=0x7f020115;
+        public static final int ic_map_pin_toaster=0x7f020116;
+        public static final int ic_menu_emoticons=0x7f020117;
+        public static final int ic_menu_info_details=0x7f020118;
+        public static final int ic_menu_preferences=0x7f020119;
+        public static final int ic_menu_search=0x7f02011a;
+        public static final int ic_my_location_small=0x7f02011b;
+        public static final int ic_notification=0x7f02011c;
+        public static final int info_trafic_off=0x7f02011d;
+        public static final int info_trafic_on=0x7f02011e;
+        public static final int item_background_holo_light=0x7f02011f;
+        public static final int item_background_options_holo_light=0x7f020120;
+        public static final int item_block_background=0x7f020121;
+        public static final int item_leg_walk_back=0x7f020122;
+        public static final int item_symbole_back=0x7f020123;
+        public static final int itinerary_leg_walk=0x7f020124;
+        public static final int list_focused_acapulco=0x7f020125;
+        public static final int list_longpressed_holo=0x7f020126;
+        public static final int list_pressed_holo_light=0x7f020127;
+        public static final int list_section_menu_underline=0x7f020128;
+        public static final int list_section_underline_dark=0x7f020129;
+        public static final int list_section_underline_light=0x7f02012a;
+        public static final int list_selector_background_transition_holo_light=0x7f02012b;
+        public static final int list_selector_disabled_holo_light=0x7f02012c;
+        public static final int location=0x7f02012d;
+        public static final int logo=0x7f02012e;
+        public static final int logo_large=0x7f02012f;
+        public static final int logo_tan=0x7f020130;
+        public static final int logo_taninfos=0x7f020131;
+        public static final int logo_taninfos_background=0x7f020132;
+        public static final int map=0x7f020133;
+        public static final int map_layer_arret=0x7f020134;
+        public static final int map_layer_bicloo=0x7f020135;
+        public static final int map_layer_covoiturage=0x7f020136;
+        public static final int map_layer_marguerite=0x7f020137;
+        public static final int map_layer_parking=0x7f020138;
+        public static final int map_layer_parking_relai=0x7f020139;
+        public static final int map_pin_arret=0x7f02013a;
+        public static final int map_pin_bicloo=0x7f02013b;
+        public static final int map_pin_covoiturage=0x7f02013c;
+        public static final int map_pin_lila=0x7f02013d;
+        public static final int map_pin_marguerite=0x7f02013e;
+        public static final int map_pin_parking=0x7f02013f;
+        public static final int menu_dropdown_panel_acapulco=0x7f020140;
+        public static final int menu_options_first_background=0x7f020141;
+        public static final int orage=0x7f020142;
+        public static final int pressed_background_acapulco=0x7f020143;
+        public static final int progress_bg_acapulco=0x7f020144;
+        public static final int progress_horizontal_acapulco=0x7f020145;
+        public static final int progress_primary_acapulco=0x7f020146;
+        public static final int progress_secondary_acapulco=0x7f020147;
+        public static final int quote_left=0x7f020148;
+        public static final int quote_right=0x7f020149;
+        public static final int romain=0x7f02014a;
+        public static final int sad_face=0x7f02014b;
+        public static final int selectable_background_acapulco=0x7f02014c;
+        public static final int shadow=0x7f02014d;
+        public static final int spinner_ab_default_acapulco=0x7f02014e;
+        public static final int spinner_ab_disabled_acapulco=0x7f02014f;
+        public static final int spinner_ab_focused_acapulco=0x7f020150;
+        public static final int spinner_ab_pressed_acapulco=0x7f020151;
+        public static final int spinner_background_ab_acapulco=0x7f020152;
+        public static final int spinner_background_holo_light=0x7f020153;
+        public static final int spinner_default_holo_light=0x7f020154;
+        public static final int spinner_disabled_holo_light=0x7f020155;
+        public static final int spinner_focused_holo_light=0x7f020156;
+        public static final int spinner_pressed_holo_light=0x7f020157;
+        public static final int tab_indicator_ab_acapulco=0x7f020158;
+        public static final int tab_selected_acapulco=0x7f020159;
+        public static final int tab_selected_focused_acapulco=0x7f02015a;
+        public static final int tab_selected_pressed_acapulco=0x7f02015b;
+        public static final int tab_unselected_focused_acapulco=0x7f02015c;
+        public static final int tab_unselected_pressed_acapulco=0x7f02015d;
+        public static final int toast_frame=0x7f02015e;
+        public static final int tuto_favoris=0x7f02015f;
+        public static final int tuto_infotrafic=0x7f020160;
+        public static final int tuto_menu=0x7f020161;
+        public static final int tuto_mobilite=0x7f020162;
+        public static final int tuto_parkings=0x7f020163;
+        public static final int tuto_widgets=0x7f020164;
+        public static final int twitter_account=0x7f020165;
+        public static final int unicorn=0x7f020166;
+        public static final int vm_blue_dot_off=0x7f020167;
+        public static final int vm_blue_dot_on=0x7f020168;
+        public static final int vpi__tab_indicator=0x7f020169;
+        public static final int vpi__tab_selected_focused_holo=0x7f02016a;
+        public static final int vpi__tab_selected_holo=0x7f02016b;
+        public static final int vpi__tab_selected_pressed_holo=0x7f02016c;
+        public static final int vpi__tab_unselected_focused_holo=0x7f02016d;
+        public static final int vpi__tab_unselected_holo=0x7f02016e;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f02016f;
+        public static final int warning=0x7f020170;
+        public static final int widget_large=0x7f020171;
+        public static final int widget_small=0x7f020172;
     }
     public static final class id {
         public static final int aboutFacebook=0x7f08003d;
@@ -2179,65 +2190,64 @@ containing a value of this type.
         /**  About 
          */
         public static final int aboutTwitterRomain=0x7f08003a;
-        public static final int abs__action_bar=0x7f0800ac;
-        public static final int abs__action_bar_container=0x7f0800ab;
-        public static final int abs__action_bar_subtitle=0x7f08009d;
-        public static final int abs__action_bar_title=0x7f08009c;
-        public static final int abs__action_context_bar=0x7f0800ad;
+        public static final int abs__action_bar=0x7f0800b2;
+        public static final int abs__action_bar_container=0x7f0800b1;
+        public static final int abs__action_bar_subtitle=0x7f0800a3;
+        public static final int abs__action_bar_title=0x7f0800a2;
+        public static final int abs__action_context_bar=0x7f0800b3;
         public static final int abs__action_menu_divider=0x7f08001c;
         public static final int abs__action_menu_presenter=0x7f08001d;
-        public static final int abs__action_mode_bar=0x7f0800b1;
-        public static final int abs__action_mode_bar_stub=0x7f0800b0;
-        public static final int abs__action_mode_close_button=0x7f0800a0;
-        public static final int abs__activity_chooser_view_content=0x7f0800a1;
-        public static final int abs__checkbox=0x7f0800a8;
-        public static final int abs__content=0x7f0800ae;
-        public static final int abs__default_activity_button=0x7f0800a4;
-        public static final int abs__expand_activities_button=0x7f0800a2;
+        public static final int abs__action_mode_bar=0x7f0800b7;
+        public static final int abs__action_mode_bar_stub=0x7f0800b6;
+        public static final int abs__action_mode_close_button=0x7f0800a6;
+        public static final int abs__activity_chooser_view_content=0x7f0800a7;
+        public static final int abs__checkbox=0x7f0800ae;
+        public static final int abs__content=0x7f0800b4;
+        public static final int abs__default_activity_button=0x7f0800aa;
+        public static final int abs__expand_activities_button=0x7f0800a8;
         public static final int abs__home=0x7f08001a;
-        public static final int abs__icon=0x7f0800a6;
-        public static final int abs__image=0x7f0800a3;
-        public static final int abs__imageButton=0x7f08009e;
-        public static final int abs__list_item=0x7f0800a5;
+        public static final int abs__icon=0x7f0800ac;
+        public static final int abs__image=0x7f0800a9;
+        public static final int abs__imageButton=0x7f0800a4;
+        public static final int abs__list_item=0x7f0800ab;
         public static final int abs__progress_circular=0x7f08001e;
         public static final int abs__progress_horizontal=0x7f08001f;
-        public static final int abs__radio=0x7f0800a9;
-        public static final int abs__search_badge=0x7f0800b4;
-        public static final int abs__search_bar=0x7f0800b3;
-        public static final int abs__search_button=0x7f0800b5;
-        public static final int abs__search_close_btn=0x7f0800ba;
-        public static final int abs__search_edit_frame=0x7f0800b6;
-        public static final int abs__search_go_btn=0x7f0800bc;
-        public static final int abs__search_mag_icon=0x7f0800b7;
-        public static final int abs__search_plate=0x7f0800b8;
-        public static final int abs__search_src_text=0x7f0800b9;
-        public static final int abs__search_voice_btn=0x7f0800bd;
-        public static final int abs__shortcut=0x7f0800aa;
-        public static final int abs__split_action_bar=0x7f0800af;
-        public static final int abs__submit_area=0x7f0800bb;
-        public static final int abs__textButton=0x7f08009f;
-        public static final int abs__title=0x7f0800a7;
+        public static final int abs__radio=0x7f0800af;
+        public static final int abs__search_badge=0x7f0800ba;
+        public static final int abs__search_bar=0x7f0800b9;
+        public static final int abs__search_button=0x7f0800bb;
+        public static final int abs__search_close_btn=0x7f0800c0;
+        public static final int abs__search_edit_frame=0x7f0800bc;
+        public static final int abs__search_go_btn=0x7f0800c2;
+        public static final int abs__search_mag_icon=0x7f0800bd;
+        public static final int abs__search_plate=0x7f0800be;
+        public static final int abs__search_src_text=0x7f0800bf;
+        public static final int abs__search_voice_btn=0x7f0800c3;
+        public static final int abs__shortcut=0x7f0800b0;
+        public static final int abs__split_action_bar=0x7f0800b5;
+        public static final int abs__submit_area=0x7f0800c1;
+        public static final int abs__textButton=0x7f0800a5;
+        public static final int abs__title=0x7f0800ad;
         public static final int abs__up=0x7f08001b;
         public static final int actionDrag=0x7f080055;
-        public static final int actionbar_discard=0x7f0800be;
-        public static final int actionbar_done=0x7f0800bf;
+        public static final int actionbar_discard=0x7f0800c4;
+        public static final int actionbar_done=0x7f0800c5;
         public static final int alignBounds=0x7f08000a;
         public static final int alignMargins=0x7f08000b;
-        public static final int avatarBenoit=0x7f0800ec;
-        public static final int avatarRomain=0x7f0800ea;
-        public static final int balloon_main_layout=0x7f0800d3;
+        public static final int avatarBenoit=0x7f0800f1;
+        public static final int avatarRomain=0x7f0800ef;
         /**  Bicloos 
          */
         public static final int bicloosDisponibles=0x7f080048;
-        public static final int bicloosDisponiblesLabel=0x7f0800c7;
+        public static final int bicloosDisponiblesLabel=0x7f0800cd;
         public static final int bottom=0x7f08000e;
         public static final int clickRemove=0x7f080005;
-        public static final int codename=0x7f0800db;
+        public static final int codename=0x7f0800df;
         /**   
          */
         public static final int colLeft=0x7f08004c;
         public static final int colRight=0x7f08004d;
-        public static final int comment=0x7f0800c3;
+        public static final int comment=0x7f0800c9;
         public static final int commentaireArret=0x7f08005f;
         public static final int commentaireLigne=0x7f08005d;
         /**  Layouts 
@@ -2245,30 +2255,34 @@ containing a value of this type.
         public static final int commentaireLigneSpinner=0x7f08005c;
         public static final int commentaireSens=0x7f08005e;
         public static final int contentView=0x7f080050;
-        public static final int dateAndTime=0x7f080097;
-        public static final int dateAndTimeLabel=0x7f080098;
-        public static final int dateEvent=0x7f0800c0;
+        public static final int dateAndTime=0x7f08009b;
+        public static final int dateAndTimeLabel=0x7f08009c;
+        public static final int dateEvent=0x7f0800c6;
         /**  Date Picker 
          */
-        public static final int dateKind=0x7f080099;
-        public static final int datePicker=0x7f08009a;
-        public static final int delaiMain=0x7f0800d7;
+        public static final int dateKind=0x7f08009d;
+        public static final int datePicker=0x7f08009e;
+        public static final int delaiMain=0x7f0800db;
         public static final int disableHome=0x7f080019;
         public static final int donateFlattr=0x7f080044;
         /**  Donate 
          */
         public static final int donatePaypal=0x7f080043;
         public static final int dotLocation=0x7f08002b;
-        public static final int drawer_layout=0x7f0800cc;
-        public static final int edit_query=0x7f0800b2;
+        public static final int drawer_layout=0x7f0800d2;
+        public static final int edit_query=0x7f0800b8;
         public static final int flingRemove=0x7f080006;
-        public static final int formFrom=0x7f08008e;
+        public static final int form=0x7f0800e3;
+        public static final int formFrom=0x7f08008f;
+        public static final int formIconFrom=0x7f080092;
+        public static final int formIconTo=0x7f080093;
         /**  Itinéraires 
          */
-        public static final int formItemAddress=0x7f08008b;
-        public static final int formItemAddressFormatted=0x7f08008c;
-        public static final int formItemProgress=0x7f08008d;
-        public static final int formTo=0x7f08008f;
+        public static final int formItemAddress=0x7f08008c;
+        public static final int formItemAddressFormatted=0x7f08008d;
+        public static final int formItemProgress=0x7f08008e;
+        public static final int formReverse=0x7f080091;
+        public static final int formTo=0x7f080090;
         public static final int fragmentContent=0x7f080059;
         public static final int fragmentLeft=0x7f08005a;
         /**  Fragments 
@@ -2277,11 +2291,11 @@ containing a value of this type.
         public static final int fragmentMessage=0x7f080058;
         public static final int fragmentMessageStub=0x7f080057;
         public static final int fragmentRight=0x7f08005b;
-        public static final int fromDirection=0x7f080092;
-        public static final int fromPlace=0x7f080091;
+        public static final int fromDirection=0x7f080096;
+        public static final int fromPlace=0x7f080095;
         /**   
          */
-        public static final int fromTime=0x7f080090;
+        public static final int fromTime=0x7f080094;
         public static final int headerCode=0x7f080036;
         public static final int headerDivider=0x7f080034;
         public static final int headerSubTitle=0x7f080035;
@@ -2290,8 +2304,8 @@ containing a value of this type.
          */
         public static final int headerView=0x7f080032;
         public static final int homeAsUp=0x7f080016;
-        public static final int horaireWidget=0x7f0800ee;
-        public static final int horaires=0x7f0800d6;
+        public static final int horaireWidget=0x7f0800f3;
+        public static final int horaires=0x7f0800da;
         public static final int hybrid=0x7f080004;
         public static final int itemAddress=0x7f080030;
         public static final int itemCode=0x7f080023;
@@ -2299,33 +2313,35 @@ containing a value of this type.
         public static final int itemDelai=0x7f08002f;
         public static final int itemDescription=0x7f080025;
         public static final int itemDistance=0x7f080028;
-        public static final int itemFavori=0x7f0800e2;
+        public static final int itemFavori=0x7f0800e7;
         /**  Items 
          */
         public static final int itemHeader=0x7f080020;
         public static final int itemHoraire=0x7f08002e;
         public static final int itemIcon=0x7f080022;
         public static final int itemLignes=0x7f080029;
-        public static final int itemMetroPoint=0x7f0800e1;
-        public static final int itemMetroPointFrom=0x7f0800e6;
-        public static final int itemMetroPointTo=0x7f0800e7;
-        public static final int itemSource=0x7f0800cb;
+        public static final int itemMetroPoint=0x7f0800e6;
+        public static final int itemMetroPointFrom=0x7f0800eb;
+        public static final int itemMetroPointTo=0x7f0800ec;
+        public static final int itemSource=0x7f0800d1;
         public static final int itemSymbole=0x7f080021;
         public static final int itemTelephone=0x7f08002a;
-        public static final int itemTelephoneLabel=0x7f0800d1;
+        public static final int itemTelephoneLabel=0x7f0800d8;
         public static final int itemTime=0x7f080026;
         public static final int itemTitle=0x7f080024;
         public static final int itemWalkTime=0x7f080031;
-        public static final int left_drawer=0x7f0800cd;
+        public static final int left_drawer=0x7f0800d4;
         public static final int ligneFrom=0x7f08002c;
         public static final int ligneTo=0x7f08002d;
-        public static final int lignes=0x7f0800d5;
+        public static final int lignes=0x7f0800e2;
         public static final int listMode=0x7f080012;
-        public static final int loader=0x7f0800cf;
-        public static final int loading=0x7f0800e5;
+        public static final int loader=0x7f0800d6;
+        public static final int loading=0x7f0800ea;
         public static final int majDate=0x7f080047;
-        public static final int map=0x7f0800de;
-        public static final int map_view=0x7f0800c9;
+        /**  Map 
+         */
+        public static final int map=0x7f0800a0;
+        public static final int map_view=0x7f0800cf;
         public static final int menu_about=0x7f080089;
         public static final int menu_add=0x7f080085;
         public static final int menu_comment=0x7f080082;
@@ -2351,6 +2367,7 @@ containing a value of this type.
         public static final int menu_rate=0x7f080080;
         public static final int menu_refresh=0x7f08006d;
         public static final int menu_reverse=0x7f080086;
+        public static final int menu_satellite=0x7f08008b;
         /**  Menus 
          */
         public static final int menu_search=0x7f080066;
@@ -2365,10 +2382,10 @@ containing a value of this type.
         public static final int menu_sort_name=0x7f080078;
         public static final int menu_sort_ordre=0x7f08007b;
         public static final int menu_sort_parking_places=0x7f080079;
-        public static final int message=0x7f0800ca;
-        public static final int moreAction=0x7f0800d4;
-        public static final int my_animation=0x7f0800ef;
-        public static final int nextButton=0x7f0800e0;
+        public static final int message=0x7f0800d0;
+        public static final int moreAction=0x7f0800a1;
+        public static final int my_animation=0x7f0800f4;
+        public static final int nextButton=0x7f0800e5;
         public static final int none=0x7f080000;
         public static final int normal=0x7f080001;
         public static final int onDown=0x7f080007;
@@ -2376,46 +2393,47 @@ containing a value of this type.
         public static final int onMove=0x7f080008;
         public static final int pager=0x7f080051;
         public static final int placesDisponibles=0x7f080046;
-        public static final int placesDisponiblesLabel=0x7f0800c6;
+        public static final int placesDisponiblesLabel=0x7f0800cc;
         /**  Parking 
          */
         public static final int placesTotales=0x7f080045;
-        public static final int placesTotalesLabel=0x7f0800d0;
+        public static final int placesTotalesLabel=0x7f0800d7;
         public static final int planView=0x7f08004f;
-        public static final int rowBottom=0x7f0800d9;
-        public static final int rowTop=0x7f0800d8;
+        public static final int rowBottom=0x7f0800dd;
+        public static final int rowTop=0x7f0800dc;
         public static final int satellite=0x7f080002;
-        public static final int searchViewClose=0x7f0800e9;
-        public static final int searchViewText=0x7f0800e8;
-        public static final int secondLine=0x7f0800e3;
+        public static final int searchViewClose=0x7f0800ee;
+        public static final int searchViewText=0x7f0800ed;
+        public static final int secondLine=0x7f0800e8;
         public static final int setupView=0x7f080053;
         public static final int setupViewLabel=0x7f080054;
-        public static final int setupViewStub=0x7f0800ce;
+        public static final int setupViewStub=0x7f0800d5;
         public static final int showCustom=0x7f080018;
         public static final int showHome=0x7f080015;
         public static final int showTitle=0x7f080017;
-        public static final int showcase=0x7f0800c4;
+        public static final int showcase=0x7f0800ca;
         public static final int showcase_button=0x7f080010;
-        public static final int spinnerCalendrier=0x7f0800c1;
-        public static final int spinnerDelai=0x7f0800c2;
+        public static final int singleFragmentContent=0x7f0800d3;
+        public static final int spinnerCalendrier=0x7f0800c7;
+        public static final int spinnerDelai=0x7f0800c8;
         public static final int stationBonus=0x7f08004a;
         public static final int stationEtat=0x7f080049;
         public static final int stationPaiement=0x7f08004b;
-        public static final int stationPaiementLabel=0x7f0800c8;
+        public static final int stationPaiementLabel=0x7f0800ce;
         public static final int tabMode=0x7f080013;
         public static final int tabs=0x7f080052;
         public static final int terrain=0x7f080003;
-        public static final int text=0x7f0800d2;
-        public static final int textView=0x7f0800c5;
-        public static final int timePicker=0x7f08009b;
-        public static final int title=0x7f0800da;
-        public static final int titleBenoit=0x7f0800ed;
-        public static final int titleRomain=0x7f0800eb;
-        public static final int toPlace=0x7f080094;
-        public static final int toProgress=0x7f080096;
-        public static final int toTime=0x7f080095;
+        public static final int text=0x7f0800d9;
+        public static final int textView=0x7f0800cb;
+        public static final int timePicker=0x7f08009f;
+        public static final int title=0x7f0800de;
+        public static final int titleBenoit=0x7f0800f2;
+        public static final int titleRomain=0x7f0800f0;
+        public static final int toPlace=0x7f080098;
+        public static final int toProgress=0x7f08009a;
+        public static final int toTime=0x7f080099;
         public static final int top=0x7f08000f;
-        public static final int totalTime=0x7f080093;
+        public static final int totalTime=0x7f080097;
         public static final int triangle=0x7f08000c;
         public static final int tutorialButtonBar=0x7f080039;
         /**  Tutorial 
@@ -2423,10 +2441,10 @@ containing a value of this type.
         public static final int tutorialNext=0x7f080037;
         public static final int tutorialPrevious=0x7f080038;
         public static final int underline=0x7f08000d;
-        public static final int updateView=0x7f0800df;
+        public static final int updateView=0x7f0800e4;
         public static final int useLogo=0x7f080014;
-        public static final int version=0x7f0800dd;
-        public static final int versionNotes=0x7f0800dc;
+        public static final int version=0x7f0800e1;
+        public static final int versionNotes=0x7f0800e0;
         public static final int viewPager=0x7f080060;
         public static final int viewPagerIndicator=0x7f080061;
         public static final int webView=0x7f08004e;
@@ -2437,7 +2455,7 @@ containing a value of this type.
         public static final int widgetLoading=0x7f080064;
         public static final int widgetProgress=0x7f080065;
         public static final int wrap_content=0x7f080011;
-        public static final int zoneTitle=0x7f0800e4;
+        public static final int zoneTitle=0x7f0800e9;
     }
     public static final class integer {
         public static final int abs__max_action_buttons=0x7f0d0005;
@@ -2490,28 +2508,28 @@ containing a value of this type.
         public static final int activity_tutorial=0x7f030025;
         public static final int activity_two_fragment=0x7f030026;
         public static final int address_bar=0x7f030027;
-        public static final int balloon_overlay=0x7f030028;
-        public static final int card_base=0x7f030029;
-        public static final int card_horaire=0x7f03002a;
-        public static final int card_horaire_delay=0x7f03002b;
-        public static final int card_horaire_text=0x7f03002c;
-        public static final int card_horaire_text_first=0x7f03002d;
-        public static final int card_horaire_text_last=0x7f03002e;
-        public static final int card_item_commentaire=0x7f03002f;
-        public static final int card_item_trafic_ligne=0x7f030030;
-        public static final int card_map=0x7f030031;
-        public static final int card_trafic=0x7f030032;
-        public static final int dialog_changelog=0x7f030033;
-        public static final int dialog_input=0x7f030034;
-        public static final int dialog_readonly=0x7f030035;
-        public static final int divider=0x7f030036;
-        public static final int fragment_about=0x7f030037;
-        public static final int fragment_address_search=0x7f030038;
-        public static final int fragment_arret_detail=0x7f030039;
-        public static final int fragment_base=0x7f03003a;
-        public static final int fragment_donate=0x7f03003b;
-        public static final int fragment_infotrafic_detail=0x7f03003c;
-        public static final int fragment_itineraire=0x7f03003d;
+        public static final int card_base=0x7f030028;
+        public static final int card_horaire=0x7f030029;
+        public static final int card_horaire_delay=0x7f03002a;
+        public static final int card_horaire_text=0x7f03002b;
+        public static final int card_horaire_text_first=0x7f03002c;
+        public static final int card_horaire_text_last=0x7f03002d;
+        public static final int card_item_commentaire=0x7f03002e;
+        public static final int card_item_trafic_ligne=0x7f03002f;
+        public static final int card_map=0x7f030030;
+        public static final int card_trafic=0x7f030031;
+        public static final int dialog_changelog=0x7f030032;
+        public static final int dialog_input=0x7f030033;
+        public static final int dialog_readonly=0x7f030034;
+        public static final int divider=0x7f030035;
+        public static final int fragment_about=0x7f030036;
+        public static final int fragment_address_search=0x7f030037;
+        public static final int fragment_arret_detail=0x7f030038;
+        public static final int fragment_base=0x7f030039;
+        public static final int fragment_donate=0x7f03003a;
+        public static final int fragment_infotrafic_detail=0x7f03003b;
+        public static final int fragment_itineraire=0x7f03003c;
+        public static final int fragment_itineraire_detail=0x7f03003d;
         public static final int fragment_listview=0x7f03003e;
         public static final int fragment_listview_box=0x7f03003f;
         public static final int fragment_listview_drag_drop=0x7f030040;
@@ -2561,19 +2579,20 @@ containing a value of this type.
         public static final int list_item_sens_spinner=0x7f03006c;
         public static final int list_item_trafic_ligne=0x7f03006d;
         public static final int main=0x7f03006e;
-        public static final int menu=0x7f03006f;
-        public static final int search_view=0x7f030070;
-        public static final int section_about_auteurs=0x7f030071;
-        public static final int section_about_com=0x7f030072;
-        public static final int section_about_thanks=0x7f030073;
-        public static final int section_about_translators=0x7f030074;
-        public static final int section_item_small=0x7f030075;
-        public static final int setup_view=0x7f030076;
-        public static final int sherlock_spinner_dropdown_item=0x7f030077;
-        public static final int sherlock_spinner_item=0x7f030078;
-        public static final int tutorial_view=0x7f030079;
-        public static final int tutorial_view_simple=0x7f03007a;
-        public static final int widget_horaire_layout=0x7f03007b;
+        public static final int map_info_window=0x7f03006f;
+        public static final int menu=0x7f030070;
+        public static final int search_view=0x7f030071;
+        public static final int section_about_auteurs=0x7f030072;
+        public static final int section_about_com=0x7f030073;
+        public static final int section_about_thanks=0x7f030074;
+        public static final int section_about_translators=0x7f030075;
+        public static final int section_item_small=0x7f030076;
+        public static final int setup_view=0x7f030077;
+        public static final int sherlock_spinner_dropdown_item=0x7f030078;
+        public static final int sherlock_spinner_item=0x7f030079;
+        public static final int tutorial_view=0x7f03007a;
+        public static final int tutorial_view_simple=0x7f03007b;
+        public static final int widget_horaire_layout=0x7f03007c;
     }
     public static final class menu {
         public static final int activity_about=0x7f100000;
@@ -2582,26 +2601,25 @@ containing a value of this type.
         public static final int activity_commentaire=0x7f100003;
         public static final int activity_commentaire_detail=0x7f100004;
         public static final int activity_en_direct=0x7f100005;
-        public static final int activity_map=0x7f100006;
-        public static final int activity_parking_detail=0x7f100007;
-        public static final int activity_tutorial=0x7f100008;
-        public static final int fragment_arret_detail=0x7f100009;
-        public static final int fragment_arrets=0x7f10000a;
-        public static final int fragment_arrets_contextual=0x7f10000b;
-        public static final int fragment_bicloos=0x7f10000c;
-        public static final int fragment_bicloos_contextual=0x7f10000d;
-        public static final int fragment_equipements=0x7f10000e;
-        public static final int fragment_favoris=0x7f10000f;
-        public static final int fragment_favoris_bicloos_contextual=0x7f100010;
-        public static final int fragment_favoris_contextual=0x7f100011;
-        public static final int fragment_groupes=0x7f100012;
-        public static final int fragment_groupes_contextual=0x7f100013;
-        public static final int fragment_horaires=0x7f100014;
-        public static final int fragment_itineraire=0x7f100015;
-        public static final int fragment_lignes=0x7f100016;
-        public static final int fragment_lignes_contextual=0x7f100017;
-        public static final int fragment_parkings_publics=0x7f100018;
-        public static final int fragment_proximite=0x7f100019;
+        public static final int activity_parking_detail=0x7f100006;
+        public static final int activity_tutorial=0x7f100007;
+        public static final int fragment_arret_detail=0x7f100008;
+        public static final int fragment_arrets=0x7f100009;
+        public static final int fragment_arrets_contextual=0x7f10000a;
+        public static final int fragment_bicloos=0x7f10000b;
+        public static final int fragment_bicloos_contextual=0x7f10000c;
+        public static final int fragment_equipements=0x7f10000d;
+        public static final int fragment_favoris=0x7f10000e;
+        public static final int fragment_favoris_bicloos_contextual=0x7f10000f;
+        public static final int fragment_favoris_contextual=0x7f100010;
+        public static final int fragment_groupes=0x7f100011;
+        public static final int fragment_groupes_contextual=0x7f100012;
+        public static final int fragment_horaires=0x7f100013;
+        public static final int fragment_lignes=0x7f100014;
+        public static final int fragment_lignes_contextual=0x7f100015;
+        public static final int fragment_map=0x7f100016;
+        public static final int fragment_parkings_publics=0x7f100017;
+        public static final int fragment_proximite=0x7f100018;
     }
     public static final class plurals {
         public static final int bicloo=0x7f0f0003;
@@ -2705,7 +2723,6 @@ containing a value of this type.
         public static final int action_rate=0x7f090083;
         public static final int action_refresh=0x7f090071;
         public static final int action_rename=0x7f090077;
-        public static final int action_reverse=0x7f090157;
         public static final int action_search=0x7f09008c;
         public static final int action_send=0x7f090082;
         public static final int action_share=0x7f090070;
@@ -2716,6 +2733,7 @@ containing a value of this type.
         public static final int action_sort_name=0x7f090079;
         public static final int action_sort_ordre=0x7f09007b;
         public static final int action_sort_parking_places=0x7f09007c;
+        public static final int action_view_satellite=0x7f09015a;
         /**  Add events 
          */
         public static final int add_event_calendar_select=0x7f09012b;
@@ -2839,23 +2857,23 @@ containing a value of this type.
         public static final int dialog_title_invalid_comment=0x7f090132;
         public static final int dialog_title_menu_lignes=0x7f090136;
         public static final int dialog_title_warning=0x7f090131;
-        public static final int donate_donators_title=0x7f09015d;
+        public static final int donate_donators_title=0x7f090160;
         public static final int donate_flattr=0x7f0900b8;
         public static final int donate_paypal=0x7f0900b9;
-        public static final int donate_summary=0x7f09015c;
+        public static final int donate_summary=0x7f09015f;
         /**  Dons 
          */
-        public static final int donate_title=0x7f09015a;
-        public static final int donate_via=0x7f09015b;
-        public static final int drawer_close=0x7f090156;
-        public static final int drawer_open=0x7f090155;
+        public static final int donate_title=0x7f09015d;
+        public static final int donate_via=0x7f09015e;
+        public static final int drawer_close=0x7f090157;
+        public static final int drawer_open=0x7f090156;
         public static final int emptyString=0x7f090033;
-        public static final int error_current_address=0x7f090159;
+        public static final int error_current_address=0x7f09015c;
         public static final int error_summary=0x7f09009a;
         public static final int error_summary_empty=0x7f09009e;
         public static final int error_summary_empty_arrets_favoris=0x7f0900a2;
         public static final int error_summary_empty_favori=0x7f09009f;
-        public static final int error_summary_empty_favori_bicloo=0x7f090158;
+        public static final int error_summary_empty_favori_bicloo=0x7f09015b;
         public static final int error_summary_empty_groupe=0x7f0900a0;
         public static final int error_summary_network=0x7f09009c;
         public static final int error_summary_selected_groupe=0x7f0900a1;
@@ -2873,30 +2891,30 @@ containing a value of this type.
         public static final int error_title_webservice=0x7f090094;
         public static final int error_title_webservice_tan=0x7f090093;
         public static final int exp=0x7f090028;
-        public static final int format_heures=0x7f090154;
-        public static final int format_km=0x7f090152;
-        public static final int format_metres=0x7f090151;
-        public static final int format_minutes=0x7f090153;
-        public static final int google_map_api_key=0x7f09002c;
+        public static final int format_heures=0x7f090155;
+        public static final int format_km=0x7f090153;
+        public static final int format_metres=0x7f090152;
+        public static final int format_minutes=0x7f090154;
+        public static final int google_map_api_key=0x7f09002a;
         /**   
  Hint 
          */
         public static final int hint_ajouter_commentaire=0x7f09012f;
         /**  Itinéraires 
          */
-        public static final int itineraire_current_location=0x7f09015e;
-        public static final int itineraire_hint_arrive=0x7f090160;
-        public static final int itineraire_hint_date=0x7f090161;
-        public static final int itineraire_hint_depart=0x7f09015f;
+        public static final int itineraire_current_location=0x7f090161;
+        public static final int itineraire_hint_arrive=0x7f090163;
+        public static final int itineraire_hint_depart=0x7f090162;
         public static final int itineraire_section_form=0x7f0900ef;
-        public static final int itinerary_date=0x7f090167;
+        public static final int itinerary_date=0x7f090169;
+        public static final int itinerary_go_to=0x7f09016b;
         /**  Itinéraires 
          */
-        public static final int itinerary_kind=0x7f090164;
-        public static final int itinerary_kind_arrival=0x7f090165;
-        public static final int itinerary_kind_departure=0x7f090166;
-        public static final int itinerary_time=0x7f090168;
-        public static final int jcdecaux_key=0x7f09002b;
+        public static final int itinerary_kind=0x7f090166;
+        public static final int itinerary_kind_arrival=0x7f090167;
+        public static final int itinerary_kind_departure=0x7f090168;
+        public static final int itinerary_time=0x7f09016a;
+        public static final int jcdecaux_key=0x7f09002c;
         public static final int loading=0x7f090032;
         /**  Location client code resources (prefix with location_client) 
 
@@ -2972,7 +2990,7 @@ containing a value of this type.
          */
         public static final int msg_warning_send_comment=0x7f090111;
         public static final int next=0x7f090038;
-        public static final int nod_key=0x7f09002a;
+        public static final int nod_key=0x7f09002b;
         public static final int parking=0x7f0900dd;
         public static final int parking_abonne=0x7f0900e0;
         public static final int parking_ferme=0x7f0900df;
@@ -2994,13 +3012,15 @@ containing a value of this type.
         public static final int pref_cache_size=0x7f09003e;
         public static final int pref_calendar_summary=0x7f090040;
         public static final int pref_calendar_title=0x7f09003f;
+        public static final int pref_navigation_home=0x7f090159;
         public static final int pref_section_calendar=0x7f09003b;
         /**  Preférences 
          */
+        public static final int pref_section_navigation=0x7f090158;
         public static final int pref_section_plans=0x7f090039;
         public static final int pref_section_timetable=0x7f09003a;
-        public static final int previous=0x7f090150;
-        public static final int search_address=0x7f090162;
+        public static final int previous=0x7f090151;
+        public static final int search_address=0x7f090164;
         public static final int search_empty=0x7f0900fa;
         /**  Search 
          */
@@ -3022,6 +3042,7 @@ containing a value of this type.
         public static final int section_distance_none=0x7f0900fd;
         public static final int section_groupe_aucun=0x7f090108;
         public static final int setup=0x7f090035;
+        public static final int setup_complete=0x7f090150;
         public static final int showcase_arrets_content=0x7f09013e;
         /**  Showcase 
          */
@@ -3091,7 +3112,7 @@ containing a value of this type.
         public static final int title_fragment_tan_actu=0x7f0900bd;
         public static final int title_fragment_trafic_detail=0x7f0900bf;
         public static final int title_fragment_versions=0x7f0900a7;
-        public static final int toast_autre_sens=0x7f090163;
+        public static final int toast_autre_sens=0x7f090165;
         /**  Toasts 
          */
         public static final int toast_favori_ajout=0x7f090146;
@@ -3385,8 +3406,8 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #CirclePageIndicator_android_background net.naonedbus:android_background}</code></td><td> View background </td></tr>
-           <tr><td><code>{@link #CirclePageIndicator_android_orientation net.naonedbus:android_orientation}</code></td><td> Orientation of the indicator.</td></tr>
+           <tr><td><code>{@link #CirclePageIndicator_android_background android:background}</code></td><td> View background </td></tr>
+           <tr><td><code>{@link #CirclePageIndicator_android_orientation android:orientation}</code></td><td> Orientation of the indicator.</td></tr>
            <tr><td><code>{@link #CirclePageIndicator_centered net.naonedbus:centered}</code></td><td> Whether or not the indicators should be centered.</td></tr>
            <tr><td><code>{@link #CirclePageIndicator_fillColor net.naonedbus:fillColor}</code></td><td> Color of the filled circle that represents the current page.</td></tr>
            <tr><td><code>{@link #CirclePageIndicator_pageColor net.naonedbus:pageColor}</code></td><td> Color of the filled circles that represents pages.</td></tr>
@@ -3414,16 +3435,18 @@ containing a value of this type.
           <p>
           @attr description
            View background 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_background}.
-          @attr name android:android_background
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#background}.
+          @attr name android:background
         */
         public static final int CirclePageIndicator_android_background = 1;
         /**
           <p>
           @attr description
            Orientation of the indicator. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_orientation}.
-          @attr name android:android_orientation
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#orientation}.
+          @attr name android:orientation
         */
         public static final int CirclePageIndicator_android_orientation = 0;
         /**
@@ -3439,7 +3462,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:centered
+          @attr name net.naonedbus:centered
         */
         public static final int CirclePageIndicator_centered = 2;
         /**
@@ -3456,7 +3479,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:fillColor
+          @attr name net.naonedbus:fillColor
         */
         public static final int CirclePageIndicator_fillColor = 4;
         /**
@@ -3473,7 +3496,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:pageColor
+          @attr name net.naonedbus:pageColor
         */
         public static final int CirclePageIndicator_pageColor = 5;
         /**
@@ -3491,7 +3514,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:radius
+          @attr name net.naonedbus:radius
         */
         public static final int CirclePageIndicator_radius = 6;
         /**
@@ -3507,7 +3530,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:snap
+          @attr name net.naonedbus:snap
         */
         public static final int CirclePageIndicator_snap = 7;
         /**
@@ -3524,7 +3547,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:strokeColor
+          @attr name net.naonedbus:strokeColor
         */
         public static final int CirclePageIndicator_strokeColor = 8;
         /**
@@ -3542,7 +3565,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:strokeWidth
+          @attr name net.naonedbus:strokeWidth
         */
         public static final int CirclePageIndicator_strokeWidth = 3;
         /** Attributes that can be used with a DragSortListView.
@@ -3607,7 +3630,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:click_remove_id
+          @attr name net.naonedbus:click_remove_id
         */
         public static final int DragSortListView_click_remove_id = 16;
         /**
@@ -3623,7 +3646,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:collapsed_height
+          @attr name net.naonedbus:collapsed_height
         */
         public static final int DragSortListView_collapsed_height = 0;
         /**
@@ -3637,7 +3660,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:drag_enabled
+          @attr name net.naonedbus:drag_enabled
         */
         public static final int DragSortListView_drag_enabled = 10;
         /**
@@ -3651,7 +3674,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:drag_handle_id
+          @attr name net.naonedbus:drag_handle_id
         */
         public static final int DragSortListView_drag_handle_id = 14;
         /**
@@ -3665,7 +3688,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:drag_scroll_start
+          @attr name net.naonedbus:drag_scroll_start
         */
         public static final int DragSortListView_drag_scroll_start = 1;
         /**
@@ -3683,7 +3706,7 @@ containing a value of this type.
 <tr><td><code>onMove</code></td><td>1</td><td></td></tr>
 <tr><td><code>onLongPress</code></td><td>2</td><td></td></tr>
 </table>
-          @attr name android:drag_start_mode
+          @attr name net.naonedbus:drag_start_mode
         */
         public static final int DragSortListView_drag_start_mode = 13;
         /**
@@ -3697,7 +3720,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:drop_animation_duration
+          @attr name net.naonedbus:drop_animation_duration
         */
         public static final int DragSortListView_drop_animation_duration = 9;
         /**
@@ -3711,7 +3734,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:fling_handle_id
+          @attr name net.naonedbus:fling_handle_id
         */
         public static final int DragSortListView_fling_handle_id = 15;
         /**
@@ -3725,7 +3748,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:float_alpha
+          @attr name net.naonedbus:float_alpha
         */
         public static final int DragSortListView_float_alpha = 6;
         /**
@@ -3740,7 +3763,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:float_background_color
+          @attr name net.naonedbus:float_background_color
         */
         public static final int DragSortListView_float_background_color = 3;
         /**
@@ -3754,7 +3777,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:max_drag_scroll_speed
+          @attr name net.naonedbus:max_drag_scroll_speed
         */
         public static final int DragSortListView_max_drag_scroll_speed = 2;
         /**
@@ -3768,7 +3791,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:remove_animation_duration
+          @attr name net.naonedbus:remove_animation_duration
         */
         public static final int DragSortListView_remove_animation_duration = 8;
         /**
@@ -3782,7 +3805,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:remove_enabled
+          @attr name net.naonedbus:remove_enabled
         */
         public static final int DragSortListView_remove_enabled = 12;
         /**
@@ -3799,7 +3822,7 @@ containing a value of this type.
 <tr><td><code>clickRemove</code></td><td>0</td><td></td></tr>
 <tr><td><code>flingRemove</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name android:remove_mode
+          @attr name net.naonedbus:remove_mode
         */
         public static final int DragSortListView_remove_mode = 4;
         /**
@@ -3813,7 +3836,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:slide_shuffle_speed
+          @attr name net.naonedbus:slide_shuffle_speed
         */
         public static final int DragSortListView_slide_shuffle_speed = 7;
         /**
@@ -3827,7 +3850,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:sort_enabled
+          @attr name net.naonedbus:sort_enabled
         */
         public static final int DragSortListView_sort_enabled = 11;
         /**
@@ -3841,7 +3864,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:track_drag_sort
+          @attr name net.naonedbus:track_drag_sort
         */
         public static final int DragSortListView_track_drag_sort = 5;
         /**
@@ -3855,7 +3878,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:use_default_controller
+          @attr name net.naonedbus:use_default_controller
         */
         public static final int DragSortListView_use_default_controller = 17;
         /** Attributes that can be used with a GridLayout.
@@ -3866,7 +3889,7 @@ containing a value of this type.
            <tr><th>Attribute</th><th>Description</th></tr>
            <tr><td><code>{@link #GridLayout_alignmentMode net.naonedbus:alignmentMode}</code></td><td> When set to alignMargins, causes alignment to take place between the outer
         boundary of a view, as defined by its margins.</td></tr>
-           <tr><td><code>{@link #GridLayout_android_orientation net.naonedbus:android_orientation}</code></td><td> The orientation property is not used during layout.</td></tr>
+           <tr><td><code>{@link #GridLayout_android_orientation android:orientation}</code></td><td> The orientation property is not used during layout.</td></tr>
            <tr><td><code>{@link #GridLayout_columnCount net.naonedbus:columnCount}</code></td><td> The maxmimum number of columns to create when automatically positioning children.</td></tr>
            <tr><td><code>{@link #GridLayout_columnOrderPreserved net.naonedbus:columnOrderPreserved}</code></td><td> When set to true, forces column boundaries to appear in the same order
         as column indices.</td></tr>
@@ -3910,7 +3933,7 @@ containing a value of this type.
         See {@link android.widget.GridLayout#ALIGN_MARGINS}. </td></tr>
 </table>
           <p>This is a private symbol.
-          @attr name android:alignmentMode
+          @attr name net.naonedbus:alignmentMode
         */
         public static final int GridLayout_alignmentMode = 1;
         /**
@@ -3924,8 +3947,9 @@ containing a value of this type.
         property may be additionally supplied to force new rows to be created when a
         row is full. The rowCount attribute may be used similarly in the vertical case.
         The default is horizontal. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_orientation}.
-          @attr name android:android_orientation
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#orientation}.
+          @attr name android:orientation
         */
         public static final int GridLayout_android_orientation = 0;
         /**
@@ -3941,7 +3965,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:columnCount
+          @attr name net.naonedbus:columnCount
         */
         public static final int GridLayout_columnCount = 3;
         /**
@@ -3960,7 +3984,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:columnOrderPreserved
+          @attr name net.naonedbus:columnOrderPreserved
         */
         public static final int GridLayout_columnOrderPreserved = 6;
         /**
@@ -3976,7 +4000,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:rowCount
+          @attr name net.naonedbus:rowCount
         */
         public static final int GridLayout_rowCount = 2;
         /**
@@ -3995,7 +4019,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:rowOrderPreserved
+          @attr name net.naonedbus:rowOrderPreserved
         */
         public static final int GridLayout_rowOrderPreserved = 5;
         /**
@@ -4014,7 +4038,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:useDefaultMargins
+          @attr name net.naonedbus:useDefaultMargins
         */
         public static final int GridLayout_useDefaultMargins = 4;
         /** Attributes that can be used with a GridLayout_Layout.
@@ -4023,9 +4047,9 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #GridLayout_Layout_android_layout_column net.naonedbus:android_layout_column}</code></td><td> The column boundary delimiting the left of the group of cells
+           <tr><td><code>{@link #GridLayout_Layout_android_layout_column android:layout_column}</code></td><td> The column boundary delimiting the left of the group of cells
         occupied by this view.</td></tr>
-           <tr><td><code>{@link #GridLayout_Layout_android_layout_gravity net.naonedbus:android_layout_gravity}</code></td><td> Gravity specifies how a component should be placed in its group of cells.</td></tr>
+           <tr><td><code>{@link #GridLayout_Layout_android_layout_gravity android:layout_gravity}</code></td><td> Gravity specifies how a component should be placed in its group of cells.</td></tr>
            <tr><td><code>{@link #GridLayout_Layout_layout_columnSpan net.naonedbus:layout_columnSpan}</code></td><td> The column span: the difference between the right and left
         boundaries delimiting the group of cells occupied by this view.</td></tr>
            <tr><td><code>{@link #GridLayout_Layout_layout_row net.naonedbus:layout_row}</code></td><td> The row boundary delimiting the top of the group of cells
@@ -4048,8 +4072,9 @@ containing a value of this type.
           @attr description
            The column boundary delimiting the left of the group of cells
         occupied by this view. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_layout_column}.
-          @attr name android:android_layout_column
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#layout_column}.
+          @attr name android:layout_column
         */
         public static final int GridLayout_Layout_android_layout_column = 1;
         /**
@@ -4058,8 +4083,9 @@ containing a value of this type.
            Gravity specifies how a component should be placed in its group of cells.
         The default is LEFT | BASELINE.
         See {@link android.widget.GridLayout.LayoutParams#setGravity(int)}. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_layout_gravity}.
-          @attr name android:android_layout_gravity
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#layout_gravity}.
+          @attr name android:layout_gravity
         */
         public static final int GridLayout_Layout_android_layout_gravity = 0;
         /**
@@ -4078,7 +4104,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:layout_columnSpan
+          @attr name net.naonedbus:layout_columnSpan
         */
         public static final int GridLayout_Layout_layout_columnSpan = 4;
         /**
@@ -4095,7 +4121,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:layout_row
+          @attr name net.naonedbus:layout_row
         */
         public static final int GridLayout_Layout_layout_row = 2;
         /**
@@ -4114,7 +4140,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:layout_rowSpan
+          @attr name net.naonedbus:layout_rowSpan
         */
         public static final int GridLayout_Layout_layout_rowSpan = 3;
         /** Attributes that can be used with a LinePageIndicator.
@@ -4123,7 +4149,7 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #LinePageIndicator_android_background net.naonedbus:android_background}</code></td><td> View background </td></tr>
+           <tr><td><code>{@link #LinePageIndicator_android_background android:background}</code></td><td> View background </td></tr>
            <tr><td><code>{@link #LinePageIndicator_centered net.naonedbus:centered}</code></td><td> Whether or not the indicators should be centered.</td></tr>
            <tr><td><code>{@link #LinePageIndicator_gapWidth net.naonedbus:gapWidth}</code></td><td> Width of the gap between each indicator line.</td></tr>
            <tr><td><code>{@link #LinePageIndicator_lineWidth net.naonedbus:lineWidth}</code></td><td> Width of each indicator line.</td></tr>
@@ -4147,8 +4173,9 @@ containing a value of this type.
           <p>
           @attr description
            View background 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_background}.
-          @attr name android:android_background
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#background}.
+          @attr name android:background
         */
         public static final int LinePageIndicator_android_background = 0;
         /**
@@ -4164,7 +4191,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:centered
+          @attr name net.naonedbus:centered
         */
         public static final int LinePageIndicator_centered = 1;
         /**
@@ -4182,7 +4209,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:gapWidth
+          @attr name net.naonedbus:gapWidth
         */
         public static final int LinePageIndicator_gapWidth = 6;
         /**
@@ -4200,7 +4227,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:lineWidth
+          @attr name net.naonedbus:lineWidth
         */
         public static final int LinePageIndicator_lineWidth = 5;
         /**
@@ -4217,7 +4244,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:selectedColor
+          @attr name net.naonedbus:selectedColor
         */
         public static final int LinePageIndicator_selectedColor = 2;
         /**
@@ -4235,7 +4262,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:strokeWidth
+          @attr name net.naonedbus:strokeWidth
         */
         public static final int LinePageIndicator_strokeWidth = 3;
         /**
@@ -4252,7 +4279,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:unselectedColor
+          @attr name net.naonedbus:unselectedColor
         */
         public static final int LinePageIndicator_unselectedColor = 4;
         /** Attributes that can be used with a MapAttrs.
@@ -4308,7 +4335,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:cameraBearing
+          @attr name net.naonedbus:cameraBearing
         */
         public static final int MapAttrs_cameraBearing = 1;
         /**
@@ -4322,7 +4349,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:cameraTargetLat
+          @attr name net.naonedbus:cameraTargetLat
         */
         public static final int MapAttrs_cameraTargetLat = 2;
         /**
@@ -4336,7 +4363,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:cameraTargetLng
+          @attr name net.naonedbus:cameraTargetLng
         */
         public static final int MapAttrs_cameraTargetLng = 3;
         /**
@@ -4350,7 +4377,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:cameraTilt
+          @attr name net.naonedbus:cameraTilt
         */
         public static final int MapAttrs_cameraTilt = 4;
         /**
@@ -4364,7 +4391,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:cameraZoom
+          @attr name net.naonedbus:cameraZoom
         */
         public static final int MapAttrs_cameraZoom = 5;
         /**
@@ -4384,7 +4411,7 @@ containing a value of this type.
 <tr><td><code>terrain</code></td><td>3</td><td></td></tr>
 <tr><td><code>hybrid</code></td><td>4</td><td></td></tr>
 </table>
-          @attr name android:mapType
+          @attr name net.naonedbus:mapType
         */
         public static final int MapAttrs_mapType = 0;
         /**
@@ -4398,7 +4425,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:uiCompass
+          @attr name net.naonedbus:uiCompass
         */
         public static final int MapAttrs_uiCompass = 6;
         /**
@@ -4412,7 +4439,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:uiRotateGestures
+          @attr name net.naonedbus:uiRotateGestures
         */
         public static final int MapAttrs_uiRotateGestures = 7;
         /**
@@ -4426,7 +4453,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:uiScrollGestures
+          @attr name net.naonedbus:uiScrollGestures
         */
         public static final int MapAttrs_uiScrollGestures = 8;
         /**
@@ -4440,7 +4467,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:uiTiltGestures
+          @attr name net.naonedbus:uiTiltGestures
         */
         public static final int MapAttrs_uiTiltGestures = 9;
         /**
@@ -4454,7 +4481,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:uiZoomControls
+          @attr name net.naonedbus:uiZoomControls
         */
         public static final int MapAttrs_uiZoomControls = 10;
         /**
@@ -4468,7 +4495,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:uiZoomGestures
+          @attr name net.naonedbus:uiZoomGestures
         */
         public static final int MapAttrs_uiZoomGestures = 11;
         /**
@@ -4482,7 +4509,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:useViewLifecycle
+          @attr name net.naonedbus:useViewLifecycle
         */
         public static final int MapAttrs_useViewLifecycle = 12;
         /**
@@ -4496,7 +4523,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:zOrderOnTop
+          @attr name net.naonedbus:zOrderOnTop
         */
         public static final int MapAttrs_zOrderOnTop = 13;
         /** Attributes that can be used with a PagerSlidingTabStrip.
@@ -4546,7 +4573,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:dividerColor
+          @attr name net.naonedbus:dividerColor
         */
         public static final int PagerSlidingTabStrip_dividerColor = 2;
         /**
@@ -4562,7 +4589,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:dividerPadding
+          @attr name net.naonedbus:dividerPadding
         */
         public static final int PagerSlidingTabStrip_dividerPadding = 5;
         /**
@@ -4577,7 +4604,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:indicatorColor
+          @attr name net.naonedbus:indicatorColor
         */
         public static final int PagerSlidingTabStrip_indicatorColor = 0;
         /**
@@ -4593,7 +4620,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:indicatorHeight
+          @attr name net.naonedbus:indicatorHeight
         */
         public static final int PagerSlidingTabStrip_indicatorHeight = 3;
         /**
@@ -4609,7 +4636,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:scrollOffset
+          @attr name net.naonedbus:scrollOffset
         */
         public static final int PagerSlidingTabStrip_scrollOffset = 7;
         /**
@@ -4623,7 +4650,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:shouldExpand
+          @attr name net.naonedbus:shouldExpand
         */
         public static final int PagerSlidingTabStrip_shouldExpand = 9;
         /**
@@ -4633,7 +4660,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:tabBackground
+          @attr name net.naonedbus:tabBackground
         */
         public static final int PagerSlidingTabStrip_tabBackground = 8;
         /**
@@ -4649,7 +4676,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:tabPaddingLeftRight
+          @attr name net.naonedbus:tabPaddingLeftRight
         */
         public static final int PagerSlidingTabStrip_tabPaddingLeftRight = 6;
         /**
@@ -4663,7 +4690,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:textAllCaps
+          @attr name net.naonedbus:textAllCaps
         */
         public static final int PagerSlidingTabStrip_textAllCaps = 10;
         /**
@@ -4678,7 +4705,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:underlineColor
+          @attr name net.naonedbus:underlineColor
         */
         public static final int PagerSlidingTabStrip_underlineColor = 1;
         /**
@@ -4694,7 +4721,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:underlineHeight
+          @attr name net.naonedbus:underlineHeight
         */
         public static final int PagerSlidingTabStrip_underlineHeight = 4;
         /**  Attributes used to style the Action Bar. 
@@ -4762,7 +4789,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:background
+          @attr name net.naonedbus:background
         */
         public static final int SherlockActionBar_background = 2;
         /**
@@ -4776,7 +4803,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:backgroundSplit
+          @attr name net.naonedbus:backgroundSplit
         */
         public static final int SherlockActionBar_backgroundSplit = 3;
         /**
@@ -4790,7 +4817,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:backgroundStacked
+          @attr name net.naonedbus:backgroundStacked
         */
         public static final int SherlockActionBar_backgroundStacked = 12;
         /**
@@ -4802,7 +4829,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:customNavigationLayout
+          @attr name net.naonedbus:customNavigationLayout
         */
         public static final int SherlockActionBar_customNavigationLayout = 13;
         /**
@@ -4825,7 +4852,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>disableHome</code></td><td>0x20</td><td></td></tr>
 </table>
           <p>This is a private symbol.
-          @attr name android:displayOptions
+          @attr name net.naonedbus:displayOptions
         */
         public static final int SherlockActionBar_displayOptions = 7;
         /**
@@ -4837,7 +4864,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:divider
+          @attr name net.naonedbus:divider
         */
         public static final int SherlockActionBar_divider = 5;
         /**
@@ -4855,7 +4882,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:height
+          @attr name net.naonedbus:height
         */
         public static final int SherlockActionBar_height = 4;
         /**
@@ -4867,7 +4894,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:homeLayout
+          @attr name net.naonedbus:homeLayout
         */
         public static final int SherlockActionBar_homeLayout = 14;
         /**
@@ -4879,7 +4906,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:icon
+          @attr name net.naonedbus:icon
         */
         public static final int SherlockActionBar_icon = 10;
         /**
@@ -4891,7 +4918,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:indeterminateProgressStyle
+          @attr name net.naonedbus:indeterminateProgressStyle
         */
         public static final int SherlockActionBar_indeterminateProgressStyle = 16;
         /**
@@ -4910,7 +4937,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:itemPadding
+          @attr name net.naonedbus:itemPadding
         */
         public static final int SherlockActionBar_itemPadding = 18;
         /**
@@ -4922,7 +4949,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:logo
+          @attr name net.naonedbus:logo
         */
         public static final int SherlockActionBar_logo = 11;
         /**
@@ -4942,7 +4969,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <tr><td><code>tabMode</code></td><td>2</td><td> The action bar will use a series of horizontal tabs for navigation. </td></tr>
 </table>
           <p>This is a private symbol.
-          @attr name android:navigationMode
+          @attr name net.naonedbus:navigationMode
         */
         public static final int SherlockActionBar_navigationMode = 6;
         /**
@@ -4960,7 +4987,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:progressBarPadding
+          @attr name net.naonedbus:progressBarPadding
         */
         public static final int SherlockActionBar_progressBarPadding = 17;
         /**
@@ -4972,7 +4999,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:progressBarStyle
+          @attr name net.naonedbus:progressBarStyle
         */
         public static final int SherlockActionBar_progressBarStyle = 15;
         /**
@@ -4988,7 +5015,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:subtitle
+          @attr name net.naonedbus:subtitle
         */
         public static final int SherlockActionBar_subtitle = 9;
         /**
@@ -5000,7 +5027,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:subtitleTextStyle
+          @attr name net.naonedbus:subtitleTextStyle
         */
         public static final int SherlockActionBar_subtitleTextStyle = 1;
         /**
@@ -5016,7 +5043,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:title
+          @attr name net.naonedbus:title
         */
         public static final int SherlockActionBar_title = 8;
         /**
@@ -5028,7 +5055,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:titleTextStyle
+          @attr name net.naonedbus:titleTextStyle
         */
         public static final int SherlockActionBar_titleTextStyle = 0;
         /** Attributes that can be used with a SherlockActionMenuItemView.
@@ -5037,7 +5064,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockActionMenuItemView_android_minWidth net.naonedbus:android_minWidth}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockActionMenuItemView_android_minWidth android:minWidth}</code></td><td></td></tr>
            </table>
            @see #SherlockActionMenuItemView_android_minWidth
          */
@@ -5045,9 +5072,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x0101013f
         };
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_minWidth}
+          <p>This symbol is the offset where the {@link android.R.attr#minWidth}
           attribute's value can be found in the {@link #SherlockActionMenuItemView} array.
-          @attr name android:android_minWidth
+          @attr name android:minWidth
         */
         public static final int SherlockActionMenuItemView_android_minWidth = 0;
         /** Attributes that can be used with a SherlockActionMode.
@@ -5083,7 +5110,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:background
+          @attr name net.naonedbus:background
         */
         public static final int SherlockActionMode_background = 2;
         /**
@@ -5097,7 +5124,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:backgroundSplit
+          @attr name net.naonedbus:backgroundSplit
         */
         public static final int SherlockActionMode_backgroundSplit = 3;
         /**
@@ -5115,7 +5142,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:height
+          @attr name net.naonedbus:height
         */
         public static final int SherlockActionMode_height = 4;
         /**
@@ -5127,7 +5154,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:subtitleTextStyle
+          @attr name net.naonedbus:subtitleTextStyle
         */
         public static final int SherlockActionMode_subtitleTextStyle = 1;
         /**
@@ -5139,7 +5166,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:titleTextStyle
+          @attr name net.naonedbus:titleTextStyle
         */
         public static final int SherlockActionMode_titleTextStyle = 0;
         /** Attributes that can be used with a SherlockActivityChooserView.
@@ -5148,7 +5175,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockActivityChooserView_android_background net.naonedbus:android_background}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockActivityChooserView_android_background android:background}</code></td><td></td></tr>
            <tr><td><code>{@link #SherlockActivityChooserView_expandActivityOverflowButtonDrawable net.naonedbus:expandActivityOverflowButtonDrawable}</code></td><td> The drawable to show in the button for expanding the activities overflow popup.</td></tr>
            <tr><td><code>{@link #SherlockActivityChooserView_initialActivityCount net.naonedbus:initialActivityCount}</code></td><td> The maximal number of items initially shown in the activity list.</td></tr>
            </table>
@@ -5160,9 +5187,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x010100d4, 0x7f0100b2, 0x7f0100b3
         };
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_background}
+          <p>This symbol is the offset where the {@link android.R.attr#background}
           attribute's value can be found in the {@link #SherlockActivityChooserView} array.
-          @attr name android:android_background
+          @attr name android:background
         */
         public static final int SherlockActivityChooserView_android_background = 0;
         /**
@@ -5179,7 +5206,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:expandActivityOverflowButtonDrawable
+          @attr name net.naonedbus:expandActivityOverflowButtonDrawable
         */
         public static final int SherlockActivityChooserView_expandActivityOverflowButtonDrawable = 2;
         /**
@@ -5195,7 +5222,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:initialActivityCount
+          @attr name net.naonedbus:initialActivityCount
         */
         public static final int SherlockActivityChooserView_initialActivityCount = 1;
         /**  Base attributes that are available to all groups. 
@@ -5204,12 +5231,12 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_checkableBehavior net.naonedbus:android_checkableBehavior}</code></td><td> Whether the items are capable of displaying a check mark.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_enabled net.naonedbus:android_enabled}</code></td><td> Whether the items are enabled.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_id net.naonedbus:android_id}</code></td><td> The ID of the group.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_menuCategory net.naonedbus:android_menuCategory}</code></td><td> The category applied to all items within this group.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_orderInCategory net.naonedbus:android_orderInCategory}</code></td><td> The order within the category applied to all items within this group.</td></tr>
-           <tr><td><code>{@link #SherlockMenuGroup_android_visible net.naonedbus:android_visible}</code></td><td> Whether the items are shown/visible.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_checkableBehavior android:checkableBehavior}</code></td><td> Whether the items are capable of displaying a check mark.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_enabled android:enabled}</code></td><td> Whether the items are enabled.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_id android:id}</code></td><td> The ID of the group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_menuCategory android:menuCategory}</code></td><td> The category applied to all items within this group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_orderInCategory android:orderInCategory}</code></td><td> The order within the category applied to all items within this group.</td></tr>
+           <tr><td><code>{@link #SherlockMenuGroup_android_visible android:visible}</code></td><td> Whether the items are shown/visible.</td></tr>
            </table>
            @see #SherlockMenuGroup_android_checkableBehavior
            @see #SherlockMenuGroup_android_enabled
@@ -5226,24 +5253,27 @@ containing a value of this type.
           <p>
           @attr description
            Whether the items are capable of displaying a check mark. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_checkableBehavior}.
-          @attr name android:android_checkableBehavior
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#checkableBehavior}.
+          @attr name android:checkableBehavior
         */
         public static final int SherlockMenuGroup_android_checkableBehavior = 5;
         /**
           <p>
           @attr description
            Whether the items are enabled. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_enabled}.
-          @attr name android:android_enabled
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#enabled}.
+          @attr name android:enabled
         */
         public static final int SherlockMenuGroup_android_enabled = 0;
         /**
           <p>
           @attr description
            The ID of the group. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_id}.
-          @attr name android:android_id
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#id}.
+          @attr name android:id
         */
         public static final int SherlockMenuGroup_android_id = 1;
         /**
@@ -5251,8 +5281,9 @@ containing a value of this type.
           @attr description
            The category applied to all items within this group.
              (This will be or'ed with the orderInCategory attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_menuCategory}.
-          @attr name android:android_menuCategory
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#menuCategory}.
+          @attr name android:menuCategory
         */
         public static final int SherlockMenuGroup_android_menuCategory = 3;
         /**
@@ -5260,16 +5291,18 @@ containing a value of this type.
           @attr description
            The order within the category applied to all items within this group.
              (This will be or'ed with the category attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_orderInCategory}.
-          @attr name android:android_orderInCategory
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#orderInCategory}.
+          @attr name android:orderInCategory
         */
         public static final int SherlockMenuGroup_android_orderInCategory = 4;
         /**
           <p>
           @attr description
            Whether the items are shown/visible. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_visible}.
-          @attr name android:android_visible
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#visible}.
+          @attr name android:visible
         */
         public static final int SherlockMenuGroup_android_visible = 2;
         /**  Base attributes that are available to all Item objects. 
@@ -5278,26 +5311,26 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_actionLayout net.naonedbus:android_actionLayout}</code></td><td> An optional layout to be used as an action view.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_actionProviderClass net.naonedbus:android_actionProviderClass}</code></td><td> The name of an optional ActionProvider class to instantiate an action view
+           <tr><td><code>{@link #SherlockMenuItem_android_actionLayout android:actionLayout}</code></td><td> An optional layout to be used as an action view.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_actionProviderClass android:actionProviderClass}</code></td><td> The name of an optional ActionProvider class to instantiate an action view
              and perform operations such as default action for that menu item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_actionViewClass net.naonedbus:android_actionViewClass}</code></td><td> The name of an optional View class to instantiate and use as an
+           <tr><td><code>{@link #SherlockMenuItem_android_actionViewClass android:actionViewClass}</code></td><td> The name of an optional View class to instantiate and use as an
              action view.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_alphabeticShortcut net.naonedbus:android_alphabeticShortcut}</code></td><td> The alphabetic shortcut key.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_checkable net.naonedbus:android_checkable}</code></td><td> Whether the item is capable of displaying a check mark.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_checked net.naonedbus:android_checked}</code></td><td> Whether the item is checked.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_enabled net.naonedbus:android_enabled}</code></td><td> Whether the item is enabled.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_icon net.naonedbus:android_icon}</code></td><td> The icon associated with this item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_id net.naonedbus:android_id}</code></td><td> The ID of the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_menuCategory net.naonedbus:android_menuCategory}</code></td><td> The category applied to the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_numericShortcut net.naonedbus:android_numericShortcut}</code></td><td> The numeric shortcut key.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_onClick net.naonedbus:android_onClick}</code></td><td> Name of a method on the Context used to inflate the menu that will be
+           <tr><td><code>{@link #SherlockMenuItem_android_alphabeticShortcut android:alphabeticShortcut}</code></td><td> The alphabetic shortcut key.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_checkable android:checkable}</code></td><td> Whether the item is capable of displaying a check mark.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_checked android:checked}</code></td><td> Whether the item is checked.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_enabled android:enabled}</code></td><td> Whether the item is enabled.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_icon android:icon}</code></td><td> The icon associated with this item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_id android:id}</code></td><td> The ID of the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_menuCategory android:menuCategory}</code></td><td> The category applied to the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_numericShortcut android:numericShortcut}</code></td><td> The numeric shortcut key.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_onClick android:onClick}</code></td><td> Name of a method on the Context used to inflate the menu that will be
              called when the item is clicked.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_orderInCategory net.naonedbus:android_orderInCategory}</code></td><td> The order within the category applied to the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_showAsAction net.naonedbus:android_showAsAction}</code></td><td> How this item should display in the Action Bar, if present.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_title net.naonedbus:android_title}</code></td><td> The title associated with the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_titleCondensed net.naonedbus:android_titleCondensed}</code></td><td> The condensed title associated with the item.</td></tr>
-           <tr><td><code>{@link #SherlockMenuItem_android_visible net.naonedbus:android_visible}</code></td><td> Whether the item is shown/visible.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_orderInCategory android:orderInCategory}</code></td><td> The order within the category applied to the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_showAsAction android:showAsAction}</code></td><td> How this item should display in the Action Bar, if present.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_title android:title}</code></td><td> The title associated with the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_titleCondensed android:titleCondensed}</code></td><td> The condensed title associated with the item.</td></tr>
+           <tr><td><code>{@link #SherlockMenuItem_android_visible android:visible}</code></td><td> Whether the item is shown/visible.</td></tr>
            </table>
            @see #SherlockMenuItem_android_actionLayout
            @see #SherlockMenuItem_android_actionProviderClass
@@ -5330,8 +5363,9 @@ containing a value of this type.
            An optional layout to be used as an action view.
              See {@link android.view.MenuItem#setActionView(android.view.View)}
              for more info. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_actionLayout}.
-          @attr name android:android_actionLayout
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#actionLayout}.
+          @attr name android:actionLayout
         */
         public static final int SherlockMenuItem_android_actionLayout = 14;
         /**
@@ -5341,8 +5375,9 @@ containing a value of this type.
              and perform operations such as default action for that menu item.
              See {@link android.view.MenuItem#setActionProvider(android.view.ActionProvider)}
              for more info. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_actionProviderClass}.
-          @attr name android:android_actionProviderClass
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#actionProviderClass}.
+          @attr name android:actionProviderClass
         */
         public static final int SherlockMenuItem_android_actionProviderClass = 16;
         /**
@@ -5351,8 +5386,9 @@ containing a value of this type.
            The name of an optional View class to instantiate and use as an
              action view. See {@link android.view.MenuItem#setActionView(android.view.View)}
              for more info. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_actionViewClass}.
-          @attr name android:android_actionViewClass
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#actionViewClass}.
+          @attr name android:actionViewClass
         */
         public static final int SherlockMenuItem_android_actionViewClass = 15;
         /**
@@ -5360,16 +5396,18 @@ containing a value of this type.
           @attr description
            The alphabetic shortcut key.  This is the shortcut when using a keyboard
              with alphabetic keys. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_alphabeticShortcut}.
-          @attr name android:android_alphabeticShortcut
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#alphabeticShortcut}.
+          @attr name android:alphabeticShortcut
         */
         public static final int SherlockMenuItem_android_alphabeticShortcut = 9;
         /**
           <p>
           @attr description
            Whether the item is capable of displaying a check mark. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_checkable}.
-          @attr name android:android_checkable
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#checkable}.
+          @attr name android:checkable
         */
         public static final int SherlockMenuItem_android_checkable = 11;
         /**
@@ -5377,16 +5415,18 @@ containing a value of this type.
           @attr description
            Whether the item is checked.  Note that you must first have enabled checking with
              the checkable attribute or else the check mark will not appear. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_checked}.
-          @attr name android:android_checked
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#checked}.
+          @attr name android:checked
         */
         public static final int SherlockMenuItem_android_checked = 3;
         /**
           <p>
           @attr description
            Whether the item is enabled. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_enabled}.
-          @attr name android:android_enabled
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#enabled}.
+          @attr name android:enabled
         */
         public static final int SherlockMenuItem_android_enabled = 1;
         /**
@@ -5394,16 +5434,18 @@ containing a value of this type.
           @attr description
            The icon associated with this item.  This icon will not always be shown, so
              the title should be sufficient in describing this item. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_icon}.
-          @attr name android:android_icon
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#icon}.
+          @attr name android:icon
         */
         public static final int SherlockMenuItem_android_icon = 0;
         /**
           <p>
           @attr description
            The ID of the item. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_id}.
-          @attr name android:android_id
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#id}.
+          @attr name android:id
         */
         public static final int SherlockMenuItem_android_id = 2;
         /**
@@ -5411,8 +5453,9 @@ containing a value of this type.
           @attr description
            The category applied to the item.
              (This will be or'ed with the orderInCategory attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_menuCategory}.
-          @attr name android:android_menuCategory
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#menuCategory}.
+          @attr name android:menuCategory
         */
         public static final int SherlockMenuItem_android_menuCategory = 5;
         /**
@@ -5420,8 +5463,9 @@ containing a value of this type.
           @attr description
            The numeric shortcut key.  This is the shortcut when using a numeric (e.g., 12-key)
              keyboard. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_numericShortcut}.
-          @attr name android:android_numericShortcut
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#numericShortcut}.
+          @attr name android:numericShortcut
         */
         public static final int SherlockMenuItem_android_numericShortcut = 10;
         /**
@@ -5429,8 +5473,9 @@ containing a value of this type.
           @attr description
            Name of a method on the Context used to inflate the menu that will be
              called when the item is clicked. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_onClick}.
-          @attr name android:android_onClick
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#onClick}.
+          @attr name android:onClick
         */
         public static final int SherlockMenuItem_android_onClick = 12;
         /**
@@ -5438,24 +5483,27 @@ containing a value of this type.
           @attr description
            The order within the category applied to the item.
              (This will be or'ed with the category attribute.) 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_orderInCategory}.
-          @attr name android:android_orderInCategory
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#orderInCategory}.
+          @attr name android:orderInCategory
         */
         public static final int SherlockMenuItem_android_orderInCategory = 6;
         /**
           <p>
           @attr description
            How this item should display in the Action Bar, if present. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_showAsAction}.
-          @attr name android:android_showAsAction
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#showAsAction}.
+          @attr name android:showAsAction
         */
         public static final int SherlockMenuItem_android_showAsAction = 13;
         /**
           <p>
           @attr description
            The title associated with the item. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_title}.
-          @attr name android:android_title
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#title}.
+          @attr name android:title
         */
         public static final int SherlockMenuItem_android_title = 7;
         /**
@@ -5463,16 +5511,18 @@ containing a value of this type.
           @attr description
            The condensed title associated with the item.  This is used in situations where the
              normal title may be too long to be displayed. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_titleCondensed}.
-          @attr name android:android_titleCondensed
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#titleCondensed}.
+          @attr name android:titleCondensed
         */
         public static final int SherlockMenuItem_android_titleCondensed = 8;
         /**
           <p>
           @attr description
            Whether the item is shown/visible. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_visible}.
-          @attr name android:android_visible
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#visible}.
+          @attr name android:visible
         */
         public static final int SherlockMenuItem_android_visible = 4;
         /** Attributes that can be used with a SherlockMenuView.
@@ -5514,7 +5564,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:headerBackground
+          @attr name net.naonedbus:headerBackground
         */
         public static final int SherlockMenuView_headerBackground = 3;
         /**
@@ -5526,7 +5576,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:horizontalDivider
+          @attr name net.naonedbus:horizontalDivider
         */
         public static final int SherlockMenuView_horizontalDivider = 1;
         /**
@@ -5540,7 +5590,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:itemBackground
+          @attr name net.naonedbus:itemBackground
         */
         public static final int SherlockMenuView_itemBackground = 4;
         /**
@@ -5556,7 +5606,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:itemIconDisabledAlpha
+          @attr name net.naonedbus:itemIconDisabledAlpha
         */
         public static final int SherlockMenuView_itemIconDisabledAlpha = 6;
         /**
@@ -5568,7 +5618,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:itemTextAppearance
+          @attr name net.naonedbus:itemTextAppearance
         */
         public static final int SherlockMenuView_itemTextAppearance = 0;
         /**
@@ -5584,7 +5634,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:preserveIconSpacing
+          @attr name net.naonedbus:preserveIconSpacing
         */
         public static final int SherlockMenuView_preserveIconSpacing = 7;
         /**
@@ -5596,7 +5646,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:verticalDivider
+          @attr name net.naonedbus:verticalDivider
         */
         public static final int SherlockMenuView_verticalDivider = 2;
         /**
@@ -5608,7 +5658,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:windowAnimationStyle
+          @attr name net.naonedbus:windowAnimationStyle
         */
         public static final int SherlockMenuView_windowAnimationStyle = 5;
         /** Attributes that can be used with a SherlockSearchView.
@@ -5617,9 +5667,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockSearchView_android_imeOptions net.naonedbus:android_imeOptions}</code></td><td> The IME options to set on the query text field.</td></tr>
-           <tr><td><code>{@link #SherlockSearchView_android_inputType net.naonedbus:android_inputType}</code></td><td> The input type to set on the query text field.</td></tr>
-           <tr><td><code>{@link #SherlockSearchView_android_maxWidth net.naonedbus:android_maxWidth}</code></td><td> An optional maximum width of the SearchView.</td></tr>
+           <tr><td><code>{@link #SherlockSearchView_android_imeOptions android:imeOptions}</code></td><td> The IME options to set on the query text field.</td></tr>
+           <tr><td><code>{@link #SherlockSearchView_android_inputType android:inputType}</code></td><td> The input type to set on the query text field.</td></tr>
+           <tr><td><code>{@link #SherlockSearchView_android_maxWidth android:maxWidth}</code></td><td> An optional maximum width of the SearchView.</td></tr>
            <tr><td><code>{@link #SherlockSearchView_iconifiedByDefault net.naonedbus:iconifiedByDefault}</code></td><td> The default state of the SearchView.</td></tr>
            <tr><td><code>{@link #SherlockSearchView_queryHint net.naonedbus:queryHint}</code></td><td> An optional query hint string to be displayed in the empty query field.</td></tr>
            </table>
@@ -5637,24 +5687,27 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>
           @attr description
            The IME options to set on the query text field. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_imeOptions}.
-          @attr name android:android_imeOptions
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#imeOptions}.
+          @attr name android:imeOptions
         */
         public static final int SherlockSearchView_android_imeOptions = 2;
         /**
           <p>
           @attr description
            The input type to set on the query text field. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_inputType}.
-          @attr name android:android_inputType
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#inputType}.
+          @attr name android:inputType
         */
         public static final int SherlockSearchView_android_inputType = 1;
         /**
           <p>
           @attr description
            An optional maximum width of the SearchView. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_maxWidth}.
-          @attr name android:android_maxWidth
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#maxWidth}.
+          @attr name android:maxWidth
         */
         public static final int SherlockSearchView_android_maxWidth = 0;
         /**
@@ -5671,7 +5724,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:iconifiedByDefault
+          @attr name net.naonedbus:iconifiedByDefault
         */
         public static final int SherlockSearchView_iconifiedByDefault = 3;
         /**
@@ -5687,7 +5740,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:queryHint
+          @attr name net.naonedbus:queryHint
         */
         public static final int SherlockSearchView_queryHint = 4;
         /** Attributes that can be used with a SherlockSpinner.
@@ -5696,17 +5749,17 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownHorizontalOffset net.naonedbus:android_dropDownHorizontalOffset}</code></td><td> Horizontal offset from the spinner widget for positioning the dropdown
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownHorizontalOffset android:dropDownHorizontalOffset}</code></td><td> Horizontal offset from the spinner widget for positioning the dropdown
              in spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownSelector net.naonedbus:android_dropDownSelector}</code></td><td> List selector to use for spinnerMode="dropdown" display.</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownVerticalOffset net.naonedbus:android_dropDownVerticalOffset}</code></td><td> Vertical offset from the spinner widget for positioning the dropdown in
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownSelector android:dropDownSelector}</code></td><td> List selector to use for spinnerMode="dropdown" display.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownVerticalOffset android:dropDownVerticalOffset}</code></td><td> Vertical offset from the spinner widget for positioning the dropdown in
              spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_dropDownWidth net.naonedbus:android_dropDownWidth}</code></td><td> Width of the dropdown in spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_gravity net.naonedbus:android_gravity}</code></td><td> Gravity setting for positioning the currently selected item.</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_popupBackground net.naonedbus:android_popupBackground}</code></td><td> Background drawable to use for the dropdown in spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_popupPromptView net.naonedbus:android_popupPromptView}</code></td><td> Reference to a layout to use for displaying a prompt in the dropdown for
+           <tr><td><code>{@link #SherlockSpinner_android_dropDownWidth android:dropDownWidth}</code></td><td> Width of the dropdown in spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_gravity android:gravity}</code></td><td> Gravity setting for positioning the currently selected item.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_popupBackground android:popupBackground}</code></td><td> Background drawable to use for the dropdown in spinnerMode="dropdown".</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_popupPromptView android:popupPromptView}</code></td><td> Reference to a layout to use for displaying a prompt in the dropdown for
              spinnerMode="dropdown".</td></tr>
-           <tr><td><code>{@link #SherlockSpinner_android_prompt net.naonedbus:android_prompt}</code></td><td> The prompt to display when the spinner's dialog is shown.</td></tr>
+           <tr><td><code>{@link #SherlockSpinner_android_prompt android:prompt}</code></td><td> The prompt to display when the spinner's dialog is shown.</td></tr>
            </table>
            @see #SherlockSpinner_android_dropDownHorizontalOffset
            @see #SherlockSpinner_android_dropDownSelector
@@ -5719,23 +5772,25 @@ containing a value of this type.
          */
         public static final int[] SherlockSpinner = {
             0x010100af, 0x01010175, 0x01010176, 0x0101017b,
-            0x01010262, 0x010102ac, 0x010102ad, 0x01010411
+            0x01010262, 0x010102ac, 0x010102ad, 0x0101041f
         };
         /**
           <p>
           @attr description
            Horizontal offset from the spinner widget for positioning the dropdown
              in spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_dropDownHorizontalOffset}.
-          @attr name android:android_dropDownHorizontalOffset
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownHorizontalOffset}.
+          @attr name android:dropDownHorizontalOffset
         */
         public static final int SherlockSpinner_android_dropDownHorizontalOffset = 5;
         /**
           <p>
           @attr description
            List selector to use for spinnerMode="dropdown" display. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_dropDownSelector}.
-          @attr name android:android_dropDownSelector
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownSelector}.
+          @attr name android:dropDownSelector
         */
         public static final int SherlockSpinner_android_dropDownSelector = 1;
         /**
@@ -5743,32 +5798,36 @@ containing a value of this type.
           @attr description
            Vertical offset from the spinner widget for positioning the dropdown in
              spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_dropDownVerticalOffset}.
-          @attr name android:android_dropDownVerticalOffset
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownVerticalOffset}.
+          @attr name android:dropDownVerticalOffset
         */
         public static final int SherlockSpinner_android_dropDownVerticalOffset = 6;
         /**
           <p>
           @attr description
            Width of the dropdown in spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_dropDownWidth}.
-          @attr name android:android_dropDownWidth
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#dropDownWidth}.
+          @attr name android:dropDownWidth
         */
         public static final int SherlockSpinner_android_dropDownWidth = 4;
         /**
           <p>
           @attr description
            Gravity setting for positioning the currently selected item. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_gravity}.
-          @attr name android:android_gravity
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#gravity}.
+          @attr name android:gravity
         */
         public static final int SherlockSpinner_android_gravity = 0;
         /**
           <p>
           @attr description
            Background drawable to use for the dropdown in spinnerMode="dropdown". 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_popupBackground}.
-          @attr name android:android_popupBackground
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#popupBackground}.
+          @attr name android:popupBackground
         */
         public static final int SherlockSpinner_android_popupBackground = 2;
         /**
@@ -5778,15 +5837,16 @@ containing a value of this type.
              spinnerMode="dropdown". This layout must contain a TextView with the id
              @android:id/text1 to be populated with the prompt text. 
           <p>This is a private symbol.
-          @attr name android:android_popupPromptView
+          @attr name android:popupPromptView
         */
         public static final int SherlockSpinner_android_popupPromptView = 7;
         /**
           <p>
           @attr description
            The prompt to display when the spinner's dialog is shown. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_prompt}.
-          @attr name android:android_prompt
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#prompt}.
+          @attr name android:prompt
         */
         public static final int SherlockSpinner_android_prompt = 3;
         /** Attributes that can be used with a SherlockTheme.
@@ -5963,7 +6023,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionBarDivider
+          @attr name net.naonedbus:actionBarDivider
         */
         public static final int SherlockTheme_actionBarDivider = 8;
         /**
@@ -5975,7 +6035,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionBarItemBackground
+          @attr name net.naonedbus:actionBarItemBackground
         */
         public static final int SherlockTheme_actionBarItemBackground = 9;
         /**
@@ -6002,7 +6062,7 @@ containing a value of this type.
 <tr><td><code>wrap_content</code></td><td>0</td><td></td></tr>
 </table>
           <p>This is a private symbol.
-          @attr name android:actionBarSize
+          @attr name net.naonedbus:actionBarSize
         */
         public static final int SherlockTheme_actionBarSize = 7;
         /**
@@ -6017,7 +6077,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionBarSplitStyle
+          @attr name net.naonedbus:actionBarSplitStyle
         */
         public static final int SherlockTheme_actionBarSplitStyle = 5;
         /**
@@ -6029,7 +6089,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionBarStyle
+          @attr name net.naonedbus:actionBarStyle
         */
         public static final int SherlockTheme_actionBarStyle = 4;
         /**
@@ -6039,7 +6099,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionBarTabBarStyle
+          @attr name net.naonedbus:actionBarTabBarStyle
         */
         public static final int SherlockTheme_actionBarTabBarStyle = 1;
         /**
@@ -6051,7 +6111,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionBarTabStyle
+          @attr name net.naonedbus:actionBarTabStyle
         */
         public static final int SherlockTheme_actionBarTabStyle = 0;
         /**
@@ -6061,7 +6121,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionBarTabTextStyle
+          @attr name net.naonedbus:actionBarTabTextStyle
         */
         public static final int SherlockTheme_actionBarTabTextStyle = 2;
         /**
@@ -6079,7 +6139,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionBarWidgetTheme
+          @attr name net.naonedbus:actionBarWidgetTheme
         */
         public static final int SherlockTheme_actionBarWidgetTheme = 6;
         /**
@@ -6089,7 +6149,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionButtonStyle
+          @attr name net.naonedbus:actionButtonStyle
         */
         public static final int SherlockTheme_actionButtonStyle = 52;
         /**
@@ -6099,7 +6159,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionDropDownStyle
+          @attr name net.naonedbus:actionDropDownStyle
         */
         public static final int SherlockTheme_actionDropDownStyle = 51;
         /**
@@ -6112,7 +6172,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionMenuTextAppearance
+          @attr name net.naonedbus:actionMenuTextAppearance
         */
         public static final int SherlockTheme_actionMenuTextAppearance = 10;
         /**
@@ -6126,7 +6186,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionMenuTextColor
+          @attr name net.naonedbus:actionMenuTextColor
         */
         public static final int SherlockTheme_actionMenuTextColor = 11;
         /**
@@ -6138,7 +6198,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionModeBackground
+          @attr name net.naonedbus:actionModeBackground
         */
         public static final int SherlockTheme_actionModeBackground = 14;
         /**
@@ -6148,7 +6208,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionModeCloseButtonStyle
+          @attr name net.naonedbus:actionModeCloseButtonStyle
         */
         public static final int SherlockTheme_actionModeCloseButtonStyle = 13;
         /**
@@ -6160,7 +6220,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionModeCloseDrawable
+          @attr name net.naonedbus:actionModeCloseDrawable
         */
         public static final int SherlockTheme_actionModeCloseDrawable = 16;
         /**
@@ -6172,7 +6232,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionModePopupWindowStyle
+          @attr name net.naonedbus:actionModePopupWindowStyle
         */
         public static final int SherlockTheme_actionModePopupWindowStyle = 18;
         /**
@@ -6184,7 +6244,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionModeShareDrawable
+          @attr name net.naonedbus:actionModeShareDrawable
         */
         public static final int SherlockTheme_actionModeShareDrawable = 17;
         /**
@@ -6196,7 +6256,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:actionModeSplitBackground
+          @attr name net.naonedbus:actionModeSplitBackground
         */
         public static final int SherlockTheme_actionModeSplitBackground = 15;
         /**
@@ -6206,7 +6266,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionModeStyle
+          @attr name net.naonedbus:actionModeStyle
         */
         public static final int SherlockTheme_actionModeStyle = 12;
         /**
@@ -6216,7 +6276,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionOverflowButtonStyle
+          @attr name net.naonedbus:actionOverflowButtonStyle
         */
         public static final int SherlockTheme_actionOverflowButtonStyle = 3;
         /**
@@ -6226,7 +6286,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:actionSpinnerItemStyle
+          @attr name net.naonedbus:actionSpinnerItemStyle
         */
         public static final int SherlockTheme_actionSpinnerItemStyle = 57;
         /**
@@ -6238,7 +6298,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:activatedBackgroundIndicator
+          @attr name net.naonedbus:activatedBackgroundIndicator
         */
         public static final int SherlockTheme_activatedBackgroundIndicator = 65;
         /**
@@ -6250,7 +6310,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:activityChooserViewStyle
+          @attr name net.naonedbus:activityChooserViewStyle
         */
         public static final int SherlockTheme_activityChooserViewStyle = 64;
         /**
@@ -6262,7 +6322,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:buttonStyleSmall
+          @attr name net.naonedbus:buttonStyleSmall
         */
         public static final int SherlockTheme_buttonStyleSmall = 19;
         /**
@@ -6274,7 +6334,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:dividerVertical
+          @attr name net.naonedbus:dividerVertical
         */
         public static final int SherlockTheme_dividerVertical = 50;
         /**
@@ -6284,7 +6344,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:dropDownHintAppearance
+          @attr name net.naonedbus:dropDownHintAppearance
         */
         public static final int SherlockTheme_dropDownHintAppearance = 66;
         /**
@@ -6294,7 +6354,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:dropDownListViewStyle
+          @attr name net.naonedbus:dropDownListViewStyle
         */
         public static final int SherlockTheme_dropDownListViewStyle = 54;
         /**
@@ -6310,7 +6370,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:dropdownListPreferredItemHeight
+          @attr name net.naonedbus:dropdownListPreferredItemHeight
         */
         public static final int SherlockTheme_dropdownListPreferredItemHeight = 56;
         /**
@@ -6320,7 +6380,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:homeAsUpIndicator
+          @attr name net.naonedbus:homeAsUpIndicator
         */
         public static final int SherlockTheme_homeAsUpIndicator = 53;
         /**
@@ -6330,7 +6390,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:listPopupWindowStyle
+          @attr name net.naonedbus:listPopupWindowStyle
         */
         public static final int SherlockTheme_listPopupWindowStyle = 63;
         /**
@@ -6348,7 +6408,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:listPreferredItemHeightSmall
+          @attr name net.naonedbus:listPreferredItemHeightSmall
         */
         public static final int SherlockTheme_listPreferredItemHeightSmall = 44;
         /**
@@ -6366,7 +6426,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:listPreferredItemPaddingLeft
+          @attr name net.naonedbus:listPreferredItemPaddingLeft
         */
         public static final int SherlockTheme_listPreferredItemPaddingLeft = 45;
         /**
@@ -6384,7 +6444,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:listPreferredItemPaddingRight
+          @attr name net.naonedbus:listPreferredItemPaddingRight
         */
         public static final int SherlockTheme_listPreferredItemPaddingRight = 46;
         /**
@@ -6394,7 +6454,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:popupMenuStyle
+          @attr name net.naonedbus:popupMenuStyle
         */
         public static final int SherlockTheme_popupMenuStyle = 55;
         /**
@@ -6406,7 +6466,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchAutoCompleteTextView
+          @attr name net.naonedbus:searchAutoCompleteTextView
         */
         public static final int SherlockTheme_searchAutoCompleteTextView = 30;
         /**
@@ -6418,7 +6478,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchDropdownBackground
+          @attr name net.naonedbus:searchDropdownBackground
         */
         public static final int SherlockTheme_searchDropdownBackground = 31;
         /**
@@ -6436,7 +6496,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:searchResultListItemHeight
+          @attr name net.naonedbus:searchResultListItemHeight
         */
         public static final int SherlockTheme_searchResultListItemHeight = 41;
         /**
@@ -6448,7 +6508,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewCloseIcon
+          @attr name net.naonedbus:searchViewCloseIcon
         */
         public static final int SherlockTheme_searchViewCloseIcon = 32;
         /**
@@ -6460,7 +6520,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewEditQuery
+          @attr name net.naonedbus:searchViewEditQuery
         */
         public static final int SherlockTheme_searchViewEditQuery = 36;
         /**
@@ -6472,7 +6532,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewEditQueryBackground
+          @attr name net.naonedbus:searchViewEditQueryBackground
         */
         public static final int SherlockTheme_searchViewEditQueryBackground = 37;
         /**
@@ -6484,7 +6544,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewGoIcon
+          @attr name net.naonedbus:searchViewGoIcon
         */
         public static final int SherlockTheme_searchViewGoIcon = 33;
         /**
@@ -6496,7 +6556,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewSearchIcon
+          @attr name net.naonedbus:searchViewSearchIcon
         */
         public static final int SherlockTheme_searchViewSearchIcon = 34;
         /**
@@ -6508,7 +6568,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewTextField
+          @attr name net.naonedbus:searchViewTextField
         */
         public static final int SherlockTheme_searchViewTextField = 38;
         /**
@@ -6520,7 +6580,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewTextFieldRight
+          @attr name net.naonedbus:searchViewTextFieldRight
         */
         public static final int SherlockTheme_searchViewTextFieldRight = 39;
         /**
@@ -6532,7 +6592,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:searchViewVoiceIcon
+          @attr name net.naonedbus:searchViewVoiceIcon
         */
         public static final int SherlockTheme_searchViewVoiceIcon = 35;
         /**
@@ -6544,7 +6604,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:selectableItemBackground
+          @attr name net.naonedbus:selectableItemBackground
         */
         public static final int SherlockTheme_selectableItemBackground = 20;
         /**
@@ -6554,7 +6614,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:spinnerDropDownItemStyle
+          @attr name net.naonedbus:spinnerDropDownItemStyle
         */
         public static final int SherlockTheme_spinnerDropDownItemStyle = 29;
         /**
@@ -6564,7 +6624,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name android:spinnerItemStyle
+          @attr name net.naonedbus:spinnerItemStyle
         */
         public static final int SherlockTheme_spinnerItemStyle = 28;
         /**
@@ -6576,7 +6636,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:textAppearanceLargePopupMenu
+          @attr name net.naonedbus:textAppearanceLargePopupMenu
         */
         public static final int SherlockTheme_textAppearanceLargePopupMenu = 22;
         /**
@@ -6588,7 +6648,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:textAppearanceListItemSmall
+          @attr name net.naonedbus:textAppearanceListItemSmall
         */
         public static final int SherlockTheme_textAppearanceListItemSmall = 47;
         /**
@@ -6600,7 +6660,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:textAppearanceSearchResultSubtitle
+          @attr name net.naonedbus:textAppearanceSearchResultSubtitle
         */
         public static final int SherlockTheme_textAppearanceSearchResultSubtitle = 43;
         /**
@@ -6612,7 +6672,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:textAppearanceSearchResultTitle
+          @attr name net.naonedbus:textAppearanceSearchResultTitle
         */
         public static final int SherlockTheme_textAppearanceSearchResultTitle = 42;
         /**
@@ -6624,7 +6684,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:textAppearanceSmall
+          @attr name net.naonedbus:textAppearanceSmall
         */
         public static final int SherlockTheme_textAppearanceSmall = 24;
         /**
@@ -6636,7 +6696,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:textAppearanceSmallPopupMenu
+          @attr name net.naonedbus:textAppearanceSmallPopupMenu
         */
         public static final int SherlockTheme_textAppearanceSmallPopupMenu = 23;
         /**
@@ -6651,7 +6711,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:textColorPrimary
+          @attr name net.naonedbus:textColorPrimary
         */
         public static final int SherlockTheme_textColorPrimary = 25;
         /**
@@ -6666,7 +6726,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:textColorPrimaryDisableOnly
+          @attr name net.naonedbus:textColorPrimaryDisableOnly
         */
         public static final int SherlockTheme_textColorPrimaryDisableOnly = 26;
         /**
@@ -6681,7 +6741,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:textColorPrimaryInverse
+          @attr name net.naonedbus:textColorPrimaryInverse
         */
         public static final int SherlockTheme_textColorPrimaryInverse = 27;
         /**
@@ -6695,7 +6755,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
           <p>This is a private symbol.
-          @attr name android:textColorSearchUrl
+          @attr name net.naonedbus:textColorSearchUrl
         */
         public static final int SherlockTheme_textColorSearchUrl = 40;
         /**
@@ -6709,7 +6769,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:windowActionBar
+          @attr name net.naonedbus:windowActionBar
         */
         public static final int SherlockTheme_windowActionBar = 59;
         /**
@@ -6723,7 +6783,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:windowActionBarOverlay
+          @attr name net.naonedbus:windowActionBarOverlay
         */
         public static final int SherlockTheme_windowActionBarOverlay = 60;
         /**
@@ -6737,7 +6797,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:windowActionModeOverlay
+          @attr name net.naonedbus:windowActionModeOverlay
         */
         public static final int SherlockTheme_windowActionModeOverlay = 61;
         /**
@@ -6750,7 +6810,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:windowContentOverlay
+          @attr name net.naonedbus:windowContentOverlay
         */
         public static final int SherlockTheme_windowContentOverlay = 21;
         /**
@@ -6766,7 +6826,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:windowMinWidthMajor
+          @attr name net.naonedbus:windowMinWidthMajor
         */
         public static final int SherlockTheme_windowMinWidthMajor = 48;
         /**
@@ -6782,7 +6842,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:windowMinWidthMinor
+          @attr name net.naonedbus:windowMinWidthMinor
         */
         public static final int SherlockTheme_windowMinWidthMinor = 49;
         /**
@@ -6796,7 +6856,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:windowNoTitle
+          @attr name net.naonedbus:windowNoTitle
         */
         public static final int SherlockTheme_windowNoTitle = 58;
         /**
@@ -6810,7 +6870,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:windowSplitActionBar
+          @attr name net.naonedbus:windowSplitActionBar
         */
         public static final int SherlockTheme_windowSplitActionBar = 62;
         /** Attributes that can be used with a SherlockView.
@@ -6819,7 +6879,7 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #SherlockView_android_focusable net.naonedbus:android_focusable}</code></td><td></td></tr>
+           <tr><td><code>{@link #SherlockView_android_focusable android:focusable}</code></td><td></td></tr>
            </table>
            @see #SherlockView_android_focusable
          */
@@ -6827,9 +6887,9 @@ containing a value of this type.
             0x010100da
         };
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_focusable}
+          <p>This symbol is the offset where the {@link android.R.attr#focusable}
           attribute's value can be found in the {@link #SherlockView} array.
-          @attr name android:android_focusable
+          @attr name android:focusable
         */
         public static final int SherlockView_android_focusable = 0;
         /** Attributes that can be used with a ShowcaseView.
@@ -6854,7 +6914,7 @@ containing a value of this type.
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          @attr name android:backgroundColor
+          @attr name net.naonedbus:backgroundColor
         */
         public static final int ShowcaseView_backgroundColor = 0;
         /** Attributes that can be used with a TitlePageIndicator.
@@ -6863,9 +6923,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #TitlePageIndicator_android_background net.naonedbus:android_background}</code></td><td> View background </td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_android_textColor net.naonedbus:android_textColor}</code></td><td> Color of regular titles.</td></tr>
-           <tr><td><code>{@link #TitlePageIndicator_android_textSize net.naonedbus:android_textSize}</code></td><td> Size of title text.</td></tr>
+           <tr><td><code>{@link #TitlePageIndicator_android_background android:background}</code></td><td> View background </td></tr>
+           <tr><td><code>{@link #TitlePageIndicator_android_textColor android:textColor}</code></td><td> Color of regular titles.</td></tr>
+           <tr><td><code>{@link #TitlePageIndicator_android_textSize android:textSize}</code></td><td> Size of title text.</td></tr>
            <tr><td><code>{@link #TitlePageIndicator_clipPadding net.naonedbus:clipPadding}</code></td><td> Screen edge padding.</td></tr>
            <tr><td><code>{@link #TitlePageIndicator_footerColor net.naonedbus:footerColor}</code></td><td> Color of the footer line and indicator.</td></tr>
            <tr><td><code>{@link #TitlePageIndicator_footerIndicatorHeight net.naonedbus:footerIndicatorHeight}</code></td><td> Height of the indicator above the footer line.</td></tr>
@@ -6905,24 +6965,27 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>
           @attr description
            View background 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_background}.
-          @attr name android:android_background
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#background}.
+          @attr name android:background
         */
         public static final int TitlePageIndicator_android_background = 2;
         /**
           <p>
           @attr description
            Color of regular titles. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_textColor}.
-          @attr name android:android_textColor
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#textColor}.
+          @attr name android:textColor
         */
         public static final int TitlePageIndicator_android_textColor = 1;
         /**
           <p>
           @attr description
            Size of title text. 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_textSize}.
-          @attr name android:android_textSize
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#textSize}.
+          @attr name android:textSize
         */
         public static final int TitlePageIndicator_android_textSize = 0;
         /**
@@ -6940,7 +7003,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:clipPadding
+          @attr name net.naonedbus:clipPadding
         */
         public static final int TitlePageIndicator_clipPadding = 4;
         /**
@@ -6957,7 +7020,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:footerColor
+          @attr name net.naonedbus:footerColor
         */
         public static final int TitlePageIndicator_footerColor = 5;
         /**
@@ -6975,7 +7038,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:footerIndicatorHeight
+          @attr name net.naonedbus:footerIndicatorHeight
         */
         public static final int TitlePageIndicator_footerIndicatorHeight = 8;
         /**
@@ -6995,7 +7058,7 @@ containing a value of this type.
 <tr><td><code>underline</code></td><td>2</td><td></td></tr>
 </table>
           <p>This is a private symbol.
-          @attr name android:footerIndicatorStyle
+          @attr name net.naonedbus:footerIndicatorStyle
         */
         public static final int TitlePageIndicator_footerIndicatorStyle = 7;
         /**
@@ -7013,7 +7076,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:footerIndicatorUnderlinePadding
+          @attr name net.naonedbus:footerIndicatorUnderlinePadding
         */
         public static final int TitlePageIndicator_footerIndicatorUnderlinePadding = 9;
         /**
@@ -7031,7 +7094,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:footerLineHeight
+          @attr name net.naonedbus:footerLineHeight
         */
         public static final int TitlePageIndicator_footerLineHeight = 6;
         /**
@@ -7049,7 +7112,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:footerPadding
+          @attr name net.naonedbus:footerPadding
         */
         public static final int TitlePageIndicator_footerPadding = 10;
         /**
@@ -7068,7 +7131,7 @@ containing a value of this type.
 <tr><td><code>top</code></td><td>1</td><td></td></tr>
 </table>
           <p>This is a private symbol.
-          @attr name android:linePosition
+          @attr name net.naonedbus:linePosition
         */
         public static final int TitlePageIndicator_linePosition = 11;
         /**
@@ -7084,7 +7147,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:selectedBold
+          @attr name net.naonedbus:selectedBold
         */
         public static final int TitlePageIndicator_selectedBold = 12;
         /**
@@ -7101,7 +7164,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:selectedColor
+          @attr name net.naonedbus:selectedColor
         */
         public static final int TitlePageIndicator_selectedColor = 3;
         /**
@@ -7119,7 +7182,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:titlePadding
+          @attr name net.naonedbus:titlePadding
         */
         public static final int TitlePageIndicator_titlePadding = 13;
         /**
@@ -7137,7 +7200,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:topPadding
+          @attr name net.naonedbus:topPadding
         */
         public static final int TitlePageIndicator_topPadding = 14;
         /** Attributes that can be used with a UnderlinePageIndicator.
@@ -7146,7 +7209,7 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #UnderlinePageIndicator_android_background net.naonedbus:android_background}</code></td><td> View background </td></tr>
+           <tr><td><code>{@link #UnderlinePageIndicator_android_background android:background}</code></td><td> View background </td></tr>
            <tr><td><code>{@link #UnderlinePageIndicator_fadeDelay net.naonedbus:fadeDelay}</code></td><td> Length of the delay to fade the indicator.</td></tr>
            <tr><td><code>{@link #UnderlinePageIndicator_fadeLength net.naonedbus:fadeLength}</code></td><td> Length of the indicator fade to transparent.</td></tr>
            <tr><td><code>{@link #UnderlinePageIndicator_fades net.naonedbus:fades}</code></td><td> Whether or not the selected indicator fades.</td></tr>
@@ -7166,8 +7229,9 @@ containing a value of this type.
           <p>
           @attr description
            View background 
-          <p>This corresponds to the global attribute          resource symbol {@link net.naonedbus.R.attr#android_background}.
-          @attr name android:android_background
+          <p>This corresponds to the global attribute
+          resource symbol {@link android.R.attr#background}.
+          @attr name android:background
         */
         public static final int UnderlinePageIndicator_android_background = 0;
         /**
@@ -7183,7 +7247,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:fadeDelay
+          @attr name net.naonedbus:fadeDelay
         */
         public static final int UnderlinePageIndicator_fadeDelay = 3;
         /**
@@ -7199,7 +7263,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:fadeLength
+          @attr name net.naonedbus:fadeLength
         */
         public static final int UnderlinePageIndicator_fadeLength = 4;
         /**
@@ -7215,7 +7279,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:fades
+          @attr name net.naonedbus:fades
         */
         public static final int UnderlinePageIndicator_fades = 2;
         /**
@@ -7232,7 +7296,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
           <p>This is a private symbol.
-          @attr name android:selectedColor
+          @attr name net.naonedbus:selectedColor
         */
         public static final int UnderlinePageIndicator_selectedColor = 1;
         /**  Give ourselves access to MarginLayout's styleables 
@@ -7241,11 +7305,11 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_margin net.naonedbus:android_layout_margin}</code></td><td></td></tr>
-           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginBottom net.naonedbus:android_layout_marginBottom}</code></td><td></td></tr>
-           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginLeft net.naonedbus:android_layout_marginLeft}</code></td><td></td></tr>
-           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginRight net.naonedbus:android_layout_marginRight}</code></td><td></td></tr>
-           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginTop net.naonedbus:android_layout_marginTop}</code></td><td></td></tr>
+           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_margin android:layout_margin}</code></td><td></td></tr>
+           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginBottom android:layout_marginBottom}</code></td><td></td></tr>
+           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginLeft android:layout_marginLeft}</code></td><td></td></tr>
+           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginRight android:layout_marginRight}</code></td><td></td></tr>
+           <tr><td><code>{@link #ViewGroup_MarginLayout_android_layout_marginTop android:layout_marginTop}</code></td><td></td></tr>
            </table>
            @see #ViewGroup_MarginLayout_android_layout_margin
            @see #ViewGroup_MarginLayout_android_layout_marginBottom
@@ -7258,33 +7322,33 @@ containing a value of this type.
             0x010100fa
         };
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_layout_margin}
+          <p>This symbol is the offset where the {@link android.R.attr#layout_margin}
           attribute's value can be found in the {@link #ViewGroup_MarginLayout} array.
-          @attr name android:android_layout_margin
+          @attr name android:layout_margin
         */
         public static final int ViewGroup_MarginLayout_android_layout_margin = 0;
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_layout_marginBottom}
+          <p>This symbol is the offset where the {@link android.R.attr#layout_marginBottom}
           attribute's value can be found in the {@link #ViewGroup_MarginLayout} array.
-          @attr name android:android_layout_marginBottom
+          @attr name android:layout_marginBottom
         */
         public static final int ViewGroup_MarginLayout_android_layout_marginBottom = 4;
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_layout_marginLeft}
+          <p>This symbol is the offset where the {@link android.R.attr#layout_marginLeft}
           attribute's value can be found in the {@link #ViewGroup_MarginLayout} array.
-          @attr name android:android_layout_marginLeft
+          @attr name android:layout_marginLeft
         */
         public static final int ViewGroup_MarginLayout_android_layout_marginLeft = 1;
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_layout_marginRight}
+          <p>This symbol is the offset where the {@link android.R.attr#layout_marginRight}
           attribute's value can be found in the {@link #ViewGroup_MarginLayout} array.
-          @attr name android:android_layout_marginRight
+          @attr name android:layout_marginRight
         */
         public static final int ViewGroup_MarginLayout_android_layout_marginRight = 3;
         /**
-          <p>This symbol is the offset where the {@link net.naonedbus.R.attr#android_layout_marginTop}
+          <p>This symbol is the offset where the {@link android.R.attr#layout_marginTop}
           attribute's value can be found in the {@link #ViewGroup_MarginLayout} array.
-          @attr name android:android_layout_marginTop
+          @attr name android:layout_marginTop
         */
         public static final int ViewGroup_MarginLayout_android_layout_marginTop = 2;
         /** Attributes that can be used with a ViewPagerIndicator.
@@ -7320,7 +7384,7 @@ containing a value of this type.
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:vpiCirclePageIndicatorStyle
+          @attr name net.naonedbus:vpiCirclePageIndicatorStyle
         */
         public static final int ViewPagerIndicator_vpiCirclePageIndicatorStyle = 0;
         /**
@@ -7332,7 +7396,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:vpiIconPageIndicatorStyle
+          @attr name net.naonedbus:vpiIconPageIndicatorStyle
         */
         public static final int ViewPagerIndicator_vpiIconPageIndicatorStyle = 1;
         /**
@@ -7344,7 +7408,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:vpiLinePageIndicatorStyle
+          @attr name net.naonedbus:vpiLinePageIndicatorStyle
         */
         public static final int ViewPagerIndicator_vpiLinePageIndicatorStyle = 2;
         /**
@@ -7356,7 +7420,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:vpiTabPageIndicatorStyle
+          @attr name net.naonedbus:vpiTabPageIndicatorStyle
         */
         public static final int ViewPagerIndicator_vpiTabPageIndicatorStyle = 4;
         /**
@@ -7368,7 +7432,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:vpiTitlePageIndicatorStyle
+          @attr name net.naonedbus:vpiTitlePageIndicatorStyle
         */
         public static final int ViewPagerIndicator_vpiTitlePageIndicatorStyle = 3;
         /**
@@ -7380,7 +7444,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           <p>This is a private symbol.
-          @attr name android:vpiUnderlinePageIndicatorStyle
+          @attr name net.naonedbus:vpiUnderlinePageIndicatorStyle
         */
         public static final int ViewPagerIndicator_vpiUnderlinePageIndicatorStyle = 5;
     };
