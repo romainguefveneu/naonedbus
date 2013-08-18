@@ -154,7 +154,8 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 			if (mSkipMenuItem != null)
 				mSkipMenuItem.setVisible(true);
 		}
-		mPreviousButton.setEnabled(position > 0);
+		mPreviousButton.setVisibility(position > 0 && position < mTutorialPagerAdapter.getCount() - 1 ? View.VISIBLE
+				: View.GONE);
 	}
 
 	private static class TutorialPagerAdapter extends PagerAdapter {
