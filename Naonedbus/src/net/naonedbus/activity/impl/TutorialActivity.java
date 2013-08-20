@@ -26,7 +26,6 @@ import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -67,18 +66,14 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_simple, R.string.tuto_about_title,
 				R.string.tuto_about_summary, 0));
 
-		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.HONEYCOMB) {
-			mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_menu_title, R.string.tuto_menu_summary,
-					R.drawable.tuto_menu));
-		}
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_favoris_title, R.string.tuto_favoris_summary,
 				R.drawable.tuto_favoris));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_commentaires_title,
-				R.string.tuto_commentaires_summary, R.drawable.tuto_infotrafic));
+				R.string.tuto_commentaires_summary, R.drawable.tuto_infostrafic));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_parkings_title, R.string.tuto_parkings_summary,
 				R.drawable.tuto_parkings));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_mobilite_title, R.string.tuto_mobilite_summary,
-				R.drawable.tuto_mobilite));
+				R.drawable.tuto_bicloos));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_widgets_title, R.string.tuto_widgets_summary,
 				R.drawable.tuto_widgets));
 
