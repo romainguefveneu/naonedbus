@@ -52,7 +52,7 @@ public class PlanFragment extends CustomFragment {
 	public static final String PARAM_CODE_LIGNE = "codeLigne";
 
 	private static final String FILE_EXT = ".png";
-	private static final String URL = "http://naonedbus.romain-guefveneu.net/plans2/{ligne}" + FILE_EXT;
+	private static final String URL = "http://naonedbus.romain-guefveneu.net/plans/{ligne}" + FILE_EXT;
 
 	private GestureImageView mGestureView;
 	private ProgressBar mProgressBar;

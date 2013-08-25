@@ -19,5 +19,6 @@ DROP TABLE IF EXISTS arrets;
 DROP TABLE IF EXISTS typesEquipements;
 DROP TABLE IF EXISTS equipements;
 DROP TABLE IF EXISTS horaires;
-
 DROP TABLE IF EXISTS stations;
+
+DROP VIEW IF EXISTS favorisView;

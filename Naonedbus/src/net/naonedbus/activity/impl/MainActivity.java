@@ -30,13 +30,14 @@ import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.provider.CustomContentProvider;
-import net.naonedbus.provider.DatabaseActionListener;
+import net.naonedbus.provider.DatabaseActionObserver;
 import net.naonedbus.provider.DatabaseVersions;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.service.FavoriService;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -56,7 +57,7 @@ public class MainActivity extends SlidingMenuActivity {
 	private boolean mFirstLaunch;
 	private final MyLocationProvider mMyLocationProvider;
 
-	private final DatabaseActionListener mListener = new DatabaseActionListener() {
+	private final DatabaseActionObserver mListener = new DatabaseActionObserver(new Handler()) {
 
 		@Override
 		public void onUpgrade(final int oldVersion) {
@@ -82,6 +83,11 @@ public class MainActivity extends SlidingMenuActivity {
 					showTutorial();
 				}
 			});
+		}
+
+		@Override
+		public void onUpgradeDone(boolean success) {
+			
 		}
 	};
 
