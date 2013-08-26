@@ -25,11 +25,13 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 
 	private final LayoutInflater mLayoutInflater;
 	private final Typeface mRobotoCondensed;
+	private final Typeface mRobotoMedium;
 
 	public ItineraryWrapperArrayAdapter(final Context context, final List<ItineraryWrapper> objects) {
 		super(context, 0, objects);
 		mLayoutInflater = LayoutInflater.from(context);
 		mRobotoCondensed = FontUtils.getRobotoBoldCondensed(context);
+		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	@Override
@@ -102,6 +104,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 					viewHolder.gridLayout, false);
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
 			textView.setText(l.getLettre());
+			textView.setTypeface(mRobotoMedium);
 			textView.setTextColor(l.getCouleurTexte());
 
 			viewHolder.gridLayout.addView(textView);
@@ -112,9 +115,9 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		if (wrapper.isUnicorn()) {
 			viewHolder.itemTitle.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.unicorn, 0, 0);
 
-			String[] strings = getContext().getResources().getStringArray(R.array.unicorn);
-			Random rand = new Random();
-			int position = rand.nextInt(strings.length);
+			final String[] strings = getContext().getResources().getStringArray(R.array.unicorn);
+			final Random rand = new Random();
+			final int position = rand.nextInt(strings.length);
 			viewHolder.itemTitle.setText(strings[position]);
 		}
 	}

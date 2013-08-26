@@ -19,6 +19,7 @@
 package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParcoursActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Equipement.Type;
@@ -96,13 +97,10 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 					startActivity(intent);
 				} else {
 					// Afficher l'élément sur la carte
-					// final ParamIntent intent = new ParamIntent(getActivity(),
-					// MapActivity.class);
-					// intent.putExtra(MapActivity.Param.itemId,
-					// selectedItemId);
-					// intent.putExtra(MapActivity.Param.itemType,
-					// selectedItemType.getId());
-					// startActivity(intent);
+					final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
+					intent.putExtra(MapFragment.PARAM_ITEM_ID, selectedItemId);
+					intent.putExtra(MapFragment.PARAM_ITEM_TYPE, selectedItemType.getId());
+					startActivity(intent);
 				}
 				getActivity().finish();
 			}
@@ -160,19 +158,19 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		final ParamIntent intent;
+		Intent intent;
 		final CursorWrapper equipement = (CursorWrapper) getListAdapter().getItem(position);
 		final int idType = equipement.getInt(equipement.getColumnIndex(EquipementTable.ID_TYPE));
 
 		if (idType == Type.TYPE_ARRET.getId()) {
-			intent = new ParamIntent(getActivity(), ParcoursActivity.class);
+			intent = new Intent(getActivity(), ParcoursActivity.class);
 			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, (int) id);
 		} else {
-			// intent = new ParamIntent(getActivity(), MapActivity.class);
-			// intent.putExtra(MapActivity.Param.itemId, (int) id);
-			// intent.putExtra(MapActivity.Param.itemType, idType);
+			intent = new Intent(getActivity(), MapActivity.class);
+			intent.putExtra(MapFragment.PARAM_ITEM_ID, id);
+			intent.putExtra(MapFragment.PARAM_ITEM_TYPE, idType);
 		}
-		// startActivity(intent);
+		startActivity(intent);
 	}
 
 	@Override

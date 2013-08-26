@@ -54,6 +54,9 @@ import com.twotoasters.clusterkraf.InputPoint;
 
 public class MapFragment extends SherlockFragment implements MapLoaderCallback, OnSuggestionListener {
 
+	public static final String PARAM_ITEM_ID = "itemId";
+	public static final String PARAM_ITEM_TYPE = "itemType";
+
 	private static String LOG_TAG = "MapFragment";
 	private static boolean DBG = BuildConfig.DEBUG;
 
@@ -77,6 +80,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private EquipementCursorAdapter mSearchAdapter;
 
 	private Equipement mLastSearchedItem;
+	private Integer mParamItemId;
+	private Integer mParamItemType;
 
 	public MapFragment() {
 		mLocationProvider = NBApplication.getLocationProvider();
@@ -87,6 +92,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
 		setHasOptionsMenu(true);
+
+		if (getArguments() != null && getArguments().containsKey(PARAM_ITEM_ID)) {
+			mParamItemId = getArguments().getInt(PARAM_ITEM_ID);
+			mParamItemType = getArguments().getInt(PARAM_ITEM_TYPE);
+			mSelectedTypes.add(Equipement.Type.getTypeById(mParamItemType));
+		}
 	}
 
 	@Override
@@ -117,9 +128,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onDestroyView() {
 		final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-		final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-		ft.remove(fragment);
-		ft.commitAllowingStateLoss();
+		if (fragment != null) {
+			final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+			ft.remove(fragment);
+			ft.commitAllowingStateLoss();
+		}
 		super.onDestroyView();
 	}
 
@@ -282,6 +295,20 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		return null;
 	}
 
+	private InputPoint findInputPoint(final int itemType, final int itemId) {
+		final List<InputPoint> inputPoints = mInputPoints.get(itemType);
+
+		if (inputPoints != null) {
+			for (final InputPoint inputPoint : inputPoints) {
+				final Equipement item = (Equipement) inputPoint.getTag();
+				if (item.getId() == itemId) {
+					return inputPoint;
+				}
+			}
+		}
+		return null;
+	}
+
 	private void loadMarkers() {
 		if (DBG)
 			Log.d(LOG_TAG, "loadMarkers " + mSelectedTypes);
@@ -344,6 +371,14 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			synchronized (mClusterkraf) {
 				mClusterkraf.addAll(result);
 			}
+
+			if (mParamItemType != null && type.getId() == mParamItemType) {
+				final InputPoint inputPoint = findInputPoint(mParamItemType, mParamItemId);
+				if (inputPoint != null) {
+					mClusterkraf.showInfoWindow(inputPoint);
+				}
+			}
+
 		}
 	}
 
