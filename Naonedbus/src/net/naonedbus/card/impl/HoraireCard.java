@@ -21,7 +21,10 @@ package net.naonedbus.card.impl;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
@@ -65,14 +68,6 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	private static final String LOG_TAG = "HoraireCard";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private Arret mArret;
-	private final DateFormat mTimeFormat;
-
-	private final List<TextView> mHoraireViews;
-	private final List<TextView> mDelaiViews;
-
-	private final LayoutInflater mLayoutInflater;
-
 	private final static IntentFilter intentFilter;
 	static {
 		intentFilter = new IntentFilter();
@@ -89,6 +84,16 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		}
 	};
 
+	private Arret mArret;
+	private final DateFormat mTimeFormat;
+
+	private final List<TextView> mHoraireViews;
+	private final List<TextView> mDelaiViews;
+
+	private final TerminusManager mTerminusManager;
+	private final LayoutInflater mLayoutInflater;
+	private ViewGroup mTerminusView;
+
 	public HoraireCard(final Context context, final LoaderManager loaderManager, final Arret arret) {
 		super(context, loaderManager, R.string.card_horaires_title, R.layout.card_horaire);
 
@@ -98,6 +103,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		mHoraireViews = new ArrayList<TextView>();
 		mDelaiViews = new ArrayList<TextView>();
 		mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
+		mTerminusManager = new TerminusManager();
 	}
 
 	@Override
@@ -126,6 +132,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	protected void bindView(final Context context, final View base, final View view) {
+
+		mTerminusView = (ViewGroup) view.findViewById(R.id.terminus);
 
 		mHoraireViews.clear();
 		mDelaiViews.clear();
@@ -252,7 +260,16 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				final Horaire horaire = horaires.get(indexHoraire);
 				final TextView horaireView = mHoraireViews.get(indexView);
 
-				horaireView.setText(FormatUtils.formatTimeAmPm(getContext(), mTimeFormat.format(horaire.getDate())));
+				CharSequence formattedTime = FormatUtils.formatTimeAmPm(getContext(),
+						mTimeFormat.format(horaire.getDate()));
+
+				if (horaire.getTerminus() != null) {
+					final String terminusLetter = mTerminusManager.getTerminusLetter(horaire.getTerminus());
+					formattedTime = formattedTime + terminusLetter;
+					formattedTime = FormatUtils.formatTerminusLetter(getContext(), formattedTime);
+				}
+
+				horaireView.setText(formattedTime);
 
 				if (indexView > 0) {
 					minutes = Minutes.minutesBetween(now,
@@ -273,9 +290,40 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				indexView++;
 			}
 
+			// Add terminus information
+			mTerminusView.removeAllViews();
+			final Map<String, String> terminus = mTerminusManager.getTerminus();
+			for (final Entry<String, String> item : terminus.entrySet()) {
+				final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_terminus,
+						mTerminusView, false);
+				textView.setText(item.getValue() + " : " + item.getKey());
+				mTerminusView.addView(textView);
+			}
+
 			showContent();
 		} else {
 			showMessage(R.string.msg_nothing_horaires);
+		}
+	}
+
+	private class TerminusManager {
+		private final Map<String, String> mLetterMap;
+		private char mCurrentLetter = 'A';
+
+		public TerminusManager() {
+			mLetterMap = new LinkedHashMap<String, String>();
+		}
+
+		public String getTerminusLetter(final String terminus) {
+			if (!mLetterMap.containsKey(terminus)) {
+				mLetterMap.put(terminus, String.valueOf(mCurrentLetter));
+				mCurrentLetter++;
+			}
+			return mLetterMap.get(terminus);
+		}
+
+		public Map<String, String> getTerminus() {
+			return mLetterMap;
 		}
 	}
 

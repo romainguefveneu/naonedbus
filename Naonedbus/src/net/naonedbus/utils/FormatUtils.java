@@ -67,6 +67,13 @@ public abstract class FormatUtils {
 		}
 	}
 
+	public static CharSequence formatTerminusLetter(final Context context, final CharSequence text) {
+		final SpannableString spannable = new SpannableString(text);
+		spannable.setSpan(new RelativeSizeSpan(0.45f), text.length() - 1, text.length(),
+				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return spannable;
+	}
+
 	public static String formatMinutes(final Context context, final long millisecondes) {
 		String delay = "";
 		final int minutes = (int) (millisecondes / 60000);
@@ -133,7 +140,7 @@ public abstract class FormatUtils {
 		return result;
 	}
 
-	public static String formatBicloos(Context context, int availableBikes, int availableStands) {
+	public static String formatBicloos(final Context context, final int availableBikes, final int availableStands) {
 		final String bikes = context.getResources().getQuantityString(R.plurals.bicloo_velos_disponibles,
 				availableBikes, availableBikes);
 		final String stands = context.getResources().getQuantityString(R.plurals.bicloo_places_disponibles,
@@ -145,7 +152,8 @@ public abstract class FormatUtils {
 		return description;
 	}
 
-	public static String formatParkingPublic(Context context, ParkingPublicStatut status, int placesDisponibles) {
+	public static String formatParkingPublic(final Context context, final ParkingPublicStatut status,
+			final int placesDisponibles) {
 		String detail;
 		if (status == ParkingPublicStatut.OUVERT) {
 			if (placesDisponibles > 0) {
