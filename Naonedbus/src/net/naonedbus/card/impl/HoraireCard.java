@@ -231,6 +231,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 			int minutes;
 			int indexView = 0;
 			int indexHoraire = -1;
+			int firstNextHoraireIndex = -1;
 
 			// Gérer le précédent passage si présent
 			DateTime date = new DateTime();
@@ -247,10 +248,12 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				// Pas de précédent
 				indexView = 1;
 				indexHoraire = 0;
+				firstNextHoraireIndex = 0;
 				mHoraireViews.get(0).setVisibility(View.GONE);
 				mDelaiViews.get(0).setVisibility(View.GONE);
 			} else {
 				// Afficher le précédent
+				firstNextHoraireIndex = 1;
 				mHoraireViews.get(0).setVisibility(View.VISIBLE);
 				mDelaiViews.get(0).setVisibility(View.VISIBLE);
 			}
@@ -265,7 +268,11 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 				if (horaire.getTerminus() != null) {
 					final String terminusLetter = mTerminusManager.getTerminusLetter(horaire.getTerminus());
-					formattedTime = formattedTime + terminusLetter;
+					if (indexHoraire > firstNextHoraireIndex) {
+						formattedTime = formattedTime + "\n" + terminusLetter;
+					} else {
+						formattedTime = formattedTime + terminusLetter;
+					}
 					formattedTime = FormatUtils.formatTerminusLetter(getContext(), formattedTime);
 				}
 
@@ -296,7 +303,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 			for (final Entry<String, String> item : terminus.entrySet()) {
 				final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_terminus,
 						mTerminusView, false);
-				textView.setText(item.getValue() + " : " + item.getKey());
+				textView.setText(item.getValue() + " " + item.getKey());
 				mTerminusView.addView(textView);
 			}
 
@@ -308,7 +315,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	private class TerminusManager {
 		private final Map<String, String> mLetterMap;
-		private char mCurrentLetter = 'A';
+		private char mCurrentLetter = 0x278A;
 
 		public TerminusManager() {
 			mLetterMap = new LinkedHashMap<String, String>();

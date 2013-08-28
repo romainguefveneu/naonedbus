@@ -80,6 +80,13 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
+    <style name="CardTerminus" parent="CardHoraire">
+        <item name="android:paddingTop">@dimen/padding_medium</item>
+        <item name="android:paddingBottom">@dimen/padding_tiny</item>
+        <item name="android:paddingLeft">@dimen/padding_small</item>
+        <item name="android:paddingRight">@dimen/padding_small</item>
+    </style>
+
     <style name="ButtonFlat">
         <item name="android:layout_margin">@dimen/padding_small</item>
         <item name="android:padding">@dimen/padding_tiny</item>

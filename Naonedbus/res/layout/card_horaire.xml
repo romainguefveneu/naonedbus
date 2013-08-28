@@ -90,12 +90,11 @@
 
     <LinearLayout
         android:id="@+id/terminus"
-        style="@style/CardDelai"
+        style="@style/CardTerminus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/horaires"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/padding_medium" >
+        android:orientation="vertical" >
     </LinearLayout>
 
 </RelativeLayout>
