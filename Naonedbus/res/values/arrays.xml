@@ -136,6 +136,7 @@
         <item>Guillaume</item>
         <item>Stéphane Péchard</item>
         <item>Jérémy Paul</item>
+        <item>Alex Charrier</item>
     </string-array>
 
     <!-- Traducteurs -->
@@ -143,8 +144,14 @@
         <item>Olivier Raulin</item>
         <item>Alexandre Berthaud</item>
         <item>Pascale Cotinat</item>
+        <item>Daniel Pereira</item>
+        <item>Heinarc</item>
+        <item>Brieuc Roblin</item>
     </string-array>
     <string-array name="translators_urls">
+        <item></item>
+        <item></item>
+        <item></item>
         <item></item>
         <item></item>
         <item></item>

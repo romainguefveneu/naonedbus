@@ -21,8 +21,6 @@
     <string name="format_km">%1$.0f km</string>
     <string name="format_minutes">%d min</string>
     <string name="format_heures">%1$sh%2$s</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
 
     <!-- Preférences -->
     <string name="pref_section_navigation">Navigation</string>
@@ -71,6 +69,7 @@
     <string name="title_activity_infos_trafic">Infos trafic</string>
     <string name="title_activity_carte">Carte</string>
     <string name="title_activity_itineraire">Itinéraires</string>
+    <string name="title_activity_bicloo">Bicloos</string>
     <string name="title_activity_equipements">Mobilité</string>
     <string name="title_activity_parkings">Parkings</string>
     <string name="title_activity_recherche">Recherche</string>
