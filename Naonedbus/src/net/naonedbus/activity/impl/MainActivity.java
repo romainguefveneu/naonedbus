@@ -23,6 +23,7 @@ import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.fragment.header.UpdateFragmentHeader;
+import net.naonedbus.fragment.impl.MapFragment;
 import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.UpdaterManager;
@@ -142,13 +143,10 @@ public class MainActivity extends MenuDrawerActivity {
 					startActivity(intent);
 				} else {
 					// Afficher l'élément sur la carte
-					// final ParamIntent intent = new ParamIntent(this,
-					// MapActivity.class);
-					// intent.putExtra(MapActivity.Param.itemId,
-					// selectedItemId);
-					// intent.putExtra(MapActivity.Param.itemType,
-					// selectedItemType.getId());
-					// startActivity(intent);
+					final Intent intent = new Intent(this, MapActivity.class);
+					intent.putExtra(MapFragment.PARAM_ITEM_ID, selectedItemId);
+					intent.putExtra(MapFragment.PARAM_ITEM_TYPE, selectedItemType.getId());
+					startActivity(intent);
 				}
 			}
 			queryIntent.setAction(null);

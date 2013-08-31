@@ -27,7 +27,9 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretDetailActivity;
 import net.naonedbus.activity.impl.ArretsActivity.OnChangeSens;
 import net.naonedbus.activity.impl.CommentaireActivity;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
@@ -325,10 +327,10 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	}
 
 	private void menuShowMap(final Arret arret) {
-//		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-//		intent.putExtra(MapActivity.Param.itemId, arret.getIdStation());
-//		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
-//		startActivity(intent);
+		final Intent intent = new Intent(getActivity(), MapActivity.class);
+		intent.putExtra(MapFragment.PARAM_ITEM_ID, arret.getIdStation());
+		intent.putExtra(MapFragment.PARAM_ITEM_TYPE, TypeOverlayItem.TYPE_STATION.getId());
+		startActivity(intent);
 	}
 
 	@TargetApi(11)

@@ -22,13 +22,7 @@
 
 <ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/fragmentLoading"
+    style="?android:attr/progressBarStyleLarge"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:indeterminate="true"
-    android:indeterminateOnly="true"
-    android:maxHeight="76dip"
-    android:maxWidth="76dip"
-    android:minHeight="76dip"
-    android:minWidth="76dip"
-    android:orientation="horizontal"
     android:visibility="gone" />

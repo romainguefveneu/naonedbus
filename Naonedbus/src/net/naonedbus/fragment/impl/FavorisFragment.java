@@ -30,7 +30,9 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretDetailActivity;
 import net.naonedbus.activity.impl.GroupesActivity;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.bean.Groupe;
@@ -462,11 +464,11 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	private void menuPlace() {
-//		final Favori item = getFirstSelectedItem();
-//		final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
-//		intent.putExtra(MapActivity.Param.itemId, item.getIdStation());
-//		intent.putExtra(MapActivity.Param.itemType, TypeOverlayItem.TYPE_STATION.getId());
-//		startActivity(intent);
+		final Favori item = getFirstSelectedItem();
+		final Intent intent = new Intent(getActivity(), MapActivity.class);
+		intent.putExtra(MapFragment.PARAM_ITEM_ID, item.getIdStation());
+		intent.putExtra(MapFragment.PARAM_ITEM_TYPE, TypeOverlayItem.TYPE_STATION.getId());
+		startActivity(intent);
 	}
 
 	private void menuShowPlan() {

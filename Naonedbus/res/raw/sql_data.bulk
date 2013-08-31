@@ -1241,7 +1241,7 @@ INSERT INTO lignes(_id, code, lettre, depuis, vers, couleurBack, couleurFront, t
 46;C3;C3;Bd de la Baule/Mie St Herblain;Bd de Doulon/Gare SNCF sud;-478429;-16777216;2
 47;C4;C4;Les Sorinières;Gréneraie;-8934118;-1;2
 48;C5;C5;Quai des Antilles;Gare SNCF Sud;-4858382;-16777216;2
-49;C6;C6;Chantererie / Grandes Ecoles;Hermeland;-4281392;-1;2
+49;C6;C6;Chantrerie - Grandes Ecoles;Hermeland;-4281392;-1;2
 50;C7;C7;Trianon;Souillarderie;-4139131;-16777216;2
 51;E1;E1;Mairie de Couëron;Gare Maritime;-1758408;-1;4
 52;E4;E4;Porte de Vertou;Vertou;-1758408;-1;4
@@ -2376,7 +2376,7 @@ INSERT INTO sens(_id, codeLigne, code, nomSens) VALUES (?, ?, ?, ?);
 96;C5;2;Gare SNCF Sud
 97;C5;1;Quai des Antilles
 98;C6;2;Hermeland
-99;C6;1;Chantererie / Grandes Ecoles
+99;C6;1;Chantrerie - Grandes Ecoles
 100;C7;2;Souillarderie
 101;C7;1;Trianon
 102;E1;2;Gare Maritime
