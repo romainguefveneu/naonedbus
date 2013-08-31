@@ -27,6 +27,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParcoursActivity;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
@@ -204,11 +205,9 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 			intent = new Intent(getActivity(), ParcoursActivity.class);
 			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, equipement.getId());
 		} else {
-			intent = null;
-			// intent = new Intent(getActivity(), MapActivity.class);
-			// intent.putExtra(MapActivity.Param.itemId, equipement.getId());
-			// intent.putExtra(MapActivity.Param.itemType,
-			// equipement.getType().getId());
+			intent = new Intent(getActivity(), MapActivity.class);
+			intent.putExtra(MapFragment.PARAM_ITEM_ID, equipement.getId());
+			intent.putExtra(MapFragment.PARAM_ITEM_TYPE, equipement.getType().getId());
 		}
 		startActivity(intent);
 

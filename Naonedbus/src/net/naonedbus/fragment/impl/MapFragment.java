@@ -10,6 +10,7 @@ import java.util.Set;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.loader.MapLoader;
@@ -22,6 +23,7 @@ import net.naonedbus.map.layer.ParkingMapLayer;
 import net.naonedbus.map.layer.ProxyInfoWindowAdapter;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.CursorWrapper;
@@ -83,6 +85,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private Integer mParamItemId;
 	private Integer mParamItemType;
 
+	private boolean mIsMapActivity;
+
 	public MapFragment() {
 		mLocationProvider = NBApplication.getLocationProvider();
 	}
@@ -98,6 +102,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			mParamItemType = getArguments().getInt(PARAM_ITEM_TYPE);
 			mSelectedTypes.add(Equipement.Type.getTypeById(mParamItemType));
 		}
+	}
+
+	@Override
+	public void onAttach(final Activity activity) {
+		super.onAttach(activity);
+		mIsMapActivity = activity instanceof MapActivity;
 	}
 
 	@Override
@@ -127,11 +137,13 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onDestroyView() {
-		final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
-		if (fragment != null) {
-			final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-			ft.remove(fragment);
-			ft.commitAllowingStateLoss();
+		if (!mIsMapActivity) {
+			final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
+			if (fragment != null) {
+				final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+				ft.remove(fragment);
+				ft.commitAllowingStateLoss();
+			}
 		}
 		super.onDestroyView();
 	}
@@ -241,7 +253,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			infoWindowAdapter.registerMapLayer(Type.TYPE_BICLOO, new BiclooMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Type.TYPE_PARKING, new ParkingMapLayer(inflater));
 
-			mOptions.setPixelDistanceToJoinCluster(80);
+			mOptions.setPixelDistanceToJoinCluster(60);
+			mOptions.setZoomToBoundsPadding(30);
 			mOptions.setMarkerOptionsChooser(markerOptionsChooser);
 			mOptions.setOnInfoWindowClickDownstreamListener(infoWindowAdapter);
 
@@ -295,7 +308,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		return null;
 	}
 
-	private InputPoint findInputPoint(final int itemType, final int itemId) {
+	private InputPoint findInputPoint(final Type itemType, final int itemId) {
 		final List<InputPoint> inputPoints = mInputPoints.get(itemType);
 
 		if (inputPoints != null) {
@@ -373,10 +386,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			}
 
 			if (mParamItemType != null && type.getId() == mParamItemType) {
-				final InputPoint inputPoint = findInputPoint(mParamItemType, mParamItemId);
+				final InputPoint inputPoint = findInputPoint(Type.getTypeById(mParamItemType), mParamItemId);
 				if (inputPoint != null) {
 					mClusterkraf.showInfoWindow(inputPoint);
 				}
+				mParamItemType = null;
+				mParamItemId = null;
 			}
 
 		}
