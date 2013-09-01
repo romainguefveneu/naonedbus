@@ -9,6 +9,8 @@
 -keep public class com.ocpsoft.pretty.time.**
 -keep public class net.naonedbus.**
 -keepclassmembers public class net.naonedbus.**  { public *;}
+-keep public class fr.ybo.opentripplanner.**
+
 
 -keepattributes *Annotation*
 -keep public class com.google.vending.licensing.ILicensingService
