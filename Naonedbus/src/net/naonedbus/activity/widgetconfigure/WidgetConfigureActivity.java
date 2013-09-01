@@ -49,6 +49,10 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
 	private LoadFavoris mLoadFavoris;
 
+	private View mListView;
+	private View mProgress;
+	private View mMessage;
+
 	public WidgetConfigureActivity() {
 
 	}
@@ -56,6 +60,11 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.dialog_widgets_favoris);
+
+		mListView = findViewById(android.R.id.list);
+		mProgress = findViewById(android.R.id.progress);
+		mMessage = findViewById(android.R.id.message);
 
 		// If the user closes window, don't create the widget
 		setResult(RESULT_CANCELED);
@@ -129,13 +138,17 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 		protected FavoriArrayAdapter doInBackground(final Void... params) {
 			final FavoriManager favoriManager = FavoriManager.getInstance();
 			final List<Favori> items = new ArrayList<Favori>();
-			final Context context = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_Acapulco_Light);
+			final Context context = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_Acapulco_Dark);
 			final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, items);
 
 			items.addAll(favoriManager.getFull(context.getContentResolver()));
 
 			if (items.isEmpty()) {
+				mProgress.setVisibility(View.GONE);
+				mMessage.setVisibility(View.VISIBLE);
 			} else {
+				mProgress.setVisibility(View.GONE);
+				mListView.setVisibility(View.VISIBLE);
 				for (final Favori favoriItem : items) {
 					favoriItem.setDelay(""); // Cacher le loader
 				}

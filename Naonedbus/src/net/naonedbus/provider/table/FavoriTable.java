@@ -51,10 +51,11 @@ public interface FavoriTable extends BaseColumns {
 			"st." + EquipementTable.NOM, 
 			"s." + SensTable.NOM,
 			"l." + LigneTable.COULEUR_BACK, 
+			"l." + LigneTable.COULEUR_FRONT, 
 			"l." + LigneTable.LETTRE
 			};
 
 	public static final String FULL_ORDER = "l." + LigneTable.TYPE + ", CAST( f." + FavoriTable.CODE_LIGNE
-			+ " as numeric), f." + FavoriTable.NOM+ ", st." + EquipementTable.NOM;
+			+ " as numeric), f." + FavoriTable.NOM + ", st." + EquipementTable.NOM;
 	//@formatter:on
 }

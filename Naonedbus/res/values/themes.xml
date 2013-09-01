@@ -34,6 +34,16 @@
         <item name="homeAsUpIndicator">@drawable/ic_drawer</item>
     </style>
 
+    <style name="Theme.Acapulco.Dark" parent="@style/Theme.Sherlock">
+        <item name="activityBackground">@android:color/background_dark</item>
+        <item name="primaryColor">@android:color/primary_text_dark</item>
+        <item name="secondaryColor">@android:color/secondary_text_dark</item>
+        <item name="dividerColor">@color/divider_dark</item>
+        <item name="sectionColor">@color/holo_blue_dark</item>
+        <item name="blockBackground">@drawable/block_dark</item>
+        <item name="sectionBackground">@drawable/list_section_underline_dark</item>
+    </style>
+
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="icon">@drawable/ic_icon_actionbar</item>
     </style>
