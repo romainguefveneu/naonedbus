@@ -119,6 +119,9 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 			final Random rand = new Random();
 			final int position = rand.nextInt(strings.length);
 			viewHolder.itemTitle.setText(strings[position]);
+		} else if (wrapper.isError()) {
+			viewHolder.itemTitle.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.warning, 0, 0);
+			viewHolder.itemTitle.setText(R.string.error_title_webservice);
 		}
 	}
 

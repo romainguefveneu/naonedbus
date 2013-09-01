@@ -60,6 +60,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.bugsense.trace.BugSenseHandler;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends AbstractListFragment implements
@@ -167,7 +168,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		mProgressView = view.findViewById(android.R.id.progress);
 
 		mAdapter = new ItineraryWrapperArrayAdapter(getActivity(), mItineraryWrappers);
-		mAnimationAdapter= new SwingBottomInAnimationAdapter(mAdapter);
+		mAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
 		mAnimationAdapter.setListView(listView);
 		listView.setAdapter(mAnimationAdapter);
 
@@ -436,10 +437,13 @@ public class ItineraireFragment extends AbstractListFragment implements
 			} else {
 				mItineraryWrappers.addAll(result.getResult());
 			}
-
-			mAdapter.notifyDataSetChanged();
-			getListView().smoothScrollToPosition(1);
+		} else {
+			mItineraryWrappers.add(ItineraryWrapper.getErrorItinerary());
+			BugSenseHandler.sendExceptionMessage("Erreur de calcul d'itinéraire.", null, result.getException());
 		}
+
+		mAdapter.notifyDataSetChanged();
+		getListView().smoothScrollToPosition(1);
 
 	}
 
