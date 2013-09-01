@@ -20,7 +20,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.naonedbus"
     android:installLocation="auto"
-    android:versionCode="49"
+    android:versionCode="50"
     android:versionName="@string/version" >
 
     <uses-sdk
