@@ -140,19 +140,10 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 			final List<Favori> items = new ArrayList<Favori>();
 			final Context context = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_Acapulco_Dark);
 			final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, items);
-
-			items.addAll(favoriManager.getFull(context.getContentResolver()));
-
-			if (items.isEmpty()) {
-				mProgress.setVisibility(View.GONE);
-				mMessage.setVisibility(View.VISIBLE);
-			} else {
-				mProgress.setVisibility(View.GONE);
-				mListView.setVisibility(View.VISIBLE);
-				for (final Favori favoriItem : items) {
-					favoriItem.setDelay(""); // Cacher le loader
-				}
+			for (final Favori favoriItem : items) {
+				favoriItem.setDelay(""); // Cacher le loader
 			}
+			items.addAll(favoriManager.getFull(context.getContentResolver()));
 
 			return adapter;
 		}
@@ -160,6 +151,15 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 		@Override
 		protected void onPostExecute(final FavoriArrayAdapter result) {
 			super.onPostExecute(result);
+
+			if (result.isEmpty()) {
+				mProgress.setVisibility(View.GONE);
+				mMessage.setVisibility(View.VISIBLE);
+			} else {
+				mProgress.setVisibility(View.GONE);
+				mListView.setVisibility(View.VISIBLE);
+			}
+
 			setListAdapter(result);
 		}
 
