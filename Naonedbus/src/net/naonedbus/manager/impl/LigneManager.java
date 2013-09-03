@@ -58,6 +58,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	private final ConcurrentLinkedQueue<LignesTaskInfo> mLignesTasks;
 	private final Object mLock = new Object();
 	private final Ligne.Builder mBuilder;
+	private boolean mIsIndexed;
 
 	public static synchronized LigneManager getInstance() {
 		if (sInstance == null) {
@@ -112,10 +113,14 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		mColCouleurBack = c.getColumnIndex(LigneTable.COULEUR_BACK);
 		mColCouleurFront = c.getColumnIndex(LigneTable.COULEUR_FRONT);
 		mColType = c.getColumnIndex(LigneTable.TYPE);
+
+		mIsIndexed = true;
 	}
 
 	@Override
 	public Ligne getSingleFromCursor(final Cursor c) {
+		if (!mIsIndexed)
+			onIndexCursor(c);
 		mBuilder.setId(c.getInt(mColId));
 		mBuilder.setCode(c.getString(mColCode));
 		mBuilder.setDepuis(c.getString(mColDepuis));
