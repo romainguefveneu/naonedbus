@@ -19,7 +19,7 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.SettingsFragments;
+import net.naonedbus.fragment.impl.SettingsFragment;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
@@ -33,7 +33,7 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
-		getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsFragments.class.getName());
+		getIntent().putExtra(PreferenceActivity.EXTRA_SHOW_FRAGMENT, SettingsFragment.class.getName());
 		getIntent().putExtra(PreferenceActivity.EXTRA_NO_HEADERS, true);
 
 		setContentView(R.layout.fragment_listview);
