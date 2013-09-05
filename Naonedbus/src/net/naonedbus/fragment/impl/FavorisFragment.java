@@ -465,7 +465,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		}
 
 		adapter.notifyDataSetChanged();
-		getActivity().invalidateOptionsMenu();
+		getSherlockActivity().invalidateOptionsMenu();
 	}
 
 	private void menuPlace() {

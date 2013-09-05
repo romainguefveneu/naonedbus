@@ -97,7 +97,7 @@ public abstract class ViewPagerFragment extends SherlockFragment implements TabL
 			Log.d(LOG_TAG, "onTabSelected " + tab.getPosition());
 
 		mViewPager.setCurrentItem(tab.getPosition());
-		getActivity().invalidateOptionsMenu();
+		getSherlockActivity().invalidateOptionsMenu();
 	}
 
 	@Override

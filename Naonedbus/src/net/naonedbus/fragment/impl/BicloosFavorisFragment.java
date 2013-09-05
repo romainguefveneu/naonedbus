@@ -159,7 +159,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 		}
 
 		adapter.notifyDataSetChanged();
-		getActivity().invalidateOptionsMenu();
+		getSherlockActivity().invalidateOptionsMenu();
 	}
 
 	@Override
