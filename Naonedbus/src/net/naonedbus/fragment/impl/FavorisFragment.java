@@ -139,6 +139,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	private final SharedPreferences mPreferences;
 	private final List<Integer> mSelectedGroupes;
 	private List<Groupe> mGroupes;
+	private LoadHoraires mLoadHoraires;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
 
@@ -347,6 +348,10 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		mStateHelper.setSortType(this, mCurrentSort);
 
 		mLocationProvider.removeListener(this);
+
+		if (mLoadHoraires != null)
+			mLoadHoraires.cancel(true);
+
 		super.onStop();
 	}
 
@@ -685,7 +690,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	 */
 	private void loadHorairesFavoris(final Integer... params) {
 		if (getListAdapter() != null) {
-			new LoadHoraires().execute(params);
+			mLoadHoraires = (LoadHoraires) new LoadHoraires().execute(params);
 		}
 	}
 
