@@ -346,7 +346,7 @@
     <string name="dialog_title_comment_sending_error">Votre message n\'a pas pu être délivré !</string>
     <string name="dialog_content_comment_sending_error">Une erreur s\'est produite pendant l\'envoi du message, merci de réessayer plus tard…</string>
     <string name="dialog_content_key_error">Vérifiez que vous avez la dernière version.</string>
-    <string name="dialog_title_menu_lignes">Ligne %1$s</string>
+    <string name="dialog_title_menu_lignes">Ligne %s</string>
     <string name="dialog_title_favoris_import">Votre clé :</string>
     <string name="dialog_title_groupes">Groupes</string>
     <string name="dialog_title_export">Favoris exportés !</string>

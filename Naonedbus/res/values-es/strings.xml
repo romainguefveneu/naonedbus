@@ -286,7 +286,7 @@
   <string name="dialog_title_comment_sending_error">¡Su mensaje no ha podido ser entregado!</string>
   <string name="dialog_content_comment_sending_error">Se ha producido un error durante el envío del mensaje, por favor intente más tarde...</string>
   <string name="dialog_content_key_error">Asegúrese de que tiene la última versión.</string>
-  <string name="dialog_title_menu_lignes">Línea %1$s</string>
+  <string name="dialog_title_menu_lignes">Línea %s</string>
   <string name="dialog_title_favoris_import">Su clave:</string>
   <string name="dialog_title_groupes">Grupos</string>
   <string name="dialog_title_export">¡Favoritos exportados!</string>
