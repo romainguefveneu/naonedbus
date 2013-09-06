@@ -71,7 +71,9 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 
 		try {
 			final Response response = client.getItineraries(request);
-			result.setResult((response.getPlan() != null) ? wrap(response.getPlan().itineraries) : null);
+			if (response != null && response.getPlan() != null) {
+				result.setResult(wrap(response.getPlan().itineraries));
+			}
 		} catch (final OpenTripPlannerException e) {
 			result.setException(e);
 		}
