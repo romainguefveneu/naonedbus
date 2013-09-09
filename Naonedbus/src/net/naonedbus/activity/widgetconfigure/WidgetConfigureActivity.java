@@ -139,10 +139,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 			final FavoriManager favoriManager = FavoriManager.getInstance();
 			final List<Favori> items = new ArrayList<Favori>();
 			final Context context = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_Acapulco_Dark);
-			final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, items);
-			for (final Favori favoriItem : items) {
-				favoriItem.setDelay(""); // Cacher le loader
-			}
+			final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, items, false);
 			items.addAll(favoriManager.getFull(context.getContentResolver()));
 
 			return adapter;

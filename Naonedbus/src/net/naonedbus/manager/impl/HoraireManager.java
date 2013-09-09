@@ -351,7 +351,9 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			NextHoraireTask task;
 
 			while ((task = mHorairesTasksQueue.poll()) != null) {
-				if (!isInDB(task.getContext().getContentResolver(), task.getArret(), today)) {
+				if (isInDB(task.getContext().getContentResolver(), task.getArret(), today)) {
+					onPostLoad(task);
+				} else {
 					load(task, today);
 				}
 			}

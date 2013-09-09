@@ -81,7 +81,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 	private static PendingIntent sPendingIntent;
 	private static long sNextTimestamp = Long.MAX_VALUE;
-	private static Integer sHoraireViewWidth = Integer.MIN_VALUE;
+	private static Integer sHoraireTextWidth = Integer.MIN_VALUE;
 	private static Object sLock = new Object();
 
 	private final int mLayoutId;
@@ -187,17 +187,18 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		setOnClickListener(context, views, favori);
 
 		try {
-			if (horaireManager.isInDB(context.getContentResolver(), favori, today, mHoraireLimit)) {
+			if (horaireManager.isInDB(context.getContentResolver(), favori, today, mHoraireLimit * 2)) {
+
 				// Les horaires sont en cache
 				final List<Horaire> horaires = horaireManager.getNextHoraires(context.getContentResolver(), favori,
-						today, mHoraireLimit);
+						today, mHoraireLimit * 2);
 				prepareWidgetViewHoraires(context, views, favori, horaires);
 
-				if (DBG)
-					Log.i(LOG_TAG, "getNextHoraires " + mHoraireLimit);
 			} else {
+
 				// Charger les prochains horaires
 				prepareWidgetAndloadHoraires(context, views, favori, appWidgetId);
+
 			}
 		} catch (final IOException e) {
 			if (DBG)
@@ -245,7 +246,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			views.setImageViewBitmap(R.id.widgetHeaderBackground, bitmap);
 		}
 
-		if (favori.getNomArret() == null) {
+		if (favori.getNomFavori() == null) {
 			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
 			views.setTextViewText(R.id.itemDescription, FormatUtils.formatSens(favori.getNomSens()));
 		} else {
@@ -290,18 +291,17 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		CharSequence content = "";
 
 		if (nextHoraires.size() > 0) {
-			int count = 0;
 
 			// Programmer si besoin l'alarme
 			scheduleUpdate(context, nextHoraires.get(0).getTimestamp());
 
-			for (final Horaire horaire : nextHoraires) {
+			for (int i = 0; i <= mHoraireLimit; i++) {
+				final Horaire horaire = nextHoraires.get(i);
 				content = TextUtils.concat(content,
 						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getTimestamp())));
-				if (++count < nextHoraires.size()) {
+				if (i < mHoraireLimit) {
 					content = TextUtils.concat(content, " \u2022 ");
 				}
-
 			}
 
 		} else {
@@ -374,26 +374,28 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private int getHorairesCount(final Context context, final Bundle bundle) {
 		synchronized (sLock) {
-			if (sHoraireViewWidth == Integer.MIN_VALUE) {
-				final TextView horairesView = new TextView(context);
+			if (sHoraireTextWidth == Integer.MIN_VALUE) {
+				final TextView horaireTextView = new TextView(context);
 				final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
 				final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-				horairesView.setText(FormatUtils.formatTimeAmPm(context, timeFormat.format(noon.toDate())) + "__");
+				horaireTextView.setText(FormatUtils.formatTimeAmPm(context, timeFormat.format(noon.toDate()))
+						+ " \u2022  ");
 
 				final int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 				final int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-				horairesView.measure(specX, specY);
+				horaireTextView.measure(specX, specY);
 
-				sHoraireViewWidth = horairesView.getMeasuredWidth();
+				sHoraireTextWidth = horaireTextView.getMeasuredWidth();
 			}
 		}
 
 		final Resources r = context.getResources();
-		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH) - 50;
+		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
+				- r.getDimensionPixelSize(R.dimen.widget_limit);
 
 		final float minWidthPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, minWidth,
 				r.getDisplayMetrics());
 
-		return (int) (minWidthPixel / sHoraireViewWidth);
+		return (int) (minWidthPixel / sHoraireTextWidth);
 	}
 }

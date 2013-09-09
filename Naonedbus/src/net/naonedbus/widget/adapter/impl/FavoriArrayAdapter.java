@@ -38,11 +38,17 @@ import android.widget.TextView;
 public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 
 	private final Typeface mRobotoBold;
+	private final boolean mShowDelay;
 	private SparseBooleanArray mCheckedItemPositions = new SparseBooleanArray();
 
-	public FavoriArrayAdapter(final Context context, final List<Favori> objects) {
+	public FavoriArrayAdapter(final Context context, final List<Favori> objects, final boolean showDelay) {
 		super(context, R.layout.list_item_favori, objects);
+		mShowDelay = showDelay;
 		mRobotoBold = FontUtils.getRobotoBoldCondensed(context);
+	}
+
+	public FavoriArrayAdapter(final Context context, final List<Favori> objects) {
+		this(context, objects, true);
 	}
 
 	@Override
@@ -75,13 +81,17 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 			holder.itemDescription.setText(FormatUtils.formatArretSens(item.getNomArret(), item.getNomSens()));
 		}
 
-		if (item.getDelay() == null) {
-			holder.nextHoraire.setVisibility(View.GONE);
-			holder.progressBar.setVisibility(View.VISIBLE);
-		} else {
+		if (mShowDelay == false) {
 			holder.progressBar.setVisibility(View.GONE);
-			holder.nextHoraire.setText(item.getDelay());
-			holder.nextHoraire.setVisibility(View.VISIBLE);
+		} else {
+			if (item.getDelay() == null) {
+				holder.nextHoraire.setVisibility(View.GONE);
+				holder.progressBar.setVisibility(View.VISIBLE);
+			} else {
+				holder.progressBar.setVisibility(View.GONE);
+				holder.nextHoraire.setText(item.getDelay());
+				holder.nextHoraire.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 

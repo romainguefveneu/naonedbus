@@ -34,7 +34,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_alignBottom="@id/itemDescription"
-            android:layout_alignTop="@id/widgetHeader"
+            android:layout_alignParentTop="true"
             android:scaleType="fitXY" />
 
         <TextView
@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/itemTitle"
             android:layout_toRightOf="@id/itemSymbole"
+            android:alpha="0.8"
             android:paddingRight="@dimen/padding_tiny" />
     </RelativeLayout>
 
