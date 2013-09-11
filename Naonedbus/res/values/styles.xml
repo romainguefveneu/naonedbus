@@ -462,6 +462,14 @@
         <item name="android:padding">0dp</item>
     </style>
 
+    <style name="CardAbout" parent="@style/Card">
+        <item name="android:padding">@dimen/padding_small</item>
+        <item name="android:layout_marginBottom">@dimen/padding_medium</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
     <style name="CardTextHuge">
         <item name="android:textColor">?attr/primaryColor</item>
         <item name="android:textSize">@dimen/horaire_huge</item>
@@ -476,6 +484,11 @@
 
     <style name="CardTitle.Small">
         <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="CardAboutTitle" parent="CardTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
     </style>
 
     <style name="CardTitle.Primary">

@@ -23,11 +23,16 @@
         style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/about_thanks_title" />
+        android:text="@string/about_info_title" />
 
-    <LinearLayout
-        android:id="@id/aboutSectionThanks"
-        style="@style/CardAbout"
-        android:orientation="vertical" />
+    <LinearLayout style="@style/CardAbout" >
+
+        <TextView
+            style="@style/SectionContent"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:linksClickable="true"
+            android:text="@string/about_info_content" />
+    </LinearLayout>
 
 </merge>

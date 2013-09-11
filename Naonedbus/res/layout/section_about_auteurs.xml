@@ -17,76 +17,80 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <TextView
-        style="@style/SectionTitle"
+        style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/about_autors_title" />
 
-    <RelativeLayout
-        android:id="@id/aboutTwitterRomain"
-        style="@style/SectionContentItem"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+    <LinearLayout style="@style/CardAbout" >
 
-        <ImageView
-            android:id="@+id/avatarRomain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dip"
-            android:src="@drawable/romain" />
+        <RelativeLayout
+            android:id="@id/aboutTwitterRomain"
+            style="@style/SectionContentItem"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/titleRomain"
-            style="@style/ItemPrimaryText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/avatarRomain"
-            android:text="@string/about_autors_content_romain" />
+            <ImageView
+                android:id="@+id/avatarRomain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dip"
+                android:src="@drawable/romain" />
 
-        <TextView
-            style="@style/ItemSecondaryText.SingleLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/titleRomain"
-            android:layout_toRightOf="@id/avatarRomain"
-            android:text="@string/about_autors_content_romain_twitter" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/titleRomain"
+                style="@style/ItemPrimaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/avatarRomain"
+                android:text="@string/about_autors_content_romain" />
 
-    <View
-        android:id="@id/headerDivider"
-        style="@style/Divider" />
+            <TextView
+                style="@style/ItemSecondaryText.SingleLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleRomain"
+                android:layout_toRightOf="@id/avatarRomain"
+                android:text="@string/about_autors_content_romain_twitter" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@id/aboutTwitterBenoit"
-        style="@style/SectionContentItem"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        <View
+            android:id="@id/headerDivider"
+            style="@style/Divider" />
 
-        <ImageView
-            android:id="@+id/avatarBenoit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dip"
-            android:src="@drawable/benoit" />
+        <RelativeLayout
+            android:id="@id/aboutTwitterBenoit"
+            style="@style/SectionContentItem"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/titleBenoit"
-            style="@style/ItemPrimaryText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/avatarBenoit"
-            android:text="@string/about_autors_content_benoit" />
+            <ImageView
+                android:id="@+id/avatarBenoit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dip"
+                android:src="@drawable/benoit" />
 
-        <TextView
-            style="@style/ItemSecondaryText.SingleLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/titleBenoit"
-            android:layout_toRightOf="@id/avatarBenoit"
-            android:text="@string/about_autors_content_benoit_twitter" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/titleBenoit"
+                style="@style/ItemPrimaryText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/avatarBenoit"
+                android:text="@string/about_autors_content_benoit" />
+
+            <TextView
+                style="@style/ItemSecondaryText.SingleLine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/titleBenoit"
+                android:layout_toRightOf="@id/avatarBenoit"
+                android:text="@string/about_autors_content_benoit_twitter" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </merge>
