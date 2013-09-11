@@ -24,7 +24,7 @@
 	url = https://github.com/bauerca/drag-sort-listview.git
 [submodule "PagerSlidingTabStrip"]
 	path = PagerSlidingTabStrip
-	url = https://github.com/astuetz/PagerSlidingTabStrip.git
+	url = https://github.com/romainguefveneu/PagerSlidingTabStrip.git
 [submodule "clusterkraf"]
 	path = clusterkraf
-	url=https://github.com/romainguefveneu/clusterkraf.git
+	url = https://github.com/romainguefveneu/clusterkraf.git
