@@ -193,7 +193,7 @@ public abstract class ViewPagerFragment extends SherlockFragment implements TabL
 				Log.d(LOG_TAG, "instantiateItem " + position);
 
 			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
-			fragment.setRetainInstance(true);
+			// fragment.setRetainInstance(true);
 			mFragmentsTags[position] = fragment.getTag();
 			return fragment;
 		}
@@ -203,7 +203,7 @@ public abstract class ViewPagerFragment extends SherlockFragment implements TabL
 			if (DBG)
 				Log.d(LOG_TAG, "getItem " + position);
 			final Fragment fragment = Fragment.instantiate(getActivity(), mClasses[position]);
-			fragment.setRetainInstance(true);
+			// fragment.setRetainInstance(true);
 			return fragment;
 		}
 

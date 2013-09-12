@@ -2,6 +2,8 @@
 Naonedbus/.idea/
 Naonedbus/.settings/
 google-play-services_lib/
+.checkstyle
+build.xml
 
 # built application files
 *.apk

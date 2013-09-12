@@ -1,67 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultActivityContent" >
+    style="@style/DefaultActivityContent"
+    android:paddingTop="@dimen/padding_small" >
 
     <TextView
-        style="@style/SectionTitle"
+        style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/donate_via" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/padding_medium"
-        android:divider="@drawable/divider_vertical"
-        android:dividerPadding="@dimen/padding_small"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/padding_small"
-        android:showDividers="middle" >
+    <LinearLayout style="@style/CardAbout" >
 
-        <ImageView
-            android:id="@id/donatePaypal"
-            style="@style/SectionContentItem"
-            android:layout_width="0dip"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:padding="@dimen/padding_medium"
-            android:src="@drawable/donate_paypal" />
+            android:layout_marginBottom="@dimen/padding_medium"
+            android:divider="@drawable/divider_vertical"
+            android:dividerPadding="@dimen/padding_small"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/padding_small"
+            android:showDividers="middle" >
 
-        <ImageView
-            android:id="@id/donateFlattr"
-            style="@style/SectionContentItem"
-            android:layout_width="0dip"
+            <ImageView
+                android:id="@id/donatePaypal"
+                style="@style/SectionContentItem"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_medium"
+                android:src="@drawable/donate_paypal" />
+
+            <ImageView
+                android:id="@id/donateFlattr"
+                style="@style/SectionContentItem"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_medium"
+                android:src="@drawable/donate_flattr" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@android:id/summary"
+            style="@style/CardText"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:padding="@dimen/padding_medium"
-            android:src="@drawable/donate_flattr" />
+            android:layout_marginBottom="@dimen/padding_medium"
+            android:gravity="center_horizontal"
+            android:text="@string/donate_summary" />
     </LinearLayout>
 
     <TextView
-        android:id="@android:id/summary"
-        style="@style/CardText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/padding_medium"
-        android:gravity="center_horizontal"
-        android:text="@string/donate_summary" />
-
-    <TextView
-        style="@style/SectionTitle"
+        style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/donate_donators_title" />
 
     <ListView
+        style="@style/CardAbout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="false"
         android:entries="@array/donators"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:scrollbarStyle="outsideOverlay" />
 
 </LinearLayout>

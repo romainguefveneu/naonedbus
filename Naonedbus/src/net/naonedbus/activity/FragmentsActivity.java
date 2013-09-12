@@ -128,7 +128,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 		if (DBG)
 			Log.d(LOG_TAG, "addFragments " + titles.length);
 
-		clearFragments();
+		// clearFragments();
 
 		mClasses = classes;
 		mTitles = titles;
@@ -136,15 +136,17 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mViewPager.setOffscreenPageLimit(classes.length);
-
 		mTabs.notifyDataSetChanged();
 	}
 
-	protected void clearFragments() {
+	private void clearFragments() {
 		final FragmentManager fragmentManager = getSupportFragmentManager();
 		final FragmentTransaction transaction = fragmentManager.beginTransaction();
 		for (final String tag : mFragmentsTags) {
-			transaction.remove(fragmentManager.findFragmentByTag(tag));
+			final Fragment fragment = fragmentManager.findFragmentByTag(tag);
+			if (fragment != null) {
+				transaction.remove(fragment);
+			}
 		}
 		transaction.commit();
 	}
@@ -162,7 +164,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 				Log.d(LOG_TAG, "instantiateItem " + position);
 
 			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
-			fragment.setRetainInstance(true);
+			// fragment.setRetainInstance(true);
 			mFragmentsTags[position] = fragment.getTag();
 			return fragment;
 		}
@@ -173,7 +175,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 				Log.d(LOG_TAG, "getItem " + position + " : " + mClasses[position]);
 
 			final Fragment fragment = Fragment.instantiate(FragmentsActivity.this, mClasses[position]);
-			fragment.setRetainInstance(true);
+			// fragment.setRetainInstance(true);
 			return fragment;
 		}
 

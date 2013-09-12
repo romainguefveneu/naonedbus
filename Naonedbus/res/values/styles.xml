@@ -462,7 +462,9 @@
         <item name="android:padding">0dp</item>
     </style>
 
-    <style name="CardAbout" parent="@style/Card">
+    <style name="CardAbout">
+        <item name="android:padding">0dp</item>
+        <item name="android:background">@drawable/block_light</item>
         <item name="android:padding">@dimen/padding_small</item>
         <item name="android:layout_marginBottom">@dimen/padding_medium</item>
         <item name="android:layout_width">match_parent</item>

@@ -94,7 +94,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setRetainInstance(true);
+//		setRetainInstance(true);
 		setHasOptionsMenu(true);
 
 		if (getArguments() != null && getArguments().containsKey(PARAM_ITEM_ID)) {
