@@ -20,7 +20,6 @@ package net.naonedbus.activity.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import net.naonedbus.R;
 import net.naonedbus.utils.FontUtils;
@@ -63,8 +62,8 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 		actionBar.setLogo(R.drawable.ic_logo);
 
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
-		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_simple, R.string.tuto_about_title,
-				R.string.tuto_about_summary, 0));
+		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_about_title,
+				R.string.tuto_about_summary, R.drawable.logo_large));
 
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_favoris_title, R.string.tuto_favoris_summary,
 				R.drawable.tuto_favoris));
@@ -182,14 +181,14 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 			final View layout = mLayoutInflater.inflate(tutorialView.layoutId, null);
 
 			final TextView title = (TextView) layout.findViewById(android.R.id.title);
-			title.setText(mContext.getString(tutorialView.titleResId).toUpperCase(Locale.getDefault()));
+			title.setText(mContext.getString(tutorialView.titleResId));
 			title.setTypeface(mRoboto);
 
 			final TextView summary = (TextView) layout.findViewById(android.R.id.summary);
 			summary.setText(Html.fromHtml(mContext.getString(tutorialView.summaryResId).toString()));
 
-			if (tutorialView.imageResId != 0) {
-				final ImageView icon = (ImageView) layout.findViewById(android.R.id.icon);
+			final ImageView icon = (ImageView) layout.findViewById(android.R.id.icon);
+			if (tutorialView.imageResId != 0 && icon != null) {
 				icon.setImageResource(tutorialView.imageResId);
 			}
 

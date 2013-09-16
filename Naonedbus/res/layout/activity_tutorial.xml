@@ -26,18 +26,15 @@
         android:id="@id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/tutorialButtonBar"
-        android:layout_below="@id/viewPagerIndicator" />
+        android:layout_above="@id/tutorialButtonBar" />
 
-    <com.viewpagerindicator.LinePageIndicator
+    <com.viewpagerindicator.UnderlinePageIndicator
         android:id="@id/viewPagerIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/padding_medium"
-        android:layout_marginTop="@dimen/padding_medium"
-        app:lineWidth="38dip"
-        app:strokeWidth="3dip" />
+        android:layout_width="match_parent"
+        android:layout_height="2dip"
+        android:layout_above="@id/tutorialButtonBar"
+        android:background="#cccccc"
+        app:fades="false" />
 
     <LinearLayout
         android:id="@id/tutorialButtonBar"

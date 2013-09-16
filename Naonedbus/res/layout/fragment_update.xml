@@ -19,7 +19,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -29,6 +29,7 @@
         style="@style/Card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/padding_medium"
         android:orientation="vertical"
         android:padding="@dimen/padding_small" >
@@ -87,11 +88,12 @@
         <ImageButton
             android:id="@+id/nextButton"
             style="@style/ShowcaseButton"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentBottom="false"
             android:layout_alignParentRight="true"
+            android:layout_below="@id/versionNotes"
             android:enabled="false"
             android:src="@drawable/ic_action_done"
             android:visibility="invisible" />
     </RelativeLayout>
 
-</LinearLayout>
+</FrameLayout>

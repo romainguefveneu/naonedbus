@@ -198,30 +198,30 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	public synchronized List<Horaire> getHoraires(final ContentResolver contentResolver, final Arret arret,
 			final DateMidnight date, final DateTime after) throws IOException {
 		// Le cache ne doit stocker que les horaires du jour et du lendemain.
-		final DateMidnight dateMax = new DateMidnight().plusDays(DAYS_IN_CACHE);
-		final DateMidnight currentDay = new DateMidnight();
+		final DateMidnight cacheLimit = new DateMidnight().plusDays(DAYS_IN_CACHE);
+		final DateMidnight today = new DateMidnight();
 		final DateTime now = new DateTime();
 
-		if (date.isBefore(dateMax)) {
+		if (date.isBefore(cacheLimit)) {
 
-			final HoraireToken flag = new HoraireToken(date.getMillis(), arret.getId());
+			final HoraireToken todayToken = new HoraireToken(date.getMillis(), arret.getId());
 			List<Horaire> horaires;
 
-			if (!isInDB(contentResolver, arret, date) && (!emptyHoraires.contains(flag))) {
+			if (!isInDB(contentResolver, arret, date) && (!emptyHoraires.contains(todayToken))) {
 				// Charger les horaires depuis le web et les stocker en base
 
-				if (date.isEqual(currentDay) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
-					// Charger la veille si besoin (pour les horaires passé
+				if (date.isEqual(today) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
+					// Charger la veille si besoin (pour les horaires après
 					// minuit)
-					final HoraireToken previousFlag = new HoraireToken(date.minusDays(1).getMillis(), arret.getId());
-					if (!isInDB(contentResolver, arret, date.minusDays(1)) && (!emptyHoraires.contains(previousFlag))) {
+					final HoraireToken yesterdayToken = new HoraireToken(date.minusDays(1).getMillis(), arret.getId());
+					if (!isInDB(contentResolver, arret, date.minusDays(1)) && (!emptyHoraires.contains(yesterdayToken))) {
 						horaires = mController.getAllFromWeb(arret, date.minusDays(1));
-						fillDB(contentResolver, arret, previousFlag, horaires);
+						fillDB(contentResolver, arret, yesterdayToken, horaires);
 					}
 				}
 
 				horaires = mController.getAllFromWeb(arret, date);
-				fillDB(contentResolver, arret, flag, horaires);
+				fillDB(contentResolver, arret, todayToken, horaires);
 
 			}
 

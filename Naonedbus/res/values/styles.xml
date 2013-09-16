@@ -406,7 +406,13 @@
         <item name="android:padding">8dip</item>
     </style>
 
-    <style name="TutorialTitle" parent="@style/BigTitle.Blue">
+    <style name="TutorialTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/bigtitle_text_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/holo_blue_light</item>
+        <item name="android:ellipsize">marquee</item>
         <item name="android:textSize">28sp</item>
         <item name="android:lines">2</item>
         <item name="android:layout_marginBottom">8dip</item>

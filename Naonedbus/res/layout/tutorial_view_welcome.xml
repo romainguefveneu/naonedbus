@@ -17,42 +17,33 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center" >
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/padding_small"
+    android:paddingLeft="@dimen/padding_medium"
+    android:paddingRight="@dimen/padding_medium"
+    android:paddingTop="@dimen/padding_small" >
 
-    <ImageView
-        android:id="@android:id/icon"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@android:id/title"
+        style="@style/TutorialTitle"
+        android:text="@android:string/untitled" />
+
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/padding_small"
-        android:layout_marginRight="@dimen/padding_large"
-        android:src="@drawable/logo_large" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@android:id/icon"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@android:id/title"
-            style="@style/TutorialTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="@android:string/untitled" />
+        android:layout_marginTop="@dimen/padding_medium" >
 
         <TextView
             android:id="@android:id/summary"
             style="@style/TutorialSummary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
+            android:drawablePadding="@dimen/padding_small"
+            android:drawableTop="@drawable/logo_large"
             android:text="@android:string/untitled" />
-    </LinearLayout>
+    </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>
