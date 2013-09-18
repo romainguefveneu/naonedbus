@@ -1,13 +1,14 @@
 package net.naonedbus.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 
-public class ItineraryWrapper implements Serializable {
-
-	private static final long serialVersionUID = 5387553827665311443L;
+public class ItineraryWrapper implements Serializable, Parcelable {
 
 	private final Itinerary mItinerary;
 	private String mTime;
@@ -18,18 +19,18 @@ public class ItineraryWrapper implements Serializable {
 	private transient List<Ligne> mLignes;
 
 	public static ItineraryWrapper getEmptyItinerary() {
-		return new ItineraryWrapper(null);
+		return new ItineraryWrapper((Itinerary) null);
 	}
 
 	public static ItineraryWrapper getErrorItinerary() {
-		final ItineraryWrapper wrapper = new ItineraryWrapper(null);
+		final ItineraryWrapper wrapper = new ItineraryWrapper((Itinerary) null);
 		wrapper.mIsError = true;
 
 		return wrapper;
 	}
 
 	public static ItineraryWrapper getUnicornItinerary() {
-		final ItineraryWrapper wrapper = new ItineraryWrapper(null);
+		final ItineraryWrapper wrapper = new ItineraryWrapper((Itinerary) null);
 		wrapper.mIsUnicorn = true;
 
 		return wrapper;
@@ -37,6 +38,17 @@ public class ItineraryWrapper implements Serializable {
 
 	public ItineraryWrapper(final Itinerary itinerary) {
 		mItinerary = itinerary;
+	}
+
+	private ItineraryWrapper(final Parcel in) {
+		mItinerary = (Itinerary) in.readSerializable();
+		mTime = in.readString();
+		mDate = in.readString();
+		mWalkTime = in.readString();
+		mIsUnicorn = in.readInt() == 1;
+		mIsError = in.readInt() == 1;
+		mLignes = new ArrayList<Ligne>();
+		in.readTypedList(mLignes, Ligne.CREATOR);
 	}
 
 	public String getTime() {
@@ -83,4 +95,31 @@ public class ItineraryWrapper implements Serializable {
 		return mIsError;
 	}
 
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
+		dest.writeSerializable(mItinerary);
+		dest.writeString(mTime);
+		dest.writeString(mDate);
+		dest.writeString(mWalkTime);
+		dest.writeInt(mIsUnicorn ? 1 : 0);
+		dest.writeInt(mIsError ? 1 : 0);
+		dest.writeTypedList(mLignes);
+	}
+
+	public static final Parcelable.Creator<ItineraryWrapper> CREATOR = new Parcelable.Creator<ItineraryWrapper>() {
+		@Override
+		public ItineraryWrapper createFromParcel(final Parcel in) {
+			return new ItineraryWrapper(in);
+		}
+
+		@Override
+		public ItineraryWrapper[] newArray(final int size) {
+			return new ItineraryWrapper[size];
+		}
+	};
 }

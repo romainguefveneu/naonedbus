@@ -16,22 +16,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.view.View;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
 
 public class ItineraryDetailFragment extends CustomListFragment {
 
 	public static final String PARAM_ITINERARY_WRAPPER = "itineraryWrapper";
-	public static final String PARAM_FROM_PLACE = "fromPlace";
-	public static final String PARAM_TO_PLACE = "toPlace";
 
 	private ItineraryWrapper mItineraryWrapper;
 	private Itinerary mItinerary;
-	private String mFromPlace;
-	private String mToPlace;
 
 	public ItineraryDetailFragment() {
 		super(R.layout.fragment_itineraire_detail);
@@ -44,8 +38,6 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		final Bundle arguments = getArguments();
 		mItineraryWrapper = (ItineraryWrapper) arguments.getSerializable(PARAM_ITINERARY_WRAPPER);
 		mItinerary = mItineraryWrapper.getItinerary();
-		mFromPlace = arguments.getString(PARAM_FROM_PLACE);
-		mToPlace = arguments.getString(PARAM_TO_PLACE);
 
 	}
 
@@ -54,22 +46,6 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		super.onActivityCreated(savedInstanceState);
 		getListView().setDivider(null);
 		getListView().setDividerHeight(0);
-
-		getActivity().setTitle(mItineraryWrapper.getTime());
-	}
-
-	@Override
-	protected void bindView(final View view, final Bundle savedInstanceState) {
-		super.bindView(view, savedInstanceState);
-
-		final TextView fromPlace = (TextView) view.findViewById(R.id.fromPlace);
-		final TextView toPlace = (TextView) view.findViewById(R.id.toPlace);
-		final TextView itemDate = (TextView) view.findViewById(R.id.itemDate);
-
-		fromPlace.setText(mFromPlace);
-		toPlace.setText(mToPlace);
-
-		itemDate.setText(mItineraryWrapper.getDate());
 	}
 
 	@Override

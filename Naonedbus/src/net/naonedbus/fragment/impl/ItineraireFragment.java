@@ -151,15 +151,26 @@ public class ItineraireFragment extends AbstractListFragment implements
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 
-		final ItineraryWrapper wrapper = (ItineraryWrapper) getListView().getItemAtPosition(position);
 		final Bundle bundle = new Bundle();
-		bundle.putSerializable(ItineraryDetailFragment.PARAM_ITINERARY_WRAPPER, wrapper);
-		bundle.putString(ItineraryDetailFragment.PARAM_FROM_PLACE, mFromAddressTextView.getText().toString());
-		bundle.putString(ItineraryDetailFragment.PARAM_TO_PLACE, mToAddressTextView.getText().toString());
+		bundle.putParcelableArrayList(ItineraryDetailActivity.PARAM_ITINERARIES, new ArrayList<ItineraryWrapper>(
+				mItineraryWrappers));
+		bundle.putString(ItineraryDetailActivity.PARAM_FROM_PLACE, mFromAddressTextView.getText().toString());
+		bundle.putString(ItineraryDetailActivity.PARAM_TO_PLACE, mToAddressTextView.getText().toString());
+		bundle.putString(ItineraryDetailActivity.PARAM_DATE, mDateAndTimeLabel.getText().toString());
+
+		bundle.putInt(ItineraryDetailActivity.PARAM_SELECTED_INDEX, position);
+
+		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_FROM_COLOR, mIconFromColor);
+		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_FROM_RES, mIconFromResId);
+		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_TO_COLOR, mIconToColor);
+		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_TO_RES, mIconToResId);
 
 		final Intent intent = new Intent(getActivity(), ItineraryDetailActivity.class);
 		intent.putExtra(ItineraryDetailActivity.PARAM_BUNDLE, bundle);
+
 		getActivity().startActivity(intent);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 	}
 
 	@Override

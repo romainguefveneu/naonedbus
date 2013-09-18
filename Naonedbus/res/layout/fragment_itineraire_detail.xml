@@ -19,22 +19,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
 
-    <include
-        android:id="@id/headerView"
-        layout="@layout/itineraire_header" />
-
-    <ListView
-        android:id="@android:id/list"
-        style="@style/Listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/headerView"
-        android:clipToPadding="false"
-        android:paddingTop="@dimen/padding_small" />
-
-</RelativeLayout>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/list"
+    style="@style/Listview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/headerView"
+    android:clipToPadding="false"
+    android:paddingTop="@dimen/padding_small" />

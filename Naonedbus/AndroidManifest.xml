@@ -126,7 +126,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activity.impl.ItineraryDetailActivity"
-            android:label="@string/emptyString" />
+            android:label="@string/title_activity_itineraire" />
         <activity
             android:name=".activity.impl.ParcoursActivity"
             android:label="@string/emptyString" />
