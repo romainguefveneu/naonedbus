@@ -310,7 +310,8 @@
   <string name="itinerary_kind_departure">Salida</string>
   <string name="itinerary_date">Fecha</string>
   <string name="itinerary_time">Hora</string>
-  <string name="itinerary_go_to">Aller à %s</string>
+  <string name="itinerary_go_to">Vaya à %s</string>
+  <string name="itinerary_get_off">Bajar en %s</string>
   <plurals name="parking_places_disponibles">
     <item quantity="one">Queda un sitio libre, ¡dése prisa!</item>
     <item quantity="other">%d sitios libres</item>

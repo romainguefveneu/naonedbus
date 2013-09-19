@@ -40,6 +40,12 @@ public abstract class FormatUtils {
 		return SENS_ARROW + " " + sens;
 	}
 
+	public static String formatLigneArretSens(final Context context, final String ligne, final String arret,
+			final String sens) {
+		return context.getString(R.string.dialog_title_menu_lignes, ligne) + " " + DOT + " " + arret + " " + SENS_ARROW
+				+ " " + sens;
+	}
+
 	public static String formatArretSens(final String arret, final String sens) {
 		return arret + " " + SENS_ARROW + " " + sens;
 	}

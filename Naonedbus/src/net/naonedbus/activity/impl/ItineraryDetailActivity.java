@@ -37,6 +37,9 @@ public class ItineraryDetailActivity extends SherlockFragmentActivity {
 	private ViewPager mViewPager;
 	private PagerSlidingTabStrip mPagerSlidingTabStrip;
 
+	private String mFrom;
+	private String mTo;
+
 	private int mIconPadding;
 
 	@Override
@@ -54,6 +57,9 @@ public class ItineraryDetailActivity extends SherlockFragmentActivity {
 
 		final Bundle bundle = getIntent().getBundleExtra(PARAM_BUNDLE);
 
+		mFrom = bundle.getString(PARAM_FROM_PLACE);
+		mTo = bundle.getString(PARAM_TO_PLACE);
+
 		final List<ItineraryWrapper> wrappers = bundle.getParcelableArrayList(PARAM_ITINERARIES);
 		final int selected = bundle.getInt(PARAM_SELECTED_INDEX);
 
@@ -61,8 +67,8 @@ public class ItineraryDetailActivity extends SherlockFragmentActivity {
 		final TextView toPlace = (TextView) findViewById(R.id.toPlace);
 		final TextView date = (TextView) findViewById(R.id.itemDate);
 
-		fromPlace.setText(bundle.getString(PARAM_FROM_PLACE));
-		toPlace.setText(bundle.getString(PARAM_TO_PLACE));
+		fromPlace.setText(mFrom);
+		toPlace.setText(mTo);
 		date.setText(bundle.getString(PARAM_DATE));
 
 		final int iconFromResId = bundle.getInt(PARAM_ICON_FROM_RES);
@@ -116,6 +122,8 @@ public class ItineraryDetailActivity extends SherlockFragmentActivity {
 
 			final Bundle bundle = new Bundle();
 			bundle.putParcelable(ItineraryDetailFragment.PARAM_ITINERARY_WRAPPER, mWrappers.get(position));
+			bundle.putString(ItineraryDetailFragment.PARAM_ITINERARY_FROM, mFrom);
+			bundle.putString(ItineraryDetailFragment.PARAM_ITINERARY_TO, mTo);
 
 			final Fragment fragment = Fragment.instantiate(ItineraryDetailActivity.this,
 					ItineraryDetailFragment.class.getName(), bundle);

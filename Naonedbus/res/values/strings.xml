@@ -312,6 +312,7 @@
   <string name="itinerary_date">Date</string>
   <string name="itinerary_time">Time</string>
   <string name="itinerary_go_to">Go to %s</string>
+  <string name="itinerary_get_off">Get off at %s</string>
   <plurals name="parking_places_disponibles">
     <item quantity="one">1 space left, hurry !</item>
     <item quantity="other">%d spaces left</item>

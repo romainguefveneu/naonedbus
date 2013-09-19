@@ -73,20 +73,21 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 			viewHolder.fromDirection.setVisibility(View.VISIBLE);
 
 			viewHolder.fromPlace.setText(getContext().getString(R.string.itinerary_go_to, to.name));
+			viewHolder.toPlace.setText(to.name);
 			viewHolder.fromDirection.setText(FormatUtils.formatWithDot(legWrapper.getTime(), legWrapper.getDistance()));
-
 		} else if (ligne != null) {
 			viewHolder.itemIcon.setVisibility(View.GONE);
 			viewHolder.itemSymbole.setVisibility(View.VISIBLE);
 			viewHolder.fromDirection.setVisibility(View.GONE);
 
 			viewHolder.fromPlace.setText(FormatUtils.formatSens(leg.headsign));
+			viewHolder.toPlace.setText(getContext().getString(R.string.itinerary_get_off, to.name));
+
 			viewHolder.itemSymbole.setText(ligne.getLettre());
 			viewHolder.itemSymbole.setTextColor(ligne.getCouleurTexte());
 			viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
 		}
 
-		viewHolder.toPlace.setText(to.name);
 		viewHolder.fromTime.setText(legWrapper.getFromTime());
 		viewHolder.toTime.setText(legWrapper.getToTime());
 
