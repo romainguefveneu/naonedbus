@@ -463,4 +463,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	}
 
+	private void showItinerary(final ItineraryWrapper wrapper) {
+
+	}
 }

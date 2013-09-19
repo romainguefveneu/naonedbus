@@ -43,6 +43,7 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.HoraireArrayAdapter;
 import net.naonedbus.widget.indexer.impl.HoraireIndexer;
 
@@ -51,6 +52,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Minutes;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
@@ -59,6 +61,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.View;
@@ -179,19 +183,35 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		super.onDestroy();
 	}
 
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
 	public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 		final Horaire horaire = (Horaire) getListView().getItemAtPosition(position);
 
-		final ParamIntent intent = new ParamIntent(getActivity(), AddEventActivity.class);
-		intent.putExtra(AddEventActivity.PARAM_LIGNE, mLigne);
-		intent.putExtra(AddEventActivity.PARAM_SENS, mSens);
-		intent.putExtra(AddEventActivity.PARAM_ARRET, mArret);
-		intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, horaire.getTimestamp());
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			final String title = mArret.getNomArret();
+			final String description = FormatUtils.formatTitle(
+					getString(R.string.dialog_title_menu_lignes, mLigne.getCode()), mArret.getNomArret(), mSens.text);
 
-		startActivity(intent);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			final Intent calIntent = new Intent(Intent.ACTION_INSERT);
+			calIntent.setType("vnd.android.cursor.item/event");
+			calIntent.putExtra(Events.TITLE, title);
+			calIntent.putExtra(Events.DESCRIPTION, description);
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, horaire.getTimestamp());
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, horaire.getTimestamp());
+			startActivity(calIntent);
 			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
+		} else {
+			final ParamIntent intent = new ParamIntent(getActivity(), AddEventActivity.class);
+			intent.putExtra(AddEventActivity.PARAM_LIGNE, mLigne);
+			intent.putExtra(AddEventActivity.PARAM_SENS, mSens);
+			intent.putExtra(AddEventActivity.PARAM_ARRET, mArret);
+			intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, horaire.getTimestamp());
+
+			startActivity(intent);
+		}
+
 	}
 
 	@Override

@@ -45,6 +45,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnSuggestionListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -85,6 +87,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private Integer mParamItemId;
 	private Integer mParamItemType;
 
+	private boolean mGooglePlayServiceAvailable;
 	private boolean mIsMapActivity;
 
 	public MapFragment() {
@@ -94,7 +97,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setRetainInstance(true);
+		// setRetainInstance(true);
 		setHasOptionsMenu(true);
 
 		if (getArguments() != null && getArguments().containsKey(PARAM_ITEM_ID)) {
@@ -152,34 +155,38 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 
-		inflater.inflate(R.menu.fragment_map, menu);
-		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
+		if (mGooglePlayServiceAvailable) {
+			inflater.inflate(R.menu.fragment_map, menu);
+			mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 
-		final EquipementManager manager = EquipementManager.getInstance();
-		final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
-		mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
+			final EquipementManager manager = EquipementManager.getInstance();
+			final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
+			mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
 
-		mSearchMenuItem = menu.findItem(R.id.menu_search);
-		final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
-		searchView.setSuggestionsAdapter(mSearchAdapter);
-		searchView.setOnSuggestionListener(this);
+			mSearchMenuItem = menu.findItem(R.id.menu_search);
+			final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
+			searchView.setSuggestionsAdapter(mSearchAdapter);
+			searchView.setOnSuggestionListener(this);
 
-		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
-		final Equipement.Type[] types = Equipement.Type.values();
-		for (final Equipement.Type type : types) {
-			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
-			item.setCheckable(true);
+			final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
+			final Equipement.Type[] types = Equipement.Type.values();
+			for (final Equipement.Type type : types) {
+				final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
+				item.setCheckable(true);
+			}
 		}
 	}
 
 	@Override
 	public void onPrepareOptionsMenu(final Menu menu) {
-		final Equipement.Type[] types = Equipement.Type.values();
-		final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
+		if (mGooglePlayServiceAvailable) {
+			final Equipement.Type[] types = Equipement.Type.values();
+			final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
 
-		for (final Equipement.Type type : types) {
-			final MenuItem item = filterSubMenu.findItem(type.getId());
-			item.setChecked(mSelectedTypes.contains(type));
+			for (final Equipement.Type type : types) {
+				final MenuItem item = filterSubMenu.findItem(type.getId());
+				item.setChecked(mSelectedTypes.contains(type));
+			}
 		}
 	}
 
@@ -226,18 +233,30 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	}
 
 	private void initMap() {
-		final UiSettings uiSettings = mGoogleMap.getUiSettings();
-		uiSettings.setScrollGesturesEnabled(true);
-		uiSettings.setZoomGesturesEnabled(true);
-		uiSettings.setCompassEnabled(true);
+		final int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+		if (resultCode == ConnectionResult.SUCCESS) {
+			mGooglePlayServiceAvailable = true;
 
-		mGoogleMap.setMyLocationEnabled(true);
+			final UiSettings uiSettings = mGoogleMap.getUiSettings();
+			uiSettings.setScrollGesturesEnabled(true);
+			uiSettings.setZoomGesturesEnabled(true);
+			uiSettings.setCompassEnabled(true);
 
-		final Location currenLocation = mLocationProvider.getLastKnownLocation();
-		if (currenLocation != null) {
-			final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(
-					currenLocation.getLatitude(), currenLocation.getLongitude()), 15);
-			mGoogleMap.animateCamera(cameraUpdate);
+			mGoogleMap.setMyLocationEnabled(true);
+
+			final Location currenLocation = mLocationProvider.getLastKnownLocation();
+			if (currenLocation != null) {
+				final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+						new LatLng(currenLocation.getLatitude(), currenLocation.getLongitude()), 15);
+				mGoogleMap.animateCamera(cameraUpdate);
+			}
+		} else {
+			mGooglePlayServiceAvailable = false;
+
+			GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(), 1).show();
+			if (mRefreshMenuItem != null) {
+				mRefreshMenuItem.setVisible(false);
+			}
 		}
 	}
 
