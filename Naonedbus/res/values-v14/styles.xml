@@ -103,4 +103,9 @@
 
     <style name="ButtonBar" parent="@android:style/Holo.Light.ButtonBar.AlertDialog"></style>
 
+    <style name="ItineraryDialog" parent="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
 </resources>

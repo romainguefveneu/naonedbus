@@ -220,6 +220,16 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="ItemItineraryTitle" parent="ItemPrimaryText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="ItemItinerarySubtitle" parent="ItemSecondaryText.SingleLine">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
     <style name="ItemMenuTitle" parent="ItemPrimaryText">
         <item name="android:textColor">@color/item_primary_text_dark</item>
         <item name="android:layout_width">fill_parent</item>
@@ -303,6 +313,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="ItemTime.Small">
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="ItemPlace">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -355,7 +369,11 @@
         <item name="android:textSize">@dimen/bigsubtitlesmall_text_size</item>
     </style>
 
-    <style name="BigSubTitle.Time" parent="BigSubTitle">
+    <style name="BigSubTitle.Secondary">
+        <item name="android:textColor">@android:color/tertiary_text_light</item>
+    </style>
+
+    <style name="BigSubTitle.Time">
         <item name="android:textColor">@android:color/tertiary_text_light</item>
     </style>
 

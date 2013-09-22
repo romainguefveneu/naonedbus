@@ -164,6 +164,8 @@
     <item name="formIconFrom" type="id"/>
     <item name="formIconTo" type="id"/>
     <!--  -->
+    <item name="itemPlace" type="id"/>
+    <item name="itemDirection" type="id"/>
     <item name="fromTime" type="id"/>
     <item name="fromPlace" type="id"/>
     <item name="fromDirection" type="id"/>

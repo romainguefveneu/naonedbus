@@ -1,23 +1,30 @@
 package net.naonedbus.bean;
 
-import fr.ybo.opentripplanner.client.modele.Leg;
+import fr.ybo.opentripplanner.client.modele.Place;
 
 public class LegWrapper {
 
-	private final Leg mLeg;
-	private Ligne mLigne;
-
-	private String mTime;
-	private String mFromTime;
-	private String mToTime;
-	private String mDistance;
-
-	public LegWrapper(final Leg leg) {
-		mLeg = leg;
+	public enum Type {
+		IN, OUT;
 	}
 
-	public Leg getLeg() {
-		return mLeg;
+	private Ligne mLigne;
+
+	private final Type mType;
+
+	private String mHeadsign;
+	private String mMode;
+	private Place mPlace;
+	private String mTime;
+	private String mDuration;
+	private String mDistance;
+
+	public LegWrapper(final Type type) {
+		mType = type;
+	}
+
+	public Type getType() {
+		return mType;
 	}
 
 	public Ligne getLigne() {
@@ -28,14 +35,6 @@ public class LegWrapper {
 		return mTime;
 	}
 
-	public String getFromTime() {
-		return mFromTime;
-	}
-
-	public String getToTime() {
-		return mToTime;
-	}
-
 	public void setLigne(final Ligne ligne) {
 		mLigne = ligne;
 	}
@@ -44,12 +43,36 @@ public class LegWrapper {
 		mTime = time;
 	}
 
-	public void setFromTime(final String fromTime) {
-		mFromTime = fromTime;
+	public String getDuration() {
+		return mDuration;
 	}
 
-	public void setToTime(final String toTime) {
-		mToTime = toTime;
+	public void setDuration(final String duration) {
+		mDuration = duration;
+	}
+
+	public Place getPlace() {
+		return mPlace;
+	}
+
+	public void setPlace(final Place place) {
+		mPlace = place;
+	}
+
+	public String getMode() {
+		return mMode;
+	}
+
+	public void setMode(final String mode) {
+		mMode = mode;
+	}
+
+	public String getHeadsign() {
+		return mHeadsign;
+	}
+
+	public void setHeadsign(final String headsign) {
+		mHeadsign = headsign;
 	}
 
 	public String getDistance() {

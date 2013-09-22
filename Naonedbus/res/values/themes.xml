@@ -50,4 +50,9 @@
 
     <style name="Theme.WidgetDialog" parent="@android:style/Theme.Dialog" />
 
+    <style name="ItineraryDialog" parent="@android:style/Theme.Light.NoTitleBar">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
 </resources>

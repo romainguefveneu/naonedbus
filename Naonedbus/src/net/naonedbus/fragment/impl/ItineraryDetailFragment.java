@@ -6,10 +6,12 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.LegWrapper;
+import net.naonedbus.bean.LegWrapper.Type;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.LegWrapperArrayAdapter;
 import android.content.Context;
@@ -17,7 +19,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.view.View;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -25,7 +29,6 @@ import com.actionbarsherlock.view.MenuItem;
 
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
-import fr.ybo.opentripplanner.client.modele.Place;
 
 public class ItineraryDetailFragment extends CustomListFragment {
 
@@ -58,10 +61,15 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	}
 
 	@Override
-	public void onActivityCreated(final Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		getListView().setDivider(null);
-		getListView().setDividerHeight(0);
+	protected void bindView(final View view, final Bundle savedInstanceState) {
+		super.bindView(view, savedInstanceState);
+
+		final TextView title = (TextView) view.findViewById(R.id.itemTime);
+		title.setTypeface(FontUtils.getRobotoLight(getActivity()));
+		title.setText(mItineraryWrapper.getTime());
+
+		final TextView walkTime = (TextView) view.findViewById(R.id.itemWalkTime);
+		walkTime.setText(mItineraryWrapper.getWalkTime());
 	}
 
 	@Override
@@ -97,28 +105,41 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		final LigneManager ligneManager = LigneManager.getInstance();
 
 		final List<LegWrapper> legWrappers = new ArrayList<LegWrapper>();
-		for (final Leg leg : mItinerary.legs) {
+
+		final List<Leg> legs = mItinerary.legs;
+		final int count = legs.size();
+		for (int i = 0; i < count; i++) {
+
 			boolean add = true;
-			final LegWrapper wrapper = new LegWrapper(leg);
+			final Leg leg = legs.get(i);
+			final LegWrapper fromWrapper = new LegWrapper(Type.IN);
+			final LegWrapper toWrapper = new LegWrapper(Type.OUT);
 
 			final long startTime = leg.startTime.getTime();
 			final long endTime = leg.endTime.getTime();
 
-			wrapper.setTime(FormatUtils.formatMinutes(context, endTime - startTime));
-			wrapper.setFromTime(DateUtils.formatDateTime(context, startTime, DateUtils.FORMAT_SHOW_TIME));
-			wrapper.setToTime(DateUtils.formatDateTime(context, endTime, DateUtils.FORMAT_SHOW_TIME));
-			wrapper.setDistance(FormatUtils.formatMetres(context, leg.distance));
+			fromWrapper.setPlace(leg.from);
+			fromWrapper.setDuration(FormatUtils.formatMinutes(context, endTime - startTime));
+			fromWrapper.setDistance(FormatUtils.formatMetres(context, leg.distance));
+			fromWrapper.setTime(DateUtils.formatDateTime(context, startTime, DateUtils.FORMAT_SHOW_TIME));
+			fromWrapper.setHeadsign(leg.headsign);
+			fromWrapper.setMode(leg.mode);
+
+			toWrapper.setPlace(leg.to);
+			toWrapper.setTime(DateUtils.formatDateTime(context, endTime, DateUtils.FORMAT_SHOW_TIME));
+			toWrapper.setMode(leg.mode);
 
 			if (!"WALK".equals(leg.mode) && !TextUtils.isEmpty(leg.route)) {
 				final Ligne ligne = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
-				wrapper.setLigne(ligne);
+				fromWrapper.setLigne(ligne);
 			} else if ("WALK".equals(leg.mode) && leg.distance < 50) {
 				add = false;
 			}
 
 			if (add) {
-				legWrappers.add(wrapper);
-
+				legWrappers.add(fromWrapper);
+				if (!"WALK".equals(leg.mode) || i == count - 1)
+					legWrappers.add(toWrapper);
 			}
 		}
 
@@ -134,28 +155,29 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	private String buildItineraryDescription(final List<LegWrapper> wrappers) {
 		final StringBuilder builder = new StringBuilder(mFrom).append("\n");
 
-		for (int i = 0; i < wrappers.size(); i++) {
-			final LegWrapper legWrapper = wrappers.get(i);
-			final Leg leg = legWrapper.getLeg();
-			final Ligne ligne = legWrapper.getLigne();
-			final Place from = leg.from;
-			final Place to = leg.to;
-
-			builder.append(legWrapper.getFromTime()).append(" : ");
-			if ("WALK".equals(leg.mode)) {
-				builder.append(getString(R.string.itinerary_go_to, to.name));
-			} else if (ligne != null) {
-				builder.append(FormatUtils.formatLigneArretSens(getActivity(), ligne.getLettre(), from.name,
-						leg.headsign));
-				builder.append("\n");
-				builder.append(legWrapper.getToTime()).append(" : ");
-				builder.append(getString(R.string.itinerary_get_off, to.name));
-				if (i < wrappers.size() - 1)
-					builder.append("\n");
-			}
-			builder.append("\n");
-		}
-		builder.append(mTo);
+		// for (int i = 0; i < wrappers.size(); i++) {
+		// final LegWrapper legWrapper = wrappers.get(i);
+		// final Leg leg = legWrapper.getLeg();
+		// final Ligne ligne = legWrapper.getLigne();
+		// final Place from = leg.from;
+		// final Place to = leg.to;
+		//
+		// builder.append(legWrapper.getFromTime()).append(" : ");
+		// if ("WALK".equals(leg.mode)) {
+		// builder.append(getString(R.string.itinerary_go_to, to.name));
+		// } else if (ligne != null) {
+		// builder.append(FormatUtils.formatLigneArretSens(getActivity(),
+		// ligne.getLettre(), from.name,
+		// leg.headsign));
+		// builder.append("\n");
+		// builder.append(legWrapper.getToTime()).append(" : ");
+		// builder.append(getString(R.string.itinerary_get_off, to.name));
+		// if (i < wrappers.size() - 1)
+		// builder.append("\n");
+		// }
+		// builder.append("\n");
+		// }
+		// builder.append(mTo);
 
 		return builder.toString();
 	}

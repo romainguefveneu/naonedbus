@@ -47,6 +47,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.View;
@@ -165,12 +166,22 @@ public class ItineraireFragment extends AbstractListFragment implements
 		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_TO_COLOR, mIconToColor);
 		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_TO_RES, mIconToResId);
 
-		final Intent intent = new Intent(getActivity(), ItineraryDetailActivity.class);
-		intent.putExtra(ItineraryDetailActivity.PARAM_BUNDLE, bundle);
+		bundle.putString(ItineraryDetailFragment.PARAM_ITINERARY_FROM, mFromAddressTextView.getText().toString());
+		bundle.putString(ItineraryDetailFragment.PARAM_ITINERARY_TO, mToAddressTextView.getText().toString());
+		bundle.putParcelable(ItineraryDetailFragment.PARAM_ITINERARY_WRAPPER, mItineraryWrappers.get(position));
 
-		getActivity().startActivity(intent);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
+		final DialogFragment dialogFragment = new ItineraryDetailDialogFragment();
+		dialogFragment.setArguments(bundle);
+		dialogFragment.show(getChildFragmentManager(), "ItineraryDetails");
+
+		// final Intent intent = new Intent(getActivity(),
+		// ItineraryDetailActivity.class);
+		// intent.putExtra(ItineraryDetailActivity.PARAM_BUNDLE, bundle);
+		//
+		// getActivity().startActivity(intent);
+		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		// getActivity().overridePendingTransition(R.anim.slide_in_from_right,
+		// R.anim.half_fade_out);
 	}
 
 	@Override
@@ -264,11 +275,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 				mFromLocation.setLongitude(longitude);
 				mFromAddressTextView.setText(address);
 				if (type == null) {
-					if (currentLocation) {
-						mIconFromResId = R.drawable.ic_action_locate_blue;
-					} else {
-						mIconFromResId = R.drawable.ic_directions_form_destination_notselected;
-					}
+					mIconFromResId = currentLocation ? R.drawable.ic_action_locate_blue
+							: R.drawable.ic_directions_form_destination_notselected;
 					mIconFromColor = Color.TRANSPARENT;
 				} else {
 					mIconFromResId = type.getDrawableRes();
@@ -279,11 +287,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 				mToLocation.setLongitude(longitude);
 				mToAddressTextView.setText(address);
 				if (type == null) {
-					if (currentLocation) {
-						mIconToResId = R.drawable.ic_action_locate_blue;
-					} else {
-						mIconToResId = R.drawable.ic_directions_form_destination_notselected;
-					}
+					mIconFromResId = currentLocation ? R.drawable.ic_action_locate_blue
+							: R.drawable.ic_directions_form_destination_notselected;
 					mIconToColor = Color.TRANSPARENT;
 				} else {
 					mIconToResId = type.getDrawableRes();

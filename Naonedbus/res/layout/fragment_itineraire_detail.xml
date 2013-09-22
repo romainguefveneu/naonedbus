@@ -19,12 +19,35 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/list"
-    style="@style/Listview"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/headerView"
-    android:clipToPadding="false"
-    android:paddingTop="@dimen/padding_small" />
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@id/itemTime"
+        style="@style/BigTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_medium"
+        android:paddingTop="@dimen/padding_small" />
+
+    <TextView
+        android:id="@id/itemWalkTime"
+        style="@style/BigSubTitle.Secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_small"
+        android:paddingLeft="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_medium" />
+
+    <ListView
+        android:id="@android:id/list"
+        style="@style/Listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/padding_medium"
+        android:paddingRight="@dimen/padding_medium" />
+
+</LinearLayout>

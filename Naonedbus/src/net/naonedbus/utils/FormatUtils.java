@@ -25,6 +25,7 @@ import android.location.Address;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 
 public abstract class FormatUtils {
@@ -78,6 +79,13 @@ public abstract class FormatUtils {
 		final SpannableString spannable = new SpannableString(text);
 		spannable.setSpan(new AbsoluteSizeSpan(18, true), text.length() - 1, text.length(),
 				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return spannable;
+	}
+
+	public static CharSequence formatColorAndSize(final Context context, final int color, final String text) {
+		final SpannableString spannable = new SpannableString(text);
+		spannable.setSpan(new ForegroundColorSpan(color), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		spannable.setSpan(new RelativeSizeSpan(0.9f), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannable;
 	}
 

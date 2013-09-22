@@ -1,104 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultLine"
-    android:layout_margin="0dip"
-    android:paddingBottom="0dip"
-    android:paddingLeft="8dip"
-    android:paddingRight="8dip"
-    android:paddingTop="0dip" >
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@id/itemTime"
+        style="@style/ItemTime.Small"
+        android:layout_width="40sp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/padding_small"
+        android:gravity="center" />
 
     <RelativeLayout
-        android:id="@id/rowTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_gravity="center_vertical" >
 
         <TextView
-            android:id="@id/fromTime"
-            style="@style/ItemTime.Medium"
-            android:layout_width="50sp"
-            android:layout_alignParentRight="false"
-            android:layout_centerVertical="true"
+            android:id="@id/itemSymbole"
+            style="@style/ItemSymbole.Tiny"
             android:layout_marginRight="@dimen/padding_small"
-            android:gravity="right"
-            android:text="00:00" />
+            android:background="@drawable/item_symbole_back" />
 
-        <View
-            android:id="@+id/itemMetroPointFrom"
-            android:layout_width="40dip"
-            android:layout_height="55dip"
-            android:layout_toRightOf="@id/fromTime"
-            android:background="@drawable/ic_arret_step_silver" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/fromTime"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@id/itemSymbole"
-                style="@style/ItemSymbole"
-                android:layout_marginRight="@dimen/padding_small"
-                android:background="@drawable/item_symbole_back" />
-
-            <ImageView
-                android:id="@id/itemIcon"
-                style="@style/ItemSymbole"
-                android:background="@drawable/item_leg_walk_back"
-                android:scaleType="center"
-                android:src="@drawable/itinerary_leg_walk" />
-
-            <TextView
-                android:id="@id/fromDirection"
-                style="@style/ItemSecondaryText.SingleLine"
-                android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@id/itemSymbole"
-                android:padding="0dip"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@id/fromPlace"
-                style="@style/ItemPrimaryText.SingleLine"
-                android:layout_above="@id/fromDirection"
-                android:layout_alignParentTop="true"
-                android:layout_alignWithParentIfMissing="true"
-                android:layout_toRightOf="@id/itemSymbole"
-                android:padding="0dip" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@id/rowBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        <ImageView
+            android:id="@id/itemIcon"
+            style="@style/ItemSymbole.Tiny"
+            android:background="@drawable/item_leg_walk_back"
+            android:scaleType="center"
+            android:src="@drawable/itinerary_leg_walk" />
 
         <TextView
-            android:id="@id/toTime"
-            style="@style/ItemTime.Medium"
-            android:layout_width="50sp"
-            android:layout_alignParentRight="false"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/padding_small"
-            android:gravity="right"
-            android:text="0:00" />
-
-        <View
-            android:id="@+id/itemMetroPointTo"
-            android:layout_width="40dip"
-            android:layout_height="55dip"
-            android:layout_toRightOf="@id/toTime"
-            android:background="@drawable/ic_arret_step_silver" />
-
-        <TextView
-            android:id="@id/toPlace"
-            style="@style/ItemPrimaryText.SingleLine"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/itemMetroPointTo"
-            android:paddingLeft="@dimen/padding_small"
-            android:text="Trémissinière" />
+            android:id="@id/itemPlace"
+            style="@style/ItemItineraryTitle"
+            android:layout_toRightOf="@id/itemSymbole"
+            android:ellipsize="end"
+            android:maxLines="2" />
     </RelativeLayout>
 
 </LinearLayout>
