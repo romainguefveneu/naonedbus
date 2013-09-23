@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultLine"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight" >
 
     <TextView
         android:id="@id/itemTime"
         style="@style/ItemTime.Small"
         android:layout_width="40sp"
+        android:layout_alignParentRight="false"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/padding_small"
-        android:gravity="center" />
+        android:gravity="center"
+        android:text="time" />
+
+    <View
+        android:id="@id/itemMetroPoint"
+        style="@style/ItemSymbole.Tiny"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/itemTime"
+        android:minHeight="?android:attr/listPreferredItemHeight" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical" >
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/itemTime" >
 
         <TextView
             android:id="@id/itemSymbole"
             style="@style/ItemSymbole.Tiny"
             android:layout_marginRight="@dimen/padding_small"
-            android:background="@drawable/item_symbole_back" />
+            android:background="@drawable/item_symbole_back"
+            android:text="42" />
 
         <ImageView
             android:id="@id/itemIcon"
@@ -36,7 +46,7 @@
             style="@style/ItemItineraryTitle"
             android:layout_toRightOf="@id/itemSymbole"
             android:ellipsize="end"
-            android:maxLines="2" />
+            android:text="place" />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -73,6 +73,13 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	}
 
 	@Override
+	public void onActivityCreated(final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		getListView().setDivider(null);
+		getListView().setDividerHeight(0);
+	}
+
+	@Override
 	public void onStart() {
 		super.onStart();
 		loadContent();
@@ -138,8 +145,12 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 			if (add) {
 				legWrappers.add(fromWrapper);
-				if (!"WALK".equals(leg.mode) || i == count - 1)
+				if (!"WALK".equals(leg.mode) || i == count - 1) {
+					fromWrapper.setIsTrip(true);
+					toWrapper.setIsTrip(true);
+
 					legWrappers.add(toWrapper);
+				}
 			}
 		}
 

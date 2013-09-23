@@ -18,6 +18,7 @@ public class LegWrapper {
 	private String mTime;
 	private String mDuration;
 	private String mDistance;
+	private boolean mIsTrip;
 
 	public LegWrapper(final Type type) {
 		mType = type;
@@ -81,6 +82,14 @@ public class LegWrapper {
 
 	public void setDistance(final String distance) {
 		mDistance = distance;
+	}
+
+	public void setIsTrip(final boolean isTrip) {
+		mIsTrip = isTrip;
+	}
+
+	public boolean isTrip() {
+		return mIsTrip;
 	}
 
 }

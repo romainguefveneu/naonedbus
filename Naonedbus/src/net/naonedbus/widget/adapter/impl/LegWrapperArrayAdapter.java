@@ -56,6 +56,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 			viewHolder.itemSymbole = (TextView) view.findViewById(R.id.itemSymbole);
 			viewHolder.itemTime = (TextView) view.findViewById(R.id.itemTime);
 			viewHolder.itemPlace = (TextView) view.findViewById(R.id.itemPlace);
+			viewHolder.itemMetroPoint = view.findViewById(R.id.itemMetroPoint);
 
 			view.setTag(viewHolder);
 		} else {
@@ -110,6 +111,17 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 			}
 		}
 
+		if (legWrapper.isTrip()) {
+			if (legWrapper.getType() == Type.IN) {
+				viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_first_silver);
+			} else {
+				viewHolder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_last_silver);
+			}
+			viewHolder.itemMetroPoint.setVisibility(View.VISIBLE);
+		} else {
+			viewHolder.itemMetroPoint.setVisibility(View.GONE);
+		}
+
 		viewHolder.itemTime.setText(legWrapper.getTime());
 
 		return view;
@@ -120,6 +132,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		TextView itemSymbole;
 		TextView itemTime;
 		TextView itemPlace;
+		View itemMetroPoint;
 	}
 
 }
