@@ -34,15 +34,15 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		mSecondaryColor = context.getResources().getColor(colorValue.resourceId);
 	}
 
-	@Override
-	public boolean areAllItemsEnabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled(final int position) {
-		return false;
-	}
+	// @Override
+	// public boolean areAllItemsEnabled() {
+	// return false;
+	// }
+	//
+	// @Override
+	// public boolean isEnabled(final int position) {
+	// return false;
+	// }
 
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
@@ -69,7 +69,6 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 
 		if ("WALK".equals(legWrapper.getMode())) {
 
-			viewHolder.itemIcon.setVisibility(View.VISIBLE);
 			viewHolder.itemSymbole.setVisibility(View.INVISIBLE);
 
 			if (legWrapper.getType() == Type.IN) {
@@ -79,8 +78,10 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 						.getString(R.string.itinerary_go_to, place.name) + "\n",
 						FormatUtils.formatColorAndSize(getContext(), mSecondaryColor, direction));
 
+				viewHolder.itemIcon.setVisibility(View.VISIBLE);
 				viewHolder.itemPlace.setText(title);
 			} else {
+				viewHolder.itemIcon.setVisibility(View.GONE);
 				viewHolder.itemPlace.setText(place.name);
 			}
 
@@ -95,7 +96,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 
 				viewHolder.itemPlace.setText(title);
 			} else {
-				viewHolder.itemPlace.setText(getContext().getString(R.string.itinerary_get_off, place.name));
+				viewHolder.itemPlace.setText(place.name);
 			}
 
 			if (ligne != null) {
