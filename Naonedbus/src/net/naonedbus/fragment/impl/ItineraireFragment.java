@@ -113,6 +113,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private int mIconPadding;
 
 	private boolean mDialogLock;
+	private boolean mAfterBindView;
 
 	public ItineraireFragment() {
 		super(R.layout.fragment_itineraire);
@@ -228,8 +229,11 @@ public class ItineraireFragment extends AbstractListFragment implements
 		mDateKindSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
-				mArriveBy = position == 1;
-				onFormValueChange();
+				final boolean arriveBy = position == 1;
+				if (arriveBy != mArriveBy) {
+					mArriveBy = arriveBy;
+					onFormValueChange();
+				}
 			}
 
 			@Override
@@ -261,6 +265,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		}
 
 		setDateValue();
+		mAfterBindView = true;
 	}
 
 	@Override
