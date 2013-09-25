@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -29,6 +30,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
+import fr.ybo.opentripplanner.client.modele.Place;
 
 public class ItineraryDetailFragment extends CustomListFragment {
 
@@ -72,6 +74,14 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 		final TextView walkTime = (TextView) view.findViewById(R.id.itemWalkTime);
 		walkTime.setText(mItineraryWrapper.getWalkTime());
+
+		final View shareView = view.findViewById(R.id.menu_share);
+		shareView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				share();
+			}
+		});
 
 		mProgressView = view.findViewById(android.R.id.progress);
 	}
@@ -182,29 +192,29 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	private String buildItineraryDescription(final List<LegWrapper> wrappers) {
 		final StringBuilder builder = new StringBuilder(mFrom).append("\n");
 
-		// for (int i = 0; i < wrappers.size(); i++) {
-		// final LegWrapper legWrapper = wrappers.get(i);
-		// final Leg leg = legWrapper.getLeg();
-		// final Ligne ligne = legWrapper.getLigne();
-		// final Place from = leg.from;
-		// final Place to = leg.to;
-		//
-		// builder.append(legWrapper.getFromTime()).append(" : ");
-		// if ("WALK".equals(leg.mode)) {
-		// builder.append(getString(R.string.itinerary_go_to, to.name));
-		// } else if (ligne != null) {
-		// builder.append(FormatUtils.formatLigneArretSens(getActivity(),
-		// ligne.getLettre(), from.name,
-		// leg.headsign));
-		// builder.append("\n");
-		// builder.append(legWrapper.getToTime()).append(" : ");
-		// builder.append(getString(R.string.itinerary_get_off, to.name));
-		// if (i < wrappers.size() - 1)
-		// builder.append("\n");
-		// }
-		// builder.append("\n");
-		// }
-		// builder.append(mTo);
+		for (int i = 0; i < wrappers.size(); i++) {
+			final LegWrapper legWrapper = wrappers.get(i);
+			final Ligne ligne = legWrapper.getLigne();
+			final Place place = legWrapper.getPlace();
+
+			builder.append(legWrapper.getTime()).append(" : ");
+
+			if ("WALK".equals(legWrapper.getMode())) {
+				if (legWrapper.getType() == Type.IN) {
+					builder.append(getString(R.string.itinerary_go_to, place.name));
+				}
+			} else {
+				if (legWrapper.getType() == Type.IN) {
+					builder.append(FormatUtils.formatLigneArretSens(getActivity(), ligne.getLettre(), place.name,
+							legWrapper.getHeadsign()));
+				} else {
+					builder.append(getString(R.string.itinerary_get_off, place.name));
+				}
+			}
+
+			if (i < wrappers.size() - 1)
+				builder.append("\n");
+		}
 
 		return builder.toString();
 	}
