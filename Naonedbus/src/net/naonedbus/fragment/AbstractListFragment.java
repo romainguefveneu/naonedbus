@@ -103,11 +103,12 @@ public abstract class AbstractListFragment extends SherlockListFragment {
 
 		mFragmentView = (ViewGroup) inflater.inflate(R.layout.fragment_base, container, false);
 		final View view = inflater.inflate(mLayoutId, container, false);
-		bindView(view, savedInstanceState);
 
 		mFragmentView.addView(view);
 
 		setupListView(inflater, mFragmentView);
+
+		bindView(view, savedInstanceState);
 
 		return mFragmentView;
 	}

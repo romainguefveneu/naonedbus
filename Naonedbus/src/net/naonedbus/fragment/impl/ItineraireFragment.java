@@ -47,11 +47,14 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.DatePicker;
@@ -77,6 +80,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private static final String BUNDLE_ICON_TO = "ItineraireFragment:iconTo";
 	private static final String BUNDLE_COLOR_FROM = "ItineraireFragment:colorFrom";
 	private static final String BUNDLE_COLOR_TO = "ItineraireFragment:colorTo";
+	private static final String BUNDLE_RESULTS = "ItineraireFragment:results";
 
 	private static final int REQUEST_CODE_FROM = 1;
 	private static final int REQUEST_CODE_TO = 2;
@@ -97,6 +101,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private TextView mToAddressTextView;
 	private TextView mDateAndTimeLabel;
 	private Spinner mDateKindSpinner;
+	private View mReverseButton;
 
 	private ImageView mIconFrom;
 	private ImageView mIconTo;
@@ -130,6 +135,12 @@ public class ItineraireFragment extends AbstractListFragment implements
 			mIconToResId = savedInstanceState.getInt(BUNDLE_ICON_TO);
 			mIconFromColor = savedInstanceState.getInt(BUNDLE_COLOR_FROM);
 			mIconToColor = savedInstanceState.getInt(BUNDLE_COLOR_TO);
+
+			final List<Parcelable> results = savedInstanceState.getParcelableArrayList(BUNDLE_RESULTS);
+			for (final Parcelable parcelable : results) {
+				mItineraryWrappers.add((ItineraryWrapper) parcelable);
+			}
+
 		}
 	};
 
@@ -145,6 +156,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		outState.putInt(BUNDLE_ICON_TO, mIconToResId);
 		outState.putInt(BUNDLE_COLOR_FROM, mIconFromColor);
 		outState.putInt(BUNDLE_COLOR_TO, mIconToColor);
+		outState.putParcelableArrayList(BUNDLE_RESULTS, new ArrayList<ItineraryWrapper>(mItineraryWrappers));
 		super.onSaveInstanceState(outState);
 	}
 
@@ -173,15 +185,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 		final DialogFragment dialogFragment = new ItineraryDetailDialogFragment();
 		dialogFragment.setArguments(bundle);
 		dialogFragment.show(getChildFragmentManager(), "ItineraryDetails");
-
-		// final Intent intent = new Intent(getActivity(),
-		// ItineraryDetailActivity.class);
-		// intent.putExtra(ItineraryDetailActivity.PARAM_BUNDLE, bundle);
-		//
-		// getActivity().startActivity(intent);
-		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-		// getActivity().overridePendingTransition(R.anim.slide_in_from_right,
-		// R.anim.half_fade_out);
 	}
 
 	@Override
@@ -235,7 +238,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 			}
 		});
 
-		view.findViewById(R.id.formReverse).setOnClickListener(new OnClickListener() {
+		mReverseButton = view.findViewById(R.id.formReverse);
+		mReverseButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				reverse();
@@ -355,6 +359,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 		notifyIconsChanged();
 		onFormValueChange();
+
+		final Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotation_full);
+		mReverseButton.startAnimation(animation);
 	}
 
 	private void notifyIconsChanged() {
@@ -468,7 +475,4 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	}
 
-	private void showItinerary(final ItineraryWrapper wrapper) {
-
-	}
 }

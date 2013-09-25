@@ -19,16 +19,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@id/menu_share"
+        style="@style/ActionIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/padding_small"
+        android:layout_marginTop="@dimen/padding_small"
+        android:background="?attr/selectableItemBackground"
+        android:src="@drawable/ic_action_share_light" />
 
     <TextView
         android:id="@id/itemTime"
         style="@style/BigTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@id/menu_share"
         android:paddingLeft="@dimen/padding_medium"
         android:paddingRight="@dimen/padding_medium"
         android:paddingTop="@dimen/padding_small" />
@@ -38,16 +51,29 @@
         style="@style/BigSubTitle.Secondary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/itemTime"
         android:paddingBottom="@dimen/padding_small"
         android:paddingLeft="@dimen/padding_medium"
         android:paddingRight="@dimen/padding_medium" />
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/itemWalkTime"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/padding_large"
+        android:layout_marginTop="@dimen/padding_large" />
 
     <ListView
         android:id="@android:id/list"
         style="@style/Listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/itemWalkTime"
         android:paddingLeft="@dimen/padding_medium"
-        android:paddingRight="@dimen/padding_medium" />
+        android:paddingRight="@dimen/padding_medium"
+        android:visibility="gone" />
 
-</LinearLayout>
+</RelativeLayout>

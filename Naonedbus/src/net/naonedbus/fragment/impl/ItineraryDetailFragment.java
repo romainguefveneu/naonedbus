@@ -36,6 +36,8 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	public static final String PARAM_ITINERARY_FROM = "itineraryFrom";
 	public static final String PARAM_ITINERARY_TO = "itineraryTo";
 
+	private View mProgressView;
+
 	private ItineraryWrapper mItineraryWrapper;
 	private Itinerary mItinerary;
 
@@ -70,6 +72,8 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 		final TextView walkTime = (TextView) view.findViewById(R.id.itemWalkTime);
 		walkTime.setText(mItineraryWrapper.getWalkTime());
+
+		mProgressView = view.findViewById(android.R.id.progress);
 	}
 
 	@Override
@@ -83,6 +87,18 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	public void onStart() {
 		super.onStart();
 		loadContent();
+	}
+
+	@Override
+	protected void showLoader() {
+		mProgressView.setVisibility(View.VISIBLE);
+		getListView().setVisibility(View.GONE);
+	}
+
+	@Override
+	protected void showContent() {
+		mProgressView.setVisibility(View.GONE);
+		getListView().setVisibility(View.VISIBLE);
 	}
 
 	@Override
