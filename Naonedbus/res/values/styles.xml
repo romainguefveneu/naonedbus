@@ -360,6 +360,9 @@
     <style name="BigTitle.Blue">
         <item name="android:textColor">@color/holo_blue_light</item>
     </style>
+    <style name="BigTitle.Green">
+        <item name="android:textColor">@color/holo_green</item>
+    </style>
 
     <style name="BigSubTitle" parent="BigTitle">
         <item name="android:textSize">@dimen/bigsubtitle_text_size</item>

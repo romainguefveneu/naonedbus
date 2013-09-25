@@ -11,7 +11,6 @@ import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.LegWrapperArrayAdapter;
 import android.content.Context;
@@ -69,7 +68,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		super.bindView(view, savedInstanceState);
 
 		final TextView title = (TextView) view.findViewById(R.id.itemTime);
-		title.setTypeface(FontUtils.getRobotoLight(getActivity()));
+		// title.setTypeface(FontUtils.getRobotoLight(getActivity()));
 		title.setText(mItineraryWrapper.getTime());
 
 		final TextView walkTime = (TextView) view.findViewById(R.id.itemWalkTime);
@@ -211,10 +210,10 @@ public class ItineraryDetailFragment extends CustomListFragment {
 					builder.append(getString(R.string.itinerary_get_off, place.name));
 				}
 			}
-
-			if (i < wrappers.size() - 1)
-				builder.append("\n");
+			builder.append("\n");
 		}
+
+		builder.append(mTo);
 
 		return builder.toString();
 	}

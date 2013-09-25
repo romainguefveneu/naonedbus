@@ -74,13 +74,13 @@ public class InfoTraficDetailFragment extends CustomFragment {
 
 	@Override
 	protected void bindView(final View view, final Bundle savedInstanceState) {
-		final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
+		final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getActivity());
 
 		mFragmentView = view;
 
 		mItemTitle = (TextView) view.findViewById(R.id.itemTitle);
-		mItemTitle.setTypeface(robotoCondensed);
+		mItemTitle.setTypeface(robotoLight);
 
 		mItemDescription = (TextView) view.findViewById(R.id.itemDescription);
 
