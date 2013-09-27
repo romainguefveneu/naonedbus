@@ -32,6 +32,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -52,8 +53,9 @@ public class MapCard extends Card<Bitmap> {
 
 	private ImageView mImageView;
 
-	public MapCard(final Context context, final LoaderManager loaderManager, final Float latitude, final Float longitude) {
-		super(context, loaderManager, R.string.card_plan_title, R.layout.card_map);
+	public MapCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
+			final Float latitude, final Float longitude) {
+		super(context, loaderManager, fragmentManager, R.string.card_plan_title, R.layout.card_map);
 
 		mLatitude = latitude;
 		mLongitude = longitude;

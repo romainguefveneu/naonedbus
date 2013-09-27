@@ -23,7 +23,6 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.activity.impl.CommentaireDetailActivity;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.formatter.CommentaireFomatter;
@@ -36,7 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListAdapter;
@@ -147,9 +146,13 @@ public class CommentairesFragment extends CustomListFragment {
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		final Commentaire commentaire = (Commentaire) l.getItemAtPosition(position);
-		final Intent intent = new Intent(getActivity(), CommentaireDetailActivity.class);
-		intent.putExtra(CommentaireDetailActivity.PARAM_COMMENTAIRE, (Parcelable) commentaire);
-		startActivity(intent);
+
+		final Bundle bundle = new Bundle();
+		bundle.putParcelable(CommentaireDetailDialogFragment.PARAM_COMMENTAIRE, commentaire);
+
+		final DialogFragment dialogFragment = new CommentaireDetailDialogFragment();
+		dialogFragment.setArguments(bundle);
+		dialogFragment.show(getChildFragmentManager(), "CommentaireDetailFragment");
 	}
 
 	private void showResfrehMenuLoader() {

@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -43,6 +44,8 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 
 	private Context mContext;
 	private final LoaderManager mLoaderManager;
+	private final FragmentManager mFragmentManager;
+
 	private final int mLayoutId;
 	private final int mTitleId;
 
@@ -54,9 +57,11 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 	private Typeface mRobotoLight;
 	private Typeface mRobotoBold;
 
-	public Card(final Context context, final LoaderManager loaderManager, final int titleId, final int layoutId) {
+	public Card(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
+			final int titleId, final int layoutId) {
 		mContext = context;
 		mLoaderManager = loaderManager;
+		mFragmentManager = fragmentManager;
 		mTitleId = titleId;
 		mLayoutId = layoutId;
 	}
@@ -74,6 +79,10 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 	}
 
 	public void onDestroy() {
+	}
+
+	protected FragmentManager getFragmentManager() {
+		return mFragmentManager;
 	}
 
 	protected Context getContext() {

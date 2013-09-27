@@ -30,16 +30,14 @@
         style="@style/BigCode"
         android:gravity="center_horizontal"
         android:paddingLeft="@dimen/padding_small"
-        android:paddingRight="@dimen/padding_small"
-        android:text="00" />
+        android:paddingRight="@dimen/padding_small" />
 
     <TextView
         android:id="@id/headerTitle"
         style="@style/BigTitle"
         android:layout_marginLeft="@dimen/padding_small"
         android:gravity="center_vertical"
-        android:paddingRight="3dip"
-        android:text="François" />
+        android:paddingRight="3dip" />
 
     <TextView
         android:id="@id/headerSubTitle"
@@ -47,6 +45,6 @@
         android:layout_marginLeft="@dimen/padding_small"
         android:gravity="center_vertical"
         android:paddingRight="3dip"
-        android:text="François" />
+        android:visibility="gone" />
 
 </LinearLayout>

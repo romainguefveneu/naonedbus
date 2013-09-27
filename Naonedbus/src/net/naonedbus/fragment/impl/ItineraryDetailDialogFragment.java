@@ -12,7 +12,6 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 public class ItineraryDetailDialogFragment extends SherlockDialogFragment {
 
 	public ItineraryDetailDialogFragment() {
-		super();
 		setStyle(STYLE_NO_FRAME, R.style.ItineraryDialog);
 	}
 

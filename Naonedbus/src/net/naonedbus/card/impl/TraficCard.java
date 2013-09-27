@@ -35,6 +35,7 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -53,8 +54,9 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	private final Ligne mLigne;
 	private ViewGroup mRoot;
 
-	public TraficCard(final Context context, final LoaderManager loaderManager, final Ligne ligne) {
-		super(context, loaderManager, R.string.card_trafic_title, R.layout.card_trafic);
+	public TraficCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
+			final Ligne ligne) {
+		super(context, loaderManager, fragmentManager, R.string.card_trafic_title, R.layout.card_trafic);
 		mLigne = ligne;
 	}
 

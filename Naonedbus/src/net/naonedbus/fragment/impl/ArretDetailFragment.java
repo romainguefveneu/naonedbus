@@ -107,9 +107,12 @@ public class ArretDetailFragment extends SherlockFragment {
 
 		setHasOptionsMenu(true);
 
-		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), mArret);
-		final TraficCard traficCard = new TraficCard(getActivity(), getLoaderManager(), mLigne);
-		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager());
+		final HoraireCard horaireCard = new HoraireCard(getActivity(), getLoaderManager(), getChildFragmentManager(),
+				mArret);
+		final TraficCard traficCard = new TraficCard(getActivity(), getLoaderManager(), getChildFragmentManager(),
+				mLigne);
+		final CommentairesCard commentairesCard = new CommentairesCard(getActivity(), getLoaderManager(),
+				getChildFragmentManager());
 		commentairesCard.setLigne(mLigne);
 		commentairesCard.setSens(mSens);
 		commentairesCard.setArret(mArret);

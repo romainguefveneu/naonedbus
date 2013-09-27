@@ -22,6 +22,7 @@ import net.naonedbus.R;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.animation.Animation;
@@ -31,7 +32,7 @@ import android.widget.TextView;
 
 public class HeaderHelper {
 
-	private final Activity mActivity;
+	private final Context mContext;
 
 	private View mHeader;
 	private TextView mTitle;
@@ -39,13 +40,17 @@ public class HeaderHelper {
 	private TextView mLigneCode;
 
 	public HeaderHelper(final Activity activity) {
-		mActivity = activity;
-		init();
+		mContext = activity;
+		init(activity.getWindow().getDecorView());
 	}
 
-	private void init() {
-		final View view = mActivity.getWindow().getDecorView();
-		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(mActivity);
+	public HeaderHelper(final Context context, final View view) {
+		mContext = context;
+		init(view);
+	}
+
+	private void init(final View view) {
+		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(mContext);
 
 		mHeader = view.findViewById(R.id.headerView);
 
@@ -97,8 +102,8 @@ public class HeaderHelper {
 	}
 
 	public void setSubTitleAnimated(final CharSequence subtitle) {
-		final Animation fadeOut = AnimationUtils.loadAnimation(mActivity, android.R.anim.fade_out);
-		final Animation fadeIn = AnimationUtils.loadAnimation(mActivity, android.R.anim.fade_in);
+		final Animation fadeOut = AnimationUtils.loadAnimation(mContext, android.R.anim.fade_out);
+		final Animation fadeIn = AnimationUtils.loadAnimation(mContext, android.R.anim.fade_in);
 
 		fadeOut.setAnimationListener(new AnimationListener() {
 

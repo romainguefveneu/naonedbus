@@ -1,22 +1,4 @@
-/**
- * Copyright (C) 2013 Romain Guefveneu.
- *   
- *  This file is part of naonedbus.
- *   
- *  Naonedbus is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *  
- *  Naonedbus is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *  
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-package net.naonedbus.activity.impl;
+package net.naonedbus.fragment.impl;
 
 import java.text.DateFormat;
 
@@ -26,8 +8,8 @@ import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.formatter.CommentaireFomatter;
-import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.security.NaonedbusClient;
+import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.utils.SmileyParser;
@@ -35,45 +17,54 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.app.SherlockDialogFragment;
 
-public class CommentaireDetailActivity extends SherlockActivity {
+public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 	public static final String PARAM_COMMENTAIRE = "commentaire";
 
-	private HeaderHelper mHeaderHelper;
+	private View mHeader;
+	private TextView mTitle;
+	private TextView mLigneCode;
 
 	private Commentaire mCommentaire;
 	private TextView mItemDescription;
 	private TextView mItemDate;
 	private TextView mItemSource;
 
+	public CommentaireDetailDialogFragment() {
+		setStyle(STYLE_NO_FRAME, R.style.ItineraryDialog);
+	}
+
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_comment_detail);
+		mCommentaire = getArguments().getParcelable(PARAM_COMMENTAIRE);
+	}
 
-		final DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getApplicationContext());
-		final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getApplicationContext());
-		SmileyParser.init(getApplicationContext());
+	@Override
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+		final View view = inflater.inflate(R.layout.dialog_comment_detail, null);
+
+		final DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getActivity());
+		final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getActivity());
+		SmileyParser.init(getActivity());
 		final SmileyParser simSmileyParser = SmileyParser.getInstance();
 
-		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
+		final Typeface robotoMedium = FontUtils.getRobotoMedium(getActivity());
 
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		mHeader = view.findViewById(R.id.headerView);
+		mTitle = (TextView) view.findViewById(R.id.headerTitle);
+		mLigneCode = (TextView) view.findViewById(R.id.headerCode);
 
-		mHeaderHelper = new HeaderHelper(this);
-
-		mItemDescription = (TextView) findViewById(R.id.itemDescription);
-		mItemDate = (TextView) findViewById(R.id.itemDate);
-		mItemSource = (TextView) findViewById(R.id.itemSource);
-
-		mCommentaire = getIntent().getParcelableExtra(PARAM_COMMENTAIRE);
+		mItemDescription = (TextView) view.findViewById(R.id.itemDescription);
+		mItemDate = (TextView) view.findViewById(R.id.itemDate);
+		mItemSource = (TextView) view.findViewById(R.id.itemSource);
 
 		mItemDescription.setText(simSmileyParser.addSmileySpans(mCommentaire.getMessage()));
 
@@ -87,30 +78,30 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(source)) {
 
-			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
-			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_info_trafic));
-			mHeaderHelper.setCode(null);
+			setTitleIcon(R.drawable.logo_tan);
+			setTitle(getString(R.string.commentaire_tan_info_trafic));
+			setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.WHITE);
 
 		} else if (NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
 
-			mHeaderHelper.setTitleIcon(R.drawable.logo_tan);
-			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_actus));
-			mHeaderHelper.setCode(null);
+			setTitleIcon(R.drawable.logo_tan);
+			setTitle(getString(R.string.commentaire_tan_actus));
+			setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_tan_header), Color.WHITE);
 
 		} else if (NaonedbusClient.TWITTER_TAN_INFOS.name().equals(source)) {
 
-			mHeaderHelper.setTitleIcon(R.drawable.logo_taninfos);
-			mHeaderHelper.setTitle(getString(R.string.commentaire_tan_infos));
-			mHeaderHelper.setCode(null);
+			setTitleIcon(R.drawable.logo_taninfos);
+			setTitle(getString(R.string.commentaire_tan_infos));
+			setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_taninfos_header), Color.WHITE);
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(source)) {
 
-			mHeaderHelper.setTitleIcon(R.drawable.ic_launcher);
-			mHeaderHelper.setTitle(getString(R.string.commentaire_message_service));
-			mHeaderHelper.setCode(null);
+			setTitleIcon(R.drawable.ic_launcher);
+			setTitle(getString(R.string.commentaire_message_service));
+			setCode(null);
 			setHeaderBackgroundColor(getResources().getColor(R.color.message_service_header), Color.WHITE);
 
 		} else {
@@ -118,26 +109,32 @@ public class CommentaireDetailActivity extends SherlockActivity {
 			setLigneSensArret(mCommentaire);
 
 		}
+
+		return view;
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(final Menu menu) {
-		final MenuInflater menuInflater = getSupportMenuInflater();
-		menuInflater.inflate(R.menu.activity_commentaire_detail, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			finish();
-			break;
-		case R.id.menu_share:
-			shareComment();
-			break;
+	public void setCode(final CharSequence code) {
+		mLigneCode.setText(code);
+		if (code == null || code.length() == 0) {
+			mLigneCode.setVisibility(View.GONE);
+		} else {
+			mLigneCode.setVisibility(View.VISIBLE);
 		}
-		return super.onOptionsItemSelected(item);
+	}
+
+	private void setTitle(final String title) {
+		mTitle.setText(title);
+	}
+
+	private void setTitleIcon(final int iconResId) {
+		mTitle.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
+	}
+
+	public void setColor(final int backColor, final int textColor) {
+		mHeader.setBackgroundDrawable(ColorUtils.getGradiant(backColor));
+
+		mTitle.setTextColor(textColor);
+		mLigneCode.setTextColor(textColor);
 	}
 
 	/**
@@ -164,41 +161,42 @@ public class CommentaireDetailActivity extends SherlockActivity {
 		final Sens sens = commentaire.getSens();
 		final Arret arret = commentaire.getArret();
 
+		String title = "";
+		String subtitle = "";
+
 		if (ligne != null) {
 			setLineColor(ligne.getCouleur(), ligne.getCouleurTexte(), ligne.getLettre());
-			mHeaderHelper.setTitle(ligne.getNom());
+			title = ligne.getNom();
 		} else {
 			setLineColor(Color.TRANSPARENT, Color.BLACK, "");
 		}
 
 		if (arret == null && sens == null && ligne == null) {
-			mHeaderHelper.setTitle(R.string.commentaire_tout);
+			title = getString(R.string.commentaire_tout);
 		} else {
 			if (arret != null) {
-				mHeaderHelper.setTitle(arret.getNomArret());
+				title = arret.getNomArret();
 			}
 			if (sens != null) {
 				if (arret == null) {
-					mHeaderHelper.setTitle(FormatUtils.formatSens(sens.text));
-					mHeaderHelper.setSubTitle(null);
+					title = FormatUtils.formatSens(sens.text);
 				} else {
-					mHeaderHelper.setSubTitle(FormatUtils.formatSens(sens.text));
+					subtitle = FormatUtils.formatSens(sens.text);
 				}
-			} else {
-				mHeaderHelper.setSubTitle(null);
 			}
 		}
 
+		setTitle(title + (subtitle == "" ? "" : "\n" + subtitle));
 	}
 
 	public void setLineColor(final int backColor, final int textColor, final String lettre) {
 		setHeaderBackgroundColor(backColor, textColor);
-		mHeaderHelper.setCode(lettre);
+		setCode(lettre);
 	}
 
 	private void setHeaderBackgroundColor(final int backColor, final int textColor) {
 		if (backColor != Color.TRANSPARENT) {
-			mHeaderHelper.setColor(backColor, textColor);
+			setColor(backColor, textColor);
 		}
 	}
 
@@ -229,5 +227,4 @@ public class CommentaireDetailActivity extends SherlockActivity {
 
 		return title;
 	}
-
 }

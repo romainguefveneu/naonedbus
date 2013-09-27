@@ -24,7 +24,6 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.activity.impl.CommentaireDetailActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
@@ -32,6 +31,7 @@ import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
+import net.naonedbus.fragment.impl.CommentaireDetailDialogFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
 import net.naonedbus.security.NaonedbusClient;
@@ -46,7 +46,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -93,8 +94,9 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 	private ViewGroup mRoot;
 	private final Typeface mRobotoMedium;
 
-	public CommentairesCard(final Context context, final LoaderManager loaderManager) {
-		super(context, loaderManager, R.string.card_commentaires_title, R.layout.card_trafic);
+	public CommentairesCard(final Context context, final LoaderManager loaderManager,
+			final FragmentManager fragmentManager) {
+		super(context, loaderManager, fragmentManager, R.string.card_commentaires_title, R.layout.card_trafic);
 		getContext().registerReceiver(mIntentReceiver, intentFilter);
 		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
@@ -187,9 +189,12 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				final Intent intent = new Intent(getContext(), CommentaireDetailActivity.class);
-				intent.putExtra(CommentaireDetailActivity.PARAM_COMMENTAIRE, (Parcelable) commentaire);
-				getContext().startActivity(intent);
+				final Bundle bundle = new Bundle();
+				bundle.putParcelable(CommentaireDetailDialogFragment.PARAM_COMMENTAIRE, commentaire);
+
+				final DialogFragment dialogFragment = new CommentaireDetailDialogFragment();
+				dialogFragment.setArguments(bundle);
+				dialogFragment.show(getFragmentManager(), "CommentaireDetailFragment");
 			}
 		});
 
