@@ -353,10 +353,10 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	public static List<MainMenuItem> getMainMenuItems() {
 		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
 		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home, new MainFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning,
-				new InfoTraficFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction,
 				new ItineraireFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning,
+				new InfoTraficFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo,
 				new BicloosFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking,
