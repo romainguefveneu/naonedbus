@@ -60,10 +60,12 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 	}
 
 	private final Typeface robotoMedium;
+	private final Typeface robotoCondensed;
 
 	public CommentaireArrayAdapter(final Context context) {
 		super(context, R.layout.list_item_commentaire);
 		robotoMedium = FontUtils.getRobotoMedium(context);
+		robotoCondensed = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	@Override
@@ -89,7 +91,7 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 		holder.itemDate = (TextView) view.findViewById(R.id.itemTime);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 
-		holder.ligneCode.setTypeface(robotoMedium);
+		holder.ligneCode.setTypeface(robotoCondensed);
 		holder.itemDate.setTypeface(robotoMedium);
 
 		view.setTag(holder);

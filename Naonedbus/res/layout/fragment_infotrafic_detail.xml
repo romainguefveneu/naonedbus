@@ -17,67 +17,59 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/net.naonedbus"
-    style="@style/DefaultActivity" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultActivity"
+    android:minWidth="400dp"
+    android:padding="@dimen/padding_small" >
 
     <LinearLayout
-        android:id="@id/fragmentContent"
+        android:id="@id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_medium"
         android:orientation="vertical"
-        android:padding="@dimen/padding_small" >
+        android:paddingLeft="@dimen/padding_small" >
 
-        <LinearLayout
-            android:id="@id/headerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_small"
-            android:paddingLeft="@dimen/padding_small" >
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/BigTitle.Blue"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:singleLine="false"
+            android:text="title" />
 
-            <TextView
-                android:id="@id/itemTitle"
-                style="@style/BigTitle.Blue"
-                android:gravity="center_vertical"
-                android:maxLines="2"
-                android:singleLine="false"
-                android:text="title" />
-
-            <TextView
-                android:id="@id/itemTime"
-                style="@style/BigSubTitle.Time"
-                android:text="Subtitle" />
-        </LinearLayout>
-
-        <ScrollView
-            style="@style/Box"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/padding_medium"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@id/itemDescription"
-                style="@style/CommentDetail"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="@dimen/padding_small"
-                android:paddingRight="@dimen/padding_small" />
-        </ScrollView>
-
-        <com.gridlayout.GridLayout
-            xmlns:gridlayout="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/lignes"
-            style="@style/Box"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="@dimen/padding_small"
-            android:paddingRight="@dimen/padding_small"
-            gridlayout:alignmentMode="alignBounds"
-            gridlayout:columnOrderPreserved="true"
-            gridlayout:useDefaultMargins="false" />
+        <TextView
+            android:id="@id/itemTime"
+            style="@style/BigSubTitle.Time"
+            android:singleLine="false"
+            android:text="Subtitle" />
     </LinearLayout>
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/padding_medium"
+        android:layout_weight="1" >
+
+        <TextView
+            android:id="@id/itemDescription"
+            style="@style/CommentDetail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="@dimen/padding_small"
+            android:paddingRight="@dimen/padding_small" />
+    </ScrollView>
+
+    <com.gridlayout.GridLayout
+        xmlns:gridlayout="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/lignes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/padding_small"
+        android:paddingRight="@dimen/padding_small"
+        gridlayout:alignmentMode="alignBounds"
+        gridlayout:columnOrderPreserved="true"
+        gridlayout:useDefaultMargins="false" />
+
+</LinearLayout>

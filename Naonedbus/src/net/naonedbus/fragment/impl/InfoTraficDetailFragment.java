@@ -74,12 +74,12 @@ public class InfoTraficDetailFragment extends CustomFragment {
 
 	@Override
 	protected void bindView(final View view, final Bundle savedInstanceState) {
-		final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
+		final Typeface robotoBoldCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
 
 		mFragmentView = view;
 
 		mItemTitle = (TextView) view.findViewById(R.id.itemTitle);
-		mItemTitle.setTypeface(robotoLight);
+		mItemTitle.setTypeface(robotoBoldCondensed);
 
 		mItemDescription = (TextView) view.findViewById(R.id.itemDescription);
 
@@ -123,11 +123,14 @@ public class InfoTraficDetailFragment extends CustomFragment {
 
 					final int newItemWidth = innerWidth / columnCount - dividerPadding / 2;
 
+					final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
+
 					for (final Ligne l : listLignes) {
 						final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item_medium,
 								mLignesView, false);
 						textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
 						textView.setText(l.getLettre());
+						textView.setTypeface(robotoCondensed);
 						textView.setTextColor(l.getCouleurTexte());
 
 						final LayoutParams layoutParams = textView.getLayoutParams();

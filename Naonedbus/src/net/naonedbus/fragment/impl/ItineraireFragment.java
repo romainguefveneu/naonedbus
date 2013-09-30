@@ -25,7 +25,6 @@ import java.util.List;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AddressSearchActivity;
-import net.naonedbus.activity.impl.ItineraryDetailActivity;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.ItineraryWrapper;
@@ -166,19 +165,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 		super.onListItemClick(l, v, position, id);
 
 		final Bundle bundle = new Bundle();
-		bundle.putParcelableArrayList(ItineraryDetailActivity.PARAM_ITINERARIES, new ArrayList<ItineraryWrapper>(
-				mItineraryWrappers));
-		bundle.putString(ItineraryDetailActivity.PARAM_FROM_PLACE, mFromAddressTextView.getText().toString());
-		bundle.putString(ItineraryDetailActivity.PARAM_TO_PLACE, mToAddressTextView.getText().toString());
-		bundle.putString(ItineraryDetailActivity.PARAM_DATE, mDateAndTimeLabel.getText().toString());
-
-		bundle.putInt(ItineraryDetailActivity.PARAM_SELECTED_INDEX, position);
-
-		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_FROM_COLOR, mIconFromColor);
-		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_FROM_RES, mIconFromResId);
-		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_TO_COLOR, mIconToColor);
-		bundle.putInt(ItineraryDetailActivity.PARAM_ICON_TO_RES, mIconToResId);
-
 		bundle.putString(ItineraryDetailFragment.PARAM_ITINERARY_FROM, mFromAddressTextView.getText().toString());
 		bundle.putString(ItineraryDetailFragment.PARAM_ITINERARY_TO, mToAddressTextView.getText().toString());
 		bundle.putParcelable(ItineraryDetailFragment.PARAM_ITINERARY_WRAPPER, mItineraryWrappers.get(position));

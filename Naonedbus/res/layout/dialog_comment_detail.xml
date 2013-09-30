@@ -19,6 +19,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultActivity"
+    android:minWidth="400dp"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -49,7 +50,7 @@
 
         <TextView
             android:id="@id/headerSubTitle"
-            style="@style/ItemSecondaryText.SingleLine.Small"
+            style="@style/ItemSecondaryText.SingleLine"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"

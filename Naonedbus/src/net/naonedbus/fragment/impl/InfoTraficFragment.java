@@ -23,13 +23,11 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.activity.impl.InfoTraficDetailActivity;
 import net.naonedbus.bean.EmptyInfoTrafic;
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.InfoTraficManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
@@ -38,6 +36,7 @@ import net.naonedbus.widget.indexer.impl.InfoTraficIndexer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -46,14 +45,14 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class TanActuFragment extends CustomListFragment {
+public class InfoTraficFragment extends CustomListFragment {
 
 	public static final String PARAM_CODE_LIGNE = "codeLigne";
 
 	private MenuItem mRefreshMenuItem;
 	private String mCodeLigne;
 
-	public TanActuFragment() {
+	public InfoTraficFragment() {
 		super(R.layout.fragment_listview_box);
 	}
 
@@ -101,9 +100,12 @@ public class TanActuFragment extends CustomListFragment {
 		super.onListItemClick(l, v, position, id);
 		final InfoTrafic item = (InfoTrafic) getListAdapter().getItem(position);
 
-		final ParamIntent intent = new ParamIntent(getActivity(), InfoTraficDetailActivity.class);
-		intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, item);
-		startActivity(intent);
+		final Bundle bundle = new Bundle();
+		bundle.putParcelable(InfoTraficDetailFragment.PARAM_INFO_TRAFIC, item);
+
+		final DialogFragment dialogFragment = new InfoTraficDetailDialogFragment();
+		dialogFragment.setArguments(bundle);
+		dialogFragment.show(getChildFragmentManager(), "InfoTraficDetailDialogFragment");
 	}
 
 	@Override

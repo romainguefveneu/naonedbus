@@ -83,12 +83,6 @@
             android:name=".activity.impl.BiclooDetailActivity"
             android:label="@string/emptyString" />
         <activity
-            android:name=".activity.impl.CommentaireDetailActivity"
-            android:label="@string/emptyString" />
-        <activity
-            android:name=".activity.impl.InfoTraficDetailActivity"
-            android:label="@string/title_activity_actu" />
-        <activity
             android:name=".activity.impl.SettingsActivity"
             android:label="@string/title_activity_parametres" />
         <activity
@@ -124,9 +118,6 @@
             android:name=".activity.impl.ItineraireActivity"
             android:label="@string/title_activity_itineraire"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.impl.ItineraryDetailActivity"
-            android:label="@string/title_activity_itineraire" />
         <activity
             android:name=".activity.impl.ParcoursActivity"
             android:label="@string/emptyString" />

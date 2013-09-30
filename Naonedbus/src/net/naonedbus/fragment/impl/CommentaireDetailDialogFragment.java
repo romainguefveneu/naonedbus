@@ -64,12 +64,15 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 		SmileyParser.init(getActivity());
 		final SmileyParser simSmileyParser = SmileyParser.getInstance();
 
-		final Typeface robotoMedium = FontUtils.getRobotoMedium(getActivity());
+		final Typeface condensed = FontUtils.getRobotoBoldCondensed(getSherlockActivity());
 
 		mHeaderView = view.findViewById(R.id.headerView);
 		mTitle = (TextView) view.findViewById(R.id.headerTitle);
+		mTitle.setTypeface(condensed);
 		mSubtitle = (TextView) view.findViewById(R.id.headerSubTitle);
+		mSubtitle.setTypeface(condensed);
 		mItemCode = (TextView) view.findViewById(R.id.itemCode);
+		mItemCode.setTypeface(condensed);
 		mItemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
 		mHeaderDivider = view.findViewById(R.id.headerDivider);
 		mImageView = (ImageView) view.findViewById(R.id.menu_share);
@@ -86,7 +89,6 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 		mItemDescription.setText(simSmileyParser.addSmileySpans(mCommentaire.getMessage()));
 
-		mItemDate.setTypeface(robotoMedium);
 		mItemDate.setText(dateFormat.format(mCommentaire.getTimestamp()) + " "
 				+ timeFormat.format(mCommentaire.getTimestamp()));
 

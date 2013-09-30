@@ -23,11 +23,11 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.InfoTraficDetailActivity;
 import net.naonedbus.bean.InfoTrafic;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.card.Card;
-import net.naonedbus.intent.ParamIntent;
+import net.naonedbus.fragment.impl.InfoTraficDetailDialogFragment;
+import net.naonedbus.fragment.impl.InfoTraficDetailFragment;
 import net.naonedbus.manager.impl.InfoTraficManager;
 
 import org.json.JSONException;
@@ -35,6 +35,7 @@ import org.json.JSONException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -117,9 +118,12 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				final ParamIntent intent = new ParamIntent(getContext(), InfoTraficDetailActivity.class);
-				intent.putExtra(InfoTraficDetailActivity.PARAM_INFO_TRAFIC, infoTrafic);
-				getContext().startActivity(intent);
+				final Bundle bundle = new Bundle();
+				bundle.putParcelable(InfoTraficDetailFragment.PARAM_INFO_TRAFIC, infoTrafic);
+
+				final DialogFragment dialogFragment = new InfoTraficDetailDialogFragment();
+				dialogFragment.setArguments(bundle);
+				dialogFragment.show(getFragmentManager(), "InfoTraficDetailDialogFragment");
 			}
 		});
 

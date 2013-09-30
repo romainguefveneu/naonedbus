@@ -104,7 +104,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 					viewHolder.gridLayout, false);
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
 			textView.setText(l.getLettre());
-			textView.setTypeface(mRobotoMedium);
+			textView.setTypeface(mRobotoCondensed);
 			textView.setTextColor(l.getCouleurTexte());
 
 			viewHolder.gridLayout.addView(textView);
