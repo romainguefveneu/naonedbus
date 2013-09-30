@@ -35,15 +35,15 @@ import android.widget.TextView;
 
 public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 
-	private Typeface mTypeface;
+	private final Typeface mTypeface;
 
-	public ParcoursAdapter(Context context, List<Parcours> objects) {
+	public ParcoursAdapter(final Context context, final List<Parcours> objects) {
 		super(context, 0, objects);
-		mTypeface = FontUtils.getRobotoMedium(context);
+		mTypeface = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_parcours, null);
 			bindViewHolder(convertView);
@@ -52,7 +52,7 @@ public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 		return convertView;
 	}
 
-	protected void bindView(View view, int position) {
+	protected void bindView(final View view, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Parcours parcours = getItem(position);
 		holder.itemSymbole.setText(parcours.lettre);
@@ -61,7 +61,7 @@ public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 		holder.itemTitle.setText(FormatUtils.formatSens(parcours.nomSens));
 	}
 
-	protected void bindViewHolder(View view) {
+	protected void bindViewHolder(final View view) {
 		final ViewHolder holder;
 		holder = new ViewHolder();
 		holder.itemSymbole = (TextView) view.findViewById(R.id.itemSymbole);
