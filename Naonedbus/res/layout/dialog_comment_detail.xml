@@ -22,9 +22,10 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@id/headerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_medium" >
+        android:layout_height="58dip"
+        android:padding="@dimen/padding_small" >
 
         <ImageView
             android:id="@id/itemSymbole"
@@ -35,9 +36,22 @@
             style="@style/ItemSymbole" />
 
         <TextView
-            android:id="@id/itemTitle"
-            style="@style/ItemPrimaryText"
+            android:id="@id/headerTitle"
+            style="@style/ItemPrimaryText.SingleLine"
             android:layout_height="wrap_content"
+            android:layout_above="@id/headerSubTitle"
+            android:layout_alignParentTop="true"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/padding_small"
+            android:layout_toLeftOf="@id/menu_share"
+            android:layout_toRightOf="@id/itemCode" />
+
+        <TextView
+            android:id="@id/headerSubTitle"
+            style="@style/ItemSecondaryText.SingleLine.Small"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/padding_small"
             android:layout_toLeftOf="@id/menu_share"

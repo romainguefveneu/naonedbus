@@ -14,9 +14,11 @@ import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.utils.SmileyParser;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,10 +32,13 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 	public static final String PARAM_COMMENTAIRE = "commentaire";
 
+	private View mHeaderView;
 	private TextView mTitle;
+	private TextView mSubtitle;
 	private TextView mItemCode;
 	private ImageView mItemSymbole;
 	private View mHeaderDivider;
+	private ImageView mImageView;
 
 	private Commentaire mCommentaire;
 	private TextView mItemDescription;
@@ -61,11 +66,14 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getActivity());
 
-		mTitle = (TextView) view.findViewById(R.id.itemTitle);
+		mHeaderView = view.findViewById(R.id.headerView);
+		mTitle = (TextView) view.findViewById(R.id.headerTitle);
+		mSubtitle = (TextView) view.findViewById(R.id.headerSubTitle);
 		mItemCode = (TextView) view.findViewById(R.id.itemCode);
 		mItemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
 		mHeaderDivider = view.findViewById(R.id.headerDivider);
-		view.findViewById(R.id.menu_share).setOnClickListener(new OnClickListener() {
+		mImageView = (ImageView) view.findViewById(R.id.menu_share);
+		mImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				shareComment();
@@ -86,24 +94,30 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 		mItemSource.setText(getString(R.string.source, getString(CommentaireFomatter.getSourceResId(source))));
 
+		final Resources res = getResources();
+
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(source)) {
 
-			setSymbole(R.drawable.logo_tan, getResources().getColor(R.color.message_tan_header));
+			setSymbole(R.drawable.logo_tan, res.getColor(R.color.message_tan_header),
+					res.getColor(R.color.message_tan_text));
 			setTitle(getString(R.string.commentaire_tan_info_trafic));
 
 		} else if (NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
 
-			setSymbole(R.drawable.logo_tan, getResources().getColor(R.color.message_tan_header));
+			setSymbole(R.drawable.logo_tan, res.getColor(R.color.message_tan_header),
+					res.getColor(R.color.message_tan_text));
 			setTitle(getString(R.string.commentaire_tan_actus));
 
 		} else if (NaonedbusClient.TWITTER_TAN_INFOS.name().equals(source)) {
 
-			setSymbole(R.drawable.logo_taninfos, getResources().getColor(R.color.message_taninfos_header));
+			setSymbole(R.drawable.logo_taninfos, res.getColor(R.color.message_taninfos_header),
+					res.getColor(R.color.message_taninfos_text));
 			setTitle(getString(R.string.commentaire_tan_infos));
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(source)) {
 
-			setSymbole(R.drawable.ic_launcher, getResources().getColor(R.color.message_service_header));
+			setSymbole(R.drawable.ic_launcher, res.getColor(R.color.message_service_header),
+					res.getColor(R.color.message_service_text));
 			setTitle(getString(R.string.commentaire_message_service));
 
 		} else {
@@ -117,28 +131,33 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 	public void setCode(final CharSequence code, final int backColor, final int textColor) {
 		mItemCode.setText(code);
-		mItemCode.setBackgroundDrawable(ColorUtils.getRoundedGradiant(backColor));
 		mItemCode.setTextColor(textColor);
+		mTitle.setTextColor(textColor);
+		mSubtitle.setTextColor(textColor & 0xaaffffff);
 
-		setDividerColor(backColor);
+		setHeaderColor(backColor, textColor);
 
 		mItemSymbole.setVisibility(View.GONE);
 	}
 
-	public void setSymbole(final int resId, final int backColor) {
+	public void setSymbole(final int resId, final int backColor, final int textColor) {
 		mItemSymbole.setImageResource(resId);
-		mItemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(backColor));
+		mTitle.setTextColor(textColor);
+		mSubtitle.setVisibility(View.GONE);
 
-		setDividerColor(backColor);
+		setHeaderColor(backColor, textColor);
 
 		mItemCode.setVisibility(View.INVISIBLE);
 	}
 
-	public void setDividerColor(int color) {
-		if (color == Color.TRANSPARENT) {
-			mHeaderDivider.setBackgroundColor(Color.LTGRAY);
+	public void setHeaderColor(final int backColor, final int textColor) {
+		mHeaderView.setBackgroundDrawable(ColorUtils.getGradiant(backColor));
+		mHeaderDivider.setBackgroundColor(ColorUtils.getDarkerColor(backColor));
+
+		if (textColor == Color.WHITE) {
+			mImageView.setImageResource(R.drawable.ic_action_share);
 		} else {
-			mHeaderDivider.setBackgroundColor(color);
+			mImageView.setImageResource(R.drawable.ic_action_share_light);
 		}
 	}
 
@@ -177,7 +196,7 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 			setCode(ligne.getLettre(), ligne.getCouleur(), ligne.getCouleurTexte());
 			title = ligne.getNom();
 		} else {
-			setCode(FormatUtils.TOUT_LE_RESEAU, Color.TRANSPARENT, Color.BLACK);
+			setCode(FormatUtils.TOUT_LE_RESEAU, Color.WHITE, Color.BLACK);
 		}
 
 		if (arret == null && sens == null && ligne == null) {
@@ -195,7 +214,13 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 			}
 		}
 
-		setTitle(title + (subtitle == "" ? "" : "\n" + subtitle));
+		mTitle.setText(title);
+		if (TextUtils.isEmpty(subtitle)) {
+			mSubtitle.setVisibility(View.GONE);
+		} else {
+			mSubtitle.setText(subtitle);
+		}
+
 	}
 
 	protected String getCommentaireTitle(final Commentaire commentaire) {
