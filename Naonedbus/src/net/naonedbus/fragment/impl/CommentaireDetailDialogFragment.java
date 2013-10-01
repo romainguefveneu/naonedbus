@@ -1,7 +1,5 @@
 package net.naonedbus.fragment.impl;
 
-import java.text.DateFormat;
-
 import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.Commentaire;
@@ -19,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,8 +58,6 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.dialog_comment_detail, null);
 
-		final DateFormat dateFormat = android.text.format.DateFormat.getLongDateFormat(getActivity());
-		final DateFormat timeFormat = android.text.format.DateFormat.getTimeFormat(getActivity());
 		SmileyParser.init(getActivity());
 		final SmileyParser simSmileyParser = SmileyParser.getInstance();
 
@@ -89,8 +86,8 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 		mItemDescription.setText(simSmileyParser.addSmileySpans(mCommentaire.getMessage()));
 
-		mItemDate.setText(dateFormat.format(mCommentaire.getTimestamp()) + " "
-				+ timeFormat.format(mCommentaire.getTimestamp()));
+		mItemDate.setText(DateUtils.formatDateTime(view.getContext(), mCommentaire.getTimestamp(),
+				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
 
 		final String source = mCommentaire.getSource();
 

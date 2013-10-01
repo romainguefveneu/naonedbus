@@ -18,14 +18,11 @@
  */
 package net.naonedbus.helper;
 
-import java.text.DateFormatSymbols;
-
-import net.naonedbus.R;
-
 import org.joda.time.DateTime;
 import org.joda.time.base.BaseDateTime;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 
 /**
  * Helper pour le formattage d'une date pour un format plus human-friendly.
@@ -37,34 +34,30 @@ public class DateTimeFormatHelper {
 
 	private static final String ARROW = " \u2192 ";
 
-	private final Context context;
-	private final DateTime now;
-	private final String[] months;
+	private final Context mContext;
 
 	public DateTimeFormatHelper(final Context context) {
-		this.context = context;
-		this.now = new DateTime();
-		this.months = new DateFormatSymbols().getMonths();
+		mContext = context;
 	}
 
 	/**
-	 * Formatter 2 dates en évitant de répéter 2 fois le même jour
+	 * Formater 2 dates en évitant de répéter 2 fois le même jour
 	 * 
 	 * @param debut
 	 * @param fin
-	 * @return Les dates formattée.
+	 * @return Les dates formatées.
 	 */
 	public String formatDuree(final DateTime debut, final DateTime fin) {
 		final StringBuilder builder = new StringBuilder();
-		builder.append(format(debut));
+		builder.append(formatDateTime(debut));
 
 		if (fin != null) {
 			builder.append(ARROW);
 			if (debut.toDateMidnight().equals(fin.toDateMidnight())) {
 				// Même jour
-				formatTime(fin, builder);
+				builder.append(DateUtils.formatDateTime(this.mContext, fin.getMillis(), DateUtils.FORMAT_SHOW_TIME));
 			} else {
-				builder.append(format(fin));
+				builder.append(formatDateTime(fin));
 			}
 		}
 
@@ -72,61 +65,14 @@ public class DateTimeFormatHelper {
 	}
 
 	/**
-	 * Formatter la date selon un format plus human-friendly.
+	 * Formater la date selon un format plus human-friendly.
 	 * 
 	 * @param dateTime
-	 * @return La date formattée.
+	 * @return La date formatée.
 	 */
-	public String format(final BaseDateTime dateTime) {
-		final StringBuilder builder = new StringBuilder();
-
-		if (dateTime.getYear() == now.getYear()) {
-			// Même année, on regarde le jour
-			if (dateTime.getDayOfYear() == now.getDayOfYear()) {
-				builder.append(context.getString(R.string.today));
-			} else if (dateTime.getDayOfYear() == now.getDayOfYear() - 1) {
-				builder.append(context.getString(R.string.yesterday));
-			} else if (dateTime.getDayOfYear() == now.getDayOfYear() + 1) {
-				builder.append(context.getString(R.string.tomorrow));
-			} else {
-				builder.append(dateTime.getDayOfMonth()).append(" ").append(months[dateTime.getMonthOfYear() - 1]);
-			}
-		} else {
-			// On affiche toute la date
-			builder.append(dateTime.getDayOfMonth()).append("/").append(twoDigitFormat(dateTime.getMonthOfYear()))
-					.append("/").append(dateTime.getYear());
-		}
-		builder.append(" ");
-
-		// Heure
-		formatTime(dateTime, builder);
-
-		return builder.toString();
-	}
-
-	/**
-	 * Formatter l'heure.
-	 * 
-	 * @param dateTime
-	 * @return L'heure formattée.
-	 */
-	public void formatTime(final BaseDateTime dateTime, final StringBuilder builder) {
-		builder.append(dateTime.getHourOfDay()).append("h").append(twoDigitFormat(dateTime.getMinuteOfHour()));
-	}
-
-	/**
-	 * Formatter un nombre sur 2 caractères.
-	 * 
-	 * @param value
-	 * @return Le nombre avec un 0 préfixé si besoin.
-	 */
-
-	private String twoDigitFormat(final int value) {
-		if (value < 10) {
-			return "0" + value;
-		} else {
-			return String.valueOf(value);
-		}
+	public String formatDateTime(final BaseDateTime dateTime) {
+		return DateUtils.formatDateTime(this.mContext, dateTime.getMillis(), DateUtils.FORMAT_SHOW_DATE
+				| DateUtils.FORMAT_SHOW_TIME);
 	}
 
 }

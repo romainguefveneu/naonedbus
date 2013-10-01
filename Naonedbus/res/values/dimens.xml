@@ -29,6 +29,7 @@
     <dimen name="headeractivity_height">60dp</dimen>
     <dimen name="bigcode_text_size">40sp</dimen>
     <dimen name="bigtitle_text_size">24sp</dimen>
+    <dimen name="bigtitle_text_size_small">24sp</dimen>
     <dimen name="bigsens_text_size">12sp</dimen>
     <dimen name="bigsubtitle_text_size">16sp</dimen>
     <dimen name="bigsubtitle_height">28dp</dimen>

@@ -38,6 +38,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
-import com.ocpsoft.pretty.time.PrettyTime;
 
 public class ParkingDetailActivity extends SherlockMapActivity {
 
@@ -57,7 +57,6 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 
 	protected static final String NAVIGATION_INTENT = "google.navigation:q=%f,%f";
 	protected static final String SMS_NAVIGATION_URL = "maps.google.com/?q=%f,%f";
-	protected static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.getDefault());
 
 	private final Map<Class<?>, ParkingDetailAdapter> mAadapterMap = new HashMap<Class<?>, ParkingDetailAdapter>();
 
@@ -295,7 +294,8 @@ class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 			activity.mPlacesTotales.setText(String.valueOf(parking.getPlacesTotales()));
 		}
 
-		activity.mItemDate.setText(ParkingDetailActivity.PRETTY_TIME.format(parking.getUpdateDate()));
+		activity.mItemDate.setText(DateUtils.getRelativeTimeSpanString(parking.getUpdateDate().getTime(),
+				System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString());
 	}
 
 	@Override

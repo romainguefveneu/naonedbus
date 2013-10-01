@@ -18,7 +18,6 @@
  */
 package net.naonedbus.activity.impl;
 
-import java.util.Date;
 import java.util.Locale;
 
 import net.naonedbus.R;
@@ -33,6 +32,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +44,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
-import com.ocpsoft.pretty.time.PrettyTime;
 
 public class BiclooDetailActivity extends SherlockMapActivity {
 
@@ -52,7 +51,6 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 
 	protected static final String NAVIGATION_INTENT = "google.navigation:q=%f,%f";
 	protected static final String SMS_NAVIGATION_URL = "maps.google.com/?q=%f,%f";
-	protected static final PrettyTime PRETTY_TIME = new PrettyTime(Locale.getDefault());
 
 	private FavoriBiclooManager mFavoriBiclooManager;
 
@@ -166,7 +164,8 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 
 		mPaiement.setText(bicloo.isBanking() ? R.string.bicloo_paiement_disponible
 				: R.string.bicloo_paiement_indisponible);
-		mItemDate.setText(PRETTY_TIME.format(new Date(bicloo.getLastUpdate())));
+		mItemDate.setText(DateUtils.getRelativeTimeSpanString(bicloo.getLastUpdate(), System.currentTimeMillis(),
+				DateUtils.MINUTE_IN_MILLIS).toString());
 
 		if (bicloo.getLocation() != null) {
 			mMapController.animateTo(getGeoPoint(bicloo));

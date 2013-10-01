@@ -20,7 +20,6 @@ package net.naonedbus.formatter;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import net.naonedbus.R;
@@ -40,8 +39,7 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 
 import android.content.Context;
-
-import com.ocpsoft.pretty.time.PrettyTime;
+import android.text.format.DateUtils;
 
 public class CommentaireFomatter {
 
@@ -63,8 +61,6 @@ public class CommentaireFomatter {
 		sTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.commentaire_message_service);
 	}
 
-	private final PrettyTime mPrettyTime;
-
 	private final Context mContext;
 	private final SmileyParser mSmileyParser;
 
@@ -78,7 +74,6 @@ public class CommentaireFomatter {
 		this.mContext = context;
 
 		SmileyParser.init(context);
-		mPrettyTime = new PrettyTime(Locale.getDefault());
 
 		mNow = new DateMidnight();
 		mYesterday = mNow.minusDays(1);
@@ -113,7 +108,8 @@ public class CommentaireFomatter {
 	public void formatValues(final Commentaire commentaire) {
 		commentaire.setMessage(mSmileyParser.addSmileySpans(commentaire.getMessage()).toString());
 		commentaire.setDateTime(new DateTime(commentaire.getTimestamp()));
-		commentaire.setDelay(mPrettyTime.format(commentaire.getDateTime().toDate()));
+		commentaire.setDelay(DateUtils.getRelativeTimeSpanString(commentaire.getDateTime().getMillis(),
+				System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString());
 		commentaire.setSection(getCommentaireSection(commentaire));
 		setCommentaireLigne(commentaire);
 		setCommentaireSens(commentaire);
