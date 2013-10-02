@@ -1,30 +1,27 @@
-[submodule "ActionBarSherlock"]
-	path = ActionBarSherlock
+[submodule "third-party/ActionBarSherlock"]
+	path = third-party/ActionBarSherlock
 	url = https://github.com/JakeWharton/ActionBarSherlock.git
-[submodule "ShowcaseView"]
-	path = ShowcaseView
+[submodule "third-party/ShowcaseView"]
+	path = third-party/ShowcaseView
 	url = https://github.com/romainguefveneu/ShowcaseView.git
-[submodule "Android-ViewPagerIndicator"]
-	path = Android-ViewPagerIndicator
+[submodule "third-party/Android-ViewPagerIndicator"]
+	path = third-party/Android-ViewPagerIndicator
 	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git
-[submodule "GridLayout"]
-	path = GridLayout
+[submodule "third-party/GridLayout"]
+	path = third-party/GridLayout
 	url = https://github.com/dlew/android-gridlayout.git
-[submodule "Gesture-ImageView"]
-	path = Gesture-ImageView
+[submodule "third-party/Gesture-ImageView"]
+	path = third-party/Gesture-ImageView
 	url = https://github.com/jasonpolites/gesture-imageview.git
-[submodule "android-menudrawer"]
-	path = android-menudrawer
-	url = https://github.com/SimonVT/android-menudrawer.git
-[submodule "Crouton"]
-	path = Crouton
+[submodule "third-party/Crouton"]
+	path = third-party/Crouton
 	url = https://github.com/keyboardsurfer/Crouton.git
-[submodule "drag-sort-listview"]
-	path = drag-sort-listview
+[submodule "third-party/drag-sort-listview"]
+	path = third-party/drag-sort-listview
 	url = https://github.com/bauerca/drag-sort-listview.git
-[submodule "PagerSlidingTabStrip"]
-	path = PagerSlidingTabStrip
+[submodule "third-party/PagerSlidingTabStrip"]
+	path = third-party/PagerSlidingTabStrip
 	url = https://github.com/romainguefveneu/PagerSlidingTabStrip.git
-[submodule "clusterkraf"]
-	path = clusterkraf
+[submodule "third-party/clusterkraf"]
+	path = third-party/clusterkraf
 	url = https://github.com/romainguefveneu/clusterkraf.git

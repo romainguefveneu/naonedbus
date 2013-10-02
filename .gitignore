@@ -1,9 +1,14 @@
 .metadata/
-Naonedbus/.idea/
-Naonedbus/.settings/
+.idea/
+.settings/
 google-play-services_lib/
 .checkstyle
 build.xml
+*.keystore
+ant.properties
+ant-profiles/
+ant-templates/
+third-party/
 
 # built application files
 *.apk
