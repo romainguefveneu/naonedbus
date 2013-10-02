@@ -46,6 +46,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
 @SuppressWarnings("deprecation")
@@ -72,6 +73,18 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 		initNavigationHome(preferences);
 		initCalendar(preferences);
 		initClearCache(preferences);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void initNavigationHome(final SharedPreferences preferences) {
