@@ -181,7 +181,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 	 */
 	private void clearCacheHoraires() {
 		final HoraireManager horaireManager = HoraireManager.getInstance();
-		horaireManager.clearAllHoraires(getContentResolver());
+		horaireManager.clearSchedules(getContentResolver());
 		clearWebviewCache();
 	}
 

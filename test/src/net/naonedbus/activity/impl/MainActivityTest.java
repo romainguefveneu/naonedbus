@@ -30,11 +30,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		assertNotNull(arret);
 
 		final HoraireManager horaireManager = HoraireManager.getInstance();
-		horaireManager.clearAllHoraires(contentResolver);
+		horaireManager.clearSchedules(contentResolver);
 
 		final DateMidnight date = new DateMidnight();
 
-		final int threadCount = 50;
+		final int threadCount = 10;
 		final CountDownLatch latch = new CountDownLatch(threadCount);
 		for (int i = 0; i < threadCount; i++) {
 			final Thread thread = new Thread(new TimeFetcherTask(contentResolver, latch, arret, date));
@@ -43,7 +43,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		latch.await();
 	}
 
-	private static class TimeFetcherTask implements Runnable {
+	class TimeFetcherTask implements Runnable {
 
 		private final Arret mArret;
 		private final DateMidnight mDate;
@@ -64,12 +64,12 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 			final MutableDateTime mutableDateTime = new MutableDateTime();
 
 			try {
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 20; i++) {
 					final Random random = new Random(System.currentTimeMillis());
 					if (random.nextBoolean())
-						horaireManager.clearAllHoraires(mContentResolver);
+						horaireManager.clearSchedules(mContentResolver);
 
-					final List<Horaire> horaires = horaireManager.getHoraires(mContentResolver, mArret, mDate);
+					final List<Horaire> horaires = horaireManager.getSchedules(mContentResolver, mArret, mDate);
 					assertTrue(horaires.size() > 0);
 
 					for (final Horaire horaire : horaires) {

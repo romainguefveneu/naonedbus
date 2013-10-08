@@ -30,7 +30,7 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.horaire.Horaire;
-import net.naonedbus.bean.horaire.HoraireToken;
+import net.naonedbus.bean.horaire.ScheduleToken;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.HoraireProvider;
 import net.naonedbus.provider.table.HoraireTable;
@@ -57,13 +57,13 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	private static final int DAYS_IN_CACHE = 3;
 	private static final int END_OF_TRIP_HOURS = 4;
 
-	private static Set<HoraireToken> emptyHoraires = new HashSet<HoraireToken>();
-
-	private static HoraireManager instance;
+	private static HoraireManager sInstance;
 
 	private final HoraireController mController;
-	private final ConcurrentLinkedQueue<NextHoraireTask> mHorairesTasksQueue;
+	private final ConcurrentLinkedQueue<NextHoraireTask> mSchedulesTasksQueue;
+	private final Set<ScheduleToken> mEmptySchedules;
 	private Thread mLoadThread;
+	private Object mDatabaseLock;
 
 	private int mColId;
 	private int mColTimestamp;
@@ -74,16 +74,18 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * Make it singleton !
 	 */
 	public static synchronized HoraireManager getInstance() {
-		if (instance == null) {
-			instance = new HoraireManager();
+		if (sInstance == null) {
+			sInstance = new HoraireManager();
 		}
-		return instance;
+		return sInstance;
 	}
 
 	private HoraireManager() {
 		super(HoraireProvider.CONTENT_URI);
 		mController = new HoraireController();
-		mHorairesTasksQueue = new ConcurrentLinkedQueue<NextHoraireTask>();
+		mSchedulesTasksQueue = new ConcurrentLinkedQueue<NextHoraireTask>();
+		mEmptySchedules = new HashSet<ScheduleToken>();
+		mDatabaseLock = new Object();
 	}
 
 	@Override
@@ -106,7 +108,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	/**
-	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée
+	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée.
 	 * 
 	 * @return {@code true} si le cache contient tous les horaires pour l'arret
 	 *         et la date demandée {@code false} si les données ne sont pas en
@@ -117,7 +119,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	/**
-	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée
+	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée.
 	 * 
 	 * @return {@code true} si le cache contient tous les horaires pour l'arret
 	 *         et la date demandée {@code false} si les données ne sont pas en
@@ -125,8 +127,9 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 */
 	public boolean isInDB(final ContentResolver contentResolver, final Arret arret, final DateMidnight date,
 			final int count) {
-		final HoraireToken flag = new HoraireToken(date.getMillis(), arret.getId());
-		if (emptyHoraires.contains(flag))
+
+		final ScheduleToken token = new ScheduleToken(date.getMillis(), arret.getId());
+		if (mEmptySchedules.contains(token))
 			return true;
 
 		final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
@@ -134,32 +137,36 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
 		builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
 
-		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
-		final int cursorCount = c.getCount();
-		c.close();
-
-		return cursorCount >= count;
+		synchronized (mDatabaseLock) {
+			final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
+			final int cursorCount = c.getCount();
+			c.close();
+			return cursorCount >= count;
+		}
 	}
 
 	/**
-	 * Supprimer les anciens horaires
+	 * Supprimer les anciens horaires.
 	 */
-	public void clearOldHoraires(final ContentResolver contentResolver) {
+	public void clearOldSchedules(final ContentResolver contentResolver) {
 		if (DBG)
 			Log.i(LOG_TAG, "Nettoyage du cache horaires");
 
-		contentResolver.delete(HoraireProvider.CONTENT_URI, HoraireTable.DAY_TRIP + " < ?",
-				new String[] { String.valueOf(new DateMidnight().getMillis()) });
+		synchronized (mDatabaseLock) {
+			contentResolver.delete(HoraireProvider.CONTENT_URI, HoraireTable.DAY_TRIP + " < ?",
+					new String[] { String.valueOf(new DateMidnight().getMillis()) });
+		}
 	}
 
 	/**
 	 * Supprimer tous les horaires
 	 */
-	public void clearAllHoraires(final ContentResolver contentResolver) {
+	public void clearSchedules(final ContentResolver contentResolver) {
 		if (DBG)
 			Log.i(LOG_TAG, "Suppression du cache horaires");
-
-		contentResolver.delete(HoraireProvider.CONTENT_URI, null, null);
+		synchronized (mDatabaseLock) {
+			contentResolver.delete(HoraireProvider.CONTENT_URI, null, null);
+		}
 	}
 
 	private ContentValues getContentValues(final Arret arret, final Horaire horaire) {
@@ -172,106 +179,114 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		return values;
 	}
 
-	private void fillDB(final ContentResolver contentResolver, final Arret arret, final HoraireToken flag,
-			final List<Horaire> horaires) {
+	private void fillDB(final ContentResolver contentResolver, final Arret arret, final ScheduleToken flag,
+			final List<Horaire> schedule) {
 		if (DBG)
-			Log.i(LOG_TAG, "Sauvegarde des horaires : " + arret + "\t" + new Date(flag.getDate()) + "\t"
-					+ (horaires == null ? null : horaires.size()));
+			Log.i(LOG_TAG, "Sauvegarde des horaires : " + arret + " \t " + new Date(flag.getDate()) + " \t "
+					+ (schedule == null ? null : schedule.size()));
 
-		if (horaires != null) {
-			if (horaires.size() == 0) {
+		if (schedule != null) {
+			if (schedule.size() == 0) {
 				// Ajouter un marqueur pour indiquer que l'on a déjà cherché
 				// les horaires
 
-				emptyHoraires.add(flag);
+				mEmptySchedules.add(flag);
 			} else {
 				// Ajouter les horaires dans la db
-				final ContentValues[] values = new ContentValues[horaires.size()];
-				for (int i = 0; i < horaires.size(); i++) {
-					values[i] = getContentValues(arret, horaires.get(i));
+				final ContentValues[] values = new ContentValues[schedule.size()];
+				for (int i = 0; i < schedule.size(); i++) {
+					values[i] = getContentValues(arret, schedule.get(i));
 				}
 
-				contentResolver.bulkInsert(HoraireProvider.CONTENT_URI, values);
+				synchronized (mDatabaseLock) {
+					contentResolver.bulkInsert(HoraireProvider.CONTENT_URI, values);
+				}
 			}
 		}
 	}
 
 	/**
-	 * Récupérer les horaires d'un arrêt
+	 * Récupérer les horaires d'un arrêt.
 	 * 
 	 * @throws IOException
 	 */
-	public synchronized List<Horaire> getHoraires(final ContentResolver contentResolver, final Arret arret,
-			final DateMidnight date) throws IOException {
-		return getHoraires(contentResolver, arret, date, null);
+	public List<Horaire> getSchedules(final ContentResolver contentResolver, final Arret arret, final DateMidnight date)
+			throws IOException {
+		return getSchedules(contentResolver, arret, date, null);
 	}
 
 	/**
-	 * Récupérer les horaires d'un arrêt
+	 * Récupérer les horaires d'un arrêt.
 	 * 
 	 * @throws IOException
 	 */
-	public synchronized List<Horaire> getHoraires(final ContentResolver contentResolver, final Arret arret,
+	public List<Horaire> getSchedules(final ContentResolver contentResolver, final Arret arret,
 			final DateMidnight date, final DateTime after) throws IOException {
 		// Le cache ne doit stocker que les horaires du jour et du lendemain.
+
 		final DateMidnight cacheLimit = new DateMidnight().plusDays(DAYS_IN_CACHE);
 		final DateMidnight today = new DateMidnight();
 		final DateTime now = new DateTime();
+		List<Horaire> horaires;
 
 		if (date.isBefore(cacheLimit)) {
 
-			final HoraireToken todayToken = new HoraireToken(date.getMillis(), arret.getId());
-			List<Horaire> horaires;
+			final ScheduleToken todayToken = new ScheduleToken(date.getMillis(), arret.getId());
 
-			if (!isInDB(contentResolver, arret, date) && (!emptyHoraires.contains(todayToken))) {
-				// Charger les horaires depuis le web et les stocker en base
+			// Partie atomique
+			synchronized (mDatabaseLock) {
 
-				if (date.isEqual(today) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
-					// Charger la veille si besoin (pour les horaires après
-					// minuit)
-					final HoraireToken yesterdayToken = new HoraireToken(date.minusDays(1).getMillis(), arret.getId());
-					if (!isInDB(contentResolver, arret, date.minusDays(1)) && (!emptyHoraires.contains(yesterdayToken))) {
-						horaires = mController.getAllFromWeb(arret, date.minusDays(1));
-						fillDB(contentResolver, arret, yesterdayToken, horaires);
+				if (!isInDB(contentResolver, arret, date) && (!mEmptySchedules.contains(todayToken))) {
+					// Charger les horaires depuis le web et les stocker en base
+
+					if (date.isEqual(today) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
+						// Charger la veille si besoin (pour les horaires après
+						// minuit)
+						final ScheduleToken yesterdayToken = new ScheduleToken(date.minusDays(1).getMillis(),
+								arret.getId());
+						if (!isInDB(contentResolver, arret, date.minusDays(1))
+								&& (!mEmptySchedules.contains(yesterdayToken))) {
+							horaires = mController.getAllFromWeb(arret, date.minusDays(1));
+							fillDB(contentResolver, arret, yesterdayToken, horaires);
+						}
 					}
+
+					horaires = mController.getAllFromWeb(arret, date);
+					fillDB(contentResolver, arret, todayToken, horaires);
 				}
 
-				horaires = mController.getAllFromWeb(arret, date);
-				fillDB(contentResolver, arret, todayToken, horaires);
+				// Charger les horaires depuis la base
+				final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
+				builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
+				builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
+				builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
+				builder.appendQueryParameter(HoraireProvider.PARAM_INCLUDE_LAST_DAY_TRIP, "true");
 
+				// Eviter l'affichage de doublons
+				if (after != null) {
+					builder.appendQueryParameter(HoraireProvider.PARAM_AFTER_TIME, String.valueOf(after.getMillis()));
+				}
+
+				final Cursor cursor = contentResolver.query(builder.build(), null, null, null, null);
+				horaires = getFromCursor(cursor);
+				cursor.close();
 			}
-
-			// Charger les horaires depuis la base
-			final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
-			builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
-			builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
-			builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
-			builder.appendQueryParameter(HoraireProvider.PARAM_INCLUDE_LAST_DAY_TRIP, "true");
-
-			// Eviter l'affichage de doublons
-			if (after != null) {
-				builder.appendQueryParameter(HoraireProvider.PARAM_AFTER_TIME, String.valueOf(after.getMillis()));
-			}
-
-			final Cursor cursor = contentResolver.query(builder.build(), null, null, null, null);
-			horaires = getFromCursor(cursor);
-			cursor.close();
-
-			return horaires;
 
 		} else {
-			return mController.getAllFromWeb(arret, date);
+			horaires = mController.getAllFromWeb(arret, date);
 		}
+
+		return horaires;
 	}
 
 	/**
-	 * Récupérer les prochains horaires d'un arrêt
+	 * Récupérer les prochains horaires d'un arrêt.
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getNextHoraires(final ContentResolver contentResolver, final Arret arret,
+	public List<Horaire> getNextSchedules(final ContentResolver contentResolver, final Arret arret,
 			final DateMidnight date, final int limit) throws IOException {
-		return getNextHoraires(contentResolver, arret, date, limit, 0);
+		return getNextSchedules(contentResolver, arret, date, limit, 0);
 	}
 
 	/**
@@ -279,54 +294,55 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getNextHoraires(final ContentResolver contentResolver, final Arret arret, DateMidnight date,
+	public List<Horaire> getNextSchedules(final ContentResolver contentResolver, final Arret arret, DateMidnight date,
 			final int limit, final int minuteDelay) throws IOException {
 		if (DBG)
 			Log.d(LOG_TAG, "getNextHoraires " + arret + " : " + date + "\t" + limit);
 
-		List<Horaire> horaires;
+		List<Horaire> schedules;
 		final long now = new DateTime().minusMinutes(minuteDelay).withSecondOfMinute(0).withMillisOfSecond(0)
 				.getMillis();
-		final List<Horaire> nextHoraires = new ArrayList<Horaire>();
-		int horairesCount = 0; // Juste renvoyer le bon nombre d'horaires
+		final List<Horaire> nextSchedules = new ArrayList<Horaire>();
+		int schedulesCount = 0; // Juste renvoyer le bon nombre d'horaires
 		int loopCount = 0; // Limiter le nombre d'itérations
 		DateTime after = null; // Dernier horaire chargé
 
 		do {
-			horaires = getHoraires(contentResolver, arret, date, after);
-			for (final Horaire horaire : horaires) {
-				if (horaire.getTimestamp() >= now) {
-					nextHoraires.add(horaire);
-					if (++horairesCount >= limit) {
+			schedules = getSchedules(contentResolver, arret, date, after);
+			for (final Horaire schedule : schedules) {
+				if (schedule.getTimestamp() >= now) {
+					nextSchedules.add(schedule);
+					if (++schedulesCount >= limit) {
 						break;
 					}
 				}
 			}
 
-			if (horaires.size() > 0)
-				after = new DateTime(horaires.get(horaires.size() - 1).getTimestamp());
+			if (schedules.size() > 0)
+				after = new DateTime(schedules.get(schedules.size() - 1).getTimestamp());
 			else
 				after = null;
 
 			date = date.plusDays(1);
 			loopCount++;
-		} while ((loopCount < 2) && (nextHoraires.size() < limit));
+		} while ((loopCount < 2) && (nextSchedules.size() < limit));
 
-		return nextHoraires;
+		return nextSchedules;
 	}
 
 	/**
-	 * Récupérer le nombre de minutes jusqu'au prochain horaire
+	 * Récupérer le nombre de minutes jusqu'au prochain horaire.
 	 * 
 	 * @throws IOException
 	 */
-	public Integer getMinutesToNextHoraire(final ContentResolver contentResolver, final Arret arret) throws IOException {
+	public Integer getMinutesToNextSchedule(final ContentResolver contentResolver, final Arret arret)
+			throws IOException {
 
-		final List<Horaire> nextHoraires = getNextHoraires(contentResolver, arret, new DateMidnight(), 1);
+		final List<Horaire> nextSchedules = getNextSchedules(contentResolver, arret, new DateMidnight(), 1);
 		Integer result = null;
 
-		if (nextHoraires.size() > 0) {
-			final Horaire next = nextHoraires.get(0);
+		if (nextSchedules.size() > 0) {
+			final Horaire next = nextSchedules.get(0);
 
 			final DateTime itemDateTime = new DateTime(next.getTimestamp()).withSecondOfMinute(0).withMillisOfSecond(0);
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
@@ -345,7 +361,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		if (DBG)
 			Log.i(LOG_TAG, "Planification de la tâche " + task);
 
-		mHorairesTasksQueue.add(task);
+		mSchedulesTasksQueue.add(task);
 		if (mLoadThread == null || !mLoadThread.isAlive()) {
 			mLoadThread = new Thread(loadHoraireTask);
 			mLoadThread.setPriority(Thread.MIN_PRIORITY);
@@ -368,7 +384,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			final DateMidnight today = new DateMidnight();
 			NextHoraireTask task;
 
-			while ((task = mHorairesTasksQueue.poll()) != null) {
+			while ((task = mSchedulesTasksQueue.poll()) != null) {
 				if (isInDB(task.getContext().getContentResolver(), task.getArret(), today)) {
 					onPostLoad(task);
 				} else {
@@ -386,7 +402,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 			try {
 
-				getNextHoraires(task.getContext().getContentResolver(), task.getArret(), today, task.getLimit());
+				getNextSchedules(task.getContext().getContentResolver(), task.getArret(), today, task.getLimit());
 
 			} catch (final IOException e) {
 				if (DBG)

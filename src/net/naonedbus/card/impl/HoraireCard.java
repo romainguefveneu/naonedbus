@@ -355,7 +355,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 			List<Horaire> horaires = null;
 
 			try {
-				horaires = mHoraireManager.getNextHoraires(getContext().getContentResolver(), mArret,
+				horaires = mHoraireManager.getNextSchedules(getContext().getContentResolver(), mArret,
 						new DateMidnight(), mHorairesCount, 5);
 			} catch (final IOException e) {
 				if (DBG)

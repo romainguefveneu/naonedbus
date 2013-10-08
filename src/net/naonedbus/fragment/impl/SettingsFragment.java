@@ -174,7 +174,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 */
 	private void clearCacheHoraires() {
 		final HoraireManager horaireManager = HoraireManager.getInstance();
-		horaireManager.clearAllHoraires(getActivity().getContentResolver());
+		horaireManager.clearSchedules(getActivity().getContentResolver());
 		clearWebviewCache();
 	}
 

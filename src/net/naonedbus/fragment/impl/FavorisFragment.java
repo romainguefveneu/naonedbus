@@ -742,7 +742,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 			final Favori favori = (Favori) getListAdapter().getItem(position);
 			if (horaireManager.isInDB(getActivity().getContentResolver(), favori, today)) {
 				final Integer delay = horaireManager
-						.getMinutesToNextHoraire(getActivity().getContentResolver(), favori);
+						.getMinutesToNextSchedule(getActivity().getContentResolver(), favori);
 				updateItemTime(favori, delay);
 				publishProgress();
 			}

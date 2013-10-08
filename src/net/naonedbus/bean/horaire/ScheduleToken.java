@@ -18,20 +18,20 @@
  */
 package net.naonedbus.bean.horaire;
 
-public class HoraireToken {
+public class ScheduleToken {
 
 	private final Long mDate;
 	private final Integer mId;
 
-	public HoraireToken(final Long date, final Integer id) {
+	public ScheduleToken(final Long date, final Integer id) {
 		mDate = date;
 		mId = id;
 	}
 
 	@Override
 	public boolean equals(final Object o) {
-		if (o instanceof HoraireToken) {
-			final HoraireToken element = (HoraireToken) o;
+		if (o instanceof ScheduleToken) {
+			final ScheduleToken element = (ScheduleToken) o;
 			return (element.mDate.equals(mDate) && element.mId.equals(mId));
 		} else {
 			return super.equals(o);

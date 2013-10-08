@@ -401,7 +401,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 
 		try {
 
-			final List<Horaire> data = mHoraireManager.getHoraires(context.getContentResolver(), mArret,
+			final List<Horaire> data = mHoraireManager.getSchedules(context.getContentResolver(), mArret,
 					mLastDayLoaded, mLastDateTimeLoaded);
 
 			if (data.size() == 0) {

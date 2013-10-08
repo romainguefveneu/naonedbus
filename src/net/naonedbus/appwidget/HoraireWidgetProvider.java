@@ -190,7 +190,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			if (horaireManager.isInDB(context.getContentResolver(), favori, today, mHoraireLimit * 2)) {
 
 				// Les horaires sont en cache
-				final List<Horaire> horaires = horaireManager.getNextHoraires(context.getContentResolver(), favori,
+				final List<Horaire> horaires = horaireManager.getNextSchedules(context.getContentResolver(), favori,
 						today, mHoraireLimit * 2);
 				prepareWidgetViewHoraires(context, views, favori, horaires);
 

@@ -119,7 +119,7 @@ public class UpdateFragment extends CustomFragment {
 
 			// Vider les anciens horaires
 			final HoraireManager horaireManager = HoraireManager.getInstance();
-			horaireManager.clearOldHoraires(getActivity().getContentResolver());
+			horaireManager.clearOldSchedules(getActivity().getContentResolver());
 
 			return null;
 		}
