@@ -65,6 +65,11 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	private final ConcurrentLinkedQueue<NextHoraireTask> mHorairesTasksQueue;
 	private Thread mLoadThread;
 
+	private int mColId;
+	private int mColTimestamp;
+	private int mColTerminus;
+	private int mColDayTrip;
+
 	/**
 	 * Make it singleton !
 	 */
@@ -82,12 +87,20 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	@Override
+	public void onIndexCursor(final Cursor c) {
+		mColId = c.getColumnIndex(HoraireTable._ID);
+		mColTimestamp = c.getColumnIndex(HoraireTable.TIMESTAMP);
+		mColTerminus = c.getColumnIndex(HoraireTable.TERMINUS);
+		mColDayTrip = c.getColumnIndex(HoraireTable.DAY_TRIP);
+	}
+
+	@Override
 	public Horaire getSingleFromCursor(final Cursor c) {
 		final Horaire item = new Horaire();
-		item.setId(c.getInt(c.getColumnIndex(HoraireTable._ID)));
-		item.setTimestamp(c.getLong(c.getColumnIndex(HoraireTable.TIMESTAMP)));
-		item.setTerminus(c.getString(c.getColumnIndex(HoraireTable.TERMINUS)));
-		item.setDayTrip(c.getLong(c.getColumnIndex(HoraireTable.DAY_TRIP)));
+		item.setId(c.getInt(mColId));
+		item.setTimestamp(c.getLong(mColTimestamp));
+		item.setTerminus(c.getString(mColTerminus));
+		item.setDayTrip(c.getLong(mColDayTrip));
 		item.setSection(new DateMidnight(item.getTimestamp()));
 		return item;
 	}
@@ -122,7 +135,10 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
 
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
-		return c.getCount() >= count;
+		final int cursorCount = c.getCount();
+		c.close();
+
+		return cursorCount >= count;
 	}
 
 	/**
@@ -237,7 +253,9 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 				builder.appendQueryParameter(HoraireProvider.PARAM_AFTER_TIME, String.valueOf(after.getMillis()));
 			}
 
-			horaires = getFromCursor(contentResolver.query(builder.build(), null, null, null, null));
+			final Cursor cursor = contentResolver.query(builder.build(), null, null, null, null);
+			horaires = getFromCursor(cursor);
+			cursor.close();
 
 			return horaires;
 
