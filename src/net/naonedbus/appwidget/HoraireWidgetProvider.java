@@ -148,13 +148,16 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	/**
-	 * Update the widget
+	 * Update the widget.
 	 */
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	public void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
 		final RemoteViews views = new RemoteViews(context.getPackageName(), this.mLayoutId);
 		final int idFavori = WidgetConfigureActivity.getFavoriIdFromWidget(context, appWidgetId);
 		final Favori favori = sFavoriManager.getSingle(context.getContentResolver(), idFavori);
+
+		if (DBG)
+			Log.i(LOG_TAG, "updateAppWidget " + favori);
 
 		// Initialisation du nombre d'horaires
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -179,6 +182,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 */
 	protected void prepareWidgetView(final Context context, final RemoteViews views, final Favori favori,
 			final Integer appWidgetId) {
+		if (DBG)
+			Log.d(LOG_TAG, "prepareWidgetView " + favori);
+
 		final HoraireManager horaireManager = HoraireManager.getInstance();
 		final DateMidnight today = new DateMidnight();
 
@@ -187,11 +193,11 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		setOnClickListener(context, views, favori);
 
 		try {
-			if (horaireManager.isInDB(context.getContentResolver(), favori, today, mHoraireLimit * 2)) {
+			if (horaireManager.isInDB(context.getContentResolver(), favori, today, mHoraireLimit)) {
 
 				// Les horaires sont en cache
 				final List<Horaire> horaires = horaireManager.getNextSchedules(context.getContentResolver(), favori,
-						today, mHoraireLimit * 2);
+						today, mHoraireLimit);
 				prepareWidgetViewHoraires(context, views, favori, horaires);
 
 			} else {
@@ -295,11 +301,11 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			// Programmer si besoin l'alarme
 			scheduleUpdate(context, nextHoraires.get(0).getTimestamp());
 
-			for (int i = 0; i <= mHoraireLimit; i++) {
+			for (int i = 0; i < nextHoraires.size(); i++) {
 				final Horaire horaire = nextHoraires.get(i);
 				content = TextUtils.concat(content,
 						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getTimestamp())));
-				if (i < mHoraireLimit) {
+				if (i < nextHoraires.size() - 1) {
 					content = TextUtils.concat(content, " \u2022 ");
 				}
 			}
@@ -334,7 +340,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		if (DBG)
 			Log.i(LOG_TAG, "onReceive " + action);
 
-		if (ACTION_APPWIDGET_UPDATE.equals(action)) {
+		boolean updateWidget = ACTION_APPWIDGET_UPDATE.equals(action) || Intent.ACTION_USER_PRESENT.equals(action);
+
+		if (updateWidget) {
 
 			final int idExtra = intent.getIntExtra("id", -1);
 			int[] ids;
@@ -373,29 +381,28 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	private int getHorairesCount(final Context context, final Bundle bundle) {
+
 		synchronized (sLock) {
 			if (sHoraireTextWidth == Integer.MIN_VALUE) {
 				final TextView horaireTextView = new TextView(context);
+				horaireTextView.setTextAppearance(horaireTextView.getContext(), android.R.style.TextAppearance_Medium);
+
 				final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
 				final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
 				horaireTextView.setText(FormatUtils.formatTimeAmPm(context, timeFormat.format(noon.toDate()))
 						+ " \u2022  ");
-
-				final int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-				final int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 				horaireTextView.measure(specX, specY);
-
 				sHoraireTextWidth = horaireTextView.getMeasuredWidth();
 			}
 		}
 
 		final Resources r = context.getResources();
-		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)
-				- r.getDimensionPixelSize(R.dimen.widget_limit);
+		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+		final int minWidthPixel = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, minWidth,
+				r.getDisplayMetrics()));
 
-		final float minWidthPixel = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, minWidth,
-				r.getDisplayMetrics());
-
-		return (int) (minWidthPixel / sHoraireTextWidth);
+		return (minWidthPixel / sHoraireTextWidth);
 	}
 }

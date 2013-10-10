@@ -237,6 +237,7 @@
         <receiver
             android:name=".appwidget.HoraireWidgetLargeProvider"
             android:enabled="@bool/showLargeWidget"
+            android:exported="true"
             android:label="Horaires naonedbus (large)" >
             <intent-filter>
                 <action android:name="net.naonedbus.action.APPWIDGET_UPDATE" />
@@ -246,6 +247,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_SCREEN_ON" />
             </intent-filter>
 
             <meta-data
@@ -254,6 +257,7 @@
         </receiver>
         <receiver
             android:name=".appwidget.HoraireWidgetSmallProvider"
+            android:exported="true"
             android:label="Horaires naonedbus" >
             <intent-filter>
                 <action android:name="net.naonedbus.action.APPWIDGET_UPDATE" />
@@ -263,6 +267,8 @@
                 <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DELETED" />
                 <action android:name="android.appwidget.action.APPWIDGET_DISABLED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_SCREEN_ON" />
             </intent-filter>
 
             <meta-data
