@@ -42,6 +42,10 @@ public class ScheduleToken {
 		return mDate;
 	}
 
+	public Integer getArretId() {
+		return mId;
+	}
+
 	@Override
 	public int hashCode() {
 		return mDate.hashCode() * 31 + mId.hashCode() * 31;

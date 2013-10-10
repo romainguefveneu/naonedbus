@@ -129,13 +129,35 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			final int count) {
 
 		final ScheduleToken token = new ScheduleToken(date.getMillis(), arret.getId());
+		return isInDB(contentResolver, token, count);
+	}
+
+	/**
+	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée.
+	 * 
+	 * @return {@code true} si le cache contient tous les horaires pour l'arret
+	 *         et la date demandée {@code false} si les données ne sont pas en
+	 *         cache.
+	 */
+	public boolean isInDB(final ContentResolver contentResolver, final ScheduleToken token) {
+		return isInDB(contentResolver, token, 1);
+	}
+
+	/**
+	 * Indique si le cache contient les horaires du token donné.
+	 * 
+	 * @return {@code true} si le cache contient tous les horaires pour l'arret
+	 *         et la date demandée {@code false} si les données ne sont pas en
+	 *         cache.
+	 */
+	public boolean isInDB(final ContentResolver contentResolver, final ScheduleToken token, int count) {
 		if (mEmptySchedules.contains(token))
 			return true;
 
 		final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
 		builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
-		builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
-		builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
+		builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(token.getArretId()));
+		builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(token.getDate()));
 
 		synchronized (mDatabaseLock) {
 			final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
@@ -159,7 +181,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	/**
-	 * Supprimer tous les horaires
+	 * Supprimer tous les horaires.
 	 */
 	public void clearSchedules(final ContentResolver contentResolver) {
 		if (DBG)
@@ -169,9 +191,9 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		}
 	}
 
-	private ContentValues getContentValues(final Arret arret, final Horaire horaire) {
+	private ContentValues getContentValues(final int arretId, final Horaire horaire) {
 		final ContentValues values = new ContentValues();
-		values.put(HoraireTable.ID_ARRET, arret.getId());
+		values.put(HoraireTable.ID_ARRET, arretId);
 		values.put(HoraireTable.TERMINUS, horaire.getTerminus());
 		values.put(HoraireTable.DAY_TRIP, horaire.getDayTrip());
 		values.put(HoraireTable.TIMESTAMP, horaire.getTimestamp());
@@ -179,23 +201,22 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		return values;
 	}
 
-	private void fillDB(final ContentResolver contentResolver, final Arret arret, final ScheduleToken flag,
-			final List<Horaire> schedule) {
+	private void fillDB(final ContentResolver contentResolver, final ScheduleToken token, final List<Horaire> schedule) {
 		if (DBG)
-			Log.i(LOG_TAG, "Sauvegarde des horaires : " + arret + " \t " + new Date(flag.getDate()) + " \t "
-					+ (schedule == null ? null : schedule.size()));
+			Log.i(LOG_TAG, "Sauvegarde des horaires : " + token.getArretId() + " \t " + new Date(token.getDate())
+					+ " \t " + (schedule == null ? null : schedule.size()));
 
 		if (schedule != null) {
 			if (schedule.size() == 0) {
 				// Ajouter un marqueur pour indiquer que l'on a déjà cherché
 				// les horaires
 
-				mEmptySchedules.add(flag);
+				mEmptySchedules.add(token);
 			} else {
 				// Ajouter les horaires dans la db
 				final ContentValues[] values = new ContentValues[schedule.size()];
 				for (int i = 0; i < schedule.size(); i++) {
-					values[i] = getContentValues(arret, schedule.get(i));
+					values[i] = getContentValues(token.getArretId(), schedule.get(i));
 				}
 
 				synchronized (mDatabaseLock) {
@@ -236,7 +257,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			// Partie atomique
 			synchronized (mDatabaseLock) {
 
-				if (!isInDB(contentResolver, arret, date) && (!mEmptySchedules.contains(todayToken))) {
+				if (!isInDB(contentResolver, todayToken)) {
 					// Charger les horaires depuis le web et les stocker en base
 
 					if (date.isEqual(today) && now.getHourOfDay() < END_OF_TRIP_HOURS) {
@@ -244,15 +265,15 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 						// minuit)
 						final ScheduleToken yesterdayToken = new ScheduleToken(date.minusDays(1).getMillis(),
 								arret.getId());
-						if (!isInDB(contentResolver, arret, date.minusDays(1))
-								&& (!mEmptySchedules.contains(yesterdayToken))) {
+
+						if (isInDB(contentResolver, yesterdayToken)) {
 							horaires = mController.getAllFromWeb(arret, date.minusDays(1));
-							fillDB(contentResolver, arret, yesterdayToken, horaires);
+							fillDB(contentResolver, yesterdayToken, horaires);
 						}
 					}
 
 					horaires = mController.getAllFromWeb(arret, date);
-					fillDB(contentResolver, arret, todayToken, horaires);
+					fillDB(contentResolver, todayToken, horaires);
 				}
 
 				// Charger les horaires depuis la base
