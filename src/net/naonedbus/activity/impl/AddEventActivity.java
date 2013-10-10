@@ -225,8 +225,7 @@ public class AddEventActivity extends SherlockActivity {
 	@Override
 	public void finish() {
 		super.finish();
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			overridePendingTransition(R.anim.half_fade_in, R.anim.slide_out_to_right);
+		overridePendingTransition(R.anim.half_fade_in, R.anim.slide_out_to_right);
 	}
 
 }

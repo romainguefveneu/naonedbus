@@ -55,6 +55,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -200,18 +201,29 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 			calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
 			calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, horaire.getTimestamp());
 			calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, horaire.getTimestamp());
-			startActivity(calIntent);
-			getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
-		} else {
-			final ParamIntent intent = new ParamIntent(getActivity(), AddEventActivity.class);
-			intent.putExtra(AddEventActivity.PARAM_LIGNE, mLigne);
-			intent.putExtra(AddEventActivity.PARAM_SENS, mSens);
-			intent.putExtra(AddEventActivity.PARAM_ARRET, mArret);
-			intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, horaire.getTimestamp());
 
-			startActivity(intent);
+			try {
+				startActivity(calIntent);
+				getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
+			} catch (ActivityNotFoundException e) {
+				addEventFallback(horaire);
+			}
+
+		} else {
+			addEventFallback(horaire);
 		}
 
+	}
+
+	private void addEventFallback(Horaire horaire) {
+		final ParamIntent intent = new ParamIntent(getActivity(), AddEventActivity.class);
+		intent.putExtra(AddEventActivity.PARAM_LIGNE, mLigne);
+		intent.putExtra(AddEventActivity.PARAM_SENS, mSens);
+		intent.putExtra(AddEventActivity.PARAM_ARRET, mArret);
+		intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, horaire.getTimestamp());
+
+		startActivity(intent);
+		getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 	}
 
 	@Override

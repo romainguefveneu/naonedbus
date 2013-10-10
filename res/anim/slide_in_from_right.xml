@@ -16,9 +16,9 @@
 */
 -->
 
+
 <!-- Animation for when a dock window at the bottom of the screen is entering. -->
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:interpolator/decelerate_quint" >
+<set xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <translate
         android:duration="@android:integer/config_mediumAnimTime"
