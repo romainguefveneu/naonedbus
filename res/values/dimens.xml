@@ -22,7 +22,7 @@
     <dimen name="padding_large">16dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="widget_padding">8dp</dimen>
-    <dimen name="widget_limit">50dp</dimen>
+    <dimen name="widget_limit">100dp</dimen>
     <dimen name="codeitem_margin">1dip</dimen>
     <dimen name="codeitem_width">35dip</dimen>
     <!-- Activity Header -->

@@ -85,8 +85,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	private static Object sLock = new Object();
 
 	private final int mLayoutId;
-	private int mHoraireLimit = -1;
 	private final int mHoraireLimitRes;
+	private int mHoraireLimit = -1;
 
 	protected HoraireWidgetProvider(final int layoutId, final int horaireLimitRes) {
 		mLayoutId = layoutId;
@@ -340,7 +340,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		if (DBG)
 			Log.i(LOG_TAG, "onReceive " + action);
 
-		boolean updateWidget = ACTION_APPWIDGET_UPDATE.equals(action) || Intent.ACTION_USER_PRESENT.equals(action);
+		final boolean updateWidget = ACTION_APPWIDGET_UPDATE.equals(action)
+				|| Intent.ACTION_USER_PRESENT.equals(action);
 
 		if (updateWidget) {
 
@@ -391,18 +392,27 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
 				horaireTextView.setText(FormatUtils.formatTimeAmPm(context, timeFormat.format(noon.toDate()))
 						+ " \u2022  ");
-				int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-				int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				final int specY = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				final int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 				horaireTextView.measure(specX, specY);
 				sHoraireTextWidth = horaireTextView.getMeasuredWidth();
+
+				Log.i(LOG_TAG, "width : " + sHoraireTextWidth);
 			}
 		}
 
 		final Resources r = context.getResources();
-		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-		final int minWidthPixel = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, minWidth,
-				r.getDisplayMetrics()));
+		final int padding = r.getDimensionPixelSize(R.dimen.widget_limit);
 
-		return (minWidthPixel / sHoraireTextWidth);
+		final int maxWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
+		final int maxWidthPixel = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidth,
+				r.getDisplayMetrics()))
+				- padding;
+
+		Log.d(LOG_TAG, "maxWidth : " + maxWidth);
+		Log.d(LOG_TAG, "maxWidthPixel : " + maxWidthPixel);
+		Log.d(LOG_TAG, "count : " + (maxWidthPixel / sHoraireTextWidth));
+
+		return (maxWidthPixel / sHoraireTextWidth);
 	}
 }
