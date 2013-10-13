@@ -54,7 +54,6 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	private View mMessage;
 
 	public WidgetConfigureActivity() {
-
 	}
 
 	@Override
@@ -181,9 +180,9 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 * @param appWidgetId
 	 */
 	public static void removeWidgetId(final Context context, final long appWidgetId) {
-		final SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-		prefs.remove(PREF_PREFIX_KEY + appWidgetId);
-		prefs.commit();
+		final SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_NAME, 0).edit();
+		editor.remove(PREF_PREFIX_KEY + appWidgetId);
+		editor.commit();
 	}
 
 	/**

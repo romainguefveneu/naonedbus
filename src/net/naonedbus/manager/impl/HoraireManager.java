@@ -168,7 +168,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	}
 
 	/**
-	 * Supprimer les anciens horaires.
+	 * Supprimer les horaires de plus d'1 jour.
 	 */
 	public void clearOldSchedules(final ContentResolver contentResolver) {
 		if (DBG)
@@ -176,7 +176,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 		synchronized (mDatabaseLock) {
 			contentResolver.delete(HoraireProvider.CONTENT_URI, HoraireTable.DAY_TRIP + " < ?",
-					new String[] { String.valueOf(new DateMidnight().getMillis()) });
+					new String[] { String.valueOf(new DateMidnight().minusDays(1).getMillis()) });
 		}
 	}
 

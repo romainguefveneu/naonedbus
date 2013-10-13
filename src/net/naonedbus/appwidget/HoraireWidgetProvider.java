@@ -19,6 +19,7 @@
 package net.naonedbus.appwidget;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
@@ -75,10 +76,6 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	private static final String ACTION_APPWIDGET_UPDATE = "net.naonedbus.action.APPWIDGET_UPDATE";
 	private static final String ACTION_APPWIDGET_ON_CLICK = "net.naonedbus.action.APPWIDGET_ON_CLICK";
 
-	private static FavorisViewManager sFavoriManager;
-	static {
-		sFavoriManager = FavorisViewManager.getInstance();
-	}
 	private static PendingIntent sPendingIntent;
 	private static long sNextTimestamp = Long.MAX_VALUE;
 	private static Integer sHoraireTextWidth = Integer.MIN_VALUE;
@@ -96,6 +93,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	@Override
 	public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
 		final int count = appWidgetIds.length;
+
+		if (DBG)
+			Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - " + "onUpdate");
 
 		final Thread update = new Thread(new Runnable() {
 			@Override
@@ -134,7 +134,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				m.cancel(sPendingIntent);
 
 				if (DBG)
-					Log.i(LOG_TAG, "\tAnnulation de la précédente alarme.");
+					Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - " + "\tAnnulation de la précédente alarme.");
 			}
 
 			final Intent intent = new Intent(ACTION_APPWIDGET_UPDATE);
@@ -142,7 +142,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			m.set(AlarmManager.RTC, sNextTimestamp, sPendingIntent);
 
 			if (DBG)
-				Log.i(LOG_TAG, "Programmation de l'alarme à : " + new DateTime(sNextTimestamp).toString());
+				Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - " + "Programmation de l'alarme à : "
+						+ new DateTime(sNextTimestamp).toString());
 		}
 
 	}
@@ -154,10 +155,10 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	public void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
 		final RemoteViews views = new RemoteViews(context.getPackageName(), this.mLayoutId);
 		final int idFavori = WidgetConfigureActivity.getFavoriIdFromWidget(context, appWidgetId);
-		final Favori favori = sFavoriManager.getSingle(context.getContentResolver(), idFavori);
+		final Favori favori = FavorisViewManager.getInstance().getSingle(context.getContentResolver(), idFavori);
 
 		if (DBG)
-			Log.i(LOG_TAG, "updateAppWidget " + favori);
+			Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - " + appWidgetId + " - updateAppWidget " + favori);
 
 		// Initialisation du nombre d'horaires
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -183,7 +184,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	protected void prepareWidgetView(final Context context, final RemoteViews views, final Favori favori,
 			final Integer appWidgetId) {
 		if (DBG)
-			Log.d(LOG_TAG, "prepareWidgetView " + favori);
+			Log.d(LOG_TAG, Integer.toHexString(hashCode()) + " - " + appWidgetId + " - prepareWidgetView " + favori);
 
 		final HoraireManager horaireManager = HoraireManager.getInstance();
 		final DateMidnight today = new DateMidnight();
@@ -208,7 +209,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			}
 		} catch (final IOException e) {
 			if (DBG)
-				Log.e(LOG_TAG, "Erreur lors du chargement des horaires", e);
+				Log.e(LOG_TAG, Integer.toHexString(hashCode()) + " - " + appWidgetId
+						+ " - Erreur lors du chargement des horaires", e);
 		}
 	}
 
@@ -323,6 +325,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 */
 	@Override
 	public void onDeleted(final Context context, final int[] appWidgetIds) {
+		if (DBG)
+			Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - " + "onDeleted " + Arrays.toString(appWidgetIds));
+
 		final int count = appWidgetIds.length;
 		for (int i = 0; i < count; i++) {
 			WidgetConfigureActivity.removeWidgetId(context, appWidgetIds[i]);
@@ -338,7 +343,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
 		if (DBG)
-			Log.i(LOG_TAG, "onReceive " + action);
+			Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - " + "onReceive " + action);
 
 		final boolean updateWidget = ACTION_APPWIDGET_UPDATE.equals(action)
 				|| Intent.ACTION_USER_PRESENT.equals(action);
@@ -349,7 +354,8 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			int[] ids;
 
 			if (DBG)
-				Log.i(LOG_TAG, "Réception de l'ordre de rafraichissement des widgets.");
+				Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - "
+						+ "Réception de l'ordre de rafraichissement des widgets.");
 
 			if (idExtra == -1) {
 				ids = appWidgetManager.getAppWidgetIds(new ComponentName(context, this.getClass()));
@@ -374,7 +380,6 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 				stackBuilder.startActivities();
 			}
-
 		}
 
 		super.onReceive(context, intent);
@@ -396,23 +401,18 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 				final int specX = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 				horaireTextView.measure(specX, specY);
 				sHoraireTextWidth = horaireTextView.getMeasuredWidth();
-
-				Log.i(LOG_TAG, "width : " + sHoraireTextWidth);
 			}
 		}
 
 		final Resources r = context.getResources();
-		final int padding = r.getDimensionPixelSize(R.dimen.widget_limit);
+		final int padding = r.getDimensionPixelSize(R.dimen.padding_small);
 
-		final int maxWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
-		final int maxWidthPixel = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, maxWidth,
+		final int minWidth = bundle.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+		final int minWidthPixel = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, minWidth,
 				r.getDisplayMetrics()))
 				- padding;
 
-		Log.d(LOG_TAG, "maxWidth : " + maxWidth);
-		Log.d(LOG_TAG, "maxWidthPixel : " + maxWidthPixel);
-		Log.d(LOG_TAG, "count : " + (maxWidthPixel / sHoraireTextWidth));
-
-		return (maxWidthPixel / sHoraireTextWidth);
+		return (minWidthPixel / sHoraireTextWidth);
 	}
+
 }

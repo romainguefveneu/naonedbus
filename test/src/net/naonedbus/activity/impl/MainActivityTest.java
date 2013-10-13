@@ -64,7 +64,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 			final MutableDateTime mutableDateTime = new MutableDateTime();
 
 			try {
-				for (int i = 0; i < 20; i++) {
+				for (int i = 0; i < 50; i++) {
 					final Random random = new Random(System.currentTimeMillis());
 					if (random.nextBoolean())
 						horaireManager.clearSchedules(mContentResolver);
