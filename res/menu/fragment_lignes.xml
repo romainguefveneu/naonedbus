@@ -2,23 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@id/menu_filter"
-        android:icon="@drawable/ic_action_labels"
+        android:id="@id/menu_search"
+        android:actionViewClass="com.actionbarsherlock.widget.SearchView"
+        android:icon="@drawable/ic_action_search"
         android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/action_favori">
-        <menu>
-            <group android:checkableBehavior="single" >
-                <item
-                    android:id="@id/menu_filter_all"
-                    android:orderInCategory="100"
-                    android:title="@string/action_filter_lignes_none"/>
-                <item
-                    android:id="@id/menu_filter_favoris"
-                    android:orderInCategory="200"
-                    android:title="@string/action_filter_lignes_favoris"/>
-            </group>
-        </menu>
-    </item>
+        android:showAsAction="always|collapseActionView"
+        android:title="@string/action_search"/>
 
 </menu>

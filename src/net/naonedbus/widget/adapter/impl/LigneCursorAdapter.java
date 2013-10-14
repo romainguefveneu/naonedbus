@@ -19,6 +19,7 @@
 package net.naonedbus.widget.adapter.impl;
 
 import net.naonedbus.R;
+import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
@@ -32,18 +33,20 @@ import android.widget.TextView;
 
 public class LigneCursorAdapter extends CursorSectionAdapter {
 
-	private int COL_LETTRE;
-	private int COL_COLOR_BACK;
-	private int COL_COLOR_FRONT;
-	private int COL_SENS1;
-	private int COL_SENS2;
-
+	private final LigneManager mLigneManager;
 	private final Typeface mRoboto;
 	private boolean mHideDivider;
+
+	private int mColLettre;
+	private int mColBackColor;
+	private int mColFrontColor;
+	private int mColSens1;
+	private int mColSens2;
 
 	public LigneCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, R.layout.list_item_ligne);
 		mRoboto = FontUtils.getRobotoBoldCondensed(context);
+		mLigneManager = LigneManager.getInstance();
 		if (c != null) {
 			initColumns(c);
 		}
@@ -71,11 +74,11 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 	}
 
 	private void initColumns(final Cursor c) {
-		COL_LETTRE = c.getColumnIndex(LigneTable.LETTRE);
-		COL_COLOR_BACK = c.getColumnIndex(LigneTable.COULEUR_BACK);
-		COL_COLOR_FRONT = c.getColumnIndex(LigneTable.COULEUR_FRONT);
-		COL_SENS1 = c.getColumnIndex(LigneTable.DEPUIS);
-		COL_SENS2 = c.getColumnIndex(LigneTable.VERS);
+		mColLettre = c.getColumnIndex(LigneTable.LETTRE);
+		mColBackColor = c.getColumnIndex(LigneTable.COULEUR_BACK);
+		mColFrontColor = c.getColumnIndex(LigneTable.COULEUR_FRONT);
+		mColSens1 = c.getColumnIndex(LigneTable.DEPUIS);
+		mColSens2 = c.getColumnIndex(LigneTable.VERS);
 	}
 
 	@Override
@@ -83,11 +86,11 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 		super.bindView(view, context, cursor);
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final String lettre = cursor.getString(COL_LETTRE);
-		final String depuis = cursor.getString(COL_SENS1);
-		final String vers = cursor.getString(COL_SENS2);
-		final int color = cursor.getInt(COL_COLOR_BACK);
-		final int colorFront = cursor.getInt(COL_COLOR_FRONT);
+		final String lettre = cursor.getString(mColLettre);
+		final String depuis = cursor.getString(mColSens1);
+		final String vers = cursor.getString(mColSens2);
+		final int color = cursor.getInt(mColBackColor);
+		final int colorFront = cursor.getInt(mColFrontColor);
 
 		holder.icon.setText(lettre);
 
@@ -110,6 +113,20 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 		if (mHideDivider) {
 			view.findViewById(R.id.headerDivider).setVisibility(View.GONE);
 		}
+	}
+
+	@Override
+	public CharSequence convertToString(final Cursor cursor) {
+		return cursor.getString(mColLettre);
+	}
+
+	@Override
+	public Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
+		Cursor currentCursor = null;
+		if (constraint != null) {
+			currentCursor = mLigneManager.getLignesSearch(mContext.getContentResolver(), constraint.toString());
+		}
+		return currentCursor;
 	}
 
 	@Override

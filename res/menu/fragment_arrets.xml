@@ -28,7 +28,7 @@
     </item>
     <item
         android:id="@id/menu_filter"
-        android:icon="@drawable/ic_action_labels"
+        android:icon="@drawable/ic_action_filter"
         android:showAsAction="always"
         android:title="@string/action_favori">
         <menu>

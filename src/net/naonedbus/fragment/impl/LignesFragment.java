@@ -24,10 +24,7 @@ import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.fragment.CustomCursorFragment;
-import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.FavoriManager;
-import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.provider.impl.LigneProvider;
 import net.naonedbus.provider.table.LigneTable;
@@ -37,50 +34,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.util.SparseIntArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
-public class LignesFragment extends CustomCursorFragment {
+public class LignesFragment extends CustomCursorFragment implements OnQueryTextListener, FilterQueryProvider {
 
-	private final static int FILTER_ALL = 0;;
-	private final static int FILTER_FAVORIS = 1;
-	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
-	static {
-		MENU_MAPPING.append(FILTER_ALL, R.id.menu_filter_all);
-		MENU_MAPPING.append(FILTER_FAVORIS, R.id.menu_filter_favoris);
-	}
-
-	private FavoriManager mFavoriManager;
-
-	private StateHelper mStateHelper;
 	private LigneCursorAdapter mAdapter;
 	private LigneManager mLigneManager;
-	private int mCurrentFilter = FILTER_ALL;
-
-	/**
-	 * Action sur les favoris.
-	 */
-	private final OnFavoriActionListener mOnFavoriActionListener = new OnFavoriActionListener() {
-		@Override
-		public void onUpdate() {
-			if (mCurrentFilter == FILTER_FAVORIS) {
-				refreshContent();
-			}
-		};
-	};
 
 	public LignesFragment() {
 		super(R.layout.fragment_listview_section);
@@ -90,12 +64,6 @@ public class LignesFragment extends CustomCursorFragment {
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		// Gestion du tri par défaut
-		mStateHelper = new StateHelper(getActivity());
-		mCurrentFilter = mStateHelper.getFilterType(this, FILTER_ALL);
-
-		mFavoriManager = FavoriManager.getInstance();
-		mFavoriManager.addActionListener(mOnFavoriActionListener);
 
 		mLigneManager = LigneManager.getInstance();
 	}
@@ -107,22 +75,13 @@ public class LignesFragment extends CustomCursorFragment {
 	}
 
 	@Override
-	public void onPause() {
-		mStateHelper.setFilterType(this, mCurrentFilter);
-		super.onPause();
-	}
-
-	@Override
-	public void onDestroy() {
-		mFavoriManager.removeActionListener(mOnFavoriActionListener);
-		super.onDestroy();
-	}
-
-	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_lignes, menu);
-		menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
+
+		final MenuItem searchItem = menu.findItem(R.id.menu_search);
+		final SearchView searchView = (SearchView) searchItem.getActionView();
+		searchView.setOnQueryTextListener(this);
 	}
 
 	@Override
@@ -161,27 +120,6 @@ public class LignesFragment extends CustomCursorFragment {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-
-		switch (item.getItemId()) {
-		case R.id.menu_filter_all:
-			item.setChecked(true);
-			mCurrentFilter = FILTER_ALL;
-			refreshContent();
-			break;
-		case R.id.menu_filter_favoris:
-			item.setChecked(true);
-			mCurrentFilter = FILTER_FAVORIS;
-			refreshContent();
-			break;
-		default:
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 		final CursorWrapper cursorWrapper = (CursorWrapper) getListAdapter().getItem(position);
@@ -208,13 +146,7 @@ public class LignesFragment extends CustomCursorFragment {
 
 	@Override
 	public Loader<Cursor> onCreateLoader(final int loaderId, final Bundle bundle) {
-		Uri uri = LigneProvider.CONTENT_URI;
-		if (mCurrentFilter == FILTER_FAVORIS) {
-			uri = uri.buildUpon().path(LigneProvider.LIGNE_FAVORIS_URI_PATH_QUERY).build();
-		}
-
-		final CursorLoader cursorLoader = new CursorLoader(getActivity(), uri, null, null, null, null);
-		return cursorLoader;
+		return new CursorLoader(getActivity(), LigneProvider.CONTENT_URI, null, null, null, null);
 	}
 
 	@Override
@@ -225,6 +157,22 @@ public class LignesFragment extends CustomCursorFragment {
 		mAdapter.setIndexer(new LigneCursorIndexer(null, types, LigneTable.TYPE));
 
 		return mAdapter;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(final String query) {
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextChange(final String newText) {
+		mAdapter.getFilter().filter(newText);
+		return true;
+	}
+
+	@Override
+	public Cursor runQuery(final CharSequence constraint) {
+		return null;
 	}
 
 }
