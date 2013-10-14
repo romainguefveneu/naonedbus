@@ -6,5 +6,11 @@
         <item name="android:textSize">22sp</item>
         <item name="android:layout_marginBottom">@dimen/padding_small</item>
     </style>
+    
+    <style name="AboutVersion" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/item_secondary_text_dark</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+    
 
 </resources>

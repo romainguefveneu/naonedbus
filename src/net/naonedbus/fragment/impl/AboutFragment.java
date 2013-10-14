@@ -113,7 +113,6 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 		view.findViewById(R.id.aboutMail).setOnClickListener(mLinkOnClickListener);
 
 		fillThanks((ViewGroup) view.findViewById(R.id.aboutSectionThanks));
-		fillTranslators((ViewGroup) view.findViewById(R.id.aboutSectionTranslators));
 
 		view.findViewById(R.id.aboutLicenceLibs).setOnClickListener(mLicencesOnClickListener);
 		view.findViewById(R.id.aboutLicenceIcons).setOnClickListener(mLicencesOnClickListener);
@@ -127,10 +126,6 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 
 	private void fillThanks(final ViewGroup parent) {
 		fillView(parent, R.array.thanks, R.array.thanks_urls);
-	}
-
-	private void fillTranslators(final ViewGroup parent) {
-		fillView(parent, R.array.translators, R.array.translators_urls);
 	}
 
 	private void fillView(final ViewGroup parent, final int idLabels, final int idUrls) {

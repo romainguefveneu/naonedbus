@@ -135,6 +135,7 @@
     <string name="title_fragment_favoris">Bookmarks</string>
     <string name="title_fragment_proximite">Nearby</string>
     <string name="title_fragment_about">About</string>
+    <string name="title_fragment_translation">Translation</string>
     <string name="title_fragment_versions">What\'s New</string>
     <string name="about_autors_title">Authors</string>
     <string name="about_autors_content_romain">Romain Guefveneu</string>

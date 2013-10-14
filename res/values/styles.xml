@@ -360,6 +360,7 @@
     <style name="BigTitle.Blue">
         <item name="android:textColor">@color/holo_blue_light</item>
     </style>
+
     <style name="BigTitle.Green">
         <item name="android:textColor">@color/holo_green</item>
     </style>
@@ -517,7 +518,7 @@
 
     <style name="CardAboutTitle" parent="CardTitle">
         <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">italic</item>
+        <item name="android:layout_marginBottom">@dimen/padding_small</item>
     </style>
 
     <style name="CardTitle.Primary">
@@ -601,6 +602,10 @@
     <style name="ButtonFlat.Blue">
         <item name="android:background">@drawable/button_flat_blue_selector</item>
         <item name="android:textColor">@color/button_flat_text_selector</item>
+    </style>
+
+    <style name="AboutVersion" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
 </resources>

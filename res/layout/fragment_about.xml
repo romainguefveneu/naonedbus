@@ -28,29 +28,41 @@
         android:orientation="vertical"
         android:padding="10dp" >
 
-        <TextView
-            android:id="@+id/version"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawablePadding="10dp"
-            android:drawableTop="@drawable/logo_large"
-            android:gravity="center_horizontal"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/tertiary_text_light" />
+            android:layout_marginBottom="@dimen/padding_medium"
+            android:background="@drawable/logo_background"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_medium" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/logo_large" />
+
+            <TextView
+                android:id="@+id/codename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:drawableLeft="@drawable/quote_left"
+                android:drawablePadding="@dimen/padding_small"
+                android:drawableRight="@drawable/quote_right"
+                android:text="@string/version_name"
+                android:textAppearance="?android:attr/textAppearanceLargeInverse" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/codename"
-            android:layout_width="wrap_content"
+            android:id="@+id/version"
+            style="@style/AboutVersion"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/padding_small"
-            android:layout_marginTop="@dimen/padding_small"
-            android:drawableLeft="@drawable/quote_left"
-            android:drawablePadding="@dimen/padding_small"
-            android:drawableRight="@drawable/quote_right"
-            android:text="@string/version_name"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_marginBottom="@dimen/padding_medium"
+            android:layout_marginTop="@dimen/padding_medium"
+            android:gravity="center_horizontal" />
 
         <include
             android:layout_width="match_parent"
@@ -71,11 +83,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/section_about_thanks" />
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/section_about_translators" />
 
         <include
             android:layout_width="match_parent"

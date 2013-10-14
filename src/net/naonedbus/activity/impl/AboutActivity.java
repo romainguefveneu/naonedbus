@@ -3,6 +3,7 @@ package net.naonedbus.activity.impl;
 import net.naonedbus.R;
 import net.naonedbus.activity.FragmentsActivity;
 import net.naonedbus.fragment.impl.AboutFragment;
+import net.naonedbus.fragment.impl.TranslationFragment;
 import net.naonedbus.fragment.impl.VersionsFragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,9 +15,11 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class AboutActivity extends FragmentsActivity {
 
-	private static int[] titles = new int[] { R.string.title_fragment_about, R.string.title_fragment_versions };
+	private static int[] titles = new int[] { R.string.title_fragment_about, R.string.title_fragment_translation,
+			R.string.title_fragment_versions };
 
-	private static Class<?>[] classes = new Class<?>[] { AboutFragment.class, VersionsFragment.class };
+	private static Class<?>[] classes = new Class<?>[] { AboutFragment.class, TranslationFragment.class,
+			VersionsFragment.class };
 
 	public AboutActivity() {
 		super(R.layout.activity_tabs);

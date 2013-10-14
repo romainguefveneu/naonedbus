@@ -29,37 +29,47 @@
         style="@style/CardAbout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="3" >
+        android:orientation="vertical" >
 
         <TextView
             android:id="@id/aboutTwitter"
             style="@style/SectionContentItem"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/twitter_account"
-            android:gravity="center_horizontal"
+            android:drawableLeft="@drawable/twitter_account"
+            android:gravity="center_vertical"
             android:text="@string/about_com_twitter" />
+
+        <View style="@style/Divider" />
+
+        <TextView
+            style="@style/SectionContentItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/googleplus_account"
+            android:gravity="center_vertical"
+            android:text="@string/about_com_facebook" />
+
+        <View style="@style/Divider" />
 
         <TextView
             android:id="@id/aboutFacebook"
             style="@style/SectionContentItem"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/facebook_account"
-            android:gravity="center_horizontal"
+            android:drawableLeft="@drawable/facebook_account"
+            android:gravity="center_vertical"
             android:text="@string/about_com_facebook" />
+
+        <View style="@style/Divider" />
 
         <TextView
             android:id="@id/aboutMail"
             style="@style/SectionContentItem"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/gmail"
-            android:gravity="center_horizontal"
+            android:drawableLeft="@drawable/gmail"
+            android:gravity="center_vertical"
             android:text="@string/about_com_mail" />
     </LinearLayout>
 
