@@ -7,7 +7,7 @@
         <item name="primaryColor">@android:color/primary_text_light</item>
         <item name="secondaryColor">@android:color/tertiary_text_light</item>
         <item name="dividerColor">@color/divider_light</item>
-        <item name="sectionColor">@color/holo_blue_light</item>
+        <item name="sectionColor">@color/section_text_color</item>
         <item name="blockBackground">@drawable/block_light</item>
         <item name="sectionBackground">@drawable/list_section_underline_light</item>
         <!--  -->

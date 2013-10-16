@@ -47,6 +47,7 @@
     <color name="background_tab">@android:color/transparent</color>
     <color name="card_text_color">#707070</color>
     <color name="modern_section__color">#555555</color>
+    <color name="section_text_color">#137aaa</color>
 
     <!-- Parkings -->
     <color name="parking_state_blue">#ff0079bc</color>
