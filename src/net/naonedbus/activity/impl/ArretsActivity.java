@@ -35,12 +35,14 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.espian.showcaseview.ShowcaseView;
+import com.espian.showcaseview.ShowcaseController;
+import com.espian.showcaseview.ShowcaseController.ShotType;
 
 public class ArretsActivity extends OneFragmentActivity {
 
@@ -109,15 +111,16 @@ public class ArretsActivity extends OneFragmentActivity {
 		});
 		sensTitle.setSelection(getSensPosition(sensList, idSens));
 
-		final ShowcaseView sv = (ShowcaseView) findViewById(R.id.showcase);
-		sv.setShowcaseView(sensTitle);
-		sv.setShotType(ShowcaseView.TYPE_ONE_SHOT);
-		sv.show();
+		final ShowcaseController showcaseController = new ShowcaseController(this,
+				(ViewStub) findViewById(R.id.showCaseViewStub), sensTitle);
+		showcaseController.setShowcaseButtonResId(R.id.showCaseButton);
+		showcaseController.setShotType(ShotType.NO_LIMIT);
+		showcaseController.show();
 
 		sensTitle.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(final View v, final MotionEvent event) {
-				sv.hide();
+				showcaseController.hide();
 				return false;
 			}
 		});

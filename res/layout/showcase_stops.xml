@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.espian.showcaseview.ShowcaseView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:showcase="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    showcase:backgroundColor="#cc000000" >
+
+    <TextView
+        android:id="@id/showCaseTitle"
+        style="@style/ShowcaseTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding_large"
+        android:layout_marginTop="200dp"
+        android:text="@string/showcase_arrets_title" />
+
+    <TextView
+        android:id="@id/showCaseDescription"
+        style="@style/ShowcaseText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/showCaseTitle"
+        android:layout_below="@id/showCaseTitle"
+        android:text="@string/showcase_arrets_content" />
+
+    <Button
+        android:id="@id/showCaseButton"
+        style="@style/ShowcaseButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="6dp"
+        android:layout_marginRight="6dp"
+        android:text="@android:string/ok"
+        android:textColor="@android:color/white" />
+
+</com.espian.showcaseview.ShowcaseView>

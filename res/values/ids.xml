@@ -183,5 +183,12 @@
     <!-- Map -->
     <item name="map" type="id"/>
     <item name="moreAction" type="id"/>
+    
+    <!-- Showcase -->
+    <item name="showCaseViewStub" type="id"/>
+    <item name="showCaseView" type="id"/>
+    <item name="showCaseTitle" type="id"/>
+    <item name="showCaseDescription" type="id"/>
+    <item name="showCaseButton" type="id"/>
 
 </resources>
