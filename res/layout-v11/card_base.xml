@@ -63,6 +63,11 @@
             android:text="@string/error_title_empty"
             android:visibility="gone" />
 
+        <View
+            android:id="@id/cardActionDivider"
+            style="@style/Divider.Card"
+            android:visibility="gone" />
+
         <TextView
             android:id="@android:id/button1"
             style="@style/CardButton"

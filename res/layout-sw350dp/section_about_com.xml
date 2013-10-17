@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2013 Romain Guefveneu.
+    
+   This file is part of naonedbus.
+    
+   Naonedbus is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+   
+   Naonedbus is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <TextView
+        style="@style/CardAboutTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_com_title" />
+
+    <LinearLayout
+        style="@style/CardAbout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@id/aboutTwitter"
+            style="@style/SectionContentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_small"
+            android:src="@drawable/twitter_account" />
+
+        <ImageView
+            style="@style/SectionContentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_small"
+            android:src="@drawable/googleplus_account" />
+
+        <ImageView
+            android:id="@id/aboutFacebook"
+            style="@style/SectionContentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_small"
+            android:src="@drawable/facebook_account" />
+
+        <ImageView
+            android:id="@id/aboutMail"
+            style="@style/SectionContentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_small"
+            android:src="@drawable/gmail" />
+    </LinearLayout>
+
+</merge>

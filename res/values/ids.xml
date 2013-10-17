@@ -151,6 +151,7 @@
     <item name="menu_satellite" type="id"/>
 
     <!-- Card -->
+    <item name="cardActionDivider" type="id"/>
     <item name="cardHoraireTag" type="string">tag:Horaire</item>
     <item name="cardDelaiTag" type="string">tag:Delai</item>
 

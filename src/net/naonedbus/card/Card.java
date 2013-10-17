@@ -53,9 +53,11 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 	private TextView mMessage;
 	private ViewGroup mContent;
 	private TextView mMoreActionView;
+	private View mMoreActionDivider;
 
 	private Typeface mRobotoLight;
 	private Typeface mRobotoBold;
+	private boolean mActionDividerVisible = true;
 
 	public Card(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
 			final int titleId, final int layoutId) {
@@ -129,6 +131,7 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 		mProgress = base.findViewById(android.R.id.progress);
 		mMessage = (TextView) base.findViewById(android.R.id.message);
 		mMoreActionView = (TextView) base.findViewById(android.R.id.button1);
+		mMoreActionDivider = base.findViewById(R.id.cardActionDivider);
 		mContent = (ViewGroup) base.findViewById(android.R.id.content);
 		mContent.addView(view);
 
@@ -209,7 +212,17 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 				}
 			});
 
+			if (mActionDividerVisible)
+				mMoreActionDivider.setVisibility(View.VISIBLE);
+
 		}
+	}
+
+	protected void setActionDividerVisible(boolean visible) {
+		mActionDividerVisible = visible;
+		if (mMoreActionView != null && mMoreActionDivider != null && mMoreActionView.getVisibility() == View.VISIBLE)
+			mMoreActionDivider.setVisibility(mActionDividerVisible ? View.VISIBLE : View.GONE);
+
 	}
 
 	protected void setTypefaceRobotoLight(final TextView textView) {

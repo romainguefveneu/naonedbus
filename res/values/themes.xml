@@ -8,7 +8,7 @@
         <item name="secondaryColor">@android:color/tertiary_text_light</item>
         <item name="dividerColor">@color/divider_light</item>
         <item name="sectionColor">@color/section_text_color</item>
-        <item name="blockBackground">@drawable/block_light</item>
+        <item name="blockBackground">@drawable/card_background</item>
         <item name="sectionBackground">@drawable/list_section_underline_light</item>
         <!--  -->
         <item name="actionBarItemBackground">@drawable/selectable_background_acapulco</item>
@@ -40,7 +40,7 @@
         <item name="secondaryColor">@android:color/secondary_text_dark</item>
         <item name="dividerColor">@color/divider_dark</item>
         <item name="sectionColor">@color/holo_blue_dark</item>
-        <item name="blockBackground">@drawable/block_dark</item>
+        <item name="blockBackground">@drawable/card_background</item>
         <item name="sectionBackground">@drawable/list_section_underline_dark</item>
     </style>
 

@@ -25,52 +25,62 @@
         android:layout_height="wrap_content"
         android:text="@string/about_com_title" />
 
-    <LinearLayout
+    <RelativeLayout
         style="@style/CardAbout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@id/aboutTwitter"
-            style="@style/SectionContentItem"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/twitter_account"
-            android:gravity="center_vertical"
-            android:text="@string/about_com_twitter" />
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
 
-        <View style="@style/Divider" />
+            <ImageView
+                android:id="@id/aboutTwitter"
+                style="@style/SectionContentItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_small"
+                android:contentDescription="@string/about_com_twitter"
+                android:src="@drawable/twitter_account" />
 
-        <TextView
-            style="@style/SectionContentItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/googleplus_account"
-            android:gravity="center_vertical"
-            android:text="@string/about_com_facebook" />
+            <ImageView
+                style="@style/SectionContentItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_small"
+                android:contentDescription="@string/about_com_facebook"
+                android:src="@drawable/googleplus_account" />
 
-        <View style="@style/Divider" />
+            <ImageView
+                android:id="@id/aboutFacebook"
+                style="@style/SectionContentItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_small"
+                android:contentDescription="@string/about_com_facebook"
+                android:src="@drawable/facebook_account" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@id/aboutFacebook"
-            style="@style/SectionContentItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/facebook_account"
-            android:gravity="center_vertical"
-            android:text="@string/about_com_facebook" />
-
-        <View style="@style/Divider" />
+        <View
+            android:id="@+id/divider"
+            style="@style/Divider.Card"
+            android:layout_below="@id/top" />
 
         <TextView
             android:id="@id/aboutMail"
             style="@style/SectionContentItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/top"
+            android:layout_alignRight="@id/top"
+            android:layout_below="@id/divider"
+            android:layout_margin="@dimen/padding_small"
             android:drawableLeft="@drawable/gmail"
-            android:gravity="center_vertical"
             android:text="@string/about_com_mail" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </merge>

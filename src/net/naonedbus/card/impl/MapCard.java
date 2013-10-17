@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.Locale;
 
 import net.naonedbus.R;
+import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.card.Card;
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +43,7 @@ import android.widget.ImageView;
 
 public class MapCard extends Card<Bitmap> {
 
-	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=14&scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&format=jpg";
+	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=20&scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&format=jpg";
 	private static final String MAP_URL_CURRENT_LOCATION = "http://maps.google.com/maps/api/staticmap?scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&center=%f,%f&format=jpg";
 	private static final String PARAM_URL = "url";
 
@@ -59,6 +60,8 @@ public class MapCard extends Card<Bitmap> {
 
 		mLatitude = latitude;
 		mLongitude = longitude;
+
+		setActionDividerVisible(false);
 	}
 
 	public void setCurrentLocation(final Location currentLocation) {
@@ -67,12 +70,10 @@ public class MapCard extends Card<Bitmap> {
 
 	@Override
 	protected Intent getMoreIntent() {
-		// final Intent intent = new Intent(getContext(), MapActivity.class);
-		// intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_map);
-		// intent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
-		// R.drawable.ic_card_navigate);
-		// return intent;
-		return null;
+		final Intent intent = new Intent(getContext(), MapActivity.class);
+		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_map);
+		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_navigate);
+		return intent;
 	}
 
 	@Override

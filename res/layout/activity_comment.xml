@@ -27,7 +27,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:background="@drawable/block_light"
+        android:background="?attr/blockBackground"
         android:gravity="top|left"
         android:hint="@string/hint_ajouter_commentaire"
         android:imeOptions="actionSend"
