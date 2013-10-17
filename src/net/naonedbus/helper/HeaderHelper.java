@@ -37,7 +37,6 @@ public class HeaderHelper {
 	private View mHeader;
 	private TextView mTitle;
 	private TextView mSubTitle;
-	private TextView mLigneCode;
 
 	public HeaderHelper(final Activity activity) {
 		mContext = activity;
@@ -56,11 +55,9 @@ public class HeaderHelper {
 
 		mTitle = (TextView) view.findViewById(R.id.headerTitle);
 		mSubTitle = (TextView) view.findViewById(R.id.headerSubTitle);
-		mLigneCode = (TextView) view.findViewById(R.id.headerCode);
 
 		mTitle.setTypeface(robotoBold);
 		mSubTitle.setTypeface(robotoBold);
-		mLigneCode.setTypeface(robotoBold);
 	}
 
 	public void setColor(final int backColor, final int textColor) {
@@ -68,16 +65,6 @@ public class HeaderHelper {
 
 		mTitle.setTextColor(textColor);
 		mSubTitle.setTextColor(textColor);
-		mLigneCode.setTextColor(textColor);
-	}
-
-	public void setCode(final CharSequence code) {
-		mLigneCode.setText(code);
-		if (code == null || code.length() == 0) {
-			mLigneCode.setVisibility(View.GONE);
-		} else {
-			mLigneCode.setVisibility(View.VISIBLE);
-		}
 	}
 
 	public void setTitle(final CharSequence title) {

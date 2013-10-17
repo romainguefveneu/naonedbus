@@ -260,7 +260,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		} else {
 			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
 			views.setTextViewText(R.id.itemDescription,
-					FormatUtils.formatArretSens(favori.getNomArret(), favori.getNomSens()));
+					FormatUtils.formatSens(favori.getNomArret(), favori.getNomSens()));
 		}
 
 		views.setViewVisibility(R.id.widgetLoading, View.GONE);

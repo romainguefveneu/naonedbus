@@ -19,45 +19,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/headerView"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/headeractivity_height" >
+    android:layout_height="@dimen/headeractivity_height"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_header"
+    android:paddingRight="@dimen/padding_header" >
 
     <TextView
-        android:id="@id/headerCode"
-        style="@style/BigCode"
-        android:layout_centerVertical="true"
-        android:paddingLeft="@dimen/padding_small"
-        android:text="00" />
+        android:id="@id/headerTitle"
+        style="@style/BigTitle"
+        android:drawablePadding="8dip"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:singleLine="true" />
 
     <TextView
         android:id="@id/headerSubTitle"
         style="@style/BigSubTitle"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/bigsubtitle_height"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/headerCode"
+        android:layout_height="match_parent"
         android:ellipsize="end"
-        android:paddingLeft="@dimen/padding_medium"
-        android:paddingRight="@dimen/padding_small"
         android:singleLine="true"
-        android:text="@android:string/untitled"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@id/headerTitle"
-        style="@style/BigTitle"
-        android:layout_above="@id/headerSubTitle"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/headerCode"
-        android:drawablePadding="8dip"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/padding_small"
-        android:singleLine="true" />
-
-</RelativeLayout>
+</LinearLayout>

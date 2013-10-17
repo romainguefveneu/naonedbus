@@ -78,7 +78,7 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomSens()));
 		} else {
 			holder.itemTitle.setText(item.getNomFavori());
-			holder.itemDescription.setText(FormatUtils.formatArretSens(item.getNomArret(), item.getNomSens()));
+			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomArret(), item.getNomSens()));
 		}
 
 		if (mShowDelay == false) {

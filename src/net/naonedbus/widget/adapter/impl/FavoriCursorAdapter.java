@@ -63,7 +63,7 @@ public class FavoriCursorAdapter extends CursorAdapter {
 			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomSens()));
 		} else {
 			holder.itemTitle.setText(item.getNomFavori());
-			holder.itemDescription.setText(FormatUtils.formatArretSens(item.getNomArret(), item.getNomSens()));
+			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomArret(), item.getNomSens()));
 		}
 
 		if (item.getDelay() == null) {

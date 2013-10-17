@@ -39,7 +39,6 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.bugsense.trace.BugSenseHandler;
 
 public class MainActivity extends MenuDrawerActivity {
 
@@ -52,7 +51,7 @@ public class MainActivity extends MenuDrawerActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
+//		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
 
 		handleSearchResult();
 		handleFavoriExport();

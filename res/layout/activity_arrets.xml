@@ -33,12 +33,12 @@
             android:id="@id/headerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/headeractivity_height"
-            android:paddingLeft="@dimen/padding_listview"
-            android:paddingRight="@dimen/padding_listview" >
+            android:paddingLeft="@dimen/padding_header"
+            android:paddingRight="@dimen/padding_header" >
 
             <TextView
                 android:id="@id/itemCode"
-                style="@style/ItemSymbole"
+                style="@style/ItemSymbole.Header"
                 android:layout_centerVertical="true"
                 android:text="00" />
 

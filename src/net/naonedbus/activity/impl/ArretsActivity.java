@@ -114,7 +114,7 @@ public class ArretsActivity extends OneFragmentActivity {
 		final ShowcaseController showcaseController = new ShowcaseController(this,
 				(ViewStub) findViewById(R.id.showCaseViewStub), sensTitle);
 		showcaseController.setShowcaseButtonResId(R.id.showCaseButton);
-		showcaseController.setShotType(ShotType.NO_LIMIT);
+		showcaseController.setShotType(ShotType.ONE_SHOT);
 		showcaseController.show();
 
 		sensTitle.setOnTouchListener(new OnTouchListener() {

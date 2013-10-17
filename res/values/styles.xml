@@ -181,6 +181,10 @@
         <item name="android:layout_height">30dip</item>
     </style>
 
+    <style name="ItemSymbole.Header">
+        <item name="android:textSize">@dimen/bigtitle_text_size</item>
+    </style>
+
     <style name="ItemPrimaryText" parent="@android:style/Widget.TextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
