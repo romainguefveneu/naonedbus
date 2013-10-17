@@ -36,11 +36,11 @@
         android:src="@drawable/ic_arret"
         android:visibility="gone" />
 
-    <ImageView
+    <net.naonedbus.widget.StopStepView
         android:id="@+id/itemMetroPoint"
         style="@style/ItemSymbole"
-        android:layout_height="match_parent"
-        android:src="@drawable/map_layer_arret" />
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:layout_height="match_parent" />
 
     <ImageView
         android:id="@+id/itemFavori"

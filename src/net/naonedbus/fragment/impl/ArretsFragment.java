@@ -101,6 +101,8 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	private ArretArrayAdapter mAdapter;
 	private int mCurrentFilter = FILTER_ALL;
 
+	private int mDefaultDividerHeight;
+
 	private List<Arret> mArrets;
 
 	private Ligne mLigne;
@@ -130,6 +132,8 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 
 		registerForContextMenu(getListView());
 
+		mDefaultDividerHeight = getListView().getDividerHeight();
+
 		mLigne = getArguments().getParcelable(PARAM_LIGNE);
 
 		mStateHelper = new StateHelper(getActivity());
@@ -138,8 +142,10 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 
 		mArrets = new ArrayList<Arret>();
 		mAdapter = new ArretArrayAdapter(getActivity(), mArrets);
+		mAdapter.setRouteColor(mLigne.getCouleur());
 		if (mCurrentSort == SORT_ORDRE) {
 			mAdapter.setViewType(ViewType.TYPE_METRO);
+			getListView().setDividerHeight(0);
 		}
 
 		mDistanceTaskCallback = new DistanceTaskCallback() {
@@ -383,8 +389,11 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		loadDistances();
 
 		if (viewType == ViewType.TYPE_METRO) {
+			getListView().setDividerHeight(0);
 			InfoDialogUtils.showIfNecessary(getActivity(), R.string.dialog_title_arret_order,
 					R.string.dialog_content_arret_order);
+		} else {
+			getListView().setDividerHeight(mDefaultDividerHeight);
 		}
 	}
 

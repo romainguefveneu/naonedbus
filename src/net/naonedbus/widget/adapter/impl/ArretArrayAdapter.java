@@ -23,6 +23,8 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.utils.DistanceUtils;
+import net.naonedbus.widget.StopStepView;
+import net.naonedbus.widget.StopStepView.Type;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
@@ -41,13 +43,18 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 
 	private ViewType mViewType = ViewType.TYPE_STANDARD;
 	private int mNearestPosition = -1;
+	private int mRouteColor;
 
 	public ArretArrayAdapter(final Context context, final List<Arret> objects) {
 		super(context, 0, objects);
 	}
 
+	public void setRouteColor(final int routeColor) {
+		mRouteColor = routeColor;
+	}
+
 	public void setViewType(final ViewType viewType) {
-		this.mViewType = viewType;
+		mViewType = viewType;
 	}
 
 	@Override
@@ -82,18 +89,18 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 
 			if (mViewType == ViewType.TYPE_METRO) {
 				if (position == 0) {
-					holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_first);
+					holder.stopStepView.setType(Type.FIRST);
 				} else if (position == getCount() - 1) {
-					holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_last);
+					holder.stopStepView.setType(Type.LAST);
 				} else {
-					holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_step);
+					holder.stopStepView.setType(Type.MIDDLE);
 				}
 
 				holder.itemIcon.setVisibility(View.INVISIBLE);
-				holder.itemMetroPoint.setVisibility(View.VISIBLE);
+				holder.stopStepView.setVisibility(View.VISIBLE);
 			} else {
 				holder.itemIcon.setVisibility(View.VISIBLE);
-				holder.itemMetroPoint.setVisibility(View.INVISIBLE);
+				holder.stopStepView.setVisibility(View.INVISIBLE);
 			}
 		}
 
@@ -129,11 +136,13 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	public void bindViewHolder(final View view) {
 		final ViewHolder holder;
 		holder = new ViewHolder();
-		holder.itemMetroPoint = (ImageView) view.findViewById(R.id.itemMetroPoint);
+		holder.stopStepView = (StopStepView) view.findViewById(R.id.itemMetroPoint);
 		holder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDistance = (TextView) view.findViewById(R.id.itemDistance);
 		holder.dotLocation = (ImageView) view.findViewById(R.id.dotLocation);
+
+		holder.stopStepView.setColor(mRouteColor);
 
 		view.setTag(holder);
 	}
@@ -143,7 +152,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	}
 
 	private static class ViewHolder {
-		ImageView itemMetroPoint;
+		StopStepView stopStepView;
 		ImageView itemIcon;
 		ImageView dotLocation;
 		TextView itemTitle;

@@ -77,9 +77,8 @@ public class AddEventActivity extends SherlockActivity {
 
 		final HeaderHelper headerHelper = new HeaderHelper(this);
 		headerHelper.setColor(ligne.getCouleur(), ligne.getCouleurTexte());
-		headerHelper.setCode(ligne.getLettre());
 		headerHelper.setTitle(arret.getNomArret());
-		headerHelper.setSubTitle(FormatUtils.formatSens(sens.text));
+		headerHelper.setSubTitle(FormatUtils.formatSens(ligne.getLettre(), sens.text));
 
 		final ActionBar actionBar = getSupportActionBar();
 

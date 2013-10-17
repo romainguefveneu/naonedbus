@@ -33,13 +33,14 @@
         <RelativeLayout
             android:id="@id/headerView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/headeractivity_height" >
+            android:layout_height="@dimen/headeractivity_height"
+            android:paddingLeft="@dimen/padding_header"
+            android:paddingRight="@dimen/padding_header" >
 
             <TextView
                 android:id="@id/itemCode"
-                style="@style/BigCode"
+                style="@style/ItemSymbole.Header"
                 android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/padding_small"
                 android:text="00" />
 
             <Spinner
