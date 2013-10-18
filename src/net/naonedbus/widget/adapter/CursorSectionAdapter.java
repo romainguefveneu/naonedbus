@@ -37,21 +37,21 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	protected CursorSectionIndexer mIndexer;
 	protected LayoutInflater mLayoutInflater;
 
-	private int mLayoutId;
+	private final int mLayoutId;
 
-	public CursorSectionAdapter(Context context, Cursor c, int layoutId) {
+	public CursorSectionAdapter(final Context context, final Cursor c, final int layoutId) {
 		super(context, c, layoutId);
 
 		mLayoutInflater = LayoutInflater.from(context);
 		mLayoutId = layoutId;
 	}
 
-	public void setIndexer(CursorSectionIndexer indexer) {
+	public void setIndexer(final CursorSectionIndexer indexer) {
 		mIndexer = indexer;
 	}
 
 	@Override
-	public void changeCursor(Cursor cursor) {
+	public void changeCursor(final Cursor cursor) {
 		super.changeCursor(cursor);
 		if (mIndexer != null) {
 			mIndexer.changeCursor(cursor);
@@ -59,7 +59,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	}
 
 	@Override
-	public Cursor swapCursor(Cursor newCursor) {
+	public Cursor swapCursor(final Cursor newCursor) {
 		final Cursor oldCursor = super.swapCursor(newCursor);
 		if (mIndexer != null) {
 			mIndexer.changeCursor(newCursor);
@@ -68,7 +68,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	}
 
 	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+	public View newView(final Context context, final Cursor cursor, final ViewGroup parent) {
 		final View v = mLayoutInflater.inflate(mLayoutId, null);
 		bindViewHolder(v);
 		return v;
@@ -82,7 +82,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	protected abstract void bindViewHolder(View view);
 
 	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
+	public void bindView(final View view, final Context context, final Cursor cursor) {
 		bindSectionHeader(view, cursor.getPosition());
 	}
 
@@ -92,7 +92,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	 * @param itemView
 	 * @param position
 	 */
-	protected void bindSectionHeader(View itemView, int position) {
+	protected void bindSectionHeader(final View itemView, final int position) {
 		final View headerView = itemView.findViewById(R.id.headerView);
 
 		if (headerView != null) {
@@ -119,7 +119,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	}
 
 	@Override
-	public int getPinnedHeaderState(int position) {
+	public int getPinnedHeaderState(final int position) {
 		if (mIndexer == null || getCount() == 0) {
 			return PINNED_HEADER_GONE;
 		}
@@ -130,12 +130,12 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 
 		// The header should get pushed up if the top item shown
 		// is the last item in a section for a particular letter.
-		int section = getSectionForPosition(position);
+		final int section = getSectionForPosition(position);
 		if (section == -1) {
 			return PINNED_HEADER_GONE;
 		}
 
-		int nextSectionPosition = getPositionForSection(section + 1);
+		final int nextSectionPosition = getPositionForSection(section + 1);
 		if (nextSectionPosition != -1 && position == nextSectionPosition - 1) {
 			return PINNED_HEADER_PUSHED_UP;
 		}
@@ -144,7 +144,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	}
 
 	@Override
-	public void configurePinnedHeader(View v, int position) {
+	public void configurePinnedHeader(final View v, final int position) {
 		final TextView header = (TextView) v.findViewById(R.id.headerTitle);
 		final int section = getSectionForPosition(position);
 		final String title = (String) getSections()[section];
@@ -160,7 +160,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 		}
 	}
 
-	public int getPositionForSection(int sectionIndex) {
+	public int getPositionForSection(final int sectionIndex) {
 		if (mIndexer == null) {
 			return -1;
 		}
@@ -169,7 +169,7 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	}
 
 	@Override
-	public int getSectionForPosition(int position) {
+	public int getSectionForPosition(final int position) {
 		if (mIndexer == null) {
 			return -1;
 		}
@@ -178,14 +178,14 @@ public abstract class CursorSectionAdapter extends CursorAdapter implements OnSc
 	}
 
 	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+	public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
 		if (view instanceof PinnedHeaderListView) {
 			((PinnedHeaderListView) view).configureHeaderView(firstVisibleItem);
 		}
 	}
 
 	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
+	public void onScrollStateChanged(final AbsListView view, final int scrollState) {
 
 	}
 

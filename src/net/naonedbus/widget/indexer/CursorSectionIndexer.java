@@ -47,14 +47,14 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 	 *            the cursor containing the data set
 	 * @param columnSection
 	 */
-	public CursorSectionIndexer(Cursor cursor, String columnSectionName, int sectionsCount) {
+	public CursorSectionIndexer(final Cursor cursor, final String columnSectionName, final int sectionsCount) {
 		mDataCursor = cursor;
 		mColumnSectionName = columnSectionName;
 
 		changeCursor(cursor);
 	}
 
-	public void changeCursor(Cursor cursor) {
+	public void changeCursor(final Cursor cursor) {
 		if (mDataCursor != null) {
 			mDataCursor.unregisterDataSetObserver(this);
 		}
@@ -68,7 +68,6 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 	}
 
 	private void buildIndex() {
-
 		final ArrayList<String> sectionsText = new ArrayList<String>();
 		final ArrayList<Integer> sectionsCount = new ArrayList<Integer>();
 		int lastSectionPosition;
@@ -126,7 +125,7 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 	protected abstract String getSectionLabel(int section);
 
 	@Override
-	public int getPositionForSection(int section) {
+	public int getPositionForSection(final int section) {
 		if (section < 0 || section >= mSections.length) {
 			return -1;
 		}
@@ -135,12 +134,12 @@ public abstract class CursorSectionIndexer extends DataSetObserver implements Se
 	}
 
 	@Override
-	public int getSectionForPosition(int position) {
+	public int getSectionForPosition(final int position) {
 		if (position < 0 || position >= mCount) {
 			return -1;
 		}
 
-		int index = Arrays.binarySearch(mPositions, position);
+		final int index = Arrays.binarySearch(mPositions, position);
 
 		/*
 		 * Consider this example: section positions are 0, 3, 5; the supplied

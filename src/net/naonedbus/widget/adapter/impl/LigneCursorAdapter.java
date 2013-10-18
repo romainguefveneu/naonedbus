@@ -28,6 +28,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -122,11 +123,11 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 
 	@Override
 	public Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
-		Cursor currentCursor = null;
-		if (constraint != null) {
-			currentCursor = mLigneManager.getLignesSearch(mContext.getContentResolver(), constraint.toString());
+		if (!TextUtils.isEmpty(constraint)) {
+			return mLigneManager.getLignesSearch(mContext.getContentResolver(), constraint.toString());
+		} else {
+			return mLigneManager.getCursor(mContext.getContentResolver());
 		}
-		return currentCursor;
 	}
 
 	@Override

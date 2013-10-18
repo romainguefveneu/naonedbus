@@ -43,7 +43,7 @@ import android.widget.ImageView;
 
 public class MapCard extends Card<Bitmap> {
 
-	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=20&scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&format=jpg";
+	private static final String MAP_URL = "http://maps.google.com/maps/api/staticmap?zoom=16&scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&format=jpg";
 	private static final String MAP_URL_CURRENT_LOCATION = "http://maps.google.com/maps/api/staticmap?scale=1&size=%dx%d&sensor=true&markers=color:blue%%7C%f,%f&center=%f,%f&format=jpg";
 	private static final String PARAM_URL = "url";
 
@@ -65,7 +65,7 @@ public class MapCard extends Card<Bitmap> {
 	}
 
 	public void setCurrentLocation(final Location currentLocation) {
-		mCurrentLocation = currentLocation;
+//		mCurrentLocation = currentLocation;
 	}
 
 	@Override
