@@ -21,10 +21,10 @@ package net.naonedbus.helper;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Groupe;
-import net.naonedbus.manager.impl.GroupeManager;
-import net.naonedbus.provider.table.FavorisGroupesTable;
-import net.naonedbus.provider.table.GroupeTable;
+import net.naonedbus.bean.BookmarkGroup;
+import net.naonedbus.manager.impl.BookmarkGroupManager;
+import net.naonedbus.provider.table.StopBookmarkGroupLinkTable;
+import net.naonedbus.provider.table.StopBookmarkGroupTable;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,11 +36,11 @@ import android.view.WindowManager;
 public class GroupesHelper {
 
 	private final Context mContext;
-	private final GroupeManager mGroupeManager;
+	private final BookmarkGroupManager mGroupeManager;
 
 	public GroupesHelper(final Context context) {
 		mContext = context;
-		mGroupeManager = GroupeManager.getInstance();
+		mGroupeManager = BookmarkGroupManager.getInstance();
 	}
 
 	public void linkFavori(final List<Integer> idFavoris, final Runnable callback) {
@@ -51,8 +51,8 @@ public class GroupesHelper {
 		if (c.getCount() > 0) {
 			c.moveToFirst();
 			while (!c.isAfterLast()) {
-				checked[c.getPosition()] = c.getInt(c.getColumnIndex(FavorisGroupesTable.LINKED)) > 0;
-				items[c.getPosition()] = c.getString(c.getColumnIndex(GroupeTable.NOM));
+				checked[c.getPosition()] = c.getInt(c.getColumnIndex(StopBookmarkGroupLinkTable.LINKED)) > 0;
+				items[c.getPosition()] = c.getString(c.getColumnIndex(StopBookmarkGroupTable.GROUP_NAME));
 				c.moveToNext();
 			}
 		}
@@ -63,7 +63,7 @@ public class GroupesHelper {
 		builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
-				Groupe groupe;
+				BookmarkGroup groupe;
 				for (int i = 0; i < checked.length; i++) {
 					c.moveToPosition(i);
 					groupe = mGroupeManager.getSingleFromCursor(c);

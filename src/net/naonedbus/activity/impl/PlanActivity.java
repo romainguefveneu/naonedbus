@@ -20,7 +20,7 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.fragment.impl.PlanFragment;
 import net.naonedbus.manager.impl.LigneManager;
 import android.os.Bundle;
@@ -39,9 +39,9 @@ public class PlanActivity extends OneFragmentActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 
 		final String codeLigne = getIntent().getStringExtra(PARAM_CODE_LIGNE);
-		final Ligne ligne = LigneManager.getInstance().getSingle(getContentResolver(), codeLigne);
+		final Route ligne = LigneManager.getInstance().getSingle(getContentResolver(), codeLigne);
 
-		setTitle(getString(R.string.title_activity_plan, ligne.getLettre(), ligne.getNom()));
+		setTitle(getString(R.string.title_activity_plan, ligne.getLetter(), ligne.getName()));
 
 		final Bundle bundle = new Bundle();
 		bundle.putString(PlanFragment.PARAM_CODE_LIGNE, codeLigne);

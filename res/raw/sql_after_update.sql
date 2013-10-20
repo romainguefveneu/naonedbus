@@ -1,16 +1,16 @@
-INSERT INTO favoris SELECT _id, codeLigne, codeSens, codeArret, nomFavori FROM favoris_backup;
-DROP TABLE favoris_backup;
+INSERT INTO stopBookmarks SELECT _id, routeCode, directionCode, stopCode, bookmarkName FROM stopBookmarks_backup;
+DROP TABLE stopBookmarks_backup;
 
-DELETE FROM favoris WHERE NOT EXISTS (SELECT 1 FROM lignes WHERE code = codeLigne);
-DELETE FROM favoris WHERE _id IN (SELECT favoris._id FROM favoris LEFT JOIN arrets ON arrets._id = favoris._id LEFT JOIN equipements ON equipements.idType = 0 AND equipements._id = arrets.idStation WHERE codeEquipement IS NULL);
-UPDATE favoris SET _id = (SELECT arrets._id FROM arrets WHERE arrets.code = favoris.codeArret AND arrets.codeSens = favoris.codeSens AND arrets.codeLigne = favoris.codeLigne);
+DELETE FROM stopBookmarks WHERE NOT EXISTS (SELECT 1 FROM routes WHERE stopBookmarks.routeCode = routes.routeCode);
+DELETE FROM stopBookmarks WHERE _id IN (SELECT stopBookmarks._id FROM stopBookmarks LEFT JOIN stops ON stops._id = stopBookmarks._id LEFT JOIN equipments ON equipments.typeId = 0 AND equipments._id = stops.equipmentId WHERE equipmentCode IS NULL);
+UPDATE stopBookmarks SET _id = (SELECT stops._id FROM stops WHERE stops.stopCode = stopBookmarks.stopCode AND stops.directionCode = stopBookmarks.directionCode AND stops.routeCode = stopBookmarks.routeCode);
 
 IF OLD_VERSION > 10
-	INSERT INTO favorisGroupes 
-		SELECT favoris._id,  favorisGroupes_backup.idGroupe FROM favorisGroupes_backup 
-		LEFT JOIN favoris 
-			ON favoris.codeLigne = favorisGroupes_backup.codeLigne 
-			AND favoris.codeSens = favorisGroupes_backup.codeSens 
-			AND favoris.codeArret = favorisGroupes_backup.codeArret;
-	DROP TABLE favorisGroupes_backup;
+	INSERT INTO stopBookmarkGroups 
+		SELECT stopBookmarks._id,  stopBookmarkGroups_backup.idGroupe FROM stopBookmarkGroups_backup 
+		LEFT JOIN stopBookmarks 
+			ON stopBookmarks.routeCode = stopBookmarkGroups_backup.routeCode 
+			AND stopBookmarks.directionCode = stopBookmarkGroups_backup.directionCode 
+			AND stopBookmarks.stopCode = stopBookmarkGroups_backup.stopCode;
+	DROP TABLE stopBookmarkGroups_backup;
 END

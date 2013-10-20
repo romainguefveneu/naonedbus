@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.ItineraryWrapper;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.helper.DateTimeFormatHelper;
 import net.naonedbus.manager.impl.LigneManager;
@@ -97,11 +97,11 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 					walkTime, walkTime);
 			wrapper.setWalkTime(walkTimeText);
 
-			final List<Ligne> lignes = new ArrayList<Ligne>();
+			final List<Route> lignes = new ArrayList<Route>();
 			final List<Leg> legs = itinerary.legs;
 			for (final Leg leg : legs) {
 				if ("BUS".equalsIgnoreCase(leg.mode) || "TRAM".equalsIgnoreCase(leg.mode)) {
-					final Ligne ligne = ligneManager.getSingleByLetter(getContext().getContentResolver(), leg.route);
+					final Route ligne = ligneManager.getSingleByLetter(getContext().getContentResolver(), leg.route);
 					if (ligne != null) {
 						lignes.add(ligne);
 					}

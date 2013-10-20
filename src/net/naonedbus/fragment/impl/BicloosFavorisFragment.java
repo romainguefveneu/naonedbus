@@ -7,8 +7,8 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.manager.impl.BiclooManager;
-import net.naonedbus.manager.impl.FavoriBiclooManager;
-import net.naonedbus.provider.impl.FavoriBiclooProvider;
+import net.naonedbus.manager.impl.BiclooBookmarkManager;
+import net.naonedbus.provider.impl.BiclooBookmarkProvider;
 import net.naonedbus.widget.adapter.impl.BiclooArrayAdapter;
 
 import org.json.JSONException;
@@ -59,7 +59,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 		final ContentResolver contentResolver = getActivity().getContentResolver();
-		contentResolver.registerContentObserver(FavoriBiclooProvider.CONTENT_URI, true, mContentObserver);
+		contentResolver.registerContentObserver(BiclooBookmarkProvider.CONTENT_URI, true, mContentObserver);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		final FavoriBiclooManager favoriBiclooManager = FavoriBiclooManager.getInstance();
+		final BiclooBookmarkManager favoriBiclooManager = BiclooBookmarkManager.getInstance();
 		final BiclooManager biclooManager = BiclooManager.getInstance();
 
 		if (bundle != null && bundle.getBoolean(BUNDKE_KEY_FORCE_UDPATE)) {
@@ -146,7 +146,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 	@SuppressLint("NewApi")
 	private void menuDelete() {
 		Bicloo item;
-		final FavoriBiclooManager manager = FavoriBiclooManager.getInstance();
+		final BiclooBookmarkManager manager = BiclooBookmarkManager.getInstance();
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 		final BiclooArrayAdapter adapter = (BiclooArrayAdapter) getListAdapter();
 

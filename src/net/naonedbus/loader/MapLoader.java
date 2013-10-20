@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.map.layer.loader.BiclooMapLoader;
 import net.naonedbus.map.layer.loader.EquipementMapLoader;
 import net.naonedbus.map.layer.loader.MapLayerLoader;
@@ -18,7 +18,7 @@ import android.util.Log;
 
 import com.twotoasters.clusterkraf.InputPoint;
 
-public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>, Void> {
+public class MapLoader extends AsyncTask<Equipment.Type, ArrayList<InputPoint>, Void> {
 
 	private static String LOG_TAG = "MapLoader";
 	private static boolean DBG = BuildConfig.DEBUG;
@@ -26,23 +26,23 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 	private final WeakReference<MapLoaderCallback> mCallback;
 	private final WeakReference<Context> mContext;
 
-	private final Map<Equipement.Type, MapLayerLoader> mLoaders;
+	private final Map<Equipment.Type, MapLayerLoader> mLoaders;
 
 	public MapLoader(final Context context, final MapLoaderCallback callback) {
 		mContext = new WeakReference<Context>(context);
 		mCallback = new WeakReference<MapLoaderCallback>(callback);
 
-		mLoaders = new HashMap<Equipement.Type, MapLayerLoader>();
-		mLoaders.put(Type.TYPE_ARRET, new EquipementMapLoader(Type.TYPE_ARRET));
+		mLoaders = new HashMap<Equipment.Type, MapLayerLoader>();
+		mLoaders.put(Type.TYPE_STOP, new EquipementMapLoader(Type.TYPE_STOP));
 		mLoaders.put(Type.TYPE_BICLOO, new BiclooMapLoader());
-		mLoaders.put(Type.TYPE_COVOITURAGE, new EquipementMapLoader(Type.TYPE_COVOITURAGE));
+		mLoaders.put(Type.TYPE_CARPOOL, new EquipementMapLoader(Type.TYPE_CARPOOL));
 		mLoaders.put(Type.TYPE_LILA, new EquipementMapLoader(Type.TYPE_LILA));
 		mLoaders.put(Type.TYPE_MARGUERITE, new EquipementMapLoader(Type.TYPE_MARGUERITE));
-		mLoaders.put(Type.TYPE_PARKING, new ParkingMapLoader());
+		mLoaders.put(Type.TYPE_PARK, new ParkingMapLoader());
 	}
 
 	@Override
-	protected Void doInBackground(final Equipement.Type... types) {
+	protected Void doInBackground(final Equipment.Type... types) {
 		final Context context = mContext.get();
 
 		if (context != null) {

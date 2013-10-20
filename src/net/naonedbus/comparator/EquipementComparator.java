@@ -20,20 +20,20 @@ package net.naonedbus.comparator;
 
 import java.util.Comparator;
 
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 
 /**
  * @author romain.guefveneu
  * 
  */
-public class EquipementComparator<T extends Equipement> implements Comparator<T> {
+public class EquipementComparator<T extends Equipment> implements Comparator<T> {
 
 	@Override
 	public int compare(T item1, T item2) {
-		if (item1 == null || item1.getNom() == null || item2 == null)
+		if (item1 == null || item1.getName() == null || item2 == null)
 			return 0;
 
-		return item1.getNom().compareTo(item2.getNom());
+		return item1.getName().compareTo(item2.getName());
 	}
 
 }

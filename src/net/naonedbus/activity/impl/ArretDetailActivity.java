@@ -20,14 +20,14 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
 import net.naonedbus.fragment.impl.ArretDetailFragment;
 import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.utils.FormatUtils;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -41,7 +41,7 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 	public static final String BUNDLE_KEY_SENS = "net.naonedbus.activity.impl.ArretDetailActivity:sens";
 
 	private HeaderHelper mHeaderHelper;
-	private Sens mSens;
+	private Direction mSens;
 
 	public ArretDetailActivity() {
 		super(R.layout.activity_horaires);
@@ -51,9 +51,9 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		final Arret arret = getIntent().getParcelableExtra(PARAM_ARRET);
-		Ligne ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
-		Sens sens;
+		final Stop arret = getIntent().getParcelableExtra(PARAM_ARRET);
+		Route ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
+		Direction sens;
 		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_KEY_SENS)) {
 			sens = savedInstanceState.getParcelable(BUNDLE_KEY_SENS);
 		} else {
@@ -65,7 +65,7 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 			ligne = ligneManager.getSingle(getContentResolver(), arret.getCodeLigne());
 		}
 		if (sens == null) {
-			final SensManager sensManager = SensManager.getInstance();
+			final DirectionManager sensManager = DirectionManager.getInstance();
 			sens = sensManager.getSingle(getContentResolver(), arret.getCodeLigne(), arret.getCodeSens());
 		}
 		mSens = sens;
@@ -80,14 +80,14 @@ public class ArretDetailActivity extends OneFragmentActivity implements OnSensCh
 		}
 
 		mHeaderHelper = new HeaderHelper(this);
-		mHeaderHelper.setColor(ligne.getCouleur(), ligne.getCouleurTexte());
+		mHeaderHelper.setColor(ligne.getBackColor(), ligne.getFrontColor());
 		mHeaderHelper.setTitle(arret.getNomArret());
-		mHeaderHelper.setSubTitle(FormatUtils.formatSens(ligne.getCode(), sens.text));
+		mHeaderHelper.setSubTitle(FormatUtils.formatSens(ligne.getCode(), sens.getName()));
 	}
 
 	@Override
-	public void onSensChange(final Sens newSens) {
-		mHeaderHelper.setSubTitleAnimated(FormatUtils.formatSens(newSens.text));
+	public void onSensChange(final Direction newSens) {
+		mHeaderHelper.setSubTitleAnimated(FormatUtils.formatSens(newSens.getName()));
 		mSens = newSens;
 	}
 

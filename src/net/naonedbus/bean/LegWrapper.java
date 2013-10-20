@@ -8,7 +8,7 @@ public class LegWrapper {
 		IN, OUT;
 	}
 
-	private Ligne mLigne;
+	private Route mLigne;
 
 	private final Type mType;
 
@@ -28,7 +28,7 @@ public class LegWrapper {
 		return mType;
 	}
 
-	public Ligne getLigne() {
+	public Route getLigne() {
 		return mLigne;
 	}
 
@@ -36,7 +36,7 @@ public class LegWrapper {
 		return mTime;
 	}
 
-	public void setLigne(final Ligne ligne) {
+	public void setLigne(final Route ligne) {
 		mLigne = ligne;
 	}
 

@@ -25,7 +25,7 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.bean.EmptyInfoTrafic;
 import net.naonedbus.bean.InfoTrafic;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.manager.impl.InfoTraficManager;
@@ -146,9 +146,9 @@ public class InfoTraficFragment extends CustomListFragment {
 
 			// TODO : Faire plus propre
 			if (mCodeLigne == null) {
-				final List<Ligne> lignes = ligneManager.getAll(context.getContentResolver());
+				final List<Route> lignes = ligneManager.getAll(context.getContentResolver());
 
-				for (final Ligne ligne : lignes) {
+				for (final Route ligne : lignes) {
 					infoTrafics = infoTraficManager.getByLigneCode(context, ligne.getCode());
 
 					if (infoTrafics == null || infoTrafics.isEmpty()) {
@@ -166,7 +166,7 @@ public class InfoTraficFragment extends CustomListFragment {
 					}
 				}
 			} else {
-				final Ligne ligne = ligneManager.getSingle(context.getContentResolver(), mCodeLigne);
+				final Route ligne = ligneManager.getSingle(context.getContentResolver(), mCodeLigne);
 				infoTrafics = infoTraficManager.getByLigneCode(context, mCodeLigne);
 
 				if (infoTrafics.size() == 0) {

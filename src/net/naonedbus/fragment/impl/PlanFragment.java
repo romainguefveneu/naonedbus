@@ -30,7 +30,7 @@ import java.net.URLConnection;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.manager.impl.LigneManager;
 import android.app.Activity;
@@ -56,7 +56,7 @@ public class PlanFragment extends CustomFragment {
 	private GestureImageView mGestureView;
 	private ProgressBar mProgressBar;
 	private LigneManager mLigneManager;
-	private Ligne mLigne;
+	private Route mLigne;
 	private boolean mSaveToCache;
 
 	public PlanFragment() {
@@ -85,11 +85,11 @@ public class PlanFragment extends CustomFragment {
 		mGestureView = (GestureImageView) view.findViewById(R.id.planView);
 		mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
 
-		if (isInCache(mLigne.getLettre())) {
+		if (isInCache(mLigne.getLetter())) {
 			afterLoaded();
 		} else {
 			try {
-				save(mLigne.getLettre());
+				save(mLigne.getLetter());
 			} catch (final MalformedURLException e) {
 				onError(e);
 			} catch (final IOException e) {

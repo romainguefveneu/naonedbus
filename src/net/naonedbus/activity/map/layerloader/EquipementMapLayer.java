@@ -23,8 +23,8 @@ import java.util.List;
 import net.naonedbus.activity.map.overlay.BasicItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.manager.impl.EquipmentManager;
 import net.naonedbus.utils.GeoPointUtils;
 import android.content.Context;
 import android.content.res.Resources;
@@ -38,13 +38,13 @@ import android.util.SparseArray;
  */
 public abstract class EquipementMapLayer implements MapLayer {
 
-	private EquipementManager equipementManager;
-	private SparseArray<Equipement> equipements = new SparseArray<Equipement>();
-	private Equipement.Type typeEquipement;
+	private EquipmentManager equipementManager;
+	private SparseArray<Equipment> equipements = new SparseArray<Equipment>();
+	private Equipment.Type typeEquipement;
 	private TypeOverlayItem typeOverlayItem;
 
-	protected EquipementMapLayer(final Equipement.Type typeEquipement, final TypeOverlayItem typeOverlayItem) {
-		this.equipementManager = EquipementManager.getInstance();
+	protected EquipementMapLayer(final Equipment.Type typeEquipement, final TypeOverlayItem typeOverlayItem) {
+		this.equipementManager = EquipmentManager.getInstance();
 		this.typeEquipement = typeEquipement;
 		this.typeOverlayItem = typeOverlayItem;
 	}
@@ -55,7 +55,7 @@ public abstract class EquipementMapLayer implements MapLayer {
 	 * @param id
 	 * @return L'équipement.
 	 */
-	protected Equipement getItemById(int id) {
+	protected Equipment getItemById(int id) {
 		return equipements.get(id);
 	}
 
@@ -64,14 +64,14 @@ public abstract class EquipementMapLayer implements MapLayer {
 	 * 
 	 * @param equipement
 	 */
-	protected void addEquipement(Equipement equipement) {
+	protected void addEquipement(Equipment equipement) {
 		equipements.put(equipement.getId(), equipement);
 	}
 
 	/**
 	 * @return L'equipementManager.
 	 */
-	protected EquipementManager getEquipementManager() {
+	protected EquipmentManager getEquipementManager() {
 		return equipementManager;
 	}
 
@@ -88,11 +88,11 @@ public abstract class EquipementMapLayer implements MapLayer {
 		final BasicItemizedOverlay newItemizedOverlay = getOverlay(context.getResources());
 		BasicOverlayItem overlayItem;
 
-		final List<Equipement> localEquipements = equipementManager.getEquipementsByType(context.getContentResolver(),
+		final List<Equipment> localEquipements = equipementManager.getEquipementsByType(context.getContentResolver(),
 				typeEquipement);
 
-		for (final Equipement equipement : localEquipements) {
-			overlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(equipement), equipement.getNom(),
+		for (final Equipment equipement : localEquipements) {
+			overlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(equipement), equipement.getName(),
 					typeOverlayItem);
 			overlayItem.setId(equipement.getId());
 			newItemizedOverlay.addOverlay(overlayItem);
@@ -105,7 +105,7 @@ public abstract class EquipementMapLayer implements MapLayer {
 	@Override
 	public BasicItemizedOverlay getOverlay(Context context, int defaultItemId) {
 		final BasicItemizedOverlay newItemizedOverlay;
-		final Equipement item = equipementManager.getSingle(context.getContentResolver(), defaultItemId);
+		final Equipment item = equipementManager.getSingle(context.getContentResolver(), defaultItemId);
 		if (item != null) {
 			final Location location = new Location(LocationManager.GPS_PROVIDER);
 			location.setLatitude(item.getLatitude());

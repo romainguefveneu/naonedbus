@@ -20,10 +20,10 @@ package net.naonedbus.rest.container;
 
 import java.util.List;
 
-import net.naonedbus.bean.Commentaire;
+import net.naonedbus.bean.Comment;
 
 public class CommentaireContainer {
 
-	public List<Commentaire> commentaire;
+	public List<Comment> commentaire;
 
 }

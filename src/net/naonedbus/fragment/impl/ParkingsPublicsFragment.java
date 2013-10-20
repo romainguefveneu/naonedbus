@@ -36,11 +36,11 @@ import net.naonedbus.helper.StateHelper;
 import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
-import net.naonedbus.widget.adapter.impl.ParkingPublicArrayAdapter;
+import net.naonedbus.widget.adapter.impl.PublicParkArrayAdapter;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
-import net.naonedbus.widget.indexer.impl.ParkingDistanceIndexer;
-import net.naonedbus.widget.indexer.impl.ParkingNomIndexer;
-import net.naonedbus.widget.indexer.impl.ParkingPlaceIndexer;
+import net.naonedbus.widget.indexer.impl.ParksDistanceIndexer;
+import net.naonedbus.widget.indexer.impl.ParksNameIndexer;
+import net.naonedbus.widget.indexer.impl.ParksPlaceIndexer;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -78,9 +78,9 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	}
 	private final static SparseArray<ArraySectionIndexer<ParkingPublic>> indexers = new SparseArray<ArraySectionIndexer<ParkingPublic>>();
 	static {
-		indexers.append(SORT_NOM, new ParkingNomIndexer());
-		indexers.append(SORT_DISTANCE, new ParkingDistanceIndexer());
-		indexers.append(SORT_PLACES, new ParkingPlaceIndexer());
+		indexers.append(SORT_NOM, new ParksNameIndexer());
+		indexers.append(SORT_DISTANCE, new ParksDistanceIndexer());
+		indexers.append(SORT_PLACES, new ParksPlaceIndexer());
 	}
 
 	private MenuItem mRefreshMenuItem;
@@ -208,7 +208,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 			final ParkingPublicManager parkingPublicManager = ParkingPublicManager.getInstance();
 			final List<ParkingPublic> parkings = parkingPublicManager.getAll(context);
 			Collections.sort(parkings, comparators.get(mCurrentSort));
-			final ParkingPublicArrayAdapter adapter = new ParkingPublicArrayAdapter(context, parkings);
+			final PublicParkArrayAdapter adapter = new PublicParkArrayAdapter(context, parkings);
 			adapter.setIndexer(indexers.get(mCurrentSort));
 
 			result.setResult(adapter);
@@ -268,7 +268,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	 * Trier les parkings selon les préférences.
 	 */
 	private void sort() {
-		final ParkingPublicArrayAdapter adapter = (ParkingPublicArrayAdapter) getListAdapter();
+		final PublicParkArrayAdapter adapter = (PublicParkArrayAdapter) getListAdapter();
 		if (adapter != null) {
 			sort(adapter);
 			adapter.notifyDataSetChanged();
@@ -280,7 +280,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	 * 
 	 * @param adapter
 	 */
-	private void sort(final ParkingPublicArrayAdapter adapter) {
+	private void sort(final PublicParkArrayAdapter adapter) {
 		final Comparator<ParkingPublic> comparator;
 		final ArraySectionIndexer<ParkingPublic> indexer;
 

@@ -3,7 +3,7 @@ package net.naonedbus.map.layer;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.map.ItemSelectedInfo;
 import net.naonedbus.utils.FontUtils;
 import android.content.Context;
@@ -46,7 +46,7 @@ public abstract class MapLayer {
 	}
 
 	public final View getInfoContents(final Object item) {
-		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (Equipement) item);
+		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (Equipment) item);
 
 		mTitle.setText(itemSelectedInfo.getTitle());
 
@@ -72,7 +72,7 @@ public abstract class MapLayer {
 	}
 
 	public final Intent getClickIntent(final Context context, final Object tag) {
-		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (Equipement) tag);
+		final ItemSelectedInfo itemSelectedInfo = getItemSelectedInfo(mContentView.getContext(), (Equipment) tag);
 		return itemSelectedInfo.getIntent(context);
 	}
 
@@ -95,7 +95,7 @@ public abstract class MapLayer {
 		mSubView.setVisibility(View.VISIBLE);
 	}
 
-	protected abstract ItemSelectedInfo getItemSelectedInfo(Context context, final Equipement item);
+	protected abstract ItemSelectedInfo getItemSelectedInfo(Context context, final Equipment item);
 
 	public abstract void chooseMarker(final MarkerOptions markerOptions, final ClusterPoint clusterPoint);
 

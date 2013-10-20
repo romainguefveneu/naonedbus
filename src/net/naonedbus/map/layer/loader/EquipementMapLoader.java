@@ -21,8 +21,8 @@ package net.naonedbus.map.layer.loader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.manager.impl.EquipmentManager;
 import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -30,29 +30,29 @@ import com.twotoasters.clusterkraf.InputPoint;
 
 public class EquipementMapLoader implements MapLayerLoader {
 
-	private final EquipementManager mEquipementManager;
-	private final Equipement.Type mTypeEquipement;
+	private final EquipmentManager mEquipementManager;
+	private final Equipment.Type mTypeEquipement;
 
-	public EquipementMapLoader(final Equipement.Type typeEquipement) {
-		mEquipementManager = EquipementManager.getInstance();
+	public EquipementMapLoader(final Equipment.Type typeEquipement) {
+		mEquipementManager = EquipmentManager.getInstance();
 		mTypeEquipement = typeEquipement;
 
 	}
 
 	@Override
 	public ArrayList<InputPoint> getInputPoints(final Context context) {
-		final List<Equipement> equipements = mEquipementManager.getEquipementsByType(context.getContentResolver(),
+		final List<Equipment> equipements = mEquipementManager.getEquipementsByType(context.getContentResolver(),
 				mTypeEquipement);
 		final ArrayList<InputPoint> result = new ArrayList<InputPoint>(equipements.size());
 
-		for (final Equipement equipement : equipements) {
+		for (final Equipment equipement : equipements) {
 			result.add(createInputPoint(equipement));
 		}
 
 		return result;
 	}
 
-	private InputPoint createInputPoint(final Equipement equipement) {
+	private InputPoint createInputPoint(final Equipment equipement) {
 		final LatLng latLng = new LatLng(equipement.getLatitude(), equipement.getLongitude());
 		final InputPoint inputPoint = new InputPoint(latLng);
 		inputPoint.setTag(equipement);

@@ -90,13 +90,12 @@ CREATE TABLE IF NOT EXISTS stopBookmarkGroups (
 	groupOrder INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS stopBookmarkGroups_id ON stopBookmarkGroups (_id);
 
-CREATE TABLE IF NOT EXISTS stopBookmarkGroups (
+CREATE TABLE IF NOT EXISTS stopBookmarkGroupLinks (
 	stopBookmarkId INTEGER NOT NULL REFERENCES stopBookmarks(_id) ON DELETE CASCADE, 
-	groupId  INTEGER NOT NULL REFERENCES bookmarkGroups(_id) ON DELETE CASCADE,
+	groupId  INTEGER NOT NULL REFERENCES stopBookmarkGroups(_id) ON DELETE CASCADE,
 	CONSTRAINT uc_ids UNIQUE (stopBookmarkId, groupId));
-
-CREATE INDEX IF NOT EXISTS stopBookmarkGroups_stopBookmarkId ON stopBookmarkGroups (stopBookmarkId);
-CREATE INDEX IF NOT EXISTS stopBookmarkGroups_groupId ON stopBookmarkGroups (groupId);
+CREATE INDEX IF NOT EXISTS stopBookmarkGroupLinks_stopBookmarkId ON stopBookmarkGroupLinks (stopBookmarkId);
+CREATE INDEX IF NOT EXISTS stopBookmarkGroupLinks_groupId ON stopBookmarkGroupLinks (groupId);
 
 CREATE TABLE IF NOT EXISTS comments (
     _id INTEGER PRIMARY KEY,
@@ -123,7 +122,7 @@ SELECT
     stopBookmarks.directionCode, 
     stopBookmarks.stopCode,
     stopBookmarks.bookmarkName, 
-    equipments.name AS stopPointName, 
+    equipments.equipmentName, 
     equipments.normalizedName, 
     equipments.equipmentCode,
     stops.equipmentId, 
@@ -134,17 +133,39 @@ SELECT
     routes.frontColor, 
     routes.backColor, 
     routes.letter,
-    bookmarkGroups.groupName,
-    bookmarkGroups._id AS bookmarkId,
-    bookmarkGroups.bookmarkOrder,
+    stopBookmarkGroups._id AS stopBookmarkGroupId,
+    stopBookmarkGroups.groupName,
+    stopBookmarkGroups.groupOrder,
     (SELECT (timestamp/1000 - ((strftime('%s','now')) / 60) * 60) / 60 FROM schedules WHERE schedules.stopId = stopBookmarks._id AND timestamp/1000 >= (strftime('%s','now')) / 60 * 60 LIMIT 1) as nextSchedule
 FROM
     stopBookmarks 
     LEFT JOIN stops ON stopBookmarks._id = stops._id
-    LEFT JOIN equipments ON equipments.idType = 0 AND equipments._id = stops.equipmentId 
+    LEFT JOIN equipments ON equipments.typeId = 0 AND equipments._id = stops.equipmentId 
     LEFT JOIN routes ON routes.routeCode = stopBookmarks.routeCode
     LEFT JOIN directions ON directions.routeCode = stopBookmarks.routeCode AND directions.directionCode = stopBookmarks.directionCode
-    LEFT JOIN stopPointBookmarkGroups ON stopBookmarks._id = stopBookmarkGroups.stopBookmarkId
-    LEFT JOIN bookmarkGroups ON bookmarkGroups._id = stopBookmarkGroups.groupId;
+    LEFT JOIN stopBookmarkGroupLinks ON stopBookmarks._id = stopBookmarkGroupLinks.stopBookmarkId
+    LEFT JOIN stopBookmarkGroups ON stopBookmarkGroups._id = stopBookmarkGroupLinks.groupId;
+
+CREATE VIEW IF NOT EXISTS stopDirectionsView AS
+SELECT stops._id AS stopId, 
+       routes.routecode, 
+       routes._id AS routeId, 
+       routes.letter, 
+       routes.backColor, 
+       routes.frontColor, 
+       routes.typeId AS routeTypeId,
+       directions._id AS directionId,
+       directions.directionName,
+       equipments.normalizedName
+FROM   equipments
+       LEFT JOIN stops 
+              ON stops.equipmentId = equipments._id 
+       LEFT JOIN directions
+              ON directions.directionCode = stops.directionCode
+                 AND directions.routeCode = stops.routeCode
+       LEFT JOIN routes 
+              ON routes.routeCode = stops.routeCode 
+WHERE  routes.routeCode IS NOT NULL 
+       AND equipments.typeId = 0;
 
 PRAGMA foreign_keys = ON;

@@ -1,5 +1,5 @@
 # Types de lignes
-INSERT INTO typesLignes(_id, nom) VALUES (?, ?);
+INSERT INTO routeTypes(_id, typeName) VALUES (?, ?);
 0;Bus relai Tram
 1;Tramway
 2;Chronobus
@@ -9,7 +9,7 @@ INSERT INTO typesLignes(_id, nom) VALUES (?, ?);
 6;Lignes spéciales
 
 # Equipements
-INSERT INTO typesEquipements(_id, nom) VALUES (?, ?);
+INSERT INTO equipmentTypes(_id, typeName) VALUES (?, ?);
 0;Arrêts Tan
 1;Parkings
 2;Stations Bicloo
@@ -18,7 +18,7 @@ INSERT INTO typesEquipements(_id, nom) VALUES (?, ?);
 5;Arrêts Lila
 
 # Parkings
-INSERT INTO equipements(_id, idType, idSousType, nomEquipement, normalizedNom, adresse, telephone, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO equipments(_id, typeId, subtypeId, equipmentName, normalizedName, address, phone, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 3551;1;1;Baco-LU 2 côté CHU;Baco-LU 2 cote CHU;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2131509800273;-1.55160425745185
 4142;1;1;Baco-LU 1 côté gare;Baco-LU 1 cote gare;Allée Baco 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2143324211276;-1.54898882844897
 3650;1;1;Bellamy;Bellamy;Impasse de la Courtine 44000 - Nantes;02 51 84 94 51;www.parkings-nantes.fr;47.2223604161017;-1.55769369256355
@@ -89,7 +89,7 @@ INSERT INTO equipements(_id, idType, idSousType, nomEquipement, normalizedNom, a
 3565;1;2;Gare de Mauves-sur-Loire;Gare de Mauves-sur-Loire;Place de la Gare 44470 - Mauves-sur-loire;02 40 44 44 44;www.tan.fr;47.2932583339329;-1.388904886686
 
 # Marguerite
-INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO equipments(_id, typeId, equipmentName, normalizedName, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
 1;3;50 Otages;50 Otages;47.2184474307694;-1.55759693321303
 2;3;Aristide Briand;Aristide Briand;47.2172290515068;-1.5624656224159
 3;3;Baco;Baco;47.2121787060193;-1.55252763911359
@@ -113,7 +113,7 @@ INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, lon
 21;3;Zola;Zola;47.2138994604397;-1.58634620409642
 
 # Co voiturage
-INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, adresse, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO equipments(_id, typeId, equipmentName, normalizedName, address, url, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 1;4;Salle Polyvalente;SALLE POLYVALENTE;Abbaretz;www.covoiturage-nantesmetropole.fr;47.55395210262326;-1.5322793346043333
 2;4;Super U;SUPER U;Arthon;www.covoiturage-nantesmetropole.fr;47.115215313981004;-1.9501037695793397
 3;4;La Herdrie;LA HERDRIE;Basse Goulaine;www.covoiturage-nantesmetropole.fr;47.19812465783537;-1.4542676659553404
@@ -202,7 +202,7 @@ INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, adresse, url,
 86;4;La Croix de Mauves;LA CROIX DE MAUVES;RD 723 - Mauves-sur-Loire;www.covoiturage-nantesmetropole.fr;47.3002662582;-1.3981722587
 
 #Lila
-INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
+INSERT INTO equipments(_id, typeId, equipmentName, normalizedName, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?);
 1;5;27 otages;27 OTAGES;47.71891688;-1.36656651
 2;5;3m;3M;47.42716985;-2.06972548
 3;5;Acacias;ACACIAS;47.71674311;-1.36333285
@@ -1191,7 +1191,7 @@ INSERT INTO equipements(_id, idType, nomEquipement, normalizedNom, latitude, lon
 986;5;Zone industrielle;ZONE INDUSTRIELLE;47.10071858;-1.60296323
 
 # Lignes
-INSERT INTO lignes(_id, code, lettre, depuis, vers, couleurBack, couleurFront, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+INSERT INTO routes(_id, routeCode, letter, headsignFrom, headsignTo, backColor, frontColor, typeId) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 0;1;1;François Mitterrand;Beaujoire / Ranzay;-16746171;-1;1
 1;2;2;Orvault Grand Val;Gare de Pont Rousseau;-1758408;-1;1
 2;3;3;Marcel Paul;Neustrie;-16746052;-1;1
@@ -1252,7 +1252,7 @@ INSERT INTO lignes(_id, code, lettre, depuis, vers, couleurBack, couleurFront, t
 57;NL;NL;Trentemoult;Roquios;-15383149;-1;6
 
 # Stations
-INSERT INTO equipements(_id, idType, codeEquipement, nomEquipement, normalizedNom, latitude, longitude) VALUES (?,?,?,?,?,?,?);
+INSERT INTO equipments(_id, typeId, equipmentCode, equipmentName, normalizedName, latitude, longitude) VALUES (?,?,?,?,?,?,?);
 0;0;ABDU;Abel Durand;ABEL DURAND;47.22019661;-1.60337553
 1;0;ABLA;Avenue Blanche;AVENUE BLANCHE;47.22973509;-1.58937990
 2;0;ACHA;Angle Chaillou;ANGLE CHAILLOU;47.26979248;-1.57206627
@@ -2276,7 +2276,7 @@ INSERT INTO equipements(_id, idType, codeEquipement, nomEquipement, normalizedNo
 1020;0;ZOLA;Zola;ZOLA;47.21376750;-1.58608132
 
 # Sens
-INSERT INTO sens(_id, codeLigne, code, nomSens) VALUES (?, ?, ?, ?);
+INSERT INTO directions(_id, routeCode, directionCode, directionName) VALUES (?, ?, ?, ?);
 0;1;2;Beaujoire / Ranzay
 1;1;1;François Mitterrand
 2;2;2;Gare de Pont Rousseau
@@ -2401,7 +2401,7 @@ INSERT INTO sens(_id, codeLigne, code, nomSens) VALUES (?, ?, ?, ?);
 121;ZT;1;Commerce / Pirmil / Gréneraie
 
 # Arrêts
-INSERT INTO arrets(_id, code, codeSens, codeLigne, idStation, ordre) VALUES (?,?,?,?,?,?);
+INSERT INTO stops(_id, stopCode, directionCode, routeCode, equipmentId, stopOrder) VALUES (?,?,?,?,?,?);
 0;FMIT1;2;1;352;1
 1;JAME1;2;1;471;1
 2;TMLI1;2;1;967;2

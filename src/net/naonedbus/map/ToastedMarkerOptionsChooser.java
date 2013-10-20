@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.map.layer.MapLayer;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -30,13 +30,13 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 	private final Paint mClusterPaintLarge;
 	private final Paint mClusterPaintMedium;
 	private final Paint mClusterPaintSmall;
-	private final Map<Equipement.Type, MapLayer> mLayerChoosers;
+	private final Map<Equipment.Type, MapLayer> mLayerChoosers;
 	private MapLayer mDefaultLayer;
 
 	public ToastedMarkerOptionsChooser(final Context context) {
 		mContextRef = new WeakReference<Context>(context);
 
-		mLayerChoosers = new HashMap<Equipement.Type, MapLayer>();
+		mLayerChoosers = new HashMap<Equipment.Type, MapLayer>();
 
 		final Resources res = context.getResources();
 
@@ -55,7 +55,7 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 		mClusterPaintLarge.setTextSize(res.getDimension(R.dimen.cluster_text_size_large));
 	}
 
-	public void registerMapLayer(final Equipement.Type type, final MapLayer mapLayer) {
+	public void registerMapLayer(final Equipment.Type type, final MapLayer mapLayer) {
 		mLayerChoosers.put(type, mapLayer);
 	}
 
@@ -77,7 +77,7 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 				markerOptions.icon(icon);
 				markerOptions.title(title);
 			} else {
-				final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
+				final Equipment equipement = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
 				MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
 				if (mapLayer == null) {
 					mapLayer = mDefaultLayer;

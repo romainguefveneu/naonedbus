@@ -33,9 +33,9 @@ import net.naonedbus.activity.impl.GroupesActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Favori;
-import net.naonedbus.bean.Groupe;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.StopBookmark;
+import net.naonedbus.bean.BookmarkGroup;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.FavoriComparator;
@@ -45,19 +45,19 @@ import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.helper.FavorisHelper.FavorisActionListener;
 import net.naonedbus.helper.GroupesHelper;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.manager.impl.FavoriManager;
-import net.naonedbus.manager.impl.FavoriManager.OnFavoriActionListener;
-import net.naonedbus.manager.impl.FavorisViewManager;
-import net.naonedbus.manager.impl.GroupeManager;
-import net.naonedbus.manager.impl.HoraireManager;
-import net.naonedbus.provider.impl.FavoriGroupeProvider;
-import net.naonedbus.provider.impl.GroupeProvider;
+import net.naonedbus.manager.impl.StopBookmarkManager;
+import net.naonedbus.manager.impl.StopBookmarkManager.OnFavoriActionListener;
+import net.naonedbus.manager.impl.StopBookmarkViewManager;
+import net.naonedbus.manager.impl.BookmarkGroupManager;
+import net.naonedbus.manager.impl.ScheduleManager;
+import net.naonedbus.provider.impl.StopBookmarkGroupLinkProvider;
+import net.naonedbus.provider.impl.StopBookmarkGroupProvider;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.service.FavoriService;
 import net.naonedbus.utils.FavorisUtil;
-import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
-import net.naonedbus.widget.indexer.impl.FavoriArrayIndexer;
+import net.naonedbus.widget.adapter.impl.StopBookmarkArrayAdapter;
+import net.naonedbus.widget.indexer.impl.StopBookmarksArrayIndexer;
 
 import org.joda.time.DateMidnight;
 
@@ -122,7 +122,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
 	}
 
-	private final static SparseArray<Comparator<Favori>> comparators = new SparseArray<Comparator<Favori>>();
+	private final static SparseArray<Comparator<StopBookmark>> comparators = new SparseArray<Comparator<StopBookmark>>();
 	static {
 		comparators.append(SORT_NOM, new FavoriComparator());
 		comparators.append(SORT_DISTANCE, new FavoriDistanceComparator());
@@ -133,12 +133,12 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	private ListView mListView;
 	private BackupManager mBackupManager;
 	private StateHelper mStateHelper;
-	private final GroupeManager mGroupeManager;
-	private final FavoriManager mFavoriManager;
-	private final FavorisViewManager mFavorisViewManager;
+	private final BookmarkGroupManager mGroupeManager;
+	private final StopBookmarkManager mFavoriManager;
+	private final StopBookmarkViewManager mFavorisViewManager;
 	private final SharedPreferences mPreferences;
 	private final List<Integer> mSelectedGroupes;
-	private List<Groupe> mGroupes;
+	private List<BookmarkGroup> mGroupes;
 	private LoadHoraires mLoadHoraires;
 	private int mCurrentSort = SORT_NOM;
 	private boolean mContentHasChanged = false;
@@ -170,7 +170,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 
 		@Override
 		@TargetApi(Build.VERSION_CODES.FROYO)
-		public void onAdd(final Arret item) {
+		public void onAdd(final Stop item) {
 			if (DBG)
 				Log.d(LOG_TAG, "onAdd : " + item);
 
@@ -261,10 +261,10 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		if (DBG)
 			Log.i(LOG_TAG, "FavorisFragment()");
 
-		mFavoriManager = FavoriManager.getInstance();
-		mFavorisViewManager = FavorisViewManager.getInstance();
+		mFavoriManager = StopBookmarkManager.getInstance();
+		mFavorisViewManager = StopBookmarkViewManager.getInstance();
 		mLocationProvider = NBApplication.getLocationProvider();
-		mGroupeManager = GroupeManager.getInstance();
+		mGroupeManager = BookmarkGroupManager.getInstance();
 
 		mPreferences = NBApplication.getPreferences();
 
@@ -308,8 +308,8 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 		final ContentResolver contentResolver = getActivity().getContentResolver();
-		contentResolver.registerContentObserver(GroupeProvider.CONTENT_URI, true, mGroupesContentObserver);
-		contentResolver.registerContentObserver(FavoriGroupeProvider.CONTENT_URI, true, mFavorisGroupesContentObserver);
+		contentResolver.registerContentObserver(StopBookmarkGroupProvider.CONTENT_URI, true, mGroupesContentObserver);
+		contentResolver.registerContentObserver(StopBookmarkGroupLinkProvider.CONTENT_URI, true, mFavorisGroupesContentObserver);
 
 		loadContent();
 	}
@@ -436,13 +436,13 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	private void menuEdit() {
-		final Favori item = getFirstSelectedItem();
+		final StopBookmark item = getFirstSelectedItem();
 		if (item != null) {
 			final FavorisHelper favorisUtils = new FavorisHelper(getActivity(), new FavorisActionListener() {
 				@Override
-				public void onFavoriRenamed(final Favori newItem) {
-					final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
-					item.setNomFavori(newItem.getNomFavori());
+				public void onFavoriRenamed(final StopBookmark newItem) {
+					final StopBookmarkArrayAdapter adapter = (StopBookmarkArrayAdapter) getListAdapter();
+					item.setBookmarkName(newItem.getBookmarkName());
 					adapter.notifyDataSetChanged();
 				}
 			});
@@ -452,9 +452,9 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 
 	@SuppressLint("NewApi")
 	private void menuDelete() {
-		Favori item;
+		StopBookmark item;
 		final ContentResolver contentResolver = getActivity().getContentResolver();
-		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+		final StopBookmarkArrayAdapter adapter = (StopBookmarkArrayAdapter) getListAdapter();
 
 		for (int i = mListView.getCount() - 1; i > -1; i--) {
 			if (mListView.isItemChecked(i)) {
@@ -469,7 +469,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	private void menuPlace() {
-		final Favori item = getFirstSelectedItem();
+		final StopBookmark item = getFirstSelectedItem();
 		final Intent intent = new Intent(getActivity(), MapActivity.class);
 		intent.putExtra(MapFragment.PARAM_ITEM_ID, item.getIdStation());
 		intent.putExtra(MapFragment.PARAM_ITEM_TYPE, TypeOverlayItem.TYPE_STATION.getId());
@@ -477,7 +477,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	private void menuShowPlan() {
-		final Favori item = getFirstSelectedItem();
+		final StopBookmark item = getFirstSelectedItem();
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
 		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, item.getCodeLigne());
 		startActivity(intent);
@@ -488,11 +488,11 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		sort();
 	}
 
-	private Favori getFirstSelectedItem() {
+	private StopBookmark getFirstSelectedItem() {
 		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checkedPositions.size(); i++) {
 			if (checkedPositions.valueAt(i)) {
-				return (Favori) mListView.getItemAtPosition(checkedPositions.keyAt(i));
+				return (StopBookmark) mListView.getItemAtPosition(checkedPositions.keyAt(i));
 			}
 		}
 		return null;
@@ -523,7 +523,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checked.size(); i++) {
 			if (checked.valueAt(i)) {
-				final Favori item = (Favori) mListView.getItemAtPosition(checked.keyAt(i));
+				final StopBookmark item = (StopBookmark) mListView.getItemAtPosition(checked.keyAt(i));
 				ids.add(item.getId());
 			}
 		}
@@ -534,8 +534,8 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	private void fillGroupesMenu(final SubMenu filterSubMenu) {
 		boolean checked;
 
-		for (final Groupe groupe : mGroupes) {
-			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, groupe.getId(), 0, groupe.getNom());
+		for (final BookmarkGroup groupe : mGroupes) {
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, groupe.getId(), 0, groupe.getName());
 			checked = mSelectedGroupes.contains(groupe.getId());
 
 			item.setCheckable(true);
@@ -552,7 +552,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 			Log.d(LOG_TAG, "Groupes : " + Arrays.toString(mGroupes.toArray()));
 
 		mSelectedGroupes.clear();
-		for (final Groupe groupe : mGroupes) {
+		for (final BookmarkGroup groupe : mGroupes) {
 			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
 			if (checked) {
 				mSelectedGroupes.add(groupe.getId());
@@ -572,7 +572,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	 * Trier les favoris selon les préférences.
 	 */
 	private void sort() {
-		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+		final StopBookmarkArrayAdapter adapter = (StopBookmarkArrayAdapter) getListAdapter();
 		if (adapter != null) {
 			sort(adapter);
 			adapter.notifyDataSetChanged();
@@ -584,8 +584,8 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	 * 
 	 * @param adapter
 	 */
-	private void sort(final FavoriArrayAdapter adapter) {
-		final Comparator<Favori> comparator;
+	private void sort(final StopBookmarkArrayAdapter adapter) {
+		final Comparator<StopBookmark> comparator;
 
 		if (mCurrentSort == SORT_DISTANCE && !mLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation
@@ -599,7 +599,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 
 	public void onItemSelected() {
 		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
-		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+		final StopBookmarkArrayAdapter adapter = (StopBookmarkArrayAdapter) getListAdapter();
 		adapter.setCheckedItemPositions(checkedPositions);
 
 		if (mActionMode == null) {
@@ -615,7 +615,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		if (mActionMode == null) {
 			mListView.setItemChecked(position, false);
-			final Favori item = (Favori) l.getItemAtPosition(position);
+			final StopBookmark item = (StopBookmark) l.getItemAtPosition(position);
 
 			final Intent intent = new Intent(getActivity(), ArretDetailActivity.class);
 			intent.putExtra(ArretDetailActivity.PARAM_ARRET, item);
@@ -638,19 +638,19 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		if (DBG)
 			Log.d(LOG_TAG, "loadContent");
 
-		final HoraireManager horaireManager = HoraireManager.getInstance();
+		final ScheduleManager horaireManager = ScheduleManager.getInstance();
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		final List<Favori> favoris = mFavorisViewManager.getAll(context.getContentResolver(), mSelectedGroupes);
+		final List<StopBookmark> favoris = mFavorisViewManager.getAll(context.getContentResolver(), mSelectedGroupes);
 		Collections.sort(favoris, comparators.get(mCurrentSort));
 
 		int position = 0;
-		for (final Favori favori : favoris) {
+		for (final StopBookmark favori : favoris) {
 			if (getActivity() != null) {
-				favori.setDelay(FavorisUtil.formatDelayLoading(getActivity(), favori.getNextHoraire()));
+				favori.setDelay(FavorisUtil.formatDelayLoading(getActivity(), favori.getNextSchedule()));
 			}
 
-			if (favori.getNextHoraire() == null) {
+			if (favori.getNextSchedule() == null) {
 				final NextHoraireTask horaireTask = new NextHoraireTask();
 				horaireTask.setContext(context);
 				horaireTask.setArret(favori);
@@ -663,14 +663,14 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 			position++;
 		}
 
-		final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, favoris);
+		final StopBookmarkArrayAdapter adapter = new StopBookmarkArrayAdapter(context, favoris);
 
 		if (mGroupes.isEmpty() == false) {
 			final SparseArray<String> groupes = new SparseArray<String>();
-			for (final Groupe groupe : mGroupes) {
-				groupes.append(groupe.getId(), groupe.getNom());
+			for (final BookmarkGroup groupe : mGroupes) {
+				groupes.append(groupe.getId(), groupe.getName());
 			}
-			adapter.setIndexer(new FavoriArrayIndexer(groupes));
+			adapter.setIndexer(new StopBookmarksArrayIndexer(groupes));
 		}
 
 		result.setResult(adapter);
@@ -699,7 +699,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	 */
 	private class LoadHoraires extends AsyncTask<Integer, Void, Boolean> {
 
-		final HoraireManager horaireManager = HoraireManager.getInstance();
+		final ScheduleManager horaireManager = ScheduleManager.getInstance();
 		final DateMidnight today = new DateMidnight();
 
 		@Override
@@ -739,7 +739,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 			if (position >= getListAdapter().getCount() || !isAdded() || getActivity() == null)
 				return;
 
-			final Favori favori = (Favori) getListAdapter().getItem(position);
+			final StopBookmark favori = (StopBookmark) getListAdapter().getItem(position);
 			if (horaireManager.isInDB(getActivity().getContentResolver(), favori, today)) {
 				final Integer delay = horaireManager
 						.getMinutesToNextSchedule(getActivity().getContentResolver(), favori);
@@ -751,7 +751,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		/**
 		 * Mettre à jour les informations de délais d'un favori
 		 */
-		private void updateItemTime(final Favori favori, final Integer delay) {
+		private void updateItemTime(final StopBookmark favori, final Integer delay) {
 			if (isDetached() || getActivity() == null)
 				return;
 
@@ -763,7 +763,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 			if (!isAdded() || getActivity() == null)
 				return;
 
-			((FavoriArrayAdapter) getListAdapter()).notifyDataSetChanged();
+			((StopBookmarkArrayAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 
 		@Override
@@ -779,9 +779,9 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	 *            La position du favori.
 	 */
 	private void markeFavoriHoraireError(final int position) {
-		FavoriArrayAdapter adapter;
-		if ((adapter = (FavoriArrayAdapter) getListAdapter()) != null) {
-			final Favori favori = (Favori) getListAdapter().getItem(position);
+		StopBookmarkArrayAdapter adapter;
+		if ((adapter = (StopBookmarkArrayAdapter) getListAdapter()) != null) {
+			final StopBookmark favori = (StopBookmark) getListAdapter().getItem(position);
 			favori.setDelay(getString(R.string.msg_horaire_erreur));
 			adapter.notifyDataSetChanged();
 		}
@@ -860,7 +860,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		mActionMode = null;
 		mListView.clearChoices();
 
-		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+		final StopBookmarkArrayAdapter adapter = (StopBookmarkArrayAdapter) getListAdapter();
 		adapter.clearCheckedItemPositions();
 		adapter.notifyDataSetChanged();
 	}

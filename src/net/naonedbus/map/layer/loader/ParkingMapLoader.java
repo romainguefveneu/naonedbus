@@ -3,7 +3,7 @@ package net.naonedbus.map.layer.loader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.manager.impl.ParkingRelaiManager;
 
@@ -17,7 +17,7 @@ import com.twotoasters.clusterkraf.InputPoint;
 public class ParkingMapLoader extends EquipementMapLoader {
 
 	public ParkingMapLoader() {
-		super(Type.TYPE_PARKING);
+		super(Type.TYPE_PARK);
 	}
 
 	@Override

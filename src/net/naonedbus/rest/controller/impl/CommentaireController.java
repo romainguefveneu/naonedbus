@@ -21,7 +21,7 @@ package net.naonedbus.rest.controller.impl;
 import java.io.IOException;
 import java.util.List;
 
-import net.naonedbus.bean.Commentaire;
+import net.naonedbus.bean.Comment;
 import net.naonedbus.rest.UrlBuilder;
 import net.naonedbus.rest.controller.RestConfiguration;
 import net.naonedbus.rest.controller.RestController;
@@ -36,7 +36,7 @@ import org.json.JSONObject;
  * @author romain.guefveneu
  * 
  */
-public class CommentaireController extends RestController<Commentaire> {
+public class CommentaireController extends RestController<Comment> {
 
 	private static final int LIMIT = 25;
 	private static final String PATH = "commentaire";
@@ -69,7 +69,7 @@ public class CommentaireController extends RestController<Commentaire> {
 		post(urlBuilder);
 	}
 
-	public List<Commentaire> getAll(final String codeLigne, final String codeSens, final String codeArret)
+	public List<Comment> getAll(final String codeLigne, final String codeSens, final String codeArret)
 			throws IOException, JSONException {
 		final UrlBuilder url = new UrlBuilder(RestConfiguration.PATH, PATH);
 
@@ -83,8 +83,8 @@ public class CommentaireController extends RestController<Commentaire> {
 	}
 
 	@Override
-	protected Commentaire parseJsonObject(final JSONObject object) throws JSONException {
-		final Commentaire commentaire = new Commentaire();
+	protected Comment parseJsonObject(final JSONObject object) throws JSONException {
+		final Comment commentaire = new Comment();
 
 		commentaire.setId(object.getInt(TAG_ID));
 		if (object.has(TAG_CODE_LIGNE))
@@ -103,7 +103,7 @@ public class CommentaireController extends RestController<Commentaire> {
 	}
 
 	@Override
-	protected JSONObject toJsonObject(final Commentaire item) throws JSONException {
+	protected JSONObject toJsonObject(final Comment item) throws JSONException {
 		final JSONObject object = new JSONObject();
 		object.put(TAG_ID, item.getId());
 		object.put(TAG_CODE_LIGNE, item.getCodeLigne());

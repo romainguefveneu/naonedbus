@@ -27,13 +27,13 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.HorairesActivity;
 import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.activity.widgetconfigure.WidgetConfigureActivity;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Favori;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.StopBookmark;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.FavorisViewManager;
-import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.manager.impl.StopBookmarkViewManager;
+import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FormatUtils;
 
@@ -155,7 +155,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	public void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
 		final RemoteViews views = new RemoteViews(context.getPackageName(), this.mLayoutId);
 		final int idFavori = WidgetConfigureActivity.getFavoriIdFromWidget(context, appWidgetId);
-		final Favori favori = FavorisViewManager.getInstance().getSingle(context.getContentResolver(), idFavori);
+		final StopBookmark favori = StopBookmarkViewManager.getInstance().getSingle(context.getContentResolver(), idFavori);
 
 		if (DBG)
 			Log.i(LOG_TAG, Integer.toHexString(hashCode()) + " - " + appWidgetId + " - updateAppWidget " + favori);
@@ -181,12 +181,12 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	/**
 	 * Préparer le widget, le mettre à jour si nécessaire.
 	 */
-	protected void prepareWidgetView(final Context context, final RemoteViews views, final Favori favori,
+	protected void prepareWidgetView(final Context context, final RemoteViews views, final StopBookmark favori,
 			final Integer appWidgetId) {
 		if (DBG)
 			Log.d(LOG_TAG, Integer.toHexString(hashCode()) + " - " + appWidgetId + " - prepareWidgetView " + favori);
 
-		final HoraireManager horaireManager = HoraireManager.getInstance();
+		final ScheduleManager horaireManager = ScheduleManager.getInstance();
 		final DateMidnight today = new DateMidnight();
 
 		// Initialisation du widget
@@ -217,7 +217,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	/**
 	 * Lancer le chargement des horaires.
 	 */
-	protected void prepareWidgetAndloadHoraires(final Context context, final RemoteViews views, final Favori favori,
+	protected void prepareWidgetAndloadHoraires(final Context context, final RemoteViews views, final StopBookmark favori,
 			final Integer appWidgetId) {
 		final NextHoraireTask horaireTask = new NextHoraireTask();
 		horaireTask.setContext(context);
@@ -227,7 +227,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		horaireTask.setActionCallback(ACTION_APPWIDGET_UPDATE);
 
 		// Lancer le chargement des horaires
-		final HoraireManager horaireManager = HoraireManager.getInstance();
+		final ScheduleManager horaireManager = ScheduleManager.getInstance();
 		horaireManager.schedule(horaireTask);
 
 		views.setTextViewText(R.id.itemTime, null);
@@ -237,16 +237,16 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	/**
 	 * Préparer le widget avec les éléments fixes (nom, ligne, sens...)
 	 */
-	protected void prepareWidgetViewInit(final Context context, final RemoteViews views, final Favori favori) {
+	protected void prepareWidgetViewInit(final Context context, final RemoteViews views, final StopBookmark favori) {
 		views.setTextViewText(R.id.itemSymbole, favori.getLettre());
 
 		// Uniquement pour 2.2 et sup
 		if (Build.VERSION.SDK_INT > 7) {
-			views.setTextColor(R.id.itemSymbole, favori.getCouleurTexte());
-			views.setTextColor(R.id.itemTitle, favori.getCouleurTexte());
-			views.setTextColor(R.id.itemDescription, favori.getCouleurTexte());
+			views.setTextColor(R.id.itemSymbole, favori.getFrontColor());
+			views.setTextColor(R.id.itemTitle, favori.getFrontColor());
+			views.setTextColor(R.id.itemDescription, favori.getFrontColor());
 
-			final GradientDrawable gradientDrawable = ColorUtils.getGradiant(favori.getCouleurBackground());
+			final GradientDrawable gradientDrawable = ColorUtils.getGradiant(favori.getBackColor());
 			final Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
 			final Canvas canvas = new Canvas(bitmap);
 			gradientDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -254,13 +254,13 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			views.setImageViewBitmap(R.id.widgetHeaderBackground, bitmap);
 		}
 
-		if (favori.getNomFavori() == null) {
+		if (favori.getBookmarkName() == null) {
 			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
-			views.setTextViewText(R.id.itemDescription, FormatUtils.formatSens(favori.getNomSens()));
+			views.setTextViewText(R.id.itemDescription, FormatUtils.formatSens(favori.getDirectionName()));
 		} else {
 			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
 			views.setTextViewText(R.id.itemDescription,
-					FormatUtils.formatSens(favori.getNomArret(), favori.getNomSens()));
+					FormatUtils.formatSens(favori.getNomArret(), favori.getDirectionName()));
 		}
 
 		views.setViewVisibility(R.id.widgetLoading, View.GONE);
@@ -275,7 +275,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 * @param viewId
 	 *            The view listening to click
 	 */
-	private void setOnClickListener(final Context context, final RemoteViews views, final Favori favori) {
+	private void setOnClickListener(final Context context, final RemoteViews views, final StopBookmark favori) {
 		final Intent intent = new Intent(context, this.getClass());
 		intent.setAction(ACTION_APPWIDGET_ON_CLICK);
 		intent.putExtra("favori", favori);
@@ -292,7 +292,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 * @param views
 	 * @param favori
 	 */
-	protected void prepareWidgetViewHoraires(final Context context, final RemoteViews views, final Favori favori,
+	protected void prepareWidgetViewHoraires(final Context context, final RemoteViews views, final StopBookmark favori,
 			final List<Horaire> nextHoraires) {
 
 		final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
@@ -367,7 +367,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 		} else if (HoraireWidgetProvider.ACTION_APPWIDGET_ON_CLICK.equals(action)) {
 
-			final Arret arret = intent.getParcelableExtra("favori");
+			final Stop arret = intent.getParcelableExtra("favori");
 			if (arret != null) {
 				final ParamIntent startIntent = new ParamIntent(context, HorairesActivity.class);
 				startIntent.putExtra(HorairesActivity.PARAM_ARRET, arret);

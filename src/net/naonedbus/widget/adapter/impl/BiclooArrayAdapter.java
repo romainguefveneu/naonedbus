@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.utils.FormatUtils;
@@ -34,8 +34,8 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 		super(context, R.layout.list_item_equipement, objects);
 
 		mSymboleBackground = ColorUtils.getRoundedGradiant(context.getResources().getColor(
-				Equipement.Type.TYPE_BICLOO.getBackgroundColorRes()));
-		mSymboleResId = Equipement.Type.TYPE_BICLOO.getDrawableRes();
+				Equipment.Type.TYPE_BICLOO.getBackgroundColorRes()));
+		mSymboleResId = Equipment.Type.TYPE_BICLOO.getDrawableRes();
 	}
 
 	@Override

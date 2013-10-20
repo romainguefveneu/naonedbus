@@ -20,7 +20,7 @@ package net.naonedbus.comparator;
 
 import java.util.Comparator;
 
-import net.naonedbus.bean.Favori;
+import net.naonedbus.bean.StopBookmark;
 import android.location.Location;
 import android.location.LocationManager;
 
@@ -28,7 +28,7 @@ import android.location.LocationManager;
  * @author romain
  * 
  */
-public class FavoriDistanceComparator implements Comparator<Favori> {
+public class FavoriDistanceComparator implements Comparator<StopBookmark> {
 
 	private Location referentiel;
 
@@ -37,7 +37,7 @@ public class FavoriDistanceComparator implements Comparator<Favori> {
 	}
 
 	@Override
-	public int compare(final Favori favori1, final Favori favori2) {
+	public int compare(final StopBookmark favori1, final StopBookmark favori2) {
 
 		if (favori1 == null || favori2 == null || referentiel == null)
 			return 0;

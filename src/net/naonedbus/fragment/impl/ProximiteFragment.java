@@ -29,18 +29,18 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParcoursActivity;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.EquipementDistanceComparator;
 import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.manager.impl.EquipmentManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.task.AddressResolverTask;
 import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.utils.FormatUtils;
-import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
+import net.naonedbus.widget.adapter.impl.EquipmentArrayAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -75,7 +75,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 
 	private final SharedPreferences mPreferences;
 	private final MyLocationProvider mLocationProvider;
-	private final Set<Equipement.Type> mSelectedTypesEquipements;
+	private final Set<Equipment.Type> mSelectedTypesEquipements;
 	private AddressResolverTask mAddressResolverTask;
 
 	private TextView headerTextView;
@@ -90,9 +90,9 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 		mLocationProvider = NBApplication.getLocationProvider();
 		mPreferences = NBApplication.getPreferences();
 
-		mSelectedTypesEquipements = new HashSet<Equipement.Type>();
-		final Equipement.Type[] types = Equipement.Type.values();
-		for (final Equipement.Type type : types) {
+		mSelectedTypesEquipements = new HashSet<Equipment.Type>();
+		final Equipment.Type[] types = Equipment.Type.values();
+		for (final Equipment.Type type : types) {
 			if (isLayerPreferenceEnabled(type.getId())) {
 				mSelectedTypesEquipements.add(type);
 			}
@@ -151,8 +151,8 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 		inflater.inflate(R.menu.fragment_proximite, menu);
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_filter).getSubMenu();
 
-		final Equipement.Type[] types = Equipement.Type.values();
-		for (final Equipement.Type type : types) {
+		final Equipment.Type[] types = Equipment.Type.values();
+		for (final Equipment.Type type : types) {
 			final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
 			item.setCheckable(true);
 			item.setChecked((mSelectedTypesEquipements.contains(type)));
@@ -170,7 +170,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	public boolean onOptionsItemSelected(final MenuItem item) {
 
 		if (item.getGroupId() == MENU_GROUP_TYPES) {
-			final Equipement.Type type = Equipement.Type.getTypeById(item.getItemId());
+			final Equipment.Type type = Equipment.Type.getTypeById(item.getItemId());
 
 			item.setChecked(!item.isChecked());
 			setLayerPreference(type.getId(), item.isChecked());
@@ -198,10 +198,10 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
+		final Equipment equipement = (Equipment) getListAdapter().getItem(position);
 
 		final Intent intent;
-		if (equipement.getType().equals(Type.TYPE_ARRET)) {
+		if (equipement.getType().equals(Type.TYPE_STOP)) {
 			intent = new Intent(getActivity(), ParcoursActivity.class);
 			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, equipement.getId());
 		} else {
@@ -228,22 +228,22 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		EquipementArrayAdapter adapter = null;
+		EquipmentArrayAdapter adapter = null;
 
 		try {
 
 			if (mSelectedTypesEquipements.size() > 0) {
-				final EquipementManager equipementManager = EquipementManager.getInstance();
+				final EquipmentManager equipementManager = EquipmentManager.getInstance();
 				final Location location = mLocationProvider.getLastKnownLocation();
 
 				if (location != null) {
-					final List<Equipement> list = equipementManager.getEquipementsByLocation(
+					final List<Equipment> list = equipementManager.getEquipementsByLocation(
 							context.getContentResolver(), mSelectedTypesEquipements, location, MAX_EQUIPEMENTS);
 
 					setDistances(list);
-					Collections.sort(list, new EquipementDistanceComparator<Equipement>());
+					Collections.sort(list, new EquipementDistanceComparator<Equipment>());
 
-					adapter = new EquipementArrayAdapter(context, list);
+					adapter = new EquipmentArrayAdapter(context, list);
 				}
 			}
 
@@ -256,12 +256,12 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 		return result;
 	}
 
-	protected void setDistances(final List<Equipement> equipements) {
+	protected void setDistances(final List<Equipment> equipements) {
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
 		final Location currentLocation = mLocationProvider.getLastKnownLocation();
 
 		if (currentLocation != null) {
-			for (final Equipement item : equipements) {
+			for (final Equipment item : equipements) {
 				final double latitude = item.getLatitude();
 				final double longitude = item.getLongitude();
 				if (latitude != 0) {
@@ -305,7 +305,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	 * @return Vrai si le calque est activé.
 	 */
 	private boolean isLayerPreferenceEnabled(final int id) {
-		if (id == Equipement.Type.TYPE_ARRET.getId()) {
+		if (id == Equipment.Type.TYPE_STOP.getId()) {
 			return mPreferences.getBoolean(PREF_PROXIMITE_LAYER + id, true);
 		} else {
 			return mPreferences.getBoolean(PREF_PROXIMITE_LAYER + id, false);

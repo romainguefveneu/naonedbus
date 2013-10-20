@@ -23,9 +23,9 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.appwidget.HoraireWidgetProvider;
-import net.naonedbus.bean.Favori;
-import net.naonedbus.manager.impl.FavoriManager;
-import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
+import net.naonedbus.bean.StopBookmark;
+import net.naonedbus.manager.impl.StopBookmarkManager;
+import net.naonedbus.widget.adapter.impl.StopBookmarkArrayAdapter;
 import android.app.ListActivity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -98,7 +98,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 
 		// Récupérer l'id du favori sélectionné
-		final Favori item = (Favori) l.getItemAtPosition(position);
+		final StopBookmark item = (StopBookmark) l.getItemAtPosition(position);
 
 		// Stocker dans les préférences l'id du favori associé à l'id du widget
 		final SharedPreferences.Editor prefs = this.getSharedPreferences(PREFS_NAME, 0).edit();
@@ -131,21 +131,21 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	 * @author romain.guefveneu
 	 * 
 	 */
-	private class LoadFavoris extends AsyncTask<Void, Void, FavoriArrayAdapter> {
+	private class LoadFavoris extends AsyncTask<Void, Void, StopBookmarkArrayAdapter> {
 
 		@Override
-		protected FavoriArrayAdapter doInBackground(final Void... params) {
-			final FavoriManager favoriManager = FavoriManager.getInstance();
-			final List<Favori> items = new ArrayList<Favori>();
+		protected StopBookmarkArrayAdapter doInBackground(final Void... params) {
+			final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
+			final List<StopBookmark> items = new ArrayList<StopBookmark>();
 			final Context context = new ContextThemeWrapper(getApplicationContext(), R.style.Theme_Acapulco_Dark);
-			final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, items, false);
+			final StopBookmarkArrayAdapter adapter = new StopBookmarkArrayAdapter(context, items, false);
 			items.addAll(favoriManager.getFull(context.getContentResolver()));
 
 			return adapter;
 		}
 
 		@Override
-		protected void onPostExecute(final FavoriArrayAdapter result) {
+		protected void onPostExecute(final StopBookmarkArrayAdapter result) {
 			super.onPostExecute(result);
 
 			if (result.isEmpty()) {

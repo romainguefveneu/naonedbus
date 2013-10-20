@@ -25,9 +25,9 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.utils.CalendarUtils;
 import net.naonedbus.utils.FormatUtils;
@@ -70,15 +70,15 @@ public class AddEventActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_addevent);
 
-		final Ligne ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
-		final Sens sens = getIntent().getParcelableExtra(PARAM_SENS);
-		final Arret arret = getIntent().getParcelableExtra(PARAM_ARRET);
+		final Route ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
+		final Direction sens = getIntent().getParcelableExtra(PARAM_SENS);
+		final Stop arret = getIntent().getParcelableExtra(PARAM_ARRET);
 		final long timestamp = getIntent().getLongExtra(PARAM_TIMESTAMP, 0);
 
 		final HeaderHelper headerHelper = new HeaderHelper(this);
-		headerHelper.setColor(ligne.getCouleur(), ligne.getCouleurTexte());
+		headerHelper.setColor(ligne.getBackColor(), ligne.getFrontColor());
 		headerHelper.setTitle(arret.getNomArret());
-		headerHelper.setSubTitle(FormatUtils.formatSens(ligne.getLettre(), sens.text));
+		headerHelper.setSubTitle(FormatUtils.formatSens(ligne.getLetter(), sens.getName()));
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -121,7 +121,7 @@ public class AddEventActivity extends SherlockActivity {
 		mDateEvent.setText(dateFormat.format(new Date(timestamp)));
 
 		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, ligne.getCode()),
-				arret.getNomArret(), sens.text));
+				arret.getNomArret(), sens.getName()));
 
 		fillCalendars();
 		fillDelais();

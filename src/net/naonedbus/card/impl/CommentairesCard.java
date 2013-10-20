@@ -24,16 +24,16 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Commentaire;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Comment;
+import net.naonedbus.bean.Direction;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.card.Card;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
 import net.naonedbus.fragment.impl.CommentaireDetailDialogFragment;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.CommentaireManager;
+import net.naonedbus.manager.impl.CommentManager;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.FontUtils;
 
@@ -61,7 +61,7 @@ import android.widget.TextView.BufferType;
 
 import com.bugsense.trace.BugSenseHandler;
 
-public class CommentairesCard extends Card<List<Commentaire>> implements OnSensChangeListener {
+public class CommentairesCard extends Card<List<Comment>> implements OnSensChangeListener {
 
 	private static final String LOG_TAG = "CommentairesCard";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -88,9 +88,9 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 		}
 	};
 
-	private Ligne mLigne;
-	private Sens mSens;
-	private Arret mArret;
+	private Route mLigne;
+	private Direction mSens;
+	private Stop mArret;
 	private ViewGroup mRoot;
 	private final Typeface mRobotoMedium;
 
@@ -101,15 +101,15 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
-	public void setLigne(final Ligne ligne) {
+	public void setLigne(final Route ligne) {
 		mLigne = ligne;
 	}
 
-	public void setSens(final Sens sens) {
+	public void setSens(final Direction sens) {
 		mSens = sens;
 	}
 
-	public void setArret(final Arret arret) {
+	public void setArret(final Stop arret) {
 		mArret = arret;
 	}
 
@@ -151,7 +151,7 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 		return intent;
 	}
 
-	private View createView(final LayoutInflater inflater, final ViewGroup root, final Commentaire commentaire) {
+	private View createView(final LayoutInflater inflater, final ViewGroup root, final Comment commentaire) {
 		final View view = inflater.inflate(R.layout.card_item_commentaire, root, false);
 
 		final TextView itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -161,14 +161,14 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 		String title = "";
 
 		if (NaonedbusClient.NAONEDBUS.name().equals(commentaire.getSource())) {
-			if (commentaire.getArret() == null && commentaire.getSens() == null && commentaire.getLigne() == null) {
+			if (commentaire.getStop() == null && commentaire.getDirection() == null && commentaire.getRoute() == null) {
 				title = view.getContext().getString(R.string.commentaire_tout);
 			} else {
-				if (commentaire.getArret() != null) {
-					title = commentaire.getArret().getNomArret() + " ";
+				if (commentaire.getStop() != null) {
+					title = commentaire.getStop().getNomArret() + " ";
 				}
-				if (commentaire.getSens() != null) {
-					title = title + "\u2192 " + commentaire.getSens().text;
+				if (commentaire.getDirection() != null) {
+					title = title + "\u2192 " + commentaire.getDirection().getName();
 				}
 			}
 		} else {
@@ -202,20 +202,20 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 	}
 
 	@Override
-	public Loader<List<Commentaire>> onCreateLoader(final int id, final Bundle bundle) {
+	public Loader<List<Comment>> onCreateLoader(final int id, final Bundle bundle) {
 		final boolean forceUpdate = (bundle != null && bundle.getBoolean(BUNDLE_FORCE_UPDATE, false));
 		return new LoaderTask(getContext(), mLigne, mSens, forceUpdate);
 	}
 
 	@Override
-	public void onLoadFinished(final Loader<List<Commentaire>> loader, final List<Commentaire> commentaires) {
+	public void onLoadFinished(final Loader<List<Comment>> loader, final List<Comment> commentaires) {
 		if (commentaires == null || commentaires.isEmpty()) {
 			showMessage(R.string.msg_nothing_commentaires, R.drawable.ic_checkmark_holo_light);
 		} else {
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 
 			mRoot.removeAllViews();
-			for (final Commentaire commentaire : commentaires) {
+			for (final Comment commentaire : commentaires) {
 				mRoot.addView(createView(inflater, mRoot, commentaire));
 			}
 
@@ -224,13 +224,13 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 
 	}
 
-	private static class LoaderTask extends AsyncTaskLoader<List<Commentaire>> {
-		private final Ligne mLigne;
-		private final Sens mSens;
+	private static class LoaderTask extends AsyncTaskLoader<List<Comment>> {
+		private final Route mLigne;
+		private final Direction mSens;
 		private final boolean mForceUpdate;
-		private List<Commentaire> mCommentaires;
+		private List<Comment> mCommentaires;
 
-		public LoaderTask(final Context context, final Ligne ligne, final Sens sens, final boolean forceUpdate) {
+		public LoaderTask(final Context context, final Route ligne, final Direction sens, final boolean forceUpdate) {
 			super(context);
 			mLigne = ligne;
 			mSens = sens;
@@ -238,21 +238,22 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 		}
 
 		@Override
-		public List<Commentaire> loadInBackground() {
-			final CommentaireManager manager = CommentaireManager.getInstance();
+		public List<Comment> loadInBackground() {
+			final CommentManager manager = CommentManager.getInstance();
 			final CommentaireFomatter fomatter = new CommentaireFomatter(getContext());
 			final long today = new DateMidnight().getMillis();
 
-			List<Commentaire> commentaires = null;
+			List<Comment> commentaires = null;
 
 			try {
 				if (mForceUpdate) {
 					manager.updateCache(getContext().getContentResolver());
 				}
-				commentaires = manager.getAll(getContext().getContentResolver(), mLigne.getCode(), mSens.code, null);
+				commentaires = manager.getAll(getContext().getContentResolver(), mLigne.getCode(), mSens.getCode(),
+						null);
 
 				for (int i = commentaires.size() - 1; i > -1; i--) {
-					final Commentaire commentaire = commentaires.get(i);
+					final Comment commentaire = commentaires.get(i);
 
 					if (commentaire.getTimestamp() > today) {
 						fomatter.formatValues(commentaire);
@@ -279,7 +280,7 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 		 * adds a little more logic.
 		 */
 		@Override
-		public void deliverResult(final List<Commentaire> commentaires) {
+		public void deliverResult(final List<Comment> commentaires) {
 			mCommentaires = commentaires;
 
 			if (isStarted()) {
@@ -310,7 +311,7 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 	}
 
 	@Override
-	public void onSensChange(final Sens newSens) {
+	public void onSensChange(final Direction newSens) {
 		mSens = newSens;
 		showLoader();
 		restartLoader(null, this);

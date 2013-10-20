@@ -27,18 +27,18 @@ import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Favori;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.StopBookmark;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
 import net.naonedbus.card.Card;
 import net.naonedbus.card.impl.CommentairesCard;
 import net.naonedbus.card.impl.HoraireCard;
 import net.naonedbus.card.impl.MapCard;
 import net.naonedbus.card.impl.TraficCard;
-import net.naonedbus.manager.impl.ArretManager;
-import net.naonedbus.manager.impl.FavoriManager;
-import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.manager.impl.StopManager;
+import net.naonedbus.manager.impl.StopBookmarkManager;
+import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 
 import org.joda.time.DateMidnight;
@@ -67,24 +67,24 @@ import com.actionbarsherlock.view.MenuItem;
 public class ArretDetailFragment extends SherlockFragment {
 
 	public static interface OnSensChangeListener {
-		void onSensChange(Sens newSens);
+		void onSensChange(Direction newSens);
 	}
 
 	public static interface OnArretChangeListener {
-		void onArretChange(Arret newArret);
+		void onArretChange(Stop newArret);
 	}
 
 	public static final String PARAM_LIGNE = "ligne";
 	public static final String PARAM_SENS = "sens";
 	public static final String PARAM_ARRET = "arret";
 
-	private Ligne mLigne;
-	private Sens mSens;
-	private Arret mArret;
+	private Route mLigne;
+	private Direction mSens;
+	private Stop mArret;
 
-	private final ArretManager mArretManager;
-	private final SensManager mSensManager;
-	private final FavoriManager mFavoriManager;
+	private final StopManager mArretManager;
+	private final DirectionManager mSensManager;
+	private final StopBookmarkManager mFavoriManager;
 	private final List<OnSensChangeListener> mOnSensChangeListeners;
 	private OnArretChangeListener mOnArretChangeListener;
 
@@ -92,9 +92,9 @@ public class ArretDetailFragment extends SherlockFragment {
 	private final List<Card<?>> mCards;
 
 	public ArretDetailFragment() {
-		mFavoriManager = FavoriManager.getInstance();
-		mArretManager = ArretManager.getInstance();
-		mSensManager = SensManager.getInstance();
+		mFavoriManager = StopBookmarkManager.getInstance();
+		mArretManager = StopManager.getInstance();
+		mSensManager = DirectionManager.getInstance();
 
 		mCards = new ArrayList<Card<?>>();
 		mOnSensChangeListeners = new ArrayList<ArretDetailFragment.OnSensChangeListener>();
@@ -257,7 +257,7 @@ public class ArretDetailFragment extends SherlockFragment {
 	}
 
 	private boolean isFavori() {
-		final Favori item = mFavoriManager.getSingle(getActivity().getContentResolver(), mArret.getId());
+		final StopBookmark item = mFavoriManager.getSingle(getActivity().getContentResolver(), mArret.getId());
 		return (item != null);
 	}
 
@@ -305,12 +305,12 @@ public class ArretDetailFragment extends SherlockFragment {
 
 	@SuppressLint("NewApi")
 	private void menuChangeSens() {
-		Sens autreSens = null;
+		Direction autreSens = null;
 
 		// Inverser le sens
-		final List<Sens> sens = mSensManager.getAll(getActivity().getContentResolver(), mLigne.getCode());
-		for (final Sens sensItem : sens) {
-			if (sensItem._id != mSens._id) {
+		final List<Direction> sens = mSensManager.getAll(getActivity().getContentResolver(), mLigne.getCode());
+		for (final Direction sensItem : sens) {
+			if (sensItem.getId() != mSens.getId()) {
 				autreSens = sensItem;
 				break;
 			}
@@ -318,8 +318,8 @@ public class ArretDetailFragment extends SherlockFragment {
 
 		if (autreSens != null) {
 			// Chercher l'arrêt dans le nouveau sens
-			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.getCode(),
-					autreSens.code, mArret.getNormalizedNom());
+			final Stop arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.getCode(),
+					autreSens.getCode(), mArret.getNormalizedNom());
 
 			if (arret != null) {
 				mSens = autreSens;

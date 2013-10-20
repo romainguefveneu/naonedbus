@@ -3,14 +3,14 @@ package net.naonedbus.comparator;
 import java.util.Comparator;
 
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import android.location.Location;
 
 public class BiclooDistanceComparator implements Comparator<Bicloo> {
 
 	/**
 	 * Référentiel servant à la comparaison via la méthode
-	 * {@link #referentielCompare(Equipement, Equipement)}.
+	 * {@link #referentielCompare(Equipment, Equipment)}.
 	 */
 	private Location mReferentiel;
 

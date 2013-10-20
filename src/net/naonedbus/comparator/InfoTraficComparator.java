@@ -30,15 +30,15 @@ public class InfoTraficComparator implements Comparator<InfoTrafic> {
 
 	@Override
 	public int compare(InfoTrafic a, InfoTrafic b) {
-		if (a.getDateFin() == null || b.getDateFin() == null) {
+		if (a.getEndDate() == null || b.getEndDate() == null) {
 			return 0;
 		}
 
-		if (a.getDateDebut().isBeforeNow() && !b.getDateDebut().isBeforeNow()) {
+		if (a.getStartDate().isBeforeNow() && !b.getStartDate().isBeforeNow()) {
 			return -1;
 		}
 
-		return (a.getDateFin().compareTo(b.getDateFin()));
+		return (a.getEndDate().compareTo(b.getEndDate()));
 	}
 
 }

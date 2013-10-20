@@ -111,11 +111,11 @@ public class InfoTraficManager {
 
 		for (final InfoTrafic infoTrafic : infoTrafics) {
 
-			infoTrafic.setDateFormated(dateTimeFormatHelper.formatDuree(infoTrafic.getDateDebut(),
-					infoTrafic.getDateFin()));
+			infoTrafic.setDateFormated(dateTimeFormatHelper.formatDuree(infoTrafic.getStartDate(),
+					infoTrafic.getEndDate()));
 
-			if (infoTrafic.getDateFin() != null && infoTrafic.getDateFin().isAfterNow()) {
-				final String troncons = infoTrafic.getTroncons();
+			if (infoTrafic.getEndDate() != null && infoTrafic.getEndDate().isAfterNow()) {
+				final String troncons = infoTrafic.getRoadSection();
 				if (troncons != null) {
 					final Matcher matcher = pattern.matcher(troncons);
 					while (matcher.find()) {
@@ -124,7 +124,7 @@ public class InfoTraficManager {
 							mCache.put(key, new ArrayList<InfoTrafic>());
 						}
 						if (!mCache.get(key).contains(infoTrafic)) {
-							infoTrafic.addLignes(key);
+							infoTrafic.addRoute(key);
 							mCache.get(key).add(infoTrafic);
 						}
 					}

@@ -24,7 +24,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.InfoTrafic;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.comparator.LigneLettreComparator;
 import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.manager.impl.LigneManager;
@@ -92,15 +92,15 @@ public class InfoTraficDetailFragment extends CustomFragment {
 		final LigneManager ligneManager = LigneManager.getInstance();
 		final LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 
-		mItemTitle.setText(infoTrafic.getIntitule());
-		mItemDescription.setText(Html.fromHtml(infoTrafic.getResume()));
+		mItemTitle.setText(infoTrafic.getTitle());
+		mItemDescription.setText(Html.fromHtml(infoTrafic.getContent()));
 		mItemTime.setText(infoTrafic.getDateFormated());
 
-		final List<String> lignesConcernees = new ArrayList<String>(infoTrafic.getLignes());
-		final List<Ligne> listLignes = new ArrayList<Ligne>();
+		final List<String> lignesConcernees = new ArrayList<String>(infoTrafic.getRoutes());
+		final List<Route> listLignes = new ArrayList<Route>();
 
 		for (final String codeLigne : lignesConcernees) {
-			final Ligne ligne = ligneManager.getSingle(getActivity().getContentResolver(), codeLigne);
+			final Route ligne = ligneManager.getSingle(getActivity().getContentResolver(), codeLigne);
 			if (ligne != null) {
 				listLignes.add(ligne);
 			}
@@ -125,13 +125,13 @@ public class InfoTraficDetailFragment extends CustomFragment {
 
 					final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
 
-					for (final Ligne l : listLignes) {
+					for (final Route l : listLignes) {
 						final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item_medium,
 								mLignesView, false);
-						textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
-						textView.setText(l.getLettre());
+						textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getBackColor()));
+						textView.setText(l.getLetter());
 						textView.setTypeface(robotoCondensed);
-						textView.setTextColor(l.getCouleurTexte());
+						textView.setTextColor(l.getFrontColor());
 
 						final LayoutParams layoutParams = textView.getLayoutParams();
 						layoutParams.width = newItemWidth;

@@ -5,7 +5,7 @@ import java.util.Random;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.ItineraryWrapper;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import android.content.Context;
@@ -97,15 +97,15 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		viewHolder.itemDate.setText(wrapper.getDate());
 		viewHolder.itemWalkTime.setText(wrapper.getWalkTime());
 
-		final List<Ligne> lignes = wrapper.getLignes();
+		final List<Route> lignes = wrapper.getLignes();
 		viewHolder.gridLayout.removeAllViews();
-		for (final Ligne l : lignes) {
+		for (final Route l : lignes) {
 			final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.ligne_code_item_medium,
 					viewHolder.gridLayout, false);
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
-			textView.setText(l.getLettre());
+			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getBackColor()));
+			textView.setText(l.getLetter());
 			textView.setTypeface(mRobotoCondensed);
-			textView.setTextColor(l.getCouleurTexte());
+			textView.setTextColor(l.getFrontColor());
 
 			viewHolder.gridLayout.addView(textView);
 		}

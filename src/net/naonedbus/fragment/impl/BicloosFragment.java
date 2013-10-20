@@ -26,7 +26,7 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.BiclooDetailActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.BiclooComparator;
 import net.naonedbus.comparator.BiclooDistanceComparator;
@@ -35,14 +35,14 @@ import net.naonedbus.helper.StateHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.BiclooManager;
 import net.naonedbus.manager.impl.BiclooManager.BiclooObserver;
-import net.naonedbus.manager.impl.FavoriBiclooManager;
+import net.naonedbus.manager.impl.BiclooBookmarkManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.BiclooArrayAdapter;
-import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
+import net.naonedbus.widget.adapter.impl.EquipmentArrayAdapter;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import net.naonedbus.widget.indexer.impl.BiclooDistanceIndexer;
-import net.naonedbus.widget.indexer.impl.BiclooNomIndexer;
+import net.naonedbus.widget.indexer.impl.BiclooNameIndexer;
 import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -86,7 +86,7 @@ public class BicloosFragment extends CustomListFragment {
 	protected int mCurrentSortPreference = SORT_NOM;
 
 	private final BiclooManager mBiclooManager;
-	private final FavoriBiclooManager mFavoriBiclooManager;
+	private final BiclooBookmarkManager mFavoriBiclooManager;
 	private final MyLocationProvider mLocationProvider;
 
 	private MenuItem mRefreshMenuItem;
@@ -97,7 +97,7 @@ public class BicloosFragment extends CustomListFragment {
 		super(R.layout.fragment_listview_section);
 
 		mBiclooManager = BiclooManager.getInstance();
-		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
+		mFavoriBiclooManager = BiclooBookmarkManager.getInstance();
 
 		mLocationProvider = NBApplication.getLocationProvider();
 
@@ -106,7 +106,7 @@ public class BicloosFragment extends CustomListFragment {
 		mComparators.append(SORT_DISTANCE, new BiclooDistanceComparator());
 
 		mIndexers = new SparseArray<ArraySectionIndexer<Bicloo>>();
-		mIndexers.append(SORT_NOM, new BiclooNomIndexer());
+		mIndexers.append(SORT_NOM, new BiclooNameIndexer());
 		mIndexers.append(SORT_DISTANCE, new BiclooDistanceIndexer());
 	}
 
@@ -273,7 +273,7 @@ public class BicloosFragment extends CustomListFragment {
 		case R.id.menu_show_plan:
 			final ParamIntent intent = new ParamIntent(getActivity(), MapActivity.class);
 			intent.putExtra(MapFragment.PARAM_ITEM_ID, bicloo.getId());
-			intent.putExtra(MapFragment.PARAM_ITEM_TYPE, Equipement.Type.TYPE_BICLOO.getId());
+			intent.putExtra(MapFragment.PARAM_ITEM_TYPE, Equipment.Type.TYPE_BICLOO.getId());
 			startActivity(intent);
 			break;
 		case R.id.menu_favori:
@@ -410,7 +410,7 @@ public class BicloosFragment extends CustomListFragment {
 
 		@Override
 		protected void onPostExecute(final Void result) {
-			final EquipementArrayAdapter adapter = (EquipementArrayAdapter) getListAdapter();
+			final EquipmentArrayAdapter adapter = (EquipmentArrayAdapter) getListAdapter();
 			adapter.notifyDataSetChanged();
 		}
 

@@ -6,7 +6,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.BiclooDetailActivity;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.BiclooManager;
 import net.naonedbus.map.ItemSelectedInfo;
@@ -36,21 +36,21 @@ public class BiclooMapLayer extends MapLayer {
 
 	@Override
 	public void chooseMarker(final MarkerOptions markerOptions, final ClusterPoint clusterPoint) {
-		final Equipement bicloo = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
-		final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(Equipement.Type.TYPE_BICLOO.getMapPin());
-		final String title = bicloo.getNom();
+		final Equipment bicloo = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
+		final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(Equipment.Type.TYPE_BICLOO.getMapPin());
+		final String title = bicloo.getName();
 
 		markerOptions.icon(icon);
 		markerOptions.title(title);
 	}
 
 	@Override
-	protected ItemSelectedInfo getItemSelectedInfo(final Context context, final Equipement item) {
+	protected ItemSelectedInfo getItemSelectedInfo(final Context context, final Equipment item) {
 		return new ItemSelectedInfo() {
 
 			@Override
 			public String getTitle() {
-				return item.getNom();
+				return item.getName();
 			}
 
 			@Override

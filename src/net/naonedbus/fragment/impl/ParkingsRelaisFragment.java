@@ -19,14 +19,14 @@
 package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.fragment.EquipementFragment;
-import net.naonedbus.manager.impl.EquipementManager.SousType;
+import net.naonedbus.manager.impl.EquipmentManager.SousType;
 
 public class ParkingsRelaisFragment extends EquipementFragment {
 
 	public ParkingsRelaisFragment() {
-		super(R.layout.fragment_listview_section, Type.TYPE_PARKING, SousType.PARKING_RELAI);
+		super(R.layout.fragment_listview_section, Type.TYPE_PARK, SousType.PARKING_RELAI);
 	}
 
 }

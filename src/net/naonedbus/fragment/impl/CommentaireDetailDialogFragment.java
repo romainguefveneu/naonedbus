@@ -1,10 +1,10 @@
 package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Commentaire;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Comment;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.ColorUtils;
@@ -39,7 +39,7 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 	private View mHeaderDivider;
 	private ImageView mImageView;
 
-	private Commentaire mCommentaire;
+	private Comment mCommentaire;
 	private TextView mItemDescription;
 	private TextView mItemDate;
 	private TextView mItemSource;
@@ -183,17 +183,17 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 	 * @param idSens
 	 * @param idArret
 	 */
-	protected void setLigneSensArret(final Commentaire commentaire) {
-		final Ligne ligne = commentaire.getLigne();
-		final Sens sens = commentaire.getSens();
-		final Arret arret = commentaire.getArret();
+	protected void setLigneSensArret(final Comment commentaire) {
+		final Route ligne = commentaire.getRoute();
+		final Direction sens = commentaire.getDirection();
+		final Stop arret = commentaire.getStop();
 
 		String title = "";
 		String subtitle = "";
 
 		if (ligne != null) {
-			setCode(ligne.getLettre(), ligne.getCouleur(), ligne.getCouleurTexte());
-			title = ligne.getNom();
+			setCode(ligne.getLetter(), ligne.getBackColor(), ligne.getFrontColor());
+			title = ligne.getName();
 		} else {
 			setCode(FormatUtils.TOUT_LE_RESEAU, Color.WHITE, Color.BLACK);
 		}
@@ -206,9 +206,9 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 			}
 			if (sens != null) {
 				if (arret == null) {
-					title = FormatUtils.formatSens(sens.text);
+					title = FormatUtils.formatSens(sens.getName());
 				} else {
-					subtitle = FormatUtils.formatSens(sens.text);
+					subtitle = FormatUtils.formatSens(sens.getName());
 				}
 			}
 		}
@@ -222,7 +222,7 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 	}
 
-	protected String getCommentaireTitle(final Commentaire commentaire) {
+	protected String getCommentaireTitle(final Comment commentaire) {
 		String title = "";
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(commentaire.getSource())) {
@@ -230,19 +230,19 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(commentaire.getSource())) {
 			title = getString(R.string.commentaire_message_service);
 		} else {
-			final Ligne ligne = commentaire.getLigne();
-			final Sens sens = commentaire.getSens();
-			final Arret arret = commentaire.getArret();
+			final Route ligne = commentaire.getRoute();
+			final Direction sens = commentaire.getDirection();
+			final Stop arret = commentaire.getStop();
 
 			if (arret == null && sens == null && ligne == null) {
 				title = getString(R.string.commentaire_tout);
 			} else if (ligne != null) {
-				title = getString(R.string.commentaire_ligne) + " " + ligne.getLettre();
+				title = getString(R.string.commentaire_ligne) + " " + ligne.getLetter();
 				if (arret != null) {
 					title += ", " + arret.getNomArret();
 				}
 				if (sens != null) {
-					title += FormatUtils.formatSens(sens.text);
+					title += FormatUtils.formatSens(sens.getName());
 				}
 			}
 		}

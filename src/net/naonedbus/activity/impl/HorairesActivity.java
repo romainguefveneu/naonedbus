@@ -20,14 +20,14 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
 import net.naonedbus.fragment.impl.HorairesFragment;
 import net.naonedbus.fragment.impl.HorairesFragment.OnSensChangeListener;
 import net.naonedbus.helper.HeaderHelper;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,16 +56,16 @@ public class HorairesActivity extends OneFragmentActivity implements OnSensChang
 		final Intent intent = getIntent();
 		mFromWidget = intent.getBooleanExtra(PARAM_FROM_WIDGET, false);
 
-		final Arret arret = intent.getParcelableExtra(PARAM_ARRET);
-		Ligne ligne = intent.getParcelableExtra(PARAM_LIGNE);
-		Sens sens = intent.getParcelableExtra(PARAM_SENS);
+		final Stop arret = intent.getParcelableExtra(PARAM_ARRET);
+		Route ligne = intent.getParcelableExtra(PARAM_LIGNE);
+		Direction sens = intent.getParcelableExtra(PARAM_SENS);
 
 		if (ligne == null) {
 			final LigneManager ligneManager = LigneManager.getInstance();
 			ligne = ligneManager.getSingle(getContentResolver(), arret.getCodeLigne());
 		}
 		if (sens == null) {
-			final SensManager sensManager = SensManager.getInstance();
+			final DirectionManager sensManager = DirectionManager.getInstance();
 			sens = sensManager.getSingle(getContentResolver(), arret.getCodeLigne(), arret.getCodeSens());
 		}
 
@@ -79,14 +79,14 @@ public class HorairesActivity extends OneFragmentActivity implements OnSensChang
 		}
 
 		mHeaderHelper = new HeaderHelper(this);
-		mHeaderHelper.setColor(ligne.getCouleur(), ligne.getCouleurTexte());
+		mHeaderHelper.setColor(ligne.getBackColor(), ligne.getFrontColor());
 		mHeaderHelper.setTitle(arret.getNomArret());
-		mHeaderHelper.setSubTitle(FormatUtils.formatSens(ligne.getLettre(), sens.text));
+		mHeaderHelper.setSubTitle(FormatUtils.formatSens(ligne.getLetter(), sens.getName()));
 	}
 
 	@Override
-	public void onSensChange(final Sens newSens) {
-		mHeaderHelper.setSubTitleAnimated(FormatUtils.formatSens(newSens.text));
+	public void onSensChange(final Direction newSens) {
+		mHeaderHelper.setSubTitleAnimated(FormatUtils.formatSens(newSens.getName()));
 	}
 
 	@Override

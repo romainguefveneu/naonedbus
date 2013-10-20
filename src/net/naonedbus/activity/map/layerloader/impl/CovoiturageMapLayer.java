@@ -28,7 +28,7 @@ import net.naonedbus.activity.map.overlay.BasicItemizedOverlay;
 import net.naonedbus.activity.map.overlay.CovoiturageItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -44,7 +44,7 @@ import com.google.android.maps.GeoPoint;
 public class CovoiturageMapLayer extends EquipementMapLayer {
 
 	public CovoiturageMapLayer() {
-		super(Equipement.Type.TYPE_COVOITURAGE, TypeOverlayItem.TYPE_COVOITURAGE);
+		super(Equipment.Type.TYPE_CARPOOL, TypeOverlayItem.TYPE_COVOITURAGE);
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class CovoiturageMapLayer extends EquipementMapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-				final Equipement equipement = getItemById(item.getId());
+				final Equipment equipement = getItemById(item.getId());
 				return getNavigationIntent(context, equipement);
 			}
 

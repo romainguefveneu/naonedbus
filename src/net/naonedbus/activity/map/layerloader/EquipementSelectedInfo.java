@@ -20,7 +20,7 @@ package net.naonedbus.activity.map.layerloader;
 
 import java.util.Locale;
 
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -33,7 +33,7 @@ public abstract class EquipementSelectedInfo implements ItemSelectedInfo {
 
 	
 	
-	public Intent getNavigationIntent(Context context, Equipement equipement) {
+	public Intent getNavigationIntent(Context context, Equipment equipement) {
 		final Uri uri = Uri.parse(String.format(Locale.ENGLISH, NAVIGATION_INTENT, equipement.getLatitude(),
 				equipement.getLongitude()));
 

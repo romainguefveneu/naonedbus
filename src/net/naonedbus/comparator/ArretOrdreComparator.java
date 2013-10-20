@@ -20,16 +20,16 @@ package net.naonedbus.comparator;
 
 import java.util.Comparator;
 
-import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Stop;
 
 /**
  * @author romain
  * 
  */
-public class ArretOrdreComparator implements Comparator<Arret> {
+public class ArretOrdreComparator implements Comparator<Stop> {
 
 	@Override
-	public int compare(final Arret e1, final Arret e2) {
+	public int compare(final Stop e1, final Stop e2) {
 		if (e1 == null || e2 == null)
 			return 0;
 

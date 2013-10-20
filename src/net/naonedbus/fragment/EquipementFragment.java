@@ -24,20 +24,20 @@ import java.util.List;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.MapActivity;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.EquipementComparator;
 import net.naonedbus.comparator.EquipementDistanceComparator;
 import net.naonedbus.fragment.impl.MapFragment;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.manager.impl.EquipementManager;
-import net.naonedbus.manager.impl.EquipementManager.SousType;
+import net.naonedbus.manager.impl.EquipmentManager;
+import net.naonedbus.manager.impl.EquipmentManager.SousType;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
-import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
+import net.naonedbus.widget.adapter.impl.EquipmentArrayAdapter;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
-import net.naonedbus.widget.indexer.impl.EquipementDistanceIndexer;
-import net.naonedbus.widget.indexer.impl.EquipementNomIndexer;
+import net.naonedbus.widget.indexer.impl.EquipmentDistanceIndexer;
+import net.naonedbus.widget.indexer.impl.EquipmentNomIndexer;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -66,37 +66,37 @@ public abstract class EquipementFragment extends CustomListFragment {
 
 	private static int COUNT = 0;
 
-	protected final SparseArray<Comparator<Equipement>> comparators;
-	protected final SparseArray<ArraySectionIndexer<Equipement>> indexers;
+	protected final SparseArray<Comparator<Equipment>> comparators;
+	protected final SparseArray<ArraySectionIndexer<Equipment>> indexers;
 
 	protected MyLocationProvider myLocationProvider;
 	protected int currentSortPreference = SORT_NOM;
 
 	private StateHelper mStateHelper;
 	private DistanceTask mLoaderDistance;
-	private final Equipement.Type mType;
+	private final Equipment.Type mType;
 	private SousType mSousType;
 
 	protected int localCount = -1;
 
-	public EquipementFragment(final int layoutId, final Equipement.Type type) {
+	public EquipementFragment(final int layoutId, final Equipment.Type type) {
 		super(layoutId);
 
 		mType = type;
 		myLocationProvider = NBApplication.getLocationProvider();
 
-		indexers = new SparseArray<ArraySectionIndexer<Equipement>>();
-		indexers.append(SORT_NOM, new EquipementNomIndexer());
-		indexers.append(SORT_DISTANCE, new EquipementDistanceIndexer());
+		indexers = new SparseArray<ArraySectionIndexer<Equipment>>();
+		indexers.append(SORT_NOM, new EquipmentNomIndexer());
+		indexers.append(SORT_DISTANCE, new EquipmentDistanceIndexer());
 
-		comparators = new SparseArray<Comparator<Equipement>>();
-		comparators.append(SORT_NOM, new EquipementComparator<Equipement>());
-		comparators.append(SORT_DISTANCE, new EquipementDistanceComparator<Equipement>());
+		comparators = new SparseArray<Comparator<Equipment>>();
+		comparators.append(SORT_NOM, new EquipementComparator<Equipment>());
+		comparators.append(SORT_DISTANCE, new EquipementDistanceComparator<Equipment>());
 
 		localCount = COUNT++;
 	}
 
-	public EquipementFragment(final int layoutId, final Equipement.Type type, final SousType sousType) {
+	public EquipementFragment(final int layoutId, final Equipment.Type type, final SousType sousType) {
 		this(layoutId, type);
 		mSousType = sousType;
 	}
@@ -136,7 +136,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		final Equipement equipement = (Equipement) getListAdapter().getItem(position);
+		final Equipment equipement = (Equipment) getListAdapter().getItem(position);
 		final Intent intent = new Intent(getActivity(), MapActivity.class);
 		intent.putExtra(MapFragment.PARAM_ITEM_ID, equipement.getId());
 		intent.putExtra(MapFragment.PARAM_ITEM_TYPE, equipement.getType().getId());
@@ -182,8 +182,8 @@ public abstract class EquipementFragment extends CustomListFragment {
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
-			final EquipementManager equipementManager = EquipementManager.getInstance();
-			final List<Equipement> equipements;
+			final EquipmentManager equipementManager = EquipmentManager.getInstance();
+			final List<Equipment> equipements;
 
 			if (mSousType == null) {
 				equipements = equipementManager.getEquipementsByType(context.getContentResolver(), mType);
@@ -193,7 +193,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 
 			setDistances(equipements);
 
-			final EquipementArrayAdapter adapter = new EquipementArrayAdapter(context, equipements);
+			final EquipmentArrayAdapter adapter = new EquipmentArrayAdapter(context, equipements);
 			adapter.setIndexer(indexers.get(currentSortPreference));
 			adapter.sort(comparators.get(currentSortPreference));
 
@@ -205,12 +205,12 @@ public abstract class EquipementFragment extends CustomListFragment {
 		return result;
 	}
 
-	protected void setDistances(final List<Equipement> equipements) {
+	protected void setDistances(final List<Equipment> equipements) {
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
 		final Location currentLocation = myLocationProvider.getLastKnownLocation();
 
 		if (currentLocation != null) {
-			for (final Equipement item : equipements) {
+			for (final Equipment item : equipements) {
 				final double latitude = item.getLatitude();
 				final double longitude = item.getLongitude();
 				if (latitude != 0) {
@@ -238,7 +238,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 
 			if (currentLocation != null) {
 				for (int i = 0; i < adapter.getCount(); i++) {
-					final Equipement item = (Equipement) adapter.getItem(i);
+					final Equipment item = (Equipment) adapter.getItem(i);
 					final double latitude = item.getLatitude();
 					final double longitude = item.getLongitude();
 					if (latitude != 0) {
@@ -254,7 +254,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 
 		@Override
 		protected void onPostExecute(final Void result) {
-			final EquipementArrayAdapter adapter = (EquipementArrayAdapter) getListAdapter();
+			final EquipmentArrayAdapter adapter = (EquipmentArrayAdapter) getListAdapter();
 			adapter.notifyDataSetChanged();
 		}
 
@@ -266,7 +266,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 	private final MyLocationListener locationListener = new MyLocationListener() {
 		@Override
 		public void onLocationChanged(final Location location) {
-			final EquipementDistanceComparator<Equipement> comparator = (EquipementDistanceComparator<Equipement>) comparators
+			final EquipementDistanceComparator<Equipment> comparator = (EquipementDistanceComparator<Equipment>) comparators
 					.get(SORT_DISTANCE);
 			comparator.setReferentiel(location);
 
@@ -277,7 +277,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 
 		@Override
 		public void onLocationDisabled() {
-			final EquipementDistanceComparator<Equipement> comparator = (EquipementDistanceComparator<Equipement>) comparators
+			final EquipementDistanceComparator<Equipment> comparator = (EquipementDistanceComparator<Equipment>) comparators
 					.get(SORT_DISTANCE);
 			comparator.setReferentiel(null);
 			if (currentSortPreference == SORT_DISTANCE) {
@@ -291,7 +291,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 	 * Trier les équipements selon les préférences.
 	 */
 	private void sort() {
-		final EquipementArrayAdapter adapter = (EquipementArrayAdapter) getListAdapter();
+		final EquipmentArrayAdapter adapter = (EquipmentArrayAdapter) getListAdapter();
 		setIndexerAndComparator(adapter);
 		adapter.notifyDataSetChanged();
 	}
@@ -302,9 +302,9 @@ public abstract class EquipementFragment extends CustomListFragment {
 	 * 
 	 * @param adapter
 	 */
-	private void setIndexerAndComparator(final EquipementArrayAdapter adapter) {
-		final Comparator<Equipement> comparator;
-		final ArraySectionIndexer<Equipement> indexer;
+	private void setIndexerAndComparator(final EquipmentArrayAdapter adapter) {
+		final Comparator<Equipment> comparator;
+		final ArraySectionIndexer<Equipment> indexer;
 
 		if (currentSortPreference == SORT_DISTANCE && !myLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation
@@ -325,7 +325,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 	 * @param key
 	 * @param comparator
 	 */
-	protected void addComparator(final int key, final Comparator<Equipement> comparator) {
+	protected void addComparator(final int key, final Comparator<Equipment> comparator) {
 		comparators.put(key, comparator);
 	}
 
@@ -335,7 +335,7 @@ public abstract class EquipementFragment extends CustomListFragment {
 	 * @param key
 	 * @param indexer
 	 */
-	protected void addIndexer(final int key, final ArraySectionIndexer<Equipement> indexer) {
+	protected void addIndexer(final int key, final ArraySectionIndexer<Equipment> indexer) {
 		indexers.put(key, indexer);
 	}
 

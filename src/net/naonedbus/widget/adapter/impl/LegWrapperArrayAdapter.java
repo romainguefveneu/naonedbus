@@ -5,7 +5,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.LegWrapper;
 import net.naonedbus.bean.LegWrapper.Type;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
@@ -71,7 +71,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		}
 
 		final LegWrapper legWrapper = getItem(position);
-		final Ligne ligne = legWrapper.getLigne();
+		final Route ligne = legWrapper.getLigne();
 		final Place place = legWrapper.getPlace();
 
 		if ("WALK".equals(legWrapper.getMode())) {
@@ -110,9 +110,9 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 				viewHolder.itemIcon.setVisibility(View.GONE);
 				viewHolder.itemSymbole.setVisibility(View.VISIBLE);
 
-				viewHolder.itemSymbole.setText(ligne.getLettre());
-				viewHolder.itemSymbole.setTextColor(ligne.getCouleurTexte());
-				viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
+				viewHolder.itemSymbole.setText(ligne.getLetter());
+				viewHolder.itemSymbole.setTextColor(ligne.getFrontColor());
+				viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getBackColor()));
 			} else {
 				viewHolder.itemIcon.setVisibility(View.INVISIBLE);
 				viewHolder.itemSymbole.setVisibility(View.INVISIBLE);

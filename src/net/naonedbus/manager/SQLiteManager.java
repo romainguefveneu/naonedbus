@@ -21,7 +21,7 @@ package net.naonedbus.manager;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.naonedbus.provider.table.LigneTable;
+import net.naonedbus.provider.table.RouteTable;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -116,18 +116,6 @@ public abstract class SQLiteManager<T> {
 	}
 
 	/**
-	 * Récupérer un élément selon son code.
-	 * 
-	 * @param contentResolver
-	 * @param code
-	 * @return un élément
-	 */
-	public T getSingle(final ContentResolver contentResolver, final String code) {
-		final Cursor c = getCursor(contentResolver, "code = ?", new String[] { code });
-		return getFirstFromCursor(c);
-	}
-
-	/**
 	 * Récupérer un élément selon sa lettre.
 	 * 
 	 * @param contentResolver
@@ -135,7 +123,7 @@ public abstract class SQLiteManager<T> {
 	 * @return un élément
 	 */
 	public T getSingleByLetter(final ContentResolver contentResolver, final String letter) {
-		final Cursor c = getCursor(contentResolver, LigneTable.LETTRE + "= ?", new String[] { letter });
+		final Cursor c = getCursor(contentResolver, RouteTable.LETTER + "= ?", new String[] { letter });
 		return getFirstFromCursor(c);
 	}
 

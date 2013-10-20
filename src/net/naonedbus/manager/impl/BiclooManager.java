@@ -8,9 +8,9 @@ import java.util.concurrent.Executors;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.provider.impl.EquipementProvider;
-import net.naonedbus.provider.table.EquipementTable;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.provider.impl.EquipmentProvider;
+import net.naonedbus.provider.table.EquipmentTable;
 import net.naonedbus.rest.controller.impl.BiclooController;
 
 import org.json.JSONException;
@@ -114,9 +114,9 @@ public class BiclooManager {
 				if (DBG)
 					Log.d(LOG_TAG, Integer.toHexString(hashCode()) + "\tDébut de sauvegarde des données bicloos...");
 
-				final Uri.Builder builder = EquipementProvider.CONTENT_URI.buildUpon();
-				builder.path(EquipementProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
-				builder.appendPath(String.valueOf(Equipement.Type.TYPE_BICLOO.getId()));
+				final Uri.Builder builder = EquipmentProvider.CONTENT_URI.buildUpon();
+				builder.path(EquipmentProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
+				builder.appendPath(String.valueOf(Equipment.Type.TYPE_BICLOO.getId()));
 				context.getContentResolver().delete(builder.build(), null, null);
 
 				fillDB(context.getContentResolver(), mCache);
@@ -136,18 +136,18 @@ public class BiclooManager {
 			values[i] = getContentValues(bicloos.get(i));
 		}
 
-		contentResolver.bulkInsert(EquipementProvider.CONTENT_URI, values);
+		contentResolver.bulkInsert(EquipmentProvider.CONTENT_URI, values);
 	}
 
 	private ContentValues getContentValues(final Bicloo bicloo) {
 		final ContentValues values = new ContentValues();
-		values.put(EquipementTable._ID, bicloo.getId());
-		values.put(EquipementTable.ID_TYPE, Equipement.Type.TYPE_BICLOO.getId());
-		values.put(EquipementTable.NOM, bicloo.getName());
-		values.put(EquipementTable.NORMALIZED_NOM, bicloo.getName());
-		values.put(EquipementTable.ADRESSE, bicloo.getAddress());
-		values.put(EquipementTable.LATITUDE, bicloo.getLocation().getLatitude());
-		values.put(EquipementTable.LONGITUDE, bicloo.getLocation().getLongitude());
+		values.put(EquipmentTable._ID, bicloo.getId());
+		values.put(EquipmentTable.TYPE_ID, Equipment.Type.TYPE_BICLOO.getId());
+		values.put(EquipmentTable.EQUIPMENT_NAME, bicloo.getName());
+		values.put(EquipmentTable.NORMALIZED_NAME, bicloo.getName());
+		values.put(EquipmentTable.ADDRESS, bicloo.getAddress());
+		values.put(EquipmentTable.LATITUDE, bicloo.getLocation().getLatitude());
+		values.put(EquipmentTable.LONGITUDE, bicloo.getLocation().getLongitude());
 
 		return values;
 	}

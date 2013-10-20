@@ -7,7 +7,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.LegWrapper;
 import net.naonedbus.bean.LegWrapper.Type;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.manager.impl.LigneManager;
@@ -162,7 +162,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 			toWrapper.setMode(leg.mode);
 
 			if (!"WALK".equals(leg.mode) && !TextUtils.isEmpty(leg.route)) {
-				final Ligne ligne = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
+				final Route ligne = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
 				fromWrapper.setLigne(ligne);
 			} else if ("WALK".equals(leg.mode) && leg.distance < 50) {
 				add = false;
@@ -193,7 +193,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 		for (int i = 0; i < wrappers.size(); i++) {
 			final LegWrapper legWrapper = wrappers.get(i);
-			final Ligne ligne = legWrapper.getLigne();
+			final Route ligne = legWrapper.getLigne();
 			final Place place = legWrapper.getPlace();
 
 			builder.append(legWrapper.getTime()).append(" : ");
@@ -204,7 +204,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 				}
 			} else {
 				if (legWrapper.getType() == Type.IN) {
-					builder.append(FormatUtils.formatLigneArretSens(getActivity(), ligne.getLettre(), place.name,
+					builder.append(FormatUtils.formatLigneArretSens(getActivity(), ligne.getLetter(), place.name,
 							legWrapper.getHeadsign()));
 				} else {
 					builder.append(getString(R.string.itinerary_get_off, place.name));

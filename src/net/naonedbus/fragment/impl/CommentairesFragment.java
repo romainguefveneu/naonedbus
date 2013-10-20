@@ -23,13 +23,13 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.bean.Commentaire;
+import net.naonedbus.bean.Comment;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.manager.impl.CommentaireManager;
-import net.naonedbus.widget.adapter.impl.CommentaireArrayAdapter;
-import net.naonedbus.widget.indexer.impl.CommentaireIndexer;
+import net.naonedbus.manager.impl.CommentManager;
+import net.naonedbus.widget.adapter.impl.CommentArrayAdapter;
+import net.naonedbus.widget.indexer.impl.CommentsIndexer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -145,7 +145,7 @@ public class CommentairesFragment extends CustomListFragment {
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		final Commentaire commentaire = (Commentaire) l.getItemAtPosition(position);
+		final Comment commentaire = (Comment) l.getItemAtPosition(position);
 
 		final Bundle bundle = new Bundle();
 		bundle.putParcelable(CommentaireDetailDialogFragment.PARAM_COMMENTAIRE, commentaire);
@@ -183,7 +183,7 @@ public class CommentairesFragment extends CustomListFragment {
 			Log.d(LOG_TAG, "onPostExecute");
 		hideResfrehMenuLoader();
 
-		final CommentaireManager manager = CommentaireManager.getInstance();
+		final CommentManager manager = CommentManager.getInstance();
 		if (manager.isUpToDate() == false) {
 			final Bundle bundle = new Bundle();
 			bundle.putBoolean(BUNDLE_FORCE_UPDATE, true);
@@ -200,8 +200,8 @@ public class CommentairesFragment extends CustomListFragment {
 			Log.d(LOG_TAG, "loadContent (mForceUpdate : " + forceUpdate + ")");
 
 		try {
-			final CommentaireManager manager = CommentaireManager.getInstance();
-			final List<Commentaire> commentaires;
+			final CommentManager manager = CommentManager.getInstance();
+			final List<Comment> commentaires;
 
 			if (forceUpdate) {
 				manager.updateCache(context.getContentResolver());
@@ -209,12 +209,12 @@ public class CommentairesFragment extends CustomListFragment {
 			commentaires = manager.getAll(context.getContentResolver(), null, null, null);
 
 			final CommentaireFomatter fomatter = new CommentaireFomatter(context);
-			final CommentaireArrayAdapter adapter = new CommentaireArrayAdapter(context);
+			final CommentArrayAdapter adapter = new CommentArrayAdapter(context);
 			if (commentaires != null) {
 				fomatter.appendToAdapter(adapter, commentaires);
 			}
 
-			adapter.setIndexer(new CommentaireIndexer());
+			adapter.setIndexer(new CommentsIndexer());
 			result.setResult(adapter);
 
 		} catch (final Exception e) {

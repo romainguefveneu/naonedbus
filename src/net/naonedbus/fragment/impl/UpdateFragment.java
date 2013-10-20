@@ -3,7 +3,7 @@ package net.naonedbus.fragment.impl;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
 import net.naonedbus.utils.FontUtils;
@@ -118,7 +118,7 @@ public class UpdateFragment extends CustomFragment {
 			updaterManager.triggerUpdate(getActivity());
 
 			// Vider les anciens horaires
-			final HoraireManager horaireManager = HoraireManager.getInstance();
+			final ScheduleManager horaireManager = ScheduleManager.getInstance();
 			horaireManager.clearOldSchedules(getActivity().getContentResolver());
 
 			return null;

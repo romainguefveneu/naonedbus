@@ -19,13 +19,13 @@
 package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.fragment.EquipementFragment;
 
 public class CoVoituragesFragment extends EquipementFragment {
 
 	public CoVoituragesFragment() {
-		super(R.layout.fragment_listview_section, Equipement.Type.TYPE_COVOITURAGE);
+		super(R.layout.fragment_listview_section, Equipment.Type.TYPE_CARPOOL);
 	}
 
 }

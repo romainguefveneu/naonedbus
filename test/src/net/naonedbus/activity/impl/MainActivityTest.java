@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
-import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.horaire.Horaire;
-import net.naonedbus.manager.impl.ArretManager;
-import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.manager.impl.StopManager;
+import net.naonedbus.manager.impl.ScheduleManager;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.MutableDateTime;
@@ -25,11 +25,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	public void testTimeAccess() throws InterruptedException {
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 
-		final ArretManager arretManager = ArretManager.getInstance();
-		final Arret arret = arretManager.getSingle(contentResolver, "FMIT1");
+		final StopManager arretManager = StopManager.getInstance();
+		final Stop arret = arretManager.getSingle(contentResolver, "FMIT1");
 		assertNotNull(arret);
 
-		final HoraireManager horaireManager = HoraireManager.getInstance();
+		final ScheduleManager horaireManager = ScheduleManager.getInstance();
 		horaireManager.clearSchedules(contentResolver);
 
 		final DateMidnight date = new DateMidnight();
@@ -45,12 +45,12 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
 	class TimeFetcherTask implements Runnable {
 
-		private final Arret mArret;
+		private final Stop mArret;
 		private final DateMidnight mDate;
 		private final ContentResolver mContentResolver;
 		private final CountDownLatch mCountDownLatch;
 
-		public TimeFetcherTask(final ContentResolver contentResolver, final CountDownLatch latch, final Arret arret,
+		public TimeFetcherTask(final ContentResolver contentResolver, final CountDownLatch latch, final Stop arret,
 				final DateMidnight date) {
 			mContentResolver = contentResolver;
 			mCountDownLatch = latch;
@@ -60,7 +60,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
 		@Override
 		public void run() {
-			final HoraireManager horaireManager = HoraireManager.getInstance();
+			final ScheduleManager horaireManager = ScheduleManager.getInstance();
 			final MutableDateTime mutableDateTime = new MutableDateTime();
 
 			try {

@@ -28,8 +28,8 @@ import net.naonedbus.activity.map.overlay.BasicItemizedOverlay;
 import net.naonedbus.activity.map.overlay.LilaItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.utils.GeoPointUtils;
 import android.content.Context;
 import android.content.Intent;
@@ -53,7 +53,7 @@ public class LilaMapLayer extends EquipementMapLayer {
 	 * @param typeOverlayItem
 	 */
 	public LilaMapLayer() {
-		super(Equipement.Type.TYPE_LILA, TypeOverlayItem.TYPE_LILA);
+		super(Equipment.Type.TYPE_LILA, TypeOverlayItem.TYPE_LILA);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class LilaMapLayer extends EquipementMapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-				final Equipement equipement = getItemById(item.getId());
+				final Equipment equipement = getItemById(item.getId());
 				return getNavigationIntent(context, equipement);
 			}
 
@@ -116,11 +116,11 @@ public class LilaMapLayer extends EquipementMapLayer {
 		BasicOverlayItem stationOverlayItem;
 
 		if (location != null) {
-			final List<Equipement> stationsProches = getEquipementManager().getEquipementsByLocation(
+			final List<Equipment> stationsProches = getEquipementManager().getEquipementsByLocation(
 					context.getContentResolver(), Type.TYPE_LILA, location, MAX_ITEMS);
 
-			for (Equipement station : stationsProches) {
-				stationOverlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(station), station.getNom(),
+			for (Equipment station : stationsProches) {
+				stationOverlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(station), station.getName(),
 						TypeOverlayItem.TYPE_LILA);
 				stationOverlayItem.setId(station.getId());
 				newItemizedOverlay.addOverlay(stationOverlayItem);

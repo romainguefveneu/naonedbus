@@ -20,16 +20,16 @@ package net.naonedbus.manager.impl;
 
 import java.util.List;
 
-import net.naonedbus.bean.Parcours;
+import net.naonedbus.bean.StopPath;
 import net.naonedbus.manager.SQLiteManager;
-import net.naonedbus.provider.impl.ParcoursProvider;
-import net.naonedbus.provider.impl.ParcoursProvider.ParcoursTable;
+import net.naonedbus.provider.impl.StopPathProvider;
+import net.naonedbus.provider.table.StopDirectionTable;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-public class ParcoursManager extends SQLiteManager<Parcours> {
+public class ParcoursManager extends SQLiteManager<StopPath> {
 
 	private static ParcoursManager instance;
 
@@ -41,34 +41,34 @@ public class ParcoursManager extends SQLiteManager<Parcours> {
 	}
 
 	private ParcoursManager() {
-		super(ParcoursProvider.CONTENT_URI);
+		super(StopPathProvider.CONTENT_URI);
 	}
 
 	public Cursor getParcours(final ContentResolver contentResolver, final String normalizedNom) {
-		final Uri.Builder builder = ParcoursProvider.CONTENT_URI.buildUpon();
+		final Uri.Builder builder = StopPathProvider.CONTENT_URI.buildUpon();
 		builder.appendQueryParameter("normalizedNom", normalizedNom);
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
-	public List<Parcours> getParcoursList(final ContentResolver contentResolver, final String normalizedNom) {
+	public List<StopPath> getParcoursList(final ContentResolver contentResolver, final String normalizedNom) {
 		return getFromCursor(getParcours(contentResolver, normalizedNom));
 	}
 
 	@Override
-	public Parcours getSingleFromCursor(final Cursor c) {
-		final Parcours item = new Parcours();
-		item._id = c.getInt(c.getColumnIndex(ParcoursTable._ID));
-		item.couleurBack = c.getInt(c.getColumnIndex(ParcoursTable.COULEUR_BACK));
-		item.couleurFront = c.getInt(c.getColumnIndex(ParcoursTable.COULEUR_FRONT));
-		item.codeLigne = c.getString(c.getColumnIndex(ParcoursTable.CODE_LIGNE));
-		item.lettre = c.getString(c.getColumnIndex(ParcoursTable.LETTRE));
-		item.nomSens = c.getString(c.getColumnIndex(ParcoursTable.NOM_SENS));
-		item.idLigne = c.getInt(c.getColumnIndex(ParcoursTable.ID_LIGNE));
+	public StopPath getSingleFromCursor(final Cursor c) {
+		final StopPath item = new StopPath();
+		item.setId(c.getInt(c.getColumnIndex(StopDirectionTable.STOP_ID)));
+		item.setBackColor(c.getInt(c.getColumnIndex(StopDirectionTable.ROUTE_BACK_COLOR)));
+		item.setFrontColor(c.getInt(c.getColumnIndex(StopDirectionTable.ROUTE_FRONT_COLOR)));
+		item.setRouteCode(c.getString(c.getColumnIndex(StopDirectionTable.ROUTE_CODE)));
+		item.setRouteLetter(c.getString(c.getColumnIndex(StopDirectionTable.ROUTE_LETTER)));
+		item.setDirectionName(c.getString(c.getColumnIndex(StopDirectionTable.DIRECTION_NAME)));
+		item.setRouteId(c.getInt(c.getColumnIndex(StopDirectionTable.ROUTE_ID)));
 		return item;
 	}
 
 	@Override
-	protected ContentValues getContentValues(final Parcours item) {
+	protected ContentValues getContentValues(final StopPath item) {
 		return null;
 	}
 

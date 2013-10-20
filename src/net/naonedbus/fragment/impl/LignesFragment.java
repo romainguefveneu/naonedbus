@@ -23,14 +23,14 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.PlanActivity;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.provider.impl.LigneProvider;
-import net.naonedbus.provider.table.LigneTable;
-import net.naonedbus.widget.adapter.impl.LigneCursorAdapter;
-import net.naonedbus.widget.indexer.impl.LigneCursorIndexer;
+import net.naonedbus.provider.impl.RouteProvider;
+import net.naonedbus.provider.table.RouteTable;
+import net.naonedbus.widget.adapter.impl.RouteCursorAdapter;
+import net.naonedbus.widget.indexer.impl.RouteCursorIndexer;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -58,7 +58,7 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 	private static final String LOG_TAG = "LignesFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private LigneCursorAdapter mAdapter;
+	private RouteCursorAdapter mAdapter;
 	private LigneManager mLigneManager;
 
 	public LignesFragment() {
@@ -109,7 +109,7 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
 
 		final CursorWrapper ligne = (CursorWrapper) getListAdapter().getItem(cmi.position);
-		final String lettreLigne = ligne.getString(ligne.getColumnIndex(LigneTable.LETTRE));
+		final String lettreLigne = ligne.getString(ligne.getColumnIndex(RouteTable.LETTER));
 
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.fragment_lignes_contextual, menu);
@@ -121,7 +121,7 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 	public boolean onContextItemSelected(final android.view.MenuItem item) {
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final CursorWrapper cursor = (CursorWrapper) getListAdapter().getItem(cmi.position);
-		final Ligne ligne = mLigneManager.getSingleFromCursor(cursor);
+		final Route ligne = mLigneManager.getSingleFromCursor(cursor);
 
 		switch (item.getItemId()) {
 		case R.id.menu_show_plan:
@@ -143,20 +143,20 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 		final CursorWrapper cursorWrapper = (CursorWrapper) getListAdapter().getItem(position);
 
 		final LigneManager ligneManager = LigneManager.getInstance();
-		final Ligne ligne = ligneManager.getSingleFromCursor(cursorWrapper);
+		final Route ligne = ligneManager.getSingleFromCursor(cursorWrapper);
 
 		final ParamIntent intent = new ParamIntent(getActivity(), ArretsActivity.class);
 		intent.putExtra(ArretsActivity.PARAM_LIGNE, ligne);
 		getActivity().startActivity(intent);
 	}
 
-	private void menuShowPlan(final Ligne ligne) {
+	private void menuShowPlan(final Route ligne) {
 		final Intent intent = new Intent(getActivity(), PlanActivity.class);
 		intent.putExtra(PlanActivity.PARAM_CODE_LIGNE, ligne.getCode());
 		startActivity(intent);
 	}
 
-	private void menuComment(final Ligne ligne) {
+	private void menuComment(final Route ligne) {
 		final Intent intent = new Intent(getActivity(), CommentaireActivity.class);
 		intent.putExtra(CommentaireActivity.PARAM_LIGNE, ligne);
 		startActivity(intent);
@@ -167,15 +167,15 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateLoader " + loaderId);
 
-		return new CursorLoader(getActivity(), LigneProvider.CONTENT_URI, null, null, null, null);
+		return new CursorLoader(getActivity(), RouteProvider.CONTENT_URI, null, null, null, null);
 	}
 
 	@Override
 	protected CursorAdapter getCursorAdapter(final Context context) {
 		final String[] types = context.getResources().getStringArray(R.array.types_lignes);
 
-		mAdapter = new LigneCursorAdapter(getActivity(), null);
-		mAdapter.setIndexer(new LigneCursorIndexer(null, types, LigneTable.TYPE));
+		mAdapter = new RouteCursorAdapter(getActivity(), null);
+		mAdapter.setIndexer(new RouteCursorIndexer(null, types, RouteTable.TYPE_ID));
 
 		return mAdapter;
 	}

@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
-import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.utils.CalendarUtils;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 
@@ -173,7 +173,7 @@ public class SettingsFragment extends PreferenceFragment {
 	 * Vider le cache horaires.
 	 */
 	private void clearCacheHoraires() {
-		final HoraireManager horaireManager = HoraireManager.getInstance();
+		final ScheduleManager horaireManager = ScheduleManager.getInstance();
 		horaireManager.clearSchedules(getActivity().getContentResolver());
 		clearWebviewCache();
 	}

@@ -25,8 +25,8 @@ import java.util.List;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AddressSearchActivity;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
@@ -260,7 +260,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 			final String address = data.getStringExtra("address");
 			final double latitude = data.getDoubleExtra("latitude", 0d);
 			final double longitude = data.getDoubleExtra("longitude", 0d);
-			final Equipement.Type type = (Type) data.getSerializableExtra("type");
+			final Equipment.Type type = (Type) data.getSerializableExtra("type");
 			final boolean currentLocation = data.getBooleanExtra("isCurrentLocation", false);
 
 			if (requestCode == REQUEST_CODE_FROM) {

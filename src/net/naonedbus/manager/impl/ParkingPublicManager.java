@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.async.ParkingPublicTaskInfo;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.manager.Unschedulable;
@@ -119,13 +119,13 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 * @param parkingsPublics
 	 */
 	private void fillParkings(final ContentResolver contentResolver, final List<ParkingPublic> parkingsPublics) {
-		final EquipementManager equipementManager = EquipementManager.getInstance();
-		final List<Equipement> equipementsParkings = equipementManager.getParkings(contentResolver,
-				EquipementManager.SousType.PARKING_PUBLIC);
+		final EquipmentManager equipementManager = EquipmentManager.getInstance();
+		final List<Equipment> equipementsParkings = equipementManager.getParkings(contentResolver,
+				EquipmentManager.SousType.PARKING_PUBLIC);
 
 		for (final ParkingPublic parkingPublic : parkingsPublics) {
-			Equipement foundEquipement = null;
-			for (final Equipement equipement : equipementsParkings) {
+			Equipment foundEquipement = null;
+			for (final Equipment equipement : equipementsParkings) {
 				if (parkingPublic.getId().equals(equipement.getId())) {
 					foundEquipement = equipement;
 					fillParking(parkingPublic, equipement);
@@ -146,13 +146,13 @@ public class ParkingPublicManager implements Unschedulable<ParkingPublicTaskInfo
 	 * @param parkingPublic
 	 * @param equipement
 	 */
-	private void fillParking(final ParkingPublic parkingPublic, final Equipement equipement) {
-		parkingPublic.setNom(equipement.getNom());
+	private void fillParking(final ParkingPublic parkingPublic, final Equipment equipement) {
+		parkingPublic.setNom(equipement.getName());
 		parkingPublic.setLatitude(equipement.getLatitude());
 		parkingPublic.setLongitude(equipement.getLongitude());
-		parkingPublic.setAdresse(equipement.getAdresse());
-		parkingPublic.setTelephone(equipement.getTelephone());
-		parkingPublic.setUrl(equipement.getTelephone());
+		parkingPublic.setAdresse(equipement.getAddress());
+		parkingPublic.setTelephone(equipement.getPhone());
+		parkingPublic.setUrl(equipement.getPhone());
 	}
 
 	/**

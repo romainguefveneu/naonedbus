@@ -4,7 +4,7 @@ import net.naonedbus.R;
 import net.naonedbus.fragment.impl.FavorisFragment;
 import net.naonedbus.fragment.impl.LignesFragment;
 import net.naonedbus.fragment.impl.ProximiteFragment;
-import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.StopBookmarkManager;
 import android.content.Context;
 
 public class MainFragmentHeader implements FragmentHeader {
@@ -27,7 +27,7 @@ public class MainFragmentHeader implements FragmentHeader {
 
 	@Override
 	public int getSelectedPosition(final Context context) {
-		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
 		final int count = favoriManager.getAll(context.getContentResolver()).size();
 		return count > 0 ? 1 : 0;
 	}

@@ -24,7 +24,7 @@ public class NextHoraireTask {
 
 	private Context mContext;
 	private int mId;
-	private Arret mArret;
+	private Stop mArret;
 	private int mLimit;
 	private String mActionCallback;
 	private Throwable mThrowable;
@@ -47,11 +47,11 @@ public class NextHoraireTask {
 		return this;
 	}
 
-	public Arret getArret() {
+	public Stop getArret() {
 		return mArret;
 	}
 
-	public NextHoraireTask setArret(final Arret arret) {
+	public NextHoraireTask setArret(final Stop arret) {
 		mArret = arret;
 		return this;
 	}

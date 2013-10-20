@@ -21,7 +21,7 @@ package net.naonedbus.backup;
 import java.io.IOException;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.StopBookmarkManager;
 import android.annotation.TargetApi;
 import android.app.backup.BackupAgent;
 import android.app.backup.BackupDataInput;
@@ -43,7 +43,7 @@ public class NaoBackupAgent extends BackupAgent {
 		if (DBG)
 			Log.i(LOG_TAG, "Backup en cours...");
 
-		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
 		final String favoriJson = favoriManager.toJson(getContentResolver());
 
 		if (DBG)
@@ -59,7 +59,7 @@ public class NaoBackupAgent extends BackupAgent {
 		if (DBG)
 			Log.i(LOG_TAG, "Restauration en cours...");
 
-		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
 
 		while (data.readNextHeader()) {
 			if (data.getKey().equals(BACKUP_KEY)) {

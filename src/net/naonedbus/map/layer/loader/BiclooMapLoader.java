@@ -3,7 +3,7 @@ package net.naonedbus.map.layer.loader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.manager.impl.BiclooManager;
 
 import org.json.JSONException;

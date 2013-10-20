@@ -29,11 +29,11 @@ import java.util.Map.Entry;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HorairesActivity;
-import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.card.Card;
 import net.naonedbus.fragment.impl.ArretDetailFragment.OnArretChangeListener;
-import net.naonedbus.manager.impl.HoraireManager;
+import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.utils.ViewHelper;
 import net.naonedbus.utils.ViewHelper.OnTagFoundHandler;
@@ -85,7 +85,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		}
 	};
 
-	private Arret mArret;
+	private Stop mArret;
 	private final DateFormat mTimeFormat;
 
 	private final List<TextView> mHoraireViews;
@@ -95,7 +95,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	private final LayoutInflater mLayoutInflater;
 	private ViewGroup mTerminusView;
 
-	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager, final Arret arret) {
+	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager, final Stop arret) {
 		super(context, loaderManager, fragmentManager, R.string.card_horaires_title, R.layout.card_horaire);
 
 		mLayoutInflater = LayoutInflater.from(context);
@@ -212,7 +212,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	}
 
 	@Override
-	public void onArretChange(final Arret newArret) {
+	public void onArretChange(final Stop newArret) {
 		mArret = newArret;
 		showLoader();
 		restartLoader(null, this);
@@ -337,17 +337,17 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	private static class LoaderTask extends AsyncTaskLoader<List<Horaire>> {
 
-		private final HoraireManager mHoraireManager;
-		private final Arret mArret;
+		private final ScheduleManager mHoraireManager;
+		private final Stop mArret;
 		private final int mHorairesCount;
 		private List<Horaire> mHoraires;
 
-		public LoaderTask(final Context context, final Arret arret, final int horairesCount) {
+		public LoaderTask(final Context context, final Stop arret, final int horairesCount) {
 			super(context);
 			mArret = arret;
 			mHorairesCount = horairesCount;
 
-			mHoraireManager = HoraireManager.getInstance();
+			mHoraireManager = ScheduleManager.getInstance();
 		}
 
 		@Override

@@ -19,8 +19,8 @@
 package net.naonedbus.helper;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Favori;
-import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.bean.StopBookmark;
+import net.naonedbus.manager.impl.StopBookmarkManager;
 import net.naonedbus.service.FavoriService;
 import net.naonedbus.utils.InfoDialogUtils;
 import android.app.AlertDialog;
@@ -46,7 +46,7 @@ public class FavorisHelper {
 		/**
 		 * Un favori a été renommé
 		 */
-		public void onFavoriRenamed(final Favori item) {
+		public void onFavoriRenamed(final StopBookmark item) {
 		};
 	}
 
@@ -69,12 +69,12 @@ public class FavorisHelper {
 	 * @param idFavori
 	 */
 	public void renameFavori(final int favoriId) {
-		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
 
-		final Favori item = favoriManager.getSingle(mContext.getContentResolver(), favoriId);
+		final StopBookmark item = favoriManager.getSingle(mContext.getContentResolver(), favoriId);
 		final View alertDialogView = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
-		input.setText(item.getNomFavori());
+		input.setText(item.getBookmarkName());
 		input.selectAll();
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -84,7 +84,7 @@ public class FavorisHelper {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
 				final String nom = input.getText().toString().trim();
-				item.setNomFavori((nom.length() == 0) ? null : nom);
+				item.setBookmarkName((nom.length() == 0) ? null : nom);
 
 				favoriManager.setFavori(mContext.getContentResolver(), item);
 				if (mFavorisActionListener != null) {

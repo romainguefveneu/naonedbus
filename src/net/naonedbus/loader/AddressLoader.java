@@ -7,10 +7,10 @@ import java.util.List;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.AddressResult;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.manager.impl.EquipmentManager;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
 import android.graphics.Color;
@@ -32,7 +32,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 	private final static double UPPER_RIGHT_LONGITUDE = -1.214d;
 
 	private final Geocoder mGeocoder;
-	private final EquipementManager mEquipementManager;
+	private final EquipmentManager mEquipementManager;
 	private final Bundle mBundle;
 	private AsyncResult<List<AddressResult>> mResult;
 
@@ -40,7 +40,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 		super(context);
 		mBundle = bundle;
 		mGeocoder = new Geocoder(context);
-		mEquipementManager = EquipementManager.getInstance();
+		mEquipementManager = EquipmentManager.getInstance();
 	}
 
 	@Override
@@ -107,13 +107,13 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 	}
 
 	private void addEquipements(final String filter, final List<AddressResult> result) {
-		final List<Equipement> equipements = mEquipementManager.getEquipementsByName(getContext().getContentResolver(),
+		final List<Equipment> equipements = mEquipementManager.getEquipementsByName(getContext().getContentResolver(),
 				null, filter);
 
-		for (final Equipement equipement : equipements) {
+		for (final Equipment equipement : equipements) {
 			final Type type = equipement.getType();
-			final String title = equipement.getNom();
-			final String description = equipement.getAdresse();
+			final String title = equipement.getName();
+			final String description = equipement.getAddress();
 			final int color = getContext().getResources().getColor(type.getBackgroundColorRes());
 			final AddressResult addressResult = new AddressResult(title, description, type, type.getDrawableRes(),
 					color, equipement.getLatitude(), equipement.getLongitude());

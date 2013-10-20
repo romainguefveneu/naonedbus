@@ -31,10 +31,10 @@ import net.naonedbus.activity.map.overlay.BiclooItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.BiclooManager;
-import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.manager.impl.EquipmentManager;
 import net.naonedbus.utils.GeoPointUtils;
 
 import org.json.JSONException;
@@ -151,8 +151,8 @@ public class BiclooMapLayer implements MapLayer {
 	@Override
 	public BasicItemizedOverlay getOverlay(final Context context, final int defaultItemId) {
 		final BasicItemizedOverlay newItemizedOverlay;
-		final EquipementManager equipementManager = EquipementManager.getInstance();
-		final Equipement item = equipementManager.getSingle(context.getContentResolver(), Equipement.Type.TYPE_BICLOO,
+		final EquipmentManager equipementManager = EquipmentManager.getInstance();
+		final Equipment item = equipementManager.getSingle(context.getContentResolver(), Equipment.Type.TYPE_BICLOO,
 				defaultItemId);
 
 		if (item != null) {

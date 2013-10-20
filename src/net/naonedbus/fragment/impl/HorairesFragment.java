@@ -30,22 +30,22 @@ import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Favori;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Direction;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.StopBookmark;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.bean.horaire.EmptyHoraire;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.fragment.CustomInfiniteListFragement;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.ArretManager;
-import net.naonedbus.manager.impl.FavoriManager;
-import net.naonedbus.manager.impl.HoraireManager;
-import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.manager.impl.StopManager;
+import net.naonedbus.manager.impl.StopBookmarkManager;
+import net.naonedbus.manager.impl.ScheduleManager;
+import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.utils.FormatUtils;
-import net.naonedbus.widget.adapter.impl.HoraireArrayAdapter;
-import net.naonedbus.widget.indexer.impl.HoraireIndexer;
+import net.naonedbus.widget.adapter.impl.ScheduleArrayAdapter;
+import net.naonedbus.widget.indexer.impl.ScheduleIndexer;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -87,7 +87,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	public static final String PARAM_ARRET = "arret";
 
 	public static interface OnSensChangeListener {
-		void onSensChange(Sens newSens);
+		void onSensChange(Direction newSens);
 	}
 
 	private final static IntentFilter intentFilter;
@@ -108,17 +108,17 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		}
 	};
 
-	private final HoraireManager mHoraireManager;
-	private final ArretManager mArretManager;
-	private final SensManager mSensManager;
-	private final FavoriManager mFavoriManager;
+	private final ScheduleManager mHoraireManager;
+	private final StopManager mArretManager;
+	private final DirectionManager mSensManager;
+	private final StopBookmarkManager mFavoriManager;
 	private OnSensChangeListener mOnSensChangeListener;
-	private HoraireArrayAdapter mAdapter;
+	private ScheduleArrayAdapter mAdapter;
 	private final List<Horaire> mHoraires;
 
-	private Ligne mLigne;
-	private Sens mSens;
-	private Arret mArret;
+	private Route mLigne;
+	private Direction mSens;
+	private Stop mArret;
 	private boolean mIsFirstLoad = true;
 	private final AtomicBoolean mIsLoading = new AtomicBoolean(false);
 
@@ -134,10 +134,10 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 
 	public HorairesFragment() {
 		super(R.layout.fragment_listview_section);
-		mHoraireManager = HoraireManager.getInstance();
-		mFavoriManager = FavoriManager.getInstance();
-		mArretManager = ArretManager.getInstance();
-		mSensManager = SensManager.getInstance();
+		mHoraireManager = ScheduleManager.getInstance();
+		mFavoriManager = StopBookmarkManager.getInstance();
+		mArretManager = StopManager.getInstance();
+		mSensManager = DirectionManager.getInstance();
 
 		mHoraires = new ArrayList<Horaire>();
 		mLastDayLoaded = new DateMidnight();
@@ -164,8 +164,8 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	@Override
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mAdapter = new HoraireArrayAdapter(getActivity(), mHoraires);
-		mAdapter.setIndexer(new HoraireIndexer());
+		mAdapter = new ScheduleArrayAdapter(getActivity(), mHoraires);
+		mAdapter.setIndexer(new ScheduleIndexer());
 
 		getListView().setOnItemClickListener(this);
 
@@ -192,7 +192,8 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			final String title = mArret.getNomArret();
 			final String description = FormatUtils.formatTitle(
-					getString(R.string.dialog_title_menu_lignes, mLigne.getCode()), mArret.getNomArret(), mSens.text);
+					getString(R.string.dialog_title_menu_lignes, mLigne.getCode()), mArret.getNomArret(),
+					mSens.getName());
 
 			final Intent calIntent = new Intent(Intent.ACTION_INSERT);
 			calIntent.setType("vnd.android.cursor.item/event");
@@ -293,7 +294,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	}
 
 	private boolean isFavori() {
-		final Favori item = mFavoriManager.getSingle(getActivity().getContentResolver(), mArret.getId());
+		final StopBookmark item = mFavoriManager.getSingle(getActivity().getContentResolver(), mArret.getId());
 		return (item != null);
 	}
 
@@ -351,12 +352,12 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 
 	@SuppressLint("NewApi")
 	private void menuChangeSens() {
-		Sens autreSens = null;
+		Direction autreSens = null;
 
 		// Inverser le sens
-		final List<Sens> sens = mSensManager.getAll(getActivity().getContentResolver(), mLigne.getCode());
-		for (final Sens sensItem : sens) {
-			if (sensItem._id != mSens._id) {
+		final List<Direction> sens = mSensManager.getAll(getActivity().getContentResolver(), mLigne.getCode());
+		for (final Direction sensItem : sens) {
+			if (sensItem.getId() != mSens.getId()) {
 				autreSens = sensItem;
 				break;
 			}
@@ -365,8 +366,8 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		if (autreSens != null) {
 
 			// Chercher l'arrêt dans le nouveau sens
-			final Arret arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.getCode(),
-					autreSens.code, mArret.getNormalizedNom());
+			final Stop arret = mArretManager.getSingle(getActivity().getContentResolver(), mLigne.getCode(),
+					autreSens.getCode(), mArret.getNormalizedNom());
 
 			if (arret != null) {
 				mSens = autreSens;

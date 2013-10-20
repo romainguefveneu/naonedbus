@@ -70,15 +70,15 @@ public class InfoTraficController extends NodRestController<InfoTrafic> {
 		final InfoTrafic infoTrafic = new InfoTrafic();
 
 		infoTrafic.setCode(object.getString(TAG_CODE));
-		infoTrafic.setIntitule(object.getString(TAG_INTITULE));
-		infoTrafic.setResume(object.getString(TAG_RESUME));
-		infoTrafic.setTexteVocal(object.getString(TAG_TEXTE_VOCALE));
-		infoTrafic.setDateDebutString(object.getString(TAG_DATE_DEBUT));
-		infoTrafic.setDateFinString(object.getString(TAG_DATE_FIN));
-		infoTrafic.setHeureDebutString(object.getString(TAG_HEURE_DEBUT));
-		infoTrafic.setHeureFinString(object.getString(TAG_HEURE_FIN));
-		infoTrafic.setPerturbationTerminee("1".equals(object.getString(TAG_PERTURBATION_TERMINEE)));
-		infoTrafic.setTroncons(object.getString(TAG_TRONCONS));
+		infoTrafic.setTitle(object.getString(TAG_INTITULE));
+		infoTrafic.setContent(object.getString(TAG_RESUME));
+		infoTrafic.setSpeechContent(object.getString(TAG_TEXTE_VOCALE));
+		infoTrafic.setDateStartString(object.getString(TAG_DATE_DEBUT));
+		infoTrafic.setDateEndString(object.getString(TAG_DATE_FIN));
+		infoTrafic.setTimeStartString(object.getString(TAG_HEURE_DEBUT));
+		infoTrafic.setTimeEndString(object.getString(TAG_HEURE_FIN));
+		infoTrafic.setEnded("1".equals(object.getString(TAG_PERTURBATION_TERMINEE)));
+		infoTrafic.setRoadSection(object.getString(TAG_TRONCONS));
 
 		return infoTrafic;
 	}

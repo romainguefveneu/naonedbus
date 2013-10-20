@@ -11,18 +11,18 @@ import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.MapActivity;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.loader.MapLoader;
 import net.naonedbus.loader.MapLoader.MapLoaderCallback;
-import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.manager.impl.EquipmentManager;
 import net.naonedbus.map.ToastedMarkerOptionsChooser;
 import net.naonedbus.map.layer.BiclooMapLayer;
 import net.naonedbus.map.layer.EquipementMapLayer;
 import net.naonedbus.map.layer.ParkingMapLayer;
 import net.naonedbus.map.layer.ProxyInfoWindowAdapter;
 import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
+import net.naonedbus.widget.adapter.impl.EquipmentCursorAdapter;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -67,10 +67,10 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private static final int MENU_GROUP_TYPES = 1;
 	private static final String PREF_MAP_LAYER = "map.layer.";
 
-	private final Map<Equipement.Type, List<InputPoint>> mInputPoints = new HashMap<Equipement.Type, List<InputPoint>>();
+	private final Map<Equipment.Type, List<InputPoint>> mInputPoints = new HashMap<Equipment.Type, List<InputPoint>>();
 	private final com.twotoasters.clusterkraf.Options mOptions = new com.twotoasters.clusterkraf.Options();
 
-	private final Set<Equipement.Type> mSelectedTypes = new HashSet<Equipement.Type>();
+	private final Set<Equipment.Type> mSelectedTypes = new HashSet<Equipment.Type>();
 	private final MyLocationProvider mLocationProvider;
 
 	private SharedPreferences mPreferences;
@@ -81,9 +81,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private MenuItem mSearchMenuItem;
 	private MenuItem mRefreshMenuItem;
 
-	private EquipementCursorAdapter mSearchAdapter;
+	private EquipmentCursorAdapter mSearchAdapter;
 
-	private Equipement mLastSearchedItem;
+	private Equipment mLastSearchedItem;
 	private Integer mParamItemId;
 	private Integer mParamItemType;
 
@@ -103,7 +103,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		if (getArguments() != null && getArguments().containsKey(PARAM_ITEM_ID)) {
 			mParamItemId = getArguments().getInt(PARAM_ITEM_ID);
 			mParamItemType = getArguments().getInt(PARAM_ITEM_TYPE);
-			mSelectedTypes.add(Equipement.Type.getTypeById(mParamItemType));
+			mSelectedTypes.add(Equipment.Type.getTypeById(mParamItemType));
 		}
 	}
 
@@ -125,8 +125,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 		mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
-		final Equipement.Type[] types = Equipement.Type.values();
-		for (final Equipement.Type type : types) {
+		final Equipment.Type[] types = Equipment.Type.values();
+		for (final Equipment.Type type : types) {
 			if (isLayerPreferenceEnabled(type.getId())) {
 				mSelectedTypes.add(type);
 			}
@@ -159,9 +159,9 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			inflater.inflate(R.menu.fragment_map, menu);
 			mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 
-			final EquipementManager manager = EquipementManager.getInstance();
+			final EquipmentManager manager = EquipmentManager.getInstance();
 			final Cursor cursor = manager.getCursor(getActivity().getContentResolver());
-			mSearchAdapter = new EquipementCursorAdapter(getActivity(), cursor);
+			mSearchAdapter = new EquipmentCursorAdapter(getActivity(), cursor);
 
 			mSearchMenuItem = menu.findItem(R.id.menu_search);
 			final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
@@ -169,8 +169,8 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			searchView.setOnSuggestionListener(this);
 
 			final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
-			final Equipement.Type[] types = Equipement.Type.values();
-			for (final Equipement.Type type : types) {
+			final Equipment.Type[] types = Equipment.Type.values();
+			for (final Equipment.Type type : types) {
 				final MenuItem item = filterSubMenu.add(MENU_GROUP_TYPES, type.getId(), 0, type.getTitleRes());
 				item.setCheckable(true);
 			}
@@ -180,10 +180,10 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public void onPrepareOptionsMenu(final Menu menu) {
 		if (mGooglePlayServiceAvailable) {
-			final Equipement.Type[] types = Equipement.Type.values();
+			final Equipment.Type[] types = Equipment.Type.values();
 			final SubMenu filterSubMenu = menu.findItem(R.id.menu_layers).getSubMenu();
 
-			for (final Equipement.Type type : types) {
+			for (final Equipment.Type type : types) {
 				final MenuItem item = filterSubMenu.findItem(type.getId());
 				item.setChecked(mSelectedTypes.contains(type));
 			}
@@ -193,7 +193,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getGroupId() == MENU_GROUP_TYPES) {
-			final Equipement.Type type = Equipement.Type.getTypeById(item.getItemId());
+			final Equipment.Type type = Equipment.Type.getTypeById(item.getItemId());
 
 			item.setChecked(!item.isChecked());
 
@@ -265,12 +265,12 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			final ToastedMarkerOptionsChooser markerOptionsChooser = new ToastedMarkerOptionsChooser(getActivity());
 			markerOptionsChooser.setDefaultMapLayer(new EquipementMapLayer(inflater));
 			markerOptionsChooser.registerMapLayer(Type.TYPE_BICLOO, new BiclooMapLayer(inflater));
-			markerOptionsChooser.registerMapLayer(Type.TYPE_PARKING, new ParkingMapLayer(inflater));
+			markerOptionsChooser.registerMapLayer(Type.TYPE_PARK, new ParkingMapLayer(inflater));
 
 			final ProxyInfoWindowAdapter infoWindowAdapter = new ProxyInfoWindowAdapter(getActivity());
 			infoWindowAdapter.setDefaultMapLayer(new EquipementMapLayer(inflater));
 			infoWindowAdapter.registerMapLayer(Type.TYPE_BICLOO, new BiclooMapLayer(inflater));
-			infoWindowAdapter.registerMapLayer(Type.TYPE_PARKING, new ParkingMapLayer(inflater));
+			infoWindowAdapter.registerMapLayer(Type.TYPE_PARK, new ParkingMapLayer(inflater));
 
 			mOptions.setPixelDistanceToJoinCluster(60);
 			mOptions.setZoomToBoundsPadding(30);
@@ -286,15 +286,15 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	}
 
 	private void onSearchItemClick(final int position) {
-		final EquipementManager manager = EquipementManager.getInstance();
+		final EquipmentManager manager = EquipmentManager.getInstance();
 		final CursorWrapper cursorWrapper = (CursorWrapper) mSearchAdapter.getItem(position);
-		final Equipement equipement = manager.getSingleFromCursorWrapper(cursorWrapper);
+		final Equipment equipement = manager.getSingleFromCursorWrapper(cursorWrapper);
 		selectEquipement(equipement);
 
 		mSearchMenuItem.collapseActionView();
 	}
 
-	private void selectEquipement(final Equipement equipement) {
+	private void selectEquipement(final Equipment equipement) {
 		final Type type = equipement.getType();
 
 		if (mInputPoints.get(type) == null) {
@@ -313,13 +313,13 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		}
 	}
 
-	private InputPoint findInputPoint(final Equipement equipement) {
+	private InputPoint findInputPoint(final Equipment equipement) {
 		final List<InputPoint> inputPoints = mInputPoints.get(equipement.getType());
 
 		if (inputPoints != null) {
 			for (final InputPoint inputPoint : inputPoints) {
-				final Equipement item = (Equipement) inputPoint.getTag();
-				if (item.getNormalizedNom().equals(equipement.getNormalizedNom())) {
+				final Equipment item = (Equipment) inputPoint.getTag();
+				if (item.getNormalizedName().equals(equipement.getNormalizedName())) {
 					return inputPoint;
 				}
 			}
@@ -332,7 +332,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 		if (inputPoints != null) {
 			for (final InputPoint inputPoint : inputPoints) {
-				final Equipement item = (Equipement) inputPoint.getTag();
+				final Equipment item = (Equipment) inputPoint.getTag();
 				if (item.getId() == itemId) {
 					return inputPoint;
 				}
@@ -349,17 +349,17 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			mClusterkraf.clear();
 		}
 
-		final Equipement.Type[] types = mSelectedTypes.toArray(new Equipement.Type[mSelectedTypes.size()]);
+		final Equipment.Type[] types = mSelectedTypes.toArray(new Equipment.Type[mSelectedTypes.size()]);
 		mMapLoader = new MapLoader(getActivity(), this);
 		mMapLoader.execute(types);
 	}
 
-	private void loadMarkers(final Equipement.Type type) {
+	private void loadMarkers(final Equipment.Type type) {
 		mMapLoader = new MapLoader(getActivity(), this);
 		mMapLoader.execute(type);
 	}
 
-	private void removeMarkers(final Equipement.Type type) {
+	private void removeMarkers(final Equipment.Type type) {
 		final List<InputPoint> inputPoints = mInputPoints.get(type);
 		mClusterkraf.removeAll(inputPoints);
 	}
@@ -371,7 +371,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	 * @return Vrai si le calque est activé.
 	 */
 	private boolean isLayerPreferenceEnabled(final Integer id) {
-		if (id == Equipement.Type.TYPE_ARRET.getId()) {
+		if (id == Equipment.Type.TYPE_STOP.getId()) {
 			return mPreferences.getBoolean(PREF_MAP_LAYER + id, true);
 		} else {
 			return mPreferences.getBoolean(PREF_MAP_LAYER + id, false);
@@ -392,7 +392,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	public void onLayerLoaded(final ArrayList<InputPoint> result) {
 		if (result != null && !result.isEmpty()) {
 
-			final Equipement tag = (Equipement) result.get(0).getTag();
+			final Equipment tag = (Equipment) result.get(0).getTag();
 			final Type type = tag.getType();
 
 			if (DBG)

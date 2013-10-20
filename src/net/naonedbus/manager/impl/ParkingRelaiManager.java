@@ -20,11 +20,11 @@ package net.naonedbus.manager.impl;
 
 import java.util.List;
 
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.bean.parking.relai.ParkingRelai;
 import net.naonedbus.manager.SQLiteManager;
-import net.naonedbus.provider.impl.EquipementProvider;
-import net.naonedbus.provider.table.EquipementTable;
+import net.naonedbus.provider.impl.EquipmentProvider;
+import net.naonedbus.provider.table.EquipmentTable;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -42,30 +42,30 @@ public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 	}
 
 	private ParkingRelaiManager() {
-		super(EquipementProvider.CONTENT_URI);
+		super(EquipmentProvider.CONTENT_URI);
 	}
 
 	@Override
 	public List<ParkingRelai> getAll(final ContentResolver contentResolver) {
-		final Uri.Builder builder = EquipementProvider.CONTENT_URI.buildUpon();
-		builder.path(EquipementProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
-		builder.appendPath(Integer.toString(Type.TYPE_PARKING.getId()));
+		final Uri.Builder builder = EquipmentProvider.CONTENT_URI.buildUpon();
+		builder.path(EquipmentProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
+		builder.appendPath(Integer.toString(Type.TYPE_PARK.getId()));
 
-		final Cursor c = contentResolver.query(builder.build(), null, EquipementTable.ID_SOUS_TYPE + "=?",
-				new String[] { String.valueOf(EquipementManager.SousType.PARKING_RELAI.getValue()) }, null);
+		final Cursor c = contentResolver.query(builder.build(), null, EquipmentTable.SUBTYPE_ID + "=?",
+				new String[] { String.valueOf(EquipmentManager.SousType.PARKING_RELAI.getValue()) }, null);
 		return getFromCursor(c);
 	}
 
 	@Override
 	public ParkingRelai getSingleFromCursor(final Cursor c) {
 		final ParkingRelai parking = new ParkingRelai();
-		parking.setId(c.getInt(c.getColumnIndex(EquipementTable._ID)));
-		parking.setNom(c.getString(c.getColumnIndex(EquipementTable.NOM)));
-		parking.setAdresse(c.getString(c.getColumnIndex(EquipementTable.ADRESSE)));
-		parking.setTelephone(c.getString(c.getColumnIndex(EquipementTable.TELEPHONE)));
-		parking.setUrl(c.getString(c.getColumnIndex(EquipementTable.URL)));
-		parking.setLatitude(c.getDouble(c.getColumnIndex(EquipementTable.LATITUDE)));
-		parking.setLongitude(c.getDouble(c.getColumnIndex(EquipementTable.LONGITUDE)));
+		parking.setId(c.getInt(c.getColumnIndex(EquipmentTable._ID)));
+		parking.setNom(c.getString(c.getColumnIndex(EquipmentTable.EQUIPMENT_NAME)));
+		parking.setAdresse(c.getString(c.getColumnIndex(EquipmentTable.ADDRESS)));
+		parking.setTelephone(c.getString(c.getColumnIndex(EquipmentTable.PHONE)));
+		parking.setUrl(c.getString(c.getColumnIndex(EquipmentTable.URL)));
+		parking.setLatitude(c.getDouble(c.getColumnIndex(EquipmentTable.LATITUDE)));
+		parking.setLongitude(c.getDouble(c.getColumnIndex(EquipmentTable.LONGITUDE)));
 		return parking;
 	}
 

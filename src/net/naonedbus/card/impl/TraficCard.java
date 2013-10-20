@@ -24,7 +24,7 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.bean.InfoTrafic;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.card.Card;
 import net.naonedbus.fragment.impl.InfoTraficDetailDialogFragment;
 import net.naonedbus.fragment.impl.InfoTraficDetailFragment;
@@ -52,11 +52,11 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	private static final String LOG_TAG = "TraficCard";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private final Ligne mLigne;
+	private final Route mLigne;
 	private ViewGroup mRoot;
 
 	public TraficCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
-			final Ligne ligne) {
+			final Route ligne) {
 		super(context, loaderManager, fragmentManager, R.string.card_trafic_title, R.layout.card_trafic);
 		mLigne = ligne;
 	}
@@ -106,7 +106,7 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 		final TextView itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		final TextView itemDate = (TextView) view.findViewById(R.id.itemDate);
 
-		itemTitle.setText(infoTrafic.getIntitule());
+		itemTitle.setText(infoTrafic.getTitle());
 		itemDate.setText(infoTrafic.getDateFormated());
 
 		if (isCurrent(infoTrafic)) {
@@ -138,14 +138,14 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	 *         <code>false</code> sinon.
 	 */
 	private static boolean isCurrent(final InfoTrafic infoTrafic) {
-		return (infoTrafic.getDateDebut() != null && infoTrafic.getDateDebut().isBeforeNow() && (infoTrafic
-				.getDateFin() == null || infoTrafic.getDateFin().isAfterNow()));
+		return (infoTrafic.getStartDate() != null && infoTrafic.getStartDate().isBeforeNow() && (infoTrafic
+				.getEndDate() == null || infoTrafic.getEndDate().isAfterNow()));
 	}
 
 	private static class LoaderTask extends AsyncTaskLoader<List<InfoTrafic>> {
-		private final Ligne mLigne;
+		private final Route mLigne;
 
-		public LoaderTask(final Context context, final Ligne ligne) {
+		public LoaderTask(final Context context, final Route ligne) {
 			super(context);
 			mLigne = ligne;
 		}

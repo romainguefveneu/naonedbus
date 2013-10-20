@@ -20,16 +20,16 @@ package net.naonedbus.comparator;
 
 import java.util.Comparator;
 
-import net.naonedbus.bean.Favori;
+import net.naonedbus.bean.StopBookmark;
 
 /**
  * @author romain.guefveneu
  * 
  */
-public class FavoriComparator implements Comparator<Favori> {
+public class FavoriComparator implements Comparator<StopBookmark> {
 
 	@Override
-	public int compare(final Favori favori1, final Favori favori2) {
+	public int compare(final StopBookmark favori1, final StopBookmark favori2) {
 		if (favori1 == null || favori2 == null)
 			return 0;
 
@@ -40,8 +40,8 @@ public class FavoriComparator implements Comparator<Favori> {
 		}
 
 		if (favori1.getCodeLigne().equals(favori2.getCodeLigne())) {
-			final String nom1 = (favori1.getNomFavori() == null) ? favori1.getNomArret() : favori1.getNomFavori();
-			final String nom2 = (favori2.getNomFavori() == null) ? favori2.getNomArret() : favori2.getNomFavori();
+			final String nom1 = (favori1.getBookmarkName() == null) ? favori1.getNomArret() : favori1.getBookmarkName();
+			final String nom2 = (favori2.getBookmarkName() == null) ? favori2.getNomArret() : favori2.getBookmarkName();
 			if (nom1 == null || nom2 == null) {
 				return 0;
 			}

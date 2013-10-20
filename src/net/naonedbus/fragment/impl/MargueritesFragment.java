@@ -19,13 +19,13 @@
 package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.fragment.EquipementFragment;
 
 public class MargueritesFragment extends EquipementFragment {
 
 	public MargueritesFragment() {
-		super(R.layout.fragment_listview_section, Equipement.Type.TYPE_MARGUERITE);
+		super(R.layout.fragment_listview_section, Equipment.Type.TYPE_MARGUERITE);
 	}
 
 }

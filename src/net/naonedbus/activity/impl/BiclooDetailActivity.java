@@ -24,7 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.activity.map.overlay.BiclooItemizedOverlay;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Bicloo;
-import net.naonedbus.manager.impl.FavoriBiclooManager;
+import net.naonedbus.manager.impl.BiclooBookmarkManager;
 import net.naonedbus.utils.FontUtils;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -52,7 +52,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	protected static final String NAVIGATION_INTENT = "google.navigation:q=%f,%f";
 	protected static final String SMS_NAVIGATION_URL = "maps.google.com/?q=%f,%f";
 
-	private FavoriBiclooManager mFavoriBiclooManager;
+	private BiclooBookmarkManager mFavoriBiclooManager;
 
 	protected TextView mTitle;
 	protected TextView mAdresse;
@@ -75,7 +75,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 
-		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
+		mFavoriBiclooManager = BiclooBookmarkManager.getInstance();
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

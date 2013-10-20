@@ -20,8 +20,8 @@ package net.naonedbus.comparator;
 
 import java.util.Comparator;
 
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Equipment;
 import android.location.Location;
 import android.location.LocationManager;
 
@@ -29,11 +29,11 @@ import android.location.LocationManager;
  * @author romain
  * 
  */
-public class ArretDistanceComparator implements Comparator<Arret> {
+public class ArretDistanceComparator implements Comparator<Stop> {
 
 	/**
 	 * Référentiel servant à la comparaison via la méthode
-	 * {@link #referentielCompare(Equipement, Equipement)}.
+	 * {@link #referentielCompare(Equipment, Equipment)}.
 	 */
 	private Location referentiel;
 
@@ -42,7 +42,7 @@ public class ArretDistanceComparator implements Comparator<Arret> {
 	}
 
 	@Override
-	public int compare(Arret e1, Arret e2) {
+	public int compare(Stop e1, Stop e2) {
 		if (e1 == null || e2 == null)
 			return 0;
 
@@ -56,7 +56,7 @@ public class ArretDistanceComparator implements Comparator<Arret> {
 	 * @param e2
 	 * @return
 	 */
-	private int referentielCompare(Arret e1, Arret e2) {
+	private int referentielCompare(Stop e1, Stop e2) {
 		if (e1.getLatitude() == null || e1.getLongitude() == null)
 			return 0;
 		if (e2.getLatitude() == null || e2.getLongitude() == null)

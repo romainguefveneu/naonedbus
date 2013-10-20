@@ -4,7 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -16,17 +16,17 @@ import com.twotoasters.clusterkraf.OnInfoWindowClickDownstreamListener;
 
 public class ProxyInfoWindowAdapter implements ClusterkrafInfoWindowAdapter, OnInfoWindowClickDownstreamListener {
 
-	private final Map<Equipement.Type, MapLayer> mLayerChoosers;
+	private final Map<Equipment.Type, MapLayer> mLayerChoosers;
 	private HashMap<Marker, ClusterPoint> mMarkerClusterPoints;
 	private WeakReference<Context> mContext;
 	private MapLayer mDefaultLayer;
 
 	public ProxyInfoWindowAdapter(Context context) {
-		mLayerChoosers = new HashMap<Equipement.Type, MapLayer>();
+		mLayerChoosers = new HashMap<Equipment.Type, MapLayer>();
 		mContext = new WeakReference<Context>(context);
 	}
 
-	public void registerMapLayer(final Equipement.Type type, final MapLayer mapLayer) {
+	public void registerMapLayer(final Equipment.Type type, final MapLayer mapLayer) {
 		mLayerChoosers.put(type, mapLayer);
 	}
 
@@ -37,7 +37,7 @@ public class ProxyInfoWindowAdapter implements ClusterkrafInfoWindowAdapter, OnI
 	@Override
 	public View getInfoContents(Marker marker) {
 		final ClusterPoint clusterPoint = mMarkerClusterPoints.get(marker);
-		final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
+		final Equipment equipement = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
 		MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
 		if (mapLayer == null) {
 			mapLayer = mDefaultLayer;
@@ -57,7 +57,7 @@ public class ProxyInfoWindowAdapter implements ClusterkrafInfoWindowAdapter, OnI
 
 	@Override
 	public boolean onInfoWindowClick(Marker marker, ClusterPoint clusterPoint) {
-		final Equipement equipement = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
+		final Equipment equipement = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
 		MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
 		if (mapLayer == null) {
 			mapLayer = mDefaultLayer;

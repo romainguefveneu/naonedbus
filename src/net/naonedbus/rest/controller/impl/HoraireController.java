@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
-import net.naonedbus.bean.Arret;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.rest.UrlBuilder;
 import net.naonedbus.rest.container.HoraireContainer;
@@ -74,7 +74,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	public synchronized List<Horaire> getAllFromWeb(final Arret arret, final DateMidnight date) throws IOException {
+	public synchronized List<Horaire> getAllFromWeb(final Stop arret, final DateMidnight date) throws IOException {
 		final UrlBuilder url = new UrlBuilder(PATH);
 		long timeOffset = date.getMillis();
 		final List<HoraireNode> horaires;

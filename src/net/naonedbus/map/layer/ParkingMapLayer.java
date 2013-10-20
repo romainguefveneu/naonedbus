@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import net.naonedbus.activity.impl.ParkingDetailActivity;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.parking.Parking;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.intent.ParamIntent;
@@ -38,21 +38,21 @@ public class ParkingMapLayer extends MapLayer {
 
 	@Override
 	public void chooseMarker(final MarkerOptions markerOptions, final ClusterPoint clusterPoint) {
-		final Equipement parking = (Equipement) clusterPoint.getPointAtOffset(0).getTag();
-		final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(Equipement.Type.TYPE_PARKING.getMapPin());
-		final String title = parking.getNom();
+		final Equipment parking = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
+		final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(Equipment.Type.TYPE_PARK.getMapPin());
+		final String title = parking.getName();
 
 		markerOptions.icon(icon);
 		markerOptions.title(title);
 	}
 
 	@Override
-	protected ItemSelectedInfo getItemSelectedInfo(final Context context, final Equipement item) {
+	protected ItemSelectedInfo getItemSelectedInfo(final Context context, final Equipment item) {
 		return new ItemSelectedInfo() {
 
 			@Override
 			public String getTitle() {
-				return item.getNom();
+				return item.getName();
 			}
 
 			@Override
@@ -65,7 +65,7 @@ public class ParkingMapLayer extends MapLayer {
 					description = FormatUtils.formatParkingPublic(context, parkingPublic.getStatut(),
 							parkingPublic.getPlacesDisponibles());
 				} else {
-					description = item.getAdresse();
+					description = item.getAddress();
 				}
 
 				return description;

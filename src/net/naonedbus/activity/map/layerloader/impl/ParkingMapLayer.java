@@ -30,12 +30,12 @@ import net.naonedbus.activity.map.overlay.BasicItemizedOverlay;
 import net.naonedbus.activity.map.overlay.ParkingItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.parking.Parking;
 import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.bean.parking.relai.ParkingRelai;
-import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.manager.impl.EquipmentManager;
 import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.manager.impl.ParkingRelaiManager;
 import net.naonedbus.utils.GeoPointUtils;
@@ -57,11 +57,11 @@ import com.google.android.maps.GeoPoint;
 
 public class ParkingMapLayer implements MapLayer {
 
-	private static EquipementManager equipementManager;
+	private static EquipmentManager equipementManager;
 	private final SparseArray<Parking> parkingList = new SparseArray<Parking>();
 
 	public ParkingMapLayer() {
-		equipementManager = EquipementManager.getInstance();
+		equipementManager = EquipmentManager.getInstance();
 	}
 
 	@Override
@@ -191,7 +191,7 @@ public class ParkingMapLayer implements MapLayer {
 	@Override
 	public BasicItemizedOverlay getOverlay(final Context context, final int defaultItemId) {
 		final BasicItemizedOverlay newItemizedOverlay;
-		final Equipement item = equipementManager.getSingle(context.getContentResolver(), defaultItemId);
+		final Equipment item = equipementManager.getSingle(context.getContentResolver(), defaultItemId);
 		if (item != null) {
 			final Location location = new Location(LocationManager.GPS_PROVIDER);
 			location.setLatitude(item.getLatitude());

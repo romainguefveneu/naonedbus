@@ -20,15 +20,15 @@ package net.naonedbus.comparator;
 
 import java.util.Comparator;
 
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import android.location.Location;
 import android.location.LocationManager;
 
-public class EquipementDistanceComparator<T extends Equipement> implements Comparator<T> {
+public class EquipementDistanceComparator<T extends Equipment> implements Comparator<T> {
 
 	/**
 	 * Référentiel servant à la comparaison via la méthode
-	 * {@link #referentielCompare(Equipement, Equipement)}.
+	 * {@link #referentielCompare(Equipment, Equipment)}.
 	 */
 	private Location referentiel;
 

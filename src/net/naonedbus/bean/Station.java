@@ -20,15 +20,15 @@ package net.naonedbus.bean;
 
 import java.util.List;
 
-public class Station extends Equipement {
+public class Station extends Equipment {
 
-	private List<Ligne> lignes;
+	private List<Route> lignes;
 
-	public List<Ligne> getLignes() {
+	public List<Route> getLignes() {
 		return lignes;
 	}
 
-	public void setLignes(List<Ligne> lignes) {
+	public void setLignes(List<Route> lignes) {
 		this.lignes = lignes;
 	}
 

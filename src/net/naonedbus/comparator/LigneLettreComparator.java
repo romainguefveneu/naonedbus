@@ -20,13 +20,13 @@ package net.naonedbus.comparator;
 
 import java.util.Comparator;
 
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 
-public class LigneLettreComparator implements Comparator<Ligne> {
+public class LigneLettreComparator implements Comparator<Route> {
 
 	@Override
-	public int compare(final Ligne a, final Ligne b) {
-		return a.getLettre().compareTo(b.getLettre());
+	public int compare(final Route a, final Route b) {
+		return a.getLetter().compareTo(b.getLetter());
 	}
 
 }

@@ -27,13 +27,13 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Commentaire;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
-import net.naonedbus.manager.impl.ArretManager;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Comment;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
+import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.rest.controller.impl.CommentaireController;
 import net.naonedbus.security.KeyType;
 import net.naonedbus.security.RSAUtils;
@@ -42,9 +42,9 @@ import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.validator.CommentaireContentTypeValidator;
 import net.naonedbus.validator.CommentaireSizeValidator;
 import net.naonedbus.validator.CommentaireValidator;
-import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
-import net.naonedbus.widget.adapter.impl.LignesArrayAdapter;
-import net.naonedbus.widget.adapter.impl.SensArrayAdapter;
+import net.naonedbus.widget.adapter.impl.StopArrayAdapter;
+import net.naonedbus.widget.adapter.impl.RouteArrayAdapter;
+import net.naonedbus.widget.adapter.impl.DirectionArrayAdapter;
 
 import org.apache.http.HttpException;
 
@@ -85,16 +85,16 @@ public class CommentaireActivity extends SherlockActivity {
 	private EditText mCommentText;
 
 	private LigneManager mLigneManager;
-	private SensManager mSensManager;
-	private ArretManager mArretManager;
+	private DirectionManager mSensManager;
+	private StopManager mArretManager;
 
-	private Ligne mLigne;
-	private Sens mSens;
-	private Arret mArret;
+	private Route mLigne;
+	private Direction mSens;
+	private Stop mArret;
 
-	private Ligne mAllLignes;
-	private Sens mAllSens;
-	private Arret mAllArrets;
+	private Route mAllLignes;
+	private Direction mAllSens;
+	private Stop mAllArrets;
 
 	private View mBtnChangeLigne;
 	private View mBtnChangeSens;
@@ -121,12 +121,12 @@ public class CommentaireActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mLigneManager = LigneManager.getInstance();
-		mSensManager = SensManager.getInstance();
-		mArretManager = ArretManager.getInstance();
+		mSensManager = DirectionManager.getInstance();
+		mArretManager = StopManager.getInstance();
 
-		mAllLignes = Ligne.buildAllLigneItem(this);
-		mAllSens = new Sens(-1, getString(R.string.target_tous_sens));
-		mAllArrets = new Arret.Builder().setId(-1).setNomArret(getString(R.string.target_tous_arrets)).build();
+		mAllLignes = Route.buildAllLigneItem(this);
+		mAllSens = new Direction(-1, getString(R.string.target_tous_sens));
+		mAllArrets = new Stop.Builder().setId(-1).setNomArret(getString(R.string.target_tous_arrets)).build();
 
 		mLignesAdapter = getLignesAdapter();
 
@@ -153,18 +153,18 @@ public class CommentaireActivity extends SherlockActivity {
 		mBtnChangeArret.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
-				showSelectArretDialog(mLigne.getCode(), mSens.code);
+				showSelectArretDialog(mLigne.getCode(), mSens.getCode());
 			}
 		});
 
-		Ligne ligne;
-		Sens sens;
-		Arret arret;
+		Route ligne;
+		Direction sens;
+		Stop arret;
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_KEY_LIGNE)) {
-			ligne = (Ligne) savedInstanceState.getParcelable(BUNDLE_KEY_LIGNE);
-			sens = (Sens) savedInstanceState.getParcelable(BUNDLE_KEY_SENS);
-			arret = (Arret) savedInstanceState.getParcelable(BUNDLE_KEY_ARRET);
+			ligne = (Route) savedInstanceState.getParcelable(BUNDLE_KEY_LIGNE);
+			sens = (Direction) savedInstanceState.getParcelable(BUNDLE_KEY_SENS);
+			arret = (Stop) savedInstanceState.getParcelable(BUNDLE_KEY_ARRET);
 		} else {
 			ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
 			sens = getIntent().getParcelableExtra(PARAM_SENS);
@@ -214,23 +214,23 @@ public class CommentaireActivity extends SherlockActivity {
 	}
 
 	private ListAdapter getLignesAdapter() {
-		final List<Ligne> lignes = mLigneManager.getAll(getContentResolver());
+		final List<Route> lignes = mLigneManager.getAll(getContentResolver());
 		lignes.add(0, mAllLignes);
-		final LignesArrayAdapter adapter = new LignesArrayAdapter(this, lignes);
+		final RouteArrayAdapter adapter = new RouteArrayAdapter(this, lignes);
 		adapter.setHideDivider(true);
 		return adapter;
 	}
 
 	private ListAdapter getSensAdapter(final String codeLigne) {
-		final List<Sens> sens = mSensManager.getAll(getContentResolver(), codeLigne);
+		final List<Direction> sens = mSensManager.getAll(getContentResolver(), codeLigne);
 		sens.add(0, mAllSens);
-		return new SensArrayAdapter(this, sens);
+		return new DirectionArrayAdapter(this, sens);
 	}
 
 	private ListAdapter getArretsAdapter(final String codeLigne, final String codeSens) {
-		final List<Arret> arrets = mArretManager.getAll(getContentResolver(), codeLigne, codeSens);
+		final List<Stop> arrets = mArretManager.getAll(getContentResolver(), codeLigne, codeSens);
 		arrets.add(0, mAllArrets);
-		return new ArretArrayAdapter(this, arrets);
+		return new StopArrayAdapter(this, arrets);
 	}
 
 	/**
@@ -242,7 +242,7 @@ public class CommentaireActivity extends SherlockActivity {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
 						mSelectedLignePosition = which;
-						setLigne((Ligne) mLignesAdapter.getItem(which));
+						setLigne((Route) mLignesAdapter.getItem(which));
 						dialog.dismiss();
 					}
 				});
@@ -252,7 +252,7 @@ public class CommentaireActivity extends SherlockActivity {
 	 * Afficher la dialog de sélection du sens.
 	 */
 	private void showSelectSensDialog(final String codeLigne) {
-		if (!codeLigne.equals(mSens.codeLigne) || mSensAdapter == null) {
+		if (!codeLigne.equals(mSens.getCode()) || mSensAdapter == null) {
 			mSensAdapter = getSensAdapter(codeLigne);
 			mSelectedSensPosition = -1;
 		}
@@ -261,7 +261,7 @@ public class CommentaireActivity extends SherlockActivity {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
 						mSelectedSensPosition = which;
-						setSens((Sens) mSensAdapter.getItem(which));
+						setSens((Direction) mSensAdapter.getItem(which));
 						dialog.dismiss();
 					}
 				});
@@ -281,7 +281,7 @@ public class CommentaireActivity extends SherlockActivity {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
 						mSelectedArretPosition = which;
-						setArret((Arret) mArretsAdapter.getItem(which));
+						setArret((Stop) mArretsAdapter.getItem(which));
 						dialog.dismiss();
 					}
 				});
@@ -309,15 +309,15 @@ public class CommentaireActivity extends SherlockActivity {
 
 	/**
 	 * Envoyer le commentaire s'il a passé les test de
-	 * {@link #validateComment(Commentaire)}
+	 * {@link #validateComment(Comment)}
 	 */
 	private void prepareAndSendComment() {
-		final Commentaire commentaireItem = new Commentaire();
+		final Comment commentaireItem = new Comment();
 		if (mArret != null) {
 			commentaireItem.setCodeArret(mArret.getCodeArret());
 		}
 		if (mSens != null) {
-			commentaireItem.setCodeSens(mSens.code);
+			commentaireItem.setCodeSens(mSens.getCode());
 		}
 		if (mLigne != null) {
 			commentaireItem.setCodeLigne(mLigne.getCode());
@@ -338,14 +338,14 @@ public class CommentaireActivity extends SherlockActivity {
 	 * @param ligne
 	 *            Le nouvelle ligne
 	 */
-	private void setLigne(final Ligne ligne) {
+	private void setLigne(final Route ligne) {
 		this.mLigne = ligne;
-		mTextLigne.setText(ligne.getLettre());
-		mTextLigne.setTextColor(ligne.getCouleurTexte());
-		if (ligne.getCouleur() == 0) {
+		mTextLigne.setText(ligne.getLetter());
+		mTextLigne.setTextColor(ligne.getFrontColor());
+		if (ligne.getBackColor() == 0) {
 			mTextLigne.setBackgroundResource(R.drawable.item_symbole_back);
 		} else {
-			mTextLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
+			mTextLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getBackColor()));
 		}
 
 		setSens(mAllSens);
@@ -359,9 +359,9 @@ public class CommentaireActivity extends SherlockActivity {
 	 * @param sens
 	 *            Le nouveau sens
 	 */
-	private void setSens(final Sens sens) {
+	private void setSens(final Direction sens) {
 		this.mSens = sens;
-		mTextSens.setText(sens.text);
+		mTextSens.setText(sens.getName());
 
 		setArret(mAllArrets);
 
@@ -374,7 +374,7 @@ public class CommentaireActivity extends SherlockActivity {
 	 * @param arret
 	 *            Le nouvel arret
 	 */
-	private void setArret(final Arret arret) {
+	private void setArret(final Stop arret) {
 		mArret = arret;
 		mTextArret.setText(arret.getNomArret());
 	}
@@ -382,7 +382,7 @@ public class CommentaireActivity extends SherlockActivity {
 	/**
 	 * @return vrai si validé, faux s'il semble louche
 	 */
-	private boolean validateComment(final Commentaire comment) {
+	private boolean validateComment(final Comment comment) {
 		boolean ret = true;
 		final List<CommentaireValidator> validators = new ArrayList<CommentaireValidator>();
 		validators.add(new CommentaireSizeValidator());
@@ -395,7 +395,7 @@ public class CommentaireActivity extends SherlockActivity {
 		return ret;
 	}
 
-	private void sendComment(final Commentaire commentaire) {
+	private void sendComment(final Comment commentaire) {
 		if (mSendTask == null || mSendTask.getStatus() == AsyncTask.Status.FINISHED) {
 			mSendTask = (SendTask) new SendTask().execute(commentaire);
 		}
@@ -407,7 +407,7 @@ public class CommentaireActivity extends SherlockActivity {
 	 * @author romain
 	 * 
 	 */
-	private class SendTask extends AsyncTask<Commentaire, Void, Boolean> {
+	private class SendTask extends AsyncTask<Comment, Void, Boolean> {
 		private ProgressDialog progressDialog;
 		private Exception exception;
 
@@ -419,9 +419,9 @@ public class CommentaireActivity extends SherlockActivity {
 		}
 
 		@Override
-		protected Boolean doInBackground(final Commentaire... args) {
+		protected Boolean doInBackground(final Comment... args) {
 			try {
-				final Commentaire messageItem = args[0];
+				final Comment messageItem = args[0];
 
 				final PrivateKey privateKey = genKey();
 				final String messageHashCode = getMessageHashCode(messageItem, privateKey);
@@ -491,7 +491,7 @@ public class CommentaireActivity extends SherlockActivity {
 		 * @throws GeneralSecurityException
 		 * @throws UnsupportedEncodingException
 		 */
-		private String getMessageHashCode(final Commentaire messageItem, final PrivateKey privateKey)
+		private String getMessageHashCode(final Comment messageItem, final PrivateKey privateKey)
 				throws UnsupportedEncodingException, GeneralSecurityException {
 			String concatHashCode;
 			String result = null;

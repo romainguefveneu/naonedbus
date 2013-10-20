@@ -30,21 +30,21 @@ import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Direction;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.ArretComparator;
 import net.naonedbus.comparator.ArretOrdreComparator;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.manager.impl.ArretManager;
-import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.StopManager;
+import net.naonedbus.manager.impl.StopBookmarkManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.utils.InfoDialogUtils;
-import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
-import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
+import net.naonedbus.widget.adapter.impl.StopArrayAdapter;
+import net.naonedbus.widget.adapter.impl.StopArrayAdapter.ViewType;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -89,33 +89,33 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		void onPostExecute();
 	}
 
-	protected final SparseArray<Comparator<Arret>> mComparators;
+	protected final SparseArray<Comparator<Stop>> mComparators;
 	protected int mCurrentSort;
 
-	private final FavoriManager mFavoriManager;
+	private final StopBookmarkManager mFavoriManager;
 	private StateHelper mStateHelper;
 	private final MyLocationProvider mLocationProvider;
 	private DistanceTask mDistanceTask;
 	private DistanceTaskCallback mDistanceTaskCallback;
 	private Integer mNearestArretPosition;
-	private ArretArrayAdapter mAdapter;
+	private StopArrayAdapter mAdapter;
 	private int mCurrentFilter = FILTER_ALL;
 
-	private List<Arret> mArrets;
+	private List<Stop> mArrets;
 
-	private Ligne mLigne;
-	private Sens mSens;
+	private Route mLigne;
+	private Direction mSens;
 
 	public ArretsFragment() {
 		super(R.layout.fragment_listview);
 		mLocationProvider = NBApplication.getLocationProvider();
 		mLocationProvider.addListener(this);
 
-		mComparators = new SparseArray<Comparator<Arret>>();
+		mComparators = new SparseArray<Comparator<Stop>>();
 		mComparators.append(SORT_NOM, new ArretComparator());
 		mComparators.append(SORT_ORDRE, new ArretOrdreComparator());
 
-		mFavoriManager = FavoriManager.getInstance();
+		mFavoriManager = StopBookmarkManager.getInstance();
 	}
 
 	@Override
@@ -136,8 +136,8 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
 		setCurrentFilter(mStateHelper.getFilterType(this, FILTER_ALL));
 
-		mArrets = new ArrayList<Arret>();
-		mAdapter = new ArretArrayAdapter(getActivity(), mArrets);
+		mArrets = new ArrayList<Stop>();
+		mAdapter = new StopArrayAdapter(getActivity(), mArrets);
 		if (mCurrentSort == SORT_ORDRE) {
 			mAdapter.setViewType(ViewType.TYPE_METRO);
 		}
@@ -146,7 +146,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 			@Override
 			public void onNearestStationFound(final Integer position) {
 				mNearestArretPosition = position;
-				final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
+				final StopArrayAdapter adapter = (StopArrayAdapter) getListAdapter();
 				if (adapter != null && mNearestArretPosition != null) {
 					adapter.setNearestPosition(mNearestArretPosition);
 					adapter.notifyDataSetChanged();
@@ -155,7 +155,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 
 			@Override
 			public void onPostExecute() {
-				final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
+				final StopArrayAdapter adapter = (StopArrayAdapter) getListAdapter();
 				if (adapter != null) {
 					adapter.notifyDataSetChanged();
 				}
@@ -241,7 +241,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-		final Arret arret = (Arret) getListView().getItemAtPosition(cmi.position);
+		final Stop arret = (Stop) getListView().getItemAtPosition(cmi.position);
 
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.fragment_arrets_contextual, menu);
@@ -259,7 +259,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	@Override
 	public boolean onContextItemSelected(final android.view.MenuItem item) {
 		final AdapterView.AdapterContextMenuInfo cmi = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		final Arret arret = (Arret) getListView().getItemAtPosition(cmi.position);
+		final Stop arret = (Stop) getListView().getItemAtPosition(cmi.position);
 
 		switch (item.getItemId()) {
 		case R.id.menu_show_plan:
@@ -285,7 +285,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
-		final Arret arret = (Arret) l.getItemAtPosition(position);
+		final Stop arret = (Stop) l.getItemAtPosition(position);
 
 		final Intent intent = new Intent(getActivity(), ArretDetailActivity.class);
 		intent.putExtra(ArretDetailActivity.PARAM_LIGNE, mLigne);
@@ -308,7 +308,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		startActivity(intent);
 	}
 
-	private void menuComment(final Arret arret) {
+	private void menuComment(final Stop arret) {
 		final Intent intent = new Intent(getActivity(), CommentaireActivity.class);
 		intent.putExtra(CommentaireActivity.PARAM_LIGNE, mLigne);
 		intent.putExtra(CommentaireActivity.PARAM_SENS, mSens);
@@ -316,17 +316,17 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		startActivity(intent);
 	}
 
-	private void addToFavoris(final Arret arret) {
+	private void addToFavoris(final Stop arret) {
 		mFavoriManager.addFavori(getActivity().getContentResolver(), arret);
 		Toast.makeText(getActivity(), R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
 	}
 
-	private void removeFromFavoris(final Arret arret) {
+	private void removeFromFavoris(final Stop arret) {
 		mFavoriManager.removeFavori(getActivity().getContentResolver(), arret.getId());
 		Toast.makeText(getActivity(), R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
 	}
 
-	private void menuShowMap(final Arret arret) {
+	private void menuShowMap(final Stop arret) {
 		final Intent intent = new Intent(getActivity(), MapActivity.class);
 		intent.putExtra(MapFragment.PARAM_ITEM_ID, arret.getIdStation());
 		intent.putExtra(MapFragment.PARAM_ITEM_TYPE, TypeOverlayItem.TYPE_STATION.getId());
@@ -373,7 +373,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	 *            Le type de vue de l'adapter
 	 */
 	private void changeSortOrder(final int sortOrder, final ViewType viewType) {
-		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
+		final StopArrayAdapter adapter = (StopArrayAdapter) getListAdapter();
 		mCurrentSort = sortOrder;
 
 		adapter.setViewType(viewType);
@@ -392,7 +392,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	 * Trier les parkings selon les préférences.
 	 */
 	private void sort() {
-		final ArretArrayAdapter adapter = (ArretArrayAdapter) getListAdapter();
+		final StopArrayAdapter adapter = (StopArrayAdapter) getListAdapter();
 		if (adapter != null) {
 			sort(adapter);
 			adapter.notifyDataSetChanged();
@@ -404,8 +404,8 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	 * 
 	 * @param adapter
 	 */
-	private void sort(final ArretArrayAdapter adapter) {
-		final Comparator<Arret> comparator = mComparators.get(mCurrentSort);
+	private void sort(final StopArrayAdapter adapter) {
+		final Comparator<Stop> comparator = mComparators.get(mCurrentSort);
 		if (comparator != null) {
 			adapter.sort(comparator);
 		}
@@ -415,12 +415,13 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
-			final ArretManager arretManager = ArretManager.getInstance();
-			final List<Arret> arrets;
+			final StopManager arretManager = StopManager.getInstance();
+			final List<Stop> arrets;
 			if (mCurrentFilter == FILTER_ALL) {
-				arrets = arretManager.getAll(context.getContentResolver(), mSens.codeLigne, mSens.code);
+				arrets = arretManager.getAll(context.getContentResolver(), mSens.getRouteCode(), mSens.getCode());
 			} else {
-				arrets = arretManager.getArretsFavoris(context.getContentResolver(), mSens.codeLigne, mSens.code);
+				arrets = arretManager.getArretsFavoris(context.getContentResolver(), mSens.getRouteCode(),
+						mSens.getCode());
 			}
 
 			mArrets.clear();
@@ -441,7 +442,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	}
 
 	@Override
-	public void onChangeSens(final Sens sens) {
+	public void onChangeSens(final Direction sens) {
 		if (sens.equals(mSens) == false) {
 			mSens = sens;
 			refreshContent();
@@ -481,7 +482,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		protected Integer doInBackground(final Void... params) {
 			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
-			Arret arret;
+			Stop arret;
 			Integer nearestPosition = null;
 			Float nearestDistance = Float.MAX_VALUE;
 			Float distance = null;
@@ -489,7 +490,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 
 			if (mCurrentLocation != null) {
 				for (int i = 0; i < mAdapter.getCount(); i++) {
-					arret = (Arret) mAdapter.getItem(i);
+					arret = (Stop) mAdapter.getItem(i);
 					equipementLocation.setLatitude(arret.getLatitude());
 					equipementLocation.setLongitude(arret.getLongitude());
 

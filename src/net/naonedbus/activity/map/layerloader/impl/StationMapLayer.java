@@ -29,9 +29,9 @@ import net.naonedbus.activity.map.overlay.BasicItemizedOverlay;
 import net.naonedbus.activity.map.overlay.StationItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
-import net.naonedbus.bean.Equipement;
-import net.naonedbus.bean.Equipement.Type;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Equipment;
+import net.naonedbus.bean.Equipment.Type;
+import net.naonedbus.bean.Route;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.utils.ColorUtils;
@@ -56,7 +56,7 @@ public class StationMapLayer extends EquipementMapLayer {
 	private static LigneManager ligneManager;
 
 	public StationMapLayer() {
-		super(Type.TYPE_ARRET, TypeOverlayItem.TYPE_STATION);
+		super(Type.TYPE_STOP, TypeOverlayItem.TYPE_STATION);
 		ligneManager = LigneManager.getInstance();
 	}
 
@@ -78,14 +78,14 @@ public class StationMapLayer extends EquipementMapLayer {
 			public List<View> getSubview(final ViewGroup root) {
 				final LayoutInflater layoutInflater = LayoutInflater.from(context);
 				final List<View> subview = new ArrayList<View>();
-				final Equipement station = getItemById(item.getId());
-				final List<Ligne> lignes = ligneManager.getLignesFromStation(context.getContentResolver(),
+				final Equipment station = getItemById(item.getId());
+				final List<Route> lignes = ligneManager.getLignesFromStation(context.getContentResolver(),
 						station.getId());
 
-				for (final Ligne ligneItem : lignes) {
+				for (final Route ligneItem : lignes) {
 					final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, root, false);
-					textView.setTextColor(ligneItem.getCouleurTexte());
-					textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getCouleur()));
+					textView.setTextColor(ligneItem.getFrontColor());
+					textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getBackColor()));
 					textView.setText(ligneItem.getCode());
 					subview.add(textView);
 				}
@@ -135,11 +135,11 @@ public class StationMapLayer extends EquipementMapLayer {
 		BasicOverlayItem stationOverlayItem;
 
 		if (location != null) {
-			final List<Equipement> stationsProches = getEquipementManager().getEquipementsByLocation(
-					context.getContentResolver(), Type.TYPE_ARRET, location, MAX_STATIONS);
+			final List<Equipment> stationsProches = getEquipementManager().getEquipementsByLocation(
+					context.getContentResolver(), Type.TYPE_STOP, location, MAX_STATIONS);
 
-			for (final Equipement station : stationsProches) {
-				stationOverlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(station), station.getNom(),
+			for (final Equipment station : stationsProches) {
+				stationOverlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(station), station.getName(),
 						TypeOverlayItem.TYPE_STATION);
 				stationOverlayItem.setId(station.getId());
 				newItemizedOverlay.addOverlay(stationOverlayItem);

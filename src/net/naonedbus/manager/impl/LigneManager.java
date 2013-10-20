@@ -22,13 +22,13 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.bean.Ligne;
+import net.naonedbus.bean.Route;
 import net.naonedbus.bean.async.AsyncTaskInfo;
 import net.naonedbus.bean.async.LignesTaskInfo;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.manager.Unschedulable;
-import net.naonedbus.provider.impl.LigneProvider;
-import net.naonedbus.provider.table.LigneTable;
+import net.naonedbus.provider.impl.RouteProvider;
+import net.naonedbus.provider.table.RouteTable;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -38,7 +38,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<LignesTaskInfo> {
+public class LigneManager extends SQLiteManager<Route> implements Unschedulable<LignesTaskInfo> {
 
 	private static final String LOG_TAG = "LigneManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -57,7 +57,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	private Thread mLignesLoader;
 	private final ConcurrentLinkedQueue<LignesTaskInfo> mLignesTasks;
 	private final Object mLock = new Object();
-	private final Ligne.Builder mBuilder;
+	private final Route.Builder mBuilder;
 	private boolean mIsIndexed;
 
 	public static synchronized LigneManager getInstance() {
@@ -68,9 +68,9 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	}
 
 	protected LigneManager() {
-		super(LigneProvider.CONTENT_URI);
+		super(RouteProvider.CONTENT_URI);
 		mLignesTasks = new ConcurrentLinkedQueue<LignesTaskInfo>();
-		mBuilder = new Ligne.Builder();
+		mBuilder = new Route.Builder();
 	}
 
 	/**
@@ -80,13 +80,18 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	 * @param idType
 	 * @return Les lignes correspondants au type
 	 */
-	public List<Ligne> getLignesByType(final ContentResolver contentResolver, final Integer idType) {
-		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
-		builder.path(LigneProvider.LIGNE_TYPE_URI_PATH_QUERY);
+	public List<Route> getLignesByType(final ContentResolver contentResolver, final Integer idType) {
+		final Uri.Builder builder = RouteProvider.CONTENT_URI.buildUpon();
+		builder.path(RouteProvider.LIGNE_TYPE_URI_PATH_QUERY);
 		builder.appendPath(Integer.toString(idType));
 
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
 		return getFromCursor(c);
+	}
+
+	public Route getSingle(final ContentResolver contentResolver, final String code) {
+		final Cursor c = getCursor(contentResolver, RouteTable.ROUTE_CODE + " = ?", new String[] { code });
+		return getFirstFromCursor(c);
 	}
 
 	/**
@@ -97,7 +102,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	 * @return Les lignes correspondants au mot clé
 	 */
 	public Cursor getLignesSearch(final ContentResolver contentResolver, final String keyword) {
-		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
+		final Uri.Builder builder = RouteProvider.CONTENT_URI.buildUpon();
 		builder.appendPath(keyword);
 
 		return contentResolver.query(builder.build(), null, null, null, null);
@@ -105,36 +110,36 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 
 	@Override
 	public void onIndexCursor(final Cursor c) {
-		mColId = c.getColumnIndex(LigneTable._ID);
-		mColCode = c.getColumnIndex(LigneTable.CODE);
-		mColDepuis = c.getColumnIndex(LigneTable.DEPUIS);
-		mColLettre = c.getColumnIndex(LigneTable.LETTRE);
-		mColVers = c.getColumnIndex(LigneTable.VERS);
-		mColCouleurBack = c.getColumnIndex(LigneTable.COULEUR_BACK);
-		mColCouleurFront = c.getColumnIndex(LigneTable.COULEUR_FRONT);
-		mColType = c.getColumnIndex(LigneTable.TYPE);
+		mColId = c.getColumnIndex(RouteTable._ID);
+		mColCode = c.getColumnIndex(RouteTable.ROUTE_CODE);
+		mColDepuis = c.getColumnIndex(RouteTable.HEADSIGN_FROM);
+		mColLettre = c.getColumnIndex(RouteTable.LETTER);
+		mColVers = c.getColumnIndex(RouteTable.HEADSIGN_TO);
+		mColCouleurBack = c.getColumnIndex(RouteTable.BACK_COLOR);
+		mColCouleurFront = c.getColumnIndex(RouteTable.FRONT_COLOR);
+		mColType = c.getColumnIndex(RouteTable.TYPE_ID);
 
 		mIsIndexed = true;
 	}
 
 	@Override
-	public Ligne getSingleFromCursor(final Cursor c) {
+	public Route getSingleFromCursor(final Cursor c) {
 		if (!mIsIndexed)
 			onIndexCursor(c);
 		mBuilder.setId(c.getInt(mColId));
 		mBuilder.setCode(c.getString(mColCode));
-		mBuilder.setDepuis(c.getString(mColDepuis));
-		mBuilder.setLettre(c.getString(mColLettre));
-		mBuilder.setVers(c.getString(mColVers));
-		mBuilder.setCouleurBack(c.getInt(mColCouleurBack));
-		mBuilder.setCouleurFront(c.getInt(mColCouleurFront));
+		mBuilder.setHeadsignFrom(c.getString(mColDepuis));
+		mBuilder.setLetter(c.getString(mColLettre));
+		mBuilder.setHeadsignTo(c.getString(mColVers));
+		mBuilder.setBackColor(c.getInt(mColCouleurBack));
+		mBuilder.setFrontColor(c.getInt(mColCouleurFront));
 		mBuilder.setSection(c.getInt(mColType));
 		return mBuilder.build();
 	}
 
-	public List<Ligne> getLignesFromStation(final ContentResolver contentResolver, final int idStation) {
-		final Uri.Builder builder = LigneProvider.CONTENT_URI.buildUpon();
-		builder.path(LigneProvider.LIGNE_STATION_URI_PATH_QUERY);
+	public List<Route> getLignesFromStation(final ContentResolver contentResolver, final int idStation) {
+		final Uri.Builder builder = RouteProvider.CONTENT_URI.buildUpon();
+		builder.path(RouteProvider.LIGNE_STATION_URI_PATH_QUERY);
 		builder.appendQueryParameter("idStation", String.valueOf(idStation));
 		final Cursor cursor = contentResolver.query(builder.build(), null, null, null, null);
 
@@ -185,7 +190,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 		@Override
 		public void run() {
 			AsyncTaskInfo<Integer> task;
-			List<Ligne> lignes;
+			List<Route> lignes;
 			Handler handler;
 			Message message;
 
@@ -211,7 +216,7 @@ public class LigneManager extends SQLiteManager<Ligne> implements Unschedulable<
 	};
 
 	@Override
-	protected ContentValues getContentValues(final Ligne item) {
+	protected ContentValues getContentValues(final Route item) {
 		return null;
 	}
 

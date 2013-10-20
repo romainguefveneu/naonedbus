@@ -18,7 +18,7 @@
  */
 package net.naonedbus.utils;
 
-import net.naonedbus.bean.Equipement;
+import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.parking.Parking;
 import android.location.Location;
 import android.location.LocationManager;
@@ -43,7 +43,7 @@ public abstract class GeoPointUtils {
 	 * @param item
 	 * @return le GeoPoint
 	 */
-	public static GeoPoint getGeoPoint(final Equipement item) {
+	public static GeoPoint getGeoPoint(final Equipment item) {
 		return new GeoPoint((int) (item.getLatitude() * 1E6), (int) (item.getLongitude() * 1E6));
 	}
 

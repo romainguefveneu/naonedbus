@@ -19,11 +19,11 @@
 package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Groupe;
+import net.naonedbus.bean.BookmarkGroup;
 import net.naonedbus.fragment.CustomCursorFragment;
-import net.naonedbus.manager.impl.GroupeManager;
-import net.naonedbus.provider.impl.GroupeProvider;
-import net.naonedbus.provider.table.GroupeTable;
+import net.naonedbus.manager.impl.BookmarkGroupManager;
+import net.naonedbus.provider.impl.StopBookmarkGroupProvider;
+import net.naonedbus.provider.table.StopBookmarkGroupTable;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -55,7 +55,7 @@ import com.mobeta.android.dslv.SimpleDragSortCursorAdapter;
 public class GroupesFragment extends CustomCursorFragment implements ActionMode.Callback, OnItemClickListener,
 		OnItemLongClickListener {
 
-	private final GroupeManager mGroupeManager;
+	private final BookmarkGroupManager mGroupeManager;
 
 	private ActionMode mActionMode;
 	private DragSortListView mListView;
@@ -64,7 +64,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 
 	public GroupesFragment() {
 		super(R.layout.fragment_listview_drag_drop);
-		mGroupeManager = GroupeManager.getInstance();
+		mGroupeManager = BookmarkGroupManager.getInstance();
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	protected CursorAdapter getCursorAdapter(final Context context) {
 		mCursor = mGroupeManager.getCursor(context.getContentResolver());
 
-		final String[] from = new String[] { GroupeTable.NOM };
+		final String[] from = new String[] { StopBookmarkGroupTable.GROUP_NAME };
 		final int[] to = new int[] { android.R.id.text1 };
 
 		mAdapter = new SimpleDragSortCursorAdapter(getActivity(), R.layout.list_item_checkable, mCursor, from, to, 0);
@@ -121,7 +121,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 
 	@Override
 	public Loader<Cursor> onCreateLoader(final int arg0, final Bundle arg1) {
-		final Uri uri = GroupeProvider.CONTENT_URI;
+		final Uri uri = StopBookmarkGroupProvider.CONTENT_URI;
 		final CursorLoader cursorLoader = new CursorLoader(getActivity(), uri, null, null, null, null);
 		return cursorLoader;
 	}
@@ -181,9 +181,9 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
-				final Groupe groupe = new Groupe();
-				groupe.setNom(input.getText().toString().trim());
-				groupe.setOrdre(mCursor.getCount());
+				final BookmarkGroup groupe = new BookmarkGroup();
+				groupe.setName(input.getText().toString().trim());
+				groupe.setOrder(mCursor.getCount());
 				mGroupeManager.add(getActivity().getContentResolver(), groupe);
 			}
 		});
@@ -208,11 +208,11 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	private void editCheckedItem() {
 		final int checkedItem = getFirstSelectedItemPosition();
 		final CursorWrapper wrapper = (CursorWrapper) mListView.getItemAtPosition(checkedItem);
-		final Groupe groupe = mGroupeManager.getSingleFromCursor(wrapper);
+		final BookmarkGroup groupe = mGroupeManager.getSingleFromCursor(wrapper);
 
 		final View alertDialogView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_input, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
-		input.setText(groupe.getNom());
+		input.setText(groupe.getName());
 		input.selectAll();
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -222,7 +222,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
 				final String nom = input.getText().toString().trim();
-				groupe.setNom((nom.length() == 0) ? null : nom);
+				groupe.setName((nom.length() == 0) ? null : nom);
 
 				mGroupeManager.update(getActivity().getContentResolver(), groupe);
 			}
@@ -292,11 +292,11 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 
 	private void saveOrder() {
 		final ContentResolver contentResolver = getActivity().getContentResolver();
-		Groupe groupe;
+		BookmarkGroup groupe;
 		for (int i = 0; i < mListView.getCount(); i++) {
 			groupe = mGroupeManager.getSingleFromCursor((CursorWrapper) mListView.getItemAtPosition(i));
-			if (i != groupe.getOrdre()) {
-				groupe.setOrdre(i);
+			if (i != groupe.getOrder()) {
+				groupe.setOrder(i);
 				mGroupeManager.update(contentResolver, groupe);
 			}
 		}

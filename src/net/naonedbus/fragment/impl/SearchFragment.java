@@ -22,16 +22,16 @@ import net.naonedbus.R;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.ParcoursActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
-import net.naonedbus.bean.Equipement.Type;
+import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.fragment.CustomCursorFragment;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.EquipementManager;
-import net.naonedbus.provider.impl.EquipementProvider;
-import net.naonedbus.provider.table.EquipementTable;
+import net.naonedbus.manager.impl.EquipmentManager;
+import net.naonedbus.provider.impl.EquipmentProvider;
+import net.naonedbus.provider.table.EquipmentTable;
 import net.naonedbus.widget.ModalSearchView;
 import net.naonedbus.widget.ModalSearchView.OnQueryTextListener;
-import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
-import net.naonedbus.widget.indexer.impl.EquipementCursorIndexer;
+import net.naonedbus.widget.adapter.impl.EquipmentCursorAdapter;
+import net.naonedbus.widget.indexer.impl.EquipmentCursorIndexer;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -55,8 +55,8 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class SearchFragment extends CustomCursorFragment implements OnQueryTextListener, FilterQueryProvider {
 
-	private EquipementCursorAdapter mAdapter;
-	private EquipementManager mEquipementManager;
+	private EquipmentCursorAdapter mAdapter;
+	private EquipmentManager mEquipementManager;
 
 	private ModalSearchView mModalSearchView;
 
@@ -106,11 +106,11 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 			}
 		}
 
-		mEquipementManager = EquipementManager.getInstance();
+		mEquipementManager = EquipmentManager.getInstance();
 		final String[] types = getResources().getStringArray(R.array.types_equipements);
 
-		mAdapter = new EquipementCursorAdapter(getActivity(), null);
-		mAdapter.setIndexer(new EquipementCursorIndexer(null, types, EquipementTable.ID_TYPE));
+		mAdapter = new EquipmentCursorAdapter(getActivity(), null);
+		mAdapter.setIndexer(new EquipmentCursorIndexer(null, types, EquipmentTable.TYPE_ID));
 		mAdapter.setFilterQueryProvider(this);
 
 		mAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -160,9 +160,9 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		Intent intent;
 		final CursorWrapper equipement = (CursorWrapper) getListAdapter().getItem(position);
-		final int idType = equipement.getInt(equipement.getColumnIndex(EquipementTable.ID_TYPE));
+		final int idType = equipement.getInt(equipement.getColumnIndex(EquipmentTable.TYPE_ID));
 
-		if (idType == Type.TYPE_ARRET.getId()) {
+		if (idType == Type.TYPE_STOP.getId()) {
 			intent = new Intent(getActivity(), ParcoursActivity.class);
 			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, (int) id);
 		} else {
@@ -175,7 +175,7 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 
 	@Override
 	public Loader<Cursor> onCreateLoader(final int loaderId, final Bundle bundle) {
-		final CursorLoader cursorLoader = new CursorLoader(getActivity(), EquipementProvider.CONTENT_URI, null, null,
+		final CursorLoader cursorLoader = new CursorLoader(getActivity(), EquipmentProvider.CONTENT_URI, null, null,
 				null, null);
 		return cursorLoader;
 	}

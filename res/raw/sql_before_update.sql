@@ -1,24 +1,24 @@
 IF OLD_VERSION > 10
-	CREATE TABLE IF NOT EXISTS favorisGroupes_backup(idFavori, codeLigne, codeSens, codeArret, idGroupe);
-	DELETE FROM favorisGroupes_backup;
-	INSERT INTO favorisGroupes_backup 
-		SELECT idFavori, codeLigne, codeSens, codeArret, idGroupe 
-		FROM favorisGroupes 
-		LEFT JOIN favoris ON favoris._id = favorisGroupes.idFavori;
-	DROP TABLE favorisGroupes;
+	CREATE TABLE IF NOT EXISTS stopBookmarks_backup(idFavori, codeLigne, codeSens, codeArret, idGroupe);
+	DELETE FROM stopBookmarks_backup;
+	INSERT INTO stopBookmarks_backup 
+		SELECT bookrmarkId, routeCode, directionCode, stopCode, groupId 
+		FROM stopBookmarkGroups 
+		LEFT JOIN stopBookmarks ON stopBookmarks._id = stopBookmarkGroups.stopBookmarkId;
+	DROP TABLE stopBookmarkGroups;
 END
 
-CREATE TEMPORARY TABLE favoris_backup(_id, codeLigne, codeSens, codeArret, nomFavori);
-INSERT INTO favoris_backup SELECT _id, codeLigne, codeSens, codeArret, nomFavori FROM favoris;
-DROP TABLE favoris;
+CREATE TEMPORARY TABLE stopBookmarks_backup(_id, routeCode, directionCode, stopCode, bookmarkName);
+INSERT INTO stopBookmarks_backup SELECT _id, routeCode, directionCode, stopCode, bookmarkName FROM stopBookmarks;
 
-DROP TABLE IF EXISTS typesLignes;
-DROP TABLE IF EXISTS lignes;
-DROP TABLE IF EXISTS sens;
-DROP TABLE IF EXISTS arrets;
-DROP TABLE IF EXISTS typesEquipements;
-DROP TABLE IF EXISTS equipements;
-DROP TABLE IF EXISTS horaires;
-DROP TABLE IF EXISTS stations;
+DROP TABLE IF EXISTS stopBookmarks;
+DROP TABLE IF EXISTS routeTypes;
+DROP TABLE IF EXISTS routes;
+DROP TABLE IF EXISTS directions;
+DROP TABLE IF EXISTS stop;
+DROP TABLE IF EXISTS equiomentTypes;
+DROP TABLE IF EXISTS equipments;
+DROP TABLE IF EXISTS schedules;
 
-DROP VIEW IF EXISTS favorisView;
+DROP VIEW IF EXISTS stopBookmarksView;
+DROP VIEW IF EXISTS stopDirectionsView;

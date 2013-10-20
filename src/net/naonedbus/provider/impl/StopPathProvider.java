@@ -1,0 +1,57 @@
+/**
+ * Copyright (C) 2013 Romain Guefveneu.
+ *   
+ *  This file is part of naonedbus.
+ *   
+ *  Naonedbus is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  Naonedbus is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package net.naonedbus.provider.impl;
+
+import net.naonedbus.provider.ReadOnlyContentProvider;
+import net.naonedbus.provider.table.StopDirectionTable;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
+
+public class StopPathProvider extends ReadOnlyContentProvider {
+
+	public static final int PARCOURS = 100;
+	public static final int PARCOURS_ID = 110;
+
+	private static final String AUTHORITY = "net.naonedbus.provider.StopPathProvider";
+	private static final String BASE_PATH = "parcours";
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+
+	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
+	static {
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH, PARCOURS);
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH + "/#", PARCOURS_ID);
+	}
+
+	@Override
+	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		queryBuilder.setTables(StopDirectionTable.TABLE_NAME);
+
+		String normalizedNom = uri.getQueryParameter("normalizedNom");
+
+		queryBuilder.appendWhere(StopDirectionTable.NORMALIZED_NAME + "=");
+		queryBuilder.appendWhereEscapeString(normalizedNom);
+
+		return queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs,
+				StopDirectionTable.GROUP_BY, null, StopDirectionTable.ORDER_BY);
+	}
+
+}

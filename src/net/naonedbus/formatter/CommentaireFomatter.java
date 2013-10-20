@@ -23,17 +23,17 @@ import java.util.List;
 import java.util.Map;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Arret;
-import net.naonedbus.bean.Commentaire;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
-import net.naonedbus.manager.impl.ArretManager;
+import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Comment;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
+import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.SmileyParser;
-import net.naonedbus.widget.adapter.impl.CommentaireArrayAdapter;
-import net.naonedbus.widget.indexer.impl.CommentaireIndexer;
+import net.naonedbus.widget.adapter.impl.CommentArrayAdapter;
+import net.naonedbus.widget.indexer.impl.CommentsIndexer;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -67,8 +67,8 @@ public class CommentaireFomatter {
 	final DateMidnight mNow;
 	final DateMidnight mYesterday;
 	final LigneManager mLigneManager;
-	final SensManager mSensManager;
-	final ArretManager mArretManager;
+	final DirectionManager mSensManager;
+	final StopManager mArretManager;
 
 	public CommentaireFomatter(final Context context) {
 		this.mContext = context;
@@ -80,8 +80,8 @@ public class CommentaireFomatter {
 
 		mSmileyParser = SmileyParser.getInstance();
 		mLigneManager = LigneManager.getInstance();
-		mSensManager = SensManager.getInstance();
-		mArretManager = ArretManager.getInstance();
+		mSensManager = DirectionManager.getInstance();
+		mArretManager = StopManager.getInstance();
 	}
 
 	/**
@@ -90,8 +90,8 @@ public class CommentaireFomatter {
 	 * @param commentaires
 	 * @return
 	 */
-	public void appendToAdapter(final CommentaireArrayAdapter adapter, final List<Commentaire> commentaires) {
-		for (final Commentaire commentaire : commentaires) {
+	public void appendToAdapter(final CommentArrayAdapter adapter, final List<Comment> commentaires) {
+		for (final Comment commentaire : commentaires) {
 			formatValues(commentaire);
 			adapter.add(commentaire);
 		}
@@ -105,7 +105,7 @@ public class CommentaireFomatter {
 	 * @return
 	 */
 
-	public void formatValues(final Commentaire commentaire) {
+	public void formatValues(final Comment commentaire) {
 		commentaire.setMessage(mSmileyParser.addSmileySpans(commentaire.getMessage()).toString());
 		commentaire.setDateTime(new DateTime(commentaire.getTimestamp()));
 		commentaire.setDelay(DateUtils.getRelativeTimeSpanString(commentaire.getDateTime().getMillis(),
@@ -116,20 +116,20 @@ public class CommentaireFomatter {
 		setCommentaireArret(commentaire);
 	}
 
-	private Object getCommentaireSection(final Commentaire commentaire) {
+	private Object getCommentaireSection(final Comment commentaire) {
 		final DateMidnight date = commentaire.getDateTime().toDateMidnight();
 		if (date.isAfterNow()) {
 			// A venir
-			return CommentaireIndexer.SECTION_FUTURE;
+			return CommentsIndexer.SECTION_FUTURE;
 		} else if (date.isEqual(mNow)) {
 			// Maintenant
-			return CommentaireIndexer.SECTION_NOW;
+			return CommentsIndexer.SECTION_NOW;
 		} else if (date.equals(mYesterday)) {
 			// Hier
-			return CommentaireIndexer.SECTION_YESTERDAY;
+			return CommentsIndexer.SECTION_YESTERDAY;
 		} else {
 			// Précédement
-			return CommentaireIndexer.SECTION_PAST;
+			return CommentsIndexer.SECTION_PAST;
 		}
 	}
 
@@ -139,10 +139,10 @@ public class CommentaireFomatter {
 	 * @param commentaire
 	 * @param commentaire
 	 */
-	private void setCommentaireLigne(final Commentaire commentaire) {
+	private void setCommentaireLigne(final Comment commentaire) {
 		if (commentaire.getCodeLigne() != null) {
-			final Ligne ligne = mLigneManager.getSingle(mContext.getContentResolver(), commentaire.getCodeLigne());
-			commentaire.setLigne(ligne);
+			final Route ligne = mLigneManager.getSingle(mContext.getContentResolver(), commentaire.getCodeLigne());
+			commentaire.setRoute(ligne);
 		}
 	}
 
@@ -152,11 +152,11 @@ public class CommentaireFomatter {
 	 * @param commentaire
 	 * @param commentaireItem
 	 */
-	private void setCommentaireSens(final Commentaire commentaire) {
+	private void setCommentaireSens(final Comment commentaire) {
 		if (commentaire.getCodeSens() != null) {
-			final Sens sens = mSensManager.getSingle(mContext.getContentResolver(), commentaire.getCodeLigne(),
+			final Direction sens = mSensManager.getSingle(mContext.getContentResolver(), commentaire.getCodeLigne(),
 					commentaire.getCodeSens());
-			commentaire.setSens(sens);
+			commentaire.setDirection(sens);
 		}
 	}
 
@@ -166,10 +166,10 @@ public class CommentaireFomatter {
 	 * @param commentaire
 	 * @param commentaireItem
 	 */
-	private void setCommentaireArret(final Commentaire commentaire) {
+	private void setCommentaireArret(final Comment commentaire) {
 		if (commentaire.getCodeArret() != null) {
-			final Arret arret = mArretManager.getSingle(mContext.getContentResolver(), commentaire.getCodeArret());
-			commentaire.setArret(arret);
+			final Stop arret = mArretManager.getSingle(mContext.getContentResolver(), commentaire.getCodeArret());
+			commentaire.setStop(arret);
 		}
 	}
 

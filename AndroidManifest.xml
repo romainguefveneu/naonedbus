@@ -140,28 +140,28 @@
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <provider
-            android:name=".provider.impl.LigneProvider"
-            android:authorities="net.naonedbus.provider.LigneProvider"
+            android:name=".provider.impl.RouteProvider"
+            android:authorities="net.naonedbus.provider.RouteProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.SensProvider"
-            android:authorities="net.naonedbus.provider.SensProvider"
+            android:name=".provider.impl.DirectionProvider"
+            android:authorities="net.naonedbus.provider.DirectionProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.ArretProvider"
-            android:authorities="net.naonedbus.provider.ArretProvider"
+            android:name=".provider.impl.StopProvider"
+            android:authorities="net.naonedbus.provider.StopProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.FavoriProvider"
-            android:authorities="net.naonedbus.provider.FavoriProvider"
+            android:name=".provider.impl.StopBookmarkProvider"
+            android:authorities="net.naonedbus.provider.StopBookmarkProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.EquipementProvider"
-            android:authorities="net.naonedbus.provider.EquipementProvider"
+            android:name=".provider.impl.EquipmentProvider"
+            android:authorities="net.naonedbus.provider.EquipmentProvider"
             android:exported="true"
             android:multiprocess="true" />
         <provider
@@ -170,48 +170,48 @@
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.TypeEquipementProvider"
-            android:authorities="net.naonedbus.provider.TypeEquipementProvider"
+            android:name=".provider.impl.EquipmentTypeProvider"
+            android:authorities="net.naonedbus.provider.EquipmentTypeProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.TypeLigneProvider"
-            android:authorities="net.naonedbus.provider.TypeLigneProvider"
+            android:name=".provider.impl.RouteTypeProvider"
+            android:authorities="net.naonedbus.provider.RouteTypeProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.HoraireProvider"
-            android:authorities="net.naonedbus.provider.HoraireProvider"
+            android:name=".provider.impl.ScheduleProvider"
+            android:authorities="net.naonedbus.provider.ScheduleProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.ParcoursProvider"
-            android:authorities="net.naonedbus.provider.ParcoursProvider"
+            android:name=".provider.impl.StopPathProvider"
+            android:authorities="net.naonedbus.provider.StopPathProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.GroupeProvider"
-            android:authorities="net.naonedbus.provider.GroupeProvider"
+            android:name=".provider.impl.StopBookmarkGroupProvider"
+            android:authorities="net.naonedbus.provider.StopBookmarkGroupProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.FavoriGroupeProvider"
-            android:authorities="net.naonedbus.provider.FavoriGroupeProvider"
+            android:name=".provider.impl.StopBookmarkGroupLinkProvider"
+            android:authorities="net.naonedbus.provider.StopBookmarkGroupLinkProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.CommentaireProvider"
-            android:authorities="net.naonedbus.provider.CommentaireProvider"
+            android:name=".provider.impl.CommentProvider"
+            android:authorities="net.naonedbus.provider.CommentProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.FavorisViewProvider"
-            android:authorities="net.naonedbus.provider.FavorisViewProvider"
+            android:name=".provider.impl.StopBookmarkViewProvider"
+            android:authorities="net.naonedbus.provider.StopBookmarkViewProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.FavoriBiclooProvider"
-            android:authorities="net.naonedbus.provider.FavoriBiclooProvider"
+            android:name=".provider.impl.BiclooBookmarkProvider"
+            android:authorities="net.naonedbus.provider.BiclooBookmarkProvider"
             android:exported="false"
             android:multiprocess="true" />
 

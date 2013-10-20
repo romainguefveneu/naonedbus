@@ -22,14 +22,14 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.bean.Ligne;
-import net.naonedbus.bean.Sens;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Direction;
 import net.naonedbus.fragment.impl.ArretsFragment;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
-import net.naonedbus.widget.adapter.impl.SensSpinnerAdapter;
+import net.naonedbus.widget.adapter.impl.DirectionSpinnerAdapter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -49,13 +49,13 @@ public class ArretsActivity extends OneFragmentActivity {
 	public static final String PARAM_LIGNE = "ligne";
 
 	public static interface OnChangeSens {
-		void onChangeSens(Sens sens);
+		void onChangeSens(Direction sens);
 	}
 
 	private StateHelper mStateHelper;
 	private OnChangeSens mOnChangeSens;
-	private Ligne mLigne;
-	private Sens mCurrentSens;
+	private Route mLigne;
+	private Direction mCurrentSens;
 
 	public ArretsActivity() {
 		super(R.layout.activity_arrets);
@@ -67,14 +67,14 @@ public class ArretsActivity extends OneFragmentActivity {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-		final SensManager sensManager = SensManager.getInstance();
+		final DirectionManager sensManager = DirectionManager.getInstance();
 
 		mStateHelper = new StateHelper(getApplicationContext());
 
 		mLigne = getIntent().getParcelableExtra(PARAM_LIGNE);
 
-		final List<Sens> sensList = sensManager.getAll(getContentResolver(), mLigne.getCode());
-		final int idSens = mStateHelper.getSens(mLigne.getCode(), sensList.get(0)._id);
+		final List<Direction> sensList = sensManager.getAll(getContentResolver(), mLigne.getCode());
+		final int idSens = mStateHelper.getSens(mLigne.getCode(), sensList.get(0).getId());
 
 		if (savedInstanceState == null) {
 			final Bundle bundle = new Bundle();
@@ -86,20 +86,20 @@ public class ArretsActivity extends OneFragmentActivity {
 		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
 
 		final View header = findViewById(R.id.headerView);
-		header.setBackgroundDrawable(ColorUtils.getGradiant(mLigne.getCouleur()));
+		header.setBackgroundDrawable(ColorUtils.getGradiant(mLigne.getBackColor()));
 
 		final TextView code = (TextView) findViewById(R.id.itemCode);
-		code.setText(mLigne.getLettre());
-		code.setTextColor(mLigne.getCouleurTexte());
+		code.setText(mLigne.getLetter());
+		code.setTextColor(mLigne.getFrontColor());
 		code.setTypeface(robotoBold);
 
 		final Spinner sensTitle = (Spinner) findViewById(R.id.itemTitle);
-		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.getCouleurTexte(), robotoBold));
+		sensTitle.setAdapter(new DirectionSpinnerAdapter(this, sensList, mLigne.getFrontColor(), robotoBold));
 		sensTitle.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
 			public void onItemSelected(final AdapterView<?> arg0, final View arg1, final int location, final long arg3) {
-				final Sens sens = sensList.get(location);
+				final Direction sens = sensList.get(location);
 				mOnChangeSens.onChangeSens(sens);
 				mCurrentSens = sens;
 			}
@@ -135,15 +135,15 @@ public class ArretsActivity extends OneFragmentActivity {
 	@Override
 	protected void onStop() {
 		if (mCurrentSens != null)
-			mStateHelper.setSens(mLigne.getCode(), mCurrentSens._id);
+			mStateHelper.setSens(mLigne.getCode(), mCurrentSens.getId());
 		super.onStop();
 	}
 
-	private int getSensPosition(final List<Sens> sensList, final int id) {
-		Sens sens;
+	private int getSensPosition(final List<Direction> sensList, final int id) {
+		Direction sens;
 		for (int i = 0; i < sensList.size(); i++) {
 			sens = sensList.get(i);
-			if (sens._id == id)
+			if (sens.getId() == id)
 				return i;
 		}
 		return 0;

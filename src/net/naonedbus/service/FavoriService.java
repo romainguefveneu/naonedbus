@@ -20,7 +20,7 @@ package net.naonedbus.service;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.MainActivity;
-import net.naonedbus.manager.impl.FavoriManager;
+import net.naonedbus.manager.impl.StopBookmarkManager;
 import net.naonedbus.rest.controller.impl.FavoriController;
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -71,7 +71,7 @@ public class FavoriService extends IntentService {
 	}
 
 	private void importFavoris(final String key) {
-		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
 
 		showNotification(R.string.msg_import_title, R.string.msg_import_ongoing);
 
@@ -89,7 +89,7 @@ public class FavoriService extends IntentService {
 	}
 
 	private void exportFavoris() {
-		final FavoriManager favoriManager = FavoriManager.getInstance();
+		final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
 		final FavoriController favoriController = new FavoriController();
 		String key = null;
 
