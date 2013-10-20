@@ -79,7 +79,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 	}
 
 	private View inflateNormalView(final ViewGroup parent) {
-		final View view = mLayoutInflater.inflate(R.layout.item_itineraire, parent, false);
+		final View view = mLayoutInflater.inflate(R.layout.list_item_itineraire, parent, false);
 
 		final ViewHolder viewHolder = new ViewHolder();
 		viewHolder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);

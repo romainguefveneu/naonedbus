@@ -18,6 +18,7 @@
  */
 package net.naonedbus.widget.adapter.impl;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.provider.table.LigneTable;
@@ -29,10 +30,14 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 public class LigneCursorAdapter extends CursorSectionAdapter {
+
+	private static final String LOG_TAG = "LigneCursorAdapter";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private final LigneManager mLigneManager;
 	private final Typeface mRoboto;
@@ -59,6 +64,9 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 
 	@Override
 	public void changeCursor(final Cursor cursor) {
+		if (DBG)
+			Log.d(LOG_TAG, "changeCursor " + cursor);
+
 		super.changeCursor(cursor);
 		if (cursor != null) {
 			initColumns(cursor);
@@ -67,6 +75,9 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 
 	@Override
 	public Cursor swapCursor(final Cursor newCursor) {
+		if (DBG)
+			Log.d(LOG_TAG, "swapCursor " + newCursor);
+
 		final Cursor oldCursor = super.swapCursor(newCursor);
 		if (newCursor != null) {
 			initColumns(newCursor);
@@ -123,6 +134,9 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 
 	@Override
 	public Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
+		if (DBG)
+			Log.d(LOG_TAG, "runQueryOnBackgroundThread '" + constraint + "'");
+
 		if (!TextUtils.isEmpty(constraint)) {
 			return mLigneManager.getLignesSearch(mContext.getContentResolver(), constraint.toString());
 		} else {

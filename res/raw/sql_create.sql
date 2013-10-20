@@ -1,165 +1,150 @@
--- Table TYPESLIGNES
-CREATE TABLE IF NOT EXISTS typesLignes (
-	_id smallint PRIMARY KEY, 
-	nom text);
-CREATE INDEX IF NOT EXISTS typesLignes_code ON typesLignes (_id);
-
--- Table LIGNES
-CREATE TABLE IF NOT EXISTS lignes (
+CREATE TABLE IF NOT EXISTS routeTypes (
 	_id INT PRIMARY KEY, 
-	code TEXT, 
-	lettre TEXT, 
-	couleurBack INT, 
-    couleurFront INT, 
-	depuis TEXT, 
-	vers TEXT, 
-	type SMALLINT);
-CREATE INDEX IF NOT EXISTS lignes_id ON lignes (_id);
-CREATE INDEX IF NOT EXISTS lignes_code ON lignes (code);
-CREATE INDEX IF NOT EXISTS lignes_lettre ON lignes (lettre);
+	typeName text);
+CREATE INDEX IF NOT EXISTS routeTypes_id ON routeTypes (_id);
 
--- Table TYPESEQUIPEMENTS
-CREATE TABLE IF NOT EXISTS typesEquipements (
-	_id INT  NOT NULL, 
-	nom TEXT NOT NULL);
-CREATE INDEX IF NOT EXISTS typesEquipements_id ON typesEquipements (_id);
+CREATE TABLE IF NOT EXISTS routes (
+	_id INT PRIMARY KEY, 
+	typeId SMALLINT,
+	routeCode TEXT, 
+	letter TEXT, 
+	backColor INT, 
+    frontColor INT, 
+	headsignFrom TEXT, 
+	headsignTo TEXT);
+CREATE INDEX IF NOT EXISTS routes_id ON routes (_id);
+CREATE INDEX IF NOT EXISTS routes_code ON routes (routeCode);
+CREATE INDEX IF NOT EXISTS routes_letter ON routes (letter);
 
--- Table EQUIPEMENTS
-CREATE TABLE IF NOT EXISTS equipements (
+CREATE TABLE IF NOT EXISTS equipmentTypes (
+	_id INT PRIMARY KEY, 
+	typeName TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS equipmentTypes_id ON equipmentTypes (_id);
+
+CREATE TABLE IF NOT EXISTS equipments (
 	_id INT NOT NULL, 
-	idType INT NOT NULL,
-	idSousType INT, 
-	codeEquipement TEXT,
-	nomEquipement TEXT NOT NULL, 
-	normalizedNom TEXT NOT NULL, 
+	typeId INT NOT NULL,
+	subtypeId INT, 
+	equipmentCode TEXT,
+	equipmentName TEXT NOT NULL, 
+	normalizedName TEXT NOT NULL, 
 	details TEXT, 
-	adresse TEXT,
-	telephone TEXT,
+	address TEXT,
+	phone TEXT,
 	url TEXT,
 	latitude REAL, 
-	longitude REAL,
-	tag INT);
-CREATE INDEX IF NOT EXISTS equipements_id ON equipements (_id);
-CREATE INDEX IF NOT EXISTS equipements_type ON equipements (idType);
-CREATE INDEX IF NOT EXISTS equipements_nom ON equipements (nomEquipement collate nocase);
-CREATE INDEX IF NOT EXISTS equipements_normalizedNom ON equipements (normalizedNom collate nocase);
-CREATE INDEX IF NOT EXISTS equipements_coordonnees ON equipements (latitude, longitude);
-CREATE INDEX IF NOT EXISTS equipements_code ON equipements (codeEquipement);
-CREATE INDEX IF NOT EXISTS equipements_type_station_code ON equipements (idType, _id, codeEquipement);
+	longitude REAL);
+CREATE INDEX IF NOT EXISTS equipments_id ON equipments (_id);
+CREATE INDEX IF NOT EXISTS equipments_type ON equipments (typeId);
+CREATE INDEX IF NOT EXISTS equipments_equipmentName ON equipments (equipmentName collate nocase);
+CREATE INDEX IF NOT EXISTS equipments_normalizedName ON equipments (normalizedName collate nocase);
+CREATE INDEX IF NOT EXISTS equipments_coordinates ON equipments (latitude, longitude);
+CREATE INDEX IF NOT EXISTS equipments_equipmentCode ON equipments (equipmentCode);
+CREATE INDEX IF NOT EXISTS equipments_type_station_code ON equipments (typeId, _id, equipmentCode);
   
--- Table ARRETS	
-CREATE TABLE IF NOT EXISTS arrets (
+CREATE TABLE IF NOT EXISTS stops (
   _id INTEGER PRIMARY KEY, 
-  code TEXT, 
-  codeSens TEXT, 
-  codeLigne TEXT, 
-  idStation INT NOT NULL,
-  ordre INT NOT NULL);
-CREATE INDEX IF NOT EXISTS arrets_id ON arrets (_id);
-CREATE INDEX IF NOT EXISTS arrets_code ON arrets (code);
-CREATE INDEX IF NOT EXISTS arrets_codeLigne ON arrets (codeLigne);
-CREATE INDEX IF NOT EXISTS arrets_codeSens ON arrets (codeSens);
-CREATE INDEX IF NOT EXISTS arrets_codeLigneSens ON arrets (codeLigne, codeSens);
-CREATE INDEX IF NOT EXISTS arrets_station ON arrets (idStation);
+  equipmentId INT NOT NULL,
+  routeCode TEXT, 
+  directionCode TEXT, 
+  stopCode TEXT, 
+  stopOrder INT NOT NULL);
+CREATE INDEX IF NOT EXISTS stops_id ON stops (_id);
+CREATE INDEX IF NOT EXISTS stops_stopCode ON stops (stopCode);
+CREATE INDEX IF NOT EXISTS stops_routeCode ON stops (routeCode);
+CREATE INDEX IF NOT EXISTS stops_directionCode ON stops (directionCode);
+CREATE INDEX IF NOT EXISTS stops_routeDirectionCode ON stops (routeCode, directionCode);
+CREATE INDEX IF NOT EXISTS stops_station ON stops (equipmentId);
 
--- Table SENS
-CREATE TABLE IF NOT EXISTS sens (
+CREATE TABLE IF NOT EXISTS directions (
 	_id INTEGER PRIMARY KEY, 
-	codeLigne text, 
-	code text, 
-	nomSens text);
-CREATE INDEX IF NOT EXISTS sens_id ON sens (_id);
-CREATE INDEX IF NOT EXISTS sens_codeLigne ON sens (codeLigne);
-CREATE INDEX IF NOT EXISTS sens_code ON sens (code);
+	routeCode TEXT NOT NULL, 
+	directionCode TEXT NOT NULL, 
+	directionName TEXT NOT NULL);
+CREATE INDEX IF NOT EXISTS directions_id ON directions (_id);
+CREATE INDEX IF NOT EXISTS directions_routeCode ON directions (routeCode);
+CREATE INDEX IF NOT EXISTS directions_directionCode ON directions (directionCode);
 
--- Table HORAIRES
-CREATE TABLE IF NOT EXISTS horaires (
+CREATE TABLE IF NOT EXISTS schedules (
 	_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	terminus NVARCHAR(255), 
+	headsign NVARCHAR(255), 
 	dayTrip INTEGER NOT NULL,
 	timestamp INTEGER NOT NULL, 
-	idArret INTEGER NOT NULL);
-CREATE INDEX IF NOT EXISTS horaires_id ON horaires (_id);
-CREATE INDEX IF NOT EXISTS horaires_dayTrip ON horaires (dayTrip);
-CREATE INDEX IF NOT EXISTS horaires_idArret_dayTrip ON horaires (idArret, dayTrip);
-CREATE INDEX IF NOT EXISTS horaires_idArret_dayTrip_timestamp ON horaires (idArret, dayTrip, timestamp);
+	stopId INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS schedules_id ON schedules (_id);
+CREATE INDEX IF NOT EXISTS schedules_dayTrip ON schedules (dayTrip);
+CREATE INDEX IF NOT EXISTS schedules_stopId_dayTrip ON schedules (stopId, dayTrip);
+CREATE INDEX IF NOT EXISTS schedules_stopId_dayTrip_timestamp ON schedules (stopId, dayTrip, timestamp);
 
--- Table FAVORIS
-CREATE TABLE IF NOT EXISTS favoris (
+CREATE TABLE IF NOT EXISTS stopBookmarks (
 	_id INTEGER PRIMARY KEY, 
-	codeLigne TEXT NOT NULL, 
-	codeSens TEXT NOT NULL, 
-	codeArret TEXT NOT NULL, 
-	nomFavori TEXT);
-CREATE INDEX IF NOT EXISTS favoris_id ON favoris (_id);
+	routeCode TEXT NOT NULL, 
+	directionCode TEXT NOT NULL, 
+	stopCode TEXT NOT NULL, 
+	bookmarkName TEXT);
+CREATE INDEX IF NOT EXISTS stopBookmarks_id ON stopBookmarks (_id);
 
--- Table GROUPES
-CREATE TABLE IF NOT EXISTS groupes (
+CREATE TABLE IF NOT EXISTS stopBookmarkGroups (
 	_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-	nom TEXT NOT NULL, 
-	ordre INTEGER NOT NULL,
-	visibilite INTEGER NOT NULL);
-CREATE INDEX IF NOT EXISTS groupes_id ON groupes (_id);
+	groupName TEXT NOT NULL, 
+	groupOrder INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS stopBookmarkGroups_id ON stopBookmarkGroups (_id);
 
--- Table FAVORISGROUPES
-CREATE TABLE IF NOT EXISTS favorisGroupes (
-	idFavori INTEGER NOT NULL REFERENCES favoris(_id) ON DELETE CASCADE, 
-	idGroupe  INTEGER NOT NULL REFERENCES groupes(_id) ON DELETE CASCADE,
-	CONSTRAINT uc_ids UNIQUE (idFavori, idGroupe));
+CREATE TABLE IF NOT EXISTS stopBookmarkGroups (
+	stopBookmarkId INTEGER NOT NULL REFERENCES stopBookmarks(_id) ON DELETE CASCADE, 
+	groupId  INTEGER NOT NULL REFERENCES bookmarkGroups(_id) ON DELETE CASCADE,
+	CONSTRAINT uc_ids UNIQUE (stopBookmarkId, groupId));
 
-CREATE INDEX IF NOT EXISTS favorisGroupes_idFavori ON favorisGroupes (idFavori);
-CREATE INDEX IF NOT EXISTS favorisGroupes_idGroupe ON favorisGroupes (idGroupe);
+CREATE INDEX IF NOT EXISTS stopBookmarkGroups_stopBookmarkId ON stopBookmarkGroups (stopBookmarkId);
+CREATE INDEX IF NOT EXISTS stopBookmarkGroups_groupId ON stopBookmarkGroups (groupId);
 
--- Table COMMENTAIRES
-CREATE TABLE IF NOT EXISTS commentaires (
+CREATE TABLE IF NOT EXISTS comments (
     _id INTEGER PRIMARY KEY,
-    codeLigne TEXT,
-    codeSens TEXT,
-    codeArret TEXT,
+    routeCode TEXT,
+    directionCode TEXT,
+	stopCode TEXT,
     message TEXT NOT NULL,
     source TEXT NOT NULL,
     timestamp LONG NOT NULL
 );
-CREATE INDEX IF NOT EXISTS commentaires_ligne ON commentaires(codeLigne);
-CREATE INDEX IF NOT EXISTS commentaires_ligne_sens ON commentaires(codeLigne, codeSens);
-CREATE INDEX IF NOT EXISTS commentaires_ligne_sens_arret ON commentaires(codeLigne, codeSens, codeArret);
+CREATE INDEX IF NOT EXISTS comments_route ON comments(routeCode);
+CREATE INDEX IF NOT EXISTS comments_route_direction ON comments(routeCode, directionCode);
+CREATE INDEX IF NOT EXISTS comments_route_direction_stop ON comments(routeCode, directionCode, stopCode);
 
--- Table FAVORIS_BICLOOS
-CREATE TABLE IF NOT EXISTS favorisBicloos (
+CREATE TABLE IF NOT EXISTS biclooBookmarks (
     _id INTEGER PRIMARY KEY,
-    nomEquipement TEXT NOT NULL
+    equipmentName TEXT NOT NULL
 );
 
--- Table FAVORISVIEW
-CREATE VIEW IF NOT EXISTS favorisView AS
+CREATE VIEW IF NOT EXISTS stopBookmarksView AS
 SELECT
-    f._id,
-    f.codeLigne, 
-    f.codeSens, 
-    f.codeArret,
-    f.nomFavori, 
-    st.nomEquipement AS nomArret, 
-    st.normalizedNom, 
-    st.codeEquipement,
-    a.idStation, 
-    st.latitude, 
-    st.longitude, 
-    s.nomSens,
-    l.type AS ligneType,
-    l.couleurBack AS ligneCouleurBack, 
-    l.couleurFront AS ligneCouleurFront, 
-    l.lettre AS ligneLettre,
-    g.nom AS nomGroupe,
-    g._id AS idGroupe,
-    g.ordre as ordreGroupe,
-    (SELECT (timestamp/1000 - ((strftime('%s','now')) / 60) * 60) / 60 FROM horaires WHERE horaires.idArret = f._id AND timestamp/1000 >= (strftime('%s','now')) / 60 * 60 LIMIT 1) as nextHoraire
+    stopBookmarks._id,
+    stopBookmarks.routeCode, 
+    stopBookmarks.directionCode, 
+    stopBookmarks.stopCode,
+    stopBookmarks.bookmarkName, 
+    equipments.name AS stopPointName, 
+    equipments.normalizedName, 
+    equipments.equipmentCode,
+    stops.equipmentId, 
+    equipments.latitude, 
+    equipments.longitude, 
+    directions.directionName,
+    routes.typeId,
+    routes.frontColor, 
+    routes.backColor, 
+    routes.letter,
+    bookmarkGroups.groupName,
+    bookmarkGroups._id AS bookmarkId,
+    bookmarkGroups.bookmarkOrder,
+    (SELECT (timestamp/1000 - ((strftime('%s','now')) / 60) * 60) / 60 FROM schedules WHERE schedules.stopId = stopBookmarks._id AND timestamp/1000 >= (strftime('%s','now')) / 60 * 60 LIMIT 1) as nextSchedule
 FROM
-    favoris f 
-    LEFT JOIN arrets a ON f._id = a._id
-    LEFT JOIN equipements st ON st.idType = 0 AND st._id = a.idStation 
-    LEFT JOIN lignes l ON l.code = f.codeLigne
-    LEFT JOIN sens s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens
-    LEFT JOIN favorisGroupes fg ON f._id = fg.idFavori
-    LEFT JOIN groupes g ON g._id = fg.idGroupe;
+    stopBookmarks 
+    LEFT JOIN stops ON stopBookmarks._id = stops._id
+    LEFT JOIN equipments ON equipments.idType = 0 AND equipments._id = stops.equipmentId 
+    LEFT JOIN routes ON routes.routeCode = stopBookmarks.routeCode
+    LEFT JOIN directions ON directions.routeCode = stopBookmarks.routeCode AND directions.directionCode = stopBookmarks.directionCode
+    LEFT JOIN stopPointBookmarkGroups ON stopBookmarks._id = stopBookmarkGroups.stopBookmarkId
+    LEFT JOIN bookmarkGroups ON bookmarkGroups._id = stopBookmarkGroups.groupId;
 
 PRAGMA foreign_keys = ON;

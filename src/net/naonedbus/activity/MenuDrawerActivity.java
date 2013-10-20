@@ -383,7 +383,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 				Log.d(LOG_TAG, "instantiateItem " + position);
 
 			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
-			fragment.setRetainInstance(true);
+			// fragment.setRetainInstance(true);
 			mFragmentsTags[position] = fragment.getTag();
 			return fragment;
 		}
@@ -394,7 +394,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 				Log.d(LOG_TAG, "getItem " + position + " : " + mClasses[position]);
 
 			final Fragment fragment = Fragment.instantiate(MenuDrawerActivity.this, mClasses[position]);
-			fragment.setRetainInstance(true);
+			// fragment.setRetainInstance(true);
 			return fragment;
 		}
 

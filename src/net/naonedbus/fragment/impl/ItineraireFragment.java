@@ -112,7 +112,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private int mIconPadding;
 
 	private boolean mDialogLock;
-	private boolean mAfterBindView;
 
 	public ItineraireFragment() {
 		super(R.layout.fragment_itineraire);
@@ -251,7 +250,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 		}
 
 		setDateValue();
-		mAfterBindView = true;
 	}
 
 	@Override

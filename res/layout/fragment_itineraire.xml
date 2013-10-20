@@ -20,8 +20,8 @@
  */
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <include
@@ -30,13 +30,15 @@
 
     <ListView
         android:id="@id/android:list"
-        style="@style/Listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/form"
         android:clipToPadding="false"
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"
-        android:paddingBottom="@dimen/padding_small"
-        android:paddingTop="@dimen/padding_small" />
+        android:listSelector="@android:color/transparent"
+        android:padding="@dimen/padding_listview"
+        android:scrollbarStyle="outsideOverlay" />
 
     <ProgressBar
         android:id="@android:id/progress"

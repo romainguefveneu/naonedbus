@@ -100,7 +100,7 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (DBG)
-			Log.d(LOG_TAG, "onActivityCreated");
+			Log.d(LOG_TAG, "onActivityCreated " + savedInstanceState);
 
 		mCursorAdapter = getCursorAdapter(getActivity());
 		setListAdapter(mCursorAdapter);
@@ -134,6 +134,9 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
+		if (DBG)
+			Log.d(LOG_TAG, "onSaveInstanceState");
+
 		if (isAdded()) {
 			final View v = getListView().getChildAt(0);
 			final int top = (v == null) ? 0 : v.getTop();
@@ -186,10 +189,16 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	}
 
 	public void refreshContent() {
+		if (DBG)
+			Log.d(LOG_TAG, "refreshContent");
+
 		getLoaderManager().restartLoader(LOADER_REFRESH, null, this);
 	}
 
 	public void cancelLoading() {
+		if (DBG)
+			Log.d(LOG_TAG, "cancelLoading");
+
 		getLoaderManager().destroyLoader(LOADER_INIT);
 		getLoaderManager().destroyLoader(LOADER_REFRESH);
 	}

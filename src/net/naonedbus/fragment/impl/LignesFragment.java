@@ -18,6 +18,7 @@
  */
 package net.naonedbus.fragment.impl;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretsActivity;
 import net.naonedbus.activity.impl.CommentaireActivity;
@@ -38,20 +39,24 @@ import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnActionExpandListener;
 import com.actionbarsherlock.widget.SearchView;
 import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 
-public class LignesFragment extends CustomCursorFragment implements OnQueryTextListener, FilterQueryProvider {
+public class LignesFragment extends CustomCursorFragment implements OnQueryTextListener {
+
+	private static final String LOG_TAG = "LignesFragment";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private LigneCursorAdapter mAdapter;
 	private LigneManager mLigneManager;
@@ -81,7 +86,20 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 
 		final MenuItem searchItem = menu.findItem(R.id.menu_search);
 		final SearchView searchView = (SearchView) searchItem.getActionView();
-		searchView.setOnQueryTextListener(this);
+		searchItem.setOnActionExpandListener(new OnActionExpandListener() {
+
+			@Override
+			public boolean onMenuItemActionExpand(MenuItem item) {
+				searchView.setOnQueryTextListener(LignesFragment.this);
+				return true;
+			}
+
+			@Override
+			public boolean onMenuItemActionCollapse(MenuItem item) {
+				searchView.setOnQueryTextListener(null);
+				return true;
+			}
+		});
 	}
 
 	@Override
@@ -146,6 +164,9 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 
 	@Override
 	public Loader<Cursor> onCreateLoader(final int loaderId, final Bundle bundle) {
+		if (DBG)
+			Log.d(LOG_TAG, "onCreateLoader " + loaderId);
+
 		return new CursorLoader(getActivity(), LigneProvider.CONTENT_URI, null, null, null, null);
 	}
 
@@ -166,13 +187,11 @@ public class LignesFragment extends CustomCursorFragment implements OnQueryTextL
 
 	@Override
 	public boolean onQueryTextChange(final String newText) {
+		if (DBG)
+			Log.d(LOG_TAG, "onQueryTextChange '" + newText + "'");
+
 		mAdapter.getFilter().filter(newText);
 		return true;
-	}
-
-	@Override
-	public Cursor runQuery(final CharSequence constraint) {
-		return null;
 	}
 
 }

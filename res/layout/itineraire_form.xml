@@ -3,7 +3,9 @@
     style="@style/Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
+    android:layout_marginLeft="@dimen/padding_listview"
+    android:layout_marginRight="@dimen/padding_listview"
+    android:layout_marginTop="@dimen/padding_listview"
     android:orientation="vertical"
     android:padding="@dimen/padding_small" >
 
