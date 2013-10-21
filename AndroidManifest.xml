@@ -72,11 +72,10 @@
         <activity
             android:name=".activity.impl.AboutActivity"
             android:label="@string/title_activity_about" />
-        <activity android:name=".activity.impl.SensActivity" />
-        <activity android:name=".activity.impl.ArretsActivity" />
-        <activity android:name=".activity.impl.HorairesActivity" />
+        <activity android:name=".activity.impl.StopsActivity" />
+        <activity android:name=".activity.impl.SchedulesActivity" />
         <activity
-            android:name=".activity.impl.CommentaireActivity"
+            android:name=".activity.impl.SendNewsActivity"
             android:label="@string/emptyString"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
         <activity
@@ -106,7 +105,7 @@
                 android:resource="@xml/map_searchable" />
         </activity>
         <activity
-            android:name=".activity.impl.ParkingDetailActivity"
+            android:name=".activity.impl.ParkDetailActivity"
             android:label="@string/emptyString" />
         <activity
             android:name=".activity.impl.PlanActivity"
@@ -115,17 +114,13 @@
             android:name=".activity.impl.TutorialActivity"
             android:label="@string/emptyString" />
         <activity
-            android:name=".activity.impl.ItineraireActivity"
-            android:label="@string/title_activity_itineraire"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".activity.impl.ParcoursActivity"
+            android:name=".activity.impl.StopPathActivity"
             android:label="@string/emptyString" />
         <activity
-            android:name=".activity.impl.GroupesActivity"
+            android:name=".activity.impl.BookmarkGroupsActivity"
             android:label="@string/title_activity_groupes" />
         <activity
-            android:name=".activity.impl.ArretDetailActivity"
+            android:name=".activity.impl.StopDetailActivity"
             android:label="@string/emptyString" />
         <activity
             android:name=".activity.impl.WebViewActivity"
@@ -200,8 +195,8 @@
             android:exported="false"
             android:multiprocess="true" />
         <provider
-            android:name=".provider.impl.CommentProvider"
-            android:authorities="net.naonedbus.provider.CommentProvider"
+            android:name=".provider.impl.LiveNewsProvider"
+            android:authorities="net.naonedbus.provider.LiveNewsProvider"
             android:exported="false"
             android:multiprocess="true" />
         <provider
@@ -276,9 +271,6 @@
                 android:resource="@xml/horaire_widget_provider" />
         </receiver>
 
-        <!-- <meta-data -->
-        <!-- android:name="com.google.android.backup.api_key" -->
-        <!-- android:value="AEdPqrEAAAAI1W-U7aKOZOpeCcnTwm5xsgLCT5EcPwslJj06rQ" /> -->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyD4kTPglWjwcELJeQsHoDAF9HeoTvdtW9U" />

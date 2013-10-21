@@ -10,7 +10,7 @@ import net.naonedbus.bean.LegWrapper.Type;
 import net.naonedbus.bean.Route;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.LegWrapperArrayAdapter;
 import android.content.Context;
@@ -134,7 +134,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 
-		final LigneManager ligneManager = LigneManager.getInstance();
+		final RouteManager ligneManager = RouteManager.getInstance();
 
 		final List<LegWrapper> legWrappers = new ArrayList<LegWrapper>();
 
@@ -162,8 +162,8 @@ public class ItineraryDetailFragment extends CustomListFragment {
 			toWrapper.setMode(leg.mode);
 
 			if (!"WALK".equals(leg.mode) && !TextUtils.isEmpty(leg.route)) {
-				final Route ligne = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
-				fromWrapper.setLigne(ligne);
+				final Route route = ligneManager.getSingleByLetter(context.getContentResolver(), leg.route);
+				fromWrapper.setLigne(route);
 			} else if ("WALK".equals(leg.mode) && leg.distance < 50) {
 				add = false;
 			}
@@ -193,7 +193,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 		for (int i = 0; i < wrappers.size(); i++) {
 			final LegWrapper legWrapper = wrappers.get(i);
-			final Route ligne = legWrapper.getLigne();
+			final Route route = legWrapper.getLigne();
 			final Place place = legWrapper.getPlace();
 
 			builder.append(legWrapper.getTime()).append(" : ");
@@ -204,7 +204,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 				}
 			} else {
 				if (legWrapper.getType() == Type.IN) {
-					builder.append(FormatUtils.formatLigneArretSens(getActivity(), ligne.getLetter(), place.name,
+					builder.append(FormatUtils.formatLigneArretSens(getActivity(), route.getLetter(), place.name,
 							legWrapper.getHeadsign()));
 				} else {
 					builder.append(getString(R.string.itinerary_get_off, place.name));

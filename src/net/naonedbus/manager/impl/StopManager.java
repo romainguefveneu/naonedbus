@@ -20,8 +20,8 @@ package net.naonedbus.manager.impl;
 
 import java.util.List;
 
-import net.naonedbus.bean.StopBookmark;
 import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.StopBookmark;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.StopProvider;
 import net.naonedbus.provider.table.EquipmentTable;
@@ -48,17 +48,17 @@ public class StopManager extends SQLiteManager<Stop> {
 
 	private final Stop.Builder mBuilder;
 	private int mColId;
-	private int mColCodeLigne;
-	private int mColLettre;
-	private int mColCodeSens;
-	private int mColCodeArret;
-	private int mColCodeEquipement;
-	private int mColNormalizedNom;
+	private int mColRouteCode;
+	private int mColLetter;
+	private int mColDirectionCode;
+	private int mColStopCode;
+	private int mColEquipmentCode;
+	private int mColNormalizedName;
 	private int mColLatitude;
 	private int mColLongitude;
-	private int mColIdStation;
-	private int mColOrdre;
-	private int mColNomArret;
+	private int mColEquipmentId;
+	private int mColOrder;
+	private int mColName;
 
 	private StopManager() {
 		super(StopProvider.CONTENT_URI);
@@ -77,13 +77,14 @@ public class StopManager extends SQLiteManager<Stop> {
 	}
 
 	/**
-	 * Récupérer une liste contenant les arrets de la ligne et du sens sépcifiée
+	 * Récupérer une liste contenant les arrets de la route et du direction
+	 * sépcifiée
 	 * 
 	 * @param contentResolver
-	 * @param codeLigne
+	 * @param routeCode
 	 */
-	public List<Stop> getAll(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
-		final Cursor c = getCursor(contentResolver, codeLigne, codeSens);
+	public List<Stop> getAll(final ContentResolver contentResolver, final String routeCode, final String directionCode) {
+		final Cursor c = getCursor(contentResolver, routeCode, directionCode);
 		return getFromCursor(c);
 	}
 
@@ -95,81 +96,83 @@ public class StopManager extends SQLiteManager<Stop> {
 	}
 
 	/**
-	 * Récupérer un arrêt selon son code ligne et sens et du nom de l'arrêt.
+	 * Récupérer un arrêt selon son code route et direction et du nom de
+	 * l'arrêt.
 	 * 
 	 * @param contentResolver
-	 * @param codeLigne
-	 *            le code de la ligne
-	 * @param codeSens
-	 *            le code du sens
-	 * @param nomArret
+	 * @param routeCode
+	 *            le code de la route
+	 * @param directionCode
+	 *            le code du direction
+	 * @param stopName
 	 *            le code de l'arrêt
 	 * @return L'arrêt cherche, ou {@code null} si non trouvé.
 	 */
-	public Stop getSingle(final ContentResolver contentResolver, final String codeLigne, final String codeSens,
-			final String nomArret) {
-		final Cursor c = getCursor(contentResolver, StopTable.ROUTE_CODE + "=? AND " + StopTable.DIRECTION_CODE
-				+ "=? AND " + EquipmentTable.NORMALIZED_NAME + "=?", new String[] { codeLigne, codeSens, nomArret });
+	public Stop getSingle(final ContentResolver contentResolver, final String routeCode, final String directionCode,
+			final String stopName) {
+		final Cursor c = getCursor(contentResolver, StopTable.TABLE_NAME + "." + StopTable.ROUTE_CODE + "=? AND "
+				+ StopTable.TABLE_NAME + "." + StopTable.DIRECTION_CODE + "=? AND " + EquipmentTable.TABLE_NAME + "."
+				+ EquipmentTable.NORMALIZED_NAME + "=?", new String[] { routeCode, directionCode, stopName });
 		return getFirstFromCursor(c);
 	}
 
 	/**
-	 * Récupérer les arrêts favoris selon son code ligne et sens.
+	 * Récupérer les arrêts favoris selon son code route et direction.
 	 * 
 	 * @param contentResolver
-	 * @param codeLigne
-	 *            le code de la ligne
-	 * @param codeSens
-	 *            le code du sens
-	 * @return La liste des arrêts favoris de la ligne et du sens donné
+	 * @param routeCode
+	 *            le code de la route
+	 * @param directionCode
+	 *            le code du direction
+	 * @return La liste des arrêts favoris de la route et du direction donné
 	 */
-	public List<Stop> getArretsFavoris(final ContentResolver contentResolver, final String codeLigne,
-			final String codeSens) {
-		final Cursor c = getCursor(contentResolver, StopTable.ROUTE_CODE + "=? AND " + StopTable.DIRECTION_CODE
-				+ "=? AND EXISTS (SELECT 1 FROM " + StopBookmarkTable.TABLE_NAME + " WHERE "
+	public List<Stop> getBookmarks(final ContentResolver contentResolver, final String routeCode,
+			final String directionCode) {
+		final Cursor c = getCursor(contentResolver, StopTable.TABLE_NAME + "." + StopTable.ROUTE_CODE + "=? AND "
+				+ StopTable.DIRECTION_CODE + "=? AND EXISTS (SELECT 1 FROM " + StopBookmarkTable.TABLE_NAME + " WHERE "
 				+ StopBookmarkTable.TABLE_NAME + "." + StopBookmarkTable._ID + "=" + StopTable.TABLE_NAME + "."
-				+ StopTable._ID + ")", new String[] { codeLigne, codeSens });
+				+ StopTable._ID + ")", new String[] { routeCode, directionCode });
 		return getFromCursor(c);
 	}
 
-	public Cursor getCursor(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
+	public Cursor getCursor(final ContentResolver contentResolver, final String routeCode, final String directionCode) {
 		final Uri.Builder builder = StopProvider.CONTENT_URI.buildUpon();
-		builder.path(StopProvider.ARRET_CODESENS_CODELIGNE_URI_PATH_QUERY);
-		builder.appendQueryParameter("codeLigne", codeLigne);
-		builder.appendQueryParameter("codeSens", codeSens);
+		builder.path(StopProvider.STOP_DIRECTION_ROUTE_URI_PATH_QUERY);
+		builder.appendQueryParameter("routeCode", routeCode);
+		builder.appendQueryParameter("directionCode", directionCode);
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
 	@Override
 	public void onIndexCursor(final Cursor c) {
 		mColId = c.getColumnIndex(StopTable._ID);
-		mColCodeArret = c.getColumnIndex(StopTable.STOP_CODE);
-		mColLettre = c.getColumnIndex(RouteTable.LETTER);
-		mColCodeEquipement = c.getColumnIndex(EquipmentTable.EQUIPMENT_CODE);
-		mColCodeLigne = c.getColumnIndex(StopTable.ROUTE_CODE);
-		mColCodeSens = c.getColumnIndex(StopTable.DIRECTION_CODE);
-		mColNomArret = c.getColumnIndex(EquipmentTable.EQUIPMENT_NAME);
-		mColNormalizedNom = c.getColumnIndex(EquipmentTable.NORMALIZED_NAME);
+		mColStopCode = c.getColumnIndex(StopTable.STOP_CODE);
+		mColLetter = c.getColumnIndex(RouteTable.LETTER);
+		mColEquipmentCode = c.getColumnIndex(EquipmentTable.EQUIPMENT_CODE);
+		mColRouteCode = c.getColumnIndex(StopTable.ROUTE_CODE);
+		mColDirectionCode = c.getColumnIndex(StopTable.DIRECTION_CODE);
+		mColName = c.getColumnIndex(EquipmentTable.EQUIPMENT_NAME);
+		mColNormalizedName = c.getColumnIndex(EquipmentTable.NORMALIZED_NAME);
 		mColLatitude = c.getColumnIndex(EquipmentTable.LATITUDE);
 		mColLongitude = c.getColumnIndex(EquipmentTable.LONGITUDE);
-		mColIdStation = c.getColumnIndex(StopTable.EQUIPMENT_ID);
-		mColOrdre = c.getColumnIndex(StopTable.STOP_ORDER);
+		mColEquipmentId = c.getColumnIndex(StopTable.EQUIPMENT_ID);
+		mColOrder = c.getColumnIndex(StopTable.STOP_ORDER);
 	}
 
 	@Override
 	public Stop getSingleFromCursor(final Cursor c) {
 		mBuilder.setId(c.getInt(mColId));
-		mBuilder.setCodeArret(c.getString(mColCodeArret));
-		mBuilder.setLettre(c.getString(mColLettre));
-		mBuilder.setCodeEquipement(c.getString(mColCodeEquipement));
-		mBuilder.setCodeLigne(c.getString(mColCodeLigne));
-		mBuilder.setCodeSens(c.getString(mColCodeSens));
-		mBuilder.setNomArret(c.getString(mColNomArret));
-		mBuilder.setNormalizedNom(c.getString(mColNormalizedNom));
+		mBuilder.setCodeArret(c.getString(mColStopCode));
+		mBuilder.setLettre(c.getString(mColLetter));
+		mBuilder.setCodeEquipement(c.getString(mColEquipmentCode));
+		mBuilder.setCodeLigne(c.getString(mColRouteCode));
+		mBuilder.setCodeSens(c.getString(mColDirectionCode));
+		mBuilder.setNomArret(c.getString(mColName));
+		mBuilder.setNormalizedNom(c.getString(mColNormalizedName));
 		mBuilder.setLatitude(c.getFloat(mColLatitude));
 		mBuilder.setLongitude(c.getFloat(mColLongitude));
-		mBuilder.setIdStation(c.getInt(mColIdStation));
-		mBuilder.setOrdre(c.getInt(mColOrdre));
+		mBuilder.setIdStation(c.getInt(mColEquipmentId));
+		mBuilder.setOrdre(c.getInt(mColOrder));
 		return mBuilder.build();
 	}
 
@@ -192,10 +195,10 @@ public class StopManager extends SQLiteManager<Stop> {
 		Integer id = null;
 
 		final Uri.Builder builder = StopProvider.CONTENT_URI.buildUpon();
-		builder.path(StopProvider.ARRET_CODEARRET_CODESENS_CODELIGNE_URI_PATH_QUERY);
+		builder.path(StopProvider.STOP_CODES_URI_PATH_QUERY);
 		builder.appendQueryParameter("codeArret", favori.getCodeArret());
-		builder.appendQueryParameter("codeSens", favori.getCodeSens());
-		builder.appendQueryParameter("codeLigne", favori.getCodeLigne());
+		builder.appendQueryParameter("directionCode", favori.getCodeSens());
+		builder.appendQueryParameter("routeCode", favori.getCodeLigne());
 
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
 		final Stop arretItem = getFirstFromCursor(c);
@@ -236,7 +239,7 @@ public class StopManager extends SQLiteManager<Stop> {
 		values.put(StopTable.STOP_CODE, item.getCodeArret());
 		values.put(StopTable.EQUIPMENT_ID, item.getIdStation());
 		values.put(StopTable.STOP_ORDER, item.getOrdre());
-		values.put(EquipmentTable.EQUIPMENT_NAME, item.getNomArret());
+		values.put(EquipmentTable.EQUIPMENT_NAME, item.getName());
 		values.put(EquipmentTable.NORMALIZED_NAME, item.getNormalizedNom());
 		return values;
 	}

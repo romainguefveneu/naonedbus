@@ -30,8 +30,8 @@ public class EquipmentNomIndexer extends ArraySectionIndexer<Equipment> {
 	}
 
 	@Override
-	protected void prepareSection(Equipment equipement) {
-		equipement.setSection(equipement.getName().substring(0, 1));
+	protected void prepareSection(Equipment equipment) {
+		equipment.setSection(equipment.getName().substring(0, 1));
 	}
 
 }

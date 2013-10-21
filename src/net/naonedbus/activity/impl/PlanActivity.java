@@ -22,12 +22,12 @@ import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
 import net.naonedbus.bean.Route;
 import net.naonedbus.fragment.impl.PlanFragment;
-import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.manager.impl.RouteManager;
 import android.os.Bundle;
 
 public class PlanActivity extends OneFragmentActivity {
 
-	public static final String PARAM_CODE_LIGNE = "codeLigne";
+	public static final String PARAM_CODE_LIGNE = "routeCode";
 
 	public PlanActivity() {
 		super(R.layout.activity_one_fragment);
@@ -38,13 +38,13 @@ public class PlanActivity extends OneFragmentActivity {
 		super.onCreate(savedInstanceState);
 		getSupportActionBar().setHomeButtonEnabled(true);
 
-		final String codeLigne = getIntent().getStringExtra(PARAM_CODE_LIGNE);
-		final Route ligne = LigneManager.getInstance().getSingle(getContentResolver(), codeLigne);
+		final String routeCode = getIntent().getStringExtra(PARAM_CODE_LIGNE);
+		final Route route = RouteManager.getInstance().getSingle(getContentResolver(), routeCode);
 
-		setTitle(getString(R.string.title_activity_plan, ligne.getLetter(), ligne.getName()));
+		setTitle(getString(R.string.title_activity_plan, route.getLetter(), route.getName()));
 
 		final Bundle bundle = new Bundle();
-		bundle.putString(PlanFragment.PARAM_CODE_LIGNE, codeLigne);
+		bundle.putString(PlanFragment.PARAM_CODE_LIGNE, routeCode);
 
 		if (savedInstanceState == null) {
 			addFragment(PlanFragment.class, bundle);

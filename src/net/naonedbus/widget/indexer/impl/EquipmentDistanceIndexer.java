@@ -31,29 +31,29 @@ public class EquipmentDistanceIndexer extends ArraySectionIndexer<Equipment> {
 	}
 
 	@Override
-	protected void prepareSection(Equipment equipement) {
-		if (equipement.getDistance() == null) {
-			equipement.setSection(R.string.section_distance_none);
-		} else if (equipement.getDistance() > 100000) {
-			equipement.setSection(R.string.section_distance_100000);
-		} else if (equipement.getDistance() > 50000) {
-			equipement.setSection(R.string.section_distance_50000);
-		} else if (equipement.getDistance() > 40000) {
-			equipement.setSection(R.string.section_distance_40000);
-		} else if (equipement.getDistance() > 30000) {
-			equipement.setSection(R.string.section_distance_30000);
-		} else if (equipement.getDistance() > 20000) {
-			equipement.setSection(R.string.section_distance_20000);
-		} else if (equipement.getDistance() > 10000) {
-			equipement.setSection(R.string.section_distance_10000);
-		} else if (equipement.getDistance() > 5000) {
-			equipement.setSection(R.string.section_distance_5000);
-		} else if (equipement.getDistance() > 1000) {
-			equipement.setSection(R.string.section_distance_1000);
-		} else if (equipement.getDistance() > 500) {
-			equipement.setSection(R.string.section_distance_500);
+	protected void prepareSection(Equipment equipment) {
+		if (equipment.getDistance() == null) {
+			equipment.setSection(R.string.section_distance_none);
+		} else if (equipment.getDistance() > 100000) {
+			equipment.setSection(R.string.section_distance_100000);
+		} else if (equipment.getDistance() > 50000) {
+			equipment.setSection(R.string.section_distance_50000);
+		} else if (equipment.getDistance() > 40000) {
+			equipment.setSection(R.string.section_distance_40000);
+		} else if (equipment.getDistance() > 30000) {
+			equipment.setSection(R.string.section_distance_30000);
+		} else if (equipment.getDistance() > 20000) {
+			equipment.setSection(R.string.section_distance_20000);
+		} else if (equipment.getDistance() > 10000) {
+			equipment.setSection(R.string.section_distance_10000);
+		} else if (equipment.getDistance() > 5000) {
+			equipment.setSection(R.string.section_distance_5000);
+		} else if (equipment.getDistance() > 1000) {
+			equipment.setSection(R.string.section_distance_1000);
+		} else if (equipment.getDistance() > 500) {
+			equipment.setSection(R.string.section_distance_500);
 		} else {
-			equipement.setSection(R.string.section_distance_0);
+			equipment.setSection(R.string.section_distance_0);
 		}
 	}
 

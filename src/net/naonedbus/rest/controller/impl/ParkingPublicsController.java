@@ -23,8 +23,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import net.naonedbus.bean.parking.pub.ParkingPublic;
-import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
+import net.naonedbus.bean.parking.PublicPark;
+import net.naonedbus.bean.parking.PublicParkStatus;
 import net.naonedbus.rest.controller.NodRestController;
 
 import org.json.JSONException;
@@ -33,9 +33,9 @@ import org.json.JSONObject;
 import android.content.res.Resources;
 import android.util.SparseArray;
 
-public class ParkingPublicsController extends NodRestController<ParkingPublic> {
+public class ParkingPublicsController extends NodRestController<PublicPark> {
 	private static final String API = "getDisponibiliteParkingsPublics";
-	private final SparseArray<ParkingPublicStatut> statuts;
+	private final SparseArray<PublicParkStatus> statuts;
 
 	private static final String TAG_ID = "IdObj";
 	private static final String TAG_NOM = "Grp_nom";
@@ -48,20 +48,20 @@ public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 	public ParkingPublicsController() {
 		super("opendata", "answer", "data", "Groupes_Parking", "Groupe_Parking");
 
-		statuts = new SparseArray<ParkingPublicStatut>();
-		for (final ParkingPublicStatut statut : ParkingPublicStatut.values()) {
+		statuts = new SparseArray<PublicParkStatus>();
+		for (final PublicParkStatus statut : PublicParkStatus.values()) {
 			statuts.put(statut.getValue(), statut);
 		}
 	}
 
-	public List<ParkingPublic> getAll(final Resources res) throws IOException, JSONException {
-		final List<ParkingPublic> parkings = super.getAll(res, API);
+	public List<PublicPark> getAll(final Resources res) throws IOException, JSONException {
+		final List<PublicPark> parkings = super.getAll(res, API);
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-		for (final ParkingPublic parkingPublic : parkings) {
-			parkingPublic.setStatut(statuts.get(parkingPublic.getStatutValue()));
+		for (final PublicPark parkingPublic : parkings) {
+			parkingPublic.setStatus(statuts.get(parkingPublic.getStatusValue()));
 			try {
-				parkingPublic.setUpdateDate(dateFormat.parse(parkingPublic.getHorodatage()));
+				parkingPublic.setUpdateDate(dateFormat.parse(parkingPublic.getTimestamp()));
 			} catch (final ParseException e) {
 				// Tant pis
 			}
@@ -71,20 +71,20 @@ public class ParkingPublicsController extends NodRestController<ParkingPublic> {
 	}
 
 	@Override
-	protected ParkingPublic parseJsonObject(final JSONObject object) throws JSONException {
-		final ParkingPublic parking = new ParkingPublic();
+	protected PublicPark parseJsonObject(final JSONObject object) throws JSONException {
+		final PublicPark parking = new PublicPark();
 		parking.setId(object.getInt(TAG_ID));
-		parking.setNom(object.getString(TAG_NOM));
-		parking.setStatutValue(object.getInt(TAG_STATUT));
-		parking.setPlacesDisponibles(object.getInt(TAG_DISPONIBILITE));
-		parking.setPlacesTotales(object.getInt(TAG_EXPLOITATION));
-		parking.setSeuilComplet(object.getInt(TAG_COMPLET));
-		parking.setHorodatage(object.getString(TAG_HORODATAGE));
+		parking.setName(object.getString(TAG_NOM));
+		parking.setStatusValue(object.getInt(TAG_STATUT));
+		parking.setAvailableSpaces(object.getInt(TAG_DISPONIBILITE));
+		parking.setTotalSpaces(object.getInt(TAG_EXPLOITATION));
+		parking.setFullLimit(object.getInt(TAG_COMPLET));
+		parking.setTimestamp(object.getString(TAG_HORODATAGE));
 		return parking;
 	}
 
 	@Override
-	protected JSONObject toJsonObject(final ParkingPublic item) throws JSONException {
+	protected JSONObject toJsonObject(final PublicPark item) throws JSONException {
 		return null;
 	}
 

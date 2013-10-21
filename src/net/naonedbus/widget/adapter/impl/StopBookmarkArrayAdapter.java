@@ -74,11 +74,11 @@ public class StopBookmarkArrayAdapter extends ArraySectionAdapter<StopBookmark> 
 		holder.ligneCode.setTextColor(item.getFrontColor());
 
 		if (item.getBookmarkName() == null) {
-			holder.itemTitle.setText(item.getNomArret());
+			holder.itemTitle.setText(item.getName());
 			holder.itemDescription.setText(FormatUtils.formatSens(item.getDirectionName()));
 		} else {
 			holder.itemTitle.setText(item.getBookmarkName());
-			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomArret(), item.getDirectionName()));
+			holder.itemDescription.setText(FormatUtils.formatSens(item.getName(), item.getDirectionName()));
 		}
 
 		if (mShowDelay == false) {

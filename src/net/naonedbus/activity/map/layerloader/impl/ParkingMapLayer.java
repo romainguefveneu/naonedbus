@@ -31,12 +31,12 @@ import net.naonedbus.activity.map.overlay.ParkingItemizedOverlay;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Equipment;
-import net.naonedbus.bean.parking.Parking;
-import net.naonedbus.bean.parking.pub.ParkingPublic;
-import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
-import net.naonedbus.bean.parking.relai.ParkingRelai;
+import net.naonedbus.bean.parking.CarPark;
+import net.naonedbus.bean.parking.IncentivePark;
+import net.naonedbus.bean.parking.PublicPark;
+import net.naonedbus.bean.parking.PublicParkStatus;
 import net.naonedbus.manager.impl.EquipmentManager;
-import net.naonedbus.manager.impl.ParkingPublicManager;
+import net.naonedbus.manager.impl.PublicParkManager;
 import net.naonedbus.manager.impl.ParkingRelaiManager;
 import net.naonedbus.utils.GeoPointUtils;
 import net.naonedbus.utils.ParkingUtils;
@@ -58,7 +58,7 @@ import com.google.android.maps.GeoPoint;
 public class ParkingMapLayer implements MapLayer {
 
 	private static EquipmentManager equipementManager;
-	private final SparseArray<Parking> parkingList = new SparseArray<Parking>();
+	private final SparseArray<CarPark> parkingList = new SparseArray<CarPark>();
 
 	public ParkingMapLayer() {
 		equipementManager = EquipmentManager.getInstance();
@@ -80,8 +80,8 @@ public class ParkingMapLayer implements MapLayer {
 
 			@Override
 			public Integer getResourceDrawable() {
-				final Parking parking = parkingList.get(item.getId());
-				if (parking instanceof ParkingPublic) {
+				final CarPark parking = parkingList.get(item.getId());
+				if (parking instanceof PublicPark) {
 					return R.drawable.map_layer_parking;
 				} else {
 					return R.drawable.map_layer_parking_relai;
@@ -90,14 +90,14 @@ public class ParkingMapLayer implements MapLayer {
 
 			@Override
 			public Integer getResourceColor() {
-				final Parking parking = parkingList.get(item.getId());
-				if (parking instanceof ParkingPublic) {
-					final ParkingPublic parkingPublic = ((ParkingPublic) parking);
+				final CarPark parking = parkingList.get(item.getId());
+				if (parking instanceof PublicPark) {
+					final PublicPark parkingPublic = ((PublicPark) parking);
 					int resColor = 0;
-					if (parkingPublic.getStatut() == ParkingPublicStatut.OUVERT) {
-						resColor = ParkingUtils.getSeuilCouleurId(parkingPublic.getPlacesDisponibles());
+					if (parkingPublic.getStatus() == PublicParkStatus.OPEN) {
+						resColor = ParkingUtils.getSeuilCouleurId(parkingPublic.getAvailableSpaces());
 					} else {
-						resColor = parkingPublic.getStatut().getColorRes();
+						resColor = parkingPublic.getStatus().getColorRes();
 					}
 					return resColor;
 				} else {
@@ -112,14 +112,14 @@ public class ParkingMapLayer implements MapLayer {
 
 			@Override
 			public String getDescription(final Context context) {
-				final Parking parking = parkingList.get(item.getId());
+				final CarPark parking = parkingList.get(item.getId());
 				String details = "";
 				int placesDisponibles = 0;
 
-				if (parking instanceof ParkingPublic) {
-					final ParkingPublic parkingPublic = ((ParkingPublic) parking);
-					placesDisponibles = ((ParkingPublic) parking).getPlacesDisponibles();
-					if (parkingPublic.getStatut() == ParkingPublicStatut.OUVERT) {
+				if (parking instanceof PublicPark) {
+					final PublicPark parkingPublic = ((PublicPark) parking);
+					placesDisponibles = ((PublicPark) parking).getAvailableSpaces();
+					if (parkingPublic.getStatus() == PublicParkStatus.OPEN) {
 						if (placesDisponibles > 0) {
 							details = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
 									placesDisponibles, placesDisponibles);
@@ -127,10 +127,10 @@ public class ParkingMapLayer implements MapLayer {
 							details = context.getResources().getString(R.string.parking_places_disponibles_zero);
 						}
 					} else {
-						details = context.getResources().getString(parkingPublic.getStatut().getTitleRes());
+						details = context.getResources().getString(parkingPublic.getStatus().getTitleRes());
 					}
 
-				} else if (parking instanceof ParkingRelai) {
+				} else if (parking instanceof IncentivePark) {
 					details = context.getResources().getString(R.string.map_calque_parking_relai);
 				}
 
@@ -139,7 +139,7 @@ public class ParkingMapLayer implements MapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-				final Parking parking = parkingList.get(item.getId());
+				final CarPark parking = parkingList.get(item.getId());
 
 				final Uri uri = Uri.parse(String.format(Locale.ENGLISH, NAVIGATION_INTENT, parking.getLatitude(),
 						parking.getLongitude()));
@@ -158,11 +158,11 @@ public class ParkingMapLayer implements MapLayer {
 
 	@Override
 	public BasicItemizedOverlay getOverlay(final Context context, final Location location) {
-		final List<Parking> parkings = new ArrayList<Parking>();
+		final List<CarPark> parkings = new ArrayList<CarPark>();
 
 		try {
 			if (parkings.size() == 0) {
-				final ParkingPublicManager publicManager = ParkingPublicManager.getInstance();
+				final PublicParkManager publicManager = PublicParkManager.getInstance();
 				final ParkingRelaiManager relaiManager = ParkingRelaiManager.getInstance();
 
 				parkings.addAll(publicManager.getAll(context));
@@ -177,8 +177,8 @@ public class ParkingMapLayer implements MapLayer {
 		final ParkingItemizedOverlay newItemizedOverlay = new ParkingItemizedOverlay(context.getResources());
 		BasicOverlayItem parkingOverlayItem;
 
-		for (final Parking parking : parkings) {
-			parkingOverlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(parking), parking.getNom(),
+		for (final CarPark parking : parkings) {
+			parkingOverlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(parking), parking.getName(),
 					TypeOverlayItem.TYPE_PARKING);
 			parkingOverlayItem.setId(parking.getId());
 			newItemizedOverlay.addOverlay(parkingOverlayItem);

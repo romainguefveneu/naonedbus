@@ -36,15 +36,15 @@ import android.view.WindowManager;
 public class GroupesHelper {
 
 	private final Context mContext;
-	private final BookmarkGroupManager mGroupeManager;
+	private final BookmarkGroupManager mBookmarkGroupManager;
 
 	public GroupesHelper(final Context context) {
 		mContext = context;
-		mGroupeManager = BookmarkGroupManager.getInstance();
+		mBookmarkGroupManager = BookmarkGroupManager.getInstance();
 	}
 
 	public void linkFavori(final List<Integer> idFavoris, final Runnable callback) {
-		final Cursor c = mGroupeManager.getCursor(mContext.getContentResolver(), idFavoris);
+		final Cursor c = mBookmarkGroupManager.getCursor(mContext.getContentResolver(), idFavoris);
 		final boolean[] checked = new boolean[c.getCount()];
 		final String[] items = new String[c.getCount()];
 
@@ -66,16 +66,16 @@ public class GroupesHelper {
 				BookmarkGroup groupe;
 				for (int i = 0; i < checked.length; i++) {
 					c.moveToPosition(i);
-					groupe = mGroupeManager.getSingleFromCursor(c);
+					groupe = mBookmarkGroupManager.getSingleFromCursor(c);
 
 					// TODO : Bulk insert / delete
 					if (checked[i]) {
 						for (final Integer idFavori : idFavoris) {
-							mGroupeManager.addFavoriToGroup(mContext.getContentResolver(), groupe.getId(), idFavori);
+							mBookmarkGroupManager.addFavoriToGroup(mContext.getContentResolver(), groupe.getId(), idFavori);
 						}
 					} else {
 						for (final Integer idFavori : idFavoris) {
-							mGroupeManager.removeFavoriFromGroup(mContext.getContentResolver(), groupe.getId(),
+							mBookmarkGroupManager.removeFavoriFromGroup(mContext.getContentResolver(), groupe.getId(),
 									idFavori);
 						}
 					}

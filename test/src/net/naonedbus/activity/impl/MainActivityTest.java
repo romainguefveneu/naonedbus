@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import net.naonedbus.bean.Stop;
-import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.schedule.Schedule;
 import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.manager.impl.StopManager;
 
@@ -60,7 +60,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 			final MutableDateTime mutableDateTime = date.toMutableDateTime();
 
 			try {
-				List<Horaire> schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
+				List<Schedule> schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
 				final int scheduleCount = schedules.size();
 
 				for (int i = 0; i < 20; i++) {
@@ -69,8 +69,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
 					schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
 
-					for (final Horaire horaire : schedules) {
-						mutableDateTime.setTime(horaire.getTimestamp());
+					for (final Schedule schedule : schedules) {
+						mutableDateTime.setTime(schedule.getTimestamp());
 
 						assertEquals(date.getDayOfMonth(), mutableDateTime.getDayOfMonth());
 						assertEquals(date.getMonthOfYear(), mutableDateTime.getMonthOfYear());

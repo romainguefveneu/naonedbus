@@ -20,7 +20,6 @@ package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.ReadOnlyContentProvider;
 import net.naonedbus.provider.table.RouteTable;
-import net.naonedbus.provider.table.StopBookmarkTable;
 import net.naonedbus.provider.table.StopTable;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -30,58 +29,51 @@ import android.net.Uri;
 public class RouteProvider extends ReadOnlyContentProvider {
 
 	/**
-	 * Recherche.
+	 * Search.
 	 */
 	public static final int SEARCH = 10;
 
 	/**
-	 * Toutes les lignes.
+	 * All routes.
 	 */
-	public static final int LIGNES = 100;
-	public static final String LIGNE_URI_PATH_QUERY = "lignes";
+	public static final int ROUTES = 100;
+	public static final String ROUTE_URI_PATH_QUERY = "routes";
 
 	/**
-	 * Ligne par son ID
+	 * Route by id.
 	 */
-	public static final int LIGNE_ID = 110;
+	public static final int ROUTE_ID = 110;
 
 	/**
-	 * Ligne par son code.
+	 * Route by code.
 	 */
-	public static final int LIGNE_CODE = 120;
-	public static final String LIGNE_CODE_URI_PATH_QUERY = "code";
+	public static final int ROUTE_CODE = 120;
+	public static final String ROUTE_CODE_URI_PATH_QUERY = "code";
 
 	/**
-	 * Lignes passant par une station donnée.
+	 * Routes by stop.
 	 */
-	public static final int LIGNE_STATION = 200;
-	public static final String LIGNE_STATION_URI_PATH_QUERY = "arret";
+	public static final int ROUTE_STOP = 200;
+	public static final String ROUTE_STOP_URI_PATH_QUERY = "stop";
 
 	/**
-	 * Lignes par type.
+	 * Routes by type.
 	 */
-	public static final int LIGNE_TYPE = 300;
-	public static final String LIGNE_TYPE_URI_PATH_QUERY = "type";
-
-	/**
-	 * Lignes ayant des favoris.
-	 */
-	public static final int LIGNE_FAVORIS = 400;
-	public static final String LIGNE_FAVORIS_URI_PATH_QUERY = "favoris";
+	public static final int ROUTE_TYPE = 300;
+	public static final String ROUTE_TYPE_URI_PATH_QUERY = "type";
 
 	private static final String AUTHORITY = "net.naonedbus.provider.RouteProvider";
-	private static final String LIGNES_BASE_PATH = "lignes";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LIGNES_BASE_PATH);
+	private static final String ROUTE_BASE_PATH = "routes";
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + ROUTE_BASE_PATH);
 
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
-		URI_MATCHER.addURI(AUTHORITY, LIGNE_URI_PATH_QUERY, LIGNES);
-		URI_MATCHER.addURI(AUTHORITY, LIGNE_URI_PATH_QUERY + "/*", SEARCH);
-		URI_MATCHER.addURI(AUTHORITY, LIGNE_URI_PATH_QUERY + "/#", LIGNE_ID);
-		URI_MATCHER.addURI(AUTHORITY, LIGNE_CODE_URI_PATH_QUERY, LIGNE_CODE);
-		URI_MATCHER.addURI(AUTHORITY, LIGNE_STATION_URI_PATH_QUERY, LIGNE_STATION);
-		URI_MATCHER.addURI(AUTHORITY, LIGNE_TYPE_URI_PATH_QUERY + "/#", LIGNE_TYPE);
-		URI_MATCHER.addURI(AUTHORITY, LIGNE_FAVORIS_URI_PATH_QUERY, LIGNE_FAVORIS);
+		URI_MATCHER.addURI(AUTHORITY, ROUTE_URI_PATH_QUERY, ROUTES);
+		URI_MATCHER.addURI(AUTHORITY, ROUTE_URI_PATH_QUERY + "/*", SEARCH);
+		URI_MATCHER.addURI(AUTHORITY, ROUTE_URI_PATH_QUERY + "/#", ROUTE_ID);
+		URI_MATCHER.addURI(AUTHORITY, ROUTE_CODE_URI_PATH_QUERY + "/*", ROUTE_CODE);
+		URI_MATCHER.addURI(AUTHORITY, ROUTE_STOP_URI_PATH_QUERY + "/*", ROUTE_STOP);
+		URI_MATCHER.addURI(AUTHORITY, ROUTE_TYPE_URI_PATH_QUERY + "/#", ROUTE_TYPE);
 	}
 
 	@Override
@@ -107,29 +99,25 @@ public class RouteProvider extends ReadOnlyContentProvider {
 			queryBuilder.appendWhereEscapeString("%" + keyword + "%");
 			break;
 
-		case LIGNE_ID:
+		case ROUTE_ID:
 			queryBuilder.appendWhere(RouteTable._ID + "=" + uri.getLastPathSegment());
 			break;
 
-		case LIGNE_CODE:
+		case ROUTE_CODE:
 			queryBuilder.appendWhere(RouteTable.ROUTE_CODE + "=");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("code"));
+			queryBuilder.appendWhereEscapeString(uri.getLastPathSegment());
 			break;
 
-		case LIGNE_STATION:
-			queryBuilder.appendWhere(String.format(LigneArretQuery.WHERE, uri.getQueryParameter("idStation")));
-			sortOrder = LigneArretQuery.ORDER_BY;
+		case ROUTE_STOP:
+			queryBuilder.appendWhere(String.format(RouteStopQuery.WHERE, uri.getLastPathSegment()));
+			sortOrder = RouteStopQuery.ORDER_BY;
 			break;
 
-		case LIGNE_TYPE:
+		case ROUTE_TYPE:
 			queryBuilder.appendWhere(RouteTable.TYPE_ID + "=" + uri.getLastPathSegment());
 			break;
 
-		case LIGNE_FAVORIS:
-			queryBuilder.appendWhere(LigneFavorisQuery.WHERE);
-			break;
-
-		case LIGNES:
+		case ROUTES:
 			// no filter
 			break;
 		default:
@@ -143,22 +131,12 @@ public class RouteProvider extends ReadOnlyContentProvider {
 	}
 
 	/**
-	 * Composants de la requête de sélection des lignes passant par un arrêt.
+	 * Routes by stop query.
 	 */
-	private static interface LigneArretQuery {
+	private static interface RouteStopQuery {
 		public static final String WHERE = RouteTable.ROUTE_CODE + "  IN (SELECT distinct(" + StopTable.ROUTE_CODE
 				+ " ) FROM " + StopTable.TABLE_NAME + " WHERE " + StopTable.EQUIPMENT_ID + "= %s)";
 		public static final String ORDER_BY = RouteTable.TYPE_ID + ", CAST(" + RouteTable.LETTER + " as numeric) ";
-
-	}
-
-	/**
-	 * Composants de la requête de sélection des lignes ayant au moins un
-	 * favori.
-	 */
-	private static interface LigneFavorisQuery {
-		public static final String WHERE = RouteTable.ROUTE_CODE + "  IN (SELECT distinct("
-				+ StopBookmarkTable.ROUTE_CODE + " ) FROM " + StopBookmarkTable.TABLE_NAME + ")";
 
 	}
 

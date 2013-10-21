@@ -45,34 +45,34 @@ public class DirectionManager extends SQLiteManager<Direction> {
 	}
 
 	/**
-	 * Récupérer une liste contenant les sens de la ligne sépcifiée
+	 * Récupérer une liste contenant les direction de la route sépcifiée
 	 * 
 	 * @param contentResolver
-	 * @param codeLigne
+	 * @param routeCode
 	 */
-	public List<Direction> getAll(final ContentResolver contentResolver, final String codeLigne) {
-		final Cursor c = getCursor(contentResolver, codeLigne);
+	public List<Direction> getAll(final ContentResolver contentResolver, final String routeCode) {
+		final Cursor c = getCursor(contentResolver, routeCode);
 		return getFromCursor(c);
 	}
 
 	/**
-	 * Récupérer un cursor contenant les sens de la ligne sépcifiée
+	 * Récupérer un cursor contenant les direction de la route sépcifiée
 	 * 
 	 * @param contentResolver
-	 * @param codeLigne
+	 * @param routeCode
 	 */
-	public Cursor getCursor(final ContentResolver contentResolver, final String codeLigne) {
+	public Cursor getCursor(final ContentResolver contentResolver, final String routeCode) {
 		final Uri.Builder builder = DirectionProvider.CONTENT_URI.buildUpon();
 		builder.path(DirectionProvider.SENS_LIGNE_CODE_URI_PATH_QUERY);
-		builder.appendQueryParameter("codeLigne", codeLigne);
+		builder.appendQueryParameter("routeCode", routeCode);
 		return contentResolver.query(builder.build(), null, null, null, null);
 	}
 
-	public Direction getSingle(final ContentResolver contentResolver, final String codeLigne, final String codeSens) {
+	public Direction getSingle(final ContentResolver contentResolver, final String routeCode, final String directionCode) {
 		final Uri.Builder builder = DirectionProvider.CONTENT_URI.buildUpon();
 		builder.path(DirectionProvider.SENS_CODE_LIGNE_CODE_URI_PATH_QUERY);
-		builder.appendQueryParameter("codeLigne", codeLigne);
-		builder.appendQueryParameter("codeSens", codeSens);
+		builder.appendQueryParameter("routeCode", routeCode);
+		builder.appendQueryParameter("directionCode", directionCode);
 		final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
 		return getFirstFromCursor(c);
 	}

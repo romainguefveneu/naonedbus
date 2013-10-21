@@ -84,7 +84,7 @@ public class StopBookmarkManager extends SQLiteManager<StopBookmark> {
 
 	/**
 	 * @param contentResolver
-	 * @return les favoris avec les données sur la ligne et le sens
+	 * @return les favoris avec les données sur la route et le direction
 	 */
 	public List<StopBookmark> getFull(final ContentResolver contentResolver) {
 		final Uri.Builder builder = StopBookmarkProvider.CONTENT_URI.buildUpon();
@@ -287,8 +287,8 @@ public class StopBookmarkManager extends SQLiteManager<StopBookmark> {
 		final StopBookmark.Builder builder = new StopBookmark.Builder();
 		for (final net.naonedbus.rest.container.FavoriContainer.Favori f : container.favoris) {
 			builder.setCodeArret(f.codeArret);
-			builder.setCodeSens(f.codeSens);
-			builder.setCodeLigne(f.codeLigne);
+			builder.setCodeSens(f.directionCode);
+			builder.setCodeLigne(f.routeCode);
 			builder.setBookmarkName(f.nomFavori);
 
 			itemId = arretManager.getIdByFavori(contentResolver, builder.build());

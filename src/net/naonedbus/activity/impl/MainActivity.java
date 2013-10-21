@@ -137,8 +137,8 @@ public class MainActivity extends MenuDrawerActivity {
 
 				if (selectedItemType.equals(TypeOverlayItem.TYPE_STATION)) {
 					// Afficher les parcours de l'arrêt sélectionné
-					final ParamIntent intent = new ParamIntent(this, ParcoursActivity.class);
-					intent.putExtra(ParcoursActivity.PARAM_ID_SATION, selectedItemId);
+					final ParamIntent intent = new ParamIntent(this, StopPathActivity.class);
+					intent.putExtra(StopPathActivity.PARAM_ID_SATION, selectedItemId);
 					startActivity(intent);
 				} else {
 					// Afficher l'élément sur la carte

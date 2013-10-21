@@ -20,7 +20,7 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.MapActivity;
-import net.naonedbus.activity.impl.ParcoursActivity;
+import net.naonedbus.activity.impl.StopPathActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.fragment.CustomCursorFragment;
@@ -92,8 +92,8 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 
 				if (selectedItemType.equals(TypeOverlayItem.TYPE_STATION)) {
 					// Afficher les parcours de l'arrêt sélectionné
-					final Intent intent = new Intent(getActivity(), ParcoursActivity.class);
-					intent.putExtra(ParcoursActivity.PARAM_ID_SATION, selectedItemId);
+					final Intent intent = new Intent(getActivity(), StopPathActivity.class);
+					intent.putExtra(StopPathActivity.PARAM_ID_SATION, selectedItemId);
 					startActivity(intent);
 				} else {
 					// Afficher l'élément sur la carte
@@ -159,12 +159,12 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		Intent intent;
-		final CursorWrapper equipement = (CursorWrapper) getListAdapter().getItem(position);
-		final int idType = equipement.getInt(equipement.getColumnIndex(EquipmentTable.TYPE_ID));
+		final CursorWrapper equipment = (CursorWrapper) getListAdapter().getItem(position);
+		final int idType = equipment.getInt(equipment.getColumnIndex(EquipmentTable.TYPE_ID));
 
 		if (idType == Type.TYPE_STOP.getId()) {
-			intent = new Intent(getActivity(), ParcoursActivity.class);
-			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, (int) id);
+			intent = new Intent(getActivity(), StopPathActivity.class);
+			intent.putExtra(StopPathActivity.PARAM_ID_SATION, (int) id);
 		} else {
 			intent = new Intent(getActivity(), MapActivity.class);
 			intent.putExtra(MapFragment.PARAM_ITEM_ID, id);
@@ -198,7 +198,7 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 
 	@Override
 	public Cursor runQuery(final CharSequence constraint) {
-		return mEquipementManager.getEquipementsCursorByName(getActivity().getContentResolver(), null,
+		return mEquipementManager.getCursorByName(getActivity().getContentResolver(), null,
 				constraint.toString());
 	}
 

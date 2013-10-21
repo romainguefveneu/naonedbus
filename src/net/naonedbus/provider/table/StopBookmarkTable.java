@@ -32,8 +32,8 @@ public interface StopBookmarkTable extends BaseColumns {
 	public static final String JOIN = TABLE_NAME + " f " + " LEFT JOIN " + StopTable.TABLE_NAME
 			+ " a ON f._id = a._id" + 
 			" LEFT JOIN " + EquipmentTable.TABLE_NAME + " st ON st.idType = 0 AND st._id = a.idStation " +
-			" LEFT JOIN " + RouteTable.TABLE_NAME+ " l ON l.code = f.codeLigne" + 
-			" LEFT JOIN " + DirectionTable.TABLE_NAME + " s ON s.codeLigne = f.codeLigne AND s.code = f.codeSens"; 
+			" LEFT JOIN " + RouteTable.TABLE_NAME+ " l ON l.code = f.routeCode" + 
+			" LEFT JOIN " + DirectionTable.TABLE_NAME + " s ON s.routeCode = f.routeCode AND s.code = f.directionCode"; 
 
 	public static final String[] PROJECTION = new String[] { 
 		StopBookmarkTable._ID, 

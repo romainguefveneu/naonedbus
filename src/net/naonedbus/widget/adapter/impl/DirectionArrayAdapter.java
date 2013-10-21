@@ -63,9 +63,9 @@ public class DirectionArrayAdapter extends ArrayAdapter<Direction> {
 
 	protected void bindView(View view, int position, Integer textColor, Typeface typeface) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final Direction sens = getItem(position);
+		final Direction direction = getItem(position);
 
-		if (sens.getId() == -1) {
+		if (direction.getId() == -1) {
 			holder.itemTitle.setTypeface(null, Typeface.BOLD);
 			if (holder.itemIcon != null)
 				holder.itemIcon.setVisibility(View.INVISIBLE);
@@ -75,7 +75,7 @@ public class DirectionArrayAdapter extends ArrayAdapter<Direction> {
 				holder.itemIcon.setVisibility(View.VISIBLE);
 		}
 
-		holder.itemTitle.setText(sens.getName());
+		holder.itemTitle.setText(direction.getName());
 		if (textColor != null)
 			holder.itemTitle.setTextColor(textColor);
 		if (typeface != null)

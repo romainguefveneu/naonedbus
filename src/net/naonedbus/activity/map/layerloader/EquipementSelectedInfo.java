@@ -33,9 +33,9 @@ public abstract class EquipementSelectedInfo implements ItemSelectedInfo {
 
 	
 	
-	public Intent getNavigationIntent(Context context, Equipment equipement) {
-		final Uri uri = Uri.parse(String.format(Locale.ENGLISH, NAVIGATION_INTENT, equipement.getLatitude(),
-				equipement.getLongitude()));
+	public Intent getNavigationIntent(Context context, Equipment equipment) {
+		final Uri uri = Uri.parse(String.format(Locale.ENGLISH, NAVIGATION_INTENT, equipment.getLatitude(),
+				equipment.getLongitude()));
 
 		return new Intent(Intent.ACTION_VIEW, uri);
 	}

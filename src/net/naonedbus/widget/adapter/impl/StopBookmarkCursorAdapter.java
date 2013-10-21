@@ -36,18 +36,18 @@ import android.widget.TextView;
 public class StopBookmarkCursorAdapter extends CursorAdapter {
 
 	private final LayoutInflater mLayoutInflater;
-	private final StopBookmarkManager mFavoriManager;
+	private final StopBookmarkManager mStopBookmarkManager;
 
 	public StopBookmarkCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 		mLayoutInflater = LayoutInflater.from(context);
-		mFavoriManager = StopBookmarkManager.getInstance();
+		mStopBookmarkManager = StopBookmarkManager.getInstance();
 	}
 
 	@Override
 	public void bindView(final View view, final Context context, final Cursor cursor) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final StopBookmark item = mFavoriManager.getSingleFromCursor(cursor);
+		final StopBookmark item = mStopBookmarkManager.getSingleFromCursor(cursor);
 
 		if (item.getBackground() == null) {
 			final GradientDrawable background = ColorUtils.getRoundedGradiant(item.getBackColor());
@@ -59,11 +59,11 @@ public class StopBookmarkCursorAdapter extends CursorAdapter {
 		holder.ligneCode.setTextColor(item.getFrontColor());
 
 		if (item.getBookmarkName() == null) {
-			holder.itemTitle.setText(item.getNomArret());
+			holder.itemTitle.setText(item.getName());
 			holder.itemDescription.setText(FormatUtils.formatSens(item.getDirectionName()));
 		} else {
 			holder.itemTitle.setText(item.getBookmarkName());
-			holder.itemDescription.setText(FormatUtils.formatSens(item.getNomArret(), item.getDirectionName()));
+			holder.itemDescription.setText(FormatUtils.formatSens(item.getName(), item.getDirectionName()));
 		}
 
 		if (item.getDelay() == null) {

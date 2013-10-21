@@ -71,7 +71,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 		}
 
 		final LegWrapper legWrapper = getItem(position);
-		final Route ligne = legWrapper.getLigne();
+		final Route route = legWrapper.getLigne();
 		final Place place = legWrapper.getPlace();
 
 		if ("WALK".equals(legWrapper.getMode())) {
@@ -106,13 +106,13 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 				viewHolder.itemPlace.setText(place.name);
 			}
 
-			if (ligne != null) {
+			if (route != null) {
 				viewHolder.itemIcon.setVisibility(View.GONE);
 				viewHolder.itemSymbole.setVisibility(View.VISIBLE);
 
-				viewHolder.itemSymbole.setText(ligne.getLetter());
-				viewHolder.itemSymbole.setTextColor(ligne.getFrontColor());
-				viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getBackColor()));
+				viewHolder.itemSymbole.setText(route.getLetter());
+				viewHolder.itemSymbole.setTextColor(route.getFrontColor());
+				viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(route.getBackColor()));
 			} else {
 				viewHolder.itemIcon.setVisibility(View.INVISIBLE);
 				viewHolder.itemSymbole.setVisibility(View.INVISIBLE);

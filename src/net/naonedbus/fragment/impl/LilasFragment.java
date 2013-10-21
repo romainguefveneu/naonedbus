@@ -20,9 +20,9 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Equipment;
-import net.naonedbus.fragment.EquipementFragment;
+import net.naonedbus.fragment.EquipmentFragment;
 
-public class LilasFragment extends EquipementFragment {
+public class LilasFragment extends EquipmentFragment {
 
 	public LilasFragment() {
 		super(R.layout.fragment_listview_section, Equipment.Type.TYPE_LILA);

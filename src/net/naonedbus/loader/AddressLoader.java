@@ -107,16 +107,16 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 	}
 
 	private void addEquipements(final String filter, final List<AddressResult> result) {
-		final List<Equipment> equipements = mEquipementManager.getEquipementsByName(getContext().getContentResolver(),
+		final List<Equipment> equipements = mEquipementManager.getByName(getContext().getContentResolver(),
 				null, filter);
 
-		for (final Equipment equipement : equipements) {
-			final Type type = equipement.getType();
-			final String title = equipement.getName();
-			final String description = equipement.getAddress();
+		for (final Equipment equipment : equipements) {
+			final Type type = equipment.getType();
+			final String title = equipment.getName();
+			final String description = equipment.getAddress();
 			final int color = getContext().getResources().getColor(type.getBackgroundColorRes());
 			final AddressResult addressResult = new AddressResult(title, description, type, type.getDrawableRes(),
-					color, equipement.getLatitude(), equipement.getLongitude());
+					color, equipment.getLatitude(), equipment.getLongitude());
 
 			addressResult.setSection(type.getId() + 1);
 			result.add(addressResult);

@@ -24,7 +24,7 @@ public class NextHoraireTask {
 
 	private Context mContext;
 	private int mId;
-	private Stop mArret;
+	private Stop mStop;
 	private int mLimit;
 	private String mActionCallback;
 	private Throwable mThrowable;
@@ -48,11 +48,11 @@ public class NextHoraireTask {
 	}
 
 	public Stop getArret() {
-		return mArret;
+		return mStop;
 	}
 
-	public NextHoraireTask setArret(final Stop arret) {
-		mArret = arret;
+	public NextHoraireTask setArret(final Stop stop) {
+		mStop = stop;
 		return this;
 	}
 
@@ -84,7 +84,7 @@ public class NextHoraireTask {
 
 	@Override
 	public String toString() {
-		return String.format("%d|%s|%d|%s", mId, mArret.toString(), mLimit, mActionCallback);
+		return String.format("%d|%s|%d|%s", mId, mStop.toString(), mLimit, mActionCallback);
 	}
 
 }

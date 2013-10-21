@@ -32,13 +32,13 @@ import android.widget.TextView;
 
 public class RouteDialogAdapter extends ArraySectionAdapter<SectionItem> {
 
-	public RouteDialogAdapter(Context context, List<Direction> sens) {
-		super(context, R.layout.list_item_icon_section, merge(sens));
+	public RouteDialogAdapter(Context context, List<Direction> direction) {
+		super(context, R.layout.list_item_icon_section, merge(direction));
 	}
 
-	private static List<SectionItem> merge(List<Direction> sens) {
+	private static List<SectionItem> merge(List<Direction> direction) {
 		List<SectionItem> objects = new ArrayList<SectionItem>();
-		for (Direction s : sens) {
+		for (Direction s : direction) {
 			objects.add((SectionItem) s);
 		}
 		return objects;
@@ -47,8 +47,8 @@ public class RouteDialogAdapter extends ArraySectionAdapter<SectionItem> {
 	@Override
 	public void bindView(View view, Context context, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final Direction sens = (Direction) getItem(position);
-		holder.itemTitle.setText(sens.getName());
+		final Direction direction = (Direction) getItem(position);
+		holder.itemTitle.setText(direction.getName());
 	}
 
 	@Override

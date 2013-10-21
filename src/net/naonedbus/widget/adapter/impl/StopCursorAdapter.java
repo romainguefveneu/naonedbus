@@ -81,14 +81,14 @@ public class StopCursorAdapter extends CursorAdapter {
 		TextView title = null;
 	}
 
-	private boolean isFavori(final int idArret) {
+	private boolean isFavori(final int stopId) {
 		if (mFavoris == null)
 			return false;
 
 		final int colIndex = mFavoris.getColumnIndex(StopBookmarkTable._ID);
 		mFavoris.moveToFirst();
 		while (mFavoris.isAfterLast() == false) {
-			if (idArret == mFavoris.getInt(colIndex))
+			if (stopId == mFavoris.getInt(colIndex))
 				return true;
 			mFavoris.moveToNext();
 		}

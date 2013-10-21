@@ -88,8 +88,8 @@ public class MargueriteMapLayer extends EquipementMapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-				final Equipment equipement = getItemById(item.getId());
-				return getNavigationIntent(context, equipement);
+				final Equipment equipment = getItemById(item.getId());
+				return getNavigationIntent(context, equipment);
 			}
 
 			@Override

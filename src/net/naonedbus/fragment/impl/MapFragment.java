@@ -288,22 +288,22 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private void onSearchItemClick(final int position) {
 		final EquipmentManager manager = EquipmentManager.getInstance();
 		final CursorWrapper cursorWrapper = (CursorWrapper) mSearchAdapter.getItem(position);
-		final Equipment equipement = manager.getSingleFromCursorWrapper(cursorWrapper);
-		selectEquipement(equipement);
+		final Equipment equipment = manager.getSingleFromCursorWrapper(cursorWrapper);
+		selectEquipement(equipment);
 
 		mSearchMenuItem.collapseActionView();
 	}
 
-	private void selectEquipement(final Equipment equipement) {
-		final Type type = equipement.getType();
+	private void selectEquipement(final Equipment equipment) {
+		final Type type = equipment.getType();
 
 		if (mInputPoints.get(type) == null) {
-			mLastSearchedItem = equipement;
+			mLastSearchedItem = equipment;
 			mSelectedTypes.add(type);
 			setLayerPreference(type.getId(), true);
 			loadMarkers();
 		} else {
-			final InputPoint inputPoint = findInputPoint(equipement);
+			final InputPoint inputPoint = findInputPoint(equipment);
 
 			if (inputPoint != null) {
 				mClusterkraf.showInfoWindow(inputPoint);
@@ -313,13 +313,13 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 		}
 	}
 
-	private InputPoint findInputPoint(final Equipment equipement) {
-		final List<InputPoint> inputPoints = mInputPoints.get(equipement.getType());
+	private InputPoint findInputPoint(final Equipment equipment) {
+		final List<InputPoint> inputPoints = mInputPoints.get(equipment.getType());
 
 		if (inputPoints != null) {
 			for (final InputPoint inputPoint : inputPoints) {
 				final Equipment item = (Equipment) inputPoint.getTag();
-				if (item.getNormalizedName().equals(equipement.getNormalizedName())) {
+				if (item.getNormalizedName().equals(equipment.getNormalizedName())) {
 					return inputPoint;
 				}
 			}

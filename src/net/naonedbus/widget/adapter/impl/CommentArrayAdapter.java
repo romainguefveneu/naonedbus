@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Comment;
+import net.naonedbus.bean.LiveNews;
 import net.naonedbus.bean.Route;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.ColorUtils;
@@ -37,7 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
-public class CommentArrayAdapter extends ArraySectionAdapter<Comment> {
+public class CommentArrayAdapter extends ArraySectionAdapter<LiveNews> {
 
 	private static final Map<String, CommentaireAdapter> adapterMap = new HashMap<String, CommentaireAdapter>();
 	static {
@@ -70,7 +70,7 @@ public class CommentArrayAdapter extends ArraySectionAdapter<Comment> {
 
 	@Override
 	public void bindView(final View view, final Context context, final int position) {
-		final Comment item = getItem(position);
+		final LiveNews item = getItem(position);
 		CommentaireAdapter adapter;
 
 		if (adapterMap.containsKey(item.getSource())) {
@@ -100,19 +100,19 @@ public class CommentArrayAdapter extends ArraySectionAdapter<Comment> {
 }
 
 /**
- * Défini un Adapter gérant l'affichage d'une ligne de commentaire
+ * Défini un Adapter gérant l'affichage d'une route de naoNews
  */
 interface CommentaireAdapter {
-	void setObject(View itemView, Comment item);
+	void setObject(View itemView, LiveNews item);
 }
 
 /**
- * Ligne de commentaire de type Tweet @tan_trafic.
+ * route de naoNews de type Tweet @tan_trafic.
  */
 class TanTraficCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(final View itemView, final Comment item) {
+	public void setObject(final View itemView, final LiveNews item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
 		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_tan);
@@ -130,12 +130,12 @@ class TanTraficCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type Tweet @tan_actus.
+ * route de naoNews de type Tweet @tan_actus.
  */
 class TanActusCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(final View itemView, final Comment item) {
+	public void setObject(final View itemView, final LiveNews item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
 		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_tan);
@@ -153,12 +153,12 @@ class TanActusCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type Tweet @TANinfos.
+ * route de naoNews de type Tweet @TANinfos.
  */
 class TanInfosCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(final View itemView, final Comment item) {
+	public void setObject(final View itemView, final LiveNews item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
 		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_taninfos_background);
@@ -176,12 +176,12 @@ class TanInfosCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type Message de service naonedbus
+ * route de naoNews de type Message de service naonedbus
  */
 class MessageServiceCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(final View itemView, final Comment item) {
+	public void setObject(final View itemView, final LiveNews item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 		holder.ligneCodeBackground.setBackgroundResource(R.drawable.ic_launcher);
 		holder.ligneCodeBackground.setImageResource(0);
@@ -198,12 +198,12 @@ class MessageServiceCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type standard
+ * route de naoNews de type standard
  */
 class DefaultCommentaireAdapter implements CommentaireAdapter {
 
 	@Override
-	public void setObject(final View itemView, final Comment item) {
+	public void setObject(final View itemView, final LiveNews item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
 		String title = "";
@@ -213,14 +213,14 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 
 		if (item.getRoute() != null) {
 
-			final Route ligne = item.getRoute();
+			final Route route = item.getRoute();
 			if (item.getBackground() == null) {
-				item.setBackground(ColorUtils.getRoundedGradiant(ligne.getBackColor()));
+				item.setBackground(ColorUtils.getRoundedGradiant(route.getBackColor()));
 			}
 
-			holder.ligneCode.setText(ligne.getLetter());
+			holder.ligneCode.setText(route.getLetter());
 			holder.ligneCode.setBackgroundDrawable(item.getBackground());
-			holder.ligneCode.setTextColor(ligne.getFrontColor());
+			holder.ligneCode.setTextColor(route.getFrontColor());
 
 		} else {
 
@@ -234,7 +234,7 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 			title = itemView.getContext().getString(R.string.commentaire_tout);
 		} else {
 			if (item.getStop() != null) {
-				title = item.getStop().getNomArret() + " ";
+				title = item.getStop().getName() + " ";
 			}
 			if (item.getDirection() != null) {
 				title = title + "\u2192 " + item.getDirection().getName();

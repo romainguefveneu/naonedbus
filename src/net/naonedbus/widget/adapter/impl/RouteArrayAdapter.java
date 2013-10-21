@@ -52,31 +52,31 @@ public class RouteArrayAdapter extends ArraySectionAdapter<Route> {
 	@Override
 	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final Route ligne = getItem(position);
+		final Route route = getItem(position);
 
-		holder.icon.setText(ligne.getLetter());
-		holder.icon.setTextColor(ligne.getFrontColor());
+		holder.icon.setText(route.getLetter());
+		holder.icon.setTextColor(route.getFrontColor());
 
-		if (ligne.getId() == -1) {
+		if (route.getId() == -1) {
 			holder.icon.setBackgroundDrawable(null);
 			holder.sens1.setTypeface(null, Typeface.BOLD);
 		} else {
 			holder.sens1.setTypeface(null, Typeface.NORMAL);
 
-			if (ligne.getBackColor() == 0) {
+			if (route.getBackColor() == 0) {
 				holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			} else {
-				holder.icon.setBackgroundColor(ligne.getBackColor());
+				holder.icon.setBackgroundColor(route.getBackColor());
 			}
 		}
 
-		if ((ligne.getHeadsigneFrom() == null || ligne.getHeadsigneFrom().length() == 0 || ligne.getHeadsigneFrom()
-				.equals(ligne.getHeadsignTo()))) {
-			holder.sens1.setText(ligne.getName());
+		if ((route.getHeadsigneFrom() == null || route.getHeadsigneFrom().length() == 0 || route.getHeadsigneFrom()
+				.equals(route.getHeadsignTo()))) {
+			holder.sens1.setText(route.getName());
 			holder.sens2.setVisibility(View.GONE);
 		} else {
-			holder.sens1.setText(ligne.getHeadsigneFrom());
-			holder.sens2.setText(ligne.getHeadsignTo());
+			holder.sens1.setText(route.getHeadsigneFrom());
+			holder.sens2.setText(route.getHeadsignTo());
 			holder.sens2.setVisibility(View.VISIBLE);
 		}
 

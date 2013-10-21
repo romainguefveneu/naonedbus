@@ -46,8 +46,8 @@ public class FavoriContainer {
 	}
 
 	public static class Favori {
-		public String codeLigne;
-		public String codeSens;
+		public String routeCode;
+		public String directionCode;
 		public String codeArret;
 		public String nomFavori;
 		public List<Integer> idGroupes;
@@ -62,12 +62,12 @@ public class FavoriContainer {
 		groupes.add(groupe);
 	}
 
-	public void addFavori(final String codeLigne, final String codeSens, final String codeArret,
+	public void addFavori(final String routeCode, final String directionCode, final String codeArret,
 			final String nomFavori, final List<Integer> idGroupes) {
 		final Favori favori = new Favori();
 		favori.codeArret = codeArret;
-		favori.codeSens = codeSens;
-		favori.codeLigne = codeLigne;
+		favori.directionCode = directionCode;
+		favori.routeCode = routeCode;
 		favori.nomFavori = nomFavori;
 		favori.idGroupes = idGroupes;
 

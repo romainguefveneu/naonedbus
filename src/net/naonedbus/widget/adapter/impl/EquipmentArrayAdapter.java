@@ -26,14 +26,14 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.Route;
 import net.naonedbus.bean.async.AsyncTaskInfo;
-import net.naonedbus.bean.async.LignesTaskInfo;
-import net.naonedbus.bean.async.ParkingPublicTaskInfo;
-import net.naonedbus.bean.parking.pub.ParkingPublic;
-import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
+import net.naonedbus.bean.async.RouteTaskInfo;
+import net.naonedbus.bean.async.PublicParkTaskInfo;
+import net.naonedbus.bean.parking.PublicPark;
+import net.naonedbus.bean.parking.PublicParkStatus;
 import net.naonedbus.manager.Unschedulable;
-import net.naonedbus.manager.impl.EquipmentManager.SousType;
-import net.naonedbus.manager.impl.LigneManager;
-import net.naonedbus.manager.impl.ParkingPublicManager;
+import net.naonedbus.manager.impl.EquipmentManager.SubType;
+import net.naonedbus.manager.impl.RouteManager;
+import net.naonedbus.manager.impl.PublicParkManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.utils.FontUtils;
@@ -75,20 +75,20 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 
 	private void initUnschedulers() {
 		unschedulers = new HashMap<Class<? extends AsyncTaskInfo<?>>, Unschedulable<?>>();
-		unschedulers.put(LignesTaskInfo.class, LigneManager.getInstance());
-		unschedulers.put(ParkingPublicTaskInfo.class, ParkingPublicManager.getInstance());
+		unschedulers.put(RouteTaskInfo.class, RouteManager.getInstance());
+		unschedulers.put(PublicParkTaskInfo.class, PublicParkManager.getInstance());
 	}
 
 	@Override
 	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final Equipment equipement = getItem(position);
-		final Equipment.Type type = equipement.getType();
+		final Equipment equipment = getItem(position);
+		final Equipment.Type type = equipment.getType();
 		final EquipementTypeAdapter adapter = adapters.get(type.getId());
 
 		// Définir le fond de l'icone.
-		if (equipement.getSubType() != 0) {
-			final SousType sousType = SousType.getTypeByValue(equipement.getSubType());
+		if (equipment.getSubType() != 0) {
+			final SubType sousType = SubType.getTypeByValue(equipment.getSubType());
 			holder.itemSymbole.setImageResource(sousType.getDrawableRes());
 		} else {
 			holder.itemSymbole.setImageResource(type.getDrawableRes());
@@ -97,14 +97,14 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 				type.getBackgroundColorRes())));
 
 		// Définir la distance.
-		if (equipement.getDistance() == null) {
+		if (equipment.getDistance() == null) {
 			holder.itemDistance.setText("");
 		} else {
-			holder.itemDistance.setText(DistanceUtils.formatDist(equipement.getDistance()));
+			holder.itemDistance.setText(DistanceUtils.formatDist(equipment.getDistance()));
 		}
 
 		if (adapter != null) {
-			adapter.bindView(context, holder, equipement);
+			adapter.bindView(context, holder, equipment);
 		}
 
 		bindHeaderView(view, position);
@@ -117,7 +117,7 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
 		holder.itemDistance = (TextView) view.findViewById(R.id.itemDistance);
-		holder.itemLignes = (ViewGroup) view.findViewById(R.id.itemLignes);
+		holder.itemRoutes = (ViewGroup) view.findViewById(R.id.itemLignes);
 		holder.itemSecondLine = view.findViewById(R.id.secondLine);
 		view.setTag(holder);
 	}
@@ -141,7 +141,7 @@ class ViewHolder {
 	TextView itemTitle;
 	TextView itemDescription;
 	TextView itemDistance;
-	ViewGroup itemLignes;
+	ViewGroup itemRoutes;
 	View itemSecondLine;
 	ImageView itemSymbole;
 	AsyncTaskInfo<?> task;
@@ -159,7 +159,7 @@ abstract class EquipementTypeAdapter {
 		return adapter;
 	}
 
-	public abstract void bindView(Context context, ViewHolder holder, Equipment equipement);
+	public abstract void bindView(Context context, ViewHolder holder, Equipment equipment);
 }
 
 class DefaultTypeAdapter extends EquipementTypeAdapter {
@@ -169,15 +169,15 @@ class DefaultTypeAdapter extends EquipementTypeAdapter {
 	}
 
 	@Override
-	public void bindView(final Context context, final ViewHolder holder, final Equipment equipement) {
-		final String details = equipement.getDetails();
-		final String adresse = equipement.getAddress();
+	public void bindView(final Context context, final ViewHolder holder, final Equipment equipment) {
+		final String details = equipment.getDetails();
+		final String adresse = equipment.getAddress();
 
 		if (holder.task != null) {
 			getAdapter().unschedule(holder.task);
 		}
 
-		holder.itemTitle.setText(equipement.getName());
+		holder.itemTitle.setText(equipment.getName());
 		if (details == null && adresse == null) {
 			holder.itemSecondLine.setVisibility(View.GONE);
 		} else {
@@ -186,50 +186,50 @@ class DefaultTypeAdapter extends EquipementTypeAdapter {
 			holder.itemSecondLine.setVisibility(View.VISIBLE);
 		}
 
-		holder.itemLignes.setVisibility(View.GONE);
+		holder.itemRoutes.setVisibility(View.GONE);
 	}
 }
 
 class ArretTypeAdapter extends EquipementTypeAdapter {
 
-	private final LigneManager mLigneManager;
+	private final RouteManager mRouteManager;
 	private final Typeface mRoboto;
 
 	public ArretTypeAdapter(final EquipmentArrayAdapter equipementArrayAdapter) {
 		super(equipementArrayAdapter);
-		mLigneManager = LigneManager.getInstance();
+		mRouteManager = RouteManager.getInstance();
 		mRoboto = FontUtils.getRobotoBoldCondensed(equipementArrayAdapter.getContext());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void bindView(final Context context, final ViewHolder holder, final Equipment equipement) {
+	public void bindView(final Context context, final ViewHolder holder, final Equipment equipment) {
 		final LayoutInflater layoutInflater = LayoutInflater.from(context);
 
-		holder.itemTitle.setText(equipement.getName());
-		holder.itemLignes.removeAllViews();
+		holder.itemTitle.setText(equipment.getName());
+		holder.itemRoutes.removeAllViews();
 		holder.itemDescription.setVisibility(View.GONE);
 
 		if (holder.task != null) {
 			getAdapter().unschedule(holder.task);
 		}
 
-		if (equipement.getTag() == null) {
+		if (equipment.getTag() == null) {
 			final Handler handler = new Handler() {
 				@Override
 				public void handleMessage(final Message msg) {
 					super.handleMessage(msg);
-					holder.itemLignes.removeAllViews();
+					holder.itemRoutes.removeAllViews();
 					final List<Route> lignes = (List<Route>) msg.obj;
-					equipement.setTag(lignes);
+					equipment.setTag(lignes);
 					bindLignes(lignes, holder, layoutInflater);
-					holder.itemLignes.startAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_from_left));
+					holder.itemRoutes.startAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_in_from_left));
 					holder.task = null;
 				}
 			};
-			holder.task = mLigneManager.scheduleGetLignesFromStation(context, equipement.getId(), handler);
+			holder.task = mRouteManager.scheduleGetRoutesByStopArea(context, equipment.getId(), handler);
 		} else {
-			bindLignes((List<Route>) equipement.getTag(), holder, layoutInflater);
+			bindLignes((List<Route>) equipment.getTag(), holder, layoutInflater);
 		}
 
 	}
@@ -237,18 +237,18 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 	private void bindLignes(final List<Route> lignes, final ViewHolder holder, final LayoutInflater layoutInflater) {
 		holder.itemSecondLine.setVisibility(View.VISIBLE);
 		holder.itemDescription.setVisibility(View.GONE);
-		holder.itemLignes.setVisibility(View.VISIBLE);
+		holder.itemRoutes.setVisibility(View.VISIBLE);
 
-		for (final Route ligne : lignes) {
-			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, holder.itemLignes,
+		for (final Route route : lignes) {
+			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, holder.itemRoutes,
 					false);
 
 			textView.setTypeface(mRoboto);
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligne.getBackColor()));
-			textView.setText(ligne.getLetter());
-			textView.setTextColor(ligne.getFrontColor());
+			textView.setBackgroundDrawable(ColorUtils.getGradiant(route.getBackColor()));
+			textView.setText(route.getLetter());
+			textView.setTextColor(route.getFrontColor());
 
-			holder.itemLignes.addView(textView);
+			holder.itemRoutes.addView(textView);
 		}
 
 	}
@@ -256,33 +256,33 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 
 class ParkingTypeAdapter extends EquipementTypeAdapter {
 
-	private final ParkingPublicManager parkingPublicManager;
+	private final PublicParkManager parkingPublicManager;
 
 	public ParkingTypeAdapter(final EquipmentArrayAdapter equipementArrayAdapter) {
 		super(equipementArrayAdapter);
-		parkingPublicManager = ParkingPublicManager.getInstance();
+		parkingPublicManager = PublicParkManager.getInstance();
 	}
 
 	@Override
-	public void bindView(final Context context, final ViewHolder holder, final Equipment equipement) {
-		holder.itemTitle.setText(equipement.getName());
+	public void bindView(final Context context, final ViewHolder holder, final Equipment equipment) {
+		holder.itemTitle.setText(equipment.getName());
 		holder.itemDescription.setVisibility(View.GONE);
-		holder.itemLignes.setVisibility(View.GONE);
+		holder.itemRoutes.setVisibility(View.GONE);
 
 		if (holder.task != null) {
 			getAdapter().unschedule(holder.task);
 		}
 
-		if (equipement.getTag() == null) {
+		if (equipment.getTag() == null) {
 			final Handler handler = new Handler() {
 				@Override
 				public void handleMessage(final Message msg) {
 					super.handleMessage(msg);
 
-					holder.itemLignes.removeAllViews();
+					holder.itemRoutes.removeAllViews();
 
-					final ParkingPublic parkingPublic = (ParkingPublic) msg.obj;
-					equipement.setTag(parkingPublic);
+					final PublicPark parkingPublic = (PublicPark) msg.obj;
+					equipment.setTag(parkingPublic);
 
 					bindParking(context, holder, parkingPublic);
 
@@ -291,19 +291,19 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 				}
 			};
 
-			holder.task = parkingPublicManager.scheduleGetParkingPublic(context, equipement.getId(), handler);
+			holder.task = parkingPublicManager.scheduleGetParkingPublic(context, equipment.getId(), handler);
 		} else {
-			bindParking(context, holder, (ParkingPublic) equipement.getTag());
+			bindParking(context, holder, (PublicPark) equipment.getTag());
 		}
 	}
 
-	private void bindParking(final Context context, final ViewHolder holder, final ParkingPublic parkingPublic) {
+	private void bindParking(final Context context, final ViewHolder holder, final PublicPark parkingPublic) {
 		if (parkingPublic != null) {
 			int couleur;
 			String detail;
 
-			if (parkingPublic.getStatut() == ParkingPublicStatut.OUVERT) {
-				final int placesDisponibles = parkingPublic.getPlacesDisponibles();
+			if (parkingPublic.getStatus() == PublicParkStatus.OPEN) {
+				final int placesDisponibles = parkingPublic.getAvailableSpaces();
 				couleur = context.getResources().getColor(ParkingUtils.getSeuilCouleurId(placesDisponibles));
 				if (placesDisponibles > 0) {
 					detail = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
@@ -312,8 +312,8 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 					detail = context.getString(R.string.parking_places_disponibles_zero);
 				}
 			} else {
-				detail = context.getString(parkingPublic.getStatut().getTitleRes());
-				couleur = context.getResources().getColor(parkingPublic.getStatut().getColorRes());
+				detail = context.getString(parkingPublic.getStatus().getTitleRes());
+				couleur = context.getResources().getColor(parkingPublic.getStatus().getColorRes());
 			}
 
 			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.ParcoursActivity;
+import net.naonedbus.activity.impl.StopPathActivity;
 import net.naonedbus.activity.map.layerloader.EquipementMapLayer;
 import net.naonedbus.activity.map.layerloader.ItemSelectedInfo;
 import net.naonedbus.activity.map.overlay.BasicItemizedOverlay;
@@ -33,7 +33,7 @@ import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.bean.Route;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.GeoPointUtils;
 import android.content.Context;
@@ -53,11 +53,11 @@ import com.google.android.maps.GeoPoint;
  */
 public class StationMapLayer extends EquipementMapLayer {
 	private static final int MAX_STATIONS = 50;
-	private static LigneManager ligneManager;
+	private static RouteManager ligneManager;
 
 	public StationMapLayer() {
 		super(Type.TYPE_STOP, TypeOverlayItem.TYPE_STATION);
-		ligneManager = LigneManager.getInstance();
+		ligneManager = RouteManager.getInstance();
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class StationMapLayer extends EquipementMapLayer {
 				final LayoutInflater layoutInflater = LayoutInflater.from(context);
 				final List<View> subview = new ArrayList<View>();
 				final Equipment station = getItemById(item.getId());
-				final List<Route> lignes = ligneManager.getLignesFromStation(context.getContentResolver(),
+				final List<Route> lignes = ligneManager.getRoutesByStopArea(context.getContentResolver(),
 						station.getId());
 
 				for (final Route ligneItem : lignes) {
@@ -115,8 +115,8 @@ public class StationMapLayer extends EquipementMapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-				final ParamIntent intent = new ParamIntent(context, ParcoursActivity.class);
-				intent.putExtra(ParcoursActivity.PARAM_ID_SATION, item.getId());
+				final ParamIntent intent = new ParamIntent(context, StopPathActivity.class);
+				intent.putExtra(StopPathActivity.PARAM_ID_SATION, item.getId());
 				return intent;
 			}
 
@@ -135,7 +135,7 @@ public class StationMapLayer extends EquipementMapLayer {
 		BasicOverlayItem stationOverlayItem;
 
 		if (location != null) {
-			final List<Equipment> stationsProches = getEquipementManager().getEquipementsByLocation(
+			final List<Equipment> stationsProches = getEquipementManager().getByLocation(
 					context.getContentResolver(), Type.TYPE_STOP, location, MAX_STATIONS);
 
 			for (final Equipment station : stationsProches) {

@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import net.naonedbus.bean.Stop;
-import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.schedule.Schedule;
 import net.naonedbus.rest.UrlBuilder;
 import net.naonedbus.rest.container.HoraireContainer;
 import net.naonedbus.rest.container.HoraireContainer.HoraireNode;
@@ -74,22 +74,22 @@ public class HoraireController extends RestController<HoraireContainer> {
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	public synchronized List<Horaire> getAllFromWeb(final Stop arret, final DateMidnight date) throws IOException {
+	public synchronized List<Schedule> getAllFromWeb(final Stop stop, final DateMidnight date) throws IOException {
 		final UrlBuilder url = new UrlBuilder(PATH);
 		long timeOffset = date.getMillis();
 		final List<HoraireNode> horaires;
-		List<Horaire> result = null;
+		List<Schedule> result = null;
 
-		url.addSegment(arret.getCodeArret());
-		url.addSegment(arret.getCodeLigne());
-		url.addSegment(arret.getCodeSens());
+		url.addSegment(stop.getCodeArret());
+		url.addSegment(stop.getCodeLigne());
+		url.addSegment(stop.getCodeSens());
 		url.addSegment(mDateFormat.format(date.toDate()));
 		final HoraireContainer content = parseJsonObject(url.getUrl());
 
 		if (content != null) {
 			horaires = content.horaires;
-			result = new ArrayList<Horaire>();
-			// Transformation des horaires TAN en horaire naonedbus.
+			result = new ArrayList<Schedule>();
+			// Transformation des horaires TAN en schedule naonedbus.
 			for (final HoraireNode horaireTan : horaires) {
 				final String heure = horaireTan.heure;
 
@@ -98,12 +98,12 @@ public class HoraireController extends RestController<HoraireContainer> {
 					timeOffset = date.plusDays(1).getMillis();
 				}
 				for (final String minute : horaireTan.passages) {
-					final Horaire horaire = new Horaire();
-					horaire.setDayTrip(date.getMillis());
-					horaire.setTimestamp(parseTimestamp(heure, minute, timeOffset));
-					horaire.setTerminus(parseTerminus(minute, content.notes));
-					horaire.setSection(new DateMidnight(horaire.getTimestamp()));
-					result.add(horaire);
+					final Schedule schedule = new Schedule();
+					schedule.setDayTrip(date.getMillis());
+					schedule.setTimestamp(parseTimestamp(heure, minute, timeOffset));
+					schedule.setHeadsign(parseTerminus(minute, content.notes));
+					schedule.setSection(new DateMidnight(schedule.getTimestamp()));
+					result.add(schedule);
 				}
 			}
 		}
@@ -172,13 +172,13 @@ public class HoraireController extends RestController<HoraireContainer> {
 		for (int i = 0; i < array.length(); i++) {
 			object = array.getJSONObject(i);
 
-			final HoraireNode horaire = new HoraireNode();
+			final HoraireNode schedule = new HoraireNode();
 			if (object.has(TAG_HORAIRES_HEURE))
-				horaire.heure = object.getString(TAG_HORAIRES_HEURE);
+				schedule.heure = object.getString(TAG_HORAIRES_HEURE);
 			if (object.has(TAG_HORAIRES_PASSAGE))
-				horaire.passages = parsePassages(object.getJSONArray(TAG_HORAIRES_PASSAGE));
+				schedule.passages = parsePassages(object.getJSONArray(TAG_HORAIRES_PASSAGE));
 
-			horaires.add(horaire);
+			horaires.add(schedule);
 		}
 
 		return horaires;

@@ -42,8 +42,8 @@ public class DirectionSpinnerAdapter extends DirectionArrayAdapter implements Sp
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final TextView view = (TextView) super.getView(position, convertView, parent);
-		final Direction sens = getItem(position);
-		view.setText(FormatUtils.formatSens(sens.getName()));
+		final Direction direction = getItem(position);
+		view.setText(FormatUtils.formatSens(direction.getName()));
 		return view;
 	}
 

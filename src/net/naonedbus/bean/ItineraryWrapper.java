@@ -16,7 +16,7 @@ public class ItineraryWrapper implements Serializable, Parcelable {
 	private String mWalkTime;
 	private boolean mIsUnicorn;
 	private boolean mIsError;
-	private transient List<Route> mLignes;
+	private transient List<Route> mRoutes;
 
 	public static ItineraryWrapper getEmptyItinerary() {
 		return new ItineraryWrapper((Itinerary) null);
@@ -47,8 +47,8 @@ public class ItineraryWrapper implements Serializable, Parcelable {
 		mWalkTime = in.readString();
 		mIsUnicorn = in.readInt() == 1;
 		mIsError = in.readInt() == 1;
-		mLignes = new ArrayList<Route>();
-		in.readTypedList(mLignes, Route.CREATOR);
+		mRoutes = new ArrayList<Route>();
+		in.readTypedList(mRoutes, Route.CREATOR);
 	}
 
 	public String getTime() {
@@ -76,11 +76,11 @@ public class ItineraryWrapper implements Serializable, Parcelable {
 	}
 
 	public List<Route> getLignes() {
-		return mLignes;
+		return mRoutes;
 	}
 
 	public void setLignes(final List<Route> lignes) {
-		mLignes = lignes;
+		mRoutes = lignes;
 	}
 
 	public Itinerary getItinerary() {
@@ -108,7 +108,7 @@ public class ItineraryWrapper implements Serializable, Parcelable {
 		dest.writeString(mWalkTime);
 		dest.writeInt(mIsUnicorn ? 1 : 0);
 		dest.writeInt(mIsError ? 1 : 0);
-		dest.writeTypedList(mLignes);
+		dest.writeTypedList(mRoutes);
 	}
 
 	public static final Parcelable.Creator<ItineraryWrapper> CREATOR = new Parcelable.Creator<ItineraryWrapper>() {

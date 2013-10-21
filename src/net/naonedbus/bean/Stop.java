@@ -61,13 +61,13 @@ public class Stop implements Parcelable {
 			return this;
 		}
 
-		public Builder setNomArret(final String nomArret) {
-			mName = nomArret;
+		public Builder setNomArret(final String stopName) {
+			mName = stopName;
 			return this;
 		}
 
-		public Builder setCodeLigne(final String codeLigne) {
-			mRouteCode = codeLigne;
+		public Builder setCodeLigne(final String routeCode) {
+			mRouteCode = routeCode;
 			return this;
 		}
 
@@ -76,8 +76,8 @@ public class Stop implements Parcelable {
 			return this;
 		}
 
-		public Builder setCodeSens(final String codeSens) {
-			mDirectionCode = codeSens;
+		public Builder setCodeSens(final String directionCode) {
+			mDirectionCode = directionCode;
 			return this;
 		}
 
@@ -229,7 +229,7 @@ public class Stop implements Parcelable {
 		return mOrder;
 	}
 
-	public String getNomArret() {
+	public String getName() {
 		return mName;
 	}
 

@@ -19,12 +19,12 @@
 package net.naonedbus.widget.indexer.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.Comment;
+import net.naonedbus.bean.LiveNews;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 import android.util.SparseIntArray;
 
-public class CommentsIndexer extends ArraySectionIndexer<Comment> {
+public class CommentsIndexer extends ArraySectionIndexer<LiveNews> {
 
 	public static final int SECTION_FUTURE = 0;
 	public static final int SECTION_NOW = 1;
@@ -40,12 +40,12 @@ public class CommentsIndexer extends ArraySectionIndexer<Comment> {
 	}
 
 	@Override
-	protected String getSectionLabel(Context context, Comment item) {
+	protected String getSectionLabel(Context context, LiveNews item) {
 		return context.getString(SECTIONS_LABELS.get((Integer) item.getSection()));
 	}
 
 	@Override
-	protected void prepareSection(Comment item) {
+	protected void prepareSection(LiveNews item) {
 	}
 
 }

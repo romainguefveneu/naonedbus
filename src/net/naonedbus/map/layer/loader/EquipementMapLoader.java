@@ -41,21 +41,21 @@ public class EquipementMapLoader implements MapLayerLoader {
 
 	@Override
 	public ArrayList<InputPoint> getInputPoints(final Context context) {
-		final List<Equipment> equipements = mEquipementManager.getEquipementsByType(context.getContentResolver(),
+		final List<Equipment> equipements = mEquipementManager.getByType(context.getContentResolver(),
 				mTypeEquipement);
 		final ArrayList<InputPoint> result = new ArrayList<InputPoint>(equipements.size());
 
-		for (final Equipment equipement : equipements) {
-			result.add(createInputPoint(equipement));
+		for (final Equipment equipment : equipements) {
+			result.add(createInputPoint(equipment));
 		}
 
 		return result;
 	}
 
-	private InputPoint createInputPoint(final Equipment equipement) {
-		final LatLng latLng = new LatLng(equipement.getLatitude(), equipement.getLongitude());
+	private InputPoint createInputPoint(final Equipment equipment) {
+		final LatLng latLng = new LatLng(equipment.getLatitude(), equipment.getLongitude());
 		final InputPoint inputPoint = new InputPoint(latLng);
-		inputPoint.setTag(equipement);
+		inputPoint.setTag(equipment);
 
 		return inputPoint;
 	}

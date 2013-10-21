@@ -8,7 +8,7 @@ public class LegWrapper {
 		IN, OUT;
 	}
 
-	private Route mLigne;
+	private Route mRoute;
 
 	private final Type mType;
 
@@ -29,15 +29,15 @@ public class LegWrapper {
 	}
 
 	public Route getLigne() {
-		return mLigne;
+		return mRoute;
 	}
 
 	public String getTime() {
 		return mTime;
 	}
 
-	public void setLigne(final Route ligne) {
-		mLigne = ligne;
+	public void setLigne(final Route route) {
+		mRoute = route;
 	}
 
 	public void setTime(final String time) {

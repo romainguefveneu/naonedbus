@@ -28,11 +28,11 @@ import java.util.Map.Entry;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.HorairesActivity;
+import net.naonedbus.activity.impl.SchedulesActivity;
 import net.naonedbus.bean.Stop;
-import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.schedule.Schedule;
 import net.naonedbus.card.Card;
-import net.naonedbus.fragment.impl.ArretDetailFragment.OnArretChangeListener;
+import net.naonedbus.fragment.impl.StopDetailFragment.OnStopChangedListener;
 import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.utils.ViewHelper;
@@ -60,10 +60,10 @@ import android.view.ViewTreeObserver;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeListener {
+public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedListener {
 
 	public static interface OnHoraireClickListener {
-		void onHoraireClick(Horaire horaire);
+		void onHoraireClick(Schedule schedule);
 	}
 
 	private static final String LOG_TAG = "HoraireCard";
@@ -85,7 +85,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		}
 	};
 
-	private Stop mArret;
+	private Stop mStop;
 	private final DateFormat mTimeFormat;
 
 	private final List<TextView> mHoraireViews;
@@ -95,12 +95,12 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	private final LayoutInflater mLayoutInflater;
 	private ViewGroup mTerminusView;
 
-	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager, final Stop arret) {
+	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager, final Stop stop) {
 		super(context, loaderManager, fragmentManager, R.string.card_horaires_title, R.layout.card_horaire);
 
 		mLayoutInflater = LayoutInflater.from(context);
 
-		mArret = arret;
+		mStop = stop;
 		mHoraireViews = new ArrayList<TextView>();
 		mDelaiViews = new ArrayList<TextView>();
 		mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
@@ -124,8 +124,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	protected Intent getMoreIntent() {
-		final Intent intent = new Intent(getContext(), HorairesActivity.class);
-		intent.putExtra(HorairesActivity.PARAM_ARRET, mArret);
+		final Intent intent = new Intent(getContext(), SchedulesActivity.class);
+		intent.putExtra(SchedulesActivity.PARAM_ARRET, mStop);
 		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_horaires);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_list);
 		return intent;
@@ -212,19 +212,19 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	}
 
 	@Override
-	public void onArretChange(final Stop newArret) {
-		mArret = newArret;
+	public void onStopChanged(final Stop newArret) {
+		mStop = newArret;
 		showLoader();
 		restartLoader(null, this);
 	}
 
 	@Override
-	public Loader<List<Horaire>> onCreateLoader(final int id, final Bundle bundle) {
-		return new LoaderTask(getContext(), mArret, mHoraireViews.size() + 1);
+	public Loader<List<Schedule>> onCreateLoader(final int id, final Bundle bundle) {
+		return new LoaderTask(getContext(), mStop, mHoraireViews.size() + 1);
 	}
 
 	@Override
-	public void onLoadFinished(final Loader<List<Horaire>> loader, final List<Horaire> horaires) {
+	public void onLoadFinished(final Loader<List<Schedule>> loader, final List<Schedule> horaires) {
 		if (horaires != null && !horaires.isEmpty()) {
 
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
@@ -261,14 +261,14 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 			while (indexHoraire < horaires.size() && indexView < mHoraireViews.size()) {
 				String delai = "";
-				final Horaire horaire = horaires.get(indexHoraire);
+				final Schedule schedule = horaires.get(indexHoraire);
 				final TextView horaireView = mHoraireViews.get(indexView);
 
 				CharSequence formattedTime = FormatUtils.formatTimeAmPm(getContext(),
-						mTimeFormat.format(horaire.getDate()));
+						mTimeFormat.format(schedule.getDate()));
 
-				if (horaire.getTerminus() != null) {
-					final String terminusLetter = mTerminusManager.getTerminusLetter(horaire.getTerminus());
+				if (schedule.getHeadsign() != null) {
+					final String terminusLetter = mTerminusManager.getTerminusLetter(schedule.getHeadsign());
 					if (indexHoraire > firstNextHoraireIndex) {
 						formattedTime = formattedTime + "\n" + terminusLetter;
 					} else {
@@ -281,7 +281,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 				if (indexView > 0) {
 					minutes = Minutes.minutesBetween(now,
-							new DateTime(horaire.getDate()).withSecondOfMinute(0).withMillisOfSecond(0)).getMinutes();
+							new DateTime(schedule.getDate()).withSecondOfMinute(0).withMillisOfSecond(0)).getMinutes();
 
 					if (minutes > 60) {
 						delai = getString(R.string.msg_depart_heure_short, minutes / 60);
@@ -335,34 +335,34 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		}
 	}
 
-	private static class LoaderTask extends AsyncTaskLoader<List<Horaire>> {
+	private static class LoaderTask extends AsyncTaskLoader<List<Schedule>> {
 
-		private final ScheduleManager mHoraireManager;
-		private final Stop mArret;
+		private final ScheduleManager mScheduleManager;
+		private final Stop mStop;
 		private final int mHorairesCount;
-		private List<Horaire> mHoraires;
+		private List<Schedule> mSchedules;
 
-		public LoaderTask(final Context context, final Stop arret, final int horairesCount) {
+		public LoaderTask(final Context context, final Stop stop, final int horairesCount) {
 			super(context);
-			mArret = arret;
+			mStop = stop;
 			mHorairesCount = horairesCount;
 
-			mHoraireManager = ScheduleManager.getInstance();
+			mScheduleManager = ScheduleManager.getInstance();
 		}
 
 		@Override
-		public List<Horaire> loadInBackground() {
-			List<Horaire> horaires = null;
+		public List<Schedule> loadInBackground() {
+			List<Schedule> horaires = null;
 
 			try {
-				horaires = mHoraireManager.getNextSchedules(getContext().getContentResolver(), mArret,
+				horaires = mScheduleManager.getNextSchedules(getContext().getContentResolver(), mStop,
 						new DateMidnight(), mHorairesCount, 5);
 			} catch (final IOException e) {
 				if (DBG)
 					Log.e(LOG_TAG, "Erreur de chargement des horaires.", e);
 			}
 
-			mHoraires = horaires;
+			mSchedules = horaires;
 
 			return horaires;
 		}
@@ -373,8 +373,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		 * adds a little more logic.
 		 */
 		@Override
-		public void deliverResult(final List<Horaire> horaires) {
-			mHoraires = horaires;
+		public void deliverResult(final List<Schedule> horaires) {
+			mSchedules = horaires;
 
 			if (isStarted()) {
 				// If the Loader is currently started, we can immediately
@@ -388,13 +388,13 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 		 */
 		@Override
 		protected void onStartLoading() {
-			if (mHoraires != null) {
+			if (mSchedules != null) {
 				// If we currently have a result available, deliver it
 				// immediately.
-				deliverResult(mHoraires);
+				deliverResult(mSchedules);
 			}
 
-			if (takeContentChanged() || mHoraires == null) {
+			if (takeContentChanged() || mSchedules == null) {
 				// If the data has changed since the last time it was loaded
 				// or is not currently available, start a load.
 				forceLoad();
