@@ -31,8 +31,8 @@ public class CommentaireSizeValidator implements CommentaireValidator {
 	 * faux sinon.
 	 */
 	@Override
-	public boolean validate(String naoNews) {
-		StringTokenizer tokenizer = new StringTokenizer(naoNews);
+	public boolean validate(String liveNews) {
+		StringTokenizer tokenizer = new StringTokenizer(liveNews);
 		return (tokenizer.countTokens() > 2);
 	}
 

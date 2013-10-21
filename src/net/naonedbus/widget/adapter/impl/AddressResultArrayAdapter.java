@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class AddressResultArrayAdapter extends ArraySectionAdapter<AddressResult> {
 
 	public AddressResultArrayAdapter(final Context context, final List<AddressResult> objects) {
-		super(context, R.layout.list_item_equipement, objects);
+		super(context, R.layout.list_item_equipment, objects);
 	}
 
 	@Override

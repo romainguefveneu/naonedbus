@@ -23,5 +23,5 @@ package net.naonedbus.validator;
  *
  */
 public interface CommentaireValidator {
-	boolean validate(String naoNews);
+	boolean validate(String liveNews);
 }

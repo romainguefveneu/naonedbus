@@ -45,7 +45,7 @@ public class ParkArrayAdapter extends ArrayAdapter<StopPath> {
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_parcours, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_stop_path, null);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);

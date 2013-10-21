@@ -102,7 +102,7 @@ public class EquipementMapLayer extends MapLayer {
 		Typeface roboto = FontUtils.getRobotoBoldCondensed(context);
 
 		for (final Route ligneItem : lignes) {
-			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, root, false);
+			final TextView textView = (TextView) layoutInflater.inflate(R.layout.route_code_item, root, false);
 			textView.setTypeface(roboto);
 			textView.setTextColor(ligneItem.getFrontColor());
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getBackColor()));

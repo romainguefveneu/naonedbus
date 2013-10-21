@@ -114,11 +114,11 @@ public class StopDetailFragment extends SherlockFragment {
 				mStop);
 		final TraficCard tanNewsCard = new TraficCard(getActivity(), getLoaderManager(), getChildFragmentManager(),
 				mRoute);
-		final CommentairesCard naoNewsCard = new CommentairesCard(getActivity(), getLoaderManager(),
+		final CommentairesCard liveNewsCard = new CommentairesCard(getActivity(), getLoaderManager(),
 				getChildFragmentManager());
-		naoNewsCard.setLigne(mRoute);
-		naoNewsCard.setSens(mDirection);
-		naoNewsCard.setArret(mStop);
+		liveNewsCard.setLigne(mRoute);
+		liveNewsCard.setSens(mDirection);
+		liveNewsCard.setArret(mStop);
 
 		final MapCard mapCard = new MapCard(getActivity(), getLoaderManager(), getChildFragmentManager(),
 				mStop.getLatitude(), mStop.getLongitude());
@@ -127,11 +127,11 @@ public class StopDetailFragment extends SherlockFragment {
 
 		mCards.add(scheduleCard);
 		mCards.add(tanNewsCard);
-		mCards.add(naoNewsCard);
+		mCards.add(liveNewsCard);
 		mCards.add(mapCard);
 
 		mOnStopChangedListener = scheduleCard;
-		mOnDirectionChangedListeners.add(naoNewsCard);
+		mOnDirectionChangedListeners.add(liveNewsCard);
 	}
 
 	@Override
@@ -142,7 +142,7 @@ public class StopDetailFragment extends SherlockFragment {
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_arret_detail, menu);
+		inflater.inflate(R.menu.fragment_stop_detail, menu);
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
 		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
@@ -166,7 +166,7 @@ public class StopDetailFragment extends SherlockFragment {
 		if (container == null) // must put this in
 			return null;
 
-		final View view = inflater.inflate(R.layout.fragment_arret_detail, container, false);
+		final View view = inflater.inflate(R.layout.fragment_stop_detail, container, false);
 		mViewGroup = (ViewGroup) view.findViewById(android.R.id.content);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {

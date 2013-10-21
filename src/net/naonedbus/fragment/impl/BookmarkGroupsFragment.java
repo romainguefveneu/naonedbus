@@ -92,7 +92,7 @@ public class BookmarkGroupsFragment extends CustomCursorFragment implements Acti
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_groupes, menu);
+		inflater.inflate(R.menu.fragment_bookmark_groups, menu);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -129,7 +129,7 @@ public class BookmarkGroupsFragment extends CustomCursorFragment implements Acti
 	@Override
 	public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_groupes_contextual, menu);
+		menuInflater.inflate(R.menu.fragment_bookmark_groups_contextual, menu);
 
 		mActionMode = mode;
 		return true;

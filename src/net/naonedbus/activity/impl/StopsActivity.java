@@ -58,7 +58,7 @@ public class StopsActivity extends OneFragmentActivity {
 	private Direction mDirection;
 
 	public StopsActivity() {
-		super(R.layout.activity_arrets);
+		super(R.layout.activity_stops);
 	}
 
 	@SuppressWarnings("deprecation")

@@ -42,11 +42,11 @@ public class PublicParkArrayAdapter extends ArraySectionAdapter<PublicPark> {
 	}
 
 	public PublicParkArrayAdapter(Context context) {
-		super(context, R.layout.list_item_parking);
+		super(context, R.layout.list_item_park);
 	}
 
 	public PublicParkArrayAdapter(Context context, List<PublicPark> objects) {
-		super(context, R.layout.list_item_parking, objects);
+		super(context, R.layout.list_item_park, objects);
 	}
 
 	@Override

@@ -24,6 +24,6 @@
 
     <include layout="@layout/list_item_header" />
 
-    <include layout="@layout/list_item_content_favori" />
+    <include layout="@layout/list_item_content_stop_bookmark" />
 
 </LinearLayout>

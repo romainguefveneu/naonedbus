@@ -81,7 +81,7 @@ public class NearByFragment extends CustomListFragment implements MyLocationList
 	private TextView headerTextView;
 
 	public NearByFragment() {
-		super(R.layout.fragment_proximite);
+		super(R.layout.fragment_nearby);
 		if (DBG)
 			Log.i(LOG_TAG, "ProximiteFragment()");
 
@@ -148,7 +148,7 @@ public class NearByFragment extends CustomListFragment implements MyLocationList
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_proximite, menu);
+		inflater.inflate(R.menu.fragment_nearby, menu);
 		final SubMenu filterSubMenu = menu.findItem(R.id.menu_filter).getSubMenu();
 
 		final Equipment.Type[] types = Equipment.Type.values();

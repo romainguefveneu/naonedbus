@@ -57,7 +57,7 @@ public class TraficCard extends Card<List<TanNews>> {
 
 	public TraficCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
 			final Route route) {
-		super(context, loaderManager, fragmentManager, R.string.card_trafic_title, R.layout.card_trafic);
+		super(context, loaderManager, fragmentManager, R.string.card_trafic_title, R.layout.card_news);
 		mRoute = route;
 	}
 

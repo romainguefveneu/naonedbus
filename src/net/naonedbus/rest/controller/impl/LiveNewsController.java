@@ -39,8 +39,8 @@ public class LiveNewsController extends RestController<LiveNews> {
 	private static final String TAG_COMMENTAIRE = "commentaire";
 	private static final String TAG_ID = "id";
 	private static final String TAG_CODE_ARRET = "codeArret";
-	private static final String TAG_CODE_LIGNE = "routeCode";
-	private static final String TAG_CODE_SENS = "directionCode";
+	private static final String TAG_CODE_LIGNE = "codeLigne";
+	private static final String TAG_CODE_SENS = "codeSens";
 	private static final String TAG_MESSAGE = "message";
 	private static final String TAG_SOURCE = "source";
 	private static final String TAG_TIMESTAMP = "timestamp";
@@ -53,8 +53,8 @@ public class LiveNewsController extends RestController<LiveNews> {
 			final String hash) throws IOException, HttpException {
 		final UrlBuilder urlBuilder = new UrlBuilder(RestConfiguration.PATH, PATH);
 
-		urlBuilder.addQueryParameter("routeCode", routeCode);
-		urlBuilder.addQueryParameter("directionCode", directionCode);
+		urlBuilder.addQueryParameter("codeLigne", routeCode);
+		urlBuilder.addQueryParameter("codeSens", directionCode);
 		urlBuilder.addQueryParameter("codeArret", codeArret);
 		urlBuilder.addQueryParameter("message", message);
 		urlBuilder.addQueryParameter("hash", hash);
@@ -67,8 +67,8 @@ public class LiveNewsController extends RestController<LiveNews> {
 			throws IOException, JSONException {
 		final UrlBuilder url = new UrlBuilder(RestConfiguration.PATH, PATH);
 
-		url.addQueryParameter("routeCode", routeCode);
-		url.addQueryParameter("directionCode", directionCode);
+		url.addQueryParameter("codeLigne", routeCode);
+		url.addQueryParameter("codeSens", directionCode);
 		url.addQueryParameter("codeArret", codeArret);
 		url.addQueryParameter("timestamp", 0);
 		url.addQueryParameter("limit", String.valueOf(LIMIT));
@@ -78,22 +78,22 @@ public class LiveNewsController extends RestController<LiveNews> {
 
 	@Override
 	protected LiveNews parseJsonObject(final JSONObject object) throws JSONException {
-		final LiveNews naoNews = new LiveNews();
+		final LiveNews liveNews = new LiveNews();
 
-		naoNews.setId(object.getInt(TAG_ID));
+		liveNews.setId(object.getInt(TAG_ID));
 		if (object.has(TAG_CODE_LIGNE))
-			naoNews.setCodeLigne(object.getString(TAG_CODE_LIGNE));
+			liveNews.setCodeLigne(object.getString(TAG_CODE_LIGNE));
 		if (object.has(TAG_CODE_SENS))
-			naoNews.setCodeSens(object.getString(TAG_CODE_SENS));
+			liveNews.setCodeSens(object.getString(TAG_CODE_SENS));
 		if (object.has(TAG_CODE_ARRET))
-			naoNews.setCodeArret(object.getString(TAG_CODE_ARRET));
+			liveNews.setCodeArret(object.getString(TAG_CODE_ARRET));
 		if (object.has(TAG_MESSAGE))
-			naoNews.setMessage(object.getString(TAG_MESSAGE));
+			liveNews.setMessage(object.getString(TAG_MESSAGE));
 		if (object.has(TAG_SOURCE))
-			naoNews.setSource(object.getString(TAG_SOURCE));
+			liveNews.setSource(object.getString(TAG_SOURCE));
 		if (object.has(TAG_TIMESTAMP))
-			naoNews.setTimestamp(object.getLong(TAG_TIMESTAMP));
-		return naoNews;
+			liveNews.setTimestamp(object.getLong(TAG_TIMESTAMP));
+		return liveNews;
 	}
 
 	@Override

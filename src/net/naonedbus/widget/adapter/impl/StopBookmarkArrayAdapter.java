@@ -42,7 +42,7 @@ public class StopBookmarkArrayAdapter extends ArraySectionAdapter<StopBookmark> 
 	private SparseBooleanArray mCheckedItemPositions = new SparseBooleanArray();
 
 	public StopBookmarkArrayAdapter(final Context context, final List<StopBookmark> objects, final boolean showDelay) {
-		super(context, R.layout.list_item_favori, objects);
+		super(context, R.layout.list_item_stop_bookmark, objects);
 		mShowDelay = showDelay;
 		mRobotoBold = FontUtils.getRobotoBoldCondensed(context);
 	}

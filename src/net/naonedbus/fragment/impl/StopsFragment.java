@@ -185,7 +185,7 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_arrets, menu);
+		inflater.inflate(R.menu.fragment_stops, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 		menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
 		super.onCreateOptionsMenu(menu, inflater);
@@ -244,7 +244,7 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		final Stop stop = (Stop) getListView().getItemAtPosition(cmi.position);
 
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
-		inflater.inflate(R.menu.fragment_arrets_contextual, menu);
+		inflater.inflate(R.menu.fragment_stops_contextual, menu);
 
 		menu.setHeaderTitle(stop.getName());
 

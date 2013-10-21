@@ -139,7 +139,7 @@ public abstract class EquipmentFragment extends CustomListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_equipements, menu);
+		inflater.inflate(R.menu.fragment_equipments, menu);
 		menu.findItem(MENU_MAPPING.get(currentSortPreference)).setChecked(true);
 		super.onCreateOptionsMenu(menu, inflater);
 	}

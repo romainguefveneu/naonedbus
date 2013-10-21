@@ -45,7 +45,7 @@ public class StopDetailActivity extends OneFragmentActivity implements OnDirecti
 	private Direction mDirection;
 
 	public StopDetailActivity() {
-		super(R.layout.activity_horaires);
+		super(R.layout.activity_schedules);
 	}
 
 	@Override

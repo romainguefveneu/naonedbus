@@ -68,7 +68,7 @@ public class TanNewsFragment extends CustomListFragment {
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.activity_en_direct, menu);
+		inflater.inflate(R.menu.fragment_livenews, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 
 		if (getLoaderManager().hasRunningLoaders())

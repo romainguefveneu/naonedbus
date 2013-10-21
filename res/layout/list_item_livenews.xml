@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/*
+/**
  *  Copyright (C) 2011 Romain Guefveneu
  *  
  *  This file is part of naonedbus.
@@ -20,10 +20,10 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine" >
+    style="@style/DefaultLine">
 
-    <include layout="@layout/list_item_header" />
+    <include layout="@layout/list_item_header_simple" />
 
-    <include layout="@layout/list_item_content_equipement" />
+    <include layout="@layout/list_item_content_livenews" />
 
 </LinearLayout>

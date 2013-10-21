@@ -78,7 +78,7 @@ public class StopBookmarkCursorAdapter extends CursorAdapter {
 
 	@Override
 	public View newView(final Context context, final Cursor cursor, final ViewGroup root) {
-		final View view = mLayoutInflater.inflate(R.layout.list_item_favori, root, false);
+		final View view = mLayoutInflater.inflate(R.layout.list_item_stop_bookmark, root, false);
 
 		final ViewHolder holder = new ViewHolder();
 		holder.ligneCode = (TextView) view.findViewById(R.id.itemSymbole);

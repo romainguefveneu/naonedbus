@@ -55,7 +55,7 @@ public class TanNewsDetailFragment extends CustomFragment {
 	protected View mFragmentView;
 
 	public TanNewsDetailFragment() {
-		super(R.layout.fragment_infotrafic_detail);
+		super(R.layout.fragment_tannews_detail);
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class TanNewsDetailFragment extends CustomFragment {
 					final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
 
 					for (final Route l : listLignes) {
-						final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item_medium,
+						final TextView textView = (TextView) layoutInflater.inflate(R.layout.route_code_item_medium,
 								mRoutesView, false);
 						textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getBackColor()));
 						textView.setText(l.getLetter());

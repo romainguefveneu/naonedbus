@@ -82,7 +82,7 @@ public class RoutesFragment extends CustomCursorFragment implements OnQueryTextL
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.fragment_lignes, menu);
+		inflater.inflate(R.menu.fragment_routes, menu);
 
 		final MenuItem searchItem = menu.findItem(R.id.menu_search);
 		final SearchView searchView = (SearchView) searchItem.getActionView();
@@ -112,7 +112,7 @@ public class RoutesFragment extends CustomCursorFragment implements OnQueryTextL
 		final String lettreLigne = route.getString(route.getColumnIndex(RouteTable.LETTER));
 
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
-		inflater.inflate(R.menu.fragment_lignes_contextual, menu);
+		inflater.inflate(R.menu.fragment_routes_contextual, menu);
 
 		menu.setHeaderTitle(getString(R.string.dialog_title_menu_lignes, lettreLigne));
 	}

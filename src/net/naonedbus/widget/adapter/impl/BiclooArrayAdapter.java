@@ -31,7 +31,7 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 	private SparseBooleanArray mCheckedItemPositions = new SparseBooleanArray();
 
 	public BiclooArrayAdapter(final Context context, final List<Bicloo> objects) {
-		super(context, R.layout.list_item_equipement, objects);
+		super(context, R.layout.list_item_equipment, objects);
 
 		mSymboleBackground = ColorUtils.getRoundedGradiant(context.getResources().getColor(
 				Equipment.Type.TYPE_BICLOO.getBackgroundColorRes()));

@@ -25,12 +25,12 @@ package net.naonedbus.validator;
 public class CommentaireContentTypeValidator implements CommentaireValidator {
 
 	/**
-	 * Retourne vrai si le naoNews n'est pas constitué d'un seul nombre
+	 * Retourne vrai si le liveNews n'est pas constitué d'un seul nombre
 	 * faux sinon.
 	 */
 	@Override
-	public boolean validate(String naoNews) {
-		return !naoNews.matches("^[\\d\\.,\\s]*$");
+	public boolean validate(String liveNews) {
+		return !liveNews.matches("^[\\d\\.,\\s]*$");
 	}
 
 }

@@ -96,7 +96,7 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 
 	public CommentairesCard(final Context context, final LoaderManager loaderManager,
 			final FragmentManager fragmentManager) {
-		super(context, loaderManager, fragmentManager, R.string.card_commentaires_title, R.layout.card_trafic);
+		super(context, loaderManager, fragmentManager, R.string.card_commentaires_title, R.layout.card_news);
 		getContext().registerReceiver(mIntentReceiver, intentFilter);
 		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
@@ -151,7 +151,7 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 		return intent;
 	}
 
-	private View createView(final LayoutInflater inflater, final ViewGroup root, final LiveNews naoNews) {
+	private View createView(final LayoutInflater inflater, final ViewGroup root, final LiveNews liveNews) {
 		final View view = inflater.inflate(R.layout.card_item_commentaire, root, false);
 
 		final TextView itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -160,23 +160,23 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 
 		String title = "";
 
-		if (NaonedbusClient.NAONEDBUS.name().equals(naoNews.getSource())) {
-			if (naoNews.getStop() == null && naoNews.getDirection() == null && naoNews.getRoute() == null) {
+		if (NaonedbusClient.NAONEDBUS.name().equals(liveNews.getSource())) {
+			if (liveNews.getStop() == null && liveNews.getDirection() == null && liveNews.getRoute() == null) {
 				title = view.getContext().getString(R.string.commentaire_tout);
 			} else {
-				if (naoNews.getStop() != null) {
-					title = naoNews.getStop().getName() + " ";
+				if (liveNews.getStop() != null) {
+					title = liveNews.getStop().getName() + " ";
 				}
-				if (naoNews.getDirection() != null) {
-					title = title + "\u2192 " + naoNews.getDirection().getName();
+				if (liveNews.getDirection() != null) {
+					title = title + "\u2192 " + liveNews.getDirection().getName();
 				}
 			}
 		} else {
-			title = getString(LiveNewsFomatter.getTitleResId(naoNews.getSource()));
+			title = getString(LiveNewsFomatter.getTitleResId(liveNews.getSource()));
 		}
 
-		itemDescription.setText(naoNews.getMessage(), BufferType.SPANNABLE);
-		itemDate.setText(naoNews.getDelay());
+		itemDescription.setText(liveNews.getMessage(), BufferType.SPANNABLE);
+		itemDate.setText(liveNews.getDelay());
 		itemDate.setTypeface(mRobotoMedium);
 
 		if (title.trim().length() == 0) {
@@ -190,7 +190,7 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 			@Override
 			public void onClick(final View v) {
 				final Bundle bundle = new Bundle();
-				bundle.putParcelable(LiveNewsDetailDialogFragment.PARAM_LIVENEWS, naoNews);
+				bundle.putParcelable(LiveNewsDetailDialogFragment.PARAM_LIVENEWS, liveNews);
 
 				final DialogFragment dialogFragment = new LiveNewsDetailDialogFragment();
 				dialogFragment.setArguments(bundle);
@@ -215,8 +215,8 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 
 			mRoot.removeAllViews();
-			for (final LiveNews naoNews : commentaires) {
-				mRoot.addView(createView(inflater, mRoot, naoNews));
+			for (final LiveNews liveNews : commentaires) {
+				mRoot.addView(createView(inflater, mRoot, liveNews));
 			}
 
 			showContent();
@@ -253,10 +253,10 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 						null);
 
 				for (int i = commentaires.size() - 1; i > -1; i--) {
-					final LiveNews naoNews = commentaires.get(i);
+					final LiveNews liveNews = commentaires.get(i);
 
-					if (naoNews.getTimestamp() > today) {
-						fomatter.formatValues(naoNews);
+					if (liveNews.getTimestamp() > today) {
+						fomatter.formatValues(liveNews);
 					} else {
 						commentaires.remove(i);
 					}

@@ -360,7 +360,7 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_favoris, menu);
+		inflater.inflate(R.menu.fragment_stop_bookmarks, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 
 		final SubMenu groupesSubMenu = menu.findItem(R.id.menu_group).getSubMenu();
@@ -781,7 +781,7 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 	@Override
 	public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_favoris_contextual, menu);
+		menuInflater.inflate(R.menu.fragment_stop_bookmarks_contextual, menu);
 		return true;
 	}
 

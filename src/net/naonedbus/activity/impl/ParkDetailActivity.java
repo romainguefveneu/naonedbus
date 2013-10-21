@@ -81,7 +81,7 @@ public class ParkDetailActivity extends SherlockMapActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_parking_detail);
+		setContentView(R.layout.activity_park_detail);
 
 		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());

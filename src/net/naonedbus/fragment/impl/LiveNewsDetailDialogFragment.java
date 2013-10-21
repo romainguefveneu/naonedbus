@@ -56,7 +56,7 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 
 	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-		final View view = inflater.inflate(R.layout.dialog_comment_detail, null);
+		final View view = inflater.inflate(R.layout.dialog_livenews_detail, null);
 
 		SmileyParser.init(getActivity());
 		final SmileyParser simSmileyParser = SmileyParser.getInstance();
@@ -176,10 +176,10 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
 	}
 
-	protected void setRouteDirectionStop(final LiveNews naoNews) {
-		final Route route = naoNews.getRoute();
-		final Direction direction = naoNews.getDirection();
-		final Stop stop = naoNews.getStop();
+	protected void setRouteDirectionStop(final LiveNews liveNews) {
+		final Route route = liveNews.getRoute();
+		final Direction direction = liveNews.getDirection();
+		final Stop stop = liveNews.getStop();
 
 		String title = "";
 		String subtitle = "";
@@ -215,17 +215,17 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 
 	}
 
-	protected String getCommentaireTitle(final LiveNews naoNews) {
+	protected String getCommentaireTitle(final LiveNews liveNews) {
 		String title = "";
 
-		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(naoNews.getSource())) {
+		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(liveNews.getSource())) {
 			title = getString(R.string.commentaire_tan_info_trafic);
-		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(naoNews.getSource())) {
+		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(liveNews.getSource())) {
 			title = getString(R.string.commentaire_message_service);
 		} else {
-			final Route route = naoNews.getRoute();
-			final Direction direction = naoNews.getDirection();
-			final Stop stop = naoNews.getStop();
+			final Route route = liveNews.getRoute();
+			final Direction direction = liveNews.getDirection();
+			final Stop stop = liveNews.getStop();
 
 			if (stop == null && direction == null && route == null) {
 				title = getString(R.string.commentaire_tout);

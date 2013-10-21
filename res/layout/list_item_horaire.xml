@@ -24,6 +24,6 @@
 
     <include layout="@layout/list_item_header" />
 
-    <include layout="@layout/list_item_content_horaire" />
+    <include layout="@layout/list_item_content_schedule" />
 
 </LinearLayout>

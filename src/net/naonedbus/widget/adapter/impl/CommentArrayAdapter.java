@@ -63,7 +63,7 @@ public class CommentArrayAdapter extends ArraySectionAdapter<LiveNews> {
 	private final Typeface robotoCondensed;
 
 	public CommentArrayAdapter(final Context context) {
-		super(context, R.layout.list_item_commentaire);
+		super(context, R.layout.list_item_livenews);
 		robotoMedium = FontUtils.getRobotoMedium(context);
 		robotoCondensed = FontUtils.getRobotoBoldCondensed(context);
 	}
@@ -100,14 +100,14 @@ public class CommentArrayAdapter extends ArraySectionAdapter<LiveNews> {
 }
 
 /**
- * Défini un Adapter gérant l'affichage d'une route de naoNews
+ * Défini un Adapter gérant l'affichage d'une route de liveNews
  */
 interface CommentaireAdapter {
 	void setObject(View itemView, LiveNews item);
 }
 
 /**
- * route de naoNews de type Tweet @tan_trafic.
+ * route de liveNews de type Tweet @tan_trafic.
  */
 class TanTraficCommentaireAdapter implements CommentaireAdapter {
 
@@ -130,7 +130,7 @@ class TanTraficCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * route de naoNews de type Tweet @tan_actus.
+ * route de liveNews de type Tweet @tan_actus.
  */
 class TanActusCommentaireAdapter implements CommentaireAdapter {
 
@@ -153,7 +153,7 @@ class TanActusCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * route de naoNews de type Tweet @TANinfos.
+ * route de liveNews de type Tweet @TANinfos.
  */
 class TanInfosCommentaireAdapter implements CommentaireAdapter {
 
@@ -176,7 +176,7 @@ class TanInfosCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * route de naoNews de type Message de service naonedbus
+ * route de liveNews de type Message de service naonedbus
  */
 class MessageServiceCommentaireAdapter implements CommentaireAdapter {
 
@@ -198,7 +198,7 @@ class MessageServiceCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * route de naoNews de type standard
+ * route de liveNews de type standard
  */
 class DefaultCommentaireAdapter implements CommentaireAdapter {
 

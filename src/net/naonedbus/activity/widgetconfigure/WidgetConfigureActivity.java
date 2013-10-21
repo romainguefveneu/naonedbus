@@ -59,7 +59,7 @@ public abstract class WidgetConfigureActivity extends ListActivity {
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dialog_widgets_favoris);
+		setContentView(R.layout.dialog_widgets_stop_bookmarks);
 
 		mListView = findViewById(android.R.id.list);
 		mProgress = findViewById(android.R.id.progress);

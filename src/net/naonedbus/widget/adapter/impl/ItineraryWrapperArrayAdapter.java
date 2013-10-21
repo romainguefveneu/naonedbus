@@ -100,7 +100,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		final List<Route> lignes = wrapper.getLignes();
 		viewHolder.gridLayout.removeAllViews();
 		for (final Route l : lignes) {
-			final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.ligne_code_item_medium,
+			final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.route_code_item_medium,
 					viewHolder.gridLayout, false);
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getBackColor()));
 			textView.setText(l.getLetter());
@@ -126,7 +126,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 	}
 
 	private View inflateEmptyView(final ViewGroup parent) {
-		final View view = mLayoutInflater.inflate(R.layout.item_itineraire_empty, parent, false);
+		final View view = mLayoutInflater.inflate(R.layout.list_item_itinerary_empty, parent, false);
 
 		final ViewHolder viewHolder = new ViewHolder();
 		viewHolder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);

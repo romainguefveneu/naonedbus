@@ -57,7 +57,7 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 	private Map<Class<? extends AsyncTaskInfo<?>>, Unschedulable<?>> unschedulers;
 
 	public EquipmentArrayAdapter(final Context context, final List<Equipment> objects) {
-		super(context, R.layout.list_item_equipement, objects);
+		super(context, R.layout.list_item_equipment, objects);
 		initUnschedulers();
 		initAdapters();
 	}
@@ -240,7 +240,7 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 		holder.itemRoutes.setVisibility(View.VISIBLE);
 
 		for (final Route route : lignes) {
-			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, holder.itemRoutes,
+			final TextView textView = (TextView) layoutInflater.inflate(R.layout.route_code_item, holder.itemRoutes,
 					false);
 
 			textView.setTypeface(mRoboto);

@@ -129,7 +129,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_parkings_publics, menu);
+		inflater.inflate(R.menu.fragment_public_parks, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 

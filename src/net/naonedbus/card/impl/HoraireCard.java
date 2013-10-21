@@ -177,14 +177,14 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 		for (int i = 0; i < viewsCount; i++) {
 			int layoutHoraire;
 			if (i == 0)
-				layoutHoraire = R.layout.card_horaire_text_first;
+				layoutHoraire = R.layout.card_schedule_text_first;
 			else if (i < viewsCount - 1)
-				layoutHoraire = R.layout.card_horaire_text;
+				layoutHoraire = R.layout.card_schedule_text;
 			else
-				layoutHoraire = R.layout.card_horaire_text_last;
+				layoutHoraire = R.layout.card_schedule_text_last;
 
 			final TextView horaireView = (TextView) mLayoutInflater.inflate(layoutHoraire, null);
-			final TextView delayView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_delay, null);
+			final TextView delayView = (TextView) mLayoutInflater.inflate(R.layout.card_schedule_delay, null);
 
 			setTypefaceRobotoLight(horaireView);
 
@@ -199,7 +199,7 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 	}
 
 	private int getTextViewCount(final ViewGroup parent) {
-		final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_text, parent, false);
+		final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_schedule_text, parent, false);
 		final DateTime noon = new DateTime().withHourOfDay(12).withMinuteOfHour(00);
 		final int padding = getContext().getResources().getDimensionPixelSize(R.dimen.padding_medium);
 		textView.setText(FormatUtils.formatTimeAmPm(getContext(), mTimeFormat.format(noon.toDate())));
@@ -302,7 +302,7 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 			mTerminusView.removeAllViews();
 			final Map<String, String> terminus = mTerminusManager.getTerminus();
 			for (final Entry<String, String> item : terminus.entrySet()) {
-				final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_horaire_terminus,
+				final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.card_schedule_headsign,
 						mTerminusView, false);
 				textView.setText(item.getValue() + " " + item.getKey());
 				mTerminusView.addView(textView);

@@ -246,7 +246,7 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_horaires, menu);
+		inflater.inflate(R.menu.fragment_schedules, menu);
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
 		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;

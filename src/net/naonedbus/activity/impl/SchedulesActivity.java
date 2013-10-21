@@ -45,7 +45,7 @@ public class SchedulesActivity extends OneFragmentActivity implements OnDirectio
 	private boolean mFromWidget;
 
 	public SchedulesActivity() {
-		super(R.layout.activity_horaires);
+		super(R.layout.activity_schedules);
 	}
 
 	@Override

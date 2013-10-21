@@ -114,26 +114,26 @@ public class LiveNewsManager extends SQLiteManager<LiveNews> {
 
 	@Override
 	public LiveNews getSingleFromCursor(final Cursor c) {
-		final LiveNews naoNews = new LiveNews();
-		naoNews.setId(c.getInt(mColId));
-		naoNews.setCodeLigne(c.getString(mColRouteCode));
-		naoNews.setCodeSens(c.getString(mColDirectionCode));
-		naoNews.setCodeArret(c.getString(mColStopCode));
-		naoNews.setMessage(c.getString(mColMessage));
-		naoNews.setSource(c.getString(mColSource));
-		naoNews.setTimestamp(c.getLong(mColTimestamp));
-		return naoNews;
+		final LiveNews liveNews = new LiveNews();
+		liveNews.setId(c.getInt(mColId));
+		liveNews.setCodeLigne(c.getString(mColRouteCode));
+		liveNews.setCodeSens(c.getString(mColDirectionCode));
+		liveNews.setCodeArret(c.getString(mColStopCode));
+		liveNews.setMessage(c.getString(mColMessage));
+		liveNews.setSource(c.getString(mColSource));
+		liveNews.setTimestamp(c.getLong(mColTimestamp));
+		return liveNews;
 	}
 
 	@Override
-	protected ContentValues getContentValues(final LiveNews naoNews) {
+	protected ContentValues getContentValues(final LiveNews liveNews) {
 		final ContentValues values = new ContentValues();
-		values.put(LiveNewsTable.ROUTE_CODE, naoNews.getCodeLigne());
-		values.put(LiveNewsTable.DIRECTION_CODE, naoNews.getCodeSens());
-		values.put(LiveNewsTable.STOP_CODE, naoNews.getCodeArret());
-		values.put(LiveNewsTable.MESSAGE, naoNews.getMessage());
-		values.put(LiveNewsTable.SOURCE, naoNews.getSource());
-		values.put(LiveNewsTable.TIMESTAMP, naoNews.getTimestamp());
+		values.put(LiveNewsTable.ROUTE_CODE, liveNews.getCodeLigne());
+		values.put(LiveNewsTable.DIRECTION_CODE, liveNews.getCodeSens());
+		values.put(LiveNewsTable.STOP_CODE, liveNews.getCodeArret());
+		values.put(LiveNewsTable.MESSAGE, liveNews.getMessage());
+		values.put(LiveNewsTable.SOURCE, liveNews.getSource());
+		values.put(LiveNewsTable.TIMESTAMP, liveNews.getTimestamp());
 		return values;
 	}
 

@@ -45,7 +45,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 	private int mColDetails;
 
 	public EquipmentCursorAdapter(final Context context, final Cursor c) {
-		super(context, c, R.layout.list_item_equipement);
+		super(context, c, R.layout.list_item_equipment);
 		mContext = context;
 		mEquipementManager = EquipmentManager.getInstance();
 

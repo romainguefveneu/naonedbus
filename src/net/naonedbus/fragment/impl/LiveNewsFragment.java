@@ -119,7 +119,7 @@ public class LiveNewsFragment extends CustomListFragment {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateOptionsMenu");
 
-		inflater.inflate(R.menu.activity_en_direct, menu);
+		inflater.inflate(R.menu.fragment_livenews, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 
 		if (getLoaderManager().hasRunningLoaders())
@@ -145,10 +145,10 @@ public class LiveNewsFragment extends CustomListFragment {
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		final LiveNews naoNews = (LiveNews) l.getItemAtPosition(position);
+		final LiveNews liveNews = (LiveNews) l.getItemAtPosition(position);
 
 		final Bundle bundle = new Bundle();
-		bundle.putParcelable(LiveNewsDetailDialogFragment.PARAM_LIVENEWS, naoNews);
+		bundle.putParcelable(LiveNewsDetailDialogFragment.PARAM_LIVENEWS, liveNews);
 
 		final DialogFragment dialogFragment = new LiveNewsDetailDialogFragment();
 		dialogFragment.setArguments(bundle);

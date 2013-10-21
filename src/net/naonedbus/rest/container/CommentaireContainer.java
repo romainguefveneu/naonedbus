@@ -24,6 +24,6 @@ import net.naonedbus.bean.LiveNews;
 
 public class CommentaireContainer {
 
-	public List<LiveNews> naoNews;
+	public List<LiveNews> liveNews;
 
 }

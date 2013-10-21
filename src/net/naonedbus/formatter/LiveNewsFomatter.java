@@ -91,33 +91,33 @@ public class LiveNewsFomatter {
 	 * @return
 	 */
 	public void appendToAdapter(final CommentArrayAdapter adapter, final List<LiveNews> commentaires) {
-		for (final LiveNews naoNews : commentaires) {
-			formatValues(naoNews);
-			adapter.add(naoNews);
+		for (final LiveNews liveNews : commentaires) {
+			formatValues(liveNews);
+			adapter.add(liveNews);
 		}
 	}
 
 	/**
 	 * Récupérer un CommentaireItem avec la route, direction et arrêt d'un
-	 * naoNews
+	 * liveNews
 	 * 
-	 * @param naoNews
+	 * @param liveNews
 	 * @return
 	 */
 
-	public void formatValues(final LiveNews naoNews) {
-		naoNews.setMessage(mSmileyParser.addSmileySpans(naoNews.getMessage()).toString());
-		naoNews.setDateTime(new DateTime(naoNews.getTimestamp()));
-		naoNews.setDelay(DateUtils.getRelativeTimeSpanString(naoNews.getDateTime().getMillis(),
+	public void formatValues(final LiveNews liveNews) {
+		liveNews.setMessage(mSmileyParser.addSmileySpans(liveNews.getMessage()).toString());
+		liveNews.setDateTime(new DateTime(liveNews.getTimestamp()));
+		liveNews.setDelay(DateUtils.getRelativeTimeSpanString(liveNews.getDateTime().getMillis(),
 				System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString());
-		naoNews.setSection(getCommentaireSection(naoNews));
-		setCommentaireLigne(naoNews);
-		setCommentaireSens(naoNews);
-		setCommentaireArret(naoNews);
+		liveNews.setSection(getCommentaireSection(liveNews));
+		setRoute(liveNews);
+		setDirection(liveNews);
+		setStop(liveNews);
 	}
 
-	private Object getCommentaireSection(final LiveNews naoNews) {
-		final DateMidnight date = naoNews.getDateTime().toDateMidnight();
+	private Object getCommentaireSection(final LiveNews liveNews) {
+		final DateMidnight date = liveNews.getDateTime().toDateMidnight();
 		if (date.isAfterNow()) {
 			// A venir
 			return CommentsIndexer.SECTION_FUTURE;
@@ -133,43 +133,25 @@ public class LiveNewsFomatter {
 		}
 	}
 
-	/**
-	 * Associer les données de la route (code & couleur)
-	 * 
-	 * @param naoNews
-	 * @param naoNews
-	 */
-	private void setCommentaireLigne(final LiveNews naoNews) {
-		if (naoNews.getCodeLigne() != null) {
-			final Route route = mRouteManager.getSingle(mContext.getContentResolver(), naoNews.getCodeLigne());
-			naoNews.setRoute(route);
+	private void setRoute(final LiveNews liveNews) {
+		if (liveNews.getCodeLigne() != null) {
+			final Route route = mRouteManager.getSingle(mContext.getContentResolver(), liveNews.getCodeLigne());
+			liveNews.setRoute(route);
 		}
 	}
 
-	/**
-	 * Associer les données du direction (nom)
-	 * 
-	 * @param naoNews
-	 * @param commentaireItem
-	 */
-	private void setCommentaireSens(final LiveNews naoNews) {
-		if (naoNews.getCodeSens() != null) {
+	private void setDirection(final LiveNews liveNews) {
+		if (liveNews.getCodeSens() != null) {
 			final Direction direction = mDirectionManager.getSingle(mContext.getContentResolver(),
-					naoNews.getCodeLigne(), naoNews.getCodeSens());
-			naoNews.setDirection(direction);
+					liveNews.getCodeLigne(), liveNews.getCodeSens());
+			liveNews.setDirection(direction);
 		}
 	}
 
-	/**
-	 * Associer les données de l'arrêt (nom)
-	 * 
-	 * @param naoNews
-	 * @param commentaireItem
-	 */
-	private void setCommentaireArret(final LiveNews naoNews) {
-		if (naoNews.getCodeArret() != null) {
-			final Stop stop = mStopManager.getSingle(mContext.getContentResolver(), naoNews.getCodeArret());
-			naoNews.setStop(stop);
+	private void setStop(final LiveNews liveNews) {
+		if (liveNews.getCodeArret() != null) {
+			final Stop stop = mStopManager.getSingle(mContext.getContentResolver(), liveNews.getCodeArret());
+			liveNews.setStop(stop);
 		}
 	}
 

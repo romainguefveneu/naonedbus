@@ -47,7 +47,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 	private String mShareContent;
 
 	public ItineraryDetailFragment() {
-		super(R.layout.fragment_itineraire_detail);
+		super(R.layout.fragment_itinerary_detail);
 	}
 
 	@Override

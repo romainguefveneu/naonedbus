@@ -15,7 +15,7 @@
         android:text="time" />
 
     <View
-        android:id="@id/itemMetroPoint"
+        android:id="@+id/itemMetroPoint"
         style="@style/ItemSymbole.Tiny"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/itemTime"

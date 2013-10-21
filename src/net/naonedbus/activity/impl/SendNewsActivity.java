@@ -117,7 +117,7 @@ public class SendNewsActivity extends SherlockActivity {
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_comment);
+		setContentView(R.layout.activity_livenews_send);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mRouteManager = RouteManager.getInstance();
@@ -186,7 +186,7 @@ public class SendNewsActivity extends SherlockActivity {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		final MenuInflater menuInflater = getSupportMenuInflater();
-		menuInflater.inflate(R.menu.activity_commentaire, menu);
+		menuInflater.inflate(R.menu.activity_livenews_send, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -308,7 +308,7 @@ public class SendNewsActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Envoyer le naoNews s'il a passé les test de
+	 * Envoyer le liveNews s'il a passé les test de
 	 * {@link #validateComment(LiveNews)}
 	 */
 	private void prepareAndSendComment() {
@@ -333,7 +333,7 @@ public class SendNewsActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Définir la route du naoNews et changer la valeur du selecteur.
+	 * Définir la route du liveNews et changer la valeur du selecteur.
 	 * 
 	 * @param route
 	 *            Le nouvelle route
@@ -354,7 +354,7 @@ public class SendNewsActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Définir le direction du naoNews et changer la valeur du selecteur.
+	 * Définir le direction du liveNews et changer la valeur du selecteur.
 	 * 
 	 * @param direction
 	 *            Le nouveau direction
@@ -369,7 +369,7 @@ public class SendNewsActivity extends SherlockActivity {
 	}
 
 	/**
-	 * Définir l'stop du naoNews et changer la valeur du selecteur.
+	 * Définir l'stop du liveNews et changer la valeur du selecteur.
 	 * 
 	 * @param stop
 	 *            Le nouvel stop
@@ -395,9 +395,9 @@ public class SendNewsActivity extends SherlockActivity {
 		return ret;
 	}
 
-	private void sendComment(final LiveNews naoNews) {
+	private void sendComment(final LiveNews liveNews) {
 		if (mSendTask == null || mSendTask.getStatus() == AsyncTask.Status.FINISHED) {
-			mSendTask = (SendTask) new SendTask().execute(naoNews);
+			mSendTask = (SendTask) new SendTask().execute(liveNews);
 		}
 	}
 

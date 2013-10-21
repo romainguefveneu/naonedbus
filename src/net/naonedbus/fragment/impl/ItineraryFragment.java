@@ -114,7 +114,7 @@ public class ItineraryFragment extends AbstractListFragment implements
 	private boolean mDialogLock;
 
 	public ItineraryFragment() {
-		super(R.layout.fragment_itineraire);
+		super(R.layout.fragment_itinerary);
 	}
 
 	@Override

@@ -53,7 +53,7 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_arret, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_stop, null);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);

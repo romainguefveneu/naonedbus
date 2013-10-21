@@ -117,7 +117,7 @@ public class BiclooBookmarksFragment extends BicloosFragment implements OnItemLo
 	@Override
 	public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
 		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
-		menuInflater.inflate(R.menu.fragment_favoris_bicloos_contextual, menu);
+		menuInflater.inflate(R.menu.fragment_bicloo_bookmarks_contextual, menu);
 		return true;
 	}
 

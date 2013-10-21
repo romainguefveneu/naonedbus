@@ -67,7 +67,7 @@
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/section_about_auteurs" />
+            layout="@layout/section_about_authors" />
 
         <include
             android:layout_width="match_parent"

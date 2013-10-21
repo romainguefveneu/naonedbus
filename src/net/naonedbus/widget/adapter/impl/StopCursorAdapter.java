@@ -35,7 +35,7 @@ import android.widget.TextView;
 public class StopCursorAdapter extends CursorAdapter {
 
 	protected LayoutInflater mLayoutInflater;
-	private int mLayoutId = R.layout.list_item_arret;
+	private int mLayoutId = R.layout.list_item_stop;
 	private Cursor mFavoris;
 	private Drawable mIconBackgroundDrawable;
 
