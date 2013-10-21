@@ -27,8 +27,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.NextHoraireTask;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.bean.horaire.ScheduleToken;
 import net.naonedbus.manager.SQLiteManager;
@@ -63,7 +63,7 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	private final ConcurrentLinkedQueue<NextHoraireTask> mSchedulesTasksQueue;
 	private final Set<ScheduleToken> mEmptySchedules;
 	private Thread mLoadThread;
-	private Object mDatabaseLock;
+	private final Object mDatabaseLock;
 
 	private int mColId;
 	private int mColTimestamp;
@@ -150,7 +150,7 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	 *         et la date demandée {@code false} si les données ne sont pas en
 	 *         cache.
 	 */
-	public boolean isInDB(final ContentResolver contentResolver, final ScheduleToken token, int count) {
+	public boolean isInDB(final ContentResolver contentResolver, final ScheduleToken token, final int count) {
 		if (mEmptySchedules.contains(token))
 			return true;
 
@@ -241,10 +241,10 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getSchedules(final ContentResolver contentResolver, final Stop arret,
-			final DateMidnight date, final DateTime after) throws IOException {
-		// Le cache ne doit stocker que les horaires du jour et du lendemain.
+	public List<Horaire> getSchedules(final ContentResolver contentResolver, final Stop stop, final DateMidnight date,
+			final DateTime after) throws IOException {
 
+		// Le cache ne doit stocker que les horaires du jour et du lendemain.
 		final DateMidnight cacheLimit = new DateMidnight().plusDays(DAYS_IN_CACHE);
 		final DateMidnight today = new DateMidnight();
 		final DateTime now = new DateTime();
@@ -252,11 +252,10 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 
 		if (date.isBefore(cacheLimit)) {
 
-			final ScheduleToken todayToken = new ScheduleToken(date.getMillis(), arret.getId());
+			final ScheduleToken todayToken = new ScheduleToken(date.getMillis(), stop.getId());
 
 			// Partie atomique
 			synchronized (mDatabaseLock) {
-
 				if (!isInDB(contentResolver, todayToken)) {
 					// Charger les horaires depuis le web et les stocker en base
 
@@ -264,24 +263,24 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 						// Charger la veille si besoin (pour les horaires après
 						// minuit)
 						final ScheduleToken yesterdayToken = new ScheduleToken(date.minusDays(1).getMillis(),
-								arret.getId());
+								stop.getId());
 
 						if (isInDB(contentResolver, yesterdayToken)) {
-							horaires = mController.getAllFromWeb(arret, date.minusDays(1));
+							horaires = mController.getAllFromWeb(stop, date.minusDays(1));
 							fillDB(contentResolver, yesterdayToken, horaires);
 						}
 					}
 
-					horaires = mController.getAllFromWeb(arret, date);
+					horaires = mController.getAllFromWeb(stop, date);
 					fillDB(contentResolver, todayToken, horaires);
 				}
 
 				// Charger les horaires depuis la base
 				final Uri.Builder builder = ScheduleProvider.CONTENT_URI.buildUpon();
 				builder.path(ScheduleProvider.HORAIRE_JOUR_URI_PATH_QUERY);
-				builder.appendQueryParameter(ScheduleProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
+				builder.appendQueryParameter(ScheduleProvider.PARAM_ARRET_ID, String.valueOf(stop.getId()));
 				builder.appendQueryParameter(ScheduleProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
-				builder.appendQueryParameter(ScheduleProvider.PARAM_INCLUDE_LAST_DAY_TRIP, "true");
+				builder.appendQueryParameter(ScheduleProvider.PARAM_INCLUDE_LAST_DAY_TRIP, Boolean.TRUE.toString());
 
 				// Eviter l'affichage de doublons
 				if (after != null) {
@@ -294,8 +293,11 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 			}
 
 		} else {
-			horaires = mController.getAllFromWeb(arret, date);
+			horaires = mController.getAllFromWeb(stop, date);
 		}
+
+		if (DBG)
+			Log.v(LOG_TAG, "getSchedules [" + stop + ";" + date + ";" + after + "] : " + horaires.size());
 
 		return horaires;
 	}
@@ -356,8 +358,7 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public Integer getMinutesToNextSchedule(final ContentResolver contentResolver, final Stop arret)
-			throws IOException {
+	public Integer getMinutesToNextSchedule(final ContentResolver contentResolver, final Stop arret) throws IOException {
 
 		final List<Horaire> nextSchedules = getNextSchedules(contentResolver, arret, new DateMidnight(), 1);
 		Integer result = null;

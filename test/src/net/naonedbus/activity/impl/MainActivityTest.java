@@ -2,13 +2,12 @@ package net.naonedbus.activity.impl;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
 import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.horaire.Horaire;
-import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.manager.impl.ScheduleManager;
+import net.naonedbus.manager.impl.StopManager;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.MutableDateTime;
@@ -26,18 +25,16 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		final ContentResolver contentResolver = getActivity().getContentResolver();
 
 		final StopManager arretManager = StopManager.getInstance();
-		final Stop arret = arretManager.getSingle(contentResolver, "FMIT1");
-		assertNotNull(arret);
+		final Stop stop = arretManager.getSingle(contentResolver, "FMIT1");
+		assertNotNull(stop);
 
 		final ScheduleManager horaireManager = ScheduleManager.getInstance();
 		horaireManager.clearSchedules(contentResolver);
 
-		final DateMidnight date = new DateMidnight();
-
-		final int threadCount = 10;
+		final int threadCount = 20;
 		final CountDownLatch latch = new CountDownLatch(threadCount);
 		for (int i = 0; i < threadCount; i++) {
-			final Thread thread = new Thread(new TimeFetcherTask(contentResolver, latch, arret, date));
+			final Thread thread = new Thread(new TimeFetcherTask(contentResolver, latch, stop));
 			thread.start();
 		}
 		latch.await();
@@ -45,40 +42,42 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 
 	class TimeFetcherTask implements Runnable {
 
-		private final Stop mArret;
-		private final DateMidnight mDate;
+		private final Stop mStop;
 		private final ContentResolver mContentResolver;
 		private final CountDownLatch mCountDownLatch;
 
-		public TimeFetcherTask(final ContentResolver contentResolver, final CountDownLatch latch, final Stop arret,
-				final DateMidnight date) {
+		public TimeFetcherTask(final ContentResolver contentResolver, final CountDownLatch latch, final Stop stop) {
 			mContentResolver = contentResolver;
 			mCountDownLatch = latch;
-			mArret = arret;
-			mDate = date;
+			mStop = stop;
 		}
 
 		@Override
 		public void run() {
-			final ScheduleManager horaireManager = ScheduleManager.getInstance();
-			final MutableDateTime mutableDateTime = new MutableDateTime();
+			final ScheduleManager scheduleManager = ScheduleManager.getInstance();
+
+			final DateMidnight date = new DateMidnight().plusDays((int) Math.round((Math.random() * 7)));
+			final MutableDateTime mutableDateTime = date.toMutableDateTime();
 
 			try {
-				for (int i = 0; i < 50; i++) {
-					final Random random = new Random(System.currentTimeMillis());
-					if (random.nextBoolean())
-						horaireManager.clearSchedules(mContentResolver);
+				List<Horaire> schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
+				final int scheduleCount = schedules.size();
 
-					final List<Horaire> horaires = horaireManager.getSchedules(mContentResolver, mArret, mDate);
-					assertTrue(horaires.size() > 0);
+				for (int i = 0; i < 20; i++) {
+					if (Math.random() > 0.9)
+						scheduleManager.clearSchedules(mContentResolver);
 
-					for (final Horaire horaire : horaires) {
+					schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
+
+					for (final Horaire horaire : schedules) {
 						mutableDateTime.setTime(horaire.getTimestamp());
 
-						assertEquals(mutableDateTime.getDayOfMonth(), mDate.getDayOfMonth());
-						assertEquals(mutableDateTime.getMonthOfYear(), mDate.getMonthOfYear());
-						assertEquals(mutableDateTime.getYear(), mDate.getYear());
+						assertEquals(date.getDayOfMonth(), mutableDateTime.getDayOfMonth());
+						assertEquals(date.getMonthOfYear(), mutableDateTime.getMonthOfYear());
+						assertEquals(date.getYear(), mutableDateTime.getYear());
 					}
+
+					assertEquals(scheduleCount, schedules.size());
 				}
 			} catch (final IOException e) {
 				fail(e.getLocalizedMessage());
