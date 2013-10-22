@@ -30,8 +30,7 @@
         android:layout_alignBaseline="@id/colRight"
         android:layout_alignLeft="@+id/horaires"
         android:layout_marginRight="@dimen/padding_small"
-        android:tag="@string/cardHoraireTag"
-        android:text="00:00 AM" />
+        android:tag="@string/cardHoraireTag" />
 
     <TextView
         style="@style/CardDelai"
@@ -50,8 +49,7 @@
         android:layout_alignRight="@id/horaires"
         android:paddingBottom="0dp"
         android:paddingRight="0dp"
-        android:tag="@string/cardHoraireTag"
-        android:text="00:00 AM" />
+        android:tag="@string/cardHoraireTag" />
 
     <TextView
         android:id="@id/delaiMain"
@@ -59,8 +57,7 @@
         android:layout_alignRight="@id/colRight"
         android:layout_below="@id/colRight"
         android:paddingRight="2dp"
-        android:tag="@string/cardDelaiTag"
-        android:text="0 min" />
+        android:tag="@string/cardDelaiTag" />
 
     <TableLayout
         android:id="@id/horaires"

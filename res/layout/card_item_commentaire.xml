@@ -30,32 +30,27 @@
     android:paddingRight="@dimen/padding_medium"
     android:paddingTop="@dimen/padding_small" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" >
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/itemTitle"
+            style="@style/ItemSecondaryText.SingleLine"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" >
+            android:layout_alignParentTop="false" />
 
-            <TextView
-                android:id="@+id/itemTitle"
-                style="@style/ItemSecondaryText.SingleLine"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="false" />
-
-            <TextView
-                android:id="@id/itemDescription"
-                style="@style/ItemPrimaryText.Medium"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/itemTitle"
-                android:layout_marginTop="@dimen/padding_tiny"
-                android:gravity="left|center_vertical" />
-        </RelativeLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@id/itemDescription"
+            style="@style/ItemPrimaryText.Medium"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemTitle"
+            android:layout_marginTop="@dimen/padding_tiny"
+            android:gravity="left|center_vertical" />
+    </RelativeLayout>
 
     <TextView
         android:id="@id/itemTime"

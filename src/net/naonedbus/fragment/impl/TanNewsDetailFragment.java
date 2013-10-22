@@ -128,7 +128,7 @@ public class TanNewsDetailFragment extends CustomFragment {
 					for (final Route l : listLignes) {
 						final TextView textView = (TextView) layoutInflater.inflate(R.layout.route_code_item_medium,
 								mRoutesView, false);
-						textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getBackColor()));
+						ColorUtils.setBackgroundGradiant(textView, l.getBackColor());
 						textView.setText(l.getLetter());
 						textView.setTypeface(robotoCondensed);
 						textView.setTextColor(l.getFrontColor());

@@ -70,7 +70,7 @@ public class StopBookmarkArrayAdapter extends ArraySectionAdapter<StopBookmark> 
 		}
 
 		holder.ligneCode.setText(item.getLettre());
-		holder.ligneCode.setBackgroundDrawable(item.getBackground());
+		ColorUtils.setBackground(holder.ligneCode, item.getBackground());
 		holder.ligneCode.setTextColor(item.getFrontColor());
 
 		if (item.getBookmarkName() == null) {

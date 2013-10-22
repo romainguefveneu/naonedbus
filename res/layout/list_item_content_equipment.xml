@@ -43,7 +43,7 @@
             style="@style/ItemSecondaryText.SingleLine" />
 
         <LinearLayout
-            android:id="@id/itemLignes"
+            android:id="@id/itemRoutes"
             android:layout_width="fill_parent"
             android:layout_height="20dp"
             android:layout_marginTop="4dp"

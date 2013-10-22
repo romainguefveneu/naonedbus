@@ -61,7 +61,7 @@ public class HeaderHelper {
 	}
 
 	public void setColor(final int backColor, final int textColor) {
-		mHeader.setBackgroundDrawable(ColorUtils.getGradiant(backColor));
+		ColorUtils.setBackgroundGradiant(mHeader, backColor);
 
 		mTitle.setTextColor(textColor);
 		mSubTitle.setTextColor(textColor);

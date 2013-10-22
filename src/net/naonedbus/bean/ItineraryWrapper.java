@@ -10,6 +10,8 @@ import fr.ybo.opentripplanner.client.modele.Itinerary;
 
 public class ItineraryWrapper implements Serializable, Parcelable {
 
+	private static final long serialVersionUID = 5232629057687343251L;
+
 	private final Itinerary mItinerary;
 	private String mTime;
 	private String mDate;

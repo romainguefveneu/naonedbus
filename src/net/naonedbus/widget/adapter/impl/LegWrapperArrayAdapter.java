@@ -112,7 +112,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 
 				viewHolder.itemSymbole.setText(route.getLetter());
 				viewHolder.itemSymbole.setTextColor(route.getFrontColor());
-				viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(route.getBackColor()));
+				ColorUtils.setBackgroundGradiant(viewHolder.itemSymbole, route.getBackColor());
 			} else {
 				viewHolder.itemIcon.setVisibility(View.INVISIBLE);
 				viewHolder.itemSymbole.setVisibility(View.INVISIBLE);

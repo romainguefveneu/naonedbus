@@ -81,9 +81,9 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 
 		mTitle = (TextView) findViewById(R.id.itemTitle);
 		mAdresse = (TextView) findViewById(R.id.itemAddress);
-		mPaiement = (TextView) findViewById(R.id.stationPaiement);
-		mBicloosDisponibles = (TextView) findViewById(R.id.bicloosDisponibles);
-		mPlacesDisponibles = (TextView) findViewById(R.id.placesDisponibles);
+		mPaiement = (TextView) findViewById(R.id.payment);
+		mBicloosDisponibles = (TextView) findViewById(R.id.bicloosAvailable);
+		mPlacesDisponibles = (TextView) findViewById(R.id.availableSpaces);
 		mItemDate = (TextView) findViewById(R.id.itemDate);
 		mMessage = (TextView) findViewById(R.id.message);
 

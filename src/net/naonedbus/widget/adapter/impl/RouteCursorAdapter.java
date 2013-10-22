@@ -110,7 +110,7 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 			holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			holder.icon.setTextColor(Color.WHITE);
 		} else {
-			holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(color));
+			ColorUtils.setBackgroundGradiant(holder.icon, color);
 			holder.icon.setTextColor(colorFront);
 		}
 		if ((depuis == null || depuis.length() == 0 || depuis.equals(vers))) {
@@ -148,8 +148,8 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 	protected void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
-		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
-		holder.sens2 = (TextView) view.findViewById(R.id.ligneTo);
+		holder.sens1 = (TextView) view.findViewById(R.id.headsignFrom);
+		holder.sens2 = (TextView) view.findViewById(R.id.headsignTo);
 		holder.icon.setTypeface(mRoboto);
 
 		view.setTag(holder);

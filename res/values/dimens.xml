@@ -21,8 +21,6 @@
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="padding_large">16dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
-    <dimen name="widget_padding">8dp</dimen>
-    <dimen name="widget_limit">100dp</dimen>
     <dimen name="codeitem_margin">1dip</dimen>
     <dimen name="codeitem_width">35dip</dimen>
     <!-- Activity Header -->
@@ -32,7 +30,6 @@
     <dimen name="bigtitle_text_size_small">24sp</dimen>
     <dimen name="bigsens_text_size">12sp</dimen>
     <dimen name="bigsubtitle_text_size">16sp</dimen>
-    <dimen name="bigsubtitle_height">28dp</dimen>
     <dimen name="bigsubtitlesmall_text_size">10sp</dimen>
     <dimen name="padding_header">13dp</dimen>
     <!-- Dimensions for PagerHeaders -->

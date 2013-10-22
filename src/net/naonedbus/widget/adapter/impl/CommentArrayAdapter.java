@@ -219,13 +219,13 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 			}
 
 			holder.ligneCode.setText(route.getLetter());
-			holder.ligneCode.setBackgroundDrawable(item.getBackground());
+			ColorUtils.setBackground(holder.ligneCode, item.getBackground());
 			holder.ligneCode.setTextColor(route.getFrontColor());
 
 		} else {
 
 			holder.ligneCode.setText(R.string.target_toutes_lignes_symbole);
-			holder.ligneCode.setBackgroundDrawable(null);
+			ColorUtils.setBackground(holder.ligneCode, null);
 			holder.ligneCode.setTextColor(Color.BLACK);
 
 		}

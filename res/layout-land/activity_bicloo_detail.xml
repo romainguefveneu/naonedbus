@@ -31,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/padding_small"
+        android:baselineAligned="false"
         android:weightSum="5" >
 
         <LinearLayout
@@ -50,9 +51,9 @@
                 <!-- Left -->
 
                 <TextView
-                    android:id="@id/placesDisponibles"
+                    android:id="@id/availableSpaces"
                     style="@style/ItemPrimaryText.Large"
-                    android:layout_alignBaseline="@id/bicloosDisponibles"
+                    android:layout_alignBaseline="@id/bicloosAvailable"
                     android:layout_alignParentLeft="true" />
 
                 <TextView
@@ -60,11 +61,11 @@
                     style="@style/SectionTitle.Small"
                     android:layout_alignBaseline="@+id/bicloosDisponiblesLabel"
                     android:layout_alignParentLeft="true"
-                    android:layout_below="@id/placesDisponibles"
+                    android:layout_below="@id/availableSpaces"
                     android:text="@string/bicloo_titre_places_disponible" />
 
                 <TextView
-                    android:id="@id/stationPaiement"
+                    android:id="@id/payment"
                     style="@style/ItemPrimaryText.Large"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/bicloosDisponiblesLabel" />
@@ -73,13 +74,13 @@
                     android:id="@+id/stationPaiementLabel"
                     style="@style/SectionTitle.Small"
                     android:layout_alignParentLeft="true"
-                    android:layout_below="@id/stationPaiement"
+                    android:layout_below="@id/payment"
                     android:text="@string/bicloo_titre_paiement" />
 
                 <!-- Right -->
 
                 <TextView
-                    android:id="@id/bicloosDisponibles"
+                    android:id="@id/bicloosAvailable"
                     style="@style/CardTextHuge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,7 +90,7 @@
                     android:id="@id/bicloosDisponiblesLabel"
                     style="@style/SectionTitle.Small"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/bicloosDisponibles"
+                    android:layout_below="@id/bicloosAvailable"
                     android:layout_marginBottom="@dimen/padding_small"
                     android:text="@string/bicloo_titre_velos_disponibles" />
             </RelativeLayout>

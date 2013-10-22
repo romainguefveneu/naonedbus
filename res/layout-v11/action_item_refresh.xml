@@ -28,7 +28,7 @@
     android:paddingRight="4dp" >
 
     <ProgressBar
-        style="@android:style/Widget.ProgressBar.Small"
+        style="@android:style/Widget.Holo.ProgressBar.Small"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:focusable="true" />

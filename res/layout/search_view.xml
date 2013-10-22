@@ -35,7 +35,6 @@
         android:layout_gravity="bottom"
         android:layout_weight="1"
         android:background="@null"
-        android:contentDescription="@string/abs__searchview_description_query"
         android:dropDownAnchor="@id/abs__search_edit_frame"
         android:dropDownHeight="wrap_content"
         android:dropDownHorizontalOffset="0dip"

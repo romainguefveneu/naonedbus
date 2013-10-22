@@ -30,6 +30,8 @@ public abstract class ThemeUtils {
 	public static int getDimensionPixelSize(Context context, int attrId) {
 		final TypedValue typedValue = new TypedValue();
 		final TypedArray array = context.obtainStyledAttributes(typedValue.resourceId, new int[] { attrId });
-		return array.getDimensionPixelSize(0, 0);
+		final int dimension = array.getDimensionPixelSize(0, 0);
+		array.recycle();
+		return dimension;
 	}
 }

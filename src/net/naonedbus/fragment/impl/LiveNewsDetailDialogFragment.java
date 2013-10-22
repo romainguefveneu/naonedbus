@@ -150,7 +150,7 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 	}
 
 	public void setHeaderColor(final int backColor, final int textColor) {
-		mHeaderView.setBackgroundDrawable(ColorUtils.getGradiant(backColor));
+		ColorUtils.setBackgroundGradiant(mHeaderView, backColor);
 		mHeaderDivider.setBackgroundColor(ColorUtils.getDarkerColor(backColor));
 
 		if (textColor == Color.WHITE) {

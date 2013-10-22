@@ -26,14 +26,14 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.Route;
 import net.naonedbus.bean.async.AsyncTaskInfo;
-import net.naonedbus.bean.async.RouteTaskInfo;
 import net.naonedbus.bean.async.PublicParkTaskInfo;
+import net.naonedbus.bean.async.RouteTaskInfo;
 import net.naonedbus.bean.parking.PublicPark;
 import net.naonedbus.bean.parking.PublicParkStatus;
 import net.naonedbus.manager.Unschedulable;
 import net.naonedbus.manager.impl.EquipmentManager.SubType;
-import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.manager.impl.PublicParkManager;
+import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.utils.FontUtils;
@@ -93,8 +93,8 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 		} else {
 			holder.itemSymbole.setImageResource(type.getDrawableRes());
 		}
-		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources().getColor(
-				type.getBackgroundColorRes())));
+		ColorUtils.setBackgroundGradiant(holder.itemSymbole,
+				context.getResources().getColor(type.getBackgroundColorRes()));
 
 		// Définir la distance.
 		if (equipment.getDistance() == null) {
@@ -117,7 +117,7 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
 		holder.itemDistance = (TextView) view.findViewById(R.id.itemDistance);
-		holder.itemRoutes = (ViewGroup) view.findViewById(R.id.itemLignes);
+		holder.itemRoutes = (ViewGroup) view.findViewById(R.id.itemRoutes);
 		holder.itemSecondLine = view.findViewById(R.id.secondLine);
 		view.setTag(holder);
 	}
@@ -244,7 +244,7 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 					false);
 
 			textView.setTypeface(mRoboto);
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(route.getBackColor()));
+			ColorUtils.setBackgroundGradiant(textView, route.getBackColor());
 			textView.setText(route.getLetter());
 			textView.setTextColor(route.getFrontColor());
 
@@ -316,7 +316,7 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 				couleur = context.getResources().getColor(parkingPublic.getStatus().getColorRes());
 			}
 
-			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
+			ColorUtils.setBackgroundGradiant(holder.itemSymbole, couleur);
 			holder.itemDescription.setText(detail);
 			holder.itemDescription.setVisibility(View.VISIBLE);
 			holder.itemSecondLine.setVisibility(View.VISIBLE);

@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -137,18 +136,6 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mViewPager.setOffscreenPageLimit(classes.length);
 		mTabs.notifyDataSetChanged();
-	}
-
-	private void clearFragments() {
-		final FragmentManager fragmentManager = getSupportFragmentManager();
-		final FragmentTransaction transaction = fragmentManager.beginTransaction();
-		for (final String tag : mFragmentsTags) {
-			final Fragment fragment = fragmentManager.findFragmentByTag(tag);
-			if (fragment != null) {
-				transaction.remove(fragment);
-			}
-		}
-		transaction.commit();
 	}
 
 	public class TabsAdapter extends FragmentPagerAdapter {

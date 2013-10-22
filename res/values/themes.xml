@@ -44,8 +44,64 @@
         <item name="sectionBackground">@drawable/list_section_underline_dark</item>
     </style>
 
+    <style name="Theme.Acapulco" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_acapulco</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Acapulco</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Acapulco</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Acapulco</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Acapulco</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Acapulco</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_acapulco</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
+
+        <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
+    </style>
+
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_acapulco</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_acapulco</item>
+        <item name="progressBarStyle">@style/ProgressBar.Acapulco</item>
         <item name="icon">@drawable/ic_icon_actionbar</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Acapulco" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/ab_transparent_acapulco</item>
+        <item name="progressBarStyle">@style/ProgressBar.Acapulco</item>
+    </style>
+
+    <style name="PopupMenu.Acapulco" parent="@style/Widget.Sherlock.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_acapulco</item>
+    </style>
+
+    <style name="DropDownListView.Acapulco" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_acapulco</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Acapulco" parent="@style/Widget.Sherlock.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_acapulco</item>
+    </style>
+
+    <style name="DropDownNav.Acapulco" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_acapulco</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_acapulco</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_acapulco</item>
+    </style>
+
+    <style name="ProgressBar.Acapulco" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_acapulco</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.Acapulco" parent="@style/Widget.Sherlock.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_acapulco</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Acapulco.Widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/PopupMenu.Acapulco</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Acapulco</item>
     </style>
 
     <style name="Theme.WidgetDialog" parent="@android:style/Theme.Dialog" />

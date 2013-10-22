@@ -39,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dip"
+                android:contentDescription="@string/about_autors_content_romain"
                 android:src="@drawable/romain" />
 
             <TextView
@@ -73,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dip"
+                android:contentDescription="@string/about_autors_content_benoit"
                 android:src="@drawable/benoit" />
 
             <TextView

@@ -15,7 +15,7 @@
    GNU General Public License for more details.
    
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -29,20 +29,19 @@
     <item name="itemTime" type="id"/>
     <item name="itemDate" type="id"/>
     <item name="itemDistance" type="id"/>
-    <item name="itemLignes" type="id"/>
-    <item name="itemTelephone" type="id"/>
+    <item name="itemRoutes" type="id"/>
+    <item name="itemPhone" type="id"/>
     <item name="dotLocation" type="id"/>
-    <item name="ligneFrom" type="id"/>
-    <item name="ligneTo" type="id"/>
-    <item name="itemHoraire" type="id"/>
-    <item name="itemDelai" type="id"/>
+    <item name="headsignFrom" type="id"/>
+    <item name="headsignTo" type="id"/>
+    <item name="itemSchedule" type="id"/>
+    <item name="itemDelay" type="id"/>
     <item name="itemAddress" type="id"/>
     <item name="itemWalkTime" type="id"/>
     <!-- Headers -->
     <item name="headerView" type="id"/>
     <item name="headerTitle" type="id"/>
     <item name="headerDivider" type="id"/>
-    <item name="headerTitle" type="id"/>
     <item name="headerSubTitle" type="id"/>
     <item name="headerCode" type="id"/>
 
@@ -67,15 +66,15 @@
     <item name="donateFlattr" type="id"/>
 
     <!-- Parking -->
-    <item name="placesTotales" type="id"/>
-    <item name="placesDisponibles" type="id"/>
-    <item name="majDate" type="id"/>
+    <item name="totalSpaces" type="id"/>
+    <item name="availableSpaces" type="id"/>
+    <item name="updateDate" type="id"/>
 
     <!-- Bicloos -->
-    <item name="bicloosDisponibles" type="id"/>
-    <item name="stationEtat" type="id"/>
-    <item name="stationBonus" type="id"/>
-    <item name="stationPaiement" type="id"/>
+    <item name="bicloosAvailable" type="id"/>
+    <item name="status" type="id"/>
+    <item name="bonus" type="id"/>
+    <item name="payment" type="id"/>
 
     <!--  -->
     <item name="colLeft" type="id"/>
@@ -98,9 +97,9 @@
     <item name="fragmentRight" type="id"/>
     <!-- Layouts -->
     <item name="commentaireLigneSpinner" type="id"/>
-    <item name="commentaireLigne" type="id"/>
-    <item name="commentaireSens" type="id"/>
-    <item name="commentaireArret" type="id"/>
+    <item name="route" type="id"/>
+    <item name="direction" type="id"/>
+    <item name="stop" type="id"/>
     <item name="viewPager" type="id"/>
     <item name="viewPagerIndicator" type="id"/>
 
@@ -170,10 +169,8 @@
     <item name="fromTime" type="id"/>
     <item name="fromPlace" type="id"/>
     <item name="fromDirection" type="id"/>
-    <item name="totalTime" type="id"/>
     <item name="toPlace" type="id"/>
     <item name="toTime" type="id"/>
-    <item name="toProgress" type="id"/>
     <item name="dateAndTime" type="id"/>
     <item name="dateAndTimeLabel" type="id"/>
 
@@ -184,12 +181,15 @@
     <!-- Map -->
     <item name="map" type="id"/>
     <item name="moreAction" type="id"/>
-    
+
     <!-- Showcase -->
     <item name="showCaseViewStub" type="id"/>
     <item name="showCaseView" type="id"/>
     <item name="showCaseTitle" type="id"/>
     <item name="showCaseDescription" type="id"/>
     <item name="showCaseButton" type="id"/>
+
+    <!-- Version -->
+    <item name="versionNotes" type="id"/>
 
 </resources>

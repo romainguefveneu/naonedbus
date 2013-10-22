@@ -361,10 +361,10 @@ public class ItineraryFragment extends AbstractListFragment implements
 	private void setIcon(final ImageView imageView, final int icoRes, final int color) {
 		imageView.setImageResource(icoRes);
 		if (color == Color.TRANSPARENT) {
-			imageView.setBackgroundDrawable(null);
+			ColorUtils.setBackground(imageView, null);
 			imageView.setPadding(0, 0, 0, 0);
 		} else {
-			imageView.setBackgroundDrawable(ColorUtils.getRoundedGradiant(color));
+			ColorUtils.setBackgroundGradiant(imageView, color);
 			imageView.setPadding(mIconPadding, mIconPadding, mIconPadding, mIconPadding);
 		}
 	}

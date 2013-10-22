@@ -11,8 +11,7 @@
         android:layout_alignParentRight="false"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/padding_small"
-        android:gravity="center"
-        android:text="time" />
+        android:gravity="center" />
 
     <View
         android:id="@+id/itemMetroPoint"
@@ -31,8 +30,7 @@
             android:id="@id/itemSymbole"
             style="@style/ItemSymbole.Tiny"
             android:layout_marginRight="@dimen/padding_small"
-            android:background="@drawable/item_symbole_back"
-            android:text="42" />
+            android:background="@drawable/item_symbole_back" />
 
         <ImageView
             android:id="@id/itemIcon"
@@ -45,8 +43,7 @@
             android:id="@id/itemPlace"
             style="@style/ItemItineraryTitle"
             android:layout_toRightOf="@id/itemSymbole"
-            android:ellipsize="end"
-            android:text="place" />
+            android:ellipsize="end" />
     </RelativeLayout>
 
 </RelativeLayout>

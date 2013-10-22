@@ -56,7 +56,7 @@ public class ParkArrayAdapter extends ArrayAdapter<StopPath> {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final StopPath parcours = getItem(position);
 		holder.itemSymbole.setText(parcours.getRouteLetter());
-		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(parcours.getBackColor()));
+		ColorUtils.setBackgroundGradiant(holder.itemSymbole, parcours.getBackColor());
 		holder.itemSymbole.setTextColor(parcours.getFrontColor());
 		holder.itemTitle.setText(FormatUtils.formatSens(parcours.getDirectionName()));
 	}
