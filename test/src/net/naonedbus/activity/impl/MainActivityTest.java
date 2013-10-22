@@ -59,15 +59,14 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 			final DateMidnight date = new DateMidnight().plusDays((int) Math.round((Math.random() * 7)));
 			final MutableDateTime mutableDateTime = date.toMutableDateTime();
 
-			try {
-				List<Horaire> schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
-				final int scheduleCount = schedules.size();
+			final int limit = (int) Math.round((Math.random() * 30));
 
+			try {
 				for (int i = 0; i < 20; i++) {
 					if (Math.random() > 0.9)
 						scheduleManager.clearSchedules(mContentResolver);
 
-					schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
+					final List<Horaire> schedules = scheduleManager.getNextSchedules(mContentResolver, mStop, date, limit);
 
 					for (final Horaire horaire : schedules) {
 						mutableDateTime.setTime(horaire.getTimestamp());
@@ -77,7 +76,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 						assertEquals(date.getYear(), mutableDateTime.getYear());
 					}
 
-					assertEquals(scheduleCount, schedules.size());
+					assertEquals(schedules.size(), limit);
 				}
 			} catch (final IOException e) {
 				fail(e.getLocalizedMessage());
