@@ -23,12 +23,12 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.bean.InfoTrafic;
+import net.naonedbus.bean.TanNews;
 import net.naonedbus.bean.Route;
 import net.naonedbus.card.Card;
-import net.naonedbus.fragment.impl.InfoTraficDetailDialogFragment;
-import net.naonedbus.fragment.impl.InfoTraficDetailFragment;
-import net.naonedbus.manager.impl.InfoTraficManager;
+import net.naonedbus.fragment.impl.TanNewsDetailDialogFragment;
+import net.naonedbus.fragment.impl.TanNewsDetailFragment;
+import net.naonedbus.manager.impl.TanNewsManager;
 
 import org.json.JSONException;
 
@@ -47,18 +47,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TraficCard extends Card<List<InfoTrafic>> {
+public class TraficCard extends Card<List<TanNews>> {
 
 	private static final String LOG_TAG = "TraficCard";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private final Route mLigne;
+	private final Route mRoute;
 	private ViewGroup mRoot;
 
 	public TraficCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
-			final Route ligne) {
-		super(context, loaderManager, fragmentManager, R.string.card_trafic_title, R.layout.card_trafic);
-		mLigne = ligne;
+			final Route route) {
+		super(context, loaderManager, fragmentManager, R.string.card_trafic_title, R.layout.card_news);
+		mRoute = route;
 	}
 
 	@Override
@@ -78,12 +78,12 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	}
 
 	@Override
-	public Loader<List<InfoTrafic>> onCreateLoader(final int arg0, final Bundle arg1) {
-		return new LoaderTask(getContext(), mLigne);
+	public Loader<List<TanNews>> onCreateLoader(final int arg0, final Bundle arg1) {
+		return new LoaderTask(getContext(), mRoute);
 	}
 
 	@Override
-	public void onLoadFinished(final Loader<List<InfoTrafic>> loader, final List<InfoTrafic> infoTrafics) {
+	public void onLoadFinished(final Loader<List<TanNews>> loader, final List<TanNews> infoTrafics) {
 
 		if (infoTrafics == null || infoTrafics.isEmpty()) {
 			showMessage(R.string.msg_nothing_info_trafic, R.drawable.ic_checkmark_holo_light);
@@ -91,7 +91,7 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 
 			mRoot.removeAllViews();
-			for (final InfoTrafic infoTrafic : infoTrafics) {
+			for (final TanNews infoTrafic : infoTrafics) {
 				mRoot.addView(createView(inflater, mRoot, infoTrafic));
 			}
 
@@ -100,7 +100,7 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 
 	}
 
-	private View createView(final LayoutInflater inflater, final ViewGroup root, final InfoTrafic infoTrafic) {
+	private View createView(final LayoutInflater inflater, final ViewGroup root, final TanNews infoTrafic) {
 		final View view = inflater.inflate(R.layout.card_item_trafic_ligne, root, false);
 
 		final TextView itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -119,9 +119,9 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 			@Override
 			public void onClick(final View v) {
 				final Bundle bundle = new Bundle();
-				bundle.putParcelable(InfoTraficDetailFragment.PARAM_INFO_TRAFIC, infoTrafic);
+				bundle.putParcelable(TanNewsDetailFragment.PARAM_TAN_NEWS, infoTrafic);
 
-				final DialogFragment dialogFragment = new InfoTraficDetailDialogFragment();
+				final DialogFragment dialogFragment = new TanNewsDetailDialogFragment();
 				dialogFragment.setArguments(bundle);
 				dialogFragment.show(getFragmentManager(), "InfoTraficDetailDialogFragment");
 			}
@@ -137,26 +137,26 @@ public class TraficCard extends Card<List<InfoTrafic>> {
 	 * @return <code>true</code> si l'infotrafic est en cours,
 	 *         <code>false</code> sinon.
 	 */
-	private static boolean isCurrent(final InfoTrafic infoTrafic) {
+	private static boolean isCurrent(final TanNews infoTrafic) {
 		return (infoTrafic.getStartDate() != null && infoTrafic.getStartDate().isBeforeNow() && (infoTrafic
 				.getEndDate() == null || infoTrafic.getEndDate().isAfterNow()));
 	}
 
-	private static class LoaderTask extends AsyncTaskLoader<List<InfoTrafic>> {
-		private final Route mLigne;
+	private static class LoaderTask extends AsyncTaskLoader<List<TanNews>> {
+		private final Route mRoute;
 
-		public LoaderTask(final Context context, final Route ligne) {
+		public LoaderTask(final Context context, final Route route) {
 			super(context);
-			mLigne = ligne;
+			mRoute = route;
 		}
 
 		@Override
-		public List<InfoTrafic> loadInBackground() {
-			final InfoTraficManager manager = InfoTraficManager.getInstance();
+		public List<TanNews> loadInBackground() {
+			final TanNewsManager manager = TanNewsManager.getInstance();
 
-			List<InfoTrafic> infoTrafics = null;
+			List<TanNews> infoTrafics = null;
 			try {
-				infoTrafics = manager.getByLigneCode(getContext(), mLigne.getCode());
+				infoTrafics = manager.getByRouteCode(getContext(), mRoute.getCode());
 			} catch (final IOException e) {
 				if (DBG)
 					Log.e(LOG_TAG, "Erreur de récupération des infos trafic.", e);

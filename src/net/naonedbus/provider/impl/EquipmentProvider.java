@@ -47,25 +47,25 @@ public class EquipmentProvider extends CustomContentProvider {
 	public static final String EQUIPEMENTS_URI_PATH_QUERY = "equipements";
 
 	/**
-	 * Equipement par son ID
+	 * equipment par son ID
 	 */
 	private static final int EQUIPEMENT_ID = 110;
 
 	/**
-	 * Equipement par son Type
+	 * equipment par son Type
 	 */
 	private static final int EQUIPEMENTS_TYPE = 200;
 	public static final String EQUIPEMENTS_TYPE_URI_PATH_QUERY = "type";
 
 	/**
-	 * Equipement par localisation
+	 * equipment par localisation
 	 */
 
 	private static final int EQUIPEMENTS_LOCATION = 300;
 	public static final String EQUIPEMENTS_LOCATION_URI_PATH_QUERY = "location";
 
 	/**
-	 * Equipement par son Nom
+	 * equipment par son Nom
 	 */
 	private static final int EQUIPEMENTS_NAME = 400;
 

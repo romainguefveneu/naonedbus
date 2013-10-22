@@ -28,33 +28,33 @@ import android.net.Uri;
 public class DirectionProvider extends ReadOnlyContentProvider {
 
 	/**
-	 * Tous les sens
+	 * Tous les direction
 	 */
-	public static final int SENS = 100;
-	private static final String SENS_BASE_PATH = "sens";
+	public static final int direction = 100;
+	private static final String SENS_BASE_PATH = "direction";
 
 	/**
-	 * Sens par son ID
+	 * direction par son ID
 	 */
 	public static final int SENS_ID = 110;
 
 	/**
-	 * Sens par codeSens
+	 * direction par directionCode
 	 */
 	public static final int SENS_LIGNE_CODE = 200;
-	public static final String SENS_LIGNE_CODE_URI_PATH_QUERY = "codeLigne";
+	public static final String SENS_LIGNE_CODE_URI_PATH_QUERY = "routeCode";
 	/**
-	 * Sens par codeSens et codeLigne
+	 * direction par directionCode et routeCode
 	 */
 	public static final int SENS_CODE_LIGNE_CODE = 300;
-	public static final String SENS_CODE_LIGNE_CODE_URI_PATH_QUERY = "codeSensCodeLigne";
+	public static final String SENS_CODE_LIGNE_CODE_URI_PATH_QUERY = "directionCodeCodeLigne";
 
 	private static final String AUTHORITY = "net.naonedbus.provider.DirectionProvider";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SENS_BASE_PATH);
 
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
-		URI_MATCHER.addURI(AUTHORITY, SENS_BASE_PATH, SENS);
+		URI_MATCHER.addURI(AUTHORITY, SENS_BASE_PATH, direction);
 		URI_MATCHER.addURI(AUTHORITY, SENS_BASE_PATH + "/#", SENS_ID);
 		URI_MATCHER.addURI(AUTHORITY, SENS_LIGNE_CODE_URI_PATH_QUERY, SENS_LIGNE_CODE);
 		URI_MATCHER.addURI(AUTHORITY, SENS_CODE_LIGNE_CODE_URI_PATH_QUERY, SENS_CODE_LIGNE_CODE);
@@ -74,19 +74,19 @@ public class DirectionProvider extends ReadOnlyContentProvider {
 			break;
 		case SENS_LIGNE_CODE:
 			queryBuilder.appendWhere(DirectionTable.ROUTE_CODE + "=");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeLigne"));
+			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("routeCode"));
 
 			break;
 		case SENS_CODE_LIGNE_CODE:
 			queryBuilder.setTables(DirectionTable.TABLE_NAME);
 			queryBuilder.appendWhere(DirectionTable.DIRECTION_CODE + "=");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeSens"));
+			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("directionCode"));
 			queryBuilder.appendWhere(" AND ");
 			queryBuilder.appendWhere(DirectionTable.ROUTE_CODE + "=");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeLigne"));
+			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("routeCode"));
 
 			break;
-		case SENS:
+		case direction:
 			// no filter
 			break;
 		default:

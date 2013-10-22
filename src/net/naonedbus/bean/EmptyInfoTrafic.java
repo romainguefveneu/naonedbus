@@ -18,7 +18,7 @@
  */
 package net.naonedbus.bean;
 
-public class EmptyInfoTrafic extends InfoTrafic {
+public class EmptyInfoTrafic extends TanNews {
 
 	private static final long serialVersionUID = 4111028202567067597L;
 

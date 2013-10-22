@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import net.naonedbus.bean.Stop;
-import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.schedule.Schedule;
 import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.manager.impl.StopManager;
 
@@ -59,24 +59,25 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 			final DateMidnight date = new DateMidnight().plusDays((int) Math.round((Math.random() * 7)));
 			final MutableDateTime mutableDateTime = date.toMutableDateTime();
 
-			final int limit = (int) Math.round((Math.random() * 30));
-
 			try {
+				List<Schedule> schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
+				final int scheduleCount = schedules.size();
+
 				for (int i = 0; i < 20; i++) {
 					if (Math.random() > 0.9)
 						scheduleManager.clearSchedules(mContentResolver);
 
-					final List<Horaire> schedules = scheduleManager.getNextSchedules(mContentResolver, mStop, date, limit);
+					schedules = scheduleManager.getSchedules(mContentResolver, mStop, date);
 
-					for (final Horaire horaire : schedules) {
-						mutableDateTime.setTime(horaire.getTimestamp());
+					for (final Schedule schedule : schedules) {
+						mutableDateTime.setTime(schedule.getTimestamp());
 
 						assertEquals(date.getDayOfMonth(), mutableDateTime.getDayOfMonth());
 						assertEquals(date.getMonthOfYear(), mutableDateTime.getMonthOfYear());
 						assertEquals(date.getYear(), mutableDateTime.getYear());
 					}
 
-					assertEquals(schedules.size(), limit);
+					assertEquals(scheduleCount, schedules.size());
 				}
 			} catch (final IOException e) {
 				fail(e.getLocalizedMessage());

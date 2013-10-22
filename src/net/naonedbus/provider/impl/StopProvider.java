@@ -19,8 +19,8 @@
 package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.ReadOnlyContentProvider;
-import net.naonedbus.provider.table.StopTable;
 import net.naonedbus.provider.table.EquipmentTable;
+import net.naonedbus.provider.table.StopTable;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -31,37 +31,36 @@ public class StopProvider extends ReadOnlyContentProvider {
 	/**
 	 * Récupérer tous les arrêts
 	 */
-	private static final int ARRETS = 20;
+	private static final int STOPS = 20;
 	/**
 	 * Récupérer un arrêt par son id
 	 */
-	private static final int ARRET_ID = 30;
+	private static final int STOP_ID = 30;
 
 	/**
-	 * Récupérer un arrêt par son code ligne et code sens.
+	 * Récupérer un arrêt par son code route et code direction.
 	 */
-	private static final int ARRET_CODESENS_CODELIGNE = 40;
-	public static final String ARRET_CODESENS_CODELIGNE_URI_PATH_QUERY = "codeSensLigne";
+	private static final int STOP_DIRECTION_ROUTE = 40;
+	public static final String STOP_DIRECTION_ROUTE_URI_PATH_QUERY = "directionRoute";
 
 	/**
-	 * Récupérer un arrêt par son code arret, code ligne et code sens
+	 * Récupérer un arrêt par son code stop, code route et code direction
 	 */
-	private static final int ARRET_CODEARRET_CODESENS_CODELIGNE = 41;
-	public static final String ARRET_CODEARRET_CODESENS_CODELIGNE_URI_PATH_QUERY = "arretSensLigne";
+	private static final int STOP_CODES = 41;
+	public static final String STOP_CODES_URI_PATH_QUERY = "all";
 
 	private static final String AUTHORITY = "net.naonedbus.provider.StopProvider";
-	private static final String ARRETS_BASE_PATH = "arrets";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + ARRETS_BASE_PATH);
+	private static final String BASE_PATH = "stops";
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
 
-		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH, ARRETS);
-		URI_MATCHER.addURI(AUTHORITY, ARRETS_BASE_PATH + "/#", ARRET_ID);
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH, STOPS);
+		URI_MATCHER.addURI(AUTHORITY, BASE_PATH + "/#", STOP_ID);
 
-		URI_MATCHER.addURI(AUTHORITY, ARRET_CODESENS_CODELIGNE_URI_PATH_QUERY, ARRET_CODESENS_CODELIGNE);
-		URI_MATCHER.addURI(AUTHORITY, ARRET_CODEARRET_CODESENS_CODELIGNE_URI_PATH_QUERY,
-				ARRET_CODEARRET_CODESENS_CODELIGNE);
+		URI_MATCHER.addURI(AUTHORITY, STOP_DIRECTION_ROUTE_URI_PATH_QUERY, STOP_DIRECTION_ROUTE);
+		URI_MATCHER.addURI(AUTHORITY, STOP_CODES_URI_PATH_QUERY, STOP_CODES);
 	}
 
 	@Override
@@ -75,29 +74,29 @@ public class StopProvider extends ReadOnlyContentProvider {
 		int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
 
-		case ARRET_ID:
+		case STOP_ID:
 			queryBuilder.appendWhere(StopTable.TABLE_NAME + "." + StopTable._ID + "=");
 			queryBuilder.appendWhereEscapeString(uri.getLastPathSegment());
 			break;
-		case ARRET_CODESENS_CODELIGNE:
+		case STOP_DIRECTION_ROUTE:
 			queryBuilder.appendWhere(StopTable.TABLE_NAME + "." + StopTable.DIRECTION_CODE + " = ");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeSens"));
+			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("directionCode"));
 			queryBuilder.appendWhere(" AND ");
 			queryBuilder.appendWhere(StopTable.TABLE_NAME + "." + StopTable.ROUTE_CODE + " = ");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeLigne"));
+			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("routeCode"));
 			break;
-		case ARRET_CODEARRET_CODESENS_CODELIGNE:
+		case STOP_CODES:
 			queryBuilder.appendWhere(StopTable.TABLE_NAME + "." + StopTable.STOP_CODE + " = ");
 			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeArret"));
 			queryBuilder.appendWhere(" AND ");
 			queryBuilder.appendWhere(StopTable.TABLE_NAME + "." + StopTable.DIRECTION_CODE + " = ");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeSens"));
+			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("directionCode"));
 			queryBuilder.appendWhere(" AND ");
 			queryBuilder.appendWhere(StopTable.TABLE_NAME + "." + StopTable.ROUTE_CODE + " = ");
-			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("codeLigne"));
+			queryBuilder.appendWhereEscapeString(uri.getQueryParameter("routeCode"));
 			break;
 
-		case ARRETS:
+		case STOPS:
 			// no filter
 			break;
 

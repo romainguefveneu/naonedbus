@@ -1,16 +1,16 @@
 package net.naonedbus.fragment.header;
 
 import net.naonedbus.R;
-import net.naonedbus.fragment.impl.FavorisFragment;
-import net.naonedbus.fragment.impl.LignesFragment;
-import net.naonedbus.fragment.impl.ProximiteFragment;
+import net.naonedbus.fragment.impl.StopBookmarksFragment;
+import net.naonedbus.fragment.impl.RoutesFragment;
+import net.naonedbus.fragment.impl.NearByFragment;
 import net.naonedbus.manager.impl.StopBookmarkManager;
 import android.content.Context;
 
 public class MainFragmentHeader implements FragmentHeader {
 
-	private final Class<?>[] mFragments = new Class<?>[] { LignesFragment.class, FavorisFragment.class,
-			ProximiteFragment.class };
+	private final Class<?>[] mFragments = new Class<?>[] { RoutesFragment.class, StopBookmarksFragment.class,
+			NearByFragment.class };
 
 	private final int[] mTitles = new int[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
 			R.string.title_fragment_proximite };

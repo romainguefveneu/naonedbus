@@ -51,8 +51,8 @@ public class FavoriController extends RestController<FavoriContainer> {
 	private static final String TAG_META_VERSION = "version";
 
 	private static final String TAG_FAVORIS = "favoris";
-	private static final String TAG_FAVORI_CODE_LIGNE = "codeLigne";
-	private static final String TAG_FAVORI_CODE_SENS = "codeSens";
+	private static final String TAG_FAVORI_CODE_LIGNE = "routeCode";
+	private static final String TAG_FAVORI_CODE_SENS = "directionCode";
 	private static final String TAG_FAVORI_CODE_ARRET = "codeArret";
 	private static final String TAG_FAVORI_NOM_FAVORI = "nomFavori";
 	private static final String TAG_FAVORI_GROUPES = "groupes";
@@ -146,8 +146,8 @@ public class FavoriController extends RestController<FavoriContainer> {
 		final JSONArray favoris = new JSONArray();
 		for (final Favori favori : item.favoris) {
 			final JSONObject favoriJson = new JSONObject();
-			favoriJson.put(TAG_FAVORI_CODE_LIGNE, favori.codeLigne);
-			favoriJson.put(TAG_FAVORI_CODE_SENS, favori.codeSens);
+			favoriJson.put(TAG_FAVORI_CODE_LIGNE, favori.routeCode);
+			favoriJson.put(TAG_FAVORI_CODE_SENS, favori.directionCode);
 			favoriJson.put(TAG_FAVORI_CODE_ARRET, favori.codeArret);
 			favoriJson.put(TAG_FAVORI_NOM_FAVORI, favori.nomFavori);
 

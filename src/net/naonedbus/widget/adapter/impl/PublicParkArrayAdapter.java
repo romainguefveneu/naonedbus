@@ -21,8 +21,8 @@ package net.naonedbus.widget.adapter.impl;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.parking.pub.ParkingPublic;
-import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
+import net.naonedbus.bean.parking.PublicPark;
+import net.naonedbus.bean.parking.PublicParkStatus;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
 import net.naonedbus.utils.ParkingUtils;
@@ -32,7 +32,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PublicParkArrayAdapter extends ArraySectionAdapter<ParkingPublic> {
+public class PublicParkArrayAdapter extends ArraySectionAdapter<PublicPark> {
 
 	static class ViewHolder {
 		TextView nom;
@@ -42,24 +42,24 @@ public class PublicParkArrayAdapter extends ArraySectionAdapter<ParkingPublic> {
 	}
 
 	public PublicParkArrayAdapter(Context context) {
-		super(context, R.layout.list_item_parking);
+		super(context, R.layout.list_item_park);
 	}
 
-	public PublicParkArrayAdapter(Context context, List<ParkingPublic> objects) {
-		super(context, R.layout.list_item_parking, objects);
+	public PublicParkArrayAdapter(Context context, List<PublicPark> objects) {
+		super(context, R.layout.list_item_park, objects);
 	}
 
 	@Override
 	public void bindView(View view, Context context, int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final ParkingPublic item = getItem(position);
+		final PublicPark item = getItem(position);
 
 		// Ajouter les données UI
 		if (item.getBackgroundDrawable() == null) {
 			fillParking(item);
 		}
 
-		holder.nom.setText(item.getNom());
+		holder.nom.setText(item.getName());
 		holder.icone.setBackgroundDrawable(item.getBackgroundDrawable());
 		holder.details.setText(item.getDetail());
 		if (item.getDistance() != null) {
@@ -83,13 +83,13 @@ public class PublicParkArrayAdapter extends ArraySectionAdapter<ParkingPublic> {
 	 * 
 	 * @param parkingPublic
 	 */
-	private void fillParking(ParkingPublic parkingPublic) {
+	private void fillParking(PublicPark parkingPublic) {
 		final Context context = getContext();
 		int couleur;
 		String detail;
 
-		if (parkingPublic.getStatut() == ParkingPublicStatut.OUVERT) {
-			final int placesDisponibles = parkingPublic.getPlacesDisponibles();
+		if (parkingPublic.getStatus() == PublicParkStatus.OPEN) {
+			final int placesDisponibles = parkingPublic.getAvailableSpaces();
 			couleur = context.getResources().getColor(ParkingUtils.getSeuilCouleurId(placesDisponibles));
 			if (placesDisponibles > 0) {
 				detail = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
@@ -98,8 +98,8 @@ public class PublicParkArrayAdapter extends ArraySectionAdapter<ParkingPublic> {
 				detail = context.getString(R.string.parking_places_disponibles_zero);
 			}
 		} else {
-			detail = context.getString(parkingPublic.getStatut().getTitleRes());
-			couleur = context.getResources().getColor(parkingPublic.getStatut().getColorRes());
+			detail = context.getString(parkingPublic.getStatus().getTitleRes());
+			couleur = context.getResources().getColor(parkingPublic.getStatus().getColorRes());
 		}
 
 		parkingPublic.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));

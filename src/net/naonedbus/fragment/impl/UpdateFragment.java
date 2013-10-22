@@ -102,7 +102,7 @@ public class UpdateFragment extends CustomFragment {
 
 	/**
 	 * Task chargée de déclencher une éventuelle mise à jour et de vider le
-	 * cache horaire.
+	 * cache schedule.
 	 * 
 	 * @author romain.guefveneu
 	 * 

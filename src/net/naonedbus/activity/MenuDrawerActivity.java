@@ -28,13 +28,13 @@ import net.naonedbus.activity.impl.DonateActivity;
 import net.naonedbus.activity.impl.OldSettingsActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.fragment.header.BicloosFragmentHeader;
-import net.naonedbus.fragment.header.EquipementsFragmentHeader;
+import net.naonedbus.fragment.header.EquipmentsFragmentHeader;
 import net.naonedbus.fragment.header.FragmentHeader;
-import net.naonedbus.fragment.header.InfoTraficFragmentHeader;
-import net.naonedbus.fragment.header.ItineraireFragmentHeader;
+import net.naonedbus.fragment.header.TanNewsFragmentHeader;
+import net.naonedbus.fragment.header.ItineraryFragmentHeader;
 import net.naonedbus.fragment.header.MainFragmentHeader;
 import net.naonedbus.fragment.header.MapFragmentHeader;
-import net.naonedbus.fragment.header.ParkingsFragmentHeader;
+import net.naonedbus.fragment.header.CarParksFragmentHeader;
 import net.naonedbus.fragment.header.SearchFragmentHeader;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.item.impl.MainMenuItem;
@@ -354,15 +354,15 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
 		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home, new MainFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction,
-				new ItineraireFragmentHeader()));
+				new ItineraryFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning,
-				new InfoTraficFragmentHeader()));
+				new TanNewsFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo,
 				new BicloosFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking,
-				new ParkingsFragmentHeader()));
+				new CarParksFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_equipements, R.drawable.ic_action_place,
-				new EquipementsFragmentHeader()));
+				new EquipmentsFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_action_search,
 				new SearchFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_action_map, new MapFragmentHeader()));

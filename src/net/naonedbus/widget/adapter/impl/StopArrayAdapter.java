@@ -53,7 +53,7 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_arret, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_stop, null);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);
@@ -62,9 +62,9 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 
 	public void bindView(final View view, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final Stop arret = getItem(position);
+		final Stop stop = getItem(position);
 
-		if (arret.getId() == -1) {
+		if (stop.getId() == -1) {
 			holder.itemTitle.setTypeface(null, Typeface.BOLD);
 			holder.itemIcon.setVisibility(View.INVISIBLE);
 		} else {
@@ -72,10 +72,10 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 			holder.itemIcon.setVisibility(View.VISIBLE);
 
 			// Définir la distance.
-			if (arret.getDistance() == null) {
+			if (stop.getDistance() == null) {
 				holder.itemDistance.setText("");
 			} else {
-				holder.itemDistance.setText(DistanceUtils.formatDist(arret.getDistance()));
+				holder.itemDistance.setText(DistanceUtils.formatDist(stop.getDistance()));
 			}
 
 			bindDotPosition(holder, position);
@@ -97,7 +97,7 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 			}
 		}
 
-		holder.itemTitle.setText(arret.getNomArret());
+		holder.itemTitle.setText(stop.getName());
 
 	}
 

@@ -20,7 +20,7 @@ package net.naonedbus.widget.adapter.impl;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.provider.table.RouteTable;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
@@ -39,7 +39,7 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 	private static final String LOG_TAG = "LigneCursorAdapter";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private final LigneManager mLigneManager;
+	private final RouteManager mRouteManager;
 	private final Typeface mRoboto;
 	private boolean mHideDivider;
 
@@ -52,7 +52,7 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 	public RouteCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, R.layout.list_item_ligne);
 		mRoboto = FontUtils.getRobotoBoldCondensed(context);
-		mLigneManager = LigneManager.getInstance();
+		mRouteManager = RouteManager.getInstance();
 		if (c != null) {
 			initColumns(c);
 		}
@@ -138,9 +138,9 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 			Log.d(LOG_TAG, "runQueryOnBackgroundThread '" + constraint + "'");
 
 		if (!TextUtils.isEmpty(constraint)) {
-			return mLigneManager.getLignesSearch(mContext.getContentResolver(), constraint.toString());
+			return mRouteManager.getRoutes(mContext.getContentResolver(), constraint.toString());
 		} else {
-			return mLigneManager.getCursor(mContext.getContentResolver());
+			return mRouteManager.getCursor(mContext.getContentResolver());
 		}
 	}
 

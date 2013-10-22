@@ -19,19 +19,19 @@
 package net.naonedbus.widget.indexer.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.parking.pub.ParkingPublic;
+import net.naonedbus.bean.parking.PublicPark;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 
-public class ParksDistanceIndexer extends ArraySectionIndexer<ParkingPublic> {
+public class ParksDistanceIndexer extends ArraySectionIndexer<PublicPark> {
 
 	@Override
-	protected String getSectionLabel(Context context, ParkingPublic item) {
+	protected String getSectionLabel(Context context, PublicPark item) {
 		return context.getString((Integer) item.getSection());
 	}
 
 	@Override
-	protected void prepareSection(ParkingPublic item) {
+	protected void prepareSection(PublicPark item) {
 		if (item.getDistance() == null) {
 			item.setSection(R.string.section_distance_none);
 		} else if (item.getDistance() > 100000) {

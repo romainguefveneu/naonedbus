@@ -24,13 +24,13 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.HorairesActivity;
+import net.naonedbus.activity.impl.SchedulesActivity;
 import net.naonedbus.activity.impl.MainActivity;
 import net.naonedbus.activity.widgetconfigure.WidgetConfigureActivity;
 import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.StopBookmark;
 import net.naonedbus.bean.NextHoraireTask;
-import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.schedule.Schedule;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.StopBookmarkViewManager;
 import net.naonedbus.manager.impl.ScheduleManager;
@@ -197,7 +197,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			if (horaireManager.isInDB(context.getContentResolver(), favori, today, mHoraireLimit)) {
 
 				// Les horaires sont en cache
-				final List<Horaire> horaires = horaireManager.getNextSchedules(context.getContentResolver(), favori,
+				final List<Schedule> horaires = horaireManager.getNextSchedules(context.getContentResolver(), favori,
 						today, mHoraireLimit);
 				prepareWidgetViewHoraires(context, views, favori, horaires);
 
@@ -235,7 +235,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	}
 
 	/**
-	 * Préparer le widget avec les éléments fixes (nom, ligne, sens...)
+	 * Préparer le widget avec les éléments fixes (nom, route, direction...)
 	 */
 	protected void prepareWidgetViewInit(final Context context, final RemoteViews views, final StopBookmark favori) {
 		views.setTextViewText(R.id.itemSymbole, favori.getLettre());
@@ -255,12 +255,12 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		}
 
 		if (favori.getBookmarkName() == null) {
-			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
+			views.setTextViewText(R.id.itemTitle, favori.getName());
 			views.setTextViewText(R.id.itemDescription, FormatUtils.formatSens(favori.getDirectionName()));
 		} else {
-			views.setTextViewText(R.id.itemTitle, favori.getNomArret());
+			views.setTextViewText(R.id.itemTitle, favori.getName());
 			views.setTextViewText(R.id.itemDescription,
-					FormatUtils.formatSens(favori.getNomArret(), favori.getDirectionName()));
+					FormatUtils.formatSens(favori.getName(), favori.getDirectionName()));
 		}
 
 		views.setViewVisibility(R.id.widgetLoading, View.GONE);
@@ -293,7 +293,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 	 * @param favori
 	 */
 	protected void prepareWidgetViewHoraires(final Context context, final RemoteViews views, final StopBookmark favori,
-			final List<Horaire> nextHoraires) {
+			final List<Schedule> nextHoraires) {
 
 		final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
 		CharSequence content = "";
@@ -304,9 +304,9 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			scheduleUpdate(context, nextHoraires.get(0).getTimestamp());
 
 			for (int i = 0; i < nextHoraires.size(); i++) {
-				final Horaire horaire = nextHoraires.get(i);
+				final Schedule schedule = nextHoraires.get(i);
 				content = TextUtils.concat(content,
-						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getTimestamp())));
+						FormatUtils.formatTimeAmPm(context, timeFormat.format(schedule.getTimestamp())));
 				if (i < nextHoraires.size() - 1) {
 					content = TextUtils.concat(content, " \u2022 ");
 				}
@@ -367,11 +367,11 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 
 		} else if (HoraireWidgetProvider.ACTION_APPWIDGET_ON_CLICK.equals(action)) {
 
-			final Stop arret = intent.getParcelableExtra("favori");
-			if (arret != null) {
-				final ParamIntent startIntent = new ParamIntent(context, HorairesActivity.class);
-				startIntent.putExtra(HorairesActivity.PARAM_ARRET, arret);
-				startIntent.putExtra(HorairesActivity.PARAM_FROM_WIDGET, true);
+			final Stop stop = intent.getParcelableExtra("favori");
+			if (stop != null) {
+				final ParamIntent startIntent = new ParamIntent(context, SchedulesActivity.class);
+				startIntent.putExtra(SchedulesActivity.PARAM_ARRET, stop);
+				startIntent.putExtra(SchedulesActivity.PARAM_FROM_WIDGET, true);
 				startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 				final TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);

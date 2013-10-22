@@ -20,9 +20,7 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.utils.FontUtils;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -41,8 +39,6 @@ public class TranslationFragment extends CustomFragment implements OnClickListen
 
 	@Override
 	protected void bindView(final View view, final Bundle savedInstanceState) {
-		final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
-
 		fillTranslators((ViewGroup) view.findViewById(R.id.aboutSectionTranslators));
 	}
 

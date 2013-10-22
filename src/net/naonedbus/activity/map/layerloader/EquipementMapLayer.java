@@ -62,10 +62,10 @@ public abstract class EquipementMapLayer implements MapLayer {
 	/**
 	 * Ajouter un équipement au cache.
 	 * 
-	 * @param equipement
+	 * @param equipment
 	 */
-	protected void addEquipement(Equipment equipement) {
-		equipements.put(equipement.getId(), equipement);
+	protected void addEquipement(Equipment equipment) {
+		equipements.put(equipment.getId(), equipment);
 	}
 
 	/**
@@ -88,15 +88,15 @@ public abstract class EquipementMapLayer implements MapLayer {
 		final BasicItemizedOverlay newItemizedOverlay = getOverlay(context.getResources());
 		BasicOverlayItem overlayItem;
 
-		final List<Equipment> localEquipements = equipementManager.getEquipementsByType(context.getContentResolver(),
+		final List<Equipment> localEquipements = equipementManager.getByType(context.getContentResolver(),
 				typeEquipement);
 
-		for (final Equipment equipement : localEquipements) {
-			overlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(equipement), equipement.getName(),
+		for (final Equipment equipment : localEquipements) {
+			overlayItem = new BasicOverlayItem(GeoPointUtils.getGeoPoint(equipment), equipment.getName(),
 					typeOverlayItem);
-			overlayItem.setId(equipement.getId());
+			overlayItem.setId(equipment.getId());
 			newItemizedOverlay.addOverlay(overlayItem);
-			equipements.put(equipement.getId(), equipement);
+			equipements.put(equipment.getId(), equipment);
 		}
 
 		return newItemizedOverlay;

@@ -32,30 +32,30 @@ import android.text.TextUtils;
 
 public class ScheduleProvider extends CustomContentProvider {
 
-	public static final String PARAM_ARRET_ID = "arretId";
+	public static final String PARAM_STOP_ID = "stopId";
 	public static final String PARAM_DAY_TRIP = "dayTrip";
 	public static final String PARAM_INCLUDE_LAST_DAY_TRIP = "includeLastDayTrip";
 	public static final String PARAM_AFTER_TIME = "afterTime";
 
-	public static final int HORAIRE = 100;
-	public static final int HORAIRE_ID = 110;
+	public static final int SCHEDULE = 100;
+	public static final int SCHEDULE_ID = 110;
 
 	/**
 	 * Les horaires d'un arrêt et d'un jour
 	 */
-	public static final int HORAIRE_JOUR = 200;
-	public static final String HORAIRE_JOUR_URI_PATH_QUERY = "arret";
+	public static final int SCHEDULE_DAY = 200;
+	public static final String SCHEDULE_DAY_URI_PATH_QUERY = "stop";
 
 	private static final String AUTHORITY = "net.naonedbus.provider.ScheduleProvider";
-	private static final String HORAIRE_BASE_PATH = "horaire";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + HORAIRE_BASE_PATH);
+	private static final String SCHEDULE_BASE_PATH = "schedule";
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCHEDULE_BASE_PATH);
 
 	private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 	static {
-		URI_MATCHER.addURI(AUTHORITY, HORAIRE_BASE_PATH, HORAIRE);
-		URI_MATCHER.addURI(AUTHORITY, HORAIRE_BASE_PATH + "/#", HORAIRE_ID);
+		URI_MATCHER.addURI(AUTHORITY, SCHEDULE_BASE_PATH, SCHEDULE);
+		URI_MATCHER.addURI(AUTHORITY, SCHEDULE_BASE_PATH + "/#", SCHEDULE_ID);
 
-		URI_MATCHER.addURI(AUTHORITY, HORAIRE_JOUR_URI_PATH_QUERY, HORAIRE_JOUR);
+		URI_MATCHER.addURI(AUTHORITY, SCHEDULE_DAY_URI_PATH_QUERY, SCHEDULE_DAY);
 
 	}
 
@@ -70,15 +70,15 @@ public class ScheduleProvider extends CustomContentProvider {
 
 		int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
-		case HORAIRE_ID:
+		case SCHEDULE_ID:
 			queryBuilder.appendWhere(ScheduleTable._ID + "=" + uri.getLastPathSegment());
 			break;
-		case HORAIRE_JOUR:
-			final String idArret = uri.getQueryParameter(PARAM_ARRET_ID);
+		case SCHEDULE_DAY:
+			final String stopId = uri.getQueryParameter(PARAM_STOP_ID);
 			final String dayTrip = uri.getQueryParameter(PARAM_DAY_TRIP);
 			final String afterTime = uri.getQueryParameter(PARAM_AFTER_TIME);
 
-			queryBuilder.appendWhere(ScheduleTable.STOP_ID + " = " + idArret);
+			queryBuilder.appendWhere(ScheduleTable.STOP_ID + " = " + stopId);
 			queryBuilder.appendWhere(" AND (");
 			queryBuilder.appendWhere(ScheduleTable.DAY_TRIP + " = " + dayTrip);
 
@@ -100,7 +100,7 @@ public class ScheduleProvider extends CustomContentProvider {
 			}
 
 			break;
-		case HORAIRE:
+		case SCHEDULE:
 			// no filter
 			break;
 		default:
@@ -119,10 +119,10 @@ public class ScheduleProvider extends CustomContentProvider {
 
 		int count;
 		switch (URI_MATCHER.match(uri)) {
-		case HORAIRE:
+		case SCHEDULE:
 			count = db.delete(ScheduleTable.TABLE_NAME, selection, selectionArgs);
 			break;
-		case HORAIRE_ID:
+		case SCHEDULE_ID:
 			String segment = uri.getPathSegments().get(1);
 			count = db.delete(ScheduleTable.TABLE_NAME,
 					ScheduleTable._ID + "=" + segment
@@ -147,7 +147,7 @@ public class ScheduleProvider extends CustomContentProvider {
 			values = new ContentValues();
 		}
 
-		if (URI_MATCHER.match(uri) != HORAIRE) {
+		if (URI_MATCHER.match(uri) != SCHEDULE) {
 			throw new IllegalArgumentException("Unknown URI " + uri + " (" + URI_MATCHER.match(uri) + ")");
 		}
 

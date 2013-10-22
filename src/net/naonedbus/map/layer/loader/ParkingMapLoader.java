@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import net.naonedbus.bean.Equipment.Type;
-import net.naonedbus.manager.impl.ParkingPublicManager;
+import net.naonedbus.manager.impl.PublicParkManager;
 import net.naonedbus.manager.impl.ParkingRelaiManager;
 
 import org.json.JSONException;
@@ -24,7 +24,7 @@ public class ParkingMapLoader extends EquipementMapLoader {
 	public ArrayList<InputPoint> getInputPoints(final Context context) {
 
 		try {
-			final ParkingPublicManager publicManager = ParkingPublicManager.getInstance();
+			final PublicParkManager publicManager = PublicParkManager.getInstance();
 			final ParkingRelaiManager relaiManager = ParkingRelaiManager.getInstance();
 
 			publicManager.getAll(context);

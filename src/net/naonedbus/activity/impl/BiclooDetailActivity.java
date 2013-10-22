@@ -52,7 +52,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	protected static final String NAVIGATION_INTENT = "google.navigation:q=%f,%f";
 	protected static final String SMS_NAVIGATION_URL = "maps.google.com/?q=%f,%f";
 
-	private BiclooBookmarkManager mFavoriBiclooManager;
+	private BiclooBookmarkManager mBiclooBookmarkManager;
 
 	protected TextView mTitle;
 	protected TextView mAdresse;
@@ -75,7 +75,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
 		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
 
-		mFavoriBiclooManager = BiclooBookmarkManager.getInstance();
+		mBiclooBookmarkManager = BiclooBookmarkManager.getInstance();
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -239,21 +239,21 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		final StringBuilder builder = new StringBuilder();
 		builder.append(bicloo.getName()).append("\n").append(description).append("\n").append(bicloo.getAddress())
 				.append("\n")
-				.append(String.format(Locale.ENGLISH, ParkingDetailActivity.SMS_NAVIGATION_URL, latitude, longitude));
+				.append(String.format(Locale.ENGLISH, ParkDetailActivity.SMS_NAVIGATION_URL, latitude, longitude));
 		return builder.toString();
 	}
 
 	private boolean isFavori() {
-		final Bicloo bicloo = mFavoriBiclooManager.getSingle(getContentResolver(), mBicloo.getId());
+		final Bicloo bicloo = mBiclooBookmarkManager.getSingle(getContentResolver(), mBicloo.getId());
 		return (bicloo != null);
 	}
 
 	private void addToFavoris() {
-		mFavoriBiclooManager.add(getContentResolver(), mBicloo);
+		mBiclooBookmarkManager.add(getContentResolver(), mBicloo);
 	}
 
 	private void removeFromFavoris() {
-		mFavoriBiclooManager.remove(getContentResolver(), mBicloo.getId());
+		mBiclooBookmarkManager.remove(getContentResolver(), mBicloo.getId());
 	}
 
 	private GeoPoint getGeoPoint(final Bicloo bicloo) {

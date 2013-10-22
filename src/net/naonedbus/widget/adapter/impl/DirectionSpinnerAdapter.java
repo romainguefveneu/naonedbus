@@ -34,7 +34,7 @@ import android.widget.TextView;
 public class DirectionSpinnerAdapter extends DirectionArrayAdapter implements SpinnerAdapter {
 
 	public DirectionSpinnerAdapter(Context context, List<Direction> objects, int textColor, Typeface typeface) {
-		super(context, R.layout.list_item_sens_spinner, objects);
+		super(context, R.layout.list_item_direction_spinner, objects);
 		setTypeface(typeface);
 		setTextColor(textColor);
 	}
@@ -42,8 +42,8 @@ public class DirectionSpinnerAdapter extends DirectionArrayAdapter implements Sp
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final TextView view = (TextView) super.getView(position, convertView, parent);
-		final Direction sens = getItem(position);
-		view.setText(FormatUtils.formatSens(sens.getName()));
+		final Direction direction = getItem(position);
+		view.setText(FormatUtils.formatSens(direction.getName()));
 		return view;
 	}
 

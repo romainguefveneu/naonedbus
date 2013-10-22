@@ -77,8 +77,8 @@ public class ToastedMarkerOptionsChooser extends MarkerOptionsChooser {
 				markerOptions.icon(icon);
 				markerOptions.title(title);
 			} else {
-				final Equipment equipement = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
-				MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
+				final Equipment equipment = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
+				MapLayer mapLayer = mLayerChoosers.get(equipment.getType());
 				if (mapLayer == null) {
 					mapLayer = mDefaultLayer;
 				}

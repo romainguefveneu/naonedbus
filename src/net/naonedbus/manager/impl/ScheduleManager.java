@@ -29,8 +29,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.bean.NextHoraireTask;
 import net.naonedbus.bean.Stop;
-import net.naonedbus.bean.horaire.Horaire;
-import net.naonedbus.bean.horaire.ScheduleToken;
+import net.naonedbus.bean.schedule.Schedule;
+import net.naonedbus.bean.schedule.ScheduleToken;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.ScheduleProvider;
 import net.naonedbus.provider.table.ScheduleTable;
@@ -49,7 +49,7 @@ import android.util.Log;
 
 import com.bugsense.trace.BugSenseHandler;
 
-public class ScheduleManager extends SQLiteManager<Horaire> {
+public class ScheduleManager extends SQLiteManager<Schedule> {
 
 	private static final String LOG_TAG = "ScheduleManager";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -97,11 +97,11 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	}
 
 	@Override
-	public Horaire getSingleFromCursor(final Cursor c) {
-		final Horaire item = new Horaire();
+	public Schedule getSingleFromCursor(final Cursor c) {
+		final Schedule item = new Schedule();
 		item.setId(c.getInt(mColId));
 		item.setTimestamp(c.getLong(mColTimestamp));
-		item.setTerminus(c.getString(mColTerminus));
+		item.setHeadsign(c.getString(mColTerminus));
 		item.setDayTrip(c.getLong(mColDayTrip));
 		item.setSection(new DateMidnight(item.getTimestamp()));
 		return item;
@@ -110,32 +110,32 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	/**
 	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée.
 	 * 
-	 * @return {@code true} si le cache contient tous les horaires pour l'arret
+	 * @return {@code true} si le cache contient tous les horaires pour l'stop
 	 *         et la date demandée {@code false} si les données ne sont pas en
 	 *         cache.
 	 */
-	public boolean isInDB(final ContentResolver contentResolver, final Stop arret, final DateMidnight date) {
-		return isInDB(contentResolver, arret, date, 1);
+	public boolean isInDB(final ContentResolver contentResolver, final Stop stop, final DateMidnight date) {
+		return isInDB(contentResolver, stop, date, 1);
 	}
 
 	/**
 	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée.
 	 * 
-	 * @return {@code true} si le cache contient tous les horaires pour l'arret
+	 * @return {@code true} si le cache contient tous les horaires pour l'stop
 	 *         et la date demandée {@code false} si les données ne sont pas en
 	 *         cache.
 	 */
-	public boolean isInDB(final ContentResolver contentResolver, final Stop arret, final DateMidnight date,
+	public boolean isInDB(final ContentResolver contentResolver, final Stop stop, final DateMidnight date,
 			final int count) {
 
-		final ScheduleToken token = new ScheduleToken(date.getMillis(), arret.getId());
+		final ScheduleToken token = new ScheduleToken(date.getMillis(), stop.getId());
 		return isInDB(contentResolver, token, count);
 	}
 
 	/**
 	 * Indique si le cache contient les horaires de l'arrêt pour la date donnée.
 	 * 
-	 * @return {@code true} si le cache contient tous les horaires pour l'arret
+	 * @return {@code true} si le cache contient tous les horaires pour l'stop
 	 *         et la date demandée {@code false} si les données ne sont pas en
 	 *         cache.
 	 */
@@ -146,7 +146,7 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	/**
 	 * Indique si le cache contient les horaires du token donné.
 	 * 
-	 * @return {@code true} si le cache contient tous les horaires pour l'arret
+	 * @return {@code true} si le cache contient tous les horaires pour l'stop
 	 *         et la date demandée {@code false} si les données ne sont pas en
 	 *         cache.
 	 */
@@ -155,8 +155,8 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 			return true;
 
 		final Uri.Builder builder = ScheduleProvider.CONTENT_URI.buildUpon();
-		builder.path(ScheduleProvider.HORAIRE_JOUR_URI_PATH_QUERY);
-		builder.appendQueryParameter(ScheduleProvider.PARAM_ARRET_ID, String.valueOf(token.getArretId()));
+		builder.path(ScheduleProvider.SCHEDULE_DAY_URI_PATH_QUERY);
+		builder.appendQueryParameter(ScheduleProvider.PARAM_STOP_ID, String.valueOf(token.getStopId()));
 		builder.appendQueryParameter(ScheduleProvider.PARAM_DAY_TRIP, String.valueOf(token.getDate()));
 
 		synchronized (mDatabaseLock) {
@@ -191,19 +191,19 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 		}
 	}
 
-	private ContentValues getContentValues(final int arretId, final Horaire horaire) {
+	private ContentValues getContentValues(final int arretId, final Schedule schedule) {
 		final ContentValues values = new ContentValues();
 		values.put(ScheduleTable.STOP_ID, arretId);
-		values.put(ScheduleTable.HEADSIGN, horaire.getTerminus());
-		values.put(ScheduleTable.DAY_TRIP, horaire.getDayTrip());
-		values.put(ScheduleTable.TIMESTAMP, horaire.getTimestamp());
+		values.put(ScheduleTable.HEADSIGN, schedule.getHeadsign());
+		values.put(ScheduleTable.DAY_TRIP, schedule.getDayTrip());
+		values.put(ScheduleTable.TIMESTAMP, schedule.getTimestamp());
 
 		return values;
 	}
 
-	private void fillDB(final ContentResolver contentResolver, final ScheduleToken token, final List<Horaire> schedule) {
+	private void fillDB(final ContentResolver contentResolver, final ScheduleToken token, final List<Schedule> schedule) {
 		if (DBG)
-			Log.i(LOG_TAG, "Sauvegarde des horaires : " + token.getArretId() + " \t " + new Date(token.getDate())
+			Log.i(LOG_TAG, "Sauvegarde des horaires : " + token.getStopId() + " \t " + new Date(token.getDate())
 					+ " \t " + (schedule == null ? null : schedule.size()));
 
 		if (schedule != null) {
@@ -216,7 +216,7 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 				// Ajouter les horaires dans la db
 				final ContentValues[] values = new ContentValues[schedule.size()];
 				for (int i = 0; i < schedule.size(); i++) {
-					values[i] = getContentValues(token.getArretId(), schedule.get(i));
+					values[i] = getContentValues(token.getStopId(), schedule.get(i));
 				}
 
 				synchronized (mDatabaseLock) {
@@ -231,9 +231,9 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getSchedules(final ContentResolver contentResolver, final Stop arret, final DateMidnight date)
+	public List<Schedule> getSchedules(final ContentResolver contentResolver, final Stop stop, final DateMidnight date)
 			throws IOException {
-		return getSchedules(contentResolver, arret, date, null);
+		return getSchedules(contentResolver, stop, date, null);
 	}
 
 	/**
@@ -241,14 +241,14 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getSchedules(final ContentResolver contentResolver, final Stop stop, final DateMidnight date,
+	public List<Schedule> getSchedules(final ContentResolver contentResolver, final Stop stop, final DateMidnight date,
 			final DateTime after) throws IOException {
 
 		// Le cache ne doit stocker que les horaires du jour et du lendemain.
 		final DateMidnight cacheLimit = new DateMidnight().plusDays(DAYS_IN_CACHE);
 		final DateMidnight today = new DateMidnight();
 		final DateTime now = new DateTime();
-		List<Horaire> horaires;
+		List<Schedule> horaires;
 
 		if (date.isBefore(cacheLimit)) {
 
@@ -277,8 +277,8 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 
 				// Charger les horaires depuis la base
 				final Uri.Builder builder = ScheduleProvider.CONTENT_URI.buildUpon();
-				builder.path(ScheduleProvider.HORAIRE_JOUR_URI_PATH_QUERY);
-				builder.appendQueryParameter(ScheduleProvider.PARAM_ARRET_ID, String.valueOf(stop.getId()));
+				builder.path(ScheduleProvider.SCHEDULE_DAY_URI_PATH_QUERY);
+				builder.appendQueryParameter(ScheduleProvider.PARAM_STOP_ID, String.valueOf(stop.getId()));
 				builder.appendQueryParameter(ScheduleProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
 				builder.appendQueryParameter(ScheduleProvider.PARAM_INCLUDE_LAST_DAY_TRIP, Boolean.TRUE.toString());
 
@@ -307,9 +307,9 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getNextSchedules(final ContentResolver contentResolver, final Stop arret,
+	public List<Schedule> getNextSchedules(final ContentResolver contentResolver, final Stop stop,
 			final DateMidnight date, final int limit) throws IOException {
-		return getNextSchedules(contentResolver, arret, date, limit, 0);
+		return getNextSchedules(contentResolver, stop, date, limit, 0);
 	}
 
 	/**
@@ -317,22 +317,22 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	 * 
 	 * @throws IOException
 	 */
-	public List<Horaire> getNextSchedules(final ContentResolver contentResolver, final Stop arret, DateMidnight date,
+	public List<Schedule> getNextSchedules(final ContentResolver contentResolver, final Stop stop, DateMidnight date,
 			final int limit, final int minuteDelay) throws IOException {
 		if (DBG)
-			Log.d(LOG_TAG, "getNextHoraires " + arret + " : " + date + "\t" + limit);
+			Log.d(LOG_TAG, "getNextHoraires " + stop + " : " + date + "\t" + limit);
 
-		List<Horaire> schedules;
+		List<Schedule> schedules;
 		final long now = new DateTime().minusMinutes(minuteDelay).withSecondOfMinute(0).withMillisOfSecond(0)
 				.getMillis();
-		final List<Horaire> nextSchedules = new ArrayList<Horaire>();
+		final List<Schedule> nextSchedules = new ArrayList<Schedule>();
 		int schedulesCount = 0; // Juste renvoyer le bon nombre d'horaires
 		int loopCount = 0; // Limiter le nombre d'itérations
-		DateTime after = null; // Dernier horaire chargé
+		DateTime after = null; // Dernier schedule chargé
 
 		do {
-			schedules = getSchedules(contentResolver, arret, date, after);
-			for (final Horaire schedule : schedules) {
+			schedules = getSchedules(contentResolver, stop, date, after);
+			for (final Schedule schedule : schedules) {
 				if (schedule.getTimestamp() >= now) {
 					nextSchedules.add(schedule);
 					if (++schedulesCount >= limit) {
@@ -354,17 +354,17 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	}
 
 	/**
-	 * Récupérer le nombre de minutes jusqu'au prochain horaire.
+	 * Récupérer le nombre de minutes jusqu'au prochain schedule.
 	 * 
 	 * @throws IOException
 	 */
-	public Integer getMinutesToNextSchedule(final ContentResolver contentResolver, final Stop arret) throws IOException {
+	public Integer getMinutesToNextSchedule(final ContentResolver contentResolver, final Stop stop) throws IOException {
 
-		final List<Horaire> nextSchedules = getNextSchedules(contentResolver, arret, new DateMidnight(), 1);
+		final List<Schedule> nextSchedules = getNextSchedules(contentResolver, stop, new DateMidnight(), 1);
 		Integer result = null;
 
 		if (nextSchedules.size() > 0) {
-			final Horaire next = nextSchedules.get(0);
+			final Schedule next = nextSchedules.get(0);
 
 			final DateTime itemDateTime = new DateTime(next.getTimestamp()).withSecondOfMinute(0).withMillisOfSecond(0);
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
@@ -376,7 +376,7 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	}
 
 	/**
-	 * Ajouter une demande de recherche d'horaire A la fin du chargement, le
+	 * Ajouter une demande de recherche d'schedule A la fin du chargement, le
 	 * signal TimeService.ACTION_APPWIDGET_UPDATE est envoyé.
 	 */
 	public synchronized void schedule(final NextHoraireTask task) {
@@ -456,7 +456,7 @@ public class ScheduleManager extends SQLiteManager<Horaire> {
 	};
 
 	@Override
-	protected ContentValues getContentValues(final Horaire item) {
+	protected ContentValues getContentValues(final Schedule item) {
 		return null;
 	}
 

@@ -193,7 +193,7 @@
     <string name="parking_section_info">Information</string>
     <string name="parking_section_carte">On the map</string>
     <string name="parking">Car park</string>
-    <string name="parking_relai">Relay parking</string>
+    <string name="parking_relai">Park-and-ride</string>
     <string name="parking_ferme">Closed</string>
     <string name="parking_abonne">Subscribers</string>
     <string name="parking_invalide">Information not available</string>

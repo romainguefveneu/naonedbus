@@ -53,9 +53,9 @@ import com.actionbarsherlock.app.SherlockActivity;
 
 public class AddEventActivity extends SherlockActivity {
 
-	public static final String PARAM_LIGNE = "ligne";
-	public static final String PARAM_SENS = "sens";
-	public static final String PARAM_ARRET = "arret";
+	public static final String PARAM_LIGNE = "route";
+	public static final String PARAM_SENS = "direction";
+	public static final String PARAM_ARRET = "stop";
 	public static final String PARAM_TIMESTAMP = "timestamp";
 
 	private Map<Integer, String> mCalendars;
@@ -70,15 +70,15 @@ public class AddEventActivity extends SherlockActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_addevent);
 
-		final Route ligne = getIntent().getParcelableExtra(PARAM_LIGNE);
-		final Direction sens = getIntent().getParcelableExtra(PARAM_SENS);
-		final Stop arret = getIntent().getParcelableExtra(PARAM_ARRET);
+		final Route route = getIntent().getParcelableExtra(PARAM_LIGNE);
+		final Direction direction = getIntent().getParcelableExtra(PARAM_SENS);
+		final Stop stop = getIntent().getParcelableExtra(PARAM_ARRET);
 		final long timestamp = getIntent().getLongExtra(PARAM_TIMESTAMP, 0);
 
 		final HeaderHelper headerHelper = new HeaderHelper(this);
-		headerHelper.setColor(ligne.getBackColor(), ligne.getFrontColor());
-		headerHelper.setTitle(arret.getNomArret());
-		headerHelper.setSubTitle(FormatUtils.formatSens(ligne.getLetter(), sens.getName()));
+		headerHelper.setColor(route.getBackColor(), route.getFrontColor());
+		headerHelper.setTitle(stop.getName());
+		headerHelper.setSubTitle(FormatUtils.formatSens(route.getLetter(), direction.getName()));
 
 		final ActionBar actionBar = getSupportActionBar();
 
@@ -92,7 +92,7 @@ public class AddEventActivity extends SherlockActivity {
 			@Override
 			public void onClick(final View v) {
 				final String[] delais = AddEventActivity.this.getResources().getStringArray(R.array.delais);
-				addToCalendar(AddEventActivity.this, arret.getNomArret(), mCommentText.getText().toString(),
+				addToCalendar(AddEventActivity.this, stop.getName(), mCommentText.getText().toString(),
 						getCalendarId(), Integer.valueOf(delais[mSpinnerDelai.getSelectedItemPosition()]), timestamp);
 				Toast.makeText(getApplicationContext(), getString(R.string.add_event_toast), Toast.LENGTH_LONG).show();
 				finish();
@@ -120,8 +120,8 @@ public class AddEventActivity extends SherlockActivity {
 		final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.DEFAULT);
 		mDateEvent.setText(dateFormat.format(new Date(timestamp)));
 
-		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, ligne.getCode()),
-				arret.getNomArret(), sens.getName()));
+		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, route.getCode()),
+				stop.getName(), direction.getName()));
 
 		fillCalendars();
 		fillDelais();

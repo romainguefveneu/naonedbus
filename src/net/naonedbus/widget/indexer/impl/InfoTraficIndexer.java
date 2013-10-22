@@ -19,20 +19,20 @@
 package net.naonedbus.widget.indexer.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.InfoTrafic;
+import net.naonedbus.bean.TanNews;
 import net.naonedbus.bean.Route;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 
-public class InfoTraficIndexer extends ArraySectionIndexer<InfoTrafic> {
+public class InfoTraficIndexer extends ArraySectionIndexer<TanNews> {
 
 	@Override
-	protected String getSectionLabel(final Context context, final InfoTrafic item) {
+	protected String getSectionLabel(final Context context, final TanNews item) {
 		return context.getString(R.string.dialog_title_menu_lignes, ((Route) item.getSection()).getLetter());
 	}
 
 	@Override
-	protected void prepareSection(final InfoTrafic item) {
+	protected void prepareSection(final TanNews item) {
 	}
 
 }

@@ -32,7 +32,7 @@ import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.Route;
 import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.manager.impl.RouteManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -48,15 +48,15 @@ import com.bugsense.trace.BugSenseHandler;
 import com.polites.android.GestureImageView;
 
 public class PlanFragment extends CustomFragment {
-	public static final String PARAM_CODE_LIGNE = "codeLigne";
+	public static final String PARAM_CODE_LIGNE = "routeCode";
 
 	private static final String FILE_EXT = ".png";
-	private static final String URL = "http://naonedbus.romain-guefveneu.net/plans/{ligne}" + FILE_EXT;
+	private static final String URL = "http://naonedbus.romain-guefveneu.net/plans/{route}" + FILE_EXT;
 
 	private GestureImageView mGestureView;
 	private ProgressBar mProgressBar;
-	private LigneManager mLigneManager;
-	private Route mLigne;
+	private RouteManager mRouteManager;
+	private Route mRoute;
 	private boolean mSaveToCache;
 
 	public PlanFragment() {
@@ -78,18 +78,18 @@ public class PlanFragment extends CustomFragment {
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		mSaveToCache = preferences.getBoolean(NBApplication.PREF_PLAN_CACHE, true);
 
-		final String codeLigne = getArguments().getString(PARAM_CODE_LIGNE);
-		mLigneManager = LigneManager.getInstance();
-		mLigne = mLigneManager.getSingle(context.getContentResolver(), codeLigne);
+		final String routeCode = getArguments().getString(PARAM_CODE_LIGNE);
+		mRouteManager = RouteManager.getInstance();
+		mRoute = mRouteManager.getSingle(context.getContentResolver(), routeCode);
 
 		mGestureView = (GestureImageView) view.findViewById(R.id.planView);
 		mProgressBar = (ProgressBar) view.findViewById(android.R.id.progress);
 
-		if (isInCache(mLigne.getLetter())) {
+		if (isInCache(mRoute.getLetter())) {
 			afterLoaded();
 		} else {
 			try {
-				save(mLigne.getLetter());
+				save(mRoute.getLetter());
 			} catch (final MalformedURLException e) {
 				onError(e);
 			} catch (final IOException e) {
@@ -104,9 +104,9 @@ public class PlanFragment extends CustomFragment {
 	private void afterLoaded() {
 		mProgressBar.setVisibility(View.GONE);
 		mGestureView.setVisibility(View.VISIBLE);
-		mGestureView.setImageURI(Uri.parse(getLocalPath(mLigne.getCode())));
+		mGestureView.setImageURI(Uri.parse(getLocalPath(mRoute.getCode())));
 		if (mSaveToCache == false) {
-			deleteFile(mLigne.getCode());
+			deleteFile(mRoute.getCode());
 		}
 	}
 
@@ -116,9 +116,9 @@ public class PlanFragment extends CustomFragment {
 	 * @throws IOException
 	 * @throws MalformedURLException
 	 */
-	private void save(final String codeLigne) throws MalformedURLException, IOException {
+	private void save(final String routeCode) throws MalformedURLException, IOException {
 		final DownloadFile downloadFile = new DownloadFile();
-		downloadFile.execute(codeLigne);
+		downloadFile.execute(routeCode);
 	}
 
 	/**
@@ -126,39 +126,39 @@ public class PlanFragment extends CustomFragment {
 	 * 
 	 * @return vrai|faux si le plan est dans le cache
 	 */
-	private boolean isInCache(final String codeLigne) {
-		final File cache = new File(getLocalPath(codeLigne));
+	private boolean isInCache(final String routeCode) {
+		final File cache = new File(getLocalPath(routeCode));
 		return cache.exists();
 	}
 
 	/**
 	 * Supprimer le fichier.
 	 * 
-	 * @param codeLigne
+	 * @param routeCode
 	 */
-	private void deleteFile(final String codeLigne) {
-		final File cache = new File(getLocalPath(codeLigne));
+	private void deleteFile(final String routeCode) {
+		final File cache = new File(getLocalPath(routeCode));
 		cache.delete();
 	}
 
 	/**
-	 * @param codeLigne
+	 * @param routeCode
 	 * @return L'adresse du fichier dans le cache
 	 */
 
-	private String getLocalPath(final String codeLigne) {
-		return getActivity().getCacheDir() + "/" + codeLigne + FILE_EXT;
+	private String getLocalPath(final String routeCode) {
+		return getActivity().getCacheDir() + "/" + routeCode + FILE_EXT;
 	}
 
 	/**
 	 * Construit l'url du plan
 	 * 
-	 * @param codeLigne
-	 *            : code de la ligne
+	 * @param routeCode
+	 *            : code de la route
 	 * @return l'url du plan
 	 */
-	private String getRemoteUrl(final String codeLigne) {
-		return URL.replace("{ligne}", codeLigne);
+	private String getRemoteUrl(final String routeCode) {
+		return URL.replace("{route}", routeCode);
 	}
 
 	/**
@@ -183,19 +183,19 @@ public class PlanFragment extends CustomFragment {
 	private class DownloadFile extends AsyncTask<String, Integer, Boolean> {
 
 		@Override
-		protected Boolean doInBackground(final String... codeLigne) {
+		protected Boolean doInBackground(final String... routeCode) {
 			int count;
 			long total = 0;
 			int lenghtOfFile;
 			final byte data[] = new byte[1024];
 
 			try {
-				final URL localUrl = new URL(getRemoteUrl(codeLigne[0]));
+				final URL localUrl = new URL(getRemoteUrl(routeCode[0]));
 				final URLConnection connexion = localUrl.openConnection();
 				connexion.connect();
 				lenghtOfFile = connexion.getContentLength();
 
-				final File file = new File(getActivity().getCacheDir(), codeLigne[0] + FILE_EXT);
+				final File file = new File(getActivity().getCacheDir(), routeCode[0] + FILE_EXT);
 				final InputStream input = new BufferedInputStream(localUrl.openStream());
 				final OutputStream output = new FileOutputStream(file);
 

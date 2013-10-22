@@ -21,7 +21,7 @@ package net.naonedbus.manager.impl;
 import java.util.List;
 
 import net.naonedbus.bean.Equipment.Type;
-import net.naonedbus.bean.parking.relai.ParkingRelai;
+import net.naonedbus.bean.parking.IncentivePark;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.EquipmentProvider;
 import net.naonedbus.provider.table.EquipmentTable;
@@ -30,7 +30,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
+public class ParkingRelaiManager extends SQLiteManager<IncentivePark> {
 
 	private static ParkingRelaiManager instance;
 
@@ -46,23 +46,23 @@ public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 	}
 
 	@Override
-	public List<ParkingRelai> getAll(final ContentResolver contentResolver) {
+	public List<IncentivePark> getAll(final ContentResolver contentResolver) {
 		final Uri.Builder builder = EquipmentProvider.CONTENT_URI.buildUpon();
 		builder.path(EquipmentProvider.EQUIPEMENTS_TYPE_URI_PATH_QUERY);
 		builder.appendPath(Integer.toString(Type.TYPE_PARK.getId()));
 
 		final Cursor c = contentResolver.query(builder.build(), null, EquipmentTable.SUBTYPE_ID + "=?",
-				new String[] { String.valueOf(EquipmentManager.SousType.PARKING_RELAI.getValue()) }, null);
+				new String[] { String.valueOf(EquipmentManager.SubType.INCENTIVE_PARK.getValue()) }, null);
 		return getFromCursor(c);
 	}
 
 	@Override
-	public ParkingRelai getSingleFromCursor(final Cursor c) {
-		final ParkingRelai parking = new ParkingRelai();
+	public IncentivePark getSingleFromCursor(final Cursor c) {
+		final IncentivePark parking = new IncentivePark();
 		parking.setId(c.getInt(c.getColumnIndex(EquipmentTable._ID)));
-		parking.setNom(c.getString(c.getColumnIndex(EquipmentTable.EQUIPMENT_NAME)));
-		parking.setAdresse(c.getString(c.getColumnIndex(EquipmentTable.ADDRESS)));
-		parking.setTelephone(c.getString(c.getColumnIndex(EquipmentTable.PHONE)));
+		parking.setName(c.getString(c.getColumnIndex(EquipmentTable.EQUIPMENT_NAME)));
+		parking.setAdress(c.getString(c.getColumnIndex(EquipmentTable.ADDRESS)));
+		parking.setPhone(c.getString(c.getColumnIndex(EquipmentTable.PHONE)));
 		parking.setUrl(c.getString(c.getColumnIndex(EquipmentTable.URL)));
 		parking.setLatitude(c.getDouble(c.getColumnIndex(EquipmentTable.LATITUDE)));
 		parking.setLongitude(c.getDouble(c.getColumnIndex(EquipmentTable.LONGITUDE)));
@@ -70,7 +70,7 @@ public class ParkingRelaiManager extends SQLiteManager<ParkingRelai> {
 	}
 
 	@Override
-	protected ContentValues getContentValues(final ParkingRelai item) {
+	protected ContentValues getContentValues(final IncentivePark item) {
 		return null;
 	}
 

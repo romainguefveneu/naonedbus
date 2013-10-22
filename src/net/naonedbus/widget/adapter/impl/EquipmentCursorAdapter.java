@@ -21,7 +21,7 @@ package net.naonedbus.widget.adapter.impl;
 import net.naonedbus.R;
 import net.naonedbus.bean.Equipment;
 import net.naonedbus.manager.impl.EquipmentManager;
-import net.naonedbus.manager.impl.EquipmentManager.SousType;
+import net.naonedbus.manager.impl.EquipmentManager.SubType;
 import net.naonedbus.provider.table.EquipmentTable;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.adapter.CursorSectionAdapter;
@@ -45,7 +45,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 	private int mColDetails;
 
 	public EquipmentCursorAdapter(final Context context, final Cursor c) {
-		super(context, c, R.layout.list_item_equipement);
+		super(context, c, R.layout.list_item_equipment);
 		mContext = context;
 		mEquipementManager = EquipmentManager.getInstance();
 
@@ -77,7 +77,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
-		holder.itemLignes = (ViewGroup) view.findViewById(R.id.itemLignes);
+		holder.itemRoutes = (ViewGroup) view.findViewById(R.id.itemLignes);
 		view.setTag(holder);
 	}
 
@@ -99,7 +99,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 
 		// Définir le fond de l'icone.
 		if (sousTypeId != 0) {
-			final SousType sousType = SousType.getTypeByValue(sousTypeId);
+			final SubType sousType = SubType.getTypeByValue(sousTypeId);
 			holder.itemSymbole.setImageResource(sousType.getDrawableRes());
 		} else {
 			holder.itemSymbole.setImageResource(type.getDrawableRes());
@@ -114,7 +114,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 			holder.itemDescription.setText((details != null) ? details : adresse);
 			holder.itemDescription.setVisibility(View.VISIBLE);
 		}
-		holder.itemLignes.setVisibility(View.GONE);
+		holder.itemRoutes.setVisibility(View.GONE);
 
 	}
 
@@ -141,7 +141,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 	private class ViewHolder {
 		TextView itemTitle;
 		TextView itemDescription;
-		ViewGroup itemLignes;
+		ViewGroup itemRoutes;
 		ImageView itemSymbole;
 	}
 
@@ -154,7 +154,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 	public Cursor runQueryOnBackgroundThread(final CharSequence constraint) {
 		Cursor currentCursor = null;
 		if (constraint != null) {
-			currentCursor = mEquipementManager.getEquipementsCursorByName(mContext.getContentResolver(), null,
+			currentCursor = mEquipementManager.getCursorByName(mContext.getContentResolver(), null,
 					constraint.toString());
 		}
 		return currentCursor;

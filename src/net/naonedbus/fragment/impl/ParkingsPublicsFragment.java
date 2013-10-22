@@ -24,16 +24,16 @@ import java.util.List;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.ParkingDetailActivity;
+import net.naonedbus.activity.impl.ParkDetailActivity;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.bean.parking.Parking;
-import net.naonedbus.bean.parking.pub.ParkingPublic;
-import net.naonedbus.comparator.ParkingComparator;
-import net.naonedbus.comparator.ParkingDistanceComparator;
-import net.naonedbus.comparator.ParkingPlacesComparator;
+import net.naonedbus.bean.parking.CarPark;
+import net.naonedbus.bean.parking.PublicPark;
+import net.naonedbus.comparator.PublicParkComparator;
+import net.naonedbus.comparator.PublicParkDistanceComparator;
+import net.naonedbus.comparator.PublicParkSpacesComparator;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.manager.impl.ParkingPublicManager;
+import net.naonedbus.manager.impl.PublicParkManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.widget.adapter.impl.PublicParkArrayAdapter;
@@ -70,13 +70,13 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		MENU_MAPPING.append(SORT_PLACES, R.id.menu_sort_parking_places);
 	}
 
-	private final static SparseArray<Comparator<ParkingPublic>> comparators = new SparseArray<Comparator<ParkingPublic>>();
+	private final static SparseArray<Comparator<PublicPark>> comparators = new SparseArray<Comparator<PublicPark>>();
 	static {
-		comparators.append(SORT_NOM, new ParkingComparator());
-		comparators.append(SORT_DISTANCE, new ParkingDistanceComparator());
-		comparators.append(SORT_PLACES, new ParkingPlacesComparator());
+		comparators.append(SORT_NOM, new PublicParkComparator());
+		comparators.append(SORT_DISTANCE, new PublicParkDistanceComparator());
+		comparators.append(SORT_PLACES, new PublicParkSpacesComparator());
 	}
-	private final static SparseArray<ArraySectionIndexer<ParkingPublic>> indexers = new SparseArray<ArraySectionIndexer<ParkingPublic>>();
+	private final static SparseArray<ArraySectionIndexer<PublicPark>> indexers = new SparseArray<ArraySectionIndexer<PublicPark>>();
 	static {
 		indexers.append(SORT_NOM, new ParksNameIndexer());
 		indexers.append(SORT_DISTANCE, new ParksDistanceIndexer());
@@ -129,7 +129,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-		inflater.inflate(R.menu.fragment_parkings_publics, menu);
+		inflater.inflate(R.menu.fragment_public_parks, menu);
 		mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 
@@ -178,10 +178,10 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
-		final Parking parking = (Parking) getListAdapter().getItem(position);
+		final CarPark parking = (CarPark) getListAdapter().getItem(position);
 
-		final Intent intent = new Intent(getActivity(), ParkingDetailActivity.class);
-		intent.putExtra(ParkingDetailActivity.PARAM_PARKING, parking);
+		final Intent intent = new Intent(getActivity(), ParkDetailActivity.class);
+		intent.putExtra(ParkDetailActivity.PARAM_PARKING, parking);
 		startActivity(intent);
 	}
 
@@ -205,8 +205,8 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
 
-			final ParkingPublicManager parkingPublicManager = ParkingPublicManager.getInstance();
-			final List<ParkingPublic> parkings = parkingPublicManager.getAll(context);
+			final PublicParkManager parkingPublicManager = PublicParkManager.getInstance();
+			final List<PublicPark> parkings = parkingPublicManager.getAll(context);
 			Collections.sort(parkings, comparators.get(mCurrentSort));
 			final PublicParkArrayAdapter adapter = new PublicParkArrayAdapter(context, parkings);
 			adapter.setIndexer(indexers.get(mCurrentSort));
@@ -242,7 +242,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 			if (currentLocation != null) {
 
 				for (int i = 0; i < adapter.getCount(); i++) {
-					final ParkingPublic item = (ParkingPublic) adapter.getItem(i);
+					final PublicPark item = (PublicPark) adapter.getItem(i);
 					if (item.getLatitude() != null) {
 						parkingLocation.setLatitude(item.getLatitude());
 						parkingLocation.setLongitude(item.getLongitude());
@@ -281,8 +281,8 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	 * @param adapter
 	 */
 	private void sort(final PublicParkArrayAdapter adapter) {
-		final Comparator<ParkingPublic> comparator;
-		final ArraySectionIndexer<ParkingPublic> indexer;
+		final Comparator<PublicPark> comparator;
+		final ArraySectionIndexer<PublicPark> indexer;
 
 		if (mCurrentSort == SORT_DISTANCE && !myLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation
@@ -303,7 +303,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	private final MyLocationListener locationListener = new MyLocationListener() {
 		@Override
 		public void onLocationChanged(final Location location) {
-			final ParkingDistanceComparator comparator = (ParkingDistanceComparator) comparators.get(SORT_DISTANCE);
+			final PublicParkDistanceComparator comparator = (PublicParkDistanceComparator) comparators.get(SORT_DISTANCE);
 			comparator.setReferentiel(location);
 
 			if (mCurrentSort == SORT_DISTANCE) {
@@ -313,7 +313,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 		@Override
 		public void onLocationDisabled() {
-			final ParkingDistanceComparator comparator = (ParkingDistanceComparator) comparators.get(SORT_DISTANCE);
+			final PublicParkDistanceComparator comparator = (PublicParkDistanceComparator) comparators.get(SORT_DISTANCE);
 			comparator.setReferentiel(null);
 			if (mCurrentSort == SORT_DISTANCE) {
 				mCurrentSort = SORT_NOM;

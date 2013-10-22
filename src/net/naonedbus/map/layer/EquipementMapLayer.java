@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.ParcoursActivity;
+import net.naonedbus.activity.impl.StopPathActivity;
 import net.naonedbus.bean.Equipment;
 import net.naonedbus.bean.Equipment.Type;
 import net.naonedbus.bean.Route;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.LigneManager;
+import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.map.ItemSelectedInfo;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
@@ -35,10 +35,10 @@ public class EquipementMapLayer extends MapLayer {
 
 	@Override
 	public void chooseMarker(final MarkerOptions markerOptions, final ClusterPoint clusterPoint) {
-		final Equipment equipement = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
-		final Equipment.Type type = equipement.getType();
+		final Equipment equipment = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
+		final Equipment.Type type = equipment.getType();
 		final BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(type.getMapPin());
-		final String title = equipement.getName();
+		final String title = equipment.getName();
 
 		markerOptions.icon(icon);
 		markerOptions.title(title);
@@ -82,8 +82,8 @@ public class EquipementMapLayer extends MapLayer {
 			@Override
 			public Intent getIntent(final Context context) {
 				if (item.getType() == Type.TYPE_STOP) {
-					final ParamIntent intent = new ParamIntent(context, ParcoursActivity.class);
-					intent.putExtra(ParcoursActivity.PARAM_ID_SATION, item.getId());
+					final ParamIntent intent = new ParamIntent(context, StopPathActivity.class);
+					intent.putExtra(StopPathActivity.PARAM_ID_SATION, item.getId());
 					return intent;
 				} else {
 					return null;
@@ -96,13 +96,13 @@ public class EquipementMapLayer extends MapLayer {
 	private List<View> getStationInfoContents(final Context context, final ViewGroup root, final Equipment station) {
 		final LayoutInflater layoutInflater = getLayoutInflater();
 		final List<View> views = new ArrayList<View>();
-		final LigneManager ligneManager = LigneManager.getInstance();
-		final List<Route> lignes = ligneManager.getLignesFromStation(context.getContentResolver(), station.getId());
+		final RouteManager ligneManager = RouteManager.getInstance();
+		final List<Route> lignes = ligneManager.getRoutesByStopArea(context.getContentResolver(), station.getId());
 
 		Typeface roboto = FontUtils.getRobotoBoldCondensed(context);
 
 		for (final Route ligneItem : lignes) {
-			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, root, false);
+			final TextView textView = (TextView) layoutInflater.inflate(R.layout.route_code_item, root, false);
 			textView.setTypeface(roboto);
 			textView.setTextColor(ligneItem.getFrontColor());
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getBackColor()));

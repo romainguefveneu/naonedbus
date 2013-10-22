@@ -37,12 +37,12 @@ public class ProxyInfoWindowAdapter implements ClusterkrafInfoWindowAdapter, OnI
 	@Override
 	public View getInfoContents(Marker marker) {
 		final ClusterPoint clusterPoint = mMarkerClusterPoints.get(marker);
-		final Equipment equipement = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
-		MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
+		final Equipment equipment = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
+		MapLayer mapLayer = mLayerChoosers.get(equipment.getType());
 		if (mapLayer == null) {
 			mapLayer = mDefaultLayer;
 		}
-		return mapLayer.getInfoContents(equipement);
+		return mapLayer.getInfoContents(equipment);
 	}
 
 	@Override
@@ -57,15 +57,15 @@ public class ProxyInfoWindowAdapter implements ClusterkrafInfoWindowAdapter, OnI
 
 	@Override
 	public boolean onInfoWindowClick(Marker marker, ClusterPoint clusterPoint) {
-		final Equipment equipement = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
-		MapLayer mapLayer = mLayerChoosers.get(equipement.getType());
+		final Equipment equipment = (Equipment) clusterPoint.getPointAtOffset(0).getTag();
+		MapLayer mapLayer = mLayerChoosers.get(equipment.getType());
 		if (mapLayer == null) {
 			mapLayer = mDefaultLayer;
 		}
 		final Context context = mContext.get();
 
 		if (context != null) {
-			Intent intent = mapLayer.getClickIntent(context, equipement);
+			Intent intent = mapLayer.getClickIntent(context, equipment);
 			if (intent != null) {
 				context.startActivity(intent);
 				return true;

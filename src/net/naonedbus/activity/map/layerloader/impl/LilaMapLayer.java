@@ -97,8 +97,8 @@ public class LilaMapLayer extends EquipementMapLayer {
 
 			@Override
 			public Intent getIntent(final Context context) {
-				final Equipment equipement = getItemById(item.getId());
-				return getNavigationIntent(context, equipement);
+				final Equipment equipment = getItemById(item.getId());
+				return getNavigationIntent(context, equipment);
 			}
 
 			@Override
@@ -116,7 +116,7 @@ public class LilaMapLayer extends EquipementMapLayer {
 		BasicOverlayItem stationOverlayItem;
 
 		if (location != null) {
-			final List<Equipment> stationsProches = getEquipementManager().getEquipementsByLocation(
+			final List<Equipment> stationsProches = getEquipementManager().getByLocation(
 					context.getContentResolver(), Type.TYPE_LILA, location, MAX_ITEMS);
 
 			for (Equipment station : stationsProches) {

@@ -18,20 +18,20 @@
  */
 package net.naonedbus.widget.indexer.impl;
 
-import net.naonedbus.bean.parking.pub.ParkingPublic;
+import net.naonedbus.bean.parking.PublicPark;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import android.content.Context;
 
-public class ParksNameIndexer extends ArraySectionIndexer<ParkingPublic> {
+public class ParksNameIndexer extends ArraySectionIndexer<PublicPark> {
 
 	@Override
-	protected String getSectionLabel(Context context, ParkingPublic item) {
-		return item.getNom().substring(0, 1);
+	protected String getSectionLabel(Context context, PublicPark item) {
+		return item.getName().substring(0, 1);
 	}
 
 	@Override
-	protected void prepareSection(ParkingPublic item) {
-		item.setSection(item.getNom().substring(0, 1));
+	protected void prepareSection(PublicPark item) {
+		item.setSection(item.getName().substring(0, 1));
 	}
 
 }

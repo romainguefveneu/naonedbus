@@ -24,7 +24,7 @@
 
     <include
         android:id="@id/headerView"
-        layout="@layout/itineraire_header" />
+        layout="@layout/itinerary_header" />
 
     <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
         xmlns:app="http://schemas.android.com/apk/res-auto"

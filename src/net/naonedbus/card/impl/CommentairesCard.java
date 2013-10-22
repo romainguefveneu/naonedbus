@@ -23,17 +23,17 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.CommentaireActivity;
-import net.naonedbus.bean.Comment;
+import net.naonedbus.activity.impl.SendNewsActivity;
+import net.naonedbus.bean.LiveNews;
 import net.naonedbus.bean.Direction;
 import net.naonedbus.bean.Route;
 import net.naonedbus.bean.Stop;
 import net.naonedbus.card.Card;
-import net.naonedbus.formatter.CommentaireFomatter;
-import net.naonedbus.fragment.impl.ArretDetailFragment.OnSensChangeListener;
-import net.naonedbus.fragment.impl.CommentaireDetailDialogFragment;
+import net.naonedbus.formatter.LiveNewsFomatter;
+import net.naonedbus.fragment.impl.StopDetailFragment.OnDirectionChangedListener;
+import net.naonedbus.fragment.impl.LiveNewsDetailDialogFragment;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.CommentManager;
+import net.naonedbus.manager.impl.LiveNewsManager;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.FontUtils;
 
@@ -61,7 +61,7 @@ import android.widget.TextView.BufferType;
 
 import com.bugsense.trace.BugSenseHandler;
 
-public class CommentairesCard extends Card<List<Comment>> implements OnSensChangeListener {
+public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectionChangedListener {
 
 	private static final String LOG_TAG = "CommentairesCard";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -72,7 +72,7 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 	private final static IntentFilter intentFilter;
 	static {
 		intentFilter = new IntentFilter();
-		intentFilter.addAction(CommentaireActivity.ACTION_COMMENTAIRE_SENT);
+		intentFilter.addAction(SendNewsActivity.ACTION_COMMENTAIRE_SENT);
 	}
 
 	/**
@@ -88,29 +88,29 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 		}
 	};
 
-	private Route mLigne;
-	private Direction mSens;
-	private Stop mArret;
+	private Route mRoute;
+	private Direction mDirection;
+	private Stop mStop;
 	private ViewGroup mRoot;
 	private final Typeface mRobotoMedium;
 
 	public CommentairesCard(final Context context, final LoaderManager loaderManager,
 			final FragmentManager fragmentManager) {
-		super(context, loaderManager, fragmentManager, R.string.card_commentaires_title, R.layout.card_trafic);
+		super(context, loaderManager, fragmentManager, R.string.card_commentaires_title, R.layout.card_news);
 		getContext().registerReceiver(mIntentReceiver, intentFilter);
 		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
-	public void setLigne(final Route ligne) {
-		mLigne = ligne;
+	public void setLigne(final Route route) {
+		mRoute = route;
 	}
 
-	public void setSens(final Direction sens) {
-		mSens = sens;
+	public void setSens(final Direction direction) {
+		mDirection = direction;
 	}
 
-	public void setArret(final Stop arret) {
-		mArret = arret;
+	public void setArret(final Stop stop) {
+		mStop = stop;
 	}
 
 	@Override
@@ -141,17 +141,17 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 
 	@Override
 	protected Intent getMoreIntent() {
-		final ParamIntent intent = new ParamIntent(getContext(), CommentaireActivity.class);
-		intent.putExtra(CommentaireActivity.PARAM_LIGNE, mLigne);
-		intent.putExtra(CommentaireActivity.PARAM_SENS, mSens);
-		intent.putExtra(CommentaireActivity.PARAM_ARRET, mArret);
+		final ParamIntent intent = new ParamIntent(getContext(), SendNewsActivity.class);
+		intent.putExtra(SendNewsActivity.PARAM_LIGNE, mRoute);
+		intent.putExtra(SendNewsActivity.PARAM_SENS, mDirection);
+		intent.putExtra(SendNewsActivity.PARAM_ARRET, mStop);
 
 		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_commenter);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_send);
 		return intent;
 	}
 
-	private View createView(final LayoutInflater inflater, final ViewGroup root, final Comment commentaire) {
+	private View createView(final LayoutInflater inflater, final ViewGroup root, final LiveNews liveNews) {
 		final View view = inflater.inflate(R.layout.card_item_commentaire, root, false);
 
 		final TextView itemTitle = (TextView) view.findViewById(R.id.itemTitle);
@@ -160,23 +160,23 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 
 		String title = "";
 
-		if (NaonedbusClient.NAONEDBUS.name().equals(commentaire.getSource())) {
-			if (commentaire.getStop() == null && commentaire.getDirection() == null && commentaire.getRoute() == null) {
+		if (NaonedbusClient.NAONEDBUS.name().equals(liveNews.getSource())) {
+			if (liveNews.getStop() == null && liveNews.getDirection() == null && liveNews.getRoute() == null) {
 				title = view.getContext().getString(R.string.commentaire_tout);
 			} else {
-				if (commentaire.getStop() != null) {
-					title = commentaire.getStop().getNomArret() + " ";
+				if (liveNews.getStop() != null) {
+					title = liveNews.getStop().getName() + " ";
 				}
-				if (commentaire.getDirection() != null) {
-					title = title + "\u2192 " + commentaire.getDirection().getName();
+				if (liveNews.getDirection() != null) {
+					title = title + "\u2192 " + liveNews.getDirection().getName();
 				}
 			}
 		} else {
-			title = getString(CommentaireFomatter.getTitleResId(commentaire.getSource()));
+			title = getString(LiveNewsFomatter.getTitleResId(liveNews.getSource()));
 		}
 
-		itemDescription.setText(commentaire.getMessage(), BufferType.SPANNABLE);
-		itemDate.setText(commentaire.getDelay());
+		itemDescription.setText(liveNews.getMessage(), BufferType.SPANNABLE);
+		itemDate.setText(liveNews.getDelay());
 		itemDate.setTypeface(mRobotoMedium);
 
 		if (title.trim().length() == 0) {
@@ -190,9 +190,9 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 			@Override
 			public void onClick(final View v) {
 				final Bundle bundle = new Bundle();
-				bundle.putParcelable(CommentaireDetailDialogFragment.PARAM_COMMENTAIRE, commentaire);
+				bundle.putParcelable(LiveNewsDetailDialogFragment.PARAM_LIVENEWS, liveNews);
 
-				final DialogFragment dialogFragment = new CommentaireDetailDialogFragment();
+				final DialogFragment dialogFragment = new LiveNewsDetailDialogFragment();
 				dialogFragment.setArguments(bundle);
 				dialogFragment.show(getFragmentManager(), "CommentaireDetailFragment");
 			}
@@ -202,21 +202,21 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 	}
 
 	@Override
-	public Loader<List<Comment>> onCreateLoader(final int id, final Bundle bundle) {
+	public Loader<List<LiveNews>> onCreateLoader(final int id, final Bundle bundle) {
 		final boolean forceUpdate = (bundle != null && bundle.getBoolean(BUNDLE_FORCE_UPDATE, false));
-		return new LoaderTask(getContext(), mLigne, mSens, forceUpdate);
+		return new LoaderTask(getContext(), mRoute, mDirection, forceUpdate);
 	}
 
 	@Override
-	public void onLoadFinished(final Loader<List<Comment>> loader, final List<Comment> commentaires) {
+	public void onLoadFinished(final Loader<List<LiveNews>> loader, final List<LiveNews> commentaires) {
 		if (commentaires == null || commentaires.isEmpty()) {
 			showMessage(R.string.msg_nothing_commentaires, R.drawable.ic_checkmark_holo_light);
 		} else {
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 
 			mRoot.removeAllViews();
-			for (final Comment commentaire : commentaires) {
-				mRoot.addView(createView(inflater, mRoot, commentaire));
+			for (final LiveNews liveNews : commentaires) {
+				mRoot.addView(createView(inflater, mRoot, liveNews));
 			}
 
 			showContent();
@@ -224,39 +224,39 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 
 	}
 
-	private static class LoaderTask extends AsyncTaskLoader<List<Comment>> {
-		private final Route mLigne;
-		private final Direction mSens;
+	private static class LoaderTask extends AsyncTaskLoader<List<LiveNews>> {
+		private final Route mRoute;
+		private final Direction mDirection;
 		private final boolean mForceUpdate;
-		private List<Comment> mCommentaires;
+		private List<LiveNews> mCommentaires;
 
-		public LoaderTask(final Context context, final Route ligne, final Direction sens, final boolean forceUpdate) {
+		public LoaderTask(final Context context, final Route route, final Direction direction, final boolean forceUpdate) {
 			super(context);
-			mLigne = ligne;
-			mSens = sens;
+			mRoute = route;
+			mDirection = direction;
 			mForceUpdate = forceUpdate;
 		}
 
 		@Override
-		public List<Comment> loadInBackground() {
-			final CommentManager manager = CommentManager.getInstance();
-			final CommentaireFomatter fomatter = new CommentaireFomatter(getContext());
+		public List<LiveNews> loadInBackground() {
+			final LiveNewsManager manager = LiveNewsManager.getInstance();
+			final LiveNewsFomatter fomatter = new LiveNewsFomatter(getContext());
 			final long today = new DateMidnight().getMillis();
 
-			List<Comment> commentaires = null;
+			List<LiveNews> commentaires = null;
 
 			try {
 				if (mForceUpdate) {
 					manager.updateCache(getContext().getContentResolver());
 				}
-				commentaires = manager.getAll(getContext().getContentResolver(), mLigne.getCode(), mSens.getCode(),
+				commentaires = manager.getAll(getContext().getContentResolver(), mRoute.getCode(), mDirection.getCode(),
 						null);
 
 				for (int i = commentaires.size() - 1; i > -1; i--) {
-					final Comment commentaire = commentaires.get(i);
+					final LiveNews liveNews = commentaires.get(i);
 
-					if (commentaire.getTimestamp() > today) {
-						fomatter.formatValues(commentaire);
+					if (liveNews.getTimestamp() > today) {
+						fomatter.formatValues(liveNews);
 					} else {
 						commentaires.remove(i);
 					}
@@ -280,7 +280,7 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 		 * adds a little more logic.
 		 */
 		@Override
-		public void deliverResult(final List<Comment> commentaires) {
+		public void deliverResult(final List<LiveNews> commentaires) {
 			mCommentaires = commentaires;
 
 			if (isStarted()) {
@@ -311,8 +311,8 @@ public class CommentairesCard extends Card<List<Comment>> implements OnSensChang
 	}
 
 	@Override
-	public void onSensChange(final Direction newSens) {
-		mSens = newSens;
+	public void onDirectionChanged(final Direction newDirection) {
+		mDirection = newDirection;
 		showLoader();
 		restartLoader(null, this);
 	}

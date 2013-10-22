@@ -25,7 +25,7 @@
     <include layout="@layout/list_item_header" />
 
     <include
-        layout="@layout/list_item_content_ligne"
+        layout="@layout/list_item_content_route"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true" />

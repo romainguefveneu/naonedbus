@@ -24,6 +24,6 @@
 
     <include layout="@layout/list_item_header_simple" />
 
-    <include layout="@layout/list_item_content_trafic_ligne" />
+    <include layout="@layout/list_item_content_tannews" />
 
 </LinearLayout>

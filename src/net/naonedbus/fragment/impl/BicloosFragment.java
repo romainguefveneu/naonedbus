@@ -86,7 +86,7 @@ public class BicloosFragment extends CustomListFragment {
 	protected int mCurrentSortPreference = SORT_NOM;
 
 	private final BiclooManager mBiclooManager;
-	private final BiclooBookmarkManager mFavoriBiclooManager;
+	private final BiclooBookmarkManager mBiclooBookmarkManager;
 	private final MyLocationProvider mLocationProvider;
 
 	private MenuItem mRefreshMenuItem;
@@ -97,7 +97,7 @@ public class BicloosFragment extends CustomListFragment {
 		super(R.layout.fragment_listview_section);
 
 		mBiclooManager = BiclooManager.getInstance();
-		mFavoriBiclooManager = BiclooBookmarkManager.getInstance();
+		mBiclooBookmarkManager = BiclooBookmarkManager.getInstance();
 
 		mLocationProvider = NBApplication.getLocationProvider();
 
@@ -417,15 +417,15 @@ public class BicloosFragment extends CustomListFragment {
 	}
 
 	private boolean isFavori(final Bicloo bicloo) {
-		final Bicloo b = mFavoriBiclooManager.getSingle(getActivity().getContentResolver(), bicloo.getId());
+		final Bicloo b = mBiclooBookmarkManager.getSingle(getActivity().getContentResolver(), bicloo.getId());
 		return (b != null);
 	}
 
 	private void addToFavoris(final Bicloo bicloo) {
-		mFavoriBiclooManager.add(getActivity().getContentResolver(), bicloo);
+		mBiclooBookmarkManager.add(getActivity().getContentResolver(), bicloo);
 	}
 
 	private void removeFromFavoris(final Bicloo bicloo) {
-		mFavoriBiclooManager.remove(getActivity().getContentResolver(), bicloo.getId());
+		mBiclooBookmarkManager.remove(getActivity().getContentResolver(), bicloo.getId());
 	}
 }

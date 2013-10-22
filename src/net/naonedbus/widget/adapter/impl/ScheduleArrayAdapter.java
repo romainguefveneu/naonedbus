@@ -22,8 +22,8 @@ import java.text.DateFormat;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.horaire.EmptyHoraire;
-import net.naonedbus.bean.horaire.Horaire;
+import net.naonedbus.bean.schedule.EmptySchedule;
+import net.naonedbus.bean.schedule.Schedule;
 import net.naonedbus.widget.ClockDrawer;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
@@ -34,7 +34,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ScheduleArrayAdapter extends ArraySectionAdapter<Horaire> {
+public class ScheduleArrayAdapter extends ArraySectionAdapter<Schedule> {
 
 	final DateFormat mTimeFormat;
 	final float mClockHandWidth;
@@ -42,7 +42,7 @@ public class ScheduleArrayAdapter extends ArraySectionAdapter<Horaire> {
 	final int mClockSize;
 	final ClockDrawer mClockDrawer;
 
-	public ScheduleArrayAdapter(final Context context, final List<Horaire> objects) {
+	public ScheduleArrayAdapter(final Context context, final List<Schedule> objects) {
 		super(context, R.layout.list_item_horaire, objects);
 		mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
 
@@ -55,8 +55,8 @@ public class ScheduleArrayAdapter extends ArraySectionAdapter<Horaire> {
 
 	@Override
 	public boolean isEnabled(final int position) {
-		final Horaire item = getItem(position);
-		if (item instanceof EmptyHoraire)
+		final Schedule item = getItem(position);
+		if (item instanceof EmptySchedule)
 			return false;
 		return super.isEnabled(position);
 	}
@@ -64,21 +64,21 @@ public class ScheduleArrayAdapter extends ArraySectionAdapter<Horaire> {
 	@Override
 	public void bindView(final View view, final Context context, final int position) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final Horaire item = getItem(position);
+		final Schedule item = getItem(position);
 
-		if (item instanceof EmptyHoraire) {
-			bindEmptyView(holder, (EmptyHoraire) item);
+		if (item instanceof EmptySchedule) {
+			bindEmptyView(holder, (EmptySchedule) item);
 		} else {
 			bindHoraireView(holder, item);
 		}
 	}
 
-	private void bindHoraireView(final ViewHolder holder, final Horaire item) {
+	private void bindHoraireView(final ViewHolder holder, final Schedule item) {
 		holder.itemTitle.setText(mTimeFormat.format(item.getDate()));
 		holder.itemTitle.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
 		holder.itemTitle.setEnabled(true);
 
-		final String terminus = item.getTerminus();
+		final String terminus = item.getHeadsign();
 		holder.itemDescription.setText(terminus);
 		holder.itemDescription.setVisibility(terminus == null ? View.GONE : View.VISIBLE);
 
@@ -108,7 +108,7 @@ public class ScheduleArrayAdapter extends ArraySectionAdapter<Horaire> {
 		holder.itemIcon.setVisibility(View.VISIBLE);
 	}
 
-	private void bindEmptyView(final ViewHolder holder, final EmptyHoraire item) {
+	private void bindEmptyView(final ViewHolder holder, final EmptySchedule item) {
 		holder.itemTitle.setText(item.getTextId());
 		holder.itemTitle.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 		holder.itemTitle.setEnabled(false);

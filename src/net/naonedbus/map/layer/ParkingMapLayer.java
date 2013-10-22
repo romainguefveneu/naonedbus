@@ -3,12 +3,12 @@ package net.naonedbus.map.layer;
 import java.io.IOException;
 import java.util.List;
 
-import net.naonedbus.activity.impl.ParkingDetailActivity;
+import net.naonedbus.activity.impl.ParkDetailActivity;
 import net.naonedbus.bean.Equipment;
-import net.naonedbus.bean.parking.Parking;
-import net.naonedbus.bean.parking.pub.ParkingPublic;
+import net.naonedbus.bean.parking.CarPark;
+import net.naonedbus.bean.parking.PublicPark;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.ParkingPublicManager;
+import net.naonedbus.manager.impl.PublicParkManager;
 import net.naonedbus.manager.impl.ParkingRelaiManager;
 import net.naonedbus.map.ItemSelectedInfo;
 import net.naonedbus.utils.FormatUtils;
@@ -30,7 +30,7 @@ import com.twotoasters.clusterkraf.ClusterPoint;
 
 public class ParkingMapLayer extends MapLayer {
 
-	private SparseArray<Parking> mParkings = new SparseArray<Parking>();
+	private SparseArray<CarPark> mParkings = new SparseArray<CarPark>();
 
 	public ParkingMapLayer(final LayoutInflater inflater) {
 		super(inflater);
@@ -58,12 +58,12 @@ public class ParkingMapLayer extends MapLayer {
 			@Override
 			public String getDescription(final Context context) {
 				loadParkings(context);
-				final Parking parking = mParkings.get(item.getId());
+				final CarPark parking = mParkings.get(item.getId());
 				final String description;
-				if (parking instanceof ParkingPublic) {
-					final ParkingPublic parkingPublic = (ParkingPublic) parking;
-					description = FormatUtils.formatParkingPublic(context, parkingPublic.getStatut(),
-							parkingPublic.getPlacesDisponibles());
+				if (parking instanceof PublicPark) {
+					final PublicPark parkingPublic = (PublicPark) parking;
+					description = FormatUtils.formatParkingPublic(context, parkingPublic.getStatus(),
+							parkingPublic.getAvailableSpaces());
 				} else {
 					description = item.getAddress();
 				}
@@ -84,10 +84,10 @@ public class ParkingMapLayer extends MapLayer {
 			@Override
 			public Intent getIntent(final Context context) {
 				loadParkings(context);
-				final Parking parking = mParkings.get(item.getId());
-				if (parking instanceof ParkingPublic) {
-					final ParamIntent intent = new ParamIntent(context, ParkingDetailActivity.class);
-					intent.putExtra(ParkingDetailActivity.PARAM_PARKING, parking);
+				final CarPark parking = mParkings.get(item.getId());
+				if (parking instanceof PublicPark) {
+					final ParamIntent intent = new ParamIntent(context, ParkDetailActivity.class);
+					intent.putExtra(ParkDetailActivity.PARAM_PARKING, parking);
 					return intent;
 				} else {
 					return null;
@@ -99,15 +99,15 @@ public class ParkingMapLayer extends MapLayer {
 
 	private void loadParkings(Context context) {
 		if (mParkings.size() == 0) {
-			final ParkingPublicManager publicManager = ParkingPublicManager.getInstance();
+			final PublicParkManager publicManager = PublicParkManager.getInstance();
 			final ParkingRelaiManager relaiManager = ParkingRelaiManager.getInstance();
 
 			try {
-				for (Parking parking : publicManager.getAll(context)) {
+				for (CarPark parking : publicManager.getAll(context)) {
 					mParkings.put(parking.getId(), parking);
 				}
 
-				for (Parking parking : relaiManager.getAll(context.getContentResolver())) {
+				for (CarPark parking : relaiManager.getAll(context.getContentResolver())) {
 					mParkings.put(parking.getId(), parking);
 				}
 			} catch (final IOException e) {

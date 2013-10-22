@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS stopBookmarkGroupLinks (
 CREATE INDEX IF NOT EXISTS stopBookmarkGroupLinks_stopBookmarkId ON stopBookmarkGroupLinks (stopBookmarkId);
 CREATE INDEX IF NOT EXISTS stopBookmarkGroupLinks_groupId ON stopBookmarkGroupLinks (groupId);
 
-CREATE TABLE IF NOT EXISTS comments (
+CREATE TABLE IF NOT EXISTS liveNews (
     _id INTEGER PRIMARY KEY,
     routeCode TEXT,
     directionCode TEXT,
@@ -106,9 +106,9 @@ CREATE TABLE IF NOT EXISTS comments (
     source TEXT NOT NULL,
     timestamp LONG NOT NULL
 );
-CREATE INDEX IF NOT EXISTS comments_route ON comments(routeCode);
-CREATE INDEX IF NOT EXISTS comments_route_direction ON comments(routeCode, directionCode);
-CREATE INDEX IF NOT EXISTS comments_route_direction_stop ON comments(routeCode, directionCode, stopCode);
+CREATE INDEX IF NOT EXISTS liveNews_route ON liveNews(routeCode);
+CREATE INDEX IF NOT EXISTS liveNews_route_direction ON liveNews(routeCode, directionCode);
+CREATE INDEX IF NOT EXISTS liveNews_route_direction_stop ON liveNews(routeCode, directionCode, stopCode);
 
 CREATE TABLE IF NOT EXISTS biclooBookmarks (
     _id INTEGER PRIMARY KEY,

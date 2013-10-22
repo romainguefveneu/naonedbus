@@ -19,7 +19,7 @@
 package net.naonedbus.utils;
 
 import net.naonedbus.R;
-import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
+import net.naonedbus.bean.parking.PublicParkStatus;
 import android.content.Context;
 import android.location.Address;
 import android.text.Spannable;
@@ -37,26 +37,26 @@ public abstract class FormatUtils {
 	private FormatUtils() {
 	}
 
-	public static String formatSens(final String sens) {
-		return SENS_ARROW + " " + sens;
+	public static String formatSens(final String direction) {
+		return SENS_ARROW + " " + direction;
 	}
 
-	public static String formatSens(final CharSequence before, final CharSequence sens) {
-		return before + " " + SENS_ARROW + " " + sens;
+	public static String formatSens(final CharSequence before, final CharSequence direction) {
+		return before + " " + SENS_ARROW + " " + direction;
 	}
 
-	public static String formatLigneArretSens(final Context context, final String ligne, final String arret,
-			final String sens) {
-		return context.getString(R.string.dialog_title_menu_lignes, ligne) + " " + DOT + " " + arret + " " + SENS_ARROW
-				+ " " + sens;
+	public static String formatLigneArretSens(final Context context, final String route, final String stop,
+			final String direction) {
+		return context.getString(R.string.dialog_title_menu_lignes, route) + " " + DOT + " " + stop + " " + SENS_ARROW
+				+ " " + direction;
 	}
 
-	public static String formatTitle(final String ligne, final String sens) {
-		return ligne + " " + SENS_ARROW + " " + sens;
+	public static String formatTitle(final String route, final String direction) {
+		return route + " " + SENS_ARROW + " " + direction;
 	}
 
-	public static String formatTitle(final String ligne, final String arret, final String sens) {
-		return ligne + " " + DOT + " " + arret + " " + SENS_ARROW + " " + sens;
+	public static String formatTitle(final String route, final String stop, final String direction) {
+		return route + " " + DOT + " " + stop + " " + SENS_ARROW + " " + direction;
 	}
 
 	public static String formatWithDot(final String a, final String b) {
@@ -167,10 +167,10 @@ public abstract class FormatUtils {
 		return description;
 	}
 
-	public static String formatParkingPublic(final Context context, final ParkingPublicStatut status,
+	public static String formatParkingPublic(final Context context, final PublicParkStatus status,
 			final int placesDisponibles) {
 		String detail;
-		if (status == ParkingPublicStatut.OUVERT) {
+		if (status == PublicParkStatus.OPEN) {
 			if (placesDisponibles > 0) {
 				detail = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
 						placesDisponibles, placesDisponibles);
