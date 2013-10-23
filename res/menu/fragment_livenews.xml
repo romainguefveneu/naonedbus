@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_action_new_event"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/comment"/>
+        android:title="@string/comment_on_traffic"/>
     <item
         android:id="@id/menu_refresh"
         android:icon="@drawable/ic_action_refresh"

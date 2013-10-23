@@ -23,13 +23,13 @@
 
     <!-- Types de lignes -->
     <string-array name="types_lignes">
-        <item>@string/route_type_relay</item>
-        <item>@string/route_type_tram</item>
-        <item>@string/route_type_chronobus</item>
-        <item>@string/route_type_bus</item>
-        <item>@string/route_type_express</item>
-        <item>@string/route_type_night</item>
-        <item>@string/route_type_special</item>
+        <item>@string/tram_bus_relay</item>
+        <item>@string/tram</item>
+        <item>@string/chronobus</item>
+        <item>@string/bus</item>
+        <item>@string/express_lines</item>
+        <item>@string/night_lines</item>
+        <item>@string/special_lines</item>
     </string-array>
 
     <!-- Types d'équipements -->

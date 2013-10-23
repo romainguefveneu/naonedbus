@@ -25,22 +25,21 @@
     <string name="format_hour_min_sec">%1$sh%2$s</string>
 
     <!-- Settings -->
-    <string name="pref_section_browsing">Browsing</string>
-    <string name="pref_section_plans">Plans of the lines</string>
-    <string name="pref_section_schedules">Schedules</string>
-    <string name="pref_browsing_home">Default menu at start-up</string>
-    <string name="pref_plans_cache_enable">Enable cache</string>
-    <string name="pref_plans_cache_clear">Clear Cache</string>
-    <string name="pref_plans_cache_size">Cache size: %s</string>
+    <string name="browsing">Browsing</string>
+    <string name="plans_of_routes">Plans of the lines</string>
+    <string name="home_section">Default menu at start-up</string>
+    <string name="enable_cache">Enable cache</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="cache_size">Cache size: %s</string>
 
     <!-- Route types -->
-    <string name="route_type_relay">Tram Bus Relay</string>
-    <string name="route_type_tram">Tram</string>
-    <string name="route_type_chronobus">Chronobus</string>
-    <string name="route_type_bus">Bus</string>
-    <string name="route_type_express">Express lines</string>
-    <string name="route_type_night">Night lines</string>
-    <string name="route_type_special">Special lines</string>
+    <string name="tram_bus_relay">Tram Bus Relay</string>
+    <string name="tram">Tram</string>
+    <string name="chronobus">Chronobus</string>
+    <string name="bus">Bus</string>
+    <string name="express_lines">Express lines</string>
+    <string name="night_lines">Night lines</string>
+    <string name="special_lines">Special lines</string>
 
     <!-- Tutorial -->
     <string name="tuto_about_title">Welcome</string>
@@ -65,7 +64,7 @@
     <string name="itinerary">Itinerary</string>
     <string name="share">Share</string>
     <string name="refresh">Refresh</string>
-    <string name="comment">Comment on traffic</string>
+    <string name="comment_on_traffic">Comment on traffic</string>
     <string name="action_import">Import</string>
     <string name="export">Export</string>
     <string name="sort">Sort</string>
@@ -76,14 +75,14 @@
     <string name="sort_distance">Sort by distance</string>
     <string name="sort_order">Sort by position</string>
     <string name="sort_parks_spaces">Sort by availability</string>
-    <string name="filter_stops_none">All stops</string>
-    <string name="filter_stops_bookmarks">Bookmarked stops</string>
-    <string name="filter_routes_none">All lines</string>
-    <string name="filter_routes_bookmarks">Lines with bookmarks</string>
+    <string name="all_stops">All stops</string>
+    <string name="bookmaked_stops">Bookmarked stops</string>
+    <string name="all_routes">All lines</string>
+    <string name="routes_with_bookmarks">Lines with bookmarks</string>
     <string name="filter">Filter</string>
     <string name="send">Send</string>
     <string name="note_this_app">Note this application</string>
-    <string name="line_map">Line map</string>
+    <string name="route_map">Line map</string>
     <string name="change_date">Change date</string>
     <string name="other_direction">Other way</string>
     <string name="see_on_map">See on the map</string>
@@ -236,21 +235,20 @@
     <string name="whats_happening_on_tan_network">What\'s happening on the TAN network ?</string>
     <string name="direction">Way</string>
     <string name="stop">Stop</string>
-
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-
-    <string name="target_toutes_lignes_symbole">\u221E</string>
-    <string name="target_toutes_lignes">All lines</string>
-    <string name="target_tous_sens">All ways</string>
-    <string name="target_tous_arrets">All stops</string>
-    <string name="livenews_content_too_short_title">Message too short</string>
-    <string name="livenews_content_too_short_msg">Please enter more than 2 words, because this is not a search field.</string>
-    <string name="livenews_sending_error_title">Your message could not be delivered</string>
-    <string name="livenews_sending_error_msg">An error occurred during the sending of the message, please try again later&#8230;</string>
+    <string name="infinity_symbole">\u221E</string>
+    <string name="all_directions">All ways</string>
+    <string name="message_too_short">Message too short</string>
+    <string name="please_enter_more_than_2_words">Please enter more than 2 words, because this is not a search field.</string>
+    <string name="message_not_delivered">Your message could not be delivered</string>
+    <string name="livenews_sending_fail">An error occurred during the sending of the message, please try again later&#8230;</string>
     <string name="livenews_error_key_msg">Make sure you have the latest version.</string>
+
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!--  -->
+
+
     <!-- Car Parks -->
     <string name="parking_section_disponible">Many spaces</string>
     <string name="parking_section_limite">Not many places left</string>

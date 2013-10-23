@@ -3,9 +3,9 @@
 
     <item
         android:id="@id/menu_show_plan"
-        android:title="@string/line_map"/>
+        android:title="@string/route_map"/>
     <item
         android:id="@id/menu_comment"
-        android:title="@string/comment"/>
+        android:title="@string/comment_on_traffic"/>
 
 </menu>

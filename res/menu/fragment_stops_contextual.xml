@@ -8,6 +8,6 @@
         android:title="@string/add_bookmark"/>
     <item
         android:id="@id/menu_comment"
-        android:title="@string/comment"/>
+        android:title="@string/comment_on_traffic"/>
 
 </menu>

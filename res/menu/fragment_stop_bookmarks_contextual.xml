@@ -20,7 +20,7 @@
         android:id="@id/menu_show_plan"
         android:icon="@drawable/ic_action_plan"
         android:showAsAction="ifRoom"
-        android:title="@string/line_map"/>
+        android:title="@string/route_map"/>
     <item
         android:id="@id/menu_group"
         android:icon="@drawable/ic_action_labels"

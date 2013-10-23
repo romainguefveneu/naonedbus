@@ -87,7 +87,7 @@
                     android:id="@id/route"
                     style="@style/ItemSymbole.Tiny"
                     android:background="@drawable/item_symbole_back"
-                    android:text="@string/target_toutes_lignes_symbole"
+                    android:text="@string/infinity_symbole"
                     android:textColor="@android:color/black" />
             </FrameLayout>
 
@@ -102,7 +102,7 @@
                 android:enabled="false"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:text="@string/target_tous_sens" />
+                android:text="@string/all_directions" />
 
             <TextView
                 android:id="@id/stop"

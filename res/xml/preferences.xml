@@ -3,27 +3,27 @@
     android:key="first_preferencescreen"
     android:title="@string/app_name" >
 
-    <PreferenceCategory android:title="@string/pref_section_browsing" >
+    <PreferenceCategory android:title="@string/browsing" >
         <ListPreference
             android:defaultValue="0"
             android:key="navigation.home"
-            android:title="@string/pref_browsing_home" />
+            android:title="@string/home_section" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_section_plans" >
+    <PreferenceCategory android:title="@string/plans_of_routes" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="plan.cache.enabled"
-            android:title="@string/pref_plans_cache_enable" />
+            android:title="@string/enable_cache" />
 
         <Preference
             android:key="plan.cache.clear"
-            android:summary="@string/pref_plans_cache_size"
-            android:title="@string/pref_plans_cache_clear" />
+            android:summary="@string/cache_size"
+            android:title="@string/clear_cache" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_section_schedules" >
+    <PreferenceCategory android:title="@string/shcedules" >
         <Preference
             android:key="horaires.cache.clear"
-            android:title="@string/pref_plans_cache_clear" />
+            android:title="@string/clear_cache" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/setting_section_calendar" >
         <ListPreference

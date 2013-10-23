@@ -224,7 +224,7 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 
 		} else {
 
-			holder.ligneCode.setText(R.string.target_toutes_lignes_symbole);
+			holder.ligneCode.setText(R.string.infinity_symbole);
 			ColorUtils.setBackground(holder.ligneCode, null);
 			holder.ligneCode.setTextColor(Color.BLACK);
 

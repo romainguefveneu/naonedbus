@@ -125,7 +125,7 @@ public class SendNewsActivity extends SherlockActivity {
 		mStopManager = StopManager.getInstance();
 
 		mAllLignes = Route.buildAllLigneItem(this);
-		mAllSens = new Direction(-1, getString(R.string.target_tous_sens));
+		mAllSens = new Direction(-1, getString(R.string.all_directions));
 		mAllArrets = new Stop.Builder().setId(-1).setNomArret(getString(R.string.target_tous_arrets)).build();
 
 		mRoutesAdapter = getLignesAdapter();
@@ -327,7 +327,7 @@ public class SendNewsActivity extends SherlockActivity {
 		if (validateComment(commentaireItem)) {
 			sendComment(commentaireItem);
 		} else {
-			InfoDialogUtils.show(this, R.string.livenews_content_too_short_title, R.string.livenews_content_too_short_msg);
+			InfoDialogUtils.show(this, R.string.message_too_short, R.string.please_enter_more_than_2_words);
 		}
 
 	}
@@ -443,10 +443,10 @@ public class SendNewsActivity extends SherlockActivity {
 			progressDialog.dismiss();
 
 			if (!success) {
-				final int msgError = (this.exception instanceof HttpException) ? R.string.livenews_sending_error_msg
+				final int msgError = (this.exception instanceof HttpException) ? R.string.livenews_sending_fail
 						: R.string.livenews_error_key_msg;
 
-				InfoDialogUtils.show(SendNewsActivity.this, R.string.livenews_sending_error_title, msgError);
+				InfoDialogUtils.show(SendNewsActivity.this, R.string.message_not_delivered, msgError);
 
 				if (DBG)
 					Log.e(LOG_TAG, "Erreur lors de l'envoi du message.", this.exception);

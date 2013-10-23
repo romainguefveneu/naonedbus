@@ -114,8 +114,7 @@ public class Route implements SectionItem, Parcelable {
 	private Drawable mBackground;
 
 	public static Route buildAllLigneItem(final Context context) {
-		return new Route(context.getString(R.string.target_toutes_lignes),
-				context.getString(R.string.target_toutes_lignes_symbole));
+		return new Route(context.getString(R.string.all_routes), context.getString(R.string.infinity_symbole));
 	}
 
 	private Route(final String name, final String letter) {
@@ -218,8 +217,8 @@ public class Route implements SectionItem, Parcelable {
 
 	@Override
 	public String toString() {
-		return new StringBuilder("[").append(mId).append(";").append(mCode).append(";").append(mHeadsignFrom).append(";")
-				.append(mHeadsignTo).append("]").toString();
+		return new StringBuilder("[").append(mId).append(";").append(mCode).append(";").append(mHeadsignFrom)
+				.append(";").append(mHeadsignTo).append("]").toString();
 	}
 
 	@Override

@@ -138,7 +138,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 	 * @param preferences
 	 */
 	private void initClearCache(final SharedPreferences preferences) {
-		mClearCachePlan.setSummary(getString(R.string.pref_plans_cache_size, readableFileSize(getCacheSize())));
+		mClearCachePlan.setSummary(getString(R.string.cache_size, readableFileSize(getCacheSize())));
 
 		mClearCachePlan.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -146,7 +146,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 			public boolean onPreferenceClick(final Preference preference) {
 				try {
 					clearCache();
-					mClearCachePlan.setSummary(getString(R.string.pref_plans_cache_size, readableFileSize(getCacheSize())));
+					mClearCachePlan.setSummary(getString(R.string.cache_size, readableFileSize(getCacheSize())));
 				} catch (final IOException e) {
 					BugSenseHandler.sendExceptionMessage("Erreur lors de la suppression du cache des plans", null, e);
 				}

@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_action_plan"
         android:orderInCategory="200"
         android:showAsAction="always"
-        android:title="@string/line_map"/>
+        android:title="@string/route_map"/>
     <item
         android:id="@id/menu_place"
         android:icon="@drawable/ic_action_place"
@@ -23,7 +23,7 @@
         android:icon="@drawable/ic_action_new_event"
         android:orderInCategory="350"
         android:showAsAction="never"
-        android:title="@string/comment"/>
+        android:title="@string/comment_on_traffic"/>
     <item
         android:id="@id/menu_sens"
         android:icon="@drawable/ic_action_repeat"
