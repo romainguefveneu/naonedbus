@@ -6,15 +6,15 @@
         android:icon="@drawable/ic_action_sort_by_size"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_sort">
+        android:title="@string/sort">
         <menu>
             <group android:checkableBehavior="single" >
                 <item
                     android:id="@id/menu_sort_name"
-                    android:title="@string/action_sort_name"/>
+                    android:title="@string/sort_name"/>
                 <item
                     android:id="@id/menu_sort_distance"
-                    android:title="@string/action_sort_distance"/>
+                    android:title="@string/sort_distance"/>
             </group>
         </menu>
     </item>
@@ -23,11 +23,11 @@
         android:icon="@drawable/ic_action_labels"
         android:orderInCategory="200"
         android:showAsAction="always"
-        android:title="@string/action_groups">
+        android:title="@string/groups">
         <menu>
             <item
                 android:id="@id/menu_group_manage"
-                android:title="@string/action_groupes_manage"/>
+                android:title="@string/manage_group"/>
         </menu>
     </item>
     <item
@@ -38,6 +38,6 @@
     <item
         android:id="@id/menu_export"
         android:orderInCategory="400"
-        android:title="@string/action_export"/>
+        android:title="@string/export"/>
 
 </menu>

@@ -47,7 +47,7 @@ public abstract class FormatUtils {
 
 	public static String formatLigneArretSens(final Context context, final String route, final String stop,
 			final String direction) {
-		return context.getString(R.string.dialog_title_menu_lignes, route) + " " + DOT + " " + stop + " " + SENS_ARROW
+		return context.getString(R.string.format_route, route) + " " + DOT + " " + stop + " " + SENS_ARROW
 				+ " " + direction;
 	}
 
@@ -98,7 +98,7 @@ public abstract class FormatUtils {
 		} else {
 			final int heures = minutes / 60;
 			final int reste = minutes - heures * 60;
-			delay = context.getString(R.string.format_heures, heures, (reste < 10) ? "0" + reste : reste);
+			delay = context.getString(R.string.format_hour_min_sec, heures, (reste < 10) ? "0" + reste : reste);
 		}
 
 		return delay;
@@ -108,7 +108,7 @@ public abstract class FormatUtils {
 		String result = "";
 
 		if (metres < 1000) {
-			result = context.getString(R.string.format_metres, Math.round(metres));
+			result = context.getString(R.string.format_meters, Math.round(metres));
 		} else {
 			result = context.getString(R.string.format_km, metres / 1000);
 		}

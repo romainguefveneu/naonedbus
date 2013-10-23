@@ -23,7 +23,7 @@
         style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/about_licences_title" />
+        android:text="@string/licences" />
 
     <LinearLayout style="@style/CardAbout" >
 
@@ -33,7 +33,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:linksClickable="true"
-            android:text="@string/about_licences_icons" />
+            android:text="@string/icons" />
 
         <View style="@style/Divider" />
 
@@ -43,7 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:linksClickable="true"
-            android:text="@string/about_licences_libs" />
+            android:text="@string/libraries" />
     </LinearLayout>
 
 </merge>

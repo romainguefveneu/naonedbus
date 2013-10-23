@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">Naonedbus</string>
+    <string name="version_name" translatable="false">Cuba Libre</string>
+    <!--  -->
+    <string name="romain" translatable="false">Romain Guefveneu</string>
+    <string name="romain_twitter" translatable="false">\@romainguefveneu ↗</string>
+    <string name="benoit" translatable="false">Benoît Cotinat</string>
+    <string name="benoit_twitter" translatable="false">\@benoitcotinat ↗</string>
+    <string name="twitter" translatable="false">Twitter</string>
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="tan_infos" translatable="false">TANinfos</string>
+
+</resources>

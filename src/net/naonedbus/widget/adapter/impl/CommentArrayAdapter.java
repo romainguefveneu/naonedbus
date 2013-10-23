@@ -124,7 +124,7 @@ class TanTraficCommentaireAdapter implements CommentaireAdapter {
 		holder.itemDate.setText(item.getDelay());
 
 		holder.itemTitle.setVisibility(View.VISIBLE);
-		holder.itemTitle.setText(R.string.commentaire_tan_info_trafic);
+		holder.itemTitle.setText(R.string.tan_info_trafic);
 	}
 
 }
@@ -147,7 +147,7 @@ class TanActusCommentaireAdapter implements CommentaireAdapter {
 		holder.itemDate.setText(item.getDelay());
 
 		holder.itemTitle.setVisibility(View.VISIBLE);
-		holder.itemTitle.setText(R.string.commentaire_tan_actus);
+		holder.itemTitle.setText(R.string.tan_actus);
 	}
 
 }
@@ -170,7 +170,7 @@ class TanInfosCommentaireAdapter implements CommentaireAdapter {
 		holder.itemDate.setText(item.getDelay());
 
 		holder.itemTitle.setVisibility(View.VISIBLE);
-		holder.itemTitle.setText(R.string.commentaire_tan_infos);
+		holder.itemTitle.setText(R.string.tan_infos);
 	}
 
 }
@@ -192,7 +192,7 @@ class MessageServiceCommentaireAdapter implements CommentaireAdapter {
 		holder.itemDate.setText(item.getDelay());
 
 		holder.itemTitle.setVisibility(View.VISIBLE);
-		holder.itemTitle.setText(R.string.commentaire_message_service);
+		holder.itemTitle.setText(R.string.service_message);
 	}
 
 }
@@ -231,7 +231,7 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 		}
 
 		if (item.getStop() == null && item.getDirection() == null && item.getRoute() == null) {
-			title = itemView.getContext().getString(R.string.commentaire_tout);
+			title = itemView.getContext().getString(R.string.entire_network);
 		} else {
 			if (item.getStop() != null) {
 				title = item.getStop().getName() + " ";

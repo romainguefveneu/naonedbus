@@ -5,18 +5,18 @@
         android:icon="@drawable/ic_action_direction"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_navigate"/>
+        android:title="@string/itinerary"/>
     <item
         android:id="@id/menu_share"
         android:icon="@drawable/ic_action_share"
         android:orderInCategory="200"
         android:showAsAction="always"
-        android:title="@string/action_share"/>
+        android:title="@string/share"/>
     <item
         android:id="@id/menu_phone"
         android:icon="@drawable/ic_action_call"
         android:orderInCategory="300"
         android:showAsAction="always"
-        android:title="@string/action_call"/>
+        android:title="@string/phone_call"/>
 
 </menu>

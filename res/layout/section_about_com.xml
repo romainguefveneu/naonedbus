@@ -23,7 +23,7 @@
         style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/about_com_title" />
+        android:text="@string/lets_communicate" />
 
     <RelativeLayout
         style="@style/CardAbout"
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_small"
-                android:contentDescription="@string/about_com_twitter"
+                android:contentDescription="@string/twitter"
                 android:src="@drawable/twitter_account" />
 
             <ImageView
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_small"
-                android:contentDescription="@string/about_com_facebook"
+                android:contentDescription="@string/facebook"
                 android:src="@drawable/googleplus_account" />
 
             <ImageView
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/padding_small"
-                android:contentDescription="@string/about_com_facebook"
+                android:contentDescription="@string/facebook"
                 android:src="@drawable/facebook_account" />
         </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_below="@id/divider"
             android:layout_margin="@dimen/padding_small"
             android:drawableLeft="@drawable/gmail"
-            android:text="@string/about_com_mail" />
+            android:text="@string/email" />
     </RelativeLayout>
 
 </merge>

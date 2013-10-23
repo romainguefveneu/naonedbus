@@ -16,7 +16,7 @@
             style="@style/CardAboutTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/donate_via" />
+            android:text="@string/make_donation" />
 
         <LinearLayout style="@style/CardAbout" >
 
@@ -60,7 +60,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/padding_medium"
                 android:gravity="center_horizontal"
-                android:text="@string/donate_summary" />
+                android:text="@string/make_donation_message" />
         </LinearLayout>
     </LinearLayout>
 
@@ -75,7 +75,7 @@
             style="@style/CardAboutTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/donate_donators_title" />
+            android:text="@string/donors" />
 
         <ListView
             style="@style/CardAbout"

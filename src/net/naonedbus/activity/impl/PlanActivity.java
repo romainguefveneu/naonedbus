@@ -41,7 +41,7 @@ public class PlanActivity extends OneFragmentActivity {
 		final String routeCode = getIntent().getStringExtra(PARAM_CODE_LIGNE);
 		final Route route = RouteManager.getInstance().getSingle(getContentResolver(), routeCode);
 
-		setTitle(getString(R.string.title_activity_plan, route.getLetter(), route.getName()));
+		setTitle(getString(R.string.format_route_letter_name, route.getLetter(), route.getName()));
 
 		final Bundle bundle = new Bundle();
 		bundle.putString(PlanFragment.PARAM_CODE_LIGNE, routeCode);

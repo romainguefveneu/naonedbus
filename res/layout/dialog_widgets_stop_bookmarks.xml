@@ -12,7 +12,7 @@
         android:drawableTop="@drawable/sad_face"
         android:gravity="center"
         android:padding="@dimen/padding_medium"
-        android:text="@string/error_title_empty_favori"
+        android:text="@string/no_bookmark"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone" />
 

@@ -170,7 +170,7 @@ public class PlanFragment extends CustomFragment {
 	private void onError(final Exception e) {
 		final Activity activity = getActivity();
 		if (isAdded() && isVisible() && activity != null) {
-			Toast.makeText(activity, this.getString(R.string.msg_plan_not_found), Toast.LENGTH_SHORT).show();
+			Toast.makeText(activity, this.getString(R.string.plan_not_found), Toast.LENGTH_SHORT).show();
 			activity.finish();
 		}
 	}

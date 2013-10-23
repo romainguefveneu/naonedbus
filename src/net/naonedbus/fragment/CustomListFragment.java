@@ -74,8 +74,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private static final String LOG_TAG = "CustomListFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	int mMessageEmptyTitleId = R.string.error_title_empty;
-	int mMessageEmptySummaryId = R.string.error_summary_empty;
+	int mMessageEmptyTitleId = R.string.no_data;
+	int mMessageEmptySummaryId = R.string.sorry_bit_silly;
 	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
 	protected int mLayoutId;
@@ -576,18 +576,18 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 		} else {
 
-			int titleRes = R.string.error_title;
-			int messageRes = R.string.error_summary;
+			int titleRes = R.string.error_occurred;
+			int messageRes = R.string.try_again;
 			int drawableRes = R.drawable.warning;
 
 			// Erreur réseau ou interne ?
 			if (exception instanceof IOException) {
-				titleRes = R.string.error_title_network;
-				messageRes = R.string.error_summary_network;
+				titleRes = R.string.network_fail;
+				messageRes = R.string.check_connection;
 				drawableRes = R.drawable.orage;
 			} else if (exception instanceof JSONException) {
-				titleRes = R.string.error_title_webservice;
-				messageRes = R.string.error_summary_webservice;
+				titleRes = R.string.nao_webservice_fail;
+				messageRes = R.string.try_gain_few_moments;
 			}
 
 			if (getListAdapter() == null || getListAdapter().isEmpty()) {

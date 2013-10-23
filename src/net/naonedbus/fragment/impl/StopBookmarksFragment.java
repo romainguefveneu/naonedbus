@@ -270,7 +270,7 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 
 		setHasOptionsMenu(true);
 
-		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
+		setEmptyMessageValues(R.string.no_bookmark, R.string.slide_navigate_between_lines, R.drawable.favori);
 
 		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
 			mBackupManager = new BackupManager(getActivity());
@@ -388,10 +388,10 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 			}
 
 			if (mSelectedGroups.isEmpty()) {
-				setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
+				setEmptyMessageValues(R.string.no_group, R.string.no_groups_selected,
 						R.drawable.favori);
 			} else {
-				setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
+				setEmptyMessageValues(R.string.no_bookmark, R.string.slide_navigate_between_lines,
 						R.drawable.favori);
 			}
 
@@ -551,10 +551,10 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 		}
 
 		if (mBookmarkGroups.isEmpty()) {
-			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
+			setEmptyMessageValues(R.string.no_bookmark, R.string.slide_navigate_between_lines,
 					R.drawable.favori);
 		} else if (mSelectedGroups.isEmpty()) {
-			setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
+			setEmptyMessageValues(R.string.no_group, R.string.no_groups_selected,
 					R.drawable.favori);
 		}
 	}
@@ -773,7 +773,7 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 		StopBookmarkArrayAdapter adapter;
 		if ((adapter = (StopBookmarkArrayAdapter) getListAdapter()) != null) {
 			final StopBookmark favori = (StopBookmark) getListAdapter().getItem(position);
-			favori.setDelay(getString(R.string.msg_horaire_erreur));
+			favori.setDelay(getString(R.string.not_available));
 			adapter.notifyDataSetChanged();
 		}
 	}

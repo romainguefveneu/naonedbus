@@ -41,15 +41,15 @@ public abstract class FavorisUtil {
 		String delay = "";
 
 		if (minutes == null) {
-			delay = loading ? null : context.getString(R.string.msg_aucun_depart_24h);
+			delay = loading ? null : context.getString(R.string.in_long_time);
 		} else {
 			if (minutes >= MIN_DURATION) {
 				if (minutes == MIN_DURATION) {
-					delay = context.getString(R.string.msg_depart_proche);
+					delay = context.getString(R.string.departure_imminent);
 				} else if (minutes <= MIN_HOUR) {
-					delay = context.getString(R.string.msg_depart_min, minutes);
+					delay = context.getString(R.string.departure_min, minutes);
 				} else {
-					delay = context.getString(R.string.msg_depart_heure, minutes / MIN_HOUR);
+					delay = context.getString(R.string.departure_hour, minutes / MIN_HOUR);
 				}
 			}
 		}

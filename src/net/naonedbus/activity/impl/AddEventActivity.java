@@ -120,7 +120,7 @@ public class AddEventActivity extends SherlockActivity {
 		final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.DEFAULT);
 		mDateEvent.setText(dateFormat.format(new Date(timestamp)));
 
-		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.dialog_title_menu_lignes, route.getCode()),
+		mCommentText.setText(FormatUtils.formatTitle(getString(R.string.format_route, route.getCode()),
 				stop.getName(), direction.getName()));
 
 		fillCalendars();

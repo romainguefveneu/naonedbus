@@ -28,14 +28,14 @@ import net.naonedbus.activity.impl.DonateActivity;
 import net.naonedbus.activity.impl.OldSettingsActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.fragment.header.BicloosFragmentHeader;
+import net.naonedbus.fragment.header.CarParksFragmentHeader;
 import net.naonedbus.fragment.header.EquipmentsFragmentHeader;
 import net.naonedbus.fragment.header.FragmentHeader;
-import net.naonedbus.fragment.header.TanNewsFragmentHeader;
 import net.naonedbus.fragment.header.ItineraryFragmentHeader;
 import net.naonedbus.fragment.header.MainFragmentHeader;
 import net.naonedbus.fragment.header.MapFragmentHeader;
-import net.naonedbus.fragment.header.CarParksFragmentHeader;
 import net.naonedbus.fragment.header.SearchFragmentHeader;
+import net.naonedbus.fragment.header.TanNewsFragmentHeader;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 import android.annotation.SuppressLint;
@@ -352,20 +352,20 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 	public static List<MainMenuItem> getMainMenuItems() {
 		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
-		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home, new MainFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction,
+		items.add(new MainMenuItem(R.string.home, R.drawable.ic_action_home, new MainFragmentHeader()));
+		items.add(new MainMenuItem(R.string.itineraries, R.drawable.ic_action_direction,
 				new ItineraryFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning,
+		items.add(new MainMenuItem(R.string.traffic_information, R.drawable.ic_action_warning,
 				new TanNewsFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo,
+		items.add(new MainMenuItem(R.string.bicloos, R.drawable.ic_action_bicloo,
 				new BicloosFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking,
+		items.add(new MainMenuItem(R.string.car_parks, R.drawable.ic_action_parking,
 				new CarParksFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_equipements, R.drawable.ic_action_place,
+		items.add(new MainMenuItem(R.string.mobility, R.drawable.ic_action_place,
 				new EquipmentsFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_action_search,
+		items.add(new MainMenuItem(R.string.search, R.drawable.ic_action_search,
 				new SearchFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_action_map, new MapFragmentHeader()));
+		items.add(new MainMenuItem(R.string.map, R.drawable.ic_action_map, new MapFragmentHeader()));
 
 		return items;
 	}

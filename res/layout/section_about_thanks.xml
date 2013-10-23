@@ -23,7 +23,7 @@
         style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/about_thanks_title" />
+        android:text="@string/thanks" />
 
     <LinearLayout
         android:id="@id/aboutSectionThanks"

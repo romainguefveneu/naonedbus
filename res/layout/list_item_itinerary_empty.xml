@@ -14,7 +14,7 @@
         android:drawableTop="@drawable/sad_face"
         android:gravity="center_horizontal"
         android:singleLine="false"
-        android:text="@string/error_title_empty"
+        android:text="@string/no_data"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

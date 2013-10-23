@@ -75,7 +75,7 @@ public class UpdateFragment extends CustomFragment {
 
 			((TextView) mUpdateView.findViewById(android.R.id.title)).setText(mTitleProgressId);
 
-			final String version = mContext.getString(R.string.version_number, VersionUtils.getVersion(mContext));
+			final String version = mContext.getString(R.string.format_version, VersionUtils.getVersion(mContext));
 			((TextView) mUpdateView.findViewById(R.id.version)).setText(version);
 
 			final String versionNotes = VersionUtils.getCurrentVersionNotes(mContext);

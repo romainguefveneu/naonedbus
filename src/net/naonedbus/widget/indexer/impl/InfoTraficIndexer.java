@@ -28,7 +28,7 @@ public class InfoTraficIndexer extends ArraySectionIndexer<TanNews> {
 
 	@Override
 	protected String getSectionLabel(final Context context, final TanNews item) {
-		return context.getString(R.string.dialog_title_menu_lignes, ((Route) item.getSection()).getLetter());
+		return context.getString(R.string.format_route, ((Route) item.getSection()).getLetter());
 	}
 
 	@Override

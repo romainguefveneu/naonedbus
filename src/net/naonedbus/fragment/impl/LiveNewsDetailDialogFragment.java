@@ -91,7 +91,7 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 
 		final String source = mLiveNews.getSource();
 
-		mItemSource.setText(getString(R.string.source, getString(LiveNewsFomatter.getSourceResId(source))));
+		mItemSource.setText(getString(R.string.format_sent_from, getString(LiveNewsFomatter.getSourceResId(source))));
 
 		final Resources res = getResources();
 
@@ -99,25 +99,25 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 
 			setSymbole(R.drawable.logo_tan, res.getColor(R.color.message_tan_header),
 					res.getColor(R.color.message_tan_text));
-			setTitle(getString(R.string.commentaire_tan_info_trafic));
+			setTitle(getString(R.string.tan_info_trafic));
 
 		} else if (NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
 
 			setSymbole(R.drawable.logo_tan, res.getColor(R.color.message_tan_header),
 					res.getColor(R.color.message_tan_text));
-			setTitle(getString(R.string.commentaire_tan_actus));
+			setTitle(getString(R.string.tan_actus));
 
 		} else if (NaonedbusClient.TWITTER_TAN_INFOS.name().equals(source)) {
 
 			setSymbole(R.drawable.logo_taninfos, res.getColor(R.color.message_taninfos_header),
 					res.getColor(R.color.message_taninfos_text));
-			setTitle(getString(R.string.commentaire_tan_infos));
+			setTitle(getString(R.string.tan_infos));
 
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(source)) {
 
 			setSymbole(R.drawable.ic_launcher, res.getColor(R.color.message_service_header),
 					res.getColor(R.color.message_service_text));
-			setTitle(getString(R.string.commentaire_message_service));
+			setTitle(getString(R.string.service_message));
 
 		} else {
 
@@ -173,7 +173,7 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT,
 				getCommentaireTitle(mLiveNews) + "\n" + mLiveNews.getMessage());
 
-		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
+		startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));
 	}
 
 	protected void setRouteDirectionStop(final LiveNews liveNews) {
@@ -192,7 +192,7 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 		}
 
 		if (stop == null && direction == null && route == null) {
-			title = getString(R.string.commentaire_tout);
+			title = getString(R.string.entire_network);
 		} else {
 			if (stop != null) {
 				title = stop.getName();
@@ -219,18 +219,18 @@ public class LiveNewsDetailDialogFragment extends SherlockDialogFragment {
 		String title = "";
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(liveNews.getSource())) {
-			title = getString(R.string.commentaire_tan_info_trafic);
+			title = getString(R.string.tan_info_trafic);
 		} else if (NaonedbusClient.NAONEDBUS_SERVICE.name().equals(liveNews.getSource())) {
-			title = getString(R.string.commentaire_message_service);
+			title = getString(R.string.service_message);
 		} else {
 			final Route route = liveNews.getRoute();
 			final Direction direction = liveNews.getDirection();
 			final Stop stop = liveNews.getStop();
 
 			if (stop == null && direction == null && route == null) {
-				title = getString(R.string.commentaire_tout);
+				title = getString(R.string.entire_network);
 			} else if (route != null) {
-				title = getString(R.string.commentaire_ligne) + " " + route.getLetter();
+				title = getString(R.string.route) + " " + route.getLetter();
 				if (stop != null) {
 					title += ", " + stop.getName();
 				}

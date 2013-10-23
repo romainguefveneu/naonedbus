@@ -9,7 +9,7 @@ public class TanNewsFragmentHeader implements FragmentHeader {
 
 	private final Class<?>[] mFragments = new Class<?>[] { LiveNewsFragment.class, TanNewsFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_fragment_en_direct, R.string.title_fragment_tan_actu };
+	private final int[] mTitles = new int[] { R.string.live_news, R.string.tan_news };
 
 	@Override
 	public int[] getFragmentsTitles() {

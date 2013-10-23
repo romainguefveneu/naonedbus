@@ -73,18 +73,18 @@ public class FavoriService extends IntentService {
 	private void importFavoris(final String key) {
 		final StopBookmarkManager favoriManager = StopBookmarkManager.getInstance();
 
-		showNotification(R.string.msg_import_title, R.string.msg_import_ongoing);
+		showNotification(R.string.bookmarks_import, R.string.import_ongoing);
 
 		try {
 			favoriManager.importFavoris(getContentResolver(), key);
 		} catch (final Exception e) {
 			BugSenseHandler.sendExceptionMessage("Erreur lors de l'import des favoris", null, e);
 			Log.e(LOG_TAG, "Erreur lors de l'import des favoris", e);
-			showNotification(R.string.msg_import_title, R.string.msg_import_error);
+			showNotification(R.string.bookmarks_import, R.string.bookmarks_import_fail);
 			return;
 		}
 
-		showNotification(R.string.msg_import_title, R.string.msg_import_succeed);
+		showNotification(R.string.bookmarks_import, R.string.bookmarks_import_success);
 		cancelNotification();
 	}
 
@@ -95,7 +95,7 @@ public class FavoriService extends IntentService {
 
 		boolean succeed;
 
-		showNotification(R.string.msg_export_title, R.string.msg_export_ongoing);
+		showNotification(R.string.bookmarks_export, R.string.export_ongoing);
 		try {
 			final String content = favoriManager.toJson(getContentResolver());
 			key = favoriController.post(content);
@@ -103,12 +103,12 @@ public class FavoriService extends IntentService {
 		} catch (final Exception e) {
 			BugSenseHandler.sendExceptionMessage("Erreur lors de l'export des favoris", null, e);
 			Log.e(LOG_TAG, "Erreur lors de l'export des favoris", e);
-			showNotification(R.string.msg_export_title, R.string.msg_export_error);
+			showNotification(R.string.bookmarks_export, R.string.bookmarks_export_fail);
 			succeed = false;
 		}
 
 		if (succeed) {
-			showResultNotification(R.string.msg_export_title, R.string.msg_export_succeed, key);
+			showResultNotification(R.string.bookmarks_export, R.string.bookmarks_export_success, key);
 
 			final Intent broadcast = new Intent(ACTION_EXPORTED);
 			broadcast.putExtra(INTENT_PARAM_KEY, key);

@@ -10,7 +10,7 @@ public class BicloosFragmentHeader implements FragmentHeader {
 
 	private final Class<?>[] mFragments = new Class<?>[] { BicloosFragment.class, BiclooBookmarksFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_fragment_bicloos, R.string.title_fragment_favoris };
+	private final int[] mTitles = new int[] { R.string.stations, R.string.bookmarks };
 
 	@Override
 	public int[] getFragmentsTitles() {

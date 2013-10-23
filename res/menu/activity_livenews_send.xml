@@ -5,6 +5,6 @@
         android:icon="@drawable/ic_action_send"
         android:orderInCategory="100"
         android:showAsAction="always|withText"
-        android:title="@string/action_send"/>
+        android:title="@string/send"/>
 
 </menu>

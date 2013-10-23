@@ -5,6 +5,6 @@
         android:icon="@drawable/ic_action_good"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_rate"/>
+        android:title="@string/note_this_app"/>
 
 </menu>

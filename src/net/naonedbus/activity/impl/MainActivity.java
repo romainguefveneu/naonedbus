@@ -63,12 +63,12 @@ public class MainActivity extends MenuDrawerActivity {
 			if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
 				hideActionBar();
 				setBaseMenuVisible(false);
-				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
+				setFragment(new UpdateFragmentHeader(), R.string.home);
 				showTutorial();
 			} else if (UpdateType.UPGRADE.equals(updateType)) {
 				hideActionBar();
 				setBaseMenuVisible(false);
-				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
+				setFragment(new UpdateFragmentHeader(), R.string.home);
 			} else {
 				final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 				selectNavigationItem(Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0")));

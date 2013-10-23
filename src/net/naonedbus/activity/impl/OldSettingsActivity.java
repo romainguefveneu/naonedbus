@@ -138,7 +138,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 	 * @param preferences
 	 */
 	private void initClearCache(final SharedPreferences preferences) {
-		mClearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
+		mClearCachePlan.setSummary(getString(R.string.pref_plans_cache_size, readableFileSize(getCacheSize())));
 
 		mClearCachePlan.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -146,7 +146,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 			public boolean onPreferenceClick(final Preference preference) {
 				try {
 					clearCache();
-					mClearCachePlan.setSummary(getString(R.string.pref_cache_size, readableFileSize(getCacheSize())));
+					mClearCachePlan.setSummary(getString(R.string.pref_plans_cache_size, readableFileSize(getCacheSize())));
 				} catch (final IOException e) {
 					BugSenseHandler.sendExceptionMessage("Erreur lors de la suppression du cache des plans", null, e);
 				}
@@ -160,7 +160,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 			@Override
 			public boolean onPreferenceClick(final Preference preference) {
 				clearCacheHoraires();
-				Toast.makeText(OldSettingsActivity.this, R.string.msg_cache_horaire_clear, Toast.LENGTH_SHORT).show();
+				Toast.makeText(OldSettingsActivity.this, R.string.schedules_cleared, Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -274,7 +274,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 	 */
 	private String readableFileSize(final long size) {
 		if (size <= 0)
-			return getString(R.string.msg_vide);
+			return getString(R.string.empty);
 		final String[] units = new String[] { "o", "Ko", "Mo", "Go", "To" };
 		final int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
 		return new DecimalFormat("#,##0.#").format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];

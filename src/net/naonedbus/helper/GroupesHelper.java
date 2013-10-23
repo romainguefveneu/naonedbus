@@ -58,7 +58,7 @@ public class GroupesHelper {
 		}
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle(R.string.dialog_title_groupes);
+		builder.setTitle(R.string.groups);
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
 			@Override

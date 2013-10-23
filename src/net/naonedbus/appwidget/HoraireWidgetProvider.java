@@ -313,7 +313,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			}
 
 		} else {
-			content = context.getString(R.string.msg_aucun_depart_24h);
+			content = context.getString(R.string.in_long_time);
 		}
 
 		views.setTextViewText(R.id.itemTime, content);

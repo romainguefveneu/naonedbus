@@ -259,7 +259,7 @@ public class BicloosFragment extends CustomListFragment {
 
 		menu.setHeaderTitle(bicloo.getName());
 		menu.findItem(R.id.menu_favori).setTitle(
-				isFavori(bicloo) ? R.string.action_favori_remove : R.string.action_favori_add);
+				isFavori(bicloo) ? R.string.remove_bookmark : R.string.add_bookmark);
 
 	}
 

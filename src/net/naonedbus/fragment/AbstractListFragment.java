@@ -55,8 +55,8 @@ public abstract class AbstractListFragment extends SherlockListFragment {
 	private static final String LOG_TAG = "CustomListFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	int mMessageEmptyTitleId = R.string.error_title_empty;
-	int mMessageEmptySummaryId = R.string.error_summary_empty;
+	int mMessageEmptyTitleId = R.string.no_data;
+	int mMessageEmptySummaryId = R.string.sorry_bit_silly;
 	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
 	protected int mLayoutId;

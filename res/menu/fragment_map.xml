@@ -11,7 +11,7 @@
         android:actionViewClass="com.actionbarsherlock.widget.SearchView"
         android:icon="@drawable/ic_action_search"
         android:showAsAction="always|collapseActionView"
-        android:title="@string/action_search"/>
+        android:title="@string/search"/>
     <item
         android:id="@id/menu_layers"
         android:icon="@drawable/ic_action_labels"
@@ -24,6 +24,6 @@
         android:id="@id/menu_satellite"
         android:checkable="true"
         android:showAsAction="never"
-        android:title="@string/action_view_satellite"/>
+        android:title="@string/satellite_view"/>
 
 </menu>

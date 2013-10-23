@@ -250,9 +250,9 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 
 		final android.view.MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 		if (mStopBookmarkManager.isFavori(getActivity().getContentResolver(), stop.getId())) {
-			menuFavori.setTitle(R.string.action_favori_remove);
+			menuFavori.setTitle(R.string.remove_bookmark);
 		} else {
-			menuFavori.setTitle(R.string.action_favori_add);
+			menuFavori.setTitle(R.string.add_bookmark);
 		}
 	}
 
@@ -318,12 +318,12 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 
 	private void addToFavoris(final Stop stop) {
 		mStopBookmarkManager.addFavori(getActivity().getContentResolver(), stop);
-		Toast.makeText(getActivity(), R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), R.string.bookmark_added, Toast.LENGTH_SHORT).show();
 	}
 
 	private void removeFromFavoris(final Stop stop) {
 		mStopBookmarkManager.removeFavori(getActivity().getContentResolver(), stop.getId());
-		Toast.makeText(getActivity(), R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), R.string.bookmark_removed, Toast.LENGTH_SHORT).show();
 	}
 
 	private void menuShowMap(final Stop stop) {
@@ -357,9 +357,9 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		mCurrentFilter = filter;
 
 		if (mCurrentFilter == FILTER_ALL) {
-			setEmptyMessageValues(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.sad_face);
+			setEmptyMessageValues(R.string.no_data, R.string.sorry_bit_silly, R.drawable.sad_face);
 		} else {
-			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_arrets_favoris,
+			setEmptyMessageValues(R.string.no_bookmark, R.string.no_bookmarked_stops,
 					R.drawable.favori);
 		}
 	}
@@ -383,8 +383,8 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		loadDistances();
 
 		if (viewType == ViewType.TYPE_METRO) {
-			InfoDialogUtils.showIfNecessary(getActivity(), R.string.dialog_title_arret_order,
-					R.string.dialog_content_arret_order);
+			InfoDialogUtils.showIfNecessary(getActivity(), R.string.sort_by_location,
+					R.string.sort_by_location_message);
 		}
 	}
 

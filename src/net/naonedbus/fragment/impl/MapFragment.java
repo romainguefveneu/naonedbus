@@ -308,7 +308,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 			if (inputPoint != null) {
 				mClusterkraf.showInfoWindow(inputPoint);
 			} else {
-				Toast.makeText(getActivity(), getString(R.string.msg_element_not_localized), Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), getString(R.string.item_not_localized), Toast.LENGTH_LONG).show();
 			}
 		}
 	}

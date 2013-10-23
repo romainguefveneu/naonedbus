@@ -12,8 +12,8 @@ public class MainFragmentHeader implements FragmentHeader {
 	private final Class<?>[] mFragments = new Class<?>[] { RoutesFragment.class, StopBookmarksFragment.class,
 			NearByFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_fragment_lignes, R.string.title_fragment_favoris,
-			R.string.title_fragment_proximite };
+	private final int[] mTitles = new int[] { R.string.routes, R.string.bookmarks,
+			R.string.nearby };
 
 	@Override
 	public int[] getFragmentsTitles() {

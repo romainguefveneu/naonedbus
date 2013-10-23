@@ -284,11 +284,11 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 							new DateTime(schedule.getDate()).withSecondOfMinute(0).withMillisOfSecond(0)).getMinutes();
 
 					if (minutes > 60) {
-						delai = getString(R.string.msg_depart_heure_short, minutes / 60);
+						delai = getString(R.string.departure_hour_short, minutes / 60);
 					} else if (minutes > 0) {
-						delai = getString(R.string.msg_depart_min_short, minutes);
+						delai = getString(R.string.departure_min_short, minutes);
 					} else if (minutes == 0) {
-						delai = getString(R.string.msg_depart_proche);
+						delai = getString(R.string.departure_imminent);
 					}
 
 					mDelaiViews.get(indexView).setText(delai);
@@ -310,7 +310,7 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 
 			showContent();
 		} else {
-			showMessage(R.string.msg_nothing_horaires);
+			showMessage(R.string.no_schedules);
 		}
 	}
 

@@ -8,7 +8,7 @@ public class SearchFragmentHeader implements FragmentHeader {
 
 	private final Class<?>[] mFragments = new Class<?>[] { SearchFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_activity_recherche };
+	private final int[] mTitles = new int[] { R.string.search };
 
 	@Override
 	public int[] getFragmentsTitles() {

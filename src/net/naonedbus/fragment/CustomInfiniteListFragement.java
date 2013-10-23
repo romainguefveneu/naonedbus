@@ -112,9 +112,9 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 
 			// Erreur réseau ou interne ?
 			if (exception instanceof IOException) {
-				showMessage(R.string.error_title_network, R.string.error_summary_network, R.drawable.orage);
+				showMessage(R.string.network_fail, R.string.check_connection, R.drawable.orage);
 			} else {
-				showError(R.string.error_title, R.string.error_summary);
+				showError(R.string.error_occurred, R.string.try_again);
 			}
 		}
 

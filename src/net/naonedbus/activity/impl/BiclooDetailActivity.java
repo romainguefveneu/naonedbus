@@ -195,7 +195,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		try {
 			startActivity(i);
 		} catch (final ActivityNotFoundException e) {
-			Toast.makeText(getApplicationContext(), R.string.msg_error_navigation, Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), R.string.google_navigation_missing, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -206,17 +206,17 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getBiclooInformation(bicloo));
-		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
+		startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));
 	}
 
 	@SuppressLint("NewApi")
 	private void onStarClick() {
 		if (isFavori()) {
 			removeFromFavoris();
-			Toast.makeText(this, R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.bookmark_removed, Toast.LENGTH_SHORT).show();
 		} else {
 			addToFavoris();
-			Toast.makeText(this, R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.bookmark_added, Toast.LENGTH_SHORT).show();
 		}
 
 		invalidateOptionsMenu();

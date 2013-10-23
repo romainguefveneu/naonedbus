@@ -30,7 +30,7 @@ public class DonateFragment extends CustomFragment implements OnClickListener {
 
 		SmileyParser.init(getActivity());
 		final SmileyParser smileyParser = SmileyParser.getInstance();
-		summary.setText(smileyParser.addSmileySpans(getString(R.string.donate_summary)));
+		summary.setText(smileyParser.addSmileySpans(getString(R.string.make_donation_message)));
 	}
 
 	@Override

@@ -79,7 +79,7 @@ public class FavorisHelper {
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setView(alertDialogView);
-		builder.setTitle(R.string.action_rename);
+		builder.setTitle(R.string.rename);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
@@ -120,7 +120,7 @@ public class FavorisHelper {
 		input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-		builder.setTitle(R.string.dialog_title_favoris_import);
+		builder.setTitle(R.string.you_key);
 		builder.setNegativeButton(android.R.string.cancel, null);
 		builder.setPositiveButton(R.string.action_import, new DialogInterface.OnClickListener() {
 			@Override
@@ -142,7 +142,7 @@ public class FavorisHelper {
 	}
 
 	private void showErrorKeyNoValid() {
-		InfoDialogUtils.show(mContext, R.string.msg_error_export_import, R.string.msg_error_content_favoris_key);
+		InfoDialogUtils.show(mContext, R.string.import_fail, R.string.bookmark_key_fail);
 	}
 
 	private void onImport(final String key) {
@@ -158,13 +158,13 @@ public class FavorisHelper {
 		final View alertDialogView = factory.inflate(R.layout.dialog_readonly, null);
 		final EditText input = (EditText) alertDialogView.findViewById(R.id.text);
 		final TextView label = (TextView) alertDialogView.findViewById(R.id.comment);
-		label.setText(R.string.dialog_content_export);
+		label.setText(R.string.keep_this_key);
 		input.setText(key);
 		input.setFocusable(false);
 
 		final AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
 		adb.setView(alertDialogView);
-		adb.setTitle(R.string.dialog_title_export);
+		adb.setTitle(R.string.bookmark_exported);
 		adb.setPositiveButton(android.R.string.ok, null);
 		adb.setCancelable(false);
 		adb.setNeutralButton(R.string.copy, new OnClickListener() {

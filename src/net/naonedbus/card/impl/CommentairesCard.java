@@ -162,7 +162,7 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 
 		if (NaonedbusClient.NAONEDBUS.name().equals(liveNews.getSource())) {
 			if (liveNews.getStop() == null && liveNews.getDirection() == null && liveNews.getRoute() == null) {
-				title = view.getContext().getString(R.string.commentaire_tout);
+				title = view.getContext().getString(R.string.entire_network);
 			} else {
 				if (liveNews.getStop() != null) {
 					title = liveNews.getStop().getName() + " ";
@@ -210,7 +210,7 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 	@Override
 	public void onLoadFinished(final Loader<List<LiveNews>> loader, final List<LiveNews> commentaires) {
 		if (commentaires == null || commentaires.isEmpty()) {
-			showMessage(R.string.msg_nothing_commentaires, R.drawable.ic_checkmark_holo_light);
+			showMessage(R.string.no_livenews, R.drawable.ic_checkmark_holo_light);
 		} else {
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 

@@ -4,16 +4,16 @@
         android:id="@id/menu_favori"
         android:icon="@drawable/ic_action_important"
         android:showAsAction="always"
-        android:title="@string/action_favori"/>
+        android:title="@string/bookmark"/>
     <item
         android:id="@id/menu_navigation"
         android:icon="@drawable/ic_action_direction"
         android:showAsAction="always"
-        android:title="@string/action_navigate"/>
+        android:title="@string/itinerary"/>
     <item
         android:id="@id/menu_share"
         android:icon="@drawable/ic_action_share"
         android:showAsAction="always"
-        android:title="@string/action_share"/>
+        android:title="@string/share"/>
 
 </menu>

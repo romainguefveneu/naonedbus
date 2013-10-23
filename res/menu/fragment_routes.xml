@@ -7,6 +7,6 @@
         android:icon="@drawable/ic_action_search"
         android:orderInCategory="100"
         android:showAsAction="always|collapseActionView"
-        android:title="@string/action_search"/>
+        android:title="@string/search"/>
 
 </menu>

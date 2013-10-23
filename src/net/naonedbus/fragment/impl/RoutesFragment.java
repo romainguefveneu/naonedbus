@@ -114,7 +114,7 @@ public class RoutesFragment extends CustomCursorFragment implements OnQueryTextL
 		final android.view.MenuInflater inflater = getActivity().getMenuInflater();
 		inflater.inflate(R.menu.fragment_routes_contextual, menu);
 
-		menu.setHeaderTitle(getString(R.string.dialog_title_menu_lignes, lettreLigne));
+		menu.setHeaderTitle(getString(R.string.format_route, lettreLigne));
 	}
 
 	@Override

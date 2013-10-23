@@ -62,8 +62,8 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 	private static final String STATE_POSITION = "position";
 	private static final String STATE_TOP = "top";
 
-	int mMessageEmptyTitleId = R.string.error_title_empty;
-	int mMessageEmptySummaryId = R.string.error_summary_empty;
+	int mMessageEmptyTitleId = R.string.no_data;
+	int mMessageEmptySummaryId = R.string.sorry_bit_silly;
 	int mMessageEmptyDrawableId = R.drawable.sad_face;
 
 	protected int mLayoutId;

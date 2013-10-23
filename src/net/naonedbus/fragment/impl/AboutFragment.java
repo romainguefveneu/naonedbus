@@ -85,7 +85,7 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 	protected void bindView(final View view, final Bundle savedInstanceState) {
 		final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
 
-		mVersion = getString(R.string.version_number, VersionUtils.getVersion(getActivity()));
+		mVersion = getString(R.string.format_version, VersionUtils.getVersion(getActivity()));
 		mSha1 = getString(R.string.version_sha1);
 
 		((TextView) view.findViewById(R.id.codename)).setTypeface(robotoLight);

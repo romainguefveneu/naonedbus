@@ -138,7 +138,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:text="@string/msg_element_not_localized"
+                android:text="@string/item_not_localized"
                 android:visibility="gone" />
 
             <!-- Footer -->

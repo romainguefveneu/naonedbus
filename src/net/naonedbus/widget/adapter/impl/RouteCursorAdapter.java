@@ -36,7 +36,7 @@ import android.widget.TextView;
 
 public class RouteCursorAdapter extends CursorSectionAdapter {
 
-	private static final String LOG_TAG = "LigneCursorAdapter";
+	private static final String LOG_TAG = "RouteCursorAdapter";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private final RouteManager mRouteManager;
@@ -46,8 +46,8 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 	private int mColLettre;
 	private int mColBackColor;
 	private int mColFrontColor;
-	private int mColSens1;
-	private int mColSens2;
+	private int mColHeadsignFrom;
+	private int mColHeadsignTo;
 
 	public RouteCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, R.layout.list_item_ligne);
@@ -89,8 +89,8 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 		mColLettre = c.getColumnIndex(RouteTable.LETTER);
 		mColBackColor = c.getColumnIndex(RouteTable.BACK_COLOR);
 		mColFrontColor = c.getColumnIndex(RouteTable.FRONT_COLOR);
-		mColSens1 = c.getColumnIndex(RouteTable.HEADSIGN_FROM);
-		mColSens2 = c.getColumnIndex(RouteTable.HEADSIGN_TO);
+		mColHeadsignFrom = c.getColumnIndex(RouteTable.HEADSIGN_FROM);
+		mColHeadsignTo = c.getColumnIndex(RouteTable.HEADSIGN_TO);
 	}
 
 	@Override
@@ -98,28 +98,28 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 		super.bindView(view, context, cursor);
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
-		final String lettre = cursor.getString(mColLettre);
-		final String depuis = cursor.getString(mColSens1);
-		final String vers = cursor.getString(mColSens2);
-		final int color = cursor.getInt(mColBackColor);
-		final int colorFront = cursor.getInt(mColFrontColor);
+		final String letter = cursor.getString(mColLettre);
+		final String headsignFrom = cursor.getString(mColHeadsignFrom);
+		final String headsignTo = cursor.getString(mColHeadsignTo);
+		final int backColor = cursor.getInt(mColBackColor);
+		final int frontColor = cursor.getInt(mColFrontColor);
 
-		holder.icon.setText(lettre);
+		holder.icon.setText(letter);
 
-		if (color == 0) {
+		if (backColor == 0) {
 			holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			holder.icon.setTextColor(Color.WHITE);
 		} else {
-			holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(color));
-			holder.icon.setTextColor(colorFront);
+			holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(backColor));
+			holder.icon.setTextColor(frontColor);
 		}
-		if ((depuis == null || depuis.length() == 0 || depuis.equals(vers))) {
-			holder.sens1.setText(vers);
-			holder.sens2.setVisibility(View.GONE);
+		if ((headsignFrom == null || headsignFrom.length() == 0 || headsignFrom.equals(headsignTo))) {
+			holder.headsignFrom.setText(headsignTo);
+			holder.headsignTo.setVisibility(View.GONE);
 		} else {
-			holder.sens1.setText(depuis);
-			holder.sens2.setText(vers);
-			holder.sens2.setVisibility(View.VISIBLE);
+			holder.headsignFrom.setText(headsignFrom);
+			holder.headsignTo.setText(headsignTo);
+			holder.headsignTo.setVisibility(View.VISIBLE);
 		}
 
 		if (mHideDivider) {
@@ -148,8 +148,8 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 	protected void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
-		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
-		holder.sens2 = (TextView) view.findViewById(R.id.ligneTo);
+		holder.headsignFrom = (TextView) view.findViewById(R.id.ligneFrom);
+		holder.headsignTo = (TextView) view.findViewById(R.id.ligneTo);
 		holder.icon.setTypeface(mRoboto);
 
 		view.setTag(holder);
@@ -157,8 +157,8 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 
 	private static class ViewHolder {
 		TextView icon;
-		TextView sens1;
-		TextView sens2;
+		TextView headsignFrom;
+		TextView headsignTo;
 	}
 
 }

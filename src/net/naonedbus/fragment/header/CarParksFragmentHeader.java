@@ -9,8 +9,7 @@ public class CarParksFragmentHeader implements FragmentHeader {
 
 	private final Class<?>[] mFragments = new Class<?>[] { ParkingsPublicsFragment.class, ParkingsRelaisFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_fragment_parkings_publics,
-			R.string.title_fragment_parkings_relais };
+	private final int[] mTitles = new int[] { R.string.publics, R.string.park_and_ride };
 
 	@Override
 	public int[] getFragmentsTitles() {

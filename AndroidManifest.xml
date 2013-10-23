@@ -71,7 +71,7 @@
         </activity>
         <activity
             android:name=".activity.impl.AboutActivity"
-            android:label="@string/title_activity_about" />
+            android:label="@string/about" />
         <activity android:name=".activity.impl.StopsActivity" />
         <activity android:name=".activity.impl.SchedulesActivity" />
         <activity
@@ -83,16 +83,16 @@
             android:label="@string/emptyString" />
         <activity
             android:name=".activity.impl.SettingsActivity"
-            android:label="@string/title_activity_parametres" />
+            android:label="@string/settings" />
         <activity
             android:name=".activity.impl.OldSettingsActivity"
-            android:label="@string/title_activity_parametres" />
+            android:label="@string/settings" />
         <activity
             android:name=".activity.impl.DonateActivity"
-            android:label="@string/title_activity_donate" />
+            android:label="@string/donate" />
         <activity
             android:name=".activity.impl.MapActivity"
-            android:label="@string/title_activity_carte"
+            android:label="@string/map"
             android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -118,7 +118,7 @@
             android:label="@string/emptyString" />
         <activity
             android:name=".activity.impl.BookmarkGroupsActivity"
-            android:label="@string/title_activity_groupes" />
+            android:label="@string/group_management" />
         <activity
             android:name=".activity.impl.StopDetailActivity"
             android:label="@string/emptyString" />

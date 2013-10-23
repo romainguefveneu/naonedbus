@@ -128,7 +128,7 @@ public class ItineraryDetailFragment extends CustomListFragment {
 		final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, mShareContent);
-		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
+		startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));
 	}
 
 	@Override

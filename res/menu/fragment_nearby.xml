@@ -4,7 +4,7 @@
         android:icon="@drawable/ic_action_labels"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_filter">
+        android:title="@string/filter">
         <menu>
         </menu>
     </item>

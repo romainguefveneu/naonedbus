@@ -121,7 +121,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 			viewHolder.itemTitle.setText(strings[position]);
 		} else if (wrapper.isError()) {
 			viewHolder.itemTitle.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.warning, 0, 0);
-			viewHolder.itemTitle.setText(R.string.error_title_webservice);
+			viewHolder.itemTitle.setText(R.string.nao_webservice_fail);
 		}
 	}
 

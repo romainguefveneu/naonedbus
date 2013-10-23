@@ -4,6 +4,6 @@
         android:id="@id/menu_add"
         android:icon="@drawable/ic_action_new"
         android:showAsAction="always"
-        android:title="@string/action_groupes_add"/>
+        android:title="@string/add_group"/>
 
 </menu>

@@ -27,13 +27,13 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.bean.Stop;
+import net.naonedbus.bean.Direction;
 import net.naonedbus.bean.LiveNews;
 import net.naonedbus.bean.Route;
-import net.naonedbus.bean.Direction;
-import net.naonedbus.manager.impl.StopManager;
-import net.naonedbus.manager.impl.RouteManager;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.manager.impl.DirectionManager;
+import net.naonedbus.manager.impl.RouteManager;
+import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.rest.controller.impl.LiveNewsController;
 import net.naonedbus.security.KeyType;
 import net.naonedbus.security.RSAUtils;
@@ -42,9 +42,9 @@ import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.validator.CommentaireContentTypeValidator;
 import net.naonedbus.validator.CommentaireSizeValidator;
 import net.naonedbus.validator.CommentaireValidator;
-import net.naonedbus.widget.adapter.impl.StopArrayAdapter;
-import net.naonedbus.widget.adapter.impl.RouteArrayAdapter;
 import net.naonedbus.widget.adapter.impl.DirectionArrayAdapter;
+import net.naonedbus.widget.adapter.impl.RouteArrayAdapter;
+import net.naonedbus.widget.adapter.impl.StopArrayAdapter;
 
 import org.apache.http.HttpException;
 
@@ -237,7 +237,7 @@ public class SendNewsActivity extends SherlockActivity {
 	 * Afficher la dialog de sélection de la route.
 	 */
 	private void showSelectLigneDialog() {
-		showSelectDialog(R.string.target_ligne, mRoutesAdapter, mSelectedLignePosition,
+		showSelectDialog(R.string.route, mRoutesAdapter, mSelectedLignePosition,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
@@ -256,7 +256,7 @@ public class SendNewsActivity extends SherlockActivity {
 			mDirectionAdapter = getSensAdapter(routeCode);
 			mSelectedSensPosition = -1;
 		}
-		showSelectDialog(R.string.target_sens, mDirectionAdapter, mSelectedSensPosition,
+		showSelectDialog(R.string.direction, mDirectionAdapter, mSelectedSensPosition,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
@@ -276,7 +276,7 @@ public class SendNewsActivity extends SherlockActivity {
 			mArretsAdapter = getArretsAdapter(routeCode, directionCode);
 			mSelectedArretPosition = -1;
 		}
-		showSelectDialog(R.string.target_arret, mArretsAdapter, mSelectedArretPosition,
+		showSelectDialog(R.string.stop, mArretsAdapter, mSelectedArretPosition,
 				new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
@@ -327,7 +327,7 @@ public class SendNewsActivity extends SherlockActivity {
 		if (validateComment(commentaireItem)) {
 			sendComment(commentaireItem);
 		} else {
-			InfoDialogUtils.show(this, R.string.dialog_title_invalid_comment, R.string.msg_warning_send_comment);
+			InfoDialogUtils.show(this, R.string.livenews_content_too_short_title, R.string.livenews_content_too_short_msg);
 		}
 
 	}
@@ -414,7 +414,7 @@ public class SendNewsActivity extends SherlockActivity {
 		@Override
 		protected void onPreExecute() {
 			progressDialog = ProgressDialog.show(SendNewsActivity.this, "",
-					getString(R.string.commentaire_action_transmission), true);
+					getString(R.string.transmission_in_progress), true);
 			super.onPreExecute();
 		}
 
@@ -443,10 +443,10 @@ public class SendNewsActivity extends SherlockActivity {
 			progressDialog.dismiss();
 
 			if (!success) {
-				final int msgError = (this.exception instanceof HttpException) ? R.string.dialog_content_comment_sending_error
-						: R.string.dialog_content_key_error;
+				final int msgError = (this.exception instanceof HttpException) ? R.string.livenews_sending_error_msg
+						: R.string.livenews_error_key_msg;
 
-				InfoDialogUtils.show(SendNewsActivity.this, R.string.dialog_title_comment_sending_error, msgError);
+				InfoDialogUtils.show(SendNewsActivity.this, R.string.livenews_sending_error_title, msgError);
 
 				if (DBG)
 					Log.e(LOG_TAG, "Erreur lors de l'envoi du message.", this.exception);

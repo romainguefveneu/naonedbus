@@ -24,7 +24,7 @@
         style="@style/CardAboutTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/about_autors_title" />
+        android:text="@string/authors" />
 
     <LinearLayout style="@style/CardAbout" >
 
@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/avatarRomain"
-                android:text="@string/about_autors_content_romain" />
+                android:text="@string/romain" />
 
             <TextView
                 style="@style/ItemSecondaryText.SingleLine"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleRomain"
                 android:layout_toRightOf="@id/avatarRomain"
-                android:text="@string/about_autors_content_romain_twitter" />
+                android:text="@string/romain_twitter" />
         </RelativeLayout>
 
         <View
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/avatarBenoit"
-                android:text="@string/about_autors_content_benoit" />
+                android:text="@string/benoit" />
 
             <TextView
                 style="@style/ItemSecondaryText.SingleLine"
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/titleBenoit"
                 android:layout_toRightOf="@id/avatarBenoit"
-                android:text="@string/about_autors_content_benoit_twitter" />
+                android:text="@string/benoit_twitter" />
         </RelativeLayout>
     </LinearLayout>
 

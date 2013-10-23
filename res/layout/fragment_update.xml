@@ -59,7 +59,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/padding_large"
             android:gravity="center_horizontal"
-            android:text="@string/version_number"
+            android:text="@string/format_version"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView

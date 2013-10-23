@@ -71,7 +71,7 @@ public class BookmarkGroupsFragment extends CustomCursorFragment implements Acti
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_empty_groupe, R.drawable.groupe);
+		setEmptyMessageValues(R.string.no_group, R.string.add_groups_with_icon, R.drawable.groupe);
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public class BookmarkGroupsFragment extends CustomCursorFragment implements Acti
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setView(alertDialogView);
-		builder.setTitle(R.string.action_groupes_add);
+		builder.setTitle(R.string.add_group);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
@@ -217,7 +217,7 @@ public class BookmarkGroupsFragment extends CustomCursorFragment implements Acti
 
 		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setView(alertDialogView);
-		builder.setTitle(R.string.action_rename);
+		builder.setTitle(R.string.rename);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {

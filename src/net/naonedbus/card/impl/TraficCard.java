@@ -86,7 +86,7 @@ public class TraficCard extends Card<List<TanNews>> {
 	public void onLoadFinished(final Loader<List<TanNews>> loader, final List<TanNews> infoTrafics) {
 
 		if (infoTrafics == null || infoTrafics.isEmpty()) {
-			showMessage(R.string.msg_nothing_info_trafic, R.drawable.ic_checkmark_holo_light);
+			showMessage(R.string.no_tannews, R.drawable.ic_checkmark_holo_light);
 		} else {
 			final LayoutInflater inflater = LayoutInflater.from(getContext());
 

@@ -192,7 +192,7 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			final String title = mStop.getName();
 			final String description = FormatUtils.formatTitle(
-					getString(R.string.dialog_title_menu_lignes, mRoute.getCode()), mStop.getName(),
+					getString(R.string.format_route, mRoute.getCode()), mStop.getName(),
 					mDirection.getName());
 
 			final Intent calIntent = new Intent(Intent.ACTION_INSERT);
@@ -302,10 +302,10 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 	private void onStarClick() {
 		if (isFavori()) {
 			removeFromFavoris();
-			Toast.makeText(getActivity(), R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), R.string.bookmark_removed, Toast.LENGTH_SHORT).show();
 		} else {
 			addToFavoris();
-			Toast.makeText(getActivity(), R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), R.string.bookmark_added, Toast.LENGTH_SHORT).show();
 		}
 
 		getSherlockActivity().invalidateOptionsMenu();
@@ -387,7 +387,7 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 				return;
 			}
 		}
-		Toast.makeText(getActivity(), getString(R.string.toast_autre_sens), Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), getString(R.string.no_stop_other_way), Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -423,7 +423,7 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 				// actuel (route de nuit par exemple) ne pas réafficher le jour.
 				if (((mLastDayLoaded == null || mLastDateTimeLoaded == null) || !mLastDayLoaded
 						.equals(mLastDateTimeLoaded.toDateMidnight()))) {
-					mSchedules.add(new EmptySchedule(R.string.msg_nothing_horaires, mLastDayLoaded.toDate()));
+					mSchedules.add(new EmptySchedule(R.string.no_schedules, mLastDayLoaded.toDate()));
 				}
 			} else {
 				mSchedules.addAll(data);
@@ -454,9 +454,9 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 		} else {
 			final Exception exception = result.getException();
 			if (exception instanceof IOException) {
-				showError(R.string.error_title_network, R.string.error_summary_network);
+				showError(R.string.network_fail, R.string.check_connection);
 			} else {
-				showError(R.string.error_title_webservice_tan, R.string.error_summary_webservice);
+				showError(R.string.tan_webservice_fail, R.string.try_gain_few_moments);
 			}
 			Log.w(LOG_TAG, "Erreur", exception);
 		}
@@ -503,9 +503,9 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 			delay = Minutes.minutesBetween(now, itemDateTime).getMinutes();
 
 			if (delay > 0 && delay < 60) {
-				schedule.setDelai(getString(R.string.msg_depart_min, delay));
+				schedule.setDelai(getString(R.string.departure_min, delay));
 			} else if (delay == 0) {
-				schedule.setDelai(getString(R.string.msg_depart_proche));
+				schedule.setDelai(getString(R.string.departure_imminent));
 			} else {
 				schedule.setDelai(null);
 			}

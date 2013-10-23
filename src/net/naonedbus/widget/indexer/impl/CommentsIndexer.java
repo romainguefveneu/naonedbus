@@ -33,19 +33,19 @@ public class CommentsIndexer extends ArraySectionIndexer<LiveNews> {
 
 	private static final SparseIntArray SECTIONS_LABELS = new SparseIntArray();
 	static {
-		SECTIONS_LABELS.put(SECTION_FUTURE, R.string.time_line_after);
-		SECTIONS_LABELS.put(SECTION_NOW, R.string.time_line_now);
-		SECTIONS_LABELS.put(SECTION_YESTERDAY, R.string.time_line_yesterday);
-		SECTIONS_LABELS.put(SECTION_PAST, R.string.time_line_before);
+		SECTIONS_LABELS.put(SECTION_FUTURE, R.string.coming_up);
+		SECTIONS_LABELS.put(SECTION_NOW, R.string.today);
+		SECTIONS_LABELS.put(SECTION_YESTERDAY, R.string.yesterday);
+		SECTIONS_LABELS.put(SECTION_PAST, R.string.previously);
 	}
 
 	@Override
-	protected String getSectionLabel(Context context, LiveNews item) {
+	protected String getSectionLabel(final Context context, final LiveNews item) {
 		return context.getString(SECTIONS_LABELS.get((Integer) item.getSection()));
 	}
 
 	@Override
-	protected void prepareSection(LiveNews item) {
+	protected void prepareSection(final LiveNews item) {
 	}
 
 }

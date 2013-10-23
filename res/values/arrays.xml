@@ -32,13 +32,13 @@
 
     <!-- Types de lignes -->
     <string-array name="types_lignes">
-        <item>@string/type_relai_tram</item>
-        <item>@string/type_tramway</item>
-        <item>@string/type_chronobus</item>
-        <item>@string/type_bus</item>
-        <item>@string/type_express</item>
-        <item>@string/type_nuit</item>
-        <item>@string/type_special</item>
+        <item>@string/route_type_relay</item>
+        <item>@string/route_type_tram</item>
+        <item>@string/route_type_chronobus</item>
+        <item>@string/route_type_bus</item>
+        <item>@string/route_type_express</item>
+        <item>@string/route_type_night</item>
+        <item>@string/route_type_special</item>
     </string-array>
 
     <!-- Types d'équipements -->

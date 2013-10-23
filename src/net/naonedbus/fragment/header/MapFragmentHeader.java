@@ -8,7 +8,7 @@ public class MapFragmentHeader implements FragmentHeader {
 
 	private final Class<?>[] mFragments = new Class<?>[] { MapFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_activity_recherche };
+	private final int[] mTitles = new int[] { R.string.search };
 
 	@Override
 	public int[] getFragmentsTitles() {

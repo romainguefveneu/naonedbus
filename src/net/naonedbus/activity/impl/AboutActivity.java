@@ -15,8 +15,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class AboutActivity extends FragmentsActivity {
 
-	private static int[] titles = new int[] { R.string.title_fragment_about, R.string.title_fragment_translation,
-			R.string.title_fragment_versions };
+	private static int[] titles = new int[] { R.string.about, R.string.translation,
+			R.string.whats_new };
 
 	private static Class<?>[] classes = new Class<?>[] { AboutFragment.class, TranslationFragment.class,
 			VersionsFragment.class };

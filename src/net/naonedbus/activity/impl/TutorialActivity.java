@@ -65,13 +65,13 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_about_title,
 				R.string.tuto_about_summary, R.drawable.logo_large));
 
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_favoris_title, R.string.tuto_favoris_summary,
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_bookmarks_title, R.string.tuto_bookmarks_summary,
 				R.drawable.tuto_favoris));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_commentaires_title,
-				R.string.tuto_commentaires_summary, R.drawable.tuto_infostrafic));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_parkings_title, R.string.tuto_parkings_summary,
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_livenews_title,
+				R.string.tuto_livenews_summary, R.drawable.tuto_infostrafic));
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_parks_title, R.string.tuto_parks_summary,
 				R.drawable.tuto_parkings));
-		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_mobilite_title, R.string.tuto_mobilite_summary,
+		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_mobility_title, R.string.tuto_mobility_summary,
 				R.drawable.tuto_bicloos));
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_widgets_title, R.string.tuto_widgets_summary,
 				R.drawable.tuto_widgets));

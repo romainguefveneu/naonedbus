@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/padding_large"
         android:layout_marginTop="200dp"
-        android:text="@string/showcase_arrets_title" />
+        android:text="@string/easily_change_direction" />
 
     <TextView
         android:id="@id/showCaseDescription"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/showCaseTitle"
         android:layout_below="@id/showCaseTitle"
-        android:text="@string/showcase_arrets_content" />
+        android:text="@string/click_direction_to_change" />
 
     <Button
         android:id="@id/showCaseButton"

@@ -287,8 +287,8 @@ public class NearByFragment extends CustomListFragment implements MyLocationList
 		if (DBG)
 			Log.d(LOG_TAG, "onLocationDisabled");
 
-		showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
-		setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
+		showMessage(R.string.localization_disabled, R.string.please_enable_localization, R.drawable.location);
+		setMessageButton(R.string.localization_services, new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -325,7 +325,7 @@ public class NearByFragment extends CustomListFragment implements MyLocationList
 	@Override
 	public void onAddressTaskPreExecute() {
 		headerTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-		headerTextView.setText(R.string.msg_loading_address);
+		headerTextView.setText(R.string.loading_address);
 	}
 
 	@Override
@@ -334,7 +334,7 @@ public class NearByFragment extends CustomListFragment implements MyLocationList
 			headerTextView.setText(FormatUtils.formatAddress(address, null));
 			headerTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_location_small, 0, 0, 0);
 		} else {
-			headerTextView.setText(R.string.error_current_address);
+			headerTextView.setText(R.string.current_address_unknown);
 		}
 	}
 }

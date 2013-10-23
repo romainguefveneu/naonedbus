@@ -46,7 +46,7 @@ public abstract class InfoDialogUtils {
 	 * @param messageId
 	 */
 	public static void show(final Context context, final int messageId) {
-		show(context, R.string.dialog_title_information, messageId);
+		show(context, R.string.information, messageId);
 	}
 
 	/**

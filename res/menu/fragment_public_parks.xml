@@ -4,7 +4,7 @@
         android:id="@id/menu_sort"
         android:icon="@drawable/ic_action_sort_by_size"
         android:showAsAction="always"
-        android:title="@string/action_sort">
+        android:title="@string/sort">
         <menu>
             <group android:checkableBehavior="single" >
                 <item
@@ -12,17 +12,17 @@
                     android:checked="true"
                     android:orderInCategory="100"
                     android:showAsAction="withText"
-                    android:title="@string/action_sort_name"/>
+                    android:title="@string/sort_name"/>
                 <item
                     android:id="@id/menu_sort_parking_places"
                     android:orderInCategory="200"
                     android:showAsAction="withText"
-                    android:title="@string/action_sort_parking_places"/>
+                    android:title="@string/sort_parks_spaces"/>
                 <item
                     android:id="@id/menu_sort_distance"
                     android:orderInCategory="300"
                     android:showAsAction="withText"
-                    android:title="@string/action_sort_distance"/>
+                    android:title="@string/sort_distance"/>
             </group>
         </menu>
     </item>
@@ -30,6 +30,6 @@
         android:id="@id/menu_refresh"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="always"
-        android:title="@string/action_refresh"/>
+        android:title="@string/refresh"/>
 
 </menu>

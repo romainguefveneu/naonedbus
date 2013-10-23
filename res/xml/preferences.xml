@@ -3,29 +3,29 @@
     android:key="first_preferencescreen"
     android:title="@string/app_name" >
 
-    <PreferenceCategory android:title="@string/pref_section_navigation" >
+    <PreferenceCategory android:title="@string/pref_section_browsing" >
         <ListPreference
             android:defaultValue="0"
             android:key="navigation.home"
-            android:title="@string/pref_navigation_home" />
+            android:title="@string/pref_browsing_home" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_section_plans" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="plan.cache.enabled"
-            android:title="@string/pref_cache_enable" />
+            android:title="@string/pref_plans_cache_enable" />
 
         <Preference
             android:key="plan.cache.clear"
-            android:summary="@string/pref_cache_size"
-            android:title="@string/pref_cache_clear" />
+            android:summary="@string/pref_plans_cache_size"
+            android:title="@string/pref_plans_cache_clear" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_section_timetable" >
+    <PreferenceCategory android:title="@string/pref_section_schedules" >
         <Preference
             android:key="horaires.cache.clear"
-            android:title="@string/pref_cache_clear" />
+            android:title="@string/pref_plans_cache_clear" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_section_calendar" >
+    <PreferenceCategory android:title="@string/setting_section_calendar" >
         <ListPreference
             android:key="calendrier.defaut"
             android:summary="@string/pref_calendar_summary"

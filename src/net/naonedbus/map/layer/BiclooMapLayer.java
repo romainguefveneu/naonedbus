@@ -64,7 +64,7 @@ public class BiclooMapLayer extends MapLayer {
 					final int availableStands = bicloo.getAvailableBikeStands();
 					description = FormatUtils.formatBicloos(context, availableBikes, availableStands);
 				} else {
-					description = context.getString(R.string.msg_vide);
+					description = context.getString(R.string.empty);
 				}
 				return description;
 			}

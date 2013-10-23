@@ -199,7 +199,7 @@ public class ParkDetailActivity extends SherlockMapActivity {
 		try {
 			startActivity(i);
 		} catch (final ActivityNotFoundException e) {
-			Toast.makeText(getApplicationContext(), R.string.msg_error_navigation, Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), R.string.google_navigation_missing, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -210,7 +210,7 @@ public class ParkDetailActivity extends SherlockMapActivity {
 		final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
 		shareIntent.setType("text/plain");
 		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getParkingInformation(parking));
-		startActivity(Intent.createChooser(shareIntent, getString(R.string.action_share)));
+		startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));
 	}
 
 	/**

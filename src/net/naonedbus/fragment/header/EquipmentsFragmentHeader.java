@@ -11,8 +11,8 @@ public class EquipmentsFragmentHeader implements FragmentHeader {
 	private final Class<?>[] mFragments = new Class<?>[] { MargueritesFragment.class, CarPoolFragment.class,
 			LilasFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_fragment_marguerites, R.string.title_fragment_covoiturage,
-			R.string.title_fragment_lila };
+	private final int[] mTitles = new int[] { R.string.marguerites, R.string.carpooling,
+			R.string.lila };
 
 	@Override
 	public int[] getFragmentsTitles() {

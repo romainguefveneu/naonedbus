@@ -265,10 +265,10 @@ public class StopDetailFragment extends SherlockFragment {
 	private void onStarClick() {
 		if (isFavori()) {
 			removeFromFavoris();
-			Toast.makeText(getActivity(), R.string.toast_favori_retire, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), R.string.bookmark_removed, Toast.LENGTH_SHORT).show();
 		} else {
 			addToFavoris();
-			Toast.makeText(getActivity(), R.string.toast_favori_ajout, Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), R.string.bookmark_added, Toast.LENGTH_SHORT).show();
 		}
 
 		getSherlockActivity().invalidateOptionsMenu();
@@ -334,7 +334,7 @@ public class StopDetailFragment extends SherlockFragment {
 				return;
 			}
 		}
-		Toast.makeText(getActivity(), getString(R.string.toast_autre_sens), Toast.LENGTH_SHORT).show();
+		Toast.makeText(getActivity(), getString(R.string.no_stop_other_way), Toast.LENGTH_SHORT).show();
 	}
 
 	/**

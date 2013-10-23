@@ -55,10 +55,10 @@ public class LiveNewsFomatter {
 	private static final Map<String, Integer> sTitle = new HashMap<String, Integer>();
 	static {
 		sTitle.put(NaonedbusClient.NAONEDBUS.name(), R.string.source_naonedbus);
-		sTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.commentaire_tan_info_trafic);
-		sTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.commentaire_tan_actus);
-		sTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.commentaire_tan_infos);
-		sTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.commentaire_message_service);
+		sTitle.put(NaonedbusClient.TWITTER_TAN_TRAFIC.name(), R.string.tan_info_trafic);
+		sTitle.put(NaonedbusClient.TWITTER_TAN_ACTUS.name(), R.string.tan_actus);
+		sTitle.put(NaonedbusClient.TWITTER_TAN_INFOS.name(), R.string.tan_infos);
+		sTitle.put(NaonedbusClient.NAONEDBUS_SERVICE.name(), R.string.service_message);
 	}
 
 	private final Context mContext;

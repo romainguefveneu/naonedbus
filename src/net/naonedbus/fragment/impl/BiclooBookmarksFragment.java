@@ -46,7 +46,7 @@ public class BiclooBookmarksFragment extends BicloosFragment implements OnItemLo
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori_bicloo,
+		setEmptyMessageValues(R.string.no_bookmark, R.string.slide_navigate_bicloo,
 				R.drawable.favori);
 	};
 

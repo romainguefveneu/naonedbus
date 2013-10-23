@@ -8,7 +8,7 @@ public class ItineraryFragmentHeader implements FragmentHeader {
 
 	private final Class<?>[] mFragments = new Class<?>[] { ItineraryFragment.class };
 
-	private final int[] mTitles = new int[] { R.string.title_activity_itineraire };
+	private final int[] mTitles = new int[] { R.string.itineraries };
 
 	@Override
 	public int[] getFragmentsTitles() {
