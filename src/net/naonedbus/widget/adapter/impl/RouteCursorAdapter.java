@@ -148,8 +148,8 @@ public class RouteCursorAdapter extends CursorSectionAdapter {
 	protected void bindViewHolder(final View view) {
 		final ViewHolder holder = new ViewHolder();
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
-		holder.headsignFrom = (TextView) view.findViewById(R.id.ligneFrom);
-		holder.headsignTo = (TextView) view.findViewById(R.id.ligneTo);
+		holder.headsignFrom = (TextView) view.findViewById(R.id.headsignFrom);
+		holder.headsignTo = (TextView) view.findViewById(R.id.headsignTo);
 		holder.icon.setTypeface(mRoboto);
 
 		view.setTag(holder);

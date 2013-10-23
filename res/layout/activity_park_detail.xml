@@ -47,9 +47,9 @@
             <!-- Left -->
 
             <TextView
-                android:id="@id/placesTotales"
+                android:id="@id/totalSpaces"
                 style="@style/ItemPrimaryText.Large"
-                android:layout_alignBaseline="@id/placesDisponibles"
+                android:layout_alignBaseline="@id/availableSpaces"
                 android:layout_alignParentLeft="true" />
 
             <TextView
@@ -57,11 +57,11 @@
                 style="@style/SectionTitle.Small"
                 android:layout_alignBaseline="@+id/placesDisponiblesLabel"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/placesTotales"
+                android:layout_below="@id/totalSpaces"
                 android:text="@string/parking_titre_places_totales" />
 
             <TextView
-                android:id="@id/itemTelephone"
+                android:id="@id/itemPhone"
                 style="@style/ItemPrimaryText.Large"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/placesDisponiblesLabel" />
@@ -70,13 +70,13 @@
                 android:id="@+id/itemTelephoneLabel"
                 style="@style/SectionTitle.Small"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@id/itemTelephone"
+                android:layout_below="@id/itemPhone"
                 android:text="@string/parking_titre_telephone" />
 
             <!-- Right -->
 
             <TextView
-                android:id="@id/placesDisponibles"
+                android:id="@id/availableSpaces"
                 style="@style/CardTextHuge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:id="@id/placesDisponiblesLabel"
                 style="@style/SectionTitle.Small"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/placesDisponibles"
+                android:layout_below="@id/availableSpaces"
                 android:layout_marginBottom="@dimen/padding_small"
                 android:text="@string/parking_titre_places_disponibles" />
         </RelativeLayout>

@@ -22,6 +22,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Route;
+import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
@@ -58,7 +59,7 @@ public class RouteArrayAdapter extends ArraySectionAdapter<Route> {
 		holder.icon.setTextColor(route.getFrontColor());
 
 		if (route.getId() == -1) {
-			holder.icon.setBackgroundDrawable(null);
+			ColorUtils.setBackground(holder.icon, null);
 			holder.sens1.setTypeface(null, Typeface.BOLD);
 		} else {
 			holder.sens1.setTypeface(null, Typeface.NORMAL);
@@ -90,8 +91,8 @@ public class RouteArrayAdapter extends ArraySectionAdapter<Route> {
 		final ViewHolder holder;
 		holder = new ViewHolder();
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
-		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
-		holder.sens2 = (TextView) view.findViewById(R.id.ligneTo);
+		holder.sens1 = (TextView) view.findViewById(R.id.headsignFrom);
+		holder.sens2 = (TextView) view.findViewById(R.id.headsignTo);
 		holder.icon.setTypeface(robotoMedium);
 
 		view.setTag(holder);

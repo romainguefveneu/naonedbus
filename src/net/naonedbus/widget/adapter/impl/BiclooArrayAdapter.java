@@ -62,7 +62,7 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 			final int availableStands = bicloo.getAvailableBikeStands();
 			final String description = FormatUtils.formatBicloos(getContext(), availableBikes, availableStands);
 			holder.itemDescription.setText(description);
-			
+
 			// Définir la distance.
 			if (bicloo.getDistance() == null) {
 				holder.itemDistance.setText("");
@@ -82,7 +82,7 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 		holder.itemDistance = (TextView) view.findViewById(R.id.itemDistance);
 
 		holder.itemSymbole.setImageResource(mSymboleResId);
-		holder.itemSymbole.setBackgroundDrawable(mSymboleBackground);
+		ColorUtils.setBackground(holder.itemSymbole, mSymboleBackground);
 		view.setTag(holder);
 	}
 

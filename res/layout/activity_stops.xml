@@ -39,8 +39,7 @@
             <TextView
                 android:id="@id/itemCode"
                 style="@style/ItemSymbole.Header"
-                android:layout_centerVertical="true"
-                android:text="00" />
+                android:layout_centerVertical="true" />
 
             <Spinner
                 android:id="@id/itemTitle"

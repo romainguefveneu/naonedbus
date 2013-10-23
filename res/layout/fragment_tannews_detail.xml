@@ -19,6 +19,7 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultActivity"
+    android:baselineAligned="false"
     android:minWidth="400dp"
     android:padding="@dimen/padding_medium" >
 
@@ -35,18 +36,16 @@
             android:gravity="center_vertical"
             android:maxLines="2"
             android:singleLine="false"
-            android:text="title"
             android:textSize="@dimen/bigtitle_text_size_small" />
 
         <TextView
             android:id="@id/itemTime"
             style="@style/BigSubTitle.Time"
-            android:singleLine="false"
-            android:text="Subtitle" />
+            android:singleLine="false" />
     </LinearLayout>
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/padding_medium"
         android:layout_weight="1" >

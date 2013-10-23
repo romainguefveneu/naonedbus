@@ -20,6 +20,7 @@ package net.naonedbus.widget.adapter.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.provider.table.DirectionTable;
+import net.naonedbus.utils.ColorUtils;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -63,7 +64,7 @@ public class DirectionCursorAdapter extends CursorAdapter {
 		holder.icon.setImageDrawable(this.icon);
 		holder.title.setText(description);
 		if (iconBackgroundDrawable != null) {
-			holder.icon.setBackgroundDrawable(iconBackgroundDrawable);
+			ColorUtils.setBackground(holder.icon, iconBackgroundDrawable);
 		}
 	}
 

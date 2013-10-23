@@ -28,10 +28,10 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.StopDetailActivity;
 import net.naonedbus.activity.impl.BookmarkGroupsActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.impl.StopDetailActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.BookmarkGroup;
 import net.naonedbus.bean.NextHoraireTask;
@@ -63,7 +63,6 @@ import org.joda.time.DateMidnight;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.backup.BackupManager;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -131,7 +130,6 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 	protected MyLocationProvider mLocationProvider;
 	private ActionMode mActionMode;
 	private ListView mListView;
-	private BackupManager mBackupManager;
 	private StateHelper mStateHelper;
 	private final BookmarkGroupManager mBookmarkGroupManager;
 	private final StopBookmarkManager mStopBookmarkManager;
@@ -271,9 +269,6 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 		setHasOptionsMenu(true);
 
 		setEmptyMessageValues(R.string.no_bookmark, R.string.slide_navigate_between_lines, R.drawable.favori);
-
-		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
-			mBackupManager = new BackupManager(getActivity());
 
 		mStopBookmarkManager.addActionListener(mOnFavoriActionListener);
 		mLocationProvider.addListener(this);

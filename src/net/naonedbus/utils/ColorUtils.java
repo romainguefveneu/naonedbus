@@ -18,12 +18,16 @@
  */
 package net.naonedbus.utils;
 
+import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
+import android.view.View;
 
 public abstract class ColorUtils {
 
-	public static synchronized GradientDrawable getGradiant(final int color) {
+	public static GradientDrawable getGradiant(final int color) {
 		int[] colors;
 		int darkerColor;
 		// Get darker color
@@ -42,7 +46,7 @@ public abstract class ColorUtils {
 		return d;
 	}
 
-	public static synchronized int getDarkerColor(final int color) {
+	public static int getDarkerColor(final int color) {
 		// Get darker color
 		final float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
@@ -50,7 +54,7 @@ public abstract class ColorUtils {
 		return Color.HSVToColor(hsv);
 	}
 
-	public static synchronized int getStackedBackgroundColor(final int color) {
+	public static int getStackedBackgroundColor(final int color) {
 		// Get darker color
 		final float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
@@ -58,7 +62,7 @@ public abstract class ColorUtils {
 		return Color.HSVToColor(hsv);
 	}
 
-	public static synchronized int getLighterColor(final int color) {
+	public static int getLighterColor(final int color) {
 		// Get lighter color
 		final float[] hsv = new float[3];
 
@@ -68,7 +72,7 @@ public abstract class ColorUtils {
 		return Color.HSVToColor(hsv);
 	}
 
-	public static synchronized GradientDrawable getRoundedGradiant(final int color) {
+	public static GradientDrawable getRoundedGradiant(final int color) {
 		if (color == Color.TRANSPARENT) {
 			return null;
 		}
@@ -78,7 +82,7 @@ public abstract class ColorUtils {
 		return d;
 	}
 
-	public static synchronized GradientDrawable getHorizontalGradiant(final int color, final int backgroundColor) {
+	public static GradientDrawable getHorizontalGradiant(final int color, final int backgroundColor) {
 		final int[] colors = new int[2];
 		colors[0] = backgroundColor;
 		colors[1] = color;
@@ -89,4 +93,17 @@ public abstract class ColorUtils {
 		return d;
 	}
 
+	public static void setBackgroundGradiant(View view, int color) {
+		setBackground(view, getRoundedGradiant(color));
+	}
+
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	@SuppressWarnings("deprecation")
+	public static void setBackground(View view, Drawable drawable) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+			view.setBackgroundDrawable(drawable);
+		} else {
+			view.setBackground(drawable);
+		}
+	}
 }

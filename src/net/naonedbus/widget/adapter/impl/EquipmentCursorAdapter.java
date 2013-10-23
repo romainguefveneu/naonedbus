@@ -77,7 +77,7 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.itemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
-		holder.itemRoutes = (ViewGroup) view.findViewById(R.id.itemLignes);
+		holder.itemRoutes = (ViewGroup) view.findViewById(R.id.itemRoutes);
 		view.setTag(holder);
 	}
 
@@ -104,8 +104,8 @@ public class EquipmentCursorAdapter extends CursorSectionAdapter {
 		} else {
 			holder.itemSymbole.setImageResource(type.getDrawableRes());
 		}
-		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources().getColor(
-				type.getBackgroundColorRes())));
+		ColorUtils.setBackgroundGradiant(holder.itemSymbole,
+				context.getResources().getColor(type.getBackgroundColorRes()));
 
 		// Détail ou adresse
 		if (TextUtils.isEmpty(details) && TextUtils.isEmpty(adresse)) {

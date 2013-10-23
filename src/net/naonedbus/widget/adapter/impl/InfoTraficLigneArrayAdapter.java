@@ -22,8 +22,8 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.EmptyInfoTrafic;
-import net.naonedbus.bean.TanNews;
 import net.naonedbus.bean.Route;
+import net.naonedbus.bean.TanNews;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
@@ -60,7 +60,7 @@ public class InfoTraficLigneArrayAdapter extends ArraySectionAdapter<TanNews> {
 
 			holder.itemTitle.setText(item.getTitle());
 			holder.itemDate.setText(item.getDateFormated());
-			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getGradiant(route.getBackColor()));
+			ColorUtils.setBackgroundGradiant(holder.itemSymbole, route.getBackColor());
 
 			if (isCurrent(item)) {
 				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.info_trafic_on, 0, 0, 0);

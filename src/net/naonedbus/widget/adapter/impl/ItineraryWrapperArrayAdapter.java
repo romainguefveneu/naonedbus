@@ -25,13 +25,11 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 
 	private final LayoutInflater mLayoutInflater;
 	private final Typeface mRobotoCondensed;
-	private final Typeface mRobotoMedium;
 
 	public ItineraryWrapperArrayAdapter(final Context context, final List<ItineraryWrapper> objects) {
 		super(context, 0, objects);
 		mLayoutInflater = LayoutInflater.from(context);
 		mRobotoCondensed = FontUtils.getRobotoBoldCondensed(context);
-		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	@Override
@@ -102,7 +100,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		for (final Route l : lignes) {
 			final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.route_code_item_medium,
 					viewHolder.gridLayout, false);
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getBackColor()));
+			ColorUtils.setBackgroundGradiant(textView, l.getBackColor());
 			textView.setText(l.getLetter());
 			textView.setTypeface(mRobotoCondensed);
 			textView.setTextColor(l.getFrontColor());

@@ -60,7 +60,7 @@ public class PublicParkArrayAdapter extends ArraySectionAdapter<PublicPark> {
 		}
 
 		holder.nom.setText(item.getName());
-		holder.icone.setBackgroundDrawable(item.getBackgroundDrawable());
+		ColorUtils.setBackground(holder.icone, item.getBackgroundDrawable());
 		holder.details.setText(item.getDetail());
 		if (item.getDistance() != null) {
 			holder.distance.setText(DistanceUtils.formatDist(item.getDistance()));

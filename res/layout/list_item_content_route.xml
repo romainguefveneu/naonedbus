@@ -28,17 +28,17 @@
         android:layout_marginRight="10dp" />
 
     <TextView
-        android:id="@id/ligneTo"
+        android:id="@id/headsignTo"
         style="@style/ItemPrimaryText.SingleLine"
         android:layout_height="26dip"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@id/itemSymbole" />
 
     <TextView
-        android:id="@id/ligneFrom"
+        android:id="@id/headsignFrom"
         style="@style/ItemPrimaryText.SingleLine"
         android:layout_height="26dip"
-        android:layout_above="@id/ligneTo"
+        android:layout_above="@id/headsignTo"
         android:layout_alignParentTop="true"
         android:layout_alignWithParentIfMissing="true"
         android:layout_toRightOf="@id/itemSymbole" />

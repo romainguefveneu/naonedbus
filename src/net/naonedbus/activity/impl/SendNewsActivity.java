@@ -131,9 +131,9 @@ public class SendNewsActivity extends SherlockActivity {
 		mRoutesAdapter = getLignesAdapter();
 
 		mCommentText = (EditText) findViewById(android.R.id.input);
-		mTextLigne = (TextView) findViewById(R.id.commentaireLigne);
-		mTextSens = (TextView) findViewById(R.id.commentaireSens);
-		mTextArret = (TextView) findViewById(R.id.commentaireArret);
+		mTextLigne = (TextView) findViewById(R.id.route);
+		mTextSens = (TextView) findViewById(R.id.direction);
+		mTextArret = (TextView) findViewById(R.id.stop);
 
 		mBtnChangeLigne = findViewById(R.id.commentaireLigneSpinner);
 		mBtnChangeLigne.setOnClickListener(new OnClickListener() {
@@ -142,14 +142,14 @@ public class SendNewsActivity extends SherlockActivity {
 				showSelectLigneDialog();
 			}
 		});
-		mBtnChangeSens = findViewById(R.id.commentaireSens);
+		mBtnChangeSens = findViewById(R.id.direction);
 		mBtnChangeSens.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				showSelectSensDialog(mRoute.getCode());
 			}
 		});
-		mBtnChangeArret = findViewById(R.id.commentaireArret);
+		mBtnChangeArret = findViewById(R.id.stop);
 		mBtnChangeArret.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {

@@ -19,9 +19,10 @@
 package net.naonedbus.widget.adapter.impl;
 
 import net.naonedbus.R;
-import net.naonedbus.provider.table.StopTable;
 import net.naonedbus.provider.table.EquipmentTable;
 import net.naonedbus.provider.table.StopBookmarkTable;
+import net.naonedbus.provider.table.StopTable;
+import net.naonedbus.utils.ColorUtils;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -58,7 +59,7 @@ public class StopCursorAdapter extends CursorAdapter {
 		holder.iconFavori.setVisibility((isFavori(id)) ? View.VISIBLE : View.GONE);
 		holder.title.setText(description);
 		if (mIconBackgroundDrawable != null) {
-			holder.icon.setBackgroundDrawable(mIconBackgroundDrawable);
+			ColorUtils.setBackground(holder.icon, mIconBackgroundDrawable);
 		}
 	}
 

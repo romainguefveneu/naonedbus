@@ -89,13 +89,13 @@ public class ParkDetailActivity extends SherlockMapActivity {
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		mItemTelephone = (TextView) findViewById(R.id.itemTelephone);
+		mItemTelephone = (TextView) findViewById(R.id.itemPhone);
 
 		mParkingTitle = (TextView) findViewById(R.id.itemTitle);
 		mParkingDescription = (TextView) findViewById(R.id.itemDescription);
 		mParkingAdresse = (TextView) findViewById(R.id.itemAddress);
-		mPlacesDisponibles = (TextView) findViewById(R.id.placesDisponibles);
-		mPlacesTotales = (TextView) findViewById(R.id.placesTotales);
+		mPlacesDisponibles = (TextView) findViewById(R.id.availableSpaces);
+		mPlacesTotales = (TextView) findViewById(R.id.totalSpaces);
 		mItemDate = (TextView) findViewById(R.id.itemDate);
 		mMessage = (TextView) findViewById(R.id.message);
 

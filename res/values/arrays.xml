@@ -21,15 +21,6 @@
 -->
 <resources>
 
-    <string-array name="themeOptions">
-        <item>Light</item>
-        <item>Dark</item>
-    </string-array>
-    <string-array name="themeValues">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-
     <!-- Types de lignes -->
     <string-array name="types_lignes">
         <item>@string/route_type_relay</item>
@@ -67,7 +58,7 @@
          to the array DEFAULT_SMILEY_RES_IDS in MessageListItem.java and to default_smiley_names
          below.
     -->
-    <string-array name="default_smiley_texts">
+    <string-array name="default_smiley_texts" translatable="false">
         <item>:-)</item> <!-- 0: Happy -->
         <item>:-(</item> <!-- 1: Sad -->
         <item>;-)</item> <!-- 2: Winking -->
@@ -92,7 +83,7 @@
          to the array DEFAULT_SMILEY_RES_IDS in MessageListItem.java and to default_smiley_texts
          above.
     -->
-    <string-array name="default_smiley_names">
+    <string-array name="default_smiley_names" translatable="false">
         <item>Happy</item> <!-- 0: :-) -->
         <item>Sad</item> <!-- 1: :-( -->
         <item>Winking</item> <!-- 2: ;-) -->
@@ -119,19 +110,19 @@
     </string-array>
 
     <!-- Remerciements -->
-    <string-array name="thanks">
+    <string-array name="thanks" translatable="false">
         <item>Netapsys</item>
         <item>Benoît Manteau</item>
         <item>Paul Alisir</item>
     </string-array>
-    <string-array name="thanks_urls">
+    <string-array name="thanks_urls" translatable="false">
         <item>http://www.netapsys.fr</item>
         <item></item>
         <item></item>
     </string-array>
 
     <!-- Donateurs -->
-    <string-array name="donators">
+    <string-array name="donators" translatable="false">
         <item>Arzhel</item>
         <item>Guillaume</item>
         <item>Stéphane Péchard</item>
@@ -142,7 +133,7 @@
     </string-array>
 
     <!-- Traducteurs -->
-    <string-array name="translators">
+    <string-array name="translators" translatable="false">
         <item>Olivier Raulin</item>
         <item>Alexandre Berthaud</item>
         <item>Pascale Cotinat</item>
@@ -158,9 +149,18 @@
         <item></item>
         <item></item>
     </string-array>
+    <string-array name="delais" translatable="false">
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+    </string-array>
 
     <!-- Unicorn -->
-    <string-array name="unicorn">
+    <string-array name="unicorn" translatable="false">
         <item>No, Charlie!</item>
         <item>We have to take the amulet to the Banana King.</item>
         <item>Ah! All right, fine! I\'ll go! I\'ll go!</item>
