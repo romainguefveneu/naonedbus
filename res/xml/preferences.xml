@@ -20,16 +20,10 @@
             android:summary="@string/cache_size"
             android:title="@string/clear_cache" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/shcedules" >
+    <PreferenceCategory android:title="@string/schedules" >
         <Preference
             android:key="horaires.cache.clear"
             android:title="@string/clear_cache" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/setting_section_calendar" >
-        <ListPreference
-            android:key="calendrier.defaut"
-            android:summary="@string/pref_calendar_summary"
-            android:title="@string/pref_calendar_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

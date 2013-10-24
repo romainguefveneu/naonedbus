@@ -24,6 +24,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
     <RelativeLayout
         android:id="@+id/updateView"
         style="@style/Card"
@@ -31,8 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/padding_medium"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_small" >
+        android:padding="@dimen/padding_small"
+        android:visibility="gone" >
 
         <TextView
             android:id="@android:id/title"

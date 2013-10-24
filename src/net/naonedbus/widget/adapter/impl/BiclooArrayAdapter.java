@@ -56,7 +56,7 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 		final Bicloo.Status status = bicloo.getStatus();
 
 		if (Bicloo.Status.UNKNOWN.equals(status)) {
-			holder.itemDescription.setText(R.string.bicloo_indisponible);
+			holder.itemDescription.setText(R.string.not_available);
 		} else {
 			final int availableBikes = bicloo.getAvailableBike();
 			final int availableStands = bicloo.getAvailableBikeStands();

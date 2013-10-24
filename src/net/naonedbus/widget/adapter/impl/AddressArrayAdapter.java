@@ -34,7 +34,7 @@ public class AddressArrayAdapter extends ArrayAdapter<AddressWrapper> {
 	public AddressArrayAdapter(final Context context) {
 		super(context, android.R.layout.simple_dropdown_item_1line);
 		mGeocoder = new Geocoder(context);
-		mCurrenPositionWrapper = AddressWrapper.createLocateMe(context.getString(R.string.itineraire_current_location));
+		mCurrenPositionWrapper = AddressWrapper.createLocateMe(context.getString(R.string.my_location));
 		mHoloBlueColor = context.getResources().getColorStateList(R.color.card_selectable_text);
 		mTextColorColor = context.getResources().getColorStateList(android.R.color.primary_text_light);
 		mPadding = context.getResources().getDimensionPixelSize(R.dimen.padding_small);

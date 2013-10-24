@@ -5,34 +5,25 @@
     <string name="today">Aujourd\'hui</string>
     <string name="yesterday">Hier</string>
     <string name="tomorrow">Demain</string>
-    <string name="loading">Chargement&#8230;</string>
     <string name="emptyString"></string>
-    <string name="updating">Mise à jour&#8230;</string>
-    <string name="updating_complete">Mise à jour terminée</string>
-    <string name="setup">Installation en cours&#8230;</string>
-    <string name="setup_complete">Installation terminée</string>
     <string name="copy">Copier</string>
     <string name="skip">Passer</string>
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
+    <string name="updating">Mise à jour&#8230;</string>
+    <string name="updating_complete">Mise à jour terminée</string>
+    <string name="setup">Installation en cours&#8230;</string>
+    <string name="setup_complete">Installation terminée</string>
     <string name="format_meters">%d mètres</string>
     <string name="format_km">%1$.0f km</string>
     <string name="format_minutes">%d min</string>
     <string name="format_hour_min_sec">%1$sh%2$s</string>
-
-    <!-- Preférences -->
     <string name="browsing">Navigation</string>
     <string name="plans_of_routes">Plans des lignes</string>
-    <string name="shcedules">Horaires</string>
-    <string name="setting_section_calendar">Calendrier</string>
     <string name="home_section">Section de démarrage</string>
     <string name="enable_cache">Activer le cache</string>
     <string name="clear_cache">Vider le cache</string>
     <string name="cache_size">Taille du cache : %s</string>
-    <string name="pref_calendar_title">Calendrier par défaut</string>
-    <string name="pref_calendar_summary">Selectionnez un calendrier par défaut</string>
-
-    <!-- Type ligne -->
     <string name="tram_bus_relay">Bus relai Tram</string>
     <string name="tram">Tramway</string>
     <string name="chronobus">Chronobus</string>
@@ -40,47 +31,8 @@
     <string name="express_lines">Lignes express</string>
     <string name="night_lines">Lignes de nuit</string>
     <string name="special_lines">Lignes spéciales</string>
-
-    <!-- Tuto -->
-    <string name="tuto_about_title">Bienvenue</string>
+    <string name="welcome">Bienvenue</string>
     <string name="tuto_about_summary"><![CDATA[Naonedbus est une application gratuite, open-source, sans aucune affiliation avec la Semitan.<br /> Cette application est développée bénévolement. <br /><br />Les données sont issues de l\'open data, les horaires sont ceux fournis par la TAN. <br /><br /> <b>En cas de problème, envoyez-nous un mail, et nous vous aiderons ;)</b>]]></string>
-    <string name="tuto_menu_title">Menu principal</string>
-    <string name="tuto_menu_summary">Accédez aux sections via le menu : soit via l\'icône principale, soit en glissant depuis l\'extrémité gauche de l\'écran</string>
-    <string name="tuto_routes_title">Lignes</string>
-    <string name="tuto_routes_summary">Naviguez entre les lignes en un clin d\'oeil</string>
-    <string name="tuto_bookmarks_title">Favoris</string>
-    <string name="tuto_bookmarks_summary"><![CDATA[Marquez vos arrêts <b>préférés</b> pour y avoir accès à tout moment]]></string>
-    <string name="tuto_tannews_title">Info trafic</string>
-    <string name="tuto_tannews_summary">Des travaux ? Une manifestation prévue ? Gardez un oeil sur l\'info trafic !</string>
-    <string name="tuto_livenews_title">Info trafic participatif</string>
-    <string name="tuto_livenews_summary"><![CDATA[Accidents, retards : <b>informez</b> et restez informés en <b>temps réel</b> grâce à l\'info trafic participatif]]></string>
-    <string name="tuto_parks_title">Parkings</string>
-    <string name="tuto_parks_summary">Consultez la liste des parkings nantais ainsi que leur disponibilité en temps réel</string>
-    <string name="tuto_mobility_title">Mobilité</string>
-    <string name="tuto_mobility_summary">Où est le bicloo le plus proche ? Mais également les stations Marguerite, co-voiturage et Lila</string>
-    <string name="tuto_widgets_title">Widgets</string>
-    <string name="tuto_widgets_summary">Placez vos arrêts favoris en widgets !</string>
-    <string name="tuto_beta_title">Version bêta</string>
-    <string name="tuto_beta_summary"><![CDATA[Vous utilisez une version Bêta de naonedbus.<br />Merci de nous signaler tout problème : <br />naonedbus@gmail.com</font>]]></string>
-    <!-- Activities -->
-    <string name="home">Accueil</string>
-    <string name="traffic_information">Infos trafic</string>
-    <string name="map">Carte</string>
-    <string name="itineraries">Itinéraires</string>
-    <string name="bicloos">Bicloos</string>
-    <string name="mobility">Mobilité</string>
-    <string name="car_parks">Parkings</string>
-    <string name="title_activity_recherche">Recherche</string>
-    <string name="news">Actualité</string>
-    <string name="settings">Paramètres</string>
-    <string name="schedules">Horaires</string>
-    <string name="about">A propos</string>
-    <string name="group_management">Gestion des groupes</string>
-    <string name="donate">Faire un don</string>
-    <!-- Slide menu -->
-    <string name="menu_section_naonedbus">Naonedbus</string>
-    <string name="menu_section_options">Options</string>
-    <!-- Actions -->
     <string name="phone_call">Téléphoner</string>
     <string name="itinerary">Itinéraire</string>
     <string name="share">Partager</string>
@@ -116,7 +68,6 @@
     <string name="add_group">Ajouter un groupe</string>
     <string name="manage_group">Gérer les groupes</string>
     <string name="satellite_view">Vue satellite</string>
-    <!-- Erreurs -->
     <string name="error_occurred">Une erreur est survenue</string>
     <string name="update_fail">La mise à jour ne s\'est pas bien passée</string>
     <string name="tan_webservice_fail">Le service Tan est indisponible</string>
@@ -137,21 +88,13 @@
     <string name="no_groups_selected">Vous n\'avez sélectionné aucun groupe de favoris à afficher.</string>
     <string name="no_bookmarked_stops">Vous avez sélectionné le filtre \"Arrêts favoris\" mais aucun favori n\'est défini pour ce sens.</string>
     <string name="current_address_unknown">Adresse courante inconnue</string>
-    <!-- Accueil -->
     <string name="routes">Lignes</string>
     <string name="bookmarks">Favoris</string>
     <string name="nearby">A proximité</string>
-    <!-- A propos -->
     <string name="title_fragment_about">A propos</string>
     <string name="whats_new">Nouveautés</string>
     <string name="authors">Auteurs</string>
-    <string name="romain">Romain Guefveneu</string>
-    <string name="romain_twitter">\@romainguefveneu &#8599;</string>
-    <string name="benoit">Benoît Cotinat</string>
-    <string name="benoit_twitter">\@benoitcotinat &#8599;</string>
     <string name="lets_communicate">Communiquons</string>
-    <string name="twitter">Twitter</string>
-    <string name="facebook">Facebook</string>
     <string name="email">E-mail</string>
     <string name="about_info_title">Informations</string>
     <string name="information_developed_voluntarily">Cette application est développée bénévolement, sur notre temps libre, sans aucune affiliation avec la SEMITAN.\n\nLes données sont celles disponibles sur les sites tan.fr et data.nantes.fr</string>
@@ -160,20 +103,30 @@
     <string name="licences">Licences</string>
     <string name="libraries">Librairies</string>
     <string name="icons">Icônes</string>
-    <!-- Dons -->
+    <string name="home">Accueil</string>
+    <string name="traffic_information">Infos trafic</string>
+    <string name="map">Carte</string>
+    <string name="itineraries">Itinéraires</string>
+    <string name="bicloos">Bicloos</string>
+    <string name="mobility">Mobilité</string>
+    <string name="car_parks">Parkings</string>
+    <string name="title_activity_recherche">Recherche</string>
+    <string name="news">Actualité</string>
+    <string name="settings">Paramètres</string>
+    <string name="schedules">Horaires</string>
+    <string name="about">A propos</string>
+    <string name="group_management">Gestion des groupes</string>
+    <string name="donate">Faire un don</string>
     <string name="donate_title">Faire un don</string>
     <string name="make_donation">Faire un don via</string>
     <string name="make_donation_message">Faire un don est un moyen de nous remercier pour notre temps passé à développer cette application ;-)</string>
     <string name="donors">Donateurs</string>
-    <!-- Tan -->
     <string name="title_fragment_plan">Plan</string>
     <string name="stop_paths">Parcours</string>
     <string name="format_route_letter_name">Ligne %1$s &#8226; %2$s</string>
-    <!-- Infos trafic -->
     <string name="tan_news">Tan Actu</string>
     <string name="live_news">En direct</string>
     <string name="Details">Détail</string>
-    <!-- Equipements -->
     <string name="publics">Publics</string>
     <string name="park_and_ride">Relais</string>
     <string name="stations">Stations</string>
@@ -181,11 +134,9 @@
     <string name="lila">Lila</string>
     <string name="carpooling">Co-Voiturage</string>
     <string name="stops">Arrets</string>
-    <!-- Commentaires -->
     <string name="transmission_in_progress">Transmission en cours&#8230;</string>
     <string name="tan_actus">Tan actus</string>
     <string name="tan_info_trafic">Tan info trafic</string>
-    <string name="tan_infos">TANinfos</string>
     <string name="entire_network">Tout le réseau</string>
     <string name="route">Ligne</string>
     <string name="service_message">Message de service</string>
@@ -200,40 +151,39 @@
     <string name="source_tan_actus">\@tan_actus sur Twitter\n(compte officiel de la SEMITAN)</string>
     <string name="source_naonedbus_service">Discovery One</string>
     <string name="source_taninfos">\@TANinfos sur Twitter \n(compte non affilié à la SEMITAN)</string>
-    <!-- Parkings -->
-    <string name="parking_section_disponible">Beaucoup de places</string>
-    <string name="parking_section_limite">Plus beaucoup de places</string>
+    <string name="many_spaces">Beaucoup de places</string>
+    <string name="not_many_spaces_left">Plus beaucoup de places</string>
     <string name="parking_section_info">Informations</string>
-    <string name="parking_section_carte">Sur la carte</string>
-    <string name="parking">Parking</string>
+    <string name="on_the_map">Sur la carte</string>
+    <string name="car_park">Parking</string>
     <string name="parking_relai">Parking relai</string>
-    <string name="parking_ferme">Fermé</string>
-    <string name="parking_abonne">Abonnés</string>
-    <string name="parking_invalide">Information non disponible</string>
-    <string name="parking_titre_places_disponibles">Places disponibles</string>
-    <string name="parking_titre_places_totales">Places totales</string>
-    <string name="parking_titre_mise_a_jour">Mise à jour</string>
-    <string name="parking_titre_telephone">Téléphone</string>
-    <string name="parking_places_disponibles_zero">C\'est plein !</string>
+    <string name="closed">Fermé</string>
+    <string name="subscribers">Abonnés</string>
+    <string name="information_not_available">Information non disponible</string>
+    <string name="available_spaces">Places disponibles</string>
+    <string name="total_spaces">Places totales</string>
+    <string name="update">Mise à jour</string>
+    <string name="phone">Téléphone</string>
+    <string name="thats_full">C\'est plein !</string>
 
-    <plurals name="parking_places_disponibles">
+    <plurals name="available_spaces">
         <item quantity="one">1 place restante, dépéchez-vous !</item>
         <item quantity="other">%d places disponibles</item>
     </plurals>
-    <!-- Bicloo -->
-    <string name="bicloo_titre_velos_disponibles">Bicloos</string>
-    <string name="bicloo_titre_places_disponible">Places restantes</string>
-    <string name="bicloo_titre_paiement">Borne de paiement</string>
-    <string name="bicloo_paiement_disponible">Oui</string>
-    <string name="bicloo_paiement_indisponible">Non</string>
-    <string name="bicloo_indisponible">Indisponible</string>
-    <string name="bicloo_indisponible_message">Cette station bicloo est pour le moment indisponible</string>
 
-    <plurals name="bicloo_places_disponibles">
+    <string name="bicloo_titre_velos_disponibles">Bicloos</string>
+    <string name="remaining_slots">Places restantes</string>
+    <string name="payment_terminal">Borne de paiement</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="bicloo_indisponible">Indisponible</string>
+    <string name="bicloo_station_unavailable">Cette station bicloo est pour le moment indisponible</string>
+
+    <plurals name="remaining_slots">
         <item quantity="one">%d place</item>
         <item quantity="other">%d places</item>
     </plurals>
-    <plurals name="bicloo_velos_disponibles">
+    <plurals name="remaining_bicloos">
         <item quantity="one">%d bicloo</item>
         <item quantity="other">%d bicloos</item>
     </plurals>
@@ -242,51 +192,41 @@
         <item quantity="other">%1$s et %2$s restants</item>
     </plurals>
 
-    <!-- Cards -->
     <string name="card_horaires_title">Horaires</string>
-    <string name="card_trafic_title">Perturbations</string>
-    <string name="card_commentaires_title">En direct</string>
+    <string name="disturbances">Perturbations</string>
+    <string name="live">En direct</string>
     <string name="card_plan_title">Sur la carte</string>
-    <string name="card_more_horaires">Afficher tous les horaires</string>
+    <string name="show_all_times">Afficher tous les horaires</string>
     <string name="card_more_commenter">Commenter le trafic</string>
-    <string name="card_more_map">Afficher sur la carte</string>
+    <string name="show_on_map">Afficher sur la carte</string>
     <string name="card_horaire_previous">Précédent</string>
-
-    <!-- Itinéraires -->
-    <string name="itineraire_current_location">Ma position</string>
-    <string name="itineraire_hint_depart">Choisissez un point de départ&#8230;</string>
-    <string name="itineraire_hint_arrive">Choisissez une destination&#8230;</string>
-    <!-- Carte -->
-    <string name="map_calques">Calques</string>
-    <string name="map_calque_arret">Arrêt Tan</string>
+    <string name="my_location">Ma position</string>
+    <string name="choose_starting_point">Choisissez un point de départ&#8230;</string>
+    <string name="choose_destination">Choisissez une destination&#8230;</string>
+    <string name="layers">Calques</string>
+    <string name="tan_stops">Arrêt Tan</string>
     <string name="map_calque_parkings">Parkings</string>
     <string name="map_calque_parking_relai">Parking Relai</string>
-    <string name="map_calque_bicloo">Station Bicloo</string>
-    <string name="map_calque_marguerite">Station Marguerite</string>
+    <string name="bicloos_stations">Station Bicloo</string>
+    <string name="marguerite_stations">Station Marguerite</string>
     <string name="map_calque_satellite">Vue satellite</string>
-    <string name="map_calque_covoiturage">Station de co-voiturage</string>
-    <string name="map_calque_lila">Arrêt Lila</string>
-
-    <!-- Search -->
+    <string name="carpooling_station">Station de co-voiturage</string>
+    <string name="lila_stops">Arrêt Lila</string>
     <string name="search_hint">Arrêts, Parkings, Bicloo, Lila, &#8230;</string>
-    <string name="search_empty">Aucun équipement ne correspond à votre recherche</string>
-    <string name="search_address">Adresse</string>
-
-    <!-- Sections -->
-    <string name="section_distance_none">Aucune information de distance</string>
-    <string name="section_distance_100000">Beaucoup trop loin !</string>
-    <string name="section_distance_50000">Moins de 100 Km</string>
-    <string name="section_distance_40000">Moins de 50 Km</string>
-    <string name="section_distance_30000">Moins de 40 Km</string>
-    <string name="section_distance_20000">Moins de 30 Km</string>
-    <string name="section_distance_10000">Moins de 20 Km</string>
-    <string name="section_distance_5000">Moins de 10 Km</string>
-    <string name="section_distance_1000">Moins de 5 Km</string>
-    <string name="section_distance_500">Moins de 1 Km</string>
-    <string name="section_distance_0">Moins de 500 m</string>
+    <string name="no_equipment_matches">Aucun équipement ne correspond à votre recherche</string>
+    <string name="address">Adresse</string>
+    <string name="no_distance_information">Aucune information de distance</string>
+    <string name="much_too_far">Beaucoup trop loin !</string>
+    <string name="less_than_100km">Moins de 100 Km</string>
+    <string name="less_than_50km">Moins de 50 Km</string>
+    <string name="less_than_40km">Moins de 40 Km</string>
+    <string name="less_than_30km">Moins de 30 Km</string>
+    <string name="less_than_20km">Moins de 20 Km</string>
+    <string name="less_than_10km">Moins de 10 Km</string>
+    <string name="less_than_5km">Moins de 5 Km</string>
+    <string name="less_than_1km">Moins de 1 Km</string>
+    <string name="less_than_500m">Moins de 500 m</string>
     <string name="section_groupe_aucun">Aucun groupe</string>
-    <!-- Messages -->
-    <!-- - - Erreurs -->
     <string name="google_navigation_missing">Veuillez installer Google Navigation.</string>
     <string name="localization_disabled">La géolocalisation est désactivée</string>
     <string name="please_enable_localization">Activez un service de géolocation dans les paramètres d\'Android</string>
@@ -294,20 +234,16 @@
     <string name="plan_not_found">Le plan de cette ligne n\'est pas disponible.</string>
     <string name="export_fail">Une erreur s\'est produite lors de l\'export.\nVeuillez réessayer plus tard.</string>
     <string name="import_fail">Une erreur s\'est produite lors de l\'import.\nVeuillez réessayer plus tard.</string>
-    <!-- Warning -->
     <string name="please_enter_more_than_2_words">Veuillez taper plus de 2 mots, car ceci n\'est pas un champ de recherche.</string>
-    <!-- - - Vide -->
     <string name="no_phone">Pas de téléphone</string>
     <string name="item_not_localized">Cet élément ne peut pas être localisé.</string>
     <string name="empty">Vide</string>
-    <!-- - - Divers -->
     <string name="loading_address">Récupération de l\'adresse en cours&#8230;</string>
     <string name="schedules_cleared">Les horaires ont été vidés</string>
     <string name="localization_services">Services de localisation</string>
     <string name="no_tannews">Aucune perturbation en cours</string>
     <string name="no_livenews">Aucun commentaire récent</string>
     <string name="please_enable_localization_advice">La géolocalisation semble désactivée sur votre téléphone.\nPour utiliser au mieux la fonctionnalité \"Sur la carte\", nous vous conseillons de l\'activer.</string>
-    <!-- - - Horaires -->
     <string name="departure_imminent">départ proche</string>
     <string name="in_long_time">dans longtemps</string>
     <string name="not_available">indisponible</string>
@@ -316,8 +252,6 @@
     <string name="departure_min_short">%d min</string>
     <string name="departure_hour_short">> %d h</string>
     <string name="no_schedules">Aucun horaire n\'a été trouvé</string>
-
-    <!-- Import / Export -->
     <string name="bookmarks_import">Import des favoris</string>
     <string name="bookmarks_import_success">Favoris importés avec succès !</string>
     <string name="import_ongoing">Import en cours&#8230;</string>
@@ -326,16 +260,11 @@
     <string name="bookmarks_export_success">Favoris exportés avec succès !</string>
     <string name="bookmarks_export_fail">Erreur lors de l\'export des favoris</string>
     <string name="export_ongoing">Export en cours&#8230;</string>
-
-    <!-- Add events -->
-    <string name="add_event_calendar_select">Choix du calendrier</string>
-    <string name="add_event_delai_select">Délai avant rappel</string>
-    <string name="add_event_toast">Evénement créé</string>
-    <string name="add_event_message">Message</string>
-    <!--  -->
-    <!-- Hint -->
+    <string name="calendar_selection">Choix du calendrier</string>
+    <string name="deadline_reminder">Délai avant rappel</string>
+    <string name="event_created">Evénement créé</string>
+    <string name="message">Message</string>
     <string name="whats_happening_on_tan_network">Que se passe-t-il sur le réseau Tan ?</string>
-    <!-- Dialogs -->
     <string name="information">Information</string>
     <string name="warning">Attention</string>
     <string name="message_too_short">Message trop court</string>
@@ -349,11 +278,8 @@
     <string name="keep_this_key">Conservez cette clé, elle vous permettra de récupérer vos favoris.</string>
     <string name="sort_by_location">Tri par position</string>
     <string name="sort_by_location_message">Le tri par position est une moyenne observée sur la totalité des trajets.\n\nIl se peut qu\'il soit inexact dans certains cas.</string>
-    <!-- Showcase -->
     <string name="easily_change_direction">Changez facilement de sens</string>
     <string name="click_direction_to_change">Cliquez sur le sens pour en changer.</string>
-
-    <!-- Target -->
     <string name="target_ligne">Ligne</string>
     <string name="direction">Sens</string>
     <string name="stop">Arret</string>
@@ -361,27 +287,24 @@
     <string name="target_toutes_lignes">Toutes les lignes</string>
     <string name="all_directions">Tous les sens</string>
     <string name="target_tous_arrets">Tous les arrêts</string>
-    <!-- Toasts -->
     <string name="bookmark_added">Favori ajouté</string>
     <string name="bookmark_removed">Favori retiré</string>
     <string name="no_stop_other_way">Impossible de trouver l\'arrêt dans l\'autre sens.</string>
 
-    <!-- Items -->
     <plurals name="selected_items">
         <item quantity="one">1 sélectionné</item>
         <item quantity="other">%d sélectionnés</item>
     </plurals>
 
-    <!-- Itinéraires -->
     <string name="itinerary_kind">Type d\'itinéraire</string>
-    <string name="itinerary_kind_arrival">Arrivée</string>
-    <string name="itinerary_kind_departure">Départ</string>
-    <string name="itinerary_date">Date</string>
-    <string name="itinerary_time">Heure</string>
-    <string name="itinerary_go_to">Aller à %s</string>
-    <string name="itinerary_get_off">Descendre à %s</string>
+    <string name="arrival">Arrivée</string>
+    <string name="departure">Départ</string>
+    <string name="date">Date</string>
+    <string name="time">Heure</string>
+    <string name="go_to">Aller à %s</string>
+    <string name="get_off">Descendre à %s</string>
 
-    <plurals name="itinerary_walk_time">
+    <plurals name="walk_time">
         <item quantity="one">%d minute de marche</item>
         <item quantity="other">%d minutes de marche</item>
     </plurals>

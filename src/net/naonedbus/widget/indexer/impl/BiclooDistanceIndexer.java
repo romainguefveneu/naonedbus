@@ -33,27 +33,27 @@ public class BiclooDistanceIndexer extends ArraySectionIndexer<Bicloo> {
 	@Override
 	protected void prepareSection(final Bicloo bicloo) {
 		if (bicloo.getDistance() == null) {
-			bicloo.setSection(R.string.section_distance_none);
+			bicloo.setSection(R.string.no_distance_information);
 		} else if (bicloo.getDistance() > 100000) {
-			bicloo.setSection(R.string.section_distance_100000);
+			bicloo.setSection(R.string.much_too_far);
 		} else if (bicloo.getDistance() > 50000) {
-			bicloo.setSection(R.string.section_distance_50000);
+			bicloo.setSection(R.string.less_than_100km);
 		} else if (bicloo.getDistance() > 40000) {
-			bicloo.setSection(R.string.section_distance_40000);
+			bicloo.setSection(R.string.less_than_50km);
 		} else if (bicloo.getDistance() > 30000) {
-			bicloo.setSection(R.string.section_distance_30000);
+			bicloo.setSection(R.string.less_than_40km);
 		} else if (bicloo.getDistance() > 20000) {
-			bicloo.setSection(R.string.section_distance_20000);
+			bicloo.setSection(R.string.less_than_30km);
 		} else if (bicloo.getDistance() > 10000) {
-			bicloo.setSection(R.string.section_distance_10000);
+			bicloo.setSection(R.string.less_than_20km);
 		} else if (bicloo.getDistance() > 5000) {
-			bicloo.setSection(R.string.section_distance_5000);
+			bicloo.setSection(R.string.less_than_10km);
 		} else if (bicloo.getDistance() > 1000) {
-			bicloo.setSection(R.string.section_distance_1000);
+			bicloo.setSection(R.string.less_than_5km);
 		} else if (bicloo.getDistance() > 500) {
-			bicloo.setSection(R.string.section_distance_500);
+			bicloo.setSection(R.string.less_than_1km);
 		} else {
-			bicloo.setSection(R.string.section_distance_0);
+			bicloo.setSection(R.string.less_than_500m);
 		}
 	}
 

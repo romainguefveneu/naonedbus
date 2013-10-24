@@ -93,9 +93,9 @@ public class BiclooMapLayer implements MapLayer {
 				final Bicloo bicloo = mBicloos.get(item.getId());
 				final int availableBikes = bicloo.getAvailableBike();
 				final int availableStands = bicloo.getAvailableBikeStands();
-				final String bikes = context.getResources().getQuantityString(R.plurals.bicloo_velos_disponibles,
+				final String bikes = context.getResources().getQuantityString(R.plurals.remaining_bicloos,
 						availableBikes, availableBikes);
-				final String stands = context.getResources().getQuantityString(R.plurals.bicloo_places_disponibles,
+				final String stands = context.getResources().getQuantityString(R.plurals.remaining_slots,
 						availableStands, availableStands);
 
 				final String description = context.getResources().getQuantityString(R.plurals.bicloo,

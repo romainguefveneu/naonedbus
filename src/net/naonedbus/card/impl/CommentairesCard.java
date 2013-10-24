@@ -96,7 +96,7 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 
 	public CommentairesCard(final Context context, final LoaderManager loaderManager,
 			final FragmentManager fragmentManager) {
-		super(context, loaderManager, fragmentManager, R.string.card_commentaires_title, R.layout.card_news);
+		super(context, loaderManager, fragmentManager, R.string.live, R.layout.card_news);
 		getContext().registerReceiver(mIntentReceiver, intentFilter);
 		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
@@ -146,7 +146,7 @@ public class CommentairesCard extends Card<List<LiveNews>> implements OnDirectio
 		intent.putExtra(SendNewsActivity.PARAM_SENS, mDirection);
 		intent.putExtra(SendNewsActivity.PARAM_ARRET, mStop);
 
-		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_commenter);
+		intent.putExtra(Intent.EXTRA_TITLE, R.string.comment_on_traffic);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_send);
 		return intent;
 	}

@@ -35,7 +35,7 @@
         android:icon="@drawable/ic_action_go_to_today"
         android:orderInCategory="500"
         android:showAsAction="never"
-        android:title="@string/action_change_date_now"/>
+        android:title="@string/today"/>
     <item
         android:id="@id/menu_sens"
         android:icon="@drawable/ic_action_repeat"

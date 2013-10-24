@@ -18,11 +18,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 public class UpdateFragment extends CustomFragment {
+
+	private UpdateCard mUpdateCard;
+
 	public UpdateFragment() {
 		super(R.layout.fragment_update);
 	}
-
-	private UpdateCard mUpdateCard;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class UpdateFragment extends CustomFragment {
 		} else {
 			mUpdateCard.setTitles(R.string.updating, R.string.updating_complete);
 		}
+		mUpdateCard.setUpdateType(updateType);
 
 		mUpdateCard.show();
 	}
@@ -56,6 +58,7 @@ public class UpdateFragment extends CustomFragment {
 		private final Context mContext;
 		private final OnClickListener mOnNextClickListener;
 		private final View mUpdateView;
+		private UpdateType mUpdateType;
 
 		private int mTitleProgressId;
 		private int mTitleCompleteId;
@@ -66,31 +69,46 @@ public class UpdateFragment extends CustomFragment {
 			mOnNextClickListener = onNextClickListener;
 		}
 
+		public void setUpdateType(UpdateType updateType) {
+			mUpdateType = updateType;
+		}
+
 		public void show() {
-			mUpdateView.setVisibility(View.VISIBLE);
+			if (UpdateType.UPGRADE.equals(mUpdateType)) {
+				final Typeface robotoTypeface = FontUtils.getRobotoLight(mContext);
 
-			final Typeface robotoTypeface = FontUtils.getRobotoLight(mContext);
-			((TextView) mUpdateView.findViewById(android.R.id.title)).setTypeface(robotoTypeface);
-			((TextView) mUpdateView.findViewById(R.id.codename)).setTypeface(robotoTypeface);
+				TextView titleView = (TextView) mUpdateView.findViewById(android.R.id.title);
+				TextView codenameView = (TextView) mUpdateView.findViewById(R.id.codename);
+				TextView versionView = (TextView) mUpdateView.findViewById(R.id.version);
+				TextView versionNotesView = (TextView) mUpdateView.findViewById(R.id.versionNotes);
 
-			((TextView) mUpdateView.findViewById(android.R.id.title)).setText(mTitleProgressId);
+				titleView.setTypeface(robotoTypeface);
+				codenameView.setTypeface(robotoTypeface);
 
-			final String version = mContext.getString(R.string.format_version, VersionUtils.getVersion(mContext));
-			((TextView) mUpdateView.findViewById(R.id.version)).setText(version);
+				titleView.setText(mTitleProgressId);
 
-			final String versionNotes = VersionUtils.getCurrentVersionNotes(mContext);
-			((TextView) mUpdateView.findViewById(R.id.versionNotes)).setText(versionNotes);
+				final String version = mContext.getString(R.string.format_version, VersionUtils.getVersion(mContext));
+				versionView.setText(version);
 
-			mUpdateView.findViewById(R.id.nextButton).setOnClickListener(mOnNextClickListener);
+				final String versionNotes = VersionUtils.getCurrentVersionNotes(mContext);
+				versionNotesView.setText(versionNotes);
+
+				mUpdateView.findViewById(R.id.nextButton).setOnClickListener(mOnNextClickListener);
+				mUpdateView.setVisibility(View.VISIBLE);
+			}
 		}
 
 		public void setComplete() {
-			((TextView) mUpdateView.findViewById(android.R.id.title)).setText(mTitleCompleteId);
-			mUpdateView.findViewById(android.R.id.progress).setVisibility(View.GONE);
+			if (UpdateType.FIRST_LAUNCH.equals(mUpdateType)) {
+				mOnNextClickListener.onClick(mUpdateView);
+			} else {
+				((TextView) mUpdateView.findViewById(android.R.id.title)).setText(mTitleCompleteId);
+				mUpdateView.findViewById(android.R.id.progress).setVisibility(View.GONE);
 
-			final View nextButton = mUpdateView.findViewById(R.id.nextButton);
-			nextButton.setVisibility(View.VISIBLE);
-			nextButton.startAnimation(AnimationUtils.loadAnimation(mContext, android.R.anim.fade_in));
+				final View nextButton = mUpdateView.findViewById(R.id.nextButton);
+				nextButton.setVisibility(View.VISIBLE);
+				nextButton.startAnimation(AnimationUtils.loadAnimation(mContext, android.R.anim.fade_in));
+			}
 		}
 
 		public void setTitles(final int titleProgressId, final int titleCompleteId) {

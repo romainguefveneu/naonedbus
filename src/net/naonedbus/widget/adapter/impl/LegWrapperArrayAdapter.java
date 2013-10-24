@@ -82,7 +82,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 
 				final String direction = FormatUtils.formatWithDot(legWrapper.getDuration(), legWrapper.getDistance());
 				final CharSequence title = TextUtils.concat(getContext()
-						.getString(R.string.itinerary_go_to, place.name) + "\n",
+						.getString(R.string.go_to, place.name) + "\n",
 						FormatUtils.formatColorAndSize(getContext(), mSecondaryColor, direction));
 
 				viewHolder.itemIcon.setVisibility(View.VISIBLE);

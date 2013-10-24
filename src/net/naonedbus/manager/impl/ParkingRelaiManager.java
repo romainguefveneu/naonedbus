@@ -52,7 +52,7 @@ public class ParkingRelaiManager extends SQLiteManager<IncentivePark> {
 		builder.appendPath(Integer.toString(Type.TYPE_PARK.getId()));
 
 		final Cursor c = contentResolver.query(builder.build(), null, EquipmentTable.SUBTYPE_ID + "=?",
-				new String[] { String.valueOf(EquipmentManager.SubType.INCENTIVE_PARK.getValue()) }, null);
+				new String[] { String.valueOf(EquipmentManager.SubType.PARK_AND_RIDE.getValue()) }, null);
 		return getFromCursor(c);
 	}
 

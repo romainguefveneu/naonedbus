@@ -162,8 +162,8 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		mBicloosDisponibles.setText(String.valueOf(bicloo.getAvailableBike()));
 		mPlacesDisponibles.setText(String.valueOf(bicloo.getAvailableBikeStands()));
 
-		mPaiement.setText(bicloo.isBanking() ? R.string.bicloo_paiement_disponible
-				: R.string.bicloo_paiement_indisponible);
+		mPaiement.setText(bicloo.isBanking() ? R.string.yes
+				: R.string.no);
 		mItemDate.setText(DateUtils.getRelativeTimeSpanString(bicloo.getLastUpdate(), System.currentTimeMillis(),
 				DateUtils.MINUTE_IN_MILLIS).toString());
 
@@ -225,9 +225,9 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	private String getBiclooInformation(final Bicloo bicloo) {
 		final int availableBikes = bicloo.getAvailableBike();
 		final int availableStands = bicloo.getAvailableBikeStands();
-		final String bikes = getResources().getQuantityString(R.plurals.bicloo_velos_disponibles, availableBikes,
+		final String bikes = getResources().getQuantityString(R.plurals.remaining_bicloos, availableBikes,
 				availableBikes);
-		final String stands = getResources().getQuantityString(R.plurals.bicloo_places_disponibles, availableStands,
+		final String stands = getResources().getQuantityString(R.plurals.remaining_slots, availableStands,
 				availableStands);
 
 		final String description = getResources().getQuantityString(R.plurals.bicloo, availableBikes + availableStands,

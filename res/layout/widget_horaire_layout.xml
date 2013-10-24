@@ -75,16 +75,6 @@
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:textColor="#ffffff" />
 
-    <TextView
-        android:id="@id/widgetLoading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:singleLine="true"
-        android:text="@string/loading"
-        android:textAppearance="@android:style/TextAppearance.Small"
-        android:textColor="#ffffff" />
-
     <!-- Fix 2.2 issues with progressbar -->
 
     <LinearLayout

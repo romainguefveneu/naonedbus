@@ -100,7 +100,7 @@ public class SendNewsActivity extends SherlockActivity {
 	private View mBtnChangeSens;
 	private View mBtnChangeArret;
 
-	private TextView mTextLigne;
+	private TextView mRouteView;
 	private TextView mTextSens;
 	private TextView mTextArret;
 
@@ -131,7 +131,7 @@ public class SendNewsActivity extends SherlockActivity {
 		mRoutesAdapter = getLignesAdapter();
 
 		mCommentText = (EditText) findViewById(android.R.id.input);
-		mTextLigne = (TextView) findViewById(R.id.route);
+		mRouteView = (TextView) findViewById(R.id.route);
 		mTextSens = (TextView) findViewById(R.id.direction);
 		mTextArret = (TextView) findViewById(R.id.stop);
 
@@ -237,15 +237,14 @@ public class SendNewsActivity extends SherlockActivity {
 	 * Afficher la dialog de sélection de la route.
 	 */
 	private void showSelectLigneDialog() {
-		showSelectDialog(R.string.route, mRoutesAdapter, mSelectedLignePosition,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog, final int which) {
-						mSelectedLignePosition = which;
-						setLigne((Route) mRoutesAdapter.getItem(which));
-						dialog.dismiss();
-					}
-				});
+		showSelectDialog(R.string.route, mRoutesAdapter, mSelectedLignePosition, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				mSelectedLignePosition = which;
+				setLigne((Route) mRoutesAdapter.getItem(which));
+				dialog.dismiss();
+			}
+		});
 	}
 
 	/**
@@ -276,15 +275,14 @@ public class SendNewsActivity extends SherlockActivity {
 			mArretsAdapter = getArretsAdapter(routeCode, directionCode);
 			mSelectedArretPosition = -1;
 		}
-		showSelectDialog(R.string.stop, mArretsAdapter, mSelectedArretPosition,
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(final DialogInterface dialog, final int which) {
-						mSelectedArretPosition = which;
-						setArret((Stop) mArretsAdapter.getItem(which));
-						dialog.dismiss();
-					}
-				});
+		showSelectDialog(R.string.stop, mArretsAdapter, mSelectedArretPosition, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				mSelectedArretPosition = which;
+				setArret((Stop) mArretsAdapter.getItem(which));
+				dialog.dismiss();
+			}
+		});
 	}
 
 	/**
@@ -340,12 +338,12 @@ public class SendNewsActivity extends SherlockActivity {
 	 */
 	private void setLigne(final Route route) {
 		this.mRoute = route;
-		mTextLigne.setText(route.getLetter());
-		mTextLigne.setTextColor(route.getFrontColor());
+		mRouteView.setText(route.getLetter());
+		mRouteView.setTextColor(route.getFrontColor());
 		if (route.getBackColor() == 0) {
-			mTextLigne.setBackgroundResource(R.drawable.item_symbole_back);
+			mRouteView.setBackgroundResource(R.drawable.item_symbole_back);
 		} else {
-			mTextLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(route.getBackColor()));
+			ColorUtils.setBackgroundGradiant(mRouteView, route.getBackColor());
 		}
 
 		setSens(mAllSens);

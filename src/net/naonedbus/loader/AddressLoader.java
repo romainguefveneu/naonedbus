@@ -69,7 +69,7 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 		final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
 
 		if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
-			final String title = getContext().getString(R.string.itineraire_current_location);
+			final String title = getContext().getString(R.string.my_location);
 			final int icon = R.drawable.ic_action_locate_selector;
 
 			final AddressResult addressResult = new AddressResult(title, null, null, icon, Color.TRANSPARENT,

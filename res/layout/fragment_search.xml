@@ -39,7 +39,7 @@
         android:drawablePadding="20dp"
         android:drawableTop="@drawable/sad_face"
         android:gravity="center"
-        android:text="@string/search_empty"
+        android:text="@string/no_equipment_matches"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone" />
 

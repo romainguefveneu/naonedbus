@@ -95,8 +95,9 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 	private final LayoutInflater mLayoutInflater;
 	private ViewGroup mTerminusView;
 
-	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager, final Stop stop) {
-		super(context, loaderManager, fragmentManager, R.string.card_horaires_title, R.layout.card_horaire);
+	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
+			final Stop stop) {
+		super(context, loaderManager, fragmentManager, R.string.schedules, R.layout.card_horaire);
 
 		mLayoutInflater = LayoutInflater.from(context);
 
@@ -126,7 +127,7 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 	protected Intent getMoreIntent() {
 		final Intent intent = new Intent(getContext(), SchedulesActivity.class);
 		intent.putExtra(SchedulesActivity.PARAM_ARRET, mStop);
-		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_horaires);
+		intent.putExtra(Intent.EXTRA_TITLE, R.string.show_all_times);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_list);
 		return intent;
 	}

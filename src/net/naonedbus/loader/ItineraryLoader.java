@@ -93,7 +93,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 					.formatDuree(new DateTime(itinerary.startTime), new DateTime(itinerary.endTime)));
 
 			final int walkTime = Math.round(itinerary.walkTime / 60);
-			final String walkTimeText = getContext().getResources().getQuantityString(R.plurals.itinerary_walk_time,
+			final String walkTimeText = getContext().getResources().getQuantityString(R.plurals.walk_time,
 					walkTime, walkTime);
 			wrapper.setWalkTime(walkTimeText);
 

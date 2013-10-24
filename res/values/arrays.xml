@@ -34,23 +34,17 @@
 
     <!-- Types d'équipements -->
     <string-array name="types_equipements">
-        <item>@string/map_calque_arret</item>
-        <item>@string/map_calque_parkings</item>
-        <item>@string/map_calque_bicloo</item>
-        <item>@string/map_calque_marguerite</item>
-        <item>@string/map_calque_covoiturage</item>
-        <item>@string/map_calque_lila</item>
+        <item>@string/tan_stops</item>
+        <item>@string/car_parks</item>
+        <item>@string/bicloos</item>
     </string-array>
 
     <!-- Types d'équipements de recherche -->
     <string-array name="types_equipements_recherche">
-        <item>@string/search_address</item>
-        <item>@string/map_calque_arret</item>
-        <item>@string/map_calque_parkings</item>
-        <item>@string/map_calque_bicloo</item>
-        <item>@string/map_calque_marguerite</item>
-        <item>@string/map_calque_covoiturage</item>
-        <item>@string/map_calque_lila</item>
+        <item>@string/address</item>
+        <item>@string/tan_stops</item>
+        <item>@string/car_parks</item>
+        <item>@string/bicloos</item>
     </string-array>
 
     <!--
@@ -105,12 +99,12 @@
 
     <!-- Itinéraires -->
     <string-array name="itinerary_kind_labels">
-        <item>@string/itinerary_kind_departure</item>
-        <item>@string/itinerary_kind_arrival</item>
+        <item>@string/departure</item>
+        <item>@string/arrival</item>
     </string-array>
 
     <!-- Remerciements -->
-    <string-array name="thanks" translatable="false">
+    <string-array name="thanks_names" translatable="false">
         <item>Netapsys</item>
         <item>Benoît Manteau</item>
         <item>Paul Alisir</item>
@@ -133,7 +127,7 @@
     </string-array>
 
     <!-- Traducteurs -->
-    <string-array name="translators" translatable="false">
+    <string-array name="translators_names" translatable="false">
         <item>Olivier Raulin</item>
         <item>Alexandre Berthaud</item>
         <item>Pascale Cotinat</item>

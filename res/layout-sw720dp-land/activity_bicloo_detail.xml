@@ -54,7 +54,7 @@
                 android:layout_alignBaseline="@+id/bicloosDisponiblesLabel"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/availableSpaces"
-                android:text="@string/bicloo_titre_places_disponible" />
+                android:text="@string/remaining_slots" />
 
             <TextView
                 android:id="@id/payment"
@@ -67,7 +67,7 @@
                 style="@style/SectionTitle.Small"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/payment"
-                android:text="@string/bicloo_titre_paiement" />
+                android:text="@string/payment_terminal" />
 
             <!-- Right -->
 
@@ -84,7 +84,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/bicloosAvailable"
                 android:layout_marginBottom="@dimen/padding_small"
-                android:text="@string/bicloo_titre_velos_disponibles" />
+                android:text="@string/bicloos" />
         </RelativeLayout>
         <!-- Footer -->
 

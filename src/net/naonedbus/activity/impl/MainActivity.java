@@ -34,7 +34,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
@@ -51,7 +50,8 @@ public class MainActivity extends MenuDrawerActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
+		// BugSenseHandler.initAndStartSession(this,
+		// getString(R.string.bugsense));
 
 		handleSearchResult();
 		handleFavoriExport();
@@ -92,13 +92,6 @@ public class MainActivity extends MenuDrawerActivity {
 	}
 
 	private void showTutorial() {
-		new Handler().post(new Runnable() {
-			@Override
-			public void run() {
-				startActivity(new Intent(MainActivity.this, TutorialActivity.class));
-				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-			}
-		});
 	}
 
 	public void onUpgradeDone() {
@@ -109,7 +102,6 @@ public class MainActivity extends MenuDrawerActivity {
 
 		setBaseMenuVisible(true);
 		selectNavigationItem(0);
-		openDrawer();
 	}
 
 	private void handleFavoriExport() {

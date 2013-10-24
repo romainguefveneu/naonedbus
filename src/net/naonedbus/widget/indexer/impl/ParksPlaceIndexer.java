@@ -37,12 +37,12 @@ public class ParksPlaceIndexer extends ArraySectionIndexer<PublicPark> {
 
 	private static SparseArray<Integer> labels = new SparseArray<Integer>();
 	static {
-		labels.append(SECTION_PLEIN, R.string.parking_places_disponibles_zero);
-		labels.append(SECTION_LIMITE, R.string.parking_section_limite);
-		labels.append(SECTION_OUVERT, R.string.parking_section_disponible);
-		labels.append(SECTION_ABONNES, R.string.parking_abonne);
-		labels.append(SECTION_FERME, R.string.parking_ferme);
-		labels.append(SECTION_INVALIDE, R.string.parking_invalide);
+		labels.append(SECTION_PLEIN, R.string.thats_full);
+		labels.append(SECTION_LIMITE, R.string.not_many_spaces_left);
+		labels.append(SECTION_OUVERT, R.string.many_spaces);
+		labels.append(SECTION_ABONNES, R.string.subscribers);
+		labels.append(SECTION_FERME, R.string.closed);
+		labels.append(SECTION_INVALIDE, R.string.information_not_available);
 	}
 
 	@Override

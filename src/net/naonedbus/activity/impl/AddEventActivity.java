@@ -94,7 +94,7 @@ public class AddEventActivity extends SherlockActivity {
 				final String[] delais = AddEventActivity.this.getResources().getStringArray(R.array.delais);
 				addToCalendar(AddEventActivity.this, stop.getName(), mCommentText.getText().toString(),
 						getCalendarId(), Integer.valueOf(delais[mSpinnerDelai.getSelectedItemPosition()]), timestamp);
-				Toast.makeText(getApplicationContext(), getString(R.string.add_event_toast), Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), getString(R.string.event_created), Toast.LENGTH_LONG).show();
 				finish();
 			}
 		});

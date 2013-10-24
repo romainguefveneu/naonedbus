@@ -40,7 +40,7 @@ public class StopBookmarksArrayIndexer extends ArraySectionIndexer<StopBookmark>
 	protected String getSectionLabel(final Context context, final StopBookmark item) {
 		final Integer section = (Integer) item.getSection();
 		if (section == -1) {
-			return context.getString(R.string.section_groupe_aucun);
+			return context.getString(R.string.no_group);
 		} else {
 			return mGroupes.get(section);
 		}

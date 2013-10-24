@@ -39,7 +39,7 @@ public class EquipmentManager extends SQLiteManager<Equipment> {
 	private static EquipmentManager sInstance;
 
 	public static enum SubType {
-		PUBLIC_PARK(1, R.drawable.map_layer_parking), INCENTIVE_PARK(2, R.drawable.map_layer_parking_relai);
+		PUBLIC_PARK(1, R.drawable.map_layer_parking), PARK_AND_RIDE(2, R.drawable.map_layer_parking_relai);
 
 		private int mValue;
 		private int mDrawableRes;
@@ -281,22 +281,6 @@ public class EquipmentManager extends SQLiteManager<Equipment> {
 
 	public Cursor getBicloosCursor(final ContentResolver contentResolver, final String sortOrder) {
 		return getCursorByType(contentResolver, Type.TYPE_BICLOO, sortOrder);
-	}
-
-	public List<Equipment> getMarguerites(final ContentResolver contentResolver) {
-		return getByType(contentResolver, Type.TYPE_MARGUERITE);
-	}
-
-	public Cursor getMargueritesCursor(final ContentResolver contentResolver, final String sortOrder) {
-		return getCursorByType(contentResolver, Type.TYPE_MARGUERITE, sortOrder);
-	}
-
-	public List<Equipment> getCovoiturages(final ContentResolver contentResolver) {
-		return getByType(contentResolver, Type.TYPE_CARPOOL);
-	}
-
-	public Cursor getCarPoolCursor(final ContentResolver contentResolver, final String sortOrder) {
-		return getCursorByType(contentResolver, Type.TYPE_CARPOOL, sortOrder);
 	}
 
 	@Override

@@ -92,10 +92,10 @@ public class PublicParkArrayAdapter extends ArraySectionAdapter<PublicPark> {
 			final int placesDisponibles = parkingPublic.getAvailableSpaces();
 			couleur = context.getResources().getColor(ParkingUtils.getSeuilCouleurId(placesDisponibles));
 			if (placesDisponibles > 0) {
-				detail = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
+				detail = context.getResources().getQuantityString(R.plurals.available_spaces,
 						placesDisponibles, placesDisponibles);
 			} else {
-				detail = context.getString(R.string.parking_places_disponibles_zero);
+				detail = context.getString(R.string.thats_full);
 			}
 		} else {
 			detail = context.getString(parkingPublic.getStatus().getTitleRes());

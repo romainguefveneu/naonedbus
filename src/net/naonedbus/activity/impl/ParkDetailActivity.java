@@ -129,8 +129,7 @@ public class ParkDetailActivity extends SherlockMapActivity {
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		final MenuInflater menuInflater = getSupportMenuInflater();
 		menuInflater.inflate(R.menu.activity_parking_detail, menu);
-		menu.findItem(R.id.menu_phone).setVisible(
-				mParking.getPhone() != null && mParking.getPhone().length() != 0);
+		menu.findItem(R.id.menu_phone).setVisible(mParking.getPhone() != null && mParking.getPhone().length() != 0);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -283,7 +282,7 @@ class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 		}
 
 		activity.mParkingDescription.setText(detail);
-		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
+		ColorUtils.setBackgroundGradiant(activity.mParkingDescription, couleur);
 
 		if (parking.getStatus().equals(PublicParkStatus.INVALID)
 				|| parking.getStatus().equals(PublicParkStatus.SUBSCRIBERS)) {
@@ -304,19 +303,19 @@ class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder
-				.append(context.getString(R.string.parking))
+				.append(context.getString(R.string.car_park))
 				.append(" ")
 				.append(parking.getName())
 				.append("\n")
-				.append(context.getString(R.string.parking_titre_places_disponibles))
+				.append(context.getString(R.string.available_spaces))
 				.append(" ")
 				.append(parking.getAvailableSpaces())
 				.append("\n")
-				.append(context.getString(R.string.parking_titre_places_totales))
+				.append(context.getString(R.string.total_spaces))
 				.append(" ")
 				.append(parking.getTotalSpaces())
 				.append("\n")
-				.append(context.getString(R.string.parking_titre_mise_a_jour))
+				.append(context.getString(R.string.update))
 				.append(" ")
 				.append(parking.getTimestamp())
 				.append("\n")
@@ -333,9 +332,9 @@ class ParkingRelaiDetailAdapter implements ParkingDetailAdapter {
 	public void setObject(final CarPark p, final ParkDetailActivity activity) {
 		final Context context = activity.getApplicationContext();
 
-		activity.mParkingDescription.setText("\u2022 " + activity.getString(R.string.parking_relai));
-		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources()
-				.getColor(R.color.parking_state_blue)));
+		activity.mParkingDescription.setText("\u2022 " + activity.getString(R.string.park_and_ride));
+		ColorUtils.setBackgroundGradiant(activity.mParkingDescription,
+				context.getResources().getColor(R.color.parking_state_blue));
 	}
 
 	@Override
@@ -344,13 +343,13 @@ class ParkingRelaiDetailAdapter implements ParkingDetailAdapter {
 
 		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder
-				.append(context.getString(R.string.parking))
+				.append(context.getString(R.string.car_park))
 				.append(" ")
 				.append(parking.getName())
 				.append("\n")
-				.append(context.getString(R.string.parking_titre_places_disponibles))
+				.append(context.getString(R.string.available_spaces))
 				.append("\n")
-				.append(context.getString(R.string.parking_titre_mise_a_jour))
+				.append(context.getString(R.string.update))
 				.append("\n")
 				.append(String.format(Locale.ENGLISH, ParkDetailActivity.SMS_NAVIGATION_URL, parking.getLatitude(),
 						parking.getLongitude()));

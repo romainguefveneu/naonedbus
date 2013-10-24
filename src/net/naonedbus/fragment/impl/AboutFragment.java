@@ -125,7 +125,7 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 	}
 
 	private void fillThanks(final ViewGroup parent) {
-		fillView(parent, R.array.thanks, R.array.thanks_urls);
+		fillView(parent, R.array.thanks_names, R.array.thanks_urls);
 	}
 
 	private void fillView(final ViewGroup parent, final int idLabels, final int idUrls) {

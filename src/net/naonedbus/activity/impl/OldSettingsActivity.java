@@ -23,14 +23,11 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
 import net.naonedbus.manager.impl.ScheduleManager;
-import net.naonedbus.utils.CalendarUtils;
 import net.naonedbus.widget.item.impl.MainMenuItem;
 
 import org.apache.commons.io.FileUtils;
@@ -53,7 +50,6 @@ import com.bugsense.trace.BugSenseHandler;
 public class OldSettingsActivity extends SherlockPreferenceActivity {
 
 	private ListPreference mNavigationHome;
-	private ListPreference mCalendrierDefaut;
 	private Preference mClearCachePlan;
 	private Preference mClearCacheHoraires;
 
@@ -66,12 +62,10 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
 		mNavigationHome = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_NAVIGATION_HOME);
-		mCalendrierDefaut = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_CALENDRIER_DEFAUT);
 		mClearCachePlan = getPreferenceScreen().findPreference("plan.cache.clear");
 		mClearCacheHoraires = getPreferenceScreen().findPreference("horaires.cache.clear");
 
 		initNavigationHome(preferences);
-		initCalendar(preferences);
 		initClearCache(preferences);
 	}
 
@@ -113,23 +107,6 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 				return true;
 			}
 		});
-	}
-
-	/**
-	 * Initier la liste des calendriers
-	 * 
-	 * @param preferences
-	 */
-	private void initCalendar(final SharedPreferences preferences) {
-		mCalendrierDefaut.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-				setCalendarSummary((String) newValue);
-				return true;
-			}
-		});
-		setCalendarSummary(preferences);
-		fillCalendars(mCalendrierDefaut);
 	}
 
 	/**
@@ -210,51 +187,6 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 		}
 
 	};
-
-	/**
-	 * Lister les calendrier dans la ListPreference passée en paramètre
-	 * 
-	 * @param list
-	 */
-	private void fillCalendars(final ListPreference list) {
-		CharSequence[] entriesName;
-		CharSequence[] entriesId;
-		final Map<Integer, String> calendars = CalendarUtils.getCalendars(getContentResolver());
-
-		entriesName = new String[calendars.size()];
-		entriesId = new String[calendars.size()];
-
-		int i = 0;
-		for (final Entry<Integer, String> cal : calendars.entrySet()) {
-			entriesName[i] = cal.getValue();
-			entriesId[i++] = String.valueOf(cal.getKey());
-		}
-		list.setEntries(entriesName);
-		list.setEntryValues(entriesId);
-	}
-
-	/**
-	 * Afficher le sous-titre du calendrier
-	 * 
-	 * @param preferences
-	 */
-	private void setCalendarSummary(final SharedPreferences preferences) {
-		final String calendarId = preferences.getString(NBApplication.PREF_CALENDRIER_DEFAUT, null);
-		setCalendarSummary(calendarId);
-	}
-
-	/**
-	 * Afficher le sous-titre du calendrier
-	 * 
-	 * @param id
-	 */
-	private void setCalendarSummary(final String id) {
-		if (id != null) {
-			mCalendrierDefaut.setSummary(CalendarUtils.getCalendarName(getContentResolver(), id));
-		} else {
-			mCalendrierDefaut.setSummary(R.string.pref_calendar_summary);
-		}
-	}
 
 	/**
 	 * Calculer la taille du cache

@@ -30,7 +30,7 @@
         style="@style/CardTitle"
         android:paddingBottom="@dimen/padding_small"
         android:paddingTop="@dimen/padding_small"
-        android:text="@string/card_horaires_title" />
+        android:text="@string/schedules" />
 
     <ProgressBar
         android:id="@android:id/progress"

@@ -51,13 +51,13 @@
 
                 <TextView
                     style="@style/SectionTitle.Small"
-                    android:text="@string/add_event_calendar_select" />
+                    android:text="@string/calendar_selection" />
 
                 <Spinner
                     android:id="@+id/spinnerCalendrier"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:prompt="@string/add_event_calendar_select" >
+                    android:prompt="@string/calendar_selection" >
 
                     <requestFocus />
                 </Spinner>
@@ -65,18 +65,18 @@
                 <TextView
                     style="@style/SectionTitle.Small"
                     android:layout_marginTop="10dp"
-                    android:text="@string/add_event_delai_select" />
+                    android:text="@string/deadline_reminder" />
 
                 <Spinner
                     android:id="@+id/spinnerDelai"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:prompt="@string/add_event_delai_select" />
+                    android:prompt="@string/deadline_reminder" />
 
                 <TextView
                     style="@style/SectionTitle.Small"
                     android:layout_marginTop="10dp"
-                    android:text="@string/add_event_message" />
+                    android:text="@string/message" />
 
                 <EditText
                     android:id="@+id/comment"

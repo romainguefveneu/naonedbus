@@ -26,7 +26,7 @@ import net.naonedbus.manager.impl.EquipmentManager.SubType;
 public class ParkingsRelaisFragment extends EquipmentFragment {
 
 	public ParkingsRelaisFragment() {
-		super(R.layout.fragment_listview_section, Type.TYPE_PARK, SubType.INCENTIVE_PARK);
+		super(R.layout.fragment_listview_section, Type.TYPE_PARK, SubType.PARK_AND_RIDE);
 	}
 
 }

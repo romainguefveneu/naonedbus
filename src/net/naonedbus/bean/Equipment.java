@@ -28,35 +28,19 @@ public class Equipment implements SectionItem, Comparable<Equipment> {
 	 */
 	public static enum Type {
 		/**
-		 * Défini le type Arrêt Tan.
+		 * Tan Stop.
 		 */
-		TYPE_STOP(0, R.string.map_calque_arret, R.drawable.map_layer_arret, R.color.map_pin_arret,
-				R.drawable.map_pin_arret),
+		TYPE_STOP(0, R.string.tan_stops, R.drawable.map_layer_arret, R.color.map_pin_arret, R.drawable.map_pin_arret),
 		/**
-		 * Défini le type Parking.
+		 * Car park.
 		 */
-		TYPE_PARK(1, R.string.map_calque_parkings, R.drawable.map_layer_parking, R.color.map_pin_parking,
+		TYPE_PARK(1, R.string.car_parks, R.drawable.map_layer_parking, R.color.map_pin_parking,
 				R.drawable.map_pin_parking),
 		/**
-		 * Défini le type Bicloo.
+		 * Bicloo station.
 		 */
-		TYPE_BICLOO(2, R.string.map_calque_bicloo, R.drawable.map_layer_bicloo, R.color.map_pin_bicloo,
-				R.drawable.map_pin_bicloo),
-		/**
-		 * Défini le type Marguerite.
-		 */
-		TYPE_MARGUERITE(3, R.string.map_calque_marguerite, R.drawable.map_layer_marguerite, R.color.map_pin_marguerite,
-				R.drawable.map_pin_marguerite),
-		/**
-		 * Défini le type Covoiturage.
-		 */
-		TYPE_CARPOOL(4, R.string.map_calque_covoiturage, R.drawable.map_layer_covoiturage, R.color.map_pin_covoiturage,
-				R.drawable.map_pin_covoiturage),
-		/**
-		 * Défini le type Lila.
-		 */
-		TYPE_LILA(5, R.string.map_calque_lila, R.drawable.map_layer_arret, R.color.map_pin_lila,
-				R.drawable.map_pin_lila);
+		TYPE_BICLOO(2, R.string.bicloos_stations, R.drawable.map_layer_bicloo, R.color.map_pin_bicloo,
+				R.drawable.map_pin_bicloo);
 
 		private final int mId;
 		private final int mTitleRes;

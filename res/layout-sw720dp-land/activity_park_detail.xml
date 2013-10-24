@@ -60,7 +60,7 @@
                 android:layout_alignBaseline="@+id/placesDisponiblesLabel"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/totalSpaces"
-                android:text="@string/parking_titre_places_totales" />
+                android:text="@string/total_spaces" />
 
             <TextView
                 android:id="@id/itemPhone"
@@ -73,7 +73,7 @@
                 style="@style/SectionTitle.Small"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/itemPhone"
-                android:text="@string/parking_titre_telephone" />
+                android:text="@string/phone" />
 
             <!-- Right -->
 
@@ -90,7 +90,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/availableSpaces"
                 android:layout_marginBottom="@dimen/padding_small"
-                android:text="@string/parking_titre_places_disponibles" />
+                android:text="@string/available_spaces" />
         </RelativeLayout>
         <!-- Footer -->
 

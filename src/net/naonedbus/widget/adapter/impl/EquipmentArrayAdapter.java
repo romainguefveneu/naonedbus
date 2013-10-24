@@ -68,9 +68,6 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 		adapters.append(Equipment.Type.TYPE_STOP.getId(), new ArretTypeAdapter(this));
 		adapters.append(Equipment.Type.TYPE_PARK.getId(), new ParkingTypeAdapter(this));
 		adapters.append(Equipment.Type.TYPE_BICLOO.getId(), defaultTypeAdapter);
-		adapters.append(Equipment.Type.TYPE_CARPOOL.getId(), defaultTypeAdapter);
-		adapters.append(Equipment.Type.TYPE_LILA.getId(), defaultTypeAdapter);
-		adapters.append(Equipment.Type.TYPE_MARGUERITE.getId(), defaultTypeAdapter);
 	}
 
 	private void initUnschedulers() {
@@ -306,10 +303,10 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 				final int placesDisponibles = parkingPublic.getAvailableSpaces();
 				couleur = context.getResources().getColor(ParkingUtils.getSeuilCouleurId(placesDisponibles));
 				if (placesDisponibles > 0) {
-					detail = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
-							placesDisponibles, placesDisponibles);
+					detail = context.getResources().getQuantityString(R.plurals.available_spaces, placesDisponibles,
+							placesDisponibles);
 				} else {
-					detail = context.getString(R.string.parking_places_disponibles_zero);
+					detail = context.getString(R.string.thats_full);
 				}
 			} else {
 				detail = context.getString(parkingPublic.getStatus().getTitleRes());

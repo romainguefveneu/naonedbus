@@ -49,7 +49,7 @@ public class TranslationFragment extends CustomFragment implements OnClickListen
 	}
 
 	private void fillTranslators(final ViewGroup parent) {
-		fillView(parent, R.array.translators, R.array.translators_urls);
+		fillView(parent, R.array.translators_names, R.array.translators_urls);
 	}
 
 	private void fillView(final ViewGroup parent, final int idLabels, final int idUrls) {

@@ -4,7 +4,6 @@
         android:id="@id/menu_refresh"
         android:actionLayout="@layout/action_item_refresh"
         android:showAsAction="always"
-        android:title="@string/loading"
         android:visible="false"/>
     <item
         android:id="@id/menu_search"
@@ -16,7 +15,7 @@
         android:id="@id/menu_layers"
         android:icon="@drawable/ic_action_labels"
         android:showAsAction="always"
-        android:title="@string/map_calques">
+        android:title="@string/layers">
         <menu>
         </menu>
     </item>

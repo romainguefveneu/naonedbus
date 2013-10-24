@@ -200,14 +200,14 @@ public class ItineraryDetailFragment extends CustomListFragment {
 
 			if ("WALK".equals(legWrapper.getMode())) {
 				if (legWrapper.getType() == Type.IN) {
-					builder.append(getString(R.string.itinerary_go_to, place.name));
+					builder.append(getString(R.string.go_to, place.name));
 				}
 			} else {
 				if (legWrapper.getType() == Type.IN) {
 					builder.append(FormatUtils.formatLigneArretSens(getActivity(), route.getLetter(), place.name,
 							legWrapper.getHeadsign()));
 				} else {
-					builder.append(getString(R.string.itinerary_get_off, place.name));
+					builder.append(getString(R.string.get_off, place.name));
 				}
 			}
 			builder.append("\n");

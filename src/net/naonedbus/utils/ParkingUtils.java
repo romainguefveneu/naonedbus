@@ -44,11 +44,11 @@ public class ParkingUtils {
 	public static int getSeuilTextId(int placesDisponibles) {
 		int textResId;
 		if (placesDisponibles < SEUIL_ROUGE) {
-			textResId = R.string.parking_places_disponibles_zero;
+			textResId = R.string.thats_full;
 		} else if (placesDisponibles < SEUIL_ORANGE) {
-			textResId = R.string.parking_section_limite;
+			textResId = R.string.not_many_spaces_left;
 		} else {
-			textResId = R.string.parking_section_disponible;
+			textResId = R.string.many_spaces;
 		}
 
 		return textResId;

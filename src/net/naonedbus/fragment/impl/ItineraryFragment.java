@@ -241,7 +241,7 @@ public class ItineraryFragment extends AbstractListFragment implements
 			final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
 			if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
 				mFromLocation.set(currentLocation);
-				mFromAddressTextView.setText(R.string.itineraire_current_location);
+				mFromAddressTextView.setText(R.string.my_location);
 
 				mIconFromResId = R.drawable.ic_action_locate_blue;
 
@@ -305,7 +305,7 @@ public class ItineraryFragment extends AbstractListFragment implements
 
 	private void requestAddress(final int requestCode, final CharSequence query) {
 		final Intent intent = new Intent(getActivity(), AddressSearchActivity.class);
-		if (query != getString(R.string.itineraire_current_location)) {
+		if (query != getString(R.string.my_location)) {
 			intent.putExtra(AddressSearchFragment.PARAM_QUERY, query);
 		}
 

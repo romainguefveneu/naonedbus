@@ -56,7 +56,7 @@ public class MapCard extends Card<Bitmap> {
 
 	public MapCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
 			final Float latitude, final Float longitude) {
-		super(context, loaderManager, fragmentManager, R.string.card_plan_title, R.layout.card_map);
+		super(context, loaderManager, fragmentManager, R.string.on_the_map, R.layout.card_map);
 
 		mLatitude = latitude;
 		mLongitude = longitude;
@@ -71,7 +71,7 @@ public class MapCard extends Card<Bitmap> {
 	@Override
 	protected Intent getMoreIntent() {
 		final Intent intent = new Intent(getContext(), MapActivity.class);
-		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_map);
+		intent.putExtra(Intent.EXTRA_TITLE, R.string.show_on_map);
 		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_navigate);
 		return intent;
 	}

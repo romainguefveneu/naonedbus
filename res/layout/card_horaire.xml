@@ -39,7 +39,7 @@
         android:layout_below="@id/colLeft"
         android:paddingLeft="1dp"
         android:tag="@string/cardDelaiTag"
-        android:text="@string/card_horaire_previous" />
+        android:text="@string/previous" />
 
     <TextView
         android:id="@id/colRight"

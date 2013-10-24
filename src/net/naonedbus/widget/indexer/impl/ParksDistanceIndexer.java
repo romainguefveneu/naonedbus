@@ -33,27 +33,27 @@ public class ParksDistanceIndexer extends ArraySectionIndexer<PublicPark> {
 	@Override
 	protected void prepareSection(PublicPark item) {
 		if (item.getDistance() == null) {
-			item.setSection(R.string.section_distance_none);
+			item.setSection(R.string.no_distance_information);
 		} else if (item.getDistance() > 100000) {
-			item.setSection(R.string.section_distance_100000);
+			item.setSection(R.string.much_too_far);
 		} else if (item.getDistance() > 50000) {
-			item.setSection(R.string.section_distance_50000);
+			item.setSection(R.string.less_than_100km);
 		} else if (item.getDistance() > 40000) {
-			item.setSection(R.string.section_distance_40000);
+			item.setSection(R.string.less_than_50km);
 		} else if (item.getDistance() > 30000) {
-			item.setSection(R.string.section_distance_30000);
+			item.setSection(R.string.less_than_40km);
 		} else if (item.getDistance() > 20000) {
-			item.setSection(R.string.section_distance_20000);
+			item.setSection(R.string.less_than_30km);
 		} else if (item.getDistance() > 10000) {
-			item.setSection(R.string.section_distance_10000);
+			item.setSection(R.string.less_than_20km);
 		} else if (item.getDistance() > 5000) {
-			item.setSection(R.string.section_distance_5000);
+			item.setSection(R.string.less_than_10km);
 		} else if (item.getDistance() > 1000) {
-			item.setSection(R.string.section_distance_1000);
+			item.setSection(R.string.less_than_5km);
 		} else if (item.getDistance() > 500) {
-			item.setSection(R.string.section_distance_500);
+			item.setSection(R.string.less_than_1km);
 		} else {
-			item.setSection(R.string.section_distance_0);
+			item.setSection(R.string.less_than_500m);
 		}
 	}
 

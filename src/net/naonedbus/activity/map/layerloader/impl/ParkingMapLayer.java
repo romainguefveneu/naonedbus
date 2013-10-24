@@ -121,17 +121,17 @@ public class ParkingMapLayer implements MapLayer {
 					placesDisponibles = ((PublicPark) parking).getAvailableSpaces();
 					if (parkingPublic.getStatus() == PublicParkStatus.OPEN) {
 						if (placesDisponibles > 0) {
-							details = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
+							details = context.getResources().getQuantityString(R.plurals.available_spaces,
 									placesDisponibles, placesDisponibles);
 						} else {
-							details = context.getResources().getString(R.string.parking_places_disponibles_zero);
+							details = context.getResources().getString(R.string.thats_full);
 						}
 					} else {
 						details = context.getResources().getString(parkingPublic.getStatus().getTitleRes());
 					}
 
 				} else if (parking instanceof IncentivePark) {
-					details = context.getResources().getString(R.string.map_calque_parking_relai);
+					details = context.getResources().getString(R.string.park_and_ride);
 				}
 
 				return details;

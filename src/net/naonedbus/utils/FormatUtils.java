@@ -156,9 +156,9 @@ public abstract class FormatUtils {
 	}
 
 	public static String formatBicloos(final Context context, final int availableBikes, final int availableStands) {
-		final String bikes = context.getResources().getQuantityString(R.plurals.bicloo_velos_disponibles,
+		final String bikes = context.getResources().getQuantityString(R.plurals.remaining_bicloos,
 				availableBikes, availableBikes);
-		final String stands = context.getResources().getQuantityString(R.plurals.bicloo_places_disponibles,
+		final String stands = context.getResources().getQuantityString(R.plurals.remaining_slots,
 				availableStands, availableStands);
 
 		final String description = context.getResources().getQuantityString(R.plurals.bicloo,
@@ -172,10 +172,10 @@ public abstract class FormatUtils {
 		String detail;
 		if (status == PublicParkStatus.OPEN) {
 			if (placesDisponibles > 0) {
-				detail = context.getResources().getQuantityString(R.plurals.parking_places_disponibles,
+				detail = context.getResources().getQuantityString(R.plurals.available_spaces,
 						placesDisponibles, placesDisponibles);
 			} else {
-				detail = context.getString(R.string.parking_places_disponibles_zero);
+				detail = context.getString(R.string.thats_full);
 			}
 		} else {
 			detail = context.getString(status.getTitleRes());

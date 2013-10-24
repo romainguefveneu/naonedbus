@@ -29,7 +29,6 @@ import net.naonedbus.activity.impl.OldSettingsActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.fragment.header.BicloosFragmentHeader;
 import net.naonedbus.fragment.header.CarParksFragmentHeader;
-import net.naonedbus.fragment.header.EquipmentsFragmentHeader;
 import net.naonedbus.fragment.header.FragmentHeader;
 import net.naonedbus.fragment.header.ItineraryFragmentHeader;
 import net.naonedbus.fragment.header.MainFragmentHeader;
@@ -55,9 +54,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -94,7 +93,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
 	private TabsAdapter mSectionsPagerAdapter;
-	private FrameLayout mSingleFragmentContent;
+	private ViewGroup mSingleFragmentContent;
+	private ViewGroup mMultipleFragmentContent;
 
 	private final OnItemClickListener mOnMenuItemCliclListener = new OnItemClickListener() {
 		@Override
@@ -152,7 +152,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		mTabs.setViewPager(mViewPager);
 		mTabs.setShouldExpand(!getResources().getBoolean(R.bool.isTablet));
 
-		mSingleFragmentContent = (FrameLayout) findViewById(R.id.singleFragmentContent);
+		mSingleFragmentContent = (ViewGroup) findViewById(R.id.singleFragmentContent);
+		mMultipleFragmentContent = (ViewGroup) findViewById(R.id.multipleFragmentContent);
 
 		if (savedInstanceState != null && savedInstanceState.containsKey(BUNDLE_MENU_POSITION)) {
 			final String[] fragmentsTags = savedInstanceState.getStringArray(BUNDLE_FRAGMENTS_TAGS);
@@ -330,7 +331,12 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		mTabs.notifyDataSetChanged();
 		mViewPager.setCurrentItem(selectedPosition);
-		mViewPager.setVisibility(View.VISIBLE);
+
+		if (mViewPager.getVisibility() != View.VISIBLE) {
+			mViewPager.setVisibility(View.VISIBLE);
+			mMultipleFragmentContent.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fragment_in));
+		}
+
 		mSingleFragmentContent.setVisibility(View.GONE);
 	}
 
@@ -353,18 +359,12 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	public static List<MainMenuItem> getMainMenuItems() {
 		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
 		items.add(new MainMenuItem(R.string.home, R.drawable.ic_action_home, new MainFragmentHeader()));
-		items.add(new MainMenuItem(R.string.itineraries, R.drawable.ic_action_direction,
-				new ItineraryFragmentHeader()));
+		items.add(new MainMenuItem(R.string.itineraries, R.drawable.ic_action_direction, new ItineraryFragmentHeader()));
 		items.add(new MainMenuItem(R.string.traffic_information, R.drawable.ic_action_warning,
 				new TanNewsFragmentHeader()));
-		items.add(new MainMenuItem(R.string.bicloos, R.drawable.ic_action_bicloo,
-				new BicloosFragmentHeader()));
-		items.add(new MainMenuItem(R.string.car_parks, R.drawable.ic_action_parking,
-				new CarParksFragmentHeader()));
-		items.add(new MainMenuItem(R.string.mobility, R.drawable.ic_action_place,
-				new EquipmentsFragmentHeader()));
-		items.add(new MainMenuItem(R.string.search, R.drawable.ic_action_search,
-				new SearchFragmentHeader()));
+		items.add(new MainMenuItem(R.string.bicloos, R.drawable.ic_action_bicloo, new BicloosFragmentHeader()));
+		items.add(new MainMenuItem(R.string.car_parks, R.drawable.ic_action_parking, new CarParksFragmentHeader()));
+		items.add(new MainMenuItem(R.string.search, R.drawable.ic_action_search, new SearchFragmentHeader()));
 		items.add(new MainMenuItem(R.string.map, R.drawable.ic_action_map, new MapFragmentHeader()));
 
 		return items;

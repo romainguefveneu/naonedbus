@@ -27,23 +27,10 @@
     android:focusableInTouchMode="false"
     android:minHeight="?android:attr/listPreferredItemHeight" >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" >
-
-        <ProgressBar
-            android:id="@android:id/progress"
-            android:layout_width="25dip"
-            android:layout_height="25dip" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@android:id/progress"
-            android:paddingLeft="5dip"
-            android:text="@string/loading"
-            android:textSize="20dip" />
-    </RelativeLayout>
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="25dip"
+        android:layout_height="25dip"
+        android:layout_centerInParent="true" />
 
 </RelativeLayout>

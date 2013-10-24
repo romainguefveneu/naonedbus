@@ -23,10 +23,10 @@ import net.naonedbus.R;
 public enum PublicParkStatus {
 
 	//@formatter:off
-	INVALID(0, R.string.parking_invalide, R.color.parking_state_undefined), 
-	CLOSED(1, R.string.parking_ferme,R.color.parking_state_closed), 
-	SUBSCRIBERS(2, R.string.parking_abonne, R.color.parking_state_subscriber), 
-	OPEN(5, R.string.parking, R.color.parking_state_blue);
+	INVALID(0, R.string.information_not_available, R.color.parking_state_undefined), 
+	CLOSED(1, R.string.closed,R.color.parking_state_closed), 
+	SUBSCRIBERS(2, R.string.subscribers, R.color.parking_state_subscriber), 
+	OPEN(5, R.string.car_park, R.color.parking_state_blue);
 	//@formatter:on
 
 	private int mValue;
