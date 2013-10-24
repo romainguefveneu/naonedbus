@@ -125,13 +125,16 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0) {
 			@Override
 			public void onDrawerClosed(final View view) {
-				getSupportActionBar().setTitle(mTitle);
+				getSupportActionBar().setDisplayShowTitleEnabled(true);
+				getSupportActionBar().setDisplayUseLogoEnabled(false);
 				invalidateOptionsMenu();
 			}
 
 			@Override
 			public void onDrawerOpened(final View drawerView) {
-				getSupportActionBar().setTitle(R.string.app_name);
+				getSupportActionBar().setDisplayShowTitleEnabled(false);
+				getSupportActionBar().setDisplayUseLogoEnabled(true);
+				getSupportActionBar().setLogo(R.drawable.ic_logo);
 				invalidateOptionsMenu();
 			}
 		};
