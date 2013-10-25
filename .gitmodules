@@ -4,9 +4,6 @@
 [submodule "third-party/ShowcaseView"]
 	path = third-party/ShowcaseView
 	url = https://github.com/romainguefveneu/ShowcaseView.git
-[submodule "third-party/Android-ViewPagerIndicator"]
-	path = third-party/Android-ViewPagerIndicator
-	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git
 [submodule "third-party/GridLayout"]
 	path = third-party/GridLayout
 	url = https://github.com/dlew/android-gridlayout.git
