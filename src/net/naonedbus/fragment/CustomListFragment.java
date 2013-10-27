@@ -91,6 +91,8 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 	private DateTime mNextUpdate = null;
 	/** Minutes pendant lesquelles le contenu est considéré comme à jour. */
 	private int mTimeToLive = 5;
+	/** Do we need to show a progressbar ? */
+	private boolean mIsFastLoading;
 
 	public CustomListFragment(final int layoutId) {
 		mLayoutId = layoutId;
@@ -158,8 +160,10 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		super.onStop();
 		if (DBG)
 			Log.d(LOG_TAG + "$" + getClass().getSimpleName(), "onStop");
+	}
 
-		// mCurrentState = null;
+	protected void setFastLoading(boolean isFastLoading) {
+		mIsFastLoading = isFastLoading;
 	}
 
 	protected void bindView(final View view, final Bundle savedInstanceState) {
@@ -526,7 +530,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 		};
 
-		if (getListAdapter() == null || getListAdapter().getCount() == 0)
+		if (!mIsFastLoading && (getListAdapter() == null || getListAdapter().getCount() == 0))
 			showLoader();
 		onPreExecute();
 

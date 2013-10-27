@@ -39,11 +39,13 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 		TYPE_STANDARD, TYPE_METRO
 	}
 
+	private final LayoutInflater mLayoutInflater;
 	private ViewType mViewType = ViewType.TYPE_STANDARD;
 	private int mNearestPosition = -1;
 
 	public StopArrayAdapter(final Context context, final List<Stop> objects) {
 		super(context, 0, objects);
+		mLayoutInflater = LayoutInflater.from(getContext());
 	}
 
 	public void setViewType(final ViewType viewType) {
@@ -53,7 +55,7 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_stop, null);
+			convertView = mLayoutInflater.inflate(R.layout.list_item_stop, null);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);

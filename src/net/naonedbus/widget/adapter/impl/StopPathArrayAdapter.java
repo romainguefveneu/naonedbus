@@ -33,19 +33,21 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ParkArrayAdapter extends ArrayAdapter<StopPath> {
+public class StopPathArrayAdapter extends ArrayAdapter<StopPath> {
 
+	private final LayoutInflater mLayoutInflater;
 	private final Typeface mTypeface;
 
-	public ParkArrayAdapter(final Context context, final List<StopPath> objects) {
+	public StopPathArrayAdapter(final Context context, final List<StopPath> objects) {
 		super(context, 0, objects);
 		mTypeface = FontUtils.getRobotoBoldCondensed(context);
+		mLayoutInflater = LayoutInflater.from(getContext());
 	}
 
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_stop_path, null);
+			convertView = mLayoutInflater.inflate(R.layout.list_item_stop_path, null);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);
@@ -56,7 +58,7 @@ public class ParkArrayAdapter extends ArrayAdapter<StopPath> {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final StopPath parcours = getItem(position);
 		holder.itemSymbole.setText(parcours.getRouteLetter());
-		ColorUtils.setBackgroundGradiant(holder.itemSymbole, parcours.getBackColor());
+		ColorUtils.setBackgroundRoundedGradiant(holder.itemSymbole, parcours.getBackColor());
 		holder.itemSymbole.setTextColor(parcours.getFrontColor());
 		holder.itemTitle.setText(FormatUtils.formatSens(parcours.getDirectionName()));
 	}

@@ -28,10 +28,10 @@ import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.StopPath;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.CustomListFragment;
-import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.manager.impl.EquipmentManager;
+import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.manager.impl.StopPathManager;
-import net.naonedbus.widget.adapter.impl.ParkArrayAdapter;
+import net.naonedbus.widget.adapter.impl.StopPathArrayAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +48,8 @@ public class StopPathFragment extends CustomListFragment {
 
 	public StopPathFragment() {
 		super(R.layout.fragment_listview);
+		setFastLoading(true);
+
 		mEquipementManager = EquipmentManager.getInstance();
 	}
 
@@ -74,8 +76,8 @@ public class StopPathFragment extends CustomListFragment {
 		super.onListItemClick(l, v, position, id);
 		final StopPath item = (StopPath) l.getItemAtPosition(position);
 
-		final StopManager arretManager = StopManager.getInstance();
-		final Stop stop = arretManager.getSingle(getActivity().getContentResolver(), item.getId());
+		final StopManager manager = StopManager.getInstance();
+		final Stop stop = manager.getSingle(getActivity().getContentResolver(), item.getId());
 
 		final Intent intent = new Intent(getActivity(), StopDetailActivity.class);
 		intent.putExtra(StopDetailActivity.PARAM_ARRET, stop);
@@ -85,12 +87,13 @@ public class StopPathFragment extends CustomListFragment {
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
-		final StopPathManager parcoursManager = StopPathManager.getInstance();
-		final List<StopPath> parcoursList = parcoursManager.getList(context.getContentResolver(),
-				mStation.getNormalizedName());
-		final ListAdapter adapter = new ParkArrayAdapter(context, parcoursList);
+		final StopPathManager manager = StopPathManager.getInstance();
+		final List<StopPath> parcoursList = manager.getList(context.getContentResolver(), mStation.getNormalizedName());
+
+		final ListAdapter adapter = new StopPathArrayAdapter(context, parcoursList);
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		result.setResult(adapter);
+
 		return result;
 	}
 

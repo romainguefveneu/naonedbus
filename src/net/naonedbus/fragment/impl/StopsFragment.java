@@ -24,11 +24,11 @@ import java.util.List;
 
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.StopDetailActivity;
-import net.naonedbus.activity.impl.StopsActivity.OnDirectionChanged;
-import net.naonedbus.activity.impl.SendNewsActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.impl.SendNewsActivity;
+import net.naonedbus.activity.impl.StopDetailActivity;
+import net.naonedbus.activity.impl.StopsActivity.OnDirectionChanged;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Direction;
 import net.naonedbus.bean.Route;
@@ -38,8 +38,8 @@ import net.naonedbus.comparator.StopComparator;
 import net.naonedbus.comparator.StopOrderComparator;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
-import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.manager.impl.StopBookmarkManager;
+import net.naonedbus.manager.impl.StopManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.utils.InfoDialogUtils;
@@ -70,6 +70,7 @@ import com.actionbarsherlock.view.MenuItem;
 public class StopsFragment extends CustomListFragment implements OnDirectionChanged, MyLocationListener {
 
 	public static final String PARAM_ROUTE = "route";
+	public static final String PARAM_DIRECTION = "direction";
 
 	private final static int SORT_NAME = 0;
 	private final static int SORT_ORDER = 1;
@@ -108,6 +109,8 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 
 	public StopsFragment() {
 		super(R.layout.fragment_listview);
+		setFastLoading(true);
+
 		mLocationProvider = NBApplication.getLocationProvider();
 		mLocationProvider.addListener(this);
 
@@ -131,6 +134,7 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		registerForContextMenu(getListView());
 
 		mRoute = getArguments().getParcelable(PARAM_ROUTE);
+		mDirection = getArguments().getParcelable(PARAM_DIRECTION);
 
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NAME);
@@ -161,6 +165,8 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 				}
 			}
 		};
+
+		loadContent();
 	}
 
 	@Override
@@ -359,8 +365,7 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		if (mCurrentFilter == FILTER_ALL) {
 			setEmptyMessageValues(R.string.no_data, R.string.sorry_bit_silly, R.drawable.sad_face);
 		} else {
-			setEmptyMessageValues(R.string.no_bookmark, R.string.no_bookmarked_stops,
-					R.drawable.favori);
+			setEmptyMessageValues(R.string.no_bookmark, R.string.no_bookmarked_stops, R.drawable.favori);
 		}
 	}
 
@@ -383,8 +388,8 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		loadDistances();
 
 		if (viewType == ViewType.TYPE_METRO) {
-			InfoDialogUtils.showIfNecessary(getActivity(), R.string.sort_by_location,
-					R.string.sort_by_location_message);
+			InfoDialogUtils
+					.showIfNecessary(getActivity(), R.string.sort_by_location, R.string.sort_by_location_message);
 		}
 	}
 
@@ -418,7 +423,8 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 			final StopManager arretManager = StopManager.getInstance();
 			final List<Stop> arrets;
 			if (mCurrentFilter == FILTER_ALL) {
-				arrets = arretManager.getAll(context.getContentResolver(), mDirection.getRouteCode(), mDirection.getCode());
+				arrets = arretManager.getAll(context.getContentResolver(), mDirection.getRouteCode(),
+						mDirection.getCode());
 			} else {
 				arrets = arretManager.getBookmarks(context.getContentResolver(), mDirection.getRouteCode(),
 						mDirection.getCode());

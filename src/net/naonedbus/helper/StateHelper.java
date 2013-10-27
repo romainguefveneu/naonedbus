@@ -51,12 +51,12 @@ public class StateHelper {
 		mSharedPreferences.edit().putInt(fragment.getClass().getSimpleName() + FILTER, filterType).commit();
 	}
 
-	public int getSens(String routeCode, int defaultSens) {
-		return mSharedPreferences.getInt("direction" + routeCode, defaultSens);
+	public int getDirection(String routeCode, int defaultDirectionId) {
+		return mSharedPreferences.getInt("direction" + routeCode, defaultDirectionId);
 	}
 
-	public void setSens(String routeCode, int idSens) {
-		mSharedPreferences.edit().putInt("direction" + routeCode, idSens).commit();
+	public void setDirection(String routeCode, int directionId) {
+		mSharedPreferences.edit().putInt("direction" + routeCode, directionId).commit();
 	}
 
 }

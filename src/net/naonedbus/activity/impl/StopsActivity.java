@@ -22,8 +22,8 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.bean.Route;
 import net.naonedbus.bean.Direction;
+import net.naonedbus.bean.Route;
 import net.naonedbus.fragment.impl.StopsFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.manager.impl.DirectionManager;
@@ -74,11 +74,13 @@ public class StopsActivity extends OneFragmentActivity {
 		mRoute = getIntent().getParcelableExtra(PARAM_ROUTE);
 
 		final List<Direction> directions = directionManager.getAll(getContentResolver(), mRoute.getCode());
-		final int directionId = mStateHelper.getSens(mRoute.getCode(), directions.get(0).getId());
+		final int directionId = mStateHelper.getDirection(mRoute.getCode(), directions.get(0).getId());
+		final Direction direction = directionManager.getSingle(getContentResolver(), directionId);
 
 		if (savedInstanceState == null) {
 			final Bundle bundle = new Bundle();
 			bundle.putParcelable(StopsFragment.PARAM_ROUTE, mRoute);
+			bundle.putParcelable(StopsFragment.PARAM_DIRECTION, direction);
 
 			addFragment(StopsFragment.class, bundle);
 		}
@@ -135,7 +137,7 @@ public class StopsActivity extends OneFragmentActivity {
 	@Override
 	protected void onStop() {
 		if (mDirection != null)
-			mStateHelper.setSens(mRoute.getCode(), mDirection.getId());
+			mStateHelper.setDirection(mRoute.getCode(), mDirection.getId());
 		super.onStop();
 	}
 
