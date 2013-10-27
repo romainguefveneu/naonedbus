@@ -164,7 +164,7 @@ public class StopBookmarkManager extends SQLiteManager<StopBookmark> {
 			notifyOnAdd(item);
 	}
 
-	public void addFavori(final SQLiteDatabase db, final StopBookmark item) {
+	public void insert(final SQLiteDatabase db, final StopBookmark item) {
 		final ContentValues values = getContentValues(item);
 		db.insert(StopBookmarkTable.TABLE_NAME, null, values);
 
@@ -172,14 +172,14 @@ public class StopBookmarkManager extends SQLiteManager<StopBookmark> {
 			notifyOnAdd(item);
 	}
 
-	public void removeFavori(final ContentResolver contentResolver, final int id) {
+	public void delete(final ContentResolver contentResolver, final int id) {
 		contentResolver.delete(StopBookmarkProvider.CONTENT_URI, StopBookmarkTable._ID + "=?", new String[] { String.valueOf(id) });
 
 		if (mIsImporting == false)
 			notifyOnRemove(id);
 	}
 
-	public void setFavori(final ContentResolver contentResolver, final StopBookmark item) {
+	public void update(final ContentResolver contentResolver, final StopBookmark item) {
 		final ContentValues values = getContentValues(item);
 		contentResolver.update(StopBookmarkProvider.CONTENT_URI, values, StopBookmarkTable._ID + "=?",
 				new String[] { String.valueOf(item.getId()) });

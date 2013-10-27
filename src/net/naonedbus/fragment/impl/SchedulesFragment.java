@@ -312,7 +312,7 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 	}
 
 	private void removeFromFavoris() {
-		mStopBookmarkManager.removeFavori(getActivity().getContentResolver(), mStop.getId());
+		mStopBookmarkManager.delete(getActivity().getContentResolver(), mStop.getId());
 	}
 
 	protected void showArretPlan() {

@@ -279,7 +279,7 @@ public class StopDetailFragment extends SherlockFragment {
 	}
 
 	private void removeFromFavoris() {
-		mStopBookmarkManager.removeFavori(getActivity().getContentResolver(), mStop.getId());
+		mStopBookmarkManager.delete(getActivity().getContentResolver(), mStop.getId());
 	}
 
 	protected void showArretPlan() {

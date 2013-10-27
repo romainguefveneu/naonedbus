@@ -322,7 +322,7 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 	}
 
 	private void removeFromFavoris(final Stop stop) {
-		mStopBookmarkManager.removeFavori(getActivity().getContentResolver(), stop.getId());
+		mStopBookmarkManager.delete(getActivity().getContentResolver(), stop.getId());
 		Toast.makeText(getActivity(), R.string.bookmark_removed, Toast.LENGTH_SHORT).show();
 	}
 

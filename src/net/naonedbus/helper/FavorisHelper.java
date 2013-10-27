@@ -86,7 +86,7 @@ public class FavorisHelper {
 				final String nom = input.getText().toString().trim();
 				item.setBookmarkName((nom.length() == 0) ? null : nom);
 
-				favoriManager.setFavori(mContext.getContentResolver(), item);
+				favoriManager.update(mContext.getContentResolver(), item);
 				if (mFavorisActionListener != null) {
 					mFavorisActionListener.onFavoriRenamed(item);
 				}

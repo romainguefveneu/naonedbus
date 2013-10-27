@@ -446,7 +446,7 @@ public class StopBookmarksFragment extends CustomListFragment implements OnItemL
 			if (mListView.isItemChecked(i)) {
 				item = adapter.getItem(i);
 				adapter.remove(item);
-				mStopBookmarkManager.removeFavori(contentResolver, item.getId());
+				mStopBookmarkManager.delete(contentResolver, item.getId());
 			}
 		}
 
