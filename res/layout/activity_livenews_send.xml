@@ -19,12 +19,13 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultActivity"
+    android:orientation="vertical"
     android:padding="10dip" >
 
     <EditText
         android:id="@android:id/input"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:background="?attr/blockBackground"
         android:gravity="top|left"

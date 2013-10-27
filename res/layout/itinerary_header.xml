@@ -59,8 +59,7 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/padding_small"
                 android:paddingTop="@dimen/padding_small"
-                android:singleLine="true"
-                android:text="From" />
+                android:singleLine="true" />
 
             <TextView
                 android:id="@id/toPlace"
@@ -69,8 +68,7 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="@dimen/padding_small"
                 android:paddingTop="@dimen/padding_small"
-                android:singleLine="true"
-                android:text="To" />
+                android:singleLine="true" />
         </LinearLayout>
     </LinearLayout>
 
@@ -87,8 +85,7 @@
         <TextView
             android:id="@id/itemDate"
             style="@style/ItemPrimaryText"
-            android:layout_marginLeft="@dimen/padding_medium"
-            android:text="Date" />
+            android:layout_marginLeft="@dimen/padding_medium" />
     </LinearLayout>
 
 </LinearLayout>

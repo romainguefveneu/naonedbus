@@ -94,6 +94,10 @@ public abstract class ColorUtils {
 	}
 
 	public static void setBackgroundGradiant(View view, int color) {
+		setBackground(view, getGradiant(color));
+	}
+
+	public static void setBackgroundRoundedGradiant(View view, int color) {
 		setBackground(view, getRoundedGradiant(color));
 	}
 

@@ -90,7 +90,7 @@ public class EquipmentArrayAdapter extends ArraySectionAdapter<Equipment> {
 		} else {
 			holder.itemSymbole.setImageResource(type.getDrawableRes());
 		}
-		ColorUtils.setBackgroundGradiant(holder.itemSymbole,
+		ColorUtils.setBackgroundRoundedGradiant(holder.itemSymbole,
 				context.getResources().getColor(type.getBackgroundColorRes()));
 
 		// Définir la distance.

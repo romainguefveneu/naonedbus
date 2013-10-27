@@ -19,10 +19,8 @@
 package net.naonedbus.manager.impl;
 
 import net.naonedbus.provider.DatabaseVersions;
-import net.naonedbus.provider.impl.UpdaterProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 
 /**
  * @author romain.guefveneu
@@ -37,6 +35,11 @@ public class UpdaterManager {
 	private static final String LAST_DATABASE_VERSION = "lastDataBaseVersion";
 	private static final String SHARED_PREF_NAME = "updateInfo";
 
+	public void saveCurrentVersion(final Context context) {
+		final SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_NAME, 0);
+		preferences.edit().putInt(LAST_DATABASE_VERSION, DatabaseVersions.CURRENT).commit();
+	}
+
 	public UpdateType needUpdate(final Context context) {
 		final SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_NAME, 0);
 		final int newDatabaseVersion = DatabaseVersions.CURRENT;
@@ -49,21 +52,6 @@ public class UpdaterManager {
 		} else {
 			return UpdateType.UP_TO_DATE;
 		}
-	}
-
-	/**
-	 * Déclencher la mise à jour de la base de données si nécessaire.
-	 * 
-	 * @param contentResolver
-	 */
-	public void triggerUpdate(final Context context) {
-		final Cursor c = context.getContentResolver().query(UpdaterProvider.CONTENT_URI, null, null, null, null);
-		if (c != null) {
-			c.close();
-		}
-
-		final SharedPreferences preferences = context.getSharedPreferences(SHARED_PREF_NAME, 0);
-		preferences.edit().putInt(LAST_DATABASE_VERSION, DatabaseVersions.CURRENT).commit();
 	}
 
 }

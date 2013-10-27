@@ -19,15 +19,11 @@
 package net.naonedbus.activity.impl;
 
 import net.naonedbus.NBApplication;
-import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
-import net.naonedbus.fragment.header.UpdateFragmentHeader;
 import net.naonedbus.fragment.impl.MapFragment;
 import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.intent.ParamIntent;
-import net.naonedbus.manager.impl.UpdaterManager;
-import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.service.FavoriService;
 import android.app.SearchManager;
@@ -36,8 +32,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.ActionBar;
 
 public class MainActivity extends MenuDrawerActivity {
 
@@ -57,22 +51,8 @@ public class MainActivity extends MenuDrawerActivity {
 		handleFavoriExport();
 
 		if (savedInstanceState == null) {
-			final UpdaterManager updaterManager = new UpdaterManager();
-			final UpdateType updateType = updaterManager.needUpdate(this);
-
-			if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
-				hideActionBar();
-				setBaseMenuVisible(false);
-				setFragment(new UpdateFragmentHeader(), R.string.home);
-				showTutorial();
-			} else if (UpdateType.UPGRADE.equals(updateType)) {
-				hideActionBar();
-				setBaseMenuVisible(false);
-				setFragment(new UpdateFragmentHeader(), R.string.home);
-			} else {
-				final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-				selectNavigationItem(Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0")));
-			}
+			final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+			selectNavigationItem(Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0")));
 		}
 
 	}
@@ -81,27 +61,6 @@ public class MainActivity extends MenuDrawerActivity {
 	protected void onStop() {
 		mMyLocationProvider.stop();
 		super.onStop();
-	}
-
-	private void hideActionBar() {
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayHomeAsUpEnabled(false);
-		actionBar.setDisplayUseLogoEnabled(true);
-		actionBar.setLogo(R.drawable.ic_logo);
-	}
-
-	private void showTutorial() {
-	}
-
-	public void onUpgradeDone() {
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayUseLogoEnabled(false);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setDisplayShowTitleEnabled(true);
-
-		setBaseMenuVisible(true);
-		selectNavigationItem(0);
 	}
 
 	private void handleFavoriExport() {

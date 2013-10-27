@@ -25,10 +25,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.activity.impl.AddEventActivity;
-import net.naonedbus.activity.impl.SendNewsActivity;
 import net.naonedbus.activity.impl.MapActivity;
 import net.naonedbus.activity.impl.PlanActivity;
+import net.naonedbus.activity.impl.SendNewsActivity;
 import net.naonedbus.activity.map.overlay.TypeOverlayItem;
 import net.naonedbus.bean.Direction;
 import net.naonedbus.bean.Route;
@@ -38,7 +37,6 @@ import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.bean.schedule.EmptySchedule;
 import net.naonedbus.bean.schedule.Schedule;
 import net.naonedbus.fragment.CustomInfiniteListFragement;
-import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.DirectionManager;
 import net.naonedbus.manager.impl.ScheduleManager;
 import net.naonedbus.manager.impl.StopBookmarkManager;
@@ -191,9 +189,8 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			final String title = mStop.getName();
-			final String description = FormatUtils.formatTitle(
-					getString(R.string.format_route, mRoute.getCode()), mStop.getName(),
-					mDirection.getName());
+			final String description = FormatUtils.formatTitle(getString(R.string.format_route, mRoute.getCode()),
+					mStop.getName(), mDirection.getName());
 
 			final Intent calIntent = new Intent(Intent.ACTION_INSERT);
 			calIntent.setType("vnd.android.cursor.item/event");
@@ -207,24 +204,13 @@ public class SchedulesFragment extends CustomInfiniteListFragement implements On
 				startActivity(calIntent);
 				getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 			} catch (ActivityNotFoundException e) {
-				addEventFallback(schedule);
+				// TODO : Display message
 			}
 
 		} else {
-			addEventFallback(schedule);
+			// TODO : Display message
 		}
 
-	}
-
-	private void addEventFallback(Schedule schedule) {
-		final ParamIntent intent = new ParamIntent(getActivity(), AddEventActivity.class);
-		intent.putExtra(AddEventActivity.PARAM_LIGNE, mRoute);
-		intent.putExtra(AddEventActivity.PARAM_SENS, mDirection);
-		intent.putExtra(AddEventActivity.PARAM_ARRET, mStop);
-		intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, schedule.getTimestamp());
-
-		startActivity(intent);
-		getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
 	}
 
 	@Override

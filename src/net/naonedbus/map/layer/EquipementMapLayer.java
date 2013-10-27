@@ -105,12 +105,11 @@ public class EquipementMapLayer extends MapLayer {
 			final TextView textView = (TextView) layoutInflater.inflate(R.layout.route_code_item, root, false);
 			textView.setTypeface(roboto);
 			textView.setTextColor(ligneItem.getFrontColor());
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getBackColor()));
+			ColorUtils.setBackgroundGradiant(textView, ligneItem.getBackColor());
 			textView.setText(ligneItem.getCode());
 			views.add(textView);
 		}
 
 		return views;
 	}
-
 }

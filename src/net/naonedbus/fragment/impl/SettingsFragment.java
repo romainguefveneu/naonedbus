@@ -51,7 +51,6 @@ import com.bugsense.trace.BugSenseHandler;
 public class SettingsFragment extends PreferenceFragment {
 
 	private ListPreference mNavigationHome;
-	private ListPreference mCalendrierDefaut;
 	private Preference mClearCachePlan;
 	private Preference mClearCacheHoraires;
 
@@ -63,7 +62,6 @@ public class SettingsFragment extends PreferenceFragment {
 		final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 		mNavigationHome = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_NAVIGATION_HOME);
-		mCalendrierDefaut = (ListPreference) getPreferenceScreen().findPreference(NBApplication.PREF_CALENDRIER_DEFAUT);
 		mClearCachePlan = getPreferenceScreen().findPreference("plan.cache.clear");
 		mClearCacheHoraires = getPreferenceScreen().findPreference("horaires.cache.clear");
 

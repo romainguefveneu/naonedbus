@@ -19,36 +19,33 @@
 package net.naonedbus.provider;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
+import java.io.OutputStream;
 
 import net.naonedbus.BuildConfig;
-import net.naonedbus.R;
-import net.naonedbus.helper.BulkLoaderHelper.BulkQuery;
-import net.naonedbus.helper.CompressedQueriesHelper;
+import net.naonedbus.manager.impl.UpdaterManager;
+import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
 import net.naonedbus.utils.TimeLogUtils;
+
+import org.apache.commons.io.IOUtils;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
 import android.net.Uri;
-import android.util.Log;
-
-import com.bugsense.trace.BugSenseHandler;
 
 public abstract class CustomContentProvider extends ContentProvider {
-
-	private static CoreDatabase database;
-	private static DatabaseActionObserver databaseActionListener;
+	private static CoreDatabase sDatabase;
 
 	@Override
 	public boolean onCreate() {
 		synchronized (this) {
-			if (database == null) {
-				database = new CoreDatabase(getContext());
+			if (sDatabase == null) {
+				sDatabase = new CoreDatabase(getContext());
 			}
 		}
 		return true;
@@ -68,15 +65,11 @@ public abstract class CustomContentProvider extends ContentProvider {
 			String sortOrder);
 
 	protected SQLiteDatabase getReadableDatabase() {
-		return database.getReadableDatabase();
+		return sDatabase.getReadableDatabase();
 	}
 
 	protected SQLiteDatabase getWritableDatabase() {
-		return database.getWritableDatabase();
-	}
-
-	public static synchronized void setDatabaseActionListener(final DatabaseActionObserver listener) {
-		CustomContentProvider.databaseActionListener = listener;
+		return sDatabase.getWritableDatabase();
 	}
 
 	@Override
@@ -90,15 +83,11 @@ public abstract class CustomContentProvider extends ContentProvider {
 		private static final String DB_NAME = "data.db";
 
 		private final Context mContext;
-		private final CompressedQueriesHelper mCompressedQueriesHelper;
-
-		private boolean mSuccess = true;
 
 		public CoreDatabase(final Context context) {
 			super(context, DB_NAME, null, DB_VERSION);
 			mContext = context;
-			mCompressedQueriesHelper = new CompressedQueriesHelper(context);
-			mCompressedQueriesHelper.setNewVersion(DB_VERSION);
+			createDatabase();
 		}
 
 		@Override
@@ -110,159 +99,50 @@ public abstract class CustomContentProvider extends ContentProvider {
 			}
 		}
 
-		@Override
-		public void onCreate(final SQLiteDatabase db) {
-			if (DBG)
-				Log.d(LOG_TAG, "Création de la base de données.");
+		public void createDatabase() {
+			final File dbFile = mContext.getDatabasePath(DB_NAME);
 
-			TimeLogUtils timeLogUtils;
+			final UpdaterManager updaterManager = new UpdaterManager();
+			final UpdateType updateType = updaterManager.needUpdate(mContext);
 
-			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.dispatchCreate();
+			if (!dbFile.exists() || updateType.equals(UpdateType.UPGRADE)) {
+				copyDatabase(dbFile);
 			}
 
-			if (DBG) {
-				timeLogUtils = new TimeLogUtils(LOG_TAG);
-				timeLogUtils.start();
-			}
+			updaterManager.saveCurrentVersion(mContext);
+		}
 
-			createDatabase(db);
+		public void copyDatabase(File dbFile) {
+			try {
+				TimeLogUtils timeLogUtils;
 
-			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.dispatchUpgradeDone(mSuccess);
-			}
+				if (DBG) {
+					timeLogUtils = new TimeLogUtils(LOG_TAG);
+					timeLogUtils.start();
+				}
 
-			if (DBG) {
-				timeLogUtils.step("Fin d'installation");
+				dbFile.getParentFile().mkdirs();
+				dbFile.createNewFile();
+				final OutputStream outputStream = new FileOutputStream(mContext.getDatabasePath(DB_NAME));
+				IOUtils.copy(mContext.getAssets().open(DB_NAME), outputStream);
+				IOUtils.closeQuietly(outputStream);
+
+				if (DBG) {
+					timeLogUtils.step("Fin d'installation");
+				}
+			} catch (final IOException e) {
+				throw new RuntimeException("Error creating source database", e);
 			}
 		}
 
-		private void createDatabase(final SQLiteDatabase db) {
-			try {
-
-				execute(db, R.raw.sql_create);
-				executeBulk(db, R.raw.sql_data);
-
-			} catch (final Exception e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors de création de la base.", "", e);
-				Log.e(LOG_TAG, "Erreur lors de création de la base.", e);
-			}
+		@Override
+		public void onCreate(final SQLiteDatabase db) {
 		}
 
 		@Override
 		public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
-			if (DBG)
-				Log.d(LOG_TAG, "Mise à jour de la base de données.");
-
-			mCompressedQueriesHelper.setOldVersion(oldVersion);
-
-			TimeLogUtils timeLogUtils;
-
-			if (CustomContentProvider.databaseActionListener != null) {
-				CustomContentProvider.databaseActionListener.dispatchUpgrade(oldVersion);
-			}
-
-			if (DBG) {
-				timeLogUtils = new TimeLogUtils(LOG_TAG);
-				timeLogUtils.start();
-			}
-
-			try {
-
-				execute(db, R.raw.sql_before_update, R.raw.sql_create);
-				executeBulk(db, R.raw.sql_data);
-				execute(db, R.raw.sql_after_update);
-
-			} catch (final Exception e) {
-				BugSenseHandler.sendExceptionMessage("Erreur lors de la mise à jour de la base.", "", e);
-				Log.e(LOG_TAG, "Erreur lors de la mise à jour de la base.", e);
-				handleUpgradeException();
-			} finally {
-				if (DBG)
-					timeLogUtils.step("Fin de la mise à jour");
-			}
-
 		}
 
-		private void handleUpgradeException() {
-			if (DBG)
-				Log.i(LOG_TAG, "Recréation de la base de donnée.");
-
-			mSuccess = false;
-
-			final File dbFile = mContext.getDatabasePath(DB_NAME);
-			dbFile.delete();
-
-			final SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile.getAbsolutePath(), null);
-			db.beginTransaction();
-			createDatabase(db);
-			db.setTransactionSuccessful();
-			db.endTransaction();
-		}
-
-		/**
-		 * Executer des fichiers SQL sur la base de données.
-		 * 
-		 * @param db
-		 *            La base de données.
-		 * @param resIds
-		 *            Les ids des scripts à exécuter, dans l'ordre.
-		 * @throws IOException
-		 */
-		private void execute(final SQLiteDatabase db, final int... resIds) throws IOException {
-			for (final int resId : resIds) {
-				if (resId == 0)
-					continue;
-
-				if (DBG)
-					Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
-
-				final List<String> queries = mCompressedQueriesHelper.getQueries(resId);
-
-				for (final String query : queries) {
-					if (DBG)
-						Log.d(LOG_TAG, "\t" + query);
-
-					if (query.trim().length() > 0) {
-						db.execSQL(query);
-					}
-				}
-
-			}
-		}
-
-		/**
-		 * Executer des fichiers SQL sur la base de données, en mode Bulk.
-		 * 
-		 * @param db
-		 *            La base de données.
-		 * @param resIds
-		 *            Les ids des scripts à exécuter, dans l'ordre.
-		 * @throws IOException
-		 */
-		private void executeBulk(final SQLiteDatabase db, final int... resIds) throws IOException {
-			SQLiteStatement statement;
-			List<BulkQuery> bulkQueries;
-
-			for (final int resId : resIds) {
-				if (DBG)
-					Log.i(LOG_TAG, "Execution du script " + mContext.getResources().getResourceName(resId));
-
-				bulkQueries = mCompressedQueriesHelper.getBulkQueries(resId);
-
-				for (final BulkQuery bulkQuery : bulkQueries) {
-					final List<String[]> statementValues = bulkQuery.getValues();
-					statement = db.compileStatement(bulkQuery.getPattern());
-					for (final String[] values : statementValues) {
-						for (int i = 0; i < values.length; i++) {
-							statement.bindString(i + 1, values[i]);
-						}
-						statement.execute();
-					}
-				}
-			}
-
-		}
 	}
 
 }
