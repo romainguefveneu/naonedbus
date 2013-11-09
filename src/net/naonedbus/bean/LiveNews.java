@@ -18,7 +18,6 @@
  */
 package net.naonedbus.bean;
 
-import net.naonedbus.model.common.ICommentaire;
 import net.naonedbus.widget.item.SectionItem;
 
 import org.joda.time.DateTime;
@@ -27,9 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class LiveNews implements ICommentaire, SectionItem, Parcelable {
-
-	private static final long serialVersionUID = -9031229899288954850L;
+public class LiveNews implements SectionItem, Parcelable {
 
 	private int mId;
 	private String mRouteCode;
@@ -50,72 +47,58 @@ public class LiveNews implements ICommentaire, SectionItem, Parcelable {
 	public LiveNews() {
 	}
 
-	@Override
 	public Integer getId() {
 		return mId;
 	}
 
-	@Override
 	public void setId(final Integer id) {
 		mId = id;
 	}
 
-	@Override
-	public String getCodeLigne() {
+	public String getRouteCode() {
 		return mRouteCode;
 	}
 
-	@Override
-	public void setCodeLigne(final String routeCode) {
+	public void setRouteCode(final String routeCode) {
 		mRouteCode = routeCode;
 	}
 
-	@Override
-	public String getCodeSens() {
+	public String getDirectionCode() {
 		return mDirectionCode;
 	}
 
-	@Override
-	public void setCodeSens(final String directionCode) {
+	public void setDirectionCode(final String directionCode) {
 		mDirectionCode = directionCode;
 	}
 
-	@Override
-	public String getCodeArret() {
+	public String getStopCode() {
 		return mStopCode;
 	}
 
-	@Override
-	public void setCodeArret(final String codeArret) {
-		mStopCode = codeArret;
+	public void setStopCode(final String stopCode) {
+		mStopCode = stopCode;
 	}
 
-	@Override
 	public String getMessage() {
 		return mMessage;
 	}
 
-	@Override
 	public void setMessage(final String message) {
 		mMessage = message;
 	}
 
-	@Override
 	public Long getTimestamp() {
 		return mTimestamp;
 	}
 
-	@Override
 	public void setTimestamp(final Long timestamp) {
 		mTimestamp = timestamp;
 	}
 
-	@Override
 	public void setSource(final String source) {
 		mSource = source;
 	}
 
-	@Override
 	public String getSource() {
 		return mSource;
 	}
