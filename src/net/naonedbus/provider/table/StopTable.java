@@ -28,6 +28,7 @@ public interface StopTable extends BaseColumns {
 	public static final String ROUTE_CODE = "routeCode";
 	public static final String EQUIPMENT_ID = "equipmentId";
 	public static final String STOP_ORDER = "stopOrder";
+	public static final String STEP_TYPE = "stepType";
 
 	//@formatter:off
 	public static String TABLE_JOIN_STATIONS = 
@@ -45,6 +46,7 @@ public interface StopTable extends BaseColumns {
 			TABLE_NAME + "." + ROUTE_CODE,
 			TABLE_NAME + "." + EQUIPMENT_ID, 
 			TABLE_NAME + "." + STOP_ORDER, 
+			TABLE_NAME + "." + STEP_TYPE, 
 			RouteTable.TABLE_NAME + "." + RouteTable.LETTER,
 			EquipmentTable.TABLE_NAME + "." + EquipmentTable.EQUIPMENT_CODE,
 			EquipmentTable.TABLE_NAME + "." + EquipmentTable.EQUIPMENT_NAME,

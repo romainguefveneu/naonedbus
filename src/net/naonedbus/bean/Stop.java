@@ -41,6 +41,11 @@ import android.os.Parcelable;
 
 public class Stop implements Parcelable {
 
+	public static final int ORIENTATION_NONE = 0;
+	public static final int ORIENTATION_RIGHT_LEFT = 1;
+	public static final int ORIENTATION_LEFT_RIGHT = 2;
+	public static final int ORIENTATION_STRAIGHT = 3;
+
 	public static class Builder {
 		private int mId;
 		private String mRouteCode;
@@ -53,6 +58,7 @@ public class Stop implements Parcelable {
 		private Float mLongitude;
 		private int mEquipmentId;
 		private int mOrder;
+		private int mStepType;
 		private String mName;
 		private Float mDistance;
 
@@ -116,6 +122,11 @@ public class Stop implements Parcelable {
 			return this;
 		}
 
+		public Builder setStepType(final int stepType) {
+			mStepType = stepType;
+			return this;
+		}
+
 		public Builder setDistance(final Float distance) {
 			mDistance = distance;
 			return this;
@@ -138,6 +149,7 @@ public class Stop implements Parcelable {
 	private final Float mLongitude;
 	private final int mEquipmentId;
 	private final int mOrder;
+	private final int mStepType;
 	private Float mDistance;
 
 	protected Stop(final Builder builder) {
@@ -152,6 +164,7 @@ public class Stop implements Parcelable {
 		mLongitude = builder.mLongitude;
 		mEquipmentId = builder.mEquipmentId;
 		mOrder = builder.mOrder;
+		mStepType = builder.mStepType;
 		mName = builder.mName;
 		mDistance = builder.mDistance;
 	}
@@ -168,6 +181,7 @@ public class Stop implements Parcelable {
 		mLongitude = in.readFloat();
 		mEquipmentId = in.readInt();
 		mOrder = in.readInt();
+		mStepType = in.readInt();
 		mName = in.readString();
 	}
 
@@ -241,6 +255,30 @@ public class Stop implements Parcelable {
 		return mDistance;
 	}
 
+	public int getStepType() {
+		return mStepType;
+	}
+
+	public int getStepStyle() {
+		return mStepType & 0x3;
+	}
+
+	public int getStepOrientationTop() {
+		return (mStepType >> 2) & 0x3;
+	}
+
+	public int getStepOrientationBottom() {
+		return (mStepType >> 4) & 0x3;
+	}
+
+	public boolean getShowOtherLines() {
+		return ((mStepType >> 6) & 0x1) == 1;
+	}
+
+	public int getStepDepth() {
+		return mStepType >> 7;
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -259,6 +297,7 @@ public class Stop implements Parcelable {
 		dest.writeFloat(mLongitude);
 		dest.writeInt(mEquipmentId);
 		dest.writeInt(mOrder);
+		dest.writeInt(mStepType);
 		dest.writeString(mName);
 	}
 

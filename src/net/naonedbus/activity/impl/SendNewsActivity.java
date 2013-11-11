@@ -52,6 +52,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -230,7 +231,7 @@ public class SendNewsActivity extends SherlockActivity {
 	private ListAdapter getArretsAdapter(final String routeCode, final String directionCode) {
 		final List<Stop> arrets = mStopManager.getAll(getContentResolver(), routeCode, directionCode);
 		arrets.add(0, mAllArrets);
-		return new StopArrayAdapter(this, arrets);
+		return new StopArrayAdapter(this, arrets, Color.BLACK);
 	}
 
 	/**
@@ -312,13 +313,13 @@ public class SendNewsActivity extends SherlockActivity {
 	private void prepareAndSendComment() {
 		final LiveNews commentaireItem = new LiveNews();
 		if (mStop != null) {
-			commentaireItem.setCodeArret(mStop.getCodeArret());
+			commentaireItem.setStopCode(mStop.getCodeArret());
 		}
 		if (mDirection != null) {
-			commentaireItem.setCodeSens(mDirection.getCode());
+			commentaireItem.setDirectionCode(mDirection.getCode());
 		}
 		if (mRoute != null) {
-			commentaireItem.setCodeLigne(mRoute.getCode());
+			commentaireItem.setRouteCode(mRoute.getCode());
 		}
 		commentaireItem.setMessage(mCommentText.getText().toString().trim());
 
@@ -419,14 +420,14 @@ public class SendNewsActivity extends SherlockActivity {
 		@Override
 		protected Boolean doInBackground(final LiveNews... args) {
 			try {
-				final LiveNews messageItem = args[0];
+				final LiveNews news = args[0];
 
 				final PrivateKey privateKey = genKey();
-				final String messageHashCode = getMessageHashCode(messageItem, privateKey);
+				final String messageHashCode = getMessageHashCode(news, privateKey);
 
-				final LiveNewsController naoNewController = new LiveNewsController();
-				naoNewController.post(messageItem.getCodeLigne(), messageItem.getCodeSens(),
-						messageItem.getCodeArret(), messageItem.getMessage(), messageHashCode);
+				final LiveNewsController controller = new LiveNewsController();
+				controller.post(news.getRouteCode(), news.getDirectionCode(), news.getStopCode(), news.getMessage(),
+						messageHashCode);
 
 				return true;
 
@@ -461,9 +462,6 @@ public class SendNewsActivity extends SherlockActivity {
 			super.onPostExecute(success);
 		}
 
-		/**
-		 * Générer la clé privée
-		 */
 		private PrivateKey genKey() {
 			BigInteger mod;
 			BigInteger exp;
@@ -481,24 +479,12 @@ public class SendNewsActivity extends SherlockActivity {
 			return privateKey;
 		}
 
-		/**
-		 * Générer les hashCode du message
-		 * 
-		 * @param messageItem
-		 * @return
-		 * @throws GeneralSecurityException
-		 * @throws UnsupportedEncodingException
-		 */
-		private String getMessageHashCode(final LiveNews messageItem, final PrivateKey privateKey)
+		private String getMessageHashCode(final LiveNews news, final PrivateKey privateKey)
 				throws UnsupportedEncodingException, GeneralSecurityException {
-			String concatHashCode;
-			String result = null;
+			final String concatHashCode = RSAUtils.getConcatHashCode(news.getRouteCode(), news.getDirectionCode(),
+					news.getStopCode(), news.getMessage());
 
-			concatHashCode = RSAUtils.getConcatHashCode(messageItem.getCodeLigne(), messageItem.getCodeSens(),
-					messageItem.getCodeArret(), messageItem.getMessage());
-
-			result = RSAUtils.encryptBase64(concatHashCode, privateKey);
-			return result;
+			return RSAUtils.encryptBase64(concatHashCode, privateKey);
 		}
 
 	}

@@ -38,6 +38,7 @@
     <item name="itemDelay" type="id"/>
     <item name="itemAddress" type="id"/>
     <item name="itemWalkTime" type="id"/>
+    <item name="stepView" type="id"/>
     <!-- Headers -->
     <item name="headerView" type="id"/>
     <item name="headerTitle" type="id"/>

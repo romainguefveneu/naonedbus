@@ -116,9 +116,9 @@ public class LiveNewsManager extends SQLiteManager<LiveNews> {
 	public LiveNews getSingleFromCursor(final Cursor c) {
 		final LiveNews liveNews = new LiveNews();
 		liveNews.setId(c.getInt(mColId));
-		liveNews.setCodeLigne(c.getString(mColRouteCode));
-		liveNews.setCodeSens(c.getString(mColDirectionCode));
-		liveNews.setCodeArret(c.getString(mColStopCode));
+		liveNews.setRouteCode(c.getString(mColRouteCode));
+		liveNews.setDirectionCode(c.getString(mColDirectionCode));
+		liveNews.setStopCode(c.getString(mColStopCode));
 		liveNews.setMessage(c.getString(mColMessage));
 		liveNews.setSource(c.getString(mColSource));
 		liveNews.setTimestamp(c.getLong(mColTimestamp));
@@ -128,9 +128,9 @@ public class LiveNewsManager extends SQLiteManager<LiveNews> {
 	@Override
 	protected ContentValues getContentValues(final LiveNews liveNews) {
 		final ContentValues values = new ContentValues();
-		values.put(LiveNewsTable.ROUTE_CODE, liveNews.getCodeLigne());
-		values.put(LiveNewsTable.DIRECTION_CODE, liveNews.getCodeSens());
-		values.put(LiveNewsTable.STOP_CODE, liveNews.getCodeArret());
+		values.put(LiveNewsTable.ROUTE_CODE, liveNews.getRouteCode());
+		values.put(LiveNewsTable.DIRECTION_CODE, liveNews.getDirectionCode());
+		values.put(LiveNewsTable.STOP_CODE, liveNews.getStopCode());
 		values.put(LiveNewsTable.MESSAGE, liveNews.getMessage());
 		values.put(LiveNewsTable.SOURCE, liveNews.getSource());
 		values.put(LiveNewsTable.TIMESTAMP, liveNews.getTimestamp());

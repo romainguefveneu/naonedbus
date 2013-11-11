@@ -19,7 +19,6 @@
 package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.ReadOnlyContentProvider;
-import net.naonedbus.provider.table.EquipmentTable;
 import net.naonedbus.provider.table.StopTable;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -68,7 +67,7 @@ public class StopProvider extends ReadOnlyContentProvider {
 		Cursor cursor;
 		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(StopTable.TABLE_NAME + StopTable.TABLE_JOIN_STATIONS);
-		String groupBy = EquipmentTable.NORMALIZED_NAME;
+
 		projection = StopTable.PROJECTION;
 
 		int uriType = URI_MATCHER.match(uri);
@@ -104,7 +103,7 @@ public class StopProvider extends ReadOnlyContentProvider {
 			throw new IllegalArgumentException("Unknown URI (" + uri + ")");
 		}
 
-		cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, groupBy, null,
+		cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, null, null,
 				sortOrder);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		return cursor;

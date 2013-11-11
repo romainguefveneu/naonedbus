@@ -103,6 +103,9 @@
                 android:resource="@xml/map_searchable" />
         </activity>
         <activity
+            android:name=".activity.impl.Map2Activity"
+            android:label="@string/map" />
+        <activity
             android:name=".activity.impl.ParkDetailActivity"
             android:label="@string/emptyString" />
         <activity

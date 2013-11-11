@@ -206,8 +206,8 @@ public class Route implements SectionItem, Parcelable {
 		if (!(o instanceof Route))
 			return false;
 
-		final Route autreLigne = (Route) o;
-		return autreLigne.mId == mId;
+		final Route other = (Route) o;
+		return other.mId == mId;
 	}
 
 	@Override

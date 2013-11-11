@@ -82,11 +82,11 @@ public class LiveNewsController extends RestController<LiveNews> {
 
 		liveNews.setId(object.getInt(TAG_ID));
 		if (object.has(TAG_CODE_LIGNE))
-			liveNews.setCodeLigne(object.getString(TAG_CODE_LIGNE));
+			liveNews.setRouteCode(object.getString(TAG_CODE_LIGNE));
 		if (object.has(TAG_CODE_SENS))
-			liveNews.setCodeSens(object.getString(TAG_CODE_SENS));
+			liveNews.setDirectionCode(object.getString(TAG_CODE_SENS));
 		if (object.has(TAG_CODE_ARRET))
-			liveNews.setCodeArret(object.getString(TAG_CODE_ARRET));
+			liveNews.setStopCode(object.getString(TAG_CODE_ARRET));
 		if (object.has(TAG_MESSAGE))
 			liveNews.setMessage(object.getString(TAG_MESSAGE));
 		if (object.has(TAG_SOURCE))
@@ -100,9 +100,9 @@ public class LiveNewsController extends RestController<LiveNews> {
 	protected JSONObject toJsonObject(final LiveNews item) throws JSONException {
 		final JSONObject object = new JSONObject();
 		object.put(TAG_ID, item.getId());
-		object.put(TAG_CODE_LIGNE, item.getCodeLigne());
-		object.put(TAG_CODE_SENS, item.getCodeSens());
-		object.put(TAG_CODE_ARRET, item.getCodeArret());
+		object.put(TAG_CODE_LIGNE, item.getRouteCode());
+		object.put(TAG_CODE_SENS, item.getDirectionCode());
+		object.put(TAG_CODE_ARRET, item.getStopCode());
 		object.put(TAG_MESSAGE, item.getMessage());
 		object.put(TAG_SOURCE, item.getSource());
 		object.put(TAG_TIMESTAMP, item.getTimestamp());

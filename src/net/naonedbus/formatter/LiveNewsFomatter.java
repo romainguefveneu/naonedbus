@@ -134,23 +134,23 @@ public class LiveNewsFomatter {
 	}
 
 	private void setRoute(final LiveNews liveNews) {
-		if (liveNews.getCodeLigne() != null) {
-			final Route route = mRouteManager.getSingle(mContext.getContentResolver(), liveNews.getCodeLigne());
+		if (liveNews.getRouteCode() != null) {
+			final Route route = mRouteManager.getSingle(mContext.getContentResolver(), liveNews.getRouteCode());
 			liveNews.setRoute(route);
 		}
 	}
 
 	private void setDirection(final LiveNews liveNews) {
-		if (liveNews.getCodeSens() != null) {
+		if (liveNews.getDirectionCode() != null) {
 			final Direction direction = mDirectionManager.getSingle(mContext.getContentResolver(),
-					liveNews.getCodeLigne(), liveNews.getCodeSens());
+					liveNews.getRouteCode(), liveNews.getDirectionCode());
 			liveNews.setDirection(direction);
 		}
 	}
 
 	private void setStop(final LiveNews liveNews) {
-		if (liveNews.getCodeArret() != null) {
-			final Stop stop = mStopManager.getSingle(mContext.getContentResolver(), liveNews.getCodeArret());
+		if (liveNews.getStopCode() != null) {
+			final Stop stop = mStopManager.getSingle(mContext.getContentResolver(), liveNews.getStopCode());
 			liveNews.setStop(stop);
 		}
 	}

@@ -23,6 +23,7 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.Stop;
 import net.naonedbus.utils.DistanceUtils;
+import net.naonedbus.widget.StopStepView;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
@@ -42,10 +43,12 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 	private final LayoutInflater mLayoutInflater;
 	private ViewType mViewType = ViewType.TYPE_STANDARD;
 	private int mNearestPosition = -1;
+	private final int mColor;
 
-	public StopArrayAdapter(final Context context, final List<Stop> objects) {
+	public StopArrayAdapter(final Context context, final List<Stop> objects, final int color) {
 		super(context, 0, objects);
 		mLayoutInflater = LayoutInflater.from(getContext());
+		mColor = color;
 	}
 
 	public void setViewType(final ViewType viewType) {
@@ -66,12 +69,18 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Stop stop = getItem(position);
 
+		holder.stepView.setStyle(stop.getStepStyle());
+		holder.stepView.setDepth(stop.getStepDepth());
+		holder.stepView.setOrientationTop(stop.getStepOrientationTop());
+		holder.stepView.setOrientationBottom(stop.getStepOrientationBottom());
+		holder.stepView.setShowOtherLines(stop.getShowOtherLines());
+
 		if (stop.getId() == -1) {
 			holder.itemTitle.setTypeface(null, Typeface.BOLD);
-			holder.itemIcon.setVisibility(View.INVISIBLE);
+			// holder.itemIcon.setVisibility(View.INVISIBLE);
 		} else {
 			holder.itemTitle.setTypeface(null, Typeface.NORMAL);
-			holder.itemIcon.setVisibility(View.VISIBLE);
+			// holder.itemIcon.setVisibility(View.VISIBLE);
 
 			// Définir la distance.
 			if (stop.getDistance() == null) {
@@ -91,11 +100,11 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 					holder.itemMetroPoint.setBackgroundResource(R.drawable.ic_arret_step);
 				}
 
-				holder.itemIcon.setVisibility(View.INVISIBLE);
-				holder.itemMetroPoint.setVisibility(View.VISIBLE);
+				// holder.itemIcon.setVisibility(View.INVISIBLE);
+				// holder.itemMetroPoint.setVisibility(View.VISIBLE);
 			} else {
-				holder.itemIcon.setVisibility(View.VISIBLE);
-				holder.itemMetroPoint.setVisibility(View.INVISIBLE);
+				// holder.itemIcon.setVisibility(View.VISIBLE);
+				// holder.itemMetroPoint.setVisibility(View.INVISIBLE);
 			}
 		}
 
@@ -136,6 +145,8 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemDistance = (TextView) view.findViewById(R.id.itemDistance);
 		holder.dotLocation = (ImageView) view.findViewById(R.id.dotLocation);
+		holder.stepView = (StopStepView) view.findViewById(R.id.stepView);
+		holder.stepView.setColor(mColor);
 
 		view.setTag(holder);
 	}
@@ -150,5 +161,6 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 		ImageView dotLocation;
 		TextView itemTitle;
 		TextView itemDistance;
+		StopStepView stepView;
 	}
 }

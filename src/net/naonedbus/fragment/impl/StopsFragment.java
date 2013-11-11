@@ -141,7 +141,7 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		setCurrentFilter(mStateHelper.getFilterType(this, FILTER_ALL));
 
 		mStops = new ArrayList<Stop>();
-		mAdapter = new StopArrayAdapter(getActivity(), mStops);
+		mAdapter = new StopArrayAdapter(getActivity(), mStops, mRoute.getBackColor());
 		if (mCurrentSort == SORT_ORDER) {
 			mAdapter.setViewType(ViewType.TYPE_METRO);
 		}
@@ -165,6 +165,8 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 				}
 			}
 		};
+
+		getListView().setDivider(null);
 
 		loadContent();
 	}
