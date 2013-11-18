@@ -9,6 +9,15 @@ ainsi que la position et la disponibilité des parkings de la ville.
 
 [![Get it on Google Play](https://developer.android.com/images/brand/fr_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=net.naonedbus)
 
+
+Setup
+========
+```
+git clone https://github.com/romainguefveneu/naonedbus.git
+git submodule update --init
+ant make-default
+```
+
 Licence
 ========
     This program is free software: you can redistribute it and/or modify
