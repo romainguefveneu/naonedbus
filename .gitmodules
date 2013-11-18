@@ -22,3 +22,6 @@
 [submodule "third-party/clusterkraf"]
 	path = third-party/clusterkraf
 	url = https://github.com/romainguefveneu/clusterkraf.git
+[submodule "third-party/AndroidSlidingUpPanel"]
+	path = third-party/AndroidSlidingUpPanel
+	url = https://github.com/umano/AndroidSlidingUpPanel.git

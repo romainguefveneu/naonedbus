@@ -28,6 +28,10 @@
 		</copy>
 	</target>
 
+	<target name="-read-default-properties">
+		<property file="./ant-profiles/default.properties" />
+	</target>
+	
 	<target name="-read-debug-properties">
 		<property file="./ant-profiles/debug.properties" />
 	</target>
@@ -48,7 +52,11 @@
 		<property file="./ant-profiles/beta.properties" />
 	</target>
 	
-	
+	<target name="make-default" depends="-read-default-properties,-process-template">
+	    <property name="out.final.file" location="${ant.project.name}-debug.apk" />
+		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-debug-unsigned.apk" />
+		<property name="out.unsignedaligned.file" location="${out.absolute.dir}/${ant.project.name}-debug-unsigned-aligned.apk" />
+	</target>
 	<target name="make-debug" depends="-read-debug-properties,-process-template">
 	    <property name="out.final.file" location="${ant.project.name}-debug.apk" />
 		<property name="out.packaged.file" location="${out.absolute.dir}/${ant.project.name}-debug-unsigned.apk" />
