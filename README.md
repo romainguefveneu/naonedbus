@@ -1,7 +1,7 @@
 A propos
 =========
 
-![favoris](https://raw.github.com/romainguefveneu/naonedbus/master/res/drawable-nodpi/tuto_favoris.png)
+![favoris](https://lh6.ggpht.com/lv_HS7XGlVUHv6716PSRCc0zc1lpfsf3WahUF-sjaZ4-eUOjUTrfBuE-p2NC1qO-6AU2=h400-rw)
 
 
 Naonedbus est une application gratuite et open source vous permettant de consulter les horaires du réseau Tan à Nantes, 
