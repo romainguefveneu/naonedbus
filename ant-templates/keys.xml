@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="version">3.3@version.tag@</string>
+    <string name="version_sha1">@git.revision@</string>
+    <string name="mod">@privatekey.mod@</string>
+    <string name="exp">@privatekey.exp@</string>
+    <string name="bugsense">@bugsense.key@</string>
+    <string name="google_map_api_key">@maps.key@</string>
+    <string name="nod_key">@nod.key@</string>
+    <string name="jcdecaux_key">@jcdecaux.key@</string>
+
+</resources>

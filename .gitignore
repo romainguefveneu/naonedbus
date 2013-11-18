@@ -7,7 +7,6 @@ build.xml
 *.keystore
 ant.properties
 ant-profiles/
-ant-templates/
 third-party/
 
 # built application files
