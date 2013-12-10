@@ -294,7 +294,9 @@ public class Map2Activity extends SherlockFragmentActivity implements LoaderCall
 
 	@Override
 	public void onConnected(final Bundle arg0) {
-		centerCamera(mLocationClient.getLastLocation());
+		final Location location = mLocationClient.getLastLocation();
+		if (location != null)
+			centerCamera(location);
 	}
 
 	@Override

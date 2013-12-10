@@ -34,7 +34,7 @@ import net.naonedbus.bean.schedule.ScheduleToken;
 import net.naonedbus.manager.SQLiteManager;
 import net.naonedbus.provider.impl.ScheduleProvider;
 import net.naonedbus.provider.table.ScheduleTable;
-import net.naonedbus.rest.controller.impl.HoraireController;
+import net.naonedbus.rest.controller.impl.ScheduleController;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
@@ -59,7 +59,7 @@ public class ScheduleManager extends SQLiteManager<Schedule> {
 
 	private static ScheduleManager sInstance;
 
-	private final HoraireController mController;
+	private final ScheduleController mController;
 	private final ConcurrentLinkedQueue<NextHoraireTask> mSchedulesTasksQueue;
 	private final Set<ScheduleToken> mEmptySchedules;
 	private Thread mLoadThread;
@@ -82,7 +82,7 @@ public class ScheduleManager extends SQLiteManager<Schedule> {
 
 	private ScheduleManager() {
 		super(ScheduleProvider.CONTENT_URI);
-		mController = new HoraireController();
+		mController = new ScheduleController();
 		mSchedulesTasksQueue = new ConcurrentLinkedQueue<NextHoraireTask>();
 		mEmptySchedules = new HashSet<ScheduleToken>();
 		mDatabaseLock = new Object();

@@ -33,7 +33,7 @@ import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.StopBookmark;
 import net.naonedbus.card.Card;
 import net.naonedbus.card.impl.CommentairesCard;
-import net.naonedbus.card.impl.HoraireCard;
+import net.naonedbus.card.impl.ScheduleCard;
 import net.naonedbus.card.impl.MapCard;
 import net.naonedbus.card.impl.TraficCard;
 import net.naonedbus.manager.impl.DirectionManager;
@@ -110,7 +110,7 @@ public class StopDetailFragment extends SherlockFragment {
 
 		setHasOptionsMenu(true);
 
-		final HoraireCard scheduleCard = new HoraireCard(getActivity(), getLoaderManager(), getChildFragmentManager(),
+		final ScheduleCard scheduleCard = new ScheduleCard(getActivity(), getLoaderManager(), getChildFragmentManager(),
 				mStop);
 		final TraficCard tanNewsCard = new TraficCard(getActivity(), getLoaderManager(), getChildFragmentManager(),
 				mRoute);

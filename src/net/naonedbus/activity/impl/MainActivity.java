@@ -55,7 +55,7 @@ public class MainActivity extends MenuDrawerActivity {
 			selectNavigationItem(Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0")));
 		}
 
-		startActivity(new Intent(this, Map2Activity.class));
+		// startActivity(new Intent(this, Map2Activity.class));
 
 	}
 

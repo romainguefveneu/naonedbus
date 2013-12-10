@@ -46,12 +46,16 @@ public abstract class ColorUtils {
 		return d;
 	}
 
-	public static int getDarkerColor(final int color) {
+	public static int getDarkerColor(final int color, final float ratio) {
 		// Get darker color
 		final float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
-		hsv[2] *= 0.7f;
+		hsv[2] *= ratio;
 		return Color.HSVToColor(hsv);
+	}
+
+	public static int getDarkerColor(final int color) {
+		return getDarkerColor(color, 0.7f);
 	}
 
 	public static int getStackedBackgroundColor(final int color) {
@@ -62,14 +66,18 @@ public abstract class ColorUtils {
 		return Color.HSVToColor(hsv);
 	}
 
-	public static int getLighterColor(final int color) {
+	public static int getLighterColor(final int color, final float ratio) {
 		// Get lighter color
 		final float[] hsv = new float[3];
 
 		Color.colorToHSV(color, hsv);
 		hsv[1] *= 0.2f; // Saturation
-		hsv[2] *= 1.5f; // Value
+		hsv[2] *= ratio; // Value
 		return Color.HSVToColor(hsv);
+	}
+
+	public static int getLighterColor(final int color) {
+		return getLighterColor(color, 1.5f);
 	}
 
 	public static GradientDrawable getRoundedGradiant(final int color) {
@@ -93,17 +101,17 @@ public abstract class ColorUtils {
 		return d;
 	}
 
-	public static void setBackgroundGradiant(View view, int color) {
+	public static void setBackgroundGradiant(final View view, final int color) {
 		setBackground(view, getGradiant(color));
 	}
 
-	public static void setBackgroundRoundedGradiant(View view, int color) {
+	public static void setBackgroundRoundedGradiant(final View view, final int color) {
 		setBackground(view, getRoundedGradiant(color));
 	}
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 	@SuppressWarnings("deprecation")
-	public static void setBackground(View view, Drawable drawable) {
+	public static void setBackground(final View view, final Drawable drawable) {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 			view.setBackgroundDrawable(drawable);
 		} else {

@@ -45,9 +45,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 @SuppressLint("SimpleDateFormat")
-public class HoraireController extends RestController<HoraireContainer> {
+public class ScheduleController extends RestController<HoraireContainer> {
 
-	private static final String LOG_TAG = HoraireController.class.getSimpleName();
+	private static final String LOG_TAG = ScheduleController.class.getSimpleName();
 
 	private static final String TAG_CODE_COULEUR = "codeCouleur";
 	private static final String TAG_PLAGE_SERVICE = "plageDeService";
@@ -63,7 +63,7 @@ public class HoraireController extends RestController<HoraireContainer> {
 	private final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private final SimpleDateFormat mDateDecode = new SimpleDateFormat("H'h'mm");
 
-	public HoraireController() {
+	public ScheduleController() {
 		super("horaires");
 		mDateDecode.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}

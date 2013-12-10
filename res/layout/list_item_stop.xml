@@ -57,7 +57,17 @@
         android:layout_toLeftOf="@id/dotLocation"
         android:layout_toRightOf="@id/stepView"
         android:paddingLeft="10dip"
-        android:paddingRight="8dp" />
+        android:paddingRight="8dp"
+        android:visibility="gone" />
+
+    <net.naonedbus.widget.StopStepView
+        android:id="@id/stepView"
+        style="@style/ItemPrimaryText.SingleLine"
+        android:layout_width="wrap_content"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/dotLocation" />
 
     <ImageView
         android:id="@id/dotLocation"
@@ -76,10 +86,5 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:drawablePadding="8dip" />
-
-    <net.naonedbus.widget.StopStepView
-        android:id="@id/stepView"
-        android:layout_width="wrap_content"
-        android:layout_height="?android:attr/listPreferredItemHeight" />
 
 </RelativeLayout>

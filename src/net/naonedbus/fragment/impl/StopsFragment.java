@@ -39,7 +39,7 @@ import net.naonedbus.comparator.StopOrderComparator;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.manager.impl.StopBookmarkManager;
-import net.naonedbus.manager.impl.StopManager;
+import net.naonedbus.manager.impl.StopViewManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
 import net.naonedbus.utils.InfoDialogUtils;
@@ -422,15 +422,10 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
-			final StopManager arretManager = StopManager.getInstance();
+			final StopViewManager arretManager = StopViewManager.getInstance();
 			final List<Stop> arrets;
-			if (mCurrentFilter == FILTER_ALL) {
-				arrets = arretManager.getAll(context.getContentResolver(), mDirection.getRouteCode(),
-						mDirection.getCode());
-			} else {
-				arrets = arretManager.getBookmarks(context.getContentResolver(), mDirection.getRouteCode(),
-						mDirection.getCode());
-			}
+			arrets = arretManager.getAll(context.getContentResolver(), String.valueOf(mDirection.getServiceId()),
+					mDirection.getRouteCode(), mDirection.getCode());
 
 			mStops.clear();
 			mStops.addAll(arrets);

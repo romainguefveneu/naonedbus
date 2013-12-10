@@ -71,15 +71,15 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 
 		holder.stepView.setStyle(stop.getStepStyle());
 		holder.stepView.setDepth(stop.getStepDepth());
+		holder.stepView.setMaxDepth(stop.getStepMaxDepth());
 		holder.stepView.setOrientationTop(stop.getStepOrientationTop());
 		holder.stepView.setOrientationBottom(stop.getStepOrientationBottom());
-		holder.stepView.setShowOtherLines(stop.getShowOtherLines());
 
 		if (stop.getId() == -1) {
-			holder.itemTitle.setTypeface(null, Typeface.BOLD);
+			holder.stepView.setTypeface(null, Typeface.BOLD);
 			// holder.itemIcon.setVisibility(View.INVISIBLE);
 		} else {
-			holder.itemTitle.setTypeface(null, Typeface.NORMAL);
+			holder.stepView.setTypeface(null, Typeface.NORMAL);
 			// holder.itemIcon.setVisibility(View.VISIBLE);
 
 			// Définir la distance.
@@ -108,7 +108,8 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 			}
 		}
 
-		holder.itemTitle.setText(stop.getName());
+		holder.stepView.setText(stop.getName() + " " + stop.getStepDepth() + "/" + stop.getStepMaxDepth() + " : "
+				+ stop.getStepType());
 
 	}
 

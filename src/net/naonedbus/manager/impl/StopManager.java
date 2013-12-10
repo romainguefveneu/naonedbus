@@ -77,15 +77,14 @@ public class StopManager extends SQLiteManager<Stop> {
 		return getCursor(contentResolver, EquipmentTable.NORMALIZED_NAME + " LIKE %?%", new String[] { query });
 	}
 
-	/**
-	 * Récupérer une liste contenant les arrets de la route et du direction
-	 * sépcifiée
-	 * 
-	 * @param contentResolver
-	 * @param routeCode
-	 */
 	public List<Stop> getAll(final ContentResolver contentResolver, final String routeCode, final String directionCode) {
 		final Cursor c = getCursor(contentResolver, routeCode, directionCode);
+		return getFromCursor(c);
+	}
+
+	public List<Stop> getAll(final ContentResolver contentResolver, final String serviceId, final String routeCode,
+			final String directionCode) {
+		final Cursor c = getCursor(contentResolver, serviceId, routeCode, directionCode);
 		return getFromCursor(c);
 	}
 
@@ -137,8 +136,16 @@ public class StopManager extends SQLiteManager<Stop> {
 	}
 
 	public Cursor getCursor(final ContentResolver contentResolver, final String routeCode, final String directionCode) {
+		return getCursor(contentResolver, null, routeCode, directionCode);
+	}
+
+	public Cursor getCursor(final ContentResolver contentResolver, final String serviceId, final String routeCode,
+			final String directionCode) {
 		final Uri.Builder builder = StopProvider.CONTENT_URI.buildUpon();
 		builder.path(StopProvider.STOP_DIRECTION_ROUTE_URI_PATH_QUERY);
+		if (serviceId != null) {
+			builder.appendQueryParameter("serviceId", serviceId);
+		}
 		builder.appendQueryParameter("routeCode", routeCode);
 		builder.appendQueryParameter("directionCode", directionCode);
 		return contentResolver.query(builder.build(), null, null, null, null);

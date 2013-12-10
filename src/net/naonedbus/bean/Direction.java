@@ -45,6 +45,7 @@ public class Direction implements SectionItem, Parcelable {
 	public static Object section = new Object();
 
 	private int mId;
+	private int mServiceId;
 	private String mCode;
 	private String mRouteCode;
 	private String mName;
@@ -57,15 +58,16 @@ public class Direction implements SectionItem, Parcelable {
 		mName = directionName;
 	}
 
-	protected Direction(Parcel in) {
+	protected Direction(final Parcel in) {
 		mId = in.readInt();
+		mServiceId = in.readInt();
 		mCode = in.readString();
 		mRouteCode = in.readString();
 		mName = in.readString();
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (!(o instanceof Direction)) {
 			return false;
 		}
@@ -90,44 +92,57 @@ public class Direction implements SectionItem, Parcelable {
 		return mName;
 	}
 
+	public int getServiceId() {
+		return mServiceId;
+	}
+
 	@Override
 	public Object getSection() {
 		return section;
 	}
 
-	public void setId(int id) {
+	public void setId(final int id) {
 		mId = id;
 	}
 
-	public void setCode(String code) {
+	public void setCode(final String code) {
 		mCode = code;
 	}
 
-	public void setRouteCode(String routeCode) {
+	public void setRouteCode(final String routeCode) {
 		mRouteCode = routeCode;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		mName = name;
 	}
 
+	public void setServiceId(final int serviceId) {
+		mServiceId = serviceId;
+	}
+
+	@Override
 	public int describeContents() {
 		return 0;
 	}
 
-	public void writeToParcel(Parcel dest, int flags) {
+	@Override
+	public void writeToParcel(final Parcel dest, final int flags) {
 		dest.writeInt(mId);
+		dest.writeInt(mServiceId);
 		dest.writeString(mCode);
 		dest.writeString(mRouteCode);
 		dest.writeString(mName);
 	}
 
 	public static final Parcelable.Creator<Direction> CREATOR = new Parcelable.Creator<Direction>() {
-		public Direction createFromParcel(Parcel in) {
+		@Override
+		public Direction createFromParcel(final Parcel in) {
 			return new Direction(in);
 		}
 
-		public Direction[] newArray(int size) {
+		@Override
+		public Direction[] newArray(final int size) {
 			return new Direction[size];
 		}
 	};

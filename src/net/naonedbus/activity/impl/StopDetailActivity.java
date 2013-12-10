@@ -83,7 +83,7 @@ public class StopDetailActivity extends OneFragmentActivity implements OnDirecti
 
 		mHeaderHelper = new HeaderHelper(this);
 		mHeaderHelper.setColor(mRoute.getBackColor(), mRoute.getFrontColor());
-		mHeaderHelper.setTitle(stop.getName());
+		mHeaderHelper.setTitle(stop.getName() + " " + stop.getCodeArret());
 		mHeaderHelper.setSubTitle(FormatUtils.formatSens(mRoute.getLetter(), direction.getName()));
 	}
 

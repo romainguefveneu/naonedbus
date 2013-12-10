@@ -20,14 +20,14 @@ package net.naonedbus.activity.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.OneFragmentActivity;
-import net.naonedbus.bean.Stop;
-import net.naonedbus.bean.Route;
 import net.naonedbus.bean.Direction;
+import net.naonedbus.bean.Route;
+import net.naonedbus.bean.Stop;
 import net.naonedbus.fragment.impl.SchedulesFragment;
 import net.naonedbus.fragment.impl.SchedulesFragment.OnDirectionChangedListener;
 import net.naonedbus.helper.HeaderHelper;
-import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.manager.impl.DirectionManager;
+import net.naonedbus.manager.impl.RouteManager;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,7 +80,7 @@ public class SchedulesActivity extends OneFragmentActivity implements OnDirectio
 
 		mHeaderHelper = new HeaderHelper(this);
 		mHeaderHelper.setColor(route.getBackColor(), route.getFrontColor());
-		mHeaderHelper.setTitle(stop.getName());
+		mHeaderHelper.setTitle(stop.getName() + " " + stop.getCodeArret());
 		mHeaderHelper.setSubTitle(FormatUtils.formatSens(route.getLetter(), direction.getName()));
 	}
 

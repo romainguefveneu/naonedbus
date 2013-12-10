@@ -81,6 +81,7 @@ public class DirectionManager extends SQLiteManager<Direction> {
 	public Direction getSingleFromCursor(final Cursor c) {
 		final Direction item = new Direction();
 		item.setId(c.getInt(c.getColumnIndex(DirectionTable._ID)));
+		item.setServiceId(c.getInt(c.getColumnIndex(DirectionTable.SERVICE_ID)));
 		item.setCode(c.getString(c.getColumnIndex(DirectionTable.DIRECTION_CODE)));
 		item.setRouteCode(c.getString(c.getColumnIndex(DirectionTable.ROUTE_CODE)));
 		item.setName(c.getString(c.getColumnIndex(DirectionTable.DIRECTION_NAME)));

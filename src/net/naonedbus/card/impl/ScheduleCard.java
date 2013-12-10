@@ -60,7 +60,7 @@ import android.view.ViewTreeObserver;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedListener {
+public class ScheduleCard extends Card<List<Schedule>> implements OnStopChangedListener {
 
 	public static interface OnHoraireClickListener {
 		void onHoraireClick(Schedule schedule);
@@ -81,7 +81,7 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 	private final BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(final Context context, final Intent intent) {
-			restartLoader(null, HoraireCard.this).onContentChanged();
+			restartLoader(null, ScheduleCard.this).onContentChanged();
 		}
 	};
 
@@ -95,7 +95,7 @@ public class HoraireCard extends Card<List<Schedule>> implements OnStopChangedLi
 	private final LayoutInflater mLayoutInflater;
 	private ViewGroup mTerminusView;
 
-	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
+	public ScheduleCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
 			final Stop stop) {
 		super(context, loaderManager, fragmentManager, R.string.schedules, R.layout.card_horaire);
 

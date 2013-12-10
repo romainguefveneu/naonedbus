@@ -260,23 +260,23 @@ public class Stop implements Parcelable {
 	}
 
 	public int getStepStyle() {
-		return mStepType & 0x3;
+		return mStepType & 3;
 	}
 
 	public int getStepOrientationTop() {
-		return (mStepType >> 2) & 0x3;
+		return (mStepType >> 2) & 3;
 	}
 
 	public int getStepOrientationBottom() {
-		return (mStepType >> 4) & 0x3;
-	}
-
-	public boolean getShowOtherLines() {
-		return ((mStepType >> 6) & 0x1) == 1;
+		return (mStepType >> 4) & 3;
 	}
 
 	public int getStepDepth() {
-		return mStepType >> 7;
+		return (mStepType >> 6) & 31;
+	}
+
+	public int getStepMaxDepth() {
+		return (mStepType >> 11) & 31;
 	}
 
 	@Override

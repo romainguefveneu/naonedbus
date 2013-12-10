@@ -22,6 +22,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Direction;
+import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -33,22 +34,22 @@ import android.widget.TextView;
 
 public class DirectionArrayAdapter extends ArrayAdapter<Direction> {
 
-	private int mLayoutId;
+	private final int mLayoutId;
 	private Integer mTextColor;
 	private Typeface mTypeface;
 
-	public DirectionArrayAdapter(Context context, List<Direction> objects) {
+	public DirectionArrayAdapter(final Context context, final List<Direction> objects) {
 		super(context, 0, objects);
 		mLayoutId = R.layout.list_item_icon;
 	}
 
-	public DirectionArrayAdapter(Context context, int layoutId, List<Direction> objects) {
+	public DirectionArrayAdapter(final Context context, final int layoutId, final List<Direction> objects) {
 		super(context, 0, objects);
 		mLayoutId = layoutId;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
 			convertView = LayoutInflater.from(getContext()).inflate(mLayoutId, null);
 			bindViewHolder(convertView);
@@ -57,11 +58,11 @@ public class DirectionArrayAdapter extends ArrayAdapter<Direction> {
 		return convertView;
 	}
 
-	protected void bindView(View view, int position) {
+	protected void bindView(final View view, final int position) {
 		bindView(view, position, null, null);
 	}
 
-	protected void bindView(View view, int position, Integer textColor, Typeface typeface) {
+	protected void bindView(final View view, final int position, final Integer textColor, final Typeface typeface) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Direction direction = getItem(position);
 
@@ -75,14 +76,15 @@ public class DirectionArrayAdapter extends ArrayAdapter<Direction> {
 				holder.itemIcon.setVisibility(View.VISIBLE);
 		}
 
-		holder.itemTitle.setText(direction.getName());
+		holder.itemTitle.setText(direction.getServiceId() + "/" + direction.getCode() + " "
+				+ FormatUtils.formatSens(direction.getName()));
 		if (textColor != null)
 			holder.itemTitle.setTextColor(textColor);
 		if (typeface != null)
 			holder.itemTitle.setTypeface(typeface);
 	}
 
-	protected void bindViewHolder(View view) {
+	protected void bindViewHolder(final View view) {
 		final ViewHolder holder;
 		holder = new ViewHolder();
 		holder.itemIcon = (ImageView) view.findViewById(R.id.itemIcon);
@@ -93,11 +95,11 @@ public class DirectionArrayAdapter extends ArrayAdapter<Direction> {
 		view.setTag(holder);
 	}
 
-	public void setTextColor(int textColor) {
+	public void setTextColor(final int textColor) {
 		mTextColor = textColor;
 	}
 
-	public void setTypeface(Typeface typeface) {
+	public void setTypeface(final Typeface typeface) {
 		mTypeface = typeface;
 	}
 
