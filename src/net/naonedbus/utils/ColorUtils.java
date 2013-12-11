@@ -80,6 +80,38 @@ public abstract class ColorUtils {
 		return getLighterColor(color, 1.5f);
 	}
 
+	/**
+	 * Blend two colors.
+	 * 
+	 * @param color1
+	 *            First color to blend.
+	 * @param color2
+	 *            Second color to blend.
+	 * @param ratio
+	 *            Blend ratio. 0.5 will give even blend, 1.0 will return color1,
+	 *            0.0 will return color2 and so on.
+	 * @return Blended color.
+	 */
+	public static int blend(final int color1, final int color2, final double ratio) {
+		final float r = (float) ratio;
+		final float ir = (float) 1.0 - r;
+
+		final float rgb1[] = new float[3];
+		final float rgb2[] = new float[3];
+
+		rgb1[0] = Color.red(color1);
+		rgb1[1] = Color.green(color1);
+		rgb1[2] = Color.blue(color1);
+		rgb2[0] = Color.red(color2);
+		rgb2[1] = Color.green(color2);
+		rgb2[2] = Color.blue(color2);
+
+		final int color = Color.rgb(Math.round(rgb1[0] * r + rgb2[0] * ir), Math.round(rgb1[1] * r + rgb2[1] * ir),
+				Math.round(rgb1[2] * r + rgb2[2] * ir));
+
+		return color;
+	}
+
 	public static GradientDrawable getRoundedGradiant(final int color) {
 		if (color == Color.TRANSPARENT) {
 			return null;

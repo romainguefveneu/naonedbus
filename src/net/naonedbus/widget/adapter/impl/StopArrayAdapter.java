@@ -108,8 +108,7 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 			}
 		}
 
-		holder.stepView.setText(stop.getName() + " " + stop.getStepDepth() + "/" + stop.getStepMaxDepth() + " : "
-				+ stop.getStepType());
+		holder.stepView.setText(stop.getName());
 
 	}
 

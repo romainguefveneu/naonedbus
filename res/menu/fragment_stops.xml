@@ -3,56 +3,17 @@
     <item
         android:id="@id/menu_location"
         android:icon="@drawable/ic_action_location_found"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/center_on_closest"/>
-    <item
-        android:id="@id/menu_sort"
-        android:icon="@drawable/ic_action_sort_by_size"
-        android:showAsAction="always"
-        android:title="@string/sort">
-        <menu>
-            <group android:checkableBehavior="single" >
-                <item
-                    android:id="@id/menu_sort_name"
-                    android:checked="true"
-                    android:orderInCategory="100"
-                    android:showAsAction="withText"
-                    android:title="@string/sort_name"/>
-                <item
-                    android:id="@id/menu_sort_ordre"
-                    android:orderInCategory="200"
-                    android:showAsAction="withText"
-                    android:title="@string/sort_order"/>
-            </group>
-        </menu>
-    </item>
-    <item
-        android:id="@id/menu_filter"
-        android:icon="@drawable/ic_action_filter"
-        android:showAsAction="always"
-        android:title="@string/bookmark">
-        <menu>
-            <group android:checkableBehavior="single" >
-                <item
-                    android:id="@id/menu_filter_all"
-                    android:orderInCategory="100"
-                    android:title="@string/all_stops"/>
-                <item
-                    android:id="@id/menu_filter_favoris"
-                    android:orderInCategory="200"
-                    android:title="@string/bookmaked_stops"/>
-            </group>
-        </menu>
-    </item>
-    <item
-        android:id="@id/menu_comment"
-        android:icon="@drawable/ic_action_new_event"
-        android:showAsAction="never"
-        android:title="@string/comment_on_traffic"/>
     <item
         android:id="@id/menu_show_plan"
         android:icon="@drawable/ic_action_plan"
-        android:showAsAction="never"
+        android:showAsAction="ifRoom"
         android:title="@string/route_map"/>
+    <item
+        android:id="@id/menu_comment"
+        android:icon="@drawable/ic_action_new_event"
+        android:showAsAction="ifRoom"
+        android:title="@string/comment_on_traffic"/>
 
 </menu>

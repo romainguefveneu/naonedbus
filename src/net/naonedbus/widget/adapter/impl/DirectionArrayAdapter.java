@@ -76,8 +76,7 @@ public class DirectionArrayAdapter extends ArrayAdapter<Direction> {
 				holder.itemIcon.setVisibility(View.VISIBLE);
 		}
 
-		holder.itemTitle.setText(direction.getServiceId() + "/" + direction.getCode() + " "
-				+ FormatUtils.formatSens(direction.getName()));
+		holder.itemTitle.setText(FormatUtils.formatSens(direction.getName()));
 		if (textColor != null)
 			holder.itemTitle.setTextColor(textColor);
 		if (typeface != null)

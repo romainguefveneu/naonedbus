@@ -19,7 +19,7 @@
 package net.naonedbus.fragment.impl;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
 
 import net.naonedbus.NBApplication;
@@ -34,7 +34,6 @@ import net.naonedbus.bean.Direction;
 import net.naonedbus.bean.Route;
 import net.naonedbus.bean.Stop;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.comparator.StopComparator;
 import net.naonedbus.comparator.StopOrderComparator;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
@@ -42,7 +41,6 @@ import net.naonedbus.manager.impl.StopBookmarkManager;
 import net.naonedbus.manager.impl.StopViewManager;
 import net.naonedbus.provider.impl.MyLocationProvider;
 import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
-import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.widget.adapter.impl.StopArrayAdapter;
 import net.naonedbus.widget.adapter.impl.StopArrayAdapter.ViewType;
 import android.annotation.TargetApi;
@@ -53,8 +51,6 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
@@ -72,26 +68,11 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 	public static final String PARAM_ROUTE = "route";
 	public static final String PARAM_DIRECTION = "direction";
 
-	private final static int SORT_NAME = 0;
-	private final static int SORT_ORDER = 1;
-	private final static int FILTER_ALL = 2;
-	private final static int FILTER_BOOKMARKS = 3;
-	private final static SparseIntArray MENU_MAPPING = new SparseIntArray();
-	static {
-		MENU_MAPPING.append(SORT_NAME, R.id.menu_sort_name);
-		MENU_MAPPING.append(SORT_ORDER, R.id.menu_sort_ordre);
-		MENU_MAPPING.append(FILTER_ALL, R.id.menu_filter_all);
-		MENU_MAPPING.append(FILTER_BOOKMARKS, R.id.menu_filter_favoris);
-	}
-
 	private interface DistanceTaskCallback {
 		void onNearestStationFound(Integer position);
 
 		void onPostExecute();
 	}
-
-	protected final SparseArray<Comparator<Stop>> mComparators;
-	protected int mCurrentSort;
 
 	private final StopBookmarkManager mStopBookmarkManager;
 	private StateHelper mStateHelper;
@@ -100,7 +81,6 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 	private DistanceTaskCallback mDistanceTaskCallback;
 	private Integer mNearestStopPosition;
 	private StopArrayAdapter mAdapter;
-	private int mCurrentFilter = FILTER_ALL;
 
 	private List<Stop> mStops;
 
@@ -113,10 +93,6 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 
 		mLocationProvider = NBApplication.getLocationProvider();
 		mLocationProvider.addListener(this);
-
-		mComparators = new SparseArray<Comparator<Stop>>();
-		mComparators.append(SORT_NAME, new StopComparator());
-		mComparators.append(SORT_ORDER, new StopOrderComparator());
 
 		mStopBookmarkManager = StopBookmarkManager.getInstance();
 	}
@@ -136,15 +112,9 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		mRoute = getArguments().getParcelable(PARAM_ROUTE);
 		mDirection = getArguments().getParcelable(PARAM_DIRECTION);
 
-		mStateHelper = new StateHelper(getActivity());
-		mCurrentSort = mStateHelper.getSortType(this, SORT_NAME);
-		setCurrentFilter(mStateHelper.getFilterType(this, FILTER_ALL));
-
 		mStops = new ArrayList<Stop>();
 		mAdapter = new StopArrayAdapter(getActivity(), mStops, mRoute.getBackColor());
-		if (mCurrentSort == SORT_ORDER) {
-			mAdapter.setViewType(ViewType.TYPE_METRO);
-		}
+		mAdapter.setViewType(ViewType.TYPE_METRO);
 
 		mDistanceTaskCallback = new DistanceTaskCallback() {
 			@Override
@@ -181,10 +151,6 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 	public void onStop() {
 		super.onStop();
 
-		// Save state
-		mStateHelper.setSortType(this, mCurrentSort);
-		mStateHelper.setFilterType(this, mCurrentFilter);
-
 		mLocationProvider.stop();
 		if (mDistanceTask != null) {
 			mDistanceTask.cancel(true);
@@ -194,8 +160,6 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 	@Override
 	public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_stops, menu);
-		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
-		menu.findItem(MENU_MAPPING.get(mCurrentFilter)).setChecked(true);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -209,28 +173,6 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 	public boolean onOptionsItemSelected(final MenuItem item) {
 
 		switch (item.getItemId()) {
-		case R.id.menu_sort_name:
-			item.setChecked(true);
-			changeSortOrder(SORT_NAME, ViewType.TYPE_STANDARD);
-			break;
-		case R.id.menu_sort_ordre:
-			item.setChecked(true);
-			changeSortOrder(SORT_ORDER, ViewType.TYPE_METRO);
-			break;
-		case R.id.menu_filter_all:
-			if (mCurrentFilter != FILTER_ALL) {
-				item.setChecked(true);
-				setCurrentFilter(FILTER_ALL);
-				refreshContent();
-			}
-			break;
-		case R.id.menu_filter_favoris:
-			if (mCurrentFilter != FILTER_BOOKMARKS) {
-				item.setChecked(true);
-				setCurrentFilter(FILTER_BOOKMARKS);
-				refreshContent();
-			}
-			break;
 		case R.id.menu_show_plan:
 			menuShowPlan();
 			break;
@@ -356,79 +298,18 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 		}
 	}
 
-	/**
-	 * Définir le filtre courant.
-	 * 
-	 * @param filter
-	 */
-	private void setCurrentFilter(final int filter) {
-		mCurrentFilter = filter;
-
-		if (mCurrentFilter == FILTER_ALL) {
-			setEmptyMessageValues(R.string.no_data, R.string.sorry_bit_silly, R.drawable.sad_face);
-		} else {
-			setEmptyMessageValues(R.string.no_bookmark, R.string.no_bookmarked_stops, R.drawable.favori);
-		}
-	}
-
-	/**
-	 * Changer l'ordre de tri des arrêts.
-	 * 
-	 * @param sortOrder
-	 *            L'id du comparator
-	 * @param viewType
-	 *            Le type de vue de l'adapter
-	 */
-	private void changeSortOrder(final int sortOrder, final ViewType viewType) {
-		final StopArrayAdapter adapter = (StopArrayAdapter) getListAdapter();
-		mCurrentSort = sortOrder;
-
-		adapter.setViewType(viewType);
-		getListView().setSelection(0);
-
-		sort();
-		loadDistances();
-
-		if (viewType == ViewType.TYPE_METRO) {
-			InfoDialogUtils
-					.showIfNecessary(getActivity(), R.string.sort_by_location, R.string.sort_by_location_message);
-		}
-	}
-
-	/**
-	 * Trier les parkings selon les préférences.
-	 */
-	private void sort() {
-		final StopArrayAdapter adapter = (StopArrayAdapter) getListAdapter();
-		if (adapter != null) {
-			sort(adapter);
-			adapter.notifyDataSetChanged();
-		}
-	}
-
-	/**
-	 * Trier les parkings selon les préférences.
-	 * 
-	 * @param adapter
-	 */
-	private void sort(final StopArrayAdapter adapter) {
-		final Comparator<Stop> comparator = mComparators.get(mCurrentSort);
-		if (comparator != null) {
-			adapter.sort(comparator);
-		}
-	}
-
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		try {
-			final StopViewManager arretManager = StopViewManager.getInstance();
-			final List<Stop> arrets;
-			arrets = arretManager.getAll(context.getContentResolver(), String.valueOf(mDirection.getServiceId()),
-					mDirection.getRouteCode(), mDirection.getCode());
+			final StopViewManager manager = StopViewManager.getInstance();
+			final List<Stop> stops = manager.getAll(context.getContentResolver(),
+					String.valueOf(mDirection.getServiceId()), mDirection.getRouteCode(), mDirection.getCode());
+
+			Collections.sort(stops, new StopOrderComparator());
 
 			mStops.clear();
-			mStops.addAll(arrets);
+			mStops.addAll(stops);
 
 			result.setResult(mAdapter);
 		} catch (final Exception e) {
@@ -439,7 +320,6 @@ public class StopsFragment extends CustomListFragment implements OnDirectionChan
 
 	@Override
 	protected void onPostExecute() {
-		sort();
 		loadDistances();
 		mAdapter.notifyDataSetChanged();
 	}

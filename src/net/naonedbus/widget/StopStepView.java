@@ -1,5 +1,6 @@
 package net.naonedbus.widget;
 
+import net.naonedbus.R;
 import net.naonedbus.utils.ColorUtils;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 public class StopStepView extends TextView {
 
 	private static final int COLUMN_WIDTH = 42;
-	private static final int POST_LINES_ALPHA = 50;
+	private static final int POST_LINES_ALPHA = 40;
 
 	private static final int DOT_RADIUS = 6;
 	private static final int DOT_RADIUS_HEADSIGN = 10;
@@ -35,7 +36,10 @@ public class StopStepView extends TextView {
 	private int mColor;
 	private int mSecondaryColor;
 	private int mBorderColor;
+	private int mBorderAlternativeColor;
+	private int mAlternativeColor;
 	private int mPointColor;
+	private int mBackgroundColor;
 
 	/**
 	 * 1 = First 0 = Middle 2 = Last
@@ -82,6 +86,8 @@ public class StopStepView extends TextView {
 		mStrokeWidth = STROKE_WIDTH * metrics.density;
 		mStrokeBorderWidth = STROKE_BORDER_WIDTH * metrics.density;
 
+		mBackgroundColor = getResources().getColor(R.color.activity_background_light);
+
 		mPaint = new Paint();
 		mPaint.setAntiAlias(true);
 		mPaint.setStyle(Paint.Style.STROKE);
@@ -96,6 +102,10 @@ public class StopStepView extends TextView {
 		mBorderColor = ColorUtils.getDarkerColor(color);
 		mPointColor = ColorUtils.getLighterColor(color);
 		mSecondaryColor = ColorUtils.getDarkerColor(color, 0.9f);
+
+		mAlternativeColor = ColorUtils.blend(color, mBackgroundColor, 0.1f);
+		mBorderAlternativeColor = ColorUtils.blend(mBorderColor, mBackgroundColor, 0.1f);
+
 		mPaint.setColor(mColor);
 	}
 
@@ -151,8 +161,22 @@ public class StopStepView extends TextView {
 		for (int i = 0; i <= mMaxDepth; i++) {
 			if (i != mDepth) {
 				final int x = i * mColumnWidth - mColumnWidth / 2;
+
 				if (i > mDepth) {
 					alpha = POST_LINES_ALPHA;
+					// mPaint.setShader(new LinearGradient(0, 0, 0, getHeight()
+					// / 5, mBorderColor,
+					// mBorderAlternativeColor, Shader.TileMode.CLAMP));
+					// mPaint.setColor(mBorderColor);
+					// mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
+					// canvas.drawLine(x, 0, x, getHeight(), mPaint);
+					//
+					// mPaint.setShader(new LinearGradient(0, 0, 0, getHeight()
+					// / 5, mColor, mAlternativeColor,
+					// Shader.TileMode.MIRROR));
+					// mPaint.setColor(mColor);
+					// mPaint.setStrokeWidth(mStrokeWidth);
+					// canvas.drawLine(x, 0, x, getHeight(), mPaint);
 				}
 
 				mPaint.setColor(mBorderColor);
@@ -160,14 +184,14 @@ public class StopStepView extends TextView {
 				mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
 				canvas.drawLine(x, 0, x, getHeight(), mPaint);
 
-				if (i <= mDepth) {
-					mPaint.setColor(mColor);
-					mPaint.setAlpha(alpha);
-					mPaint.setStrokeWidth(mStrokeWidth);
-					canvas.drawLine(x, 0, x, getHeight(), mPaint);
-				}
+				mPaint.setColor(mColor);
+				mPaint.setAlpha(alpha);
+				mPaint.setStrokeWidth(mStrokeWidth);
+				canvas.drawLine(x, 0, x, getHeight(), mPaint);
+
 			}
 		}
+		// mPaint.setShader(null);
 		mPaint.setAlpha(255);
 	}
 
