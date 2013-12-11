@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 public class StopStepView extends TextView {
 
-	private static final int COLUMN_WIDTH = 42;
-	private static final int POST_LINES_ALPHA = 40;
+	private static final int COLUMN_WIDTH = 32;
+	private static final int POST_LINES_ALPHA = 30;
 
 	private static final int DOT_RADIUS = 6;
 	private static final int DOT_RADIUS_HEADSIGN = 10;
@@ -22,6 +22,7 @@ public class StopStepView extends TextView {
 	private static final int DOT_RADIUS_BORDER = 1;
 	private static final float STROKE_WIDTH = 6f;
 	private static final float STROKE_BORDER_WIDTH = 2f;
+	private static final float TEXT_PADDING = 8f;
 
 	private static final int ORIENTATION_NONE = 0;
 	private static final int ORIENTATION_RTL = 1;
@@ -36,8 +37,8 @@ public class StopStepView extends TextView {
 	private int mColor;
 	private int mSecondaryColor;
 	private int mBorderColor;
-	private int mBorderAlternativeColor;
-	private int mAlternativeColor;
+	// private int mBorderAlternativeColor;
+	// private int mAlternativeColor;
 	private int mPointColor;
 	private int mBackgroundColor;
 
@@ -58,6 +59,7 @@ public class StopStepView extends TextView {
 	private int mDotRadiusHeadsign;
 	private int mDotRadiusHeadsignCenter;
 	private int mDotRadiusBorder;
+	private int mTextPadding;
 	private float mStrokeWidth;
 	private float mStrokeBorderWidth;
 
@@ -85,6 +87,7 @@ public class StopStepView extends TextView {
 		mDotRadiusHeadsignCenter = Math.round(DOT_RADIUS_HEADSIGN_CENTER * metrics.density);
 		mStrokeWidth = STROKE_WIDTH * metrics.density;
 		mStrokeBorderWidth = STROKE_BORDER_WIDTH * metrics.density;
+		mTextPadding = Math.round(TEXT_PADDING * metrics.density);
 
 		mBackgroundColor = getResources().getColor(R.color.activity_background_light);
 
@@ -103,8 +106,9 @@ public class StopStepView extends TextView {
 		mPointColor = ColorUtils.getLighterColor(color);
 		mSecondaryColor = ColorUtils.getDarkerColor(color, 0.9f);
 
-		mAlternativeColor = ColorUtils.blend(color, mBackgroundColor, 0.1f);
-		mBorderAlternativeColor = ColorUtils.blend(mBorderColor, mBackgroundColor, 0.1f);
+		// mAlternativeColor = ColorUtils.blend(color, mBackgroundColor, 0.1f);
+		// mBorderAlternativeColor = ColorUtils.blend(mBorderColor,
+		// mBackgroundColor, 0.1f);
 
 		mPaint.setColor(mColor);
 	}
@@ -115,7 +119,7 @@ public class StopStepView extends TextView {
 
 	public void setDepth(final int depth) {
 		mDepth = depth;
-		setPadding(mDepth * mColumnWidth, 0, 0, 0);
+		setPadding(mDepth * mColumnWidth + mTextPadding, 0, 0, 0);
 	}
 
 	public void setOrientationTop(final int orientation) {
