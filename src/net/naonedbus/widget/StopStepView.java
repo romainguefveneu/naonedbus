@@ -5,8 +5,10 @@ import net.naonedbus.utils.ColorUtils;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
@@ -37,8 +39,8 @@ public class StopStepView extends TextView {
 	private int mColor;
 	private int mSecondaryColor;
 	private int mBorderColor;
-	// private int mBorderAlternativeColor;
-	// private int mAlternativeColor;
+	private int mBorderAlternativeColor;
+	private int mAlternativeColor;
 	private int mPointColor;
 	private int mBackgroundColor;
 
@@ -46,13 +48,17 @@ public class StopStepView extends TextView {
 	 * 1 = First 0 = Middle 2 = Last
 	 */
 	private int mStyle = 1;
-	private int mDepth = 2;
-	private int mMaxDepth = 2;
+	private int mOtherLinesTopStyle = 0;
+	private int mOtherLinesBottomStyle = 0;
+
 	/**
 	 * 1 : / 2 : \ 3 : | 0 : vide
 	 */
 	private int mOrientationTop = 0;
 	private int mOrientationBottom = 0;
+
+	private int mDepth = 2;
+	private int mMaxDepth = 2;
 
 	private int mColumnWidth;
 	private int mDotRadius;
@@ -106,9 +112,8 @@ public class StopStepView extends TextView {
 		mPointColor = ColorUtils.getLighterColor(color);
 		mSecondaryColor = ColorUtils.getDarkerColor(color, 0.9f);
 
-		// mAlternativeColor = ColorUtils.blend(color, mBackgroundColor, 0.1f);
-		// mBorderAlternativeColor = ColorUtils.blend(mBorderColor,
-		// mBackgroundColor, 0.1f);
+		mAlternativeColor = ColorUtils.blend(color, mBackgroundColor, 0.1f);
+		mBorderAlternativeColor = ColorUtils.blend(mBorderColor, mBackgroundColor, 0.1f);
 
 		mPaint.setColor(mColor);
 	}
@@ -128,6 +133,14 @@ public class StopStepView extends TextView {
 
 	public void setOrientationBottom(final int orientation) {
 		mOrientationBottom = orientation;
+	}
+
+	public void setOtherLinesTopStyle(final int otherLinesTopStyle) {
+		mOtherLinesTopStyle = otherLinesTopStyle;
+	}
+
+	public void setOtherLinesBottomStyle(final int otherLinesBottomStyle) {
+		mOtherLinesBottomStyle = otherLinesBottomStyle;
 	}
 
 	public void setMaxDepth(final int maxDepth) {
@@ -161,42 +174,57 @@ public class StopStepView extends TextView {
 	}
 
 	private void drawMainLines(final Canvas canvas) {
-		int alpha = 255;
 		for (int i = 0; i <= mMaxDepth; i++) {
 			if (i != mDepth) {
 				final int x = i * mColumnWidth - mColumnWidth / 2;
 
 				if (i > mDepth) {
-					alpha = POST_LINES_ALPHA;
-					// mPaint.setShader(new LinearGradient(0, 0, 0, getHeight()
-					// / 5, mBorderColor,
-					// mBorderAlternativeColor, Shader.TileMode.CLAMP));
-					// mPaint.setColor(mBorderColor);
-					// mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
-					// canvas.drawLine(x, 0, x, getHeight(), mPaint);
-					//
-					// mPaint.setShader(new LinearGradient(0, 0, 0, getHeight()
-					// / 5, mColor, mAlternativeColor,
-					// Shader.TileMode.MIRROR));
-					// mPaint.setColor(mColor);
-					// mPaint.setStrokeWidth(mStrokeWidth);
-					// canvas.drawLine(x, 0, x, getHeight(), mPaint);
+					if (mOtherLinesTopStyle == STEP_FIRST) {
+
+						mPaint.setShader(new LinearGradient(0, 0, 0, getHeight() * 0.1f, mBorderColor,
+								mBorderAlternativeColor, Shader.TileMode.CLAMP));
+
+						mPaint.setColor(mBorderColor);
+						mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
+						canvas.drawLine(x, 0, x, getHeight(), mPaint);
+
+						mPaint.setShader(new LinearGradient(0, 0, 0, getHeight() * 0.1f, mColor, mAlternativeColor,
+								Shader.TileMode.CLAMP));
+
+						mPaint.setColor(mColor);
+						mPaint.setStrokeWidth(mStrokeWidth);
+						canvas.drawLine(x, 0, x, getHeight(), mPaint);
+
+					}
+					if (mOtherLinesBottomStyle == STEP_LAST) {
+						mPaint.setShader(new LinearGradient(0, getHeight() * 0.9f, 0, getHeight(),
+								mBorderAlternativeColor, mBorderColor, Shader.TileMode.CLAMP));
+
+						mPaint.setColor(mBorderColor);
+						mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
+						canvas.drawLine(x, 0, x, getHeight(), mPaint);
+
+						mPaint.setShader(new LinearGradient(0, getHeight() * 0.9f, 0, getHeight(), mAlternativeColor,
+								mColor, Shader.TileMode.CLAMP));
+
+						mPaint.setColor(mColor);
+						mPaint.setStrokeWidth(mStrokeWidth);
+						canvas.drawLine(x, 0, x, getHeight(), mPaint);
+					}
+				} else {
+
+					mPaint.setColor(mBorderColor);
+					mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
+					canvas.drawLine(x, 0, x, getHeight(), mPaint);
+
+					mPaint.setColor(mColor);
+					mPaint.setStrokeWidth(mStrokeWidth);
+					canvas.drawLine(x, 0, x, getHeight(), mPaint);
+
 				}
-
-				mPaint.setColor(mBorderColor);
-				mPaint.setAlpha(alpha);
-				mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
-				canvas.drawLine(x, 0, x, getHeight(), mPaint);
-
-				mPaint.setColor(mColor);
-				mPaint.setAlpha(alpha);
-				mPaint.setStrokeWidth(mStrokeWidth);
-				canvas.drawLine(x, 0, x, getHeight(), mPaint);
-
 			}
 		}
-		// mPaint.setShader(null);
-		mPaint.setAlpha(255);
+		mPaint.setShader(null);
 	}
 
 	private void drawLineBottom(final Canvas canvas) {

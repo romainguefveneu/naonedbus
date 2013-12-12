@@ -74,6 +74,8 @@ public class StopArrayAdapter extends ArrayAdapter<Stop> {
 		holder.stepView.setMaxDepth(stop.getStepMaxDepth());
 		holder.stepView.setOrientationTop(stop.getStepOrientationTop());
 		holder.stepView.setOrientationBottom(stop.getStepOrientationBottom());
+		holder.stepView.setOtherLinesTopStyle(stop.getStepOtherLinesStyleTop());
+		holder.stepView.setOtherLinesBottomStyle(stop.getStepOtherLinesStyleBottom());
 
 		if (stop.getId() == -1) {
 			holder.stepView.setTypeface(null, Typeface.BOLD);
