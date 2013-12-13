@@ -35,6 +35,9 @@ public class StopStepView extends TextView {
 	private static final int STEP_FIRST = 1;
 	private static final int STEP_LAST = 2;
 
+	public static final int OTHERLINE_STYLE_NORMAL = 0;
+	public static final int OTHERLINE_STYLE_TRANSITION = 1;
+
 	private Paint mPaint;
 	private int mColor;
 	private int mSecondaryColor;
@@ -179,7 +182,7 @@ public class StopStepView extends TextView {
 				final int x = i * mColumnWidth - mColumnWidth / 2;
 
 				if (i > mDepth) {
-					if (mOtherLinesTopStyle == STEP_FIRST) {
+					if (mOtherLinesTopStyle == OTHERLINE_STYLE_TRANSITION) {
 
 						mPaint.setShader(new LinearGradient(0, 0, 0, getHeight() * 0.1f, mBorderColor,
 								mBorderAlternativeColor, Shader.TileMode.CLAMP));
@@ -196,7 +199,7 @@ public class StopStepView extends TextView {
 						canvas.drawLine(x, 0, x, getHeight(), mPaint);
 
 					}
-					if (mOtherLinesBottomStyle == STEP_LAST) {
+					if (mOtherLinesBottomStyle == OTHERLINE_STYLE_TRANSITION) {
 						mPaint.setShader(new LinearGradient(0, getHeight() * 0.9f, 0, getHeight(),
 								mBorderAlternativeColor, mBorderColor, Shader.TileMode.CLAMP));
 
