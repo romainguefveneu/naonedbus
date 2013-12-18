@@ -58,7 +58,7 @@ public class Stop implements Parcelable {
 		private Float mLongitude;
 		private int mEquipmentId;
 		private int mOrder;
-		private int mStepType;
+		private long mStepType;
 		private String mName;
 		private Float mDistance;
 
@@ -122,7 +122,7 @@ public class Stop implements Parcelable {
 			return this;
 		}
 
-		public Builder setStepType(final int stepType) {
+		public Builder setStepType(final long stepType) {
 			mStepType = stepType;
 			return this;
 		}
@@ -149,7 +149,7 @@ public class Stop implements Parcelable {
 	private final Float mLongitude;
 	private final int mEquipmentId;
 	private final int mOrder;
-	private final int mStepType;
+	private final long mStepType;
 	private Float mDistance;
 
 	protected Stop(final Builder builder) {
@@ -255,36 +255,36 @@ public class Stop implements Parcelable {
 		return mDistance;
 	}
 
-	public int getStepType() {
+	public long getStepType() {
 		return mStepType;
 	}
 
 	public int getStepStyle() {
-		return mStepType & 3;
+		return (int) mStepType & 3;
 	}
 
 	public int getStepOrientationTop() {
-		return (mStepType >> 2) & 3;
+		return (int) (mStepType >> 2) & 3;
 	}
 
 	public int getStepOrientationBottom() {
-		return (mStepType >> 4) & 3;
+		return (int) (mStepType >> 4) & 3;
 	}
 
 	public int getStepOtherLinesStyleTop() {
-		return (mStepType >> 6) & 1;
+		return (int) (mStepType >> 6) & 1;
 	}
 
 	public int getStepOtherLinesStyleBottom() {
-		return (mStepType >> 7) & 1;
+		return (int) (mStepType >> 7) & 1;
 	}
 
 	public int getStepDepth() {
-		return (mStepType >> 8) & 15;
+		return (int) (mStepType >> 8) & 15;
 	}
 
-	public int getStepMaxDepth() {
-		return (mStepType >> 12) & 15;
+	public int getStepDepthsVisibility() {
+		return (int) mStepType >> 12;
 	}
 
 	@Override
@@ -305,7 +305,7 @@ public class Stop implements Parcelable {
 		dest.writeFloat(mLongitude);
 		dest.writeInt(mEquipmentId);
 		dest.writeInt(mOrder);
-		dest.writeInt(mStepType);
+		dest.writeLong(mStepType);
 		dest.writeString(mName);
 	}
 

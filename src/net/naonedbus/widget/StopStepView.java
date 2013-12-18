@@ -61,7 +61,7 @@ public class StopStepView extends TextView {
 	private int mOrientationBottom = 0;
 
 	private int mDepth = 2;
-	private int mMaxDepth = 2;
+	private int mDepthsVisibility = 2;
 
 	private int mColumnWidth;
 	private int mDotRadius;
@@ -146,8 +146,8 @@ public class StopStepView extends TextView {
 		mOtherLinesBottomStyle = otherLinesBottomStyle;
 	}
 
-	public void setMaxDepth(final int maxDepth) {
-		mMaxDepth = maxDepth;
+	public void setDepthsVisibility(final int depthsVisibility) {
+		mDepthsVisibility = depthsVisibility;
 	}
 
 	@Override
@@ -177,11 +177,13 @@ public class StopStepView extends TextView {
 	}
 
 	private void drawMainLines(final Canvas canvas) {
-		for (int i = 0; i <= mMaxDepth; i++) {
-			if (i != mDepth) {
-				final int x = i * mColumnWidth - mColumnWidth / 2;
+		int i = 0;
+		while ((mDepthsVisibility >> i) > 0) {
+			final int depth = i + 1;
+			if (depth != mDepth && (((mDepthsVisibility >> i) & 1) == 1)) {
+				final int x = depth * mColumnWidth - mColumnWidth / 2;
 
-				if (i > mDepth) {
+				if (depth > mDepth) {
 					if (mOtherLinesTopStyle == OTHERLINE_STYLE_TRANSITION) {
 
 						mPaint.setShader(new LinearGradient(0, 0, 0, getHeight() * 0.1f, mBorderColor,
@@ -226,6 +228,7 @@ public class StopStepView extends TextView {
 
 				}
 			}
+			i++;
 		}
 		mPaint.setShader(null);
 	}

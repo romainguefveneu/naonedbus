@@ -21,7 +21,7 @@ package net.naonedbus.provider.table;
 import android.provider.BaseColumns;
 
 public interface DirectionTable extends BaseColumns {
-	public static final String TABLE_NAME = "directionsView";
+	public static final String TABLE_NAME = "directions";
 
 	public static final String SERVICE_ID = "serviceId";
 	public static final String DIRECTION_CODE = "directionCode";

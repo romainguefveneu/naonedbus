@@ -182,7 +182,7 @@ public class StopManager extends SQLiteManager<Stop> {
 		mBuilder.setLongitude(c.getFloat(mColLongitude));
 		mBuilder.setIdStation(c.getInt(mColEquipmentId));
 		mBuilder.setOrdre(c.getInt(mColOrder));
-		mBuilder.setStepType(c.getInt(mColStepType));
+		mBuilder.setStepType(c.getLong(mColStepType));
 		return mBuilder.build();
 	}
 
@@ -198,7 +198,7 @@ public class StopManager extends SQLiteManager<Stop> {
 		mBuilder.setLongitude(c.getFloat(c.getColumnIndex(EquipmentTable.LONGITUDE)));
 		mBuilder.setIdStation(c.getInt(c.getColumnIndex(StopTable.EQUIPMENT_ID)));
 		mBuilder.setOrdre(c.getInt(c.getColumnIndex(StopTable.STOP_ORDER)));
-		mBuilder.setStepType(c.getInt(c.getColumnIndex(StopTable.STEP_TYPE)));
+		mBuilder.setStepType(c.getLong(c.getColumnIndex(StopTable.STEP_TYPE)));
 		return mBuilder.build();
 	}
 
