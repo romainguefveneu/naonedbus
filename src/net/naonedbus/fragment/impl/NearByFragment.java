@@ -82,9 +82,6 @@ public class NearByFragment extends CustomListFragment implements MyLocationList
 
 	public NearByFragment() {
 		super(R.layout.fragment_nearby);
-		if (DBG)
-			Log.i(LOG_TAG, "ProximiteFragment()");
-
 		setHasOptionsMenu(true);
 
 		mLocationProvider = NBApplication.getLocationProvider();

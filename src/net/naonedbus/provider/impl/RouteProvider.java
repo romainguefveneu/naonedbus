@@ -20,6 +20,7 @@ package net.naonedbus.provider.impl;
 
 import net.naonedbus.provider.ReadOnlyContentProvider;
 import net.naonedbus.provider.table.RouteTable;
+import net.naonedbus.provider.table.RoutesByEquipmentView;
 import net.naonedbus.provider.table.StopTable;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -77,7 +78,8 @@ public class RouteProvider extends ReadOnlyContentProvider {
 	}
 
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+	public Cursor query(final Uri uri, final String[] projection, final String selection, final String[] selectionArgs,
+			String sortOrder) {
 		final SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(RouteTable.TABLE_NAME);
 
@@ -85,7 +87,7 @@ public class RouteProvider extends ReadOnlyContentProvider {
 			sortOrder = RouteTable.TYPE_ID + ", CAST(" + RouteTable.LETTER + " as numeric)";
 		}
 
-		int uriType = URI_MATCHER.match(uri);
+		final int uriType = URI_MATCHER.match(uri);
 		switch (uriType) {
 		case SEARCH:
 			final String keyword = uri.getLastPathSegment();
@@ -109,7 +111,8 @@ public class RouteProvider extends ReadOnlyContentProvider {
 			break;
 
 		case ROUTE_STOP:
-			queryBuilder.appendWhere(String.format(RouteStopQuery.WHERE, uri.getLastPathSegment()));
+			queryBuilder.setTables(RoutesByEquipmentView.TABLE_NAME);
+			queryBuilder.appendWhere(RoutesByEquipmentView.EQUIPMENT_ID + "=" + uri.getLastPathSegment());
 			sortOrder = RouteStopQuery.ORDER_BY;
 			break;
 
