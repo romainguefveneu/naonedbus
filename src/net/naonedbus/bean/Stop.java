@@ -181,7 +181,7 @@ public class Stop implements Parcelable {
 		mLongitude = in.readFloat();
 		mEquipmentId = in.readInt();
 		mOrder = in.readInt();
-		mStepType = in.readInt();
+		mStepType = in.readLong();
 		mName = in.readString();
 	}
 
