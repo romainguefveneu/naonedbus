@@ -180,7 +180,9 @@ public class StopStepView extends TextView {
 		int i = 0;
 		while ((mDepthsVisibility >> i) > 0) {
 			final int depth = i + 1;
-			if (depth != mDepth && (((mDepthsVisibility >> i) & 1) == 1)) {
+			final boolean isVisible = ((mDepthsVisibility >> i) & 1) == 1;
+
+			if (depth != mDepth && isVisible) {
 				final int x = depth * mColumnWidth - mColumnWidth / 2;
 
 				if (depth > mDepth) {

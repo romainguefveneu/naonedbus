@@ -68,7 +68,7 @@ public class NearByFragment extends CustomListFragment implements MyLocationList
 	private static final String LOG_TAG = "NearByFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private static final int MAX_EQUIPEMENTS = 25;
+	private static final int MAX_EQUIPEMENTS = 100;
 	private static final int MENU_GROUP_TYPES = 1;
 
 	private static final String PREF_PROXIMITE_LAYER = "proximite.layer.";

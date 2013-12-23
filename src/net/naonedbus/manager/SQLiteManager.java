@@ -134,7 +134,7 @@ public abstract class SQLiteManager<T> {
 	 *            un Curseur
 	 * @return une liste d'éléments
 	 */
-	protected List<T> getFromCursor(final Cursor c) {
+	public List<T> getFromCursor(final Cursor c) {
 		final List<T> items = new ArrayList<T>();
 		if (c.getCount() > 0) {
 			onIndexCursor(c);
