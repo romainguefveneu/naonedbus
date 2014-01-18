@@ -87,6 +87,11 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected boolean isValidFragment(final String fragmentName) {
+		return true;
+	}
+
 	private void initNavigationHome(final SharedPreferences preferences) {
 		final List<MainMenuItem> items = MenuDrawerActivity.getMainMenuItems();
 

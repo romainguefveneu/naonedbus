@@ -75,6 +75,10 @@ public class SettingsFragment extends PreferenceFragment {
 		initClearCache(preferences);
 	}
 
+	protected boolean isValidFragment(final String fragmentName) {
+		return true;
+	}
+
 	/**
 	 * Initier la liste des sections.
 	 * 

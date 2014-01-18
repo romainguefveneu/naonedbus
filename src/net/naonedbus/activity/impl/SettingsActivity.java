@@ -56,4 +56,9 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	protected boolean isValidFragment(final String fragmentName) {
+		return true;
+	}
+
 }
