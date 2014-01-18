@@ -72,6 +72,8 @@ public class StopStepView extends TextView {
 	private float mStrokeWidth;
 	private float mStrokeBorderWidth;
 
+	private int mAlpha = 255;
+
 	public StopStepView(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 		init();
@@ -119,6 +121,12 @@ public class StopStepView extends TextView {
 		mBorderAlternativeColor = ColorUtils.blend(mBorderColor, mBackgroundColor, 0.1f);
 
 		mPaint.setColor(mColor);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		super.setEnabled(enabled);
+		mAlpha = enabled ? 255 : 150;
 	}
 
 	public void setStyle(final int style) {
@@ -192,6 +200,7 @@ public class StopStepView extends TextView {
 								mBorderAlternativeColor, Shader.TileMode.CLAMP));
 
 						mPaint.setColor(mBorderColor);
+						mPaint.setAlpha(mAlpha);
 						mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
 						canvas.drawLine(x, 0, x, getHeight(), mPaint);
 
@@ -199,6 +208,7 @@ public class StopStepView extends TextView {
 								Shader.TileMode.CLAMP));
 
 						mPaint.setColor(mColor);
+						mPaint.setAlpha(mAlpha);
 						mPaint.setStrokeWidth(mStrokeWidth);
 						canvas.drawLine(x, 0, x, getHeight(), mPaint);
 
@@ -208,6 +218,7 @@ public class StopStepView extends TextView {
 								mBorderAlternativeColor, mBorderColor, Shader.TileMode.CLAMP));
 
 						mPaint.setColor(mBorderColor);
+						mPaint.setAlpha(mAlpha);
 						mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
 						canvas.drawLine(x, 0, x, getHeight(), mPaint);
 
@@ -215,16 +226,19 @@ public class StopStepView extends TextView {
 								mColor, Shader.TileMode.CLAMP));
 
 						mPaint.setColor(mColor);
+						mPaint.setAlpha(mAlpha);
 						mPaint.setStrokeWidth(mStrokeWidth);
 						canvas.drawLine(x, 0, x, getHeight(), mPaint);
 					}
 				} else {
 
 					mPaint.setColor(mBorderColor);
+					mPaint.setAlpha(mAlpha);
 					mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
 					canvas.drawLine(x, 0, x, getHeight(), mPaint);
 
 					mPaint.setColor(mColor);
+					mPaint.setAlpha(mAlpha);
 					mPaint.setStrokeWidth(mStrokeWidth);
 					canvas.drawLine(x, 0, x, getHeight(), mPaint);
 
@@ -239,10 +253,12 @@ public class StopStepView extends TextView {
 		final int x = mColumnWidth * mDepth - mColumnWidth / 2;
 
 		mPaint.setColor(mBorderColor);
+		mPaint.setAlpha(mAlpha);
 		mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
 		canvas.drawLine(x, getHeight() / 2, x, getHeight(), mPaint);
 
 		mPaint.setColor(mColor);
+		mPaint.setAlpha(mAlpha);
 		mPaint.setStrokeWidth(mStrokeWidth);
 		canvas.drawLine(x, getHeight() / 2, x, getHeight(), mPaint);
 	}
@@ -251,10 +267,12 @@ public class StopStepView extends TextView {
 		final int x = mColumnWidth * mDepth - mColumnWidth / 2;
 
 		mPaint.setColor(mBorderColor);
+		mPaint.setAlpha(mAlpha);
 		mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
 		canvas.drawLine(x, 0, x, getHeight() / 2, mPaint);
 
 		mPaint.setColor(mColor);
+		mPaint.setAlpha(mAlpha);
 		mPaint.setStrokeWidth(mStrokeWidth);
 		canvas.drawLine(x, 0, x, getHeight() / 2, mPaint);
 	}
@@ -265,14 +283,14 @@ public class StopStepView extends TextView {
 
 	private void drawPath(final Canvas canvas, final Path path, final int color) {
 		mPaint.setColor(mBorderColor);
+		mPaint.setAlpha(mAlpha);
 		mPaint.setStrokeWidth(mStrokeWidth + mStrokeBorderWidth);
 		canvas.drawPath(path, mPaint);
 
 		mPaint.setColor(color);
+		mPaint.setAlpha(mAlpha);
 		mPaint.setStrokeWidth(mStrokeWidth);
 		canvas.drawPath(path, mPaint);
-
-		mPaint.setAlpha(255);
 	}
 
 	private void drawLeftToRightBottom(final Canvas canvas) {
@@ -362,15 +380,19 @@ public class StopStepView extends TextView {
 		mPaint.setStyle(Paint.Style.FILL);
 
 		mPaint.setColor(mBorderColor);
+		mPaint.setAlpha(mAlpha);
 		canvas.drawCircle(x, y, radius + mDotRadiusBorder, mPaint);
 
 		mPaint.setColor(mPointColor);
+		mPaint.setAlpha(mAlpha);
 		canvas.drawCircle(x, y, radius, mPaint);
 
 		if (drawPoint) {
 			mPaint.setColor(mColor);
+			mPaint.setAlpha(mAlpha);
 			canvas.drawCircle(x, y, mDotRadiusHeadsignCenter, mPaint);
 			mPaint.setColor(mColor);
+			mPaint.setAlpha(mAlpha);
 		}
 
 		mPaint.setStyle(Paint.Style.STROKE);
