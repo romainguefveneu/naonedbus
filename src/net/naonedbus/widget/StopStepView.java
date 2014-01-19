@@ -15,10 +15,10 @@ public class StopStepView extends TextView {
 		FIRST, LAST, MIDDLE;
 	}
 
-	private static final int COLUMN_WIDTH = 32;
+	private static final int COLUMN_WIDTH = 36;
 
-	private static final int DOT_RADIUS = 6;
-	private static final int DOT_RADIUS_HEADSIGN = 10;
+	private static final int DOT_RADIUS = 8;
+	private static final int DOT_RADIUS_HEADSIGN = 12;
 	private static final int DOT_RADIUS_HEADSIGN_CENTER = 4;
 	private static final int DOT_RADIUS_BORDER = 1;
 
