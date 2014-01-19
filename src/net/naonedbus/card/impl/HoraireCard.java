@@ -51,6 +51,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,7 +96,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	private final LayoutInflater mLayoutInflater;
 	private ViewGroup mTerminusView;
 
-	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager, final Arret arret) {
+	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
+			final Arret arret) {
 		super(context, loaderManager, fragmentManager, R.string.card_horaires_title, R.layout.card_horaire);
 
 		mLayoutInflater = LayoutInflater.from(context);
@@ -268,13 +270,13 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 						mTimeFormat.format(horaire.getDate()));
 
 				if (horaire.getTerminus() != null) {
-					final String terminusLetter = mTerminusManager.getTerminusLetter(horaire.getTerminus());
+					CharSequence terminusLetter = mTerminusManager.getTerminusLetter(horaire.getTerminus());
+					terminusLetter = FormatUtils.formatTerminusLetter(getContext(), terminusLetter);
 					if (indexHoraire > firstNextHoraireIndex) {
-						formattedTime = formattedTime + "\n" + terminusLetter;
+						formattedTime = TextUtils.concat(formattedTime, "\n", terminusLetter);
 					} else {
-						formattedTime = formattedTime + terminusLetter;
+						formattedTime = TextUtils.concat(formattedTime, terminusLetter);
 					}
-					formattedTime = FormatUtils.formatTerminusLetter(getContext(), formattedTime);
 				}
 
 				horaireView.setText(formattedTime);
