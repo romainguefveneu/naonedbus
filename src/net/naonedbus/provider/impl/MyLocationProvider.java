@@ -45,11 +45,11 @@ public class MyLocationProvider {
 	private static final String LOG_TAG = "MyLocationProvider";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private Context mContext;
+	private final Context mContext;
 
 	private Criteria mProviderCriteria;
 	private LocationManager mLocationManager;
-	private Geocoder mGeoCoder;
+	private final Geocoder mGeoCoder;
 	private String mBestProvider;
 	private Set<MyLocationListener> mListenerList;
 
@@ -59,47 +59,47 @@ public class MyLocationProvider {
 		void onLocationDisabled();
 	}
 
-	private LocationListener mLocationListener = new LocationListener() {
+	private final LocationListener mLocationListener = new LocationListener() {
 		private Location lastLocation = new Location(LocationManager.GPS_PROVIDER);
 
 		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
+		public void onStatusChanged(final String provider, final int status, final Bundle extras) {
 			if (DBG)
 				Log.d(LOG_TAG, "onStatusChanged : " + provider + " / " + status);
 
 			if (status != LocationProvider.AVAILABLE) {
-				for (MyLocationListener listener : mListenerList) {
+				for (final MyLocationListener listener : mListenerList) {
 					listener.onLocationDisabled();
 				}
 			}
 		}
 
 		@Override
-		public void onProviderEnabled(String provider) {
+		public void onProviderEnabled(final String provider) {
 			if (DBG)
 				Log.d(LOG_TAG, "onProviderEnabled : " + provider);
 			setBestProvider();
 		}
 
 		@Override
-		public void onProviderDisabled(String provider) {
+		public void onProviderDisabled(final String provider) {
 			if (DBG)
 				Log.d(LOG_TAG, "onProviderDisabled : " + provider);
 			setBestProvider();
 		}
 
 		@Override
-		public void onLocationChanged(Location location) {
+		public void onLocationChanged(final Location location) {
 			if (location != null && lastLocation.distanceTo(location) > 50.0f) {
 				lastLocation = location;
-				for (MyLocationListener listener : mListenerList) {
+				for (final MyLocationListener listener : mListenerList) {
 					listener.onLocationChanged(location);
 				}
 			}
 		}
 	};
 
-	public MyLocationProvider(Context context) {
+	public MyLocationProvider(final Context context) {
 		mContext = context;
 		mGeoCoder = new Geocoder(context, new Locale("fr", "FR"));
 		initialize();
@@ -130,7 +130,7 @@ public class MyLocationProvider {
 	 * @param locationListener
 	 * @throws Exception
 	 */
-	public void addListener(MyLocationListener locationListener) {
+	public void addListener(final MyLocationListener locationListener) {
 		if (!mListenerList.contains(locationListener)) {
 			mListenerList.add(locationListener);
 		}
@@ -142,13 +142,13 @@ public class MyLocationProvider {
 	 * @param locationListener
 	 * @throws Exception
 	 */
-	public void removeListener(MyLocationListener locationListener) {
+	public void removeListener(final MyLocationListener locationListener) {
 		if (mListenerList.contains(locationListener)) {
 			mListenerList.remove(locationListener);
 		}
 	}
 
-	public boolean containsListener(MyLocationListener locationListener) {
+	public boolean containsListener(final MyLocationListener locationListener) {
 		return mListenerList.contains(locationListener);
 	}
 
@@ -157,14 +157,14 @@ public class MyLocationProvider {
 	 */
 	public void start() {
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 50, mLocationListener);
-		} catch (Exception e) {
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 15000, 50, mLocationListener);
+		} catch (final Exception e) {
 			if (DBG)
 				Log.w(LOG_TAG, "Impossible de récupérer la position via le réseau.", e);
 		}
 		try {
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 50, mLocationListener);
-		} catch (Exception e) {
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15000, 50, mLocationListener);
+		} catch (final Exception e) {
 			if (DBG)
 				Log.w(LOG_TAG, "Impossible de récupérer la position via le gps.", e);
 		}

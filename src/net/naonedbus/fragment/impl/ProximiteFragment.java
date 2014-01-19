@@ -123,6 +123,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 			Log.d(LOG_TAG, "onStart");
 
 		mLocationProvider.addListener(this);
+		mLocationProvider.start();
 
 		if (mLocationProvider.isProviderEnabled() == false) {
 			onLocationDisabled();
@@ -140,6 +141,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 			Log.d(LOG_TAG, "onStop");
 
 		mLocationProvider.removeListener(this);
+		mLocationProvider.stop();
 
 		if (mAddressResolverTask != null) {
 			mAddressResolverTask.cancel(false);
