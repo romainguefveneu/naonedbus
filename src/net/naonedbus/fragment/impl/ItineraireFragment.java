@@ -31,7 +31,12 @@ import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
 import net.naonedbus.loader.ItineraryLoader;
+import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.task.AddressResolverTask;
+import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.utils.ColorUtils;
+import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 
 import org.joda.time.MutableDateTime;
@@ -42,6 +47,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -67,7 +73,7 @@ import com.bugsense.trace.BugSenseHandler;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends AbstractListFragment implements
-		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener {
+		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener, MyLocationListener {
 
 	private static final String BUNDLE_LOCATION_FROM = "ItineraireFragment:locationFrom";
 	private static final String BUNDLE_LOCATION_TO = "ItineraireFragment:locationTo";
@@ -90,11 +96,17 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private View mProgressView;
 
 	private DateFormat mDateFormat;
+	private AddressResolverTask mAddressResolverTask;
+	private String mCurrentAddress;
 
+	private final MyLocationProvider mLocationProvider;
 	private final Location mFromLocation = new Location(LocationManager.GPS_PROVIDER);
 	private final Location mToLocation = new Location(LocationManager.GPS_PROVIDER);
 	private final MutableDateTime mDateTime = new MutableDateTime();
 	private boolean mArriveBy;
+
+	private boolean mFromCurrentLocation;
+	private boolean mToCurrentLocation;
 
 	private TextView mFromAddressTextView;
 	private TextView mToAddressTextView;
@@ -116,6 +128,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	public ItineraireFragment() {
 		super(R.layout.fragment_itineraire);
+
+		mLocationProvider = NBApplication.getLocationProvider();
 	}
 
 	@Override
@@ -143,6 +157,22 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 		}
 	};
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		mLocationProvider.addListener(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		mLocationProvider.removeListener(this);
+		
+		if (mAddressResolverTask != null) {
+			mAddressResolverTask.cancel(false);
+		}
+	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
@@ -243,10 +273,22 @@ public class ItineraireFragment extends AbstractListFragment implements
 			if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
 				mFromLocation.set(currentLocation);
 				mFromAddressTextView.setText(R.string.itineraire_current_location);
+				mFromCurrentLocation = true;
 
 				mIconFromResId = R.drawable.ic_action_locate_blue;
 
 				notifyIconsChanged();
+				loadCurrentAddress(new AddressTaskListener() {
+					@Override
+					public void onAddressTaskResult(Address address) {
+						mFromAddressTextView.setText(FormatUtils.formatAddress(address, null));
+					}
+
+					@Override
+					public void onAddressTaskPreExecute() {
+
+					}
+				});
 			}
 		}
 
@@ -277,6 +319,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 					mIconFromResId = type.getDrawableRes();
 					mIconFromColor = getActivity().getResources().getColor(type.getBackgroundColorRes());
 				}
+
+				mFromCurrentLocation = currentLocation;
 			} else {
 				mToLocation.setLatitude(latitude);
 				mToLocation.setLongitude(longitude);
@@ -289,6 +333,8 @@ public class ItineraireFragment extends AbstractListFragment implements
 					mIconToResId = type.getDrawableRes();
 					mIconToColor = getActivity().getResources().getColor(type.getBackgroundColorRes());
 				}
+
+				mToCurrentLocation = currentLocation;
 			}
 
 			notifyIconsChanged();
@@ -298,16 +344,16 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	private void requestFromAddress() {
-		requestAddress(REQUEST_CODE_FROM, mFromAddressTextView.getText());
+		requestAddress(REQUEST_CODE_FROM, mFromCurrentLocation ? null : mFromAddressTextView.getText());
 	}
 
 	private void requestToAddress() {
-		requestAddress(REQUEST_CODE_TO, mToAddressTextView.getText());
+		requestAddress(REQUEST_CODE_TO, mToCurrentLocation ? null : mToAddressTextView.getText());
 	}
 
 	private void requestAddress(final int requestCode, final CharSequence query) {
 		final Intent intent = new Intent(getActivity(), AddressSearchActivity.class);
-		if (query != getString(R.string.itineraire_current_location)) {
+		if (query != null) {
 			intent.putExtra(AddressSearchFragment.PARAM_QUERY, query);
 		}
 
@@ -347,6 +393,10 @@ public class ItineraireFragment extends AbstractListFragment implements
 		t = mIconFromColor;
 		mIconFromColor = mIconToColor;
 		mIconToColor = t;
+		
+		boolean tempB = mFromCurrentLocation;
+		mFromCurrentLocation = mToCurrentLocation;
+		mToCurrentLocation = tempB;
 
 		notifyIconsChanged();
 		onFormValueChange();
@@ -434,6 +484,13 @@ public class ItineraireFragment extends AbstractListFragment implements
 		mProgressView.setVisibility(View.GONE);
 	}
 
+	private void loadCurrentAddress(AddressTaskListener listener) {
+		if (mAddressResolverTask != null) {
+			mAddressResolverTask.cancel(true);
+		}
+		mAddressResolverTask = (AddressResolverTask) new AddressResolverTask(listener).execute();
+	}
+
 	@Override
 	public Loader<AsyncResult<List<ItineraryWrapper>>> onCreateLoader(final int loaderId, final Bundle bundle) {
 		return new ItineraryLoader(getActivity(), bundle);
@@ -463,6 +520,16 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	@Override
 	public void onLoaderReset(final Loader<AsyncResult<List<ItineraryWrapper>>> arg0) {
+
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+
+	}
+
+	@Override
+	public void onLocationDisabled() {
 
 	}
 

@@ -93,8 +93,8 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
-public class FavorisFragment extends CustomListFragment implements
-		OnItemLongClickListener, MyLocationListener, ActionMode.Callback {
+public class FavorisFragment extends CustomListFragment implements OnItemLongClickListener, MyLocationListener,
+		ActionMode.Callback {
 
 	private static final String LOG_TAG = "FavorisFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -204,17 +204,14 @@ public class FavorisFragment extends CustomListFragment implements
 
 			if (FavoriService.ACTION_EXPORTED.equals(action)) {
 				// Notifier l'export
-				final String key = intent
-						.getStringExtra(FavoriService.INTENT_PARAM_KEY);
-				final FavorisHelper favorisHelper = new FavorisHelper(
-						getActivity());
+				final String key = intent.getStringExtra(FavoriService.INTENT_PARAM_KEY);
+				final FavorisHelper favorisHelper = new FavorisHelper(getActivity());
 				favorisHelper.showExportKey(key);
 			} else {
 				// Mise à jour des horaires
 
 				final int id = intent.getIntExtra("id", -1);
-				final Throwable throwable = (Throwable) intent
-						.getSerializableExtra("throwable");
+				final Throwable throwable = (Throwable) intent.getSerializableExtra("throwable");
 
 				if (throwable != null) {
 					markeFavoriHoraireError(id);
@@ -228,14 +225,12 @@ public class FavorisFragment extends CustomListFragment implements
 		}
 	};
 
-	private final ContentObserver mGroupesContentObserver = new ContentObserver(
-			new Handler()) {
+	private final ContentObserver mGroupesContentObserver = new ContentObserver(new Handler()) {
 		@Override
 		@SuppressLint("NewApi")
 		public void onChange(final boolean selfChange) {
 			if (DBG)
-				Log.d(LOG_TAG, "GroupesContentObserver onChange selfChange : "
-						+ selfChange);
+				Log.d(LOG_TAG, "GroupesContentObserver onChange selfChange : " + selfChange);
 
 			initGroupes();
 			getSherlockActivity().invalidateOptionsMenu();
@@ -244,15 +239,12 @@ public class FavorisFragment extends CustomListFragment implements
 		};
 	};
 
-	private final ContentObserver mFavorisGroupesContentObserver = new ContentObserver(
-			new Handler()) {
+	private final ContentObserver mFavorisGroupesContentObserver = new ContentObserver(new Handler()) {
 		@Override
 		@SuppressLint("NewApi")
 		public void onChange(final boolean selfChange) {
 			if (DBG)
-				Log.d(LOG_TAG,
-						"mFavorisGroupesContentObserver onChange selfChange : "
-								+ selfChange);
+				Log.d(LOG_TAG, "mFavorisGroupesContentObserver onChange selfChange : " + selfChange);
 
 			if (isVisible()) {
 				refreshContent();
@@ -288,8 +280,7 @@ public class FavorisFragment extends CustomListFragment implements
 
 		setHasOptionsMenu(true);
 
-		setEmptyMessageValues(R.string.error_title_empty_favori,
-				R.string.error_summary_empty_favori, R.drawable.favori);
+		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.favori);
 
 		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
 			mBackupManager = new BackupManager(getActivity());
@@ -315,13 +306,9 @@ public class FavorisFragment extends CustomListFragment implements
 		mListView.setOnItemLongClickListener(this);
 		mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-		final ContentResolver contentResolver = getActivity()
-				.getContentResolver();
-		contentResolver.registerContentObserver(GroupeProvider.CONTENT_URI,
-				true, mGroupesContentObserver);
-		contentResolver.registerContentObserver(
-				FavoriGroupeProvider.CONTENT_URI, true,
-				mFavorisGroupesContentObserver);
+		final ContentResolver contentResolver = getActivity().getContentResolver();
+		contentResolver.registerContentObserver(GroupeProvider.CONTENT_URI, true, mGroupesContentObserver);
+		contentResolver.registerContentObserver(FavoriGroupeProvider.CONTENT_URI, true, mFavorisGroupesContentObserver);
 
 		loadContent();
 	}
@@ -382,11 +369,9 @@ public class FavorisFragment extends CustomListFragment implements
 			Log.d(LOG_TAG, "onDestroy");
 
 		mFavoriManager.removeActionListener(mOnFavoriActionListener);
-		final ContentResolver contentResolver = getActivity()
-				.getContentResolver();
+		final ContentResolver contentResolver = getActivity().getContentResolver();
 		contentResolver.unregisterContentObserver(mGroupesContentObserver);
-		contentResolver
-				.unregisterContentObserver(mFavorisGroupesContentObserver);
+		contentResolver.unregisterContentObserver(mFavorisGroupesContentObserver);
 		super.onDestroy();
 	}
 
@@ -395,8 +380,7 @@ public class FavorisFragment extends CustomListFragment implements
 		inflater.inflate(R.menu.fragment_favoris, menu);
 		menu.findItem(MENU_MAPPING.get(mCurrentSort)).setChecked(true);
 
-		final SubMenu groupesSubMenu = menu.findItem(R.id.menu_group)
-				.getSubMenu();
+		final SubMenu groupesSubMenu = menu.findItem(R.id.menu_group).getSubMenu();
 		fillGroupesMenu(groupesSubMenu);
 
 		super.onCreateOptionsMenu(menu, inflater);
@@ -413,10 +397,7 @@ public class FavorisFragment extends CustomListFragment implements
 
 		if (item.getGroupId() == MENU_GROUP_GROUPES) {
 			item.setChecked(!item.isChecked());
-			mPreferences
-					.edit()
-					.putBoolean(PREF_GROUPES + item.getItemId(),
-							item.isChecked()).commit();
+			mPreferences.edit().putBoolean(PREF_GROUPES + item.getItemId(), item.isChecked()).commit();
 			if (item.isChecked()) {
 				mSelectedGroupes.add(item.getItemId());
 			} else {
@@ -424,12 +405,11 @@ public class FavorisFragment extends CustomListFragment implements
 			}
 
 			if (mSelectedGroupes.isEmpty()) {
-				setEmptyMessageValues(R.string.error_title_empty_groupe,
-						R.string.error_summary_selected_groupe,
+				setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
 						R.drawable.favori);
 			} else {
-				setEmptyMessageValues(R.string.error_title_empty_favori,
-						R.string.error_summary_empty_favori, R.drawable.favori);
+				setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
+						R.drawable.favori);
 			}
 
 			refreshContent();
@@ -454,8 +434,7 @@ public class FavorisFragment extends CustomListFragment implements
 			menuSort(SORT_NOM);
 			break;
 		case R.id.menu_group_manage:
-			getActivity().startActivity(
-					new Intent(getActivity(), GroupesActivity.class));
+			getActivity().startActivity(new Intent(getActivity(), GroupesActivity.class));
 			break;
 		default:
 			return false;
@@ -467,15 +446,14 @@ public class FavorisFragment extends CustomListFragment implements
 	private void menuEdit() {
 		final Favori item = getFirstSelectedItem();
 		if (item != null) {
-			final FavorisHelper favorisUtils = new FavorisHelper(getActivity(),
-					new FavorisActionListener() {
-						@Override
-						public void onFavoriRenamed(final Favori newItem) {
-							final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
-							item.setNomFavori(newItem.getNomFavori());
-							adapter.notifyDataSetChanged();
-						}
-					});
+			final FavorisHelper favorisUtils = new FavorisHelper(getActivity(), new FavorisActionListener() {
+				@Override
+				public void onFavoriRenamed(final Favori newItem) {
+					final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
+					item.setNomFavori(newItem.getNomFavori());
+					adapter.notifyDataSetChanged();
+				}
+			});
 			favorisUtils.renameFavori(item.getId());
 		}
 	}
@@ -483,8 +461,7 @@ public class FavorisFragment extends CustomListFragment implements
 	@SuppressLint("NewApi")
 	private void menuDelete() {
 		Favori item;
-		final ContentResolver contentResolver = getActivity()
-				.getContentResolver();
+		final ContentResolver contentResolver = getActivity().getContentResolver();
 		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
 
 		for (int i = mListView.getCount() - 1; i > -1; i--) {
@@ -503,8 +480,7 @@ public class FavorisFragment extends CustomListFragment implements
 		final Favori item = getFirstSelectedItem();
 		final Intent intent = new Intent(getActivity(), MapActivity.class);
 		intent.putExtra(MapFragment.PARAM_ITEM_ID, item.getIdStation());
-		intent.putExtra(MapFragment.PARAM_ITEM_TYPE,
-				TypeOverlayItem.TYPE_STATION.getId());
+		intent.putExtra(MapFragment.PARAM_ITEM_TYPE, TypeOverlayItem.TYPE_STATION.getId());
 		startActivity(intent);
 	}
 
@@ -521,20 +497,17 @@ public class FavorisFragment extends CustomListFragment implements
 	}
 
 	private Favori getFirstSelectedItem() {
-		final SparseBooleanArray checkedPositions = mListView
-				.getCheckedItemPositions();
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checkedPositions.size(); i++) {
 			if (checkedPositions.valueAt(i)) {
-				return (Favori) mListView.getItemAtPosition(checkedPositions
-						.keyAt(i));
+				return (Favori) mListView.getItemAtPosition(checkedPositions.keyAt(i));
 			}
 		}
 		return null;
 	}
 
 	private int getCheckedItemsCount() {
-		final SparseBooleanArray checkedPositions = mListView
-				.getCheckedItemPositions();
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
 		int count = 0;
 		for (int i = 0; i < checkedPositions.size(); i++) {
 			if (checkedPositions.valueAt(i)) {
@@ -558,8 +531,7 @@ public class FavorisFragment extends CustomListFragment implements
 		final SparseBooleanArray checked = mListView.getCheckedItemPositions();
 		for (int i = 0; i < checked.size(); i++) {
 			if (checked.valueAt(i)) {
-				final Favori item = (Favori) mListView
-						.getItemAtPosition(checked.keyAt(i));
+				final Favori item = (Favori) mListView.getItemAtPosition(checked.keyAt(i));
 				ids.add(item.getId());
 			}
 		}
@@ -571,8 +543,7 @@ public class FavorisFragment extends CustomListFragment implements
 		boolean checked;
 
 		for (final Groupe groupe : mGroupes) {
-			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES,
-					groupe.getId(), 0, groupe.getNom());
+			final MenuItem item = filterSubMenu.add(MENU_GROUP_GROUPES, groupe.getId(), 0, groupe.getNom());
 			checked = mSelectedGroupes.contains(groupe.getId());
 
 			item.setCheckable(true);
@@ -590,19 +561,18 @@ public class FavorisFragment extends CustomListFragment implements
 
 		mSelectedGroupes.clear();
 		for (final Groupe groupe : mGroupes) {
-			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(),
-					true);
+			checked = mPreferences.getBoolean(PREF_GROUPES + groupe.getId(), true);
 			if (checked) {
 				mSelectedGroupes.add(groupe.getId());
 			}
 		}
 
 		if (mGroupes.isEmpty()) {
-			setEmptyMessageValues(R.string.error_title_empty_favori,
-					R.string.error_summary_empty_favori, R.drawable.favori);
+			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
+					R.drawable.favori);
 		} else if (mSelectedGroupes.isEmpty()) {
-			setEmptyMessageValues(R.string.error_title_empty_groupe,
-					R.string.error_summary_selected_groupe, R.drawable.favori);
+			setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
+					R.drawable.favori);
 		}
 	}
 
@@ -625,8 +595,7 @@ public class FavorisFragment extends CustomListFragment implements
 	private void sort(final FavoriArrayAdapter adapter) {
 		final Comparator<Favori> comparator;
 
-		if (mCurrentSort == SORT_DISTANCE
-				&& !mLocationProvider.isProviderEnabled()) {
+		if (mCurrentSort == SORT_DISTANCE && !mLocationProvider.isProviderEnabled()) {
 			// Tri par défaut si pas le localisation
 			comparator = comparators.get(SORT_NOM);
 		} else {
@@ -637,8 +606,7 @@ public class FavorisFragment extends CustomListFragment implements
 	}
 
 	public void onItemSelected() {
-		final SparseBooleanArray checkedPositions = mListView
-				.getCheckedItemPositions();
+		final SparseBooleanArray checkedPositions = mListView.getCheckedItemPositions();
 		final FavoriArrayAdapter adapter = (FavoriArrayAdapter) getListAdapter();
 		adapter.setCheckedItemPositions(checkedPositions);
 
@@ -652,14 +620,12 @@ public class FavorisFragment extends CustomListFragment implements
 	}
 
 	@Override
-	public void onListItemClick(final ListView l, final View v,
-			final int position, final long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		if (mActionMode == null) {
 			mListView.setItemChecked(position, false);
 			final Favori item = (Favori) l.getItemAtPosition(position);
 
-			final Intent intent = new Intent(getActivity(),
-					ArretDetailActivity.class);
+			final Intent intent = new Intent(getActivity(), ArretDetailActivity.class);
 			intent.putExtra(ArretDetailActivity.PARAM_ARRET, item);
 
 			startActivity(intent);
@@ -669,31 +635,27 @@ public class FavorisFragment extends CustomListFragment implements
 	}
 
 	@Override
-	public boolean onItemLongClick(final AdapterView<?> adapter,
-			final View view, final int position, final long id) {
+	public boolean onItemLongClick(final AdapterView<?> adapter, final View view, final int position, final long id) {
 		mListView.setItemChecked(position, !mListView.isItemChecked(position));
 		onItemSelected();
 		return true;
 	}
 
 	@Override
-	protected AsyncResult<ListAdapter> loadContent(final Context context,
-			final Bundle bundle) {
+	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
 		if (DBG)
 			Log.d(LOG_TAG, "loadContent");
 
 		final HoraireManager horaireManager = HoraireManager.getInstance();
 
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
-		final List<Favori> favoris = mFavorisViewManager.getAll(
-				context.getContentResolver(), mSelectedGroupes);
+		final List<Favori> favoris = mFavorisViewManager.getAll(context.getContentResolver(), mSelectedGroupes);
 		Collections.sort(favoris, comparators.get(mCurrentSort));
 
 		int position = 0;
 		for (final Favori favori : favoris) {
 			if (getActivity() != null) {
-				favori.setDelay(FavorisUtil.formatDelayLoading(getActivity(),
-						favori.getNextHoraire()));
+				favori.setDelay(FavorisUtil.formatDelayLoading(getActivity(), favori.getNextHoraire()));
 			}
 
 			if (favori.getNextHoraire() == null) {
@@ -709,8 +671,7 @@ public class FavorisFragment extends CustomListFragment implements
 			position++;
 		}
 
-		final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context,
-				favoris);
+		final FavoriArrayAdapter adapter = new FavoriArrayAdapter(context, favoris);
 
 		if (mGroupes.isEmpty() == false) {
 			final SparseArray<String> groupes = new SparseArray<String>();
@@ -727,8 +688,7 @@ public class FavorisFragment extends CustomListFragment implements
 
 	@SuppressLint("NewApi")
 	@Override
-	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader,
-			final AsyncResult<ListAdapter> result) {
+	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {
 		super.onLoadFinished(loader, result);
 		getSherlockActivity().invalidateOptionsMenu();
 	}
@@ -784,15 +744,13 @@ public class FavorisFragment extends CustomListFragment implements
 		 * @throws IOException
 		 */
 		private void updateAdapter(final int position) throws IOException {
-			if (position >= getListAdapter().getCount() || !isAdded()
-					|| getActivity() == null)
+			if (position >= getListAdapter().getCount() || !isAdded() || getActivity() == null)
 				return;
 
 			final Favori favori = (Favori) getListAdapter().getItem(position);
-			if (horaireManager.isInDB(getActivity().getContentResolver(),
-					favori, today)) {
-				final Integer delay = horaireManager.getMinutesToNextSchedule(
-						getActivity().getContentResolver(), favori);
+			if (horaireManager.isInDB(getActivity().getContentResolver(), favori, today)) {
+				final Integer delay = horaireManager.getMinutesToNextSchedule(getActivity().getContentResolver(),
+						favori);
 				updateItemTime(favori, delay);
 				publishProgress();
 			}
@@ -805,8 +763,7 @@ public class FavorisFragment extends CustomListFragment implements
 			if (isDetached() || getActivity() == null)
 				return;
 
-			favori.setDelay(FavorisUtil.formatDelayNoDeparture(getActivity(),
-					delay));
+			favori.setDelay(FavorisUtil.formatDelayNoDeparture(getActivity(), delay));
 		}
 
 		@Override
@@ -840,8 +797,7 @@ public class FavorisFragment extends CustomListFragment implements
 
 	@Override
 	public boolean onCreateActionMode(final ActionMode mode, final Menu menu) {
-		final MenuInflater menuInflater = getSherlockActivity()
-				.getSupportMenuInflater();
+		final MenuInflater menuInflater = getSherlockActivity().getSupportMenuInflater();
 		menuInflater.inflate(R.menu.fragment_favoris_contextual, menu);
 		return true;
 	}
@@ -855,8 +811,7 @@ public class FavorisFragment extends CustomListFragment implements
 		final MenuItem menuGroupes = menu.findItem(R.id.menu_group);
 
 		final int checkedItems = getCheckedItemsCount();
-		mActionMode.setTitle(getResources().getQuantityString(
-				R.plurals.selected_items, checkedItems, checkedItems));
+		mActionMode.setTitle(getResources().getQuantityString(R.plurals.selected_items, checkedItems, checkedItems));
 
 		menuGroupes.setVisible(mGroupes.isEmpty() == false);
 
@@ -873,8 +828,7 @@ public class FavorisFragment extends CustomListFragment implements
 	}
 
 	@Override
-	public boolean onActionItemClicked(final ActionMode mode,
-			final MenuItem item) {
+	public boolean onActionItemClicked(final ActionMode mode, final MenuItem item) {
 
 		switch (item.getItemId()) {
 		case R.id.menu_edit:
@@ -921,8 +875,7 @@ public class FavorisFragment extends CustomListFragment implements
 
 	@Override
 	public void onLocationChanged(final Location location) {
-		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators
-				.get(SORT_DISTANCE);
+		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators.get(SORT_DISTANCE);
 		comparator.setReferentiel(location);
 		if (mCurrentSort == SORT_DISTANCE) {
 			sort();
@@ -931,8 +884,7 @@ public class FavorisFragment extends CustomListFragment implements
 
 	@Override
 	public void onLocationDisabled() {
-		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators
-				.get(SORT_DISTANCE);
+		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators.get(SORT_DISTANCE);
 		comparator.setReferentiel(null);
 		if (mCurrentSort == SORT_DISTANCE) {
 			mCurrentSort = SORT_NOM;

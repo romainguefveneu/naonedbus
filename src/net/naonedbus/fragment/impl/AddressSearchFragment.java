@@ -26,6 +26,8 @@ import net.naonedbus.bean.AddressResult;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
 import net.naonedbus.loader.AddressLoader;
+import net.naonedbus.task.AddressResolverTask;
+import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.widget.ModalSearchView;
 import net.naonedbus.widget.ModalSearchView.OnQueryTextListener;
 import net.naonedbus.widget.adapter.impl.AddressResultArrayAdapter;

@@ -77,6 +77,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	private final MyLocationProvider mLocationProvider;
 	private final Set<Equipement.Type> mSelectedTypesEquipements;
 	private AddressResolverTask mAddressResolverTask;
+	private Location mLastLoadedLocation;
 
 	private TextView headerTextView;
 
@@ -123,14 +124,6 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 			Log.d(LOG_TAG, "onStart");
 
 		mLocationProvider.addListener(this);
-
-		if (mLocationProvider.isProviderEnabled() == false) {
-			onLocationDisabled();
-		} else {
-			loadContent();
-		}
-
-		loadAddress();
 	}
 
 	@Override
@@ -237,6 +230,8 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 				final Location location = mLocationProvider.getLastKnownLocation();
 
 				if (location != null) {
+					mLastLoadedLocation = location;
+
 					final List<Equipement> list = equipementManager.getEquipementsByLocation(
 							context.getContentResolver(), mSelectedTypesEquipements, location, MAX_EQUIPEMENTS);
 
@@ -278,8 +273,10 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 		if (DBG)
 			Log.d(LOG_TAG, "onLocationChanged " + location);
 
-		loadAddress();
-		refreshContent();
+		if (mLastLoadedLocation == null || mLastLoadedLocation.distanceTo(location) > 10f) {
+			loadAddress();
+			refreshContent();
+		}
 	}
 
 	@Override

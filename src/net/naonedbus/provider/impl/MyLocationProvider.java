@@ -51,6 +51,7 @@ public class MyLocationProvider implements
 	private final Context mContext;
 	private final Geocoder mGeoCoder;
 	private LocationClient mLocationClient;
+	private Location mLastKnownLocation;
 	private Set<MyLocationListener> mListenerList;
 
 	private boolean mLegacyMode;
@@ -219,9 +220,6 @@ public class MyLocationProvider implements
 		request.setInterval(5000);
 
 		mLocationClient.requestLocationUpdates(request, this);
-
-		final Location location = mLocationClient.getLastLocation();
-		onLocationChanged(location);
 	}
 
 	@Override
@@ -229,6 +227,8 @@ public class MyLocationProvider implements
 		if (DBG)
 			Log.d(LOG_TAG, "onLocationChanged " + location);
 
+		mLastKnownLocation = location;
+		
 		for (MyLocationListener l : mListenerList) {
 			l.onLocationChanged(location);
 		}
@@ -238,10 +238,6 @@ public class MyLocationProvider implements
 	public void onDisconnected() {
 		if (DBG)
 			Log.e(LOG_TAG, "onDisconnected");
-
-		for (MyLocationListener l : mListenerList) {
-			l.onLocationDisabled();
-		}
 	}
 
 	/**
@@ -260,7 +256,7 @@ public class MyLocationProvider implements
 			if (mLocationClient.isConnected())
 				return mLocationClient.getLastLocation();
 			else
-				return null;
+				return mLastKnownLocation;
 		}
 	}
 
