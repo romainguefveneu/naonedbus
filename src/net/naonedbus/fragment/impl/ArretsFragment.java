@@ -172,7 +172,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	@Override
 	public void onStart() {
 		super.onStart();
-		mLocationProvider.start();
+		mLocationProvider.addListener(this);
 	}
 
 	@Override
@@ -183,7 +183,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		mStateHelper.setSortType(this, mCurrentSort);
 		mStateHelper.setFilterType(this, mCurrentFilter);
 
-		mLocationProvider.stop();
+		mLocationProvider.removeListener(this);
 		if (mDistanceTask != null) {
 			mDistanceTask.cancel(true);
 		}

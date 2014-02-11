@@ -30,28 +30,34 @@ import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
 
-/**
- * @author romain
- * 
- */
-public class MyLocationProvider {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
+
+public class MyLocationProvider implements
+		GooglePlayServicesClient.ConnectionCallbacks,
+		GooglePlayServicesClient.OnConnectionFailedListener,
+		com.google.android.gms.location.LocationListener {
 
 	private static final String LOG_TAG = "MyLocationProvider";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
 	private final Context mContext;
-
-	private Criteria mProviderCriteria;
-	private LocationManager mLocationManager;
 	private final Geocoder mGeoCoder;
-	private String mBestProvider;
+	private LocationClient mLocationClient;
 	private Set<MyLocationListener> mListenerList;
+
+	private boolean mLegacyMode;
+
+	private LocationManager mLocationManager;
+	private Criteria mProviderCriteria;
+	private String mBestProvider;
 
 	public static interface MyLocationListener {
 		void onLocationChanged(Location location);
@@ -59,11 +65,13 @@ public class MyLocationProvider {
 		void onLocationDisabled();
 	}
 
-	private final LocationListener mLocationListener = new LocationListener() {
-		private Location lastLocation = new Location(LocationManager.GPS_PROVIDER);
+	private final android.location.LocationListener mLocationListener = new android.location.LocationListener() {
+		private Location lastLocation = new Location(
+				LocationManager.GPS_PROVIDER);
 
 		@Override
-		public void onStatusChanged(final String provider, final int status, final Bundle extras) {
+		public void onStatusChanged(final String provider, final int status,
+				final Bundle extras) {
 			if (DBG)
 				Log.d(LOG_TAG, "onStatusChanged : " + provider + " / " + status);
 
@@ -102,7 +110,8 @@ public class MyLocationProvider {
 	public MyLocationProvider(final Context context) {
 		mContext = context;
 		mGeoCoder = new Geocoder(context, new Locale("fr", "FR"));
-		initialize();
+		mLocationClient = new LocationClient(context, this, this);
+		mListenerList = new HashSet<MyLocationProvider.MyLocationListener>();
 	}
 
 	/**
@@ -114,12 +123,14 @@ public class MyLocationProvider {
 		mProviderCriteria = new Criteria();
 		mProviderCriteria.setAccuracy(Criteria.ACCURACY_FINE);
 
-		mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+		mLocationManager = (LocationManager) mContext
+				.getSystemService(Context.LOCATION_SERVICE);
 		setBestProvider();
 	}
 
 	private void setBestProvider() {
-		mBestProvider = mLocationManager.getBestProvider(mProviderCriteria, true);
+		mBestProvider = mLocationManager.getBestProvider(mProviderCriteria,
+				true);
 		if (DBG)
 			Log.d(LOG_TAG, "BestProvider : " + mBestProvider);
 	}
@@ -134,6 +145,15 @@ public class MyLocationProvider {
 		if (!mListenerList.contains(locationListener)) {
 			mListenerList.add(locationListener);
 		}
+
+		if (mListenerList.size() == 1) {
+			start();
+		}
+
+		if (DBG)
+			Log.d(LOG_TAG, "addListener "
+					+ locationListener.getClass().getSimpleName() + " (total "
+					+ mListenerList.size() + ")");
 	}
 
 	/**
@@ -146,6 +166,15 @@ public class MyLocationProvider {
 		if (mListenerList.contains(locationListener)) {
 			mListenerList.remove(locationListener);
 		}
+
+		if (mListenerList.isEmpty()) {
+			stop();
+		}
+
+		if (DBG)
+			Log.d(LOG_TAG, "removeListener "
+					+ locationListener.getClass().getSimpleName()
+					+ " (remaining " + mListenerList.size() + ")");
 	}
 
 	public boolean containsListener(final MyLocationListener locationListener) {
@@ -155,39 +184,64 @@ public class MyLocationProvider {
 	/**
 	 * Démarrer l'écoute
 	 */
-	public void start() {
-		try {
-			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 15000, 50, mLocationListener);
-		} catch (final Exception e) {
-			if (DBG)
-				Log.w(LOG_TAG, "Impossible de récupérer la position via le réseau.", e);
-		}
-		try {
-			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 15000, 50, mLocationListener);
-		} catch (final Exception e) {
-			if (DBG)
-				Log.w(LOG_TAG, "Impossible de récupérer la position via le gps.", e);
-		}
-	}
-
-	/**
-	 * Redémarrer l'écoute, en refraichissant le provider
-	 */
-	public void restart() {
-		if (DBG)
-			Log.d(LOG_TAG, "restart");
-
-		initialize();
+	private void start() {
+		mLocationClient.connect();
 	}
 
 	/**
 	 * Arrêter l'écoute
 	 */
-	public void stop() {
-		if (DBG)
-			Log.d(LOG_TAG, "stop");
+	private void stop() {
+		if (mLegacyMode) {
+			mLocationManager.removeUpdates(mLocationListener);
+		} else {
+			mLocationClient.disconnect();
+		}
+	}
 
-		mLocationManager.removeUpdates(mLocationListener);
+	@Override
+	public void onConnectionFailed(final ConnectionResult result) {
+		if (DBG)
+			Log.e(LOG_TAG, "onConnectionFailed " + result.getErrorCode());
+
+		mLegacyMode = true;
+		initialize();
+	}
+
+	@Override
+	public void onConnected(final Bundle bundle) {
+		if (DBG)
+			Log.d(LOG_TAG, "onConnected");
+
+		final LocationRequest request = new LocationRequest();
+		request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		request.setSmallestDisplacement(10f);
+		request.setInterval(5000);
+
+		mLocationClient.requestLocationUpdates(request, this);
+
+		final Location location = mLocationClient.getLastLocation();
+		onLocationChanged(location);
+	}
+
+	@Override
+	public void onLocationChanged(final Location location) {
+		if (DBG)
+			Log.d(LOG_TAG, "onLocationChanged " + location);
+
+		for (MyLocationListener l : mListenerList) {
+			l.onLocationChanged(location);
+		}
+	}
+
+	@Override
+	public void onDisconnected() {
+		if (DBG)
+			Log.e(LOG_TAG, "onDisconnected");
+
+		for (MyLocationListener l : mListenerList) {
+			l.onLocationDisabled();
+		}
 	}
 
 	/**
@@ -198,8 +252,16 @@ public class MyLocationProvider {
 	 */
 
 	public Location getLastKnownLocation() {
-		return (mBestProvider == null) ? mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-				: mLocationManager.getLastKnownLocation(mBestProvider);
+		if (mLegacyMode) {
+			return (mBestProvider == null) ? mLocationManager
+					.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+					: mLocationManager.getLastKnownLocation(mBestProvider);
+		} else {
+			if (mLocationClient.isConnected())
+				return mLocationClient.getLastLocation();
+			else
+				return null;
+		}
 	}
 
 	/**
@@ -207,7 +269,13 @@ public class MyLocationProvider {
 	 * si la localisation est désactivée sur le téléphone, le provider inactif.
 	 */
 	public boolean isProviderEnabled() {
-		return (mBestProvider == null) ? false : mLocationManager.isProviderEnabled(mBestProvider);
+		if (mLegacyMode) {
+			return (mBestProvider == null) ? false : mLocationManager
+					.isProviderEnabled(mBestProvider);
+
+		} else {
+			return mLocationClient.isConnected();
+		}
 	}
 
 	/**
@@ -221,7 +289,8 @@ public class MyLocationProvider {
 		Address result = null;
 		try {
 			if (lastKnowLocation != null) {
-				final List<Address> addresses = mGeoCoder.getFromLocation(lastKnowLocation.getLatitude(),
+				final List<Address> addresses = mGeoCoder.getFromLocation(
+						lastKnowLocation.getLatitude(),
 						lastKnowLocation.getLongitude(), 1);
 				if (addresses != null && addresses.size() > 0) {
 					result = addresses.get(0);
@@ -229,7 +298,8 @@ public class MyLocationProvider {
 			}
 		} catch (final IOException e) {
 			if (DBG)
-				Log.w(LOG_TAG, "Erreur lors de la récupération de l'adresse.", e);
+				Log.w(LOG_TAG, "Erreur lors de la récupération de l'adresse.",
+						e);
 		}
 		return result;
 	}

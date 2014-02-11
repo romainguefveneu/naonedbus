@@ -77,11 +77,6 @@ public class MainActivity extends MenuDrawerActivity {
 
 	}
 
-	@Override
-	protected void onStop() {
-		mMyLocationProvider.stop();
-		super.onStop();
-	}
 
 	private void hideActionBar() {
 		final ActionBar actionBar = getSupportActionBar();
