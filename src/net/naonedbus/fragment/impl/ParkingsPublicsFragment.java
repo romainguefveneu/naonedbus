@@ -320,6 +320,11 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 				sort();
 			}
 		}
+
+		@Override
+		public void onLocationConnecting() {
+			
+		}
 	};
 
 }

@@ -285,6 +285,11 @@ public abstract class EquipementFragment extends CustomListFragment {
 				sort();
 			}
 		}
+		
+		@Override
+		public void onLocationConnecting() {
+			
+		}
 	};
 
 	/**

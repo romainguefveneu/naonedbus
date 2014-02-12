@@ -874,6 +874,11 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	@Override
+	public void onLocationConnecting() {
+		
+	}
+	
+	@Override
 	public void onLocationChanged(final Location location) {
 		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators.get(SORT_DISTANCE);
 		comparator.setReferentiel(location);

@@ -269,6 +269,12 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	}
 
 	@Override
+	public void onLocationConnecting() {
+		headerTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+		headerTextView.setText(R.string.msg_loading_address);
+	}
+
+	@Override
 	public void onLocationChanged(final Location location) {
 		if (DBG)
 			Log.d(LOG_TAG, "onLocationChanged " + location);
@@ -334,4 +340,5 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 			headerTextView.setText(R.string.error_current_address);
 		}
 	}
+
 }

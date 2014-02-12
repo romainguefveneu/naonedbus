@@ -168,7 +168,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	public void onStop() {
 		super.onStop();
 		mLocationProvider.removeListener(this);
-		
+
 		if (mAddressResolverTask != null) {
 			mAddressResolverTask.cancel(false);
 		}
@@ -281,7 +281,9 @@ public class ItineraireFragment extends AbstractListFragment implements
 				loadCurrentAddress(new AddressTaskListener() {
 					@Override
 					public void onAddressTaskResult(Address address) {
-						mFromAddressTextView.setText(FormatUtils.formatAddress(address, null));
+						if (address != null) {
+							mFromAddressTextView.setText(FormatUtils.formatAddress(address, null));
+						}
 					}
 
 					@Override
@@ -393,7 +395,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		t = mIconFromColor;
 		mIconFromColor = mIconToColor;
 		mIconToColor = t;
-		
+
 		boolean tempB = mFromCurrentLocation;
 		mFromCurrentLocation = mToCurrentLocation;
 		mToCurrentLocation = tempB;
@@ -523,6 +525,11 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	}
 
+	@Override
+	public void onLocationConnecting() {
+		
+	}
+	
 	@Override
 	public void onLocationChanged(Location location) {
 

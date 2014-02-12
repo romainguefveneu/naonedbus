@@ -535,6 +535,11 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	}
 
 	@Override
+	public void onLocationConnecting() {
+		
+	}
+	
+	@Override
 	public void onLocationChanged(final Location location) {
 		loadDistances();
 	}

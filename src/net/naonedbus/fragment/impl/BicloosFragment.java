@@ -189,6 +189,8 @@ public class BicloosFragment extends CustomListFragment {
 		}
 	}
 
+	
+	
 	/**
 	 * Listener de changement de coordonnées GPS
 	 */
@@ -211,6 +213,11 @@ public class BicloosFragment extends CustomListFragment {
 				mCurrentSortPreference = SORT_NOM;
 				sort();
 			}
+		}
+		
+		@Override
+		public void onLocationConnecting() {
+			
 		}
 	};
 
