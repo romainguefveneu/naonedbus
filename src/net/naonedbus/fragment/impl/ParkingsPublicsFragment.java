@@ -34,8 +34,8 @@ import net.naonedbus.comparator.ParkingPlacesComparator;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.manager.impl.ParkingPublicManager;
-import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.provider.impl.NaoLocationManager;
+import net.naonedbus.provider.impl.NaoLocationManager.NaoLocationListener;
 import net.naonedbus.widget.adapter.impl.ParkingPublicArrayAdapter;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import net.naonedbus.widget.indexer.impl.ParkingDistanceIndexer;
@@ -85,7 +85,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 
 	private MenuItem mRefreshMenuItem;
 	private StateHelper mStateHelper;
-	private final MyLocationProvider myLocationProvider;
+	private final NaoLocationManager myLocationProvider;
 	private ParkingDistance loaderDistance;
 	private int mCurrentSort = SORT_NOM;
 
@@ -100,7 +100,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		myLocationProvider.addListener(locationListener);
 
 		// Initaliser le comparator avec la position actuelle.
-		locationListener.onLocationChanged(myLocationProvider.getLastKnownLocation());
+		locationListener.onLocationChanged(myLocationProvider.getLastLocation());
 
 		mStateHelper = new StateHelper(getActivity());
 		mCurrentSort = mStateHelper.getSortType(this, SORT_NOM);
@@ -186,7 +186,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	}
 
 	private void refreshDistance() {
-		if (myLocationProvider.isProviderEnabled() && getListAdapter() != null
+		if (myLocationProvider.isEnabled() && getListAdapter() != null
 				&& (loaderDistance == null || loaderDistance.getStatus() == AsyncTask.Status.FINISHED)) {
 			loaderDistance = (ParkingDistance) new ParkingDistance().execute();
 		}
@@ -237,7 +237,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 			final ListAdapter adapter = getListAdapter();
 
 			final Location parkingLocation = new Location(LocationManager.GPS_PROVIDER);
-			final Location currentLocation = myLocationProvider.getLastKnownLocation();
+			final Location currentLocation = myLocationProvider.getLastLocation();
 
 			if (currentLocation != null) {
 
@@ -284,7 +284,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		final Comparator<ParkingPublic> comparator;
 		final ArraySectionIndexer<ParkingPublic> indexer;
 
-		if (mCurrentSort == SORT_DISTANCE && !myLocationProvider.isProviderEnabled()) {
+		if (mCurrentSort == SORT_DISTANCE && !myLocationProvider.isEnabled()) {
 			// Tri par défaut si pas le localisation
 			comparator = comparators.get(SORT_NOM);
 			indexer = indexers.get(SORT_NOM);
@@ -300,7 +300,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 	/**
 	 * Listener de changement de coordonnées GPS
 	 */
-	private final MyLocationListener locationListener = new MyLocationListener() {
+	private final NaoLocationListener locationListener = new NaoLocationListener() {
 		@Override
 		public void onLocationChanged(final Location location) {
 			final ParkingDistanceComparator comparator = (ParkingDistanceComparator) comparators.get(SORT_DISTANCE);
@@ -312,7 +312,7 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		}
 
 		@Override
-		public void onLocationDisabled() {
+		public void onDisconnected() {
 			final ParkingDistanceComparator comparator = (ParkingDistanceComparator) comparators.get(SORT_DISTANCE);
 			comparator.setReferentiel(null);
 			if (mCurrentSort == SORT_DISTANCE) {
@@ -322,8 +322,13 @@ public class ParkingsPublicsFragment extends CustomListFragment {
 		}
 
 		@Override
-		public void onLocationConnecting() {
-			
+		public void onConnecting() {
+
+		}
+
+		@Override
+		public void onLocationTimeout() {
+
 		}
 	};
 

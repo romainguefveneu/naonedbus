@@ -19,7 +19,7 @@
 package net.naonedbus.task;
 
 import net.naonedbus.NBApplication;
-import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.provider.impl.NaoLocationManager;
 import android.location.Address;
 import android.os.AsyncTask;
 
@@ -35,7 +35,7 @@ public class AddressResolverTask extends AsyncTask<Void, Void, Address> {
 	}
 
 	private AddressTaskListener mAddressTaskListener;
-	private MyLocationProvider mLocationProvider;
+	private NaoLocationManager mLocationProvider;
 
 	public AddressResolverTask(final AddressTaskListener listener) {
 		mAddressTaskListener = listener;

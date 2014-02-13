@@ -21,7 +21,7 @@ import net.naonedbus.map.layer.BiclooMapLayer;
 import net.naonedbus.map.layer.EquipementMapLayer;
 import net.naonedbus.map.layer.ParkingMapLayer;
 import net.naonedbus.map.layer.ProxyInfoWindowAdapter;
-import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.provider.impl.NaoLocationManager;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -71,7 +71,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 	private final com.twotoasters.clusterkraf.Options mOptions = new com.twotoasters.clusterkraf.Options();
 
 	private final Set<Equipement.Type> mSelectedTypes = new HashSet<Equipement.Type>();
-	private final MyLocationProvider mLocationProvider;
+	private final NaoLocationManager mLocationProvider;
 
 	private SharedPreferences mPreferences;
 	private SupportMapFragment mSupportMapFragment;
@@ -244,7 +244,7 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 			mGoogleMap.setMyLocationEnabled(true);
 
-			final Location currenLocation = mLocationProvider.getLastKnownLocation();
+			final Location currenLocation = mLocationProvider.getLastLocation();
 			if (currenLocation != null) {
 				final CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
 						new LatLng(currenLocation.getLatitude(), currenLocation.getLongitude()), 15);

@@ -31,8 +31,8 @@ import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
 import net.naonedbus.loader.ItineraryLoader;
-import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.provider.impl.NaoLocationManager;
+import net.naonedbus.provider.impl.NaoLocationManager.NaoLocationListener;
 import net.naonedbus.task.AddressResolverTask;
 import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.utils.ColorUtils;
@@ -73,7 +73,7 @@ import com.bugsense.trace.BugSenseHandler;
 import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends AbstractListFragment implements
-		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener, MyLocationListener {
+		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener, NaoLocationListener {
 
 	private static final String BUNDLE_LOCATION_FROM = "ItineraireFragment:locationFrom";
 	private static final String BUNDLE_LOCATION_TO = "ItineraireFragment:locationTo";
@@ -99,7 +99,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private AddressResolverTask mAddressResolverTask;
 	private String mCurrentAddress;
 
-	private final MyLocationProvider mLocationProvider;
+	private final NaoLocationManager mLocationProvider;
 	private final Location mFromLocation = new Location(LocationManager.GPS_PROVIDER);
 	private final Location mToLocation = new Location(LocationManager.GPS_PROVIDER);
 	private final MutableDateTime mDateTime = new MutableDateTime();
@@ -269,7 +269,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		if (savedInstanceState != null) {
 			notifyIconsChanged();
 		} else {
-			final Location currentLocation = NBApplication.getLocationProvider().getLastKnownLocation();
+			final Location currentLocation = NBApplication.getLocationProvider().getLastLocation();
 			if (currentLocation != null && currentLocation.getLatitude() != 0 && currentLocation.getLongitude() != 0) {
 				mFromLocation.set(currentLocation);
 				mFromAddressTextView.setText(R.string.itineraire_current_location);
@@ -526,17 +526,22 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	@Override
-	public void onLocationConnecting() {
-		
+	public void onConnecting() {
+
 	}
-	
+
 	@Override
 	public void onLocationChanged(Location location) {
 
 	}
 
 	@Override
-	public void onLocationDisabled() {
+	public void onDisconnected() {
+
+	}
+
+	@Override
+	public void onLocationTimeout() {
 
 	}
 

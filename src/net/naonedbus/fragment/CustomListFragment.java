@@ -301,6 +301,11 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			content.setVisibility(View.VISIBLE);
 			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
 		}
+		
+//		View message = mFragmentView.findViewById(R.id.fragmentMessage);
+//		if (message != null) {
+//			message.setVisibility(View.GONE);
+//		}
 	}
 
 	/**

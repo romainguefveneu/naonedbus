@@ -35,8 +35,8 @@ import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.comparator.EquipementDistanceComparator;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.manager.impl.EquipementManager;
-import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.provider.impl.NaoLocationManager;
+import net.naonedbus.provider.impl.NaoLocationManager.NaoLocationListener;
 import net.naonedbus.task.AddressResolverTask;
 import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.utils.FormatUtils;
@@ -63,7 +63,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
-public class ProximiteFragment extends CustomListFragment implements MyLocationListener, AddressTaskListener {
+public class ProximiteFragment extends CustomListFragment implements NaoLocationListener, AddressTaskListener {
 
 	private static final String LOG_TAG = "ProximiteFragment";
 	private static final boolean DBG = BuildConfig.DEBUG;
@@ -74,10 +74,11 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	private static final String PREF_PROXIMITE_LAYER = "proximite.layer.";
 
 	private final SharedPreferences mPreferences;
-	private final MyLocationProvider mLocationProvider;
+	private final NaoLocationManager mLocationProvider;
 	private final Set<Equipement.Type> mSelectedTypesEquipements;
 	private AddressResolverTask mAddressResolverTask;
 	private Location mLastLoadedLocation;
+	private String mLastAddress;
 
 	private TextView headerTextView;
 
@@ -118,12 +119,15 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
-		if (DBG)
-			Log.d(LOG_TAG, "onStart");
-
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
 		mLocationProvider.addListener(this);
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mLocationProvider.removeListener(this);
 	}
 
 	@Override
@@ -131,8 +135,6 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 		super.onStop();
 		if (DBG)
 			Log.d(LOG_TAG, "onStop");
-
-		mLocationProvider.removeListener(this);
 
 		if (mAddressResolverTask != null) {
 			mAddressResolverTask.cancel(false);
@@ -227,7 +229,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 
 			if (mSelectedTypesEquipements.size() > 0) {
 				final EquipementManager equipementManager = EquipementManager.getInstance();
-				final Location location = mLocationProvider.getLastKnownLocation();
+				final Location location = mLocationProvider.getLastLocation();
 
 				if (location != null) {
 					mLastLoadedLocation = location;
@@ -253,7 +255,7 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 
 	protected void setDistances(final List<Equipement> equipements) {
 		final Location location = new Location(LocationManager.GPS_PROVIDER);
-		final Location currentLocation = mLocationProvider.getLastKnownLocation();
+		final Location currentLocation = mLocationProvider.getLastLocation();
 
 		if (currentLocation != null) {
 			for (final Equipement item : equipements) {
@@ -269,9 +271,11 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	}
 
 	@Override
-	public void onLocationConnecting() {
+	public void onConnecting() {
+		headerTextView.setVisibility(View.VISIBLE);
 		headerTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 		headerTextView.setText(R.string.msg_loading_address);
+		showLoader();
 	}
 
 	@Override
@@ -280,17 +284,32 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 			Log.d(LOG_TAG, "onLocationChanged " + location);
 
 		if (mLastLoadedLocation == null || mLastLoadedLocation.distanceTo(location) > 10f) {
-			loadAddress();
 			refreshContent();
+			showContent();
+			loadAddress();
 		}
 	}
 
 	@Override
-	public void onLocationDisabled() {
+	public void onDisconnected() {
 		if (DBG)
 			Log.d(LOG_TAG, "onLocationDisabled");
 
+		headerTextView.setVisibility(View.GONE);
 		showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
+		setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				getActivity().startActivity(intent);
+			}
+		});
+	}
+
+	@Override
+	public void onLocationTimeout() {
+		headerTextView.setVisibility(View.GONE);
+		showMessage(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.location);
 		setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
@@ -334,7 +353,8 @@ public class ProximiteFragment extends CustomListFragment implements MyLocationL
 	@Override
 	public void onAddressTaskResult(final Address address) {
 		if (address != null) {
-			headerTextView.setText(FormatUtils.formatAddress(address, null));
+			mLastAddress = FormatUtils.formatAddress(address, null);
+			headerTextView.setText(mLastAddress);
 			headerTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_location_small, 0, 0, 0);
 		} else {
 			headerTextView.setText(R.string.error_current_address);

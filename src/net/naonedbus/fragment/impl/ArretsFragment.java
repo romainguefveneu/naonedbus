@@ -40,8 +40,8 @@ import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
-import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.provider.impl.NaoLocationManager;
+import net.naonedbus.provider.impl.NaoLocationManager.NaoLocationListener;
 import net.naonedbus.utils.InfoDialogUtils;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter;
 import net.naonedbus.widget.adapter.impl.ArretArrayAdapter.ViewType;
@@ -67,7 +67,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ArretsFragment extends CustomListFragment implements OnChangeSens, MyLocationListener {
+public class ArretsFragment extends CustomListFragment implements OnChangeSens, NaoLocationListener {
 
 	public static final String PARAM_LIGNE = "ligne";
 
@@ -94,7 +94,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 
 	private final FavoriManager mFavoriManager;
 	private StateHelper mStateHelper;
-	private final MyLocationProvider mLocationProvider;
+	private final NaoLocationManager mLocationProvider;
 	private DistanceTask mDistanceTask;
 	private DistanceTaskCallback mDistanceTaskCallback;
 	private Integer mNearestArretPosition;
@@ -199,7 +199,7 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 
 	@Override
 	public void onPrepareOptionsMenu(final Menu menu) {
-		menu.findItem(R.id.menu_location).setVisible(mLocationProvider.isProviderEnabled());
+		menu.findItem(R.id.menu_location).setVisible(mLocationProvider.isEnabled());
 		super.onPrepareOptionsMenu(menu);
 	}
 
@@ -465,8 +465,8 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 			mDistanceTask.cancel(true);
 		}
 		if (getListAdapter() != null) {
-			mDistanceTask = (DistanceTask) new DistanceTask(mDistanceTaskCallback,
-					mLocationProvider.getLastKnownLocation(), getListAdapter()).execute();
+			mDistanceTask = (DistanceTask) new DistanceTask(mDistanceTaskCallback, mLocationProvider.getLastLocation(),
+					getListAdapter()).execute();
 		}
 	}
 
@@ -535,17 +535,22 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 	}
 
 	@Override
-	public void onLocationConnecting() {
-		
-	}
-	
-	@Override
 	public void onLocationChanged(final Location location) {
 		loadDistances();
 	}
 
 	@Override
-	public void onLocationDisabled() {
+	public void onConnecting() {
+
+	}
+
+	@Override
+	public void onDisconnected() {
+
+	}
+	
+	@Override
+	public void onLocationTimeout() {
 
 	}
 

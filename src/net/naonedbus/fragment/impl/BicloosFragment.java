@@ -36,8 +36,8 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.BiclooManager;
 import net.naonedbus.manager.impl.BiclooManager.BiclooObserver;
 import net.naonedbus.manager.impl.FavoriBiclooManager;
-import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.provider.impl.NaoLocationManager;
+import net.naonedbus.provider.impl.NaoLocationManager.NaoLocationListener;
 import net.naonedbus.widget.adapter.impl.BiclooArrayAdapter;
 import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
@@ -87,7 +87,7 @@ public class BicloosFragment extends CustomListFragment {
 
 	private final BiclooManager mBiclooManager;
 	private final FavoriBiclooManager mFavoriBiclooManager;
-	private final MyLocationProvider mLocationProvider;
+	private final NaoLocationManager mLocationProvider;
 
 	private MenuItem mRefreshMenuItem;
 	private StateHelper mStateHelper;
@@ -124,7 +124,7 @@ public class BicloosFragment extends CustomListFragment {
 		setHasOptionsMenu(true);
 
 		mLocationProvider.addListener(mLocationListener);
-		mLocationListener.onLocationChanged(mLocationProvider.getLastKnownLocation());
+		mLocationListener.onLocationChanged(mLocationProvider.getLastLocation());
 
 		// Gestion du tri par défaut
 		mStateHelper = new StateHelper(getActivity());
@@ -189,12 +189,10 @@ public class BicloosFragment extends CustomListFragment {
 		}
 	}
 
-	
-	
 	/**
 	 * Listener de changement de coordonnées GPS
 	 */
-	private final MyLocationListener mLocationListener = new MyLocationListener() {
+	private final NaoLocationListener mLocationListener = new NaoLocationListener() {
 		@Override
 		public void onLocationChanged(final Location location) {
 			final BiclooDistanceComparator comparator = (BiclooDistanceComparator) mComparators.get(SORT_DISTANCE);
@@ -206,7 +204,7 @@ public class BicloosFragment extends CustomListFragment {
 		}
 
 		@Override
-		public void onLocationDisabled() {
+		public void onDisconnected() {
 			final BiclooDistanceComparator comparator = (BiclooDistanceComparator) mComparators.get(SORT_DISTANCE);
 			comparator.setReferentiel(null);
 			if (mCurrentSortPreference == SORT_DISTANCE) {
@@ -214,11 +212,17 @@ public class BicloosFragment extends CustomListFragment {
 				sort();
 			}
 		}
-		
+
 		@Override
-		public void onLocationConnecting() {
-			
+		public void onConnecting() {
+
 		}
+
+		@Override
+		public void onLocationTimeout() {
+
+		}
+
 	};
 
 	/**
@@ -240,7 +244,7 @@ public class BicloosFragment extends CustomListFragment {
 		final Comparator<Bicloo> comparator;
 		final ArraySectionIndexer<Bicloo> indexer;
 
-		if (mCurrentSortPreference == SORT_DISTANCE && !mLocationProvider.isProviderEnabled()) {
+		if (mCurrentSortPreference == SORT_DISTANCE && !mLocationProvider.isEnabled()) {
 			// Tri par défaut si pas le localisation
 			comparator = mComparators.get(SORT_NOM);
 			indexer = mIndexers.get(SORT_NOM);
@@ -334,7 +338,7 @@ public class BicloosFragment extends CustomListFragment {
 	 * Actualiser les informations de distance.
 	 */
 	private void refreshDistance() {
-		if (mLocationProvider.isProviderEnabled() && getListAdapter() != null
+		if (mLocationProvider.isEnabled() && getListAdapter() != null
 				&& (mLoaderDistance == null || mLoaderDistance.getStatus() == AsyncTask.Status.FINISHED)) {
 			mLoaderDistance = (DistanceTask) new DistanceTask().execute();
 		}
@@ -379,7 +383,7 @@ public class BicloosFragment extends CustomListFragment {
 	}
 
 	protected void setDistances(final List<Bicloo> bicloos) {
-		final Location currentLocation = mLocationProvider.getLastKnownLocation();
+		final Location currentLocation = mLocationProvider.getLastLocation();
 
 		if (currentLocation != null) {
 			for (final Bicloo item : bicloos) {
@@ -401,7 +405,7 @@ public class BicloosFragment extends CustomListFragment {
 		protected Void doInBackground(final Void... params) {
 			final ListAdapter adapter = getListAdapter();
 
-			final Location currentLocation = mLocationProvider.getLastKnownLocation();
+			final Location currentLocation = mLocationProvider.getLastLocation();
 
 			if (currentLocation != null) {
 				for (int i = 0; i < adapter.getCount(); i++) {

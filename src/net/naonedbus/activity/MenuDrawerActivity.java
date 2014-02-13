@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.AboutActivity;
 import net.naonedbus.activity.impl.DonateActivity;
@@ -192,6 +193,12 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 			getSupportMenuInflater().inflate(R.menu.activity_base, menu);
 		}
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		NBApplication.getLocationProvider().onResume();
 	}
 
 	@Override

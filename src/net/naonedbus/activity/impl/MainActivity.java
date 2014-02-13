@@ -28,7 +28,7 @@ import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
-import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.provider.impl.NaoLocationManager;
 import net.naonedbus.service.FavoriService;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -42,7 +42,7 @@ import com.actionbarsherlock.app.ActionBar;
 
 public class MainActivity extends MenuDrawerActivity {
 
-	private final MyLocationProvider mMyLocationProvider;
+	private final NaoLocationManager mMyLocationProvider;
 
 	public MainActivity() {
 		mMyLocationProvider = NBApplication.getLocationProvider();

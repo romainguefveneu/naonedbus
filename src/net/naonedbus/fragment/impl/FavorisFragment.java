@@ -52,8 +52,8 @@ import net.naonedbus.manager.impl.GroupeManager;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.provider.impl.FavoriGroupeProvider;
 import net.naonedbus.provider.impl.GroupeProvider;
-import net.naonedbus.provider.impl.MyLocationProvider;
-import net.naonedbus.provider.impl.MyLocationProvider.MyLocationListener;
+import net.naonedbus.provider.impl.NaoLocationManager;
+import net.naonedbus.provider.impl.NaoLocationManager.NaoLocationListener;
 import net.naonedbus.service.FavoriService;
 import net.naonedbus.utils.FavorisUtil;
 import net.naonedbus.widget.adapter.impl.FavoriArrayAdapter;
@@ -93,7 +93,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
-public class FavorisFragment extends CustomListFragment implements OnItemLongClickListener, MyLocationListener,
+public class FavorisFragment extends CustomListFragment implements OnItemLongClickListener, NaoLocationListener,
 		ActionMode.Callback {
 
 	private static final String LOG_TAG = "FavorisFragment";
@@ -128,7 +128,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 		comparators.append(SORT_DISTANCE, new FavoriDistanceComparator());
 	}
 
-	protected MyLocationProvider mLocationProvider;
+	protected NaoLocationManager mLocationProvider;
 	private ActionMode mActionMode;
 	private ListView mListView;
 	private BackupManager mBackupManager;
@@ -287,7 +287,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 
 		mFavoriManager.addActionListener(mOnFavoriActionListener);
 		// Initaliser le comparator avec la position actuelle.
-		onLocationChanged(mLocationProvider.getLastKnownLocation());
+		onLocationChanged(mLocationProvider.getLastLocation());
 
 		// Gestion du tri par défaut
 		mStateHelper = new StateHelper(getActivity());
@@ -595,7 +595,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	private void sort(final FavoriArrayAdapter adapter) {
 		final Comparator<Favori> comparator;
 
-		if (mCurrentSort == SORT_DISTANCE && !mLocationProvider.isProviderEnabled()) {
+		if (mCurrentSort == SORT_DISTANCE && !mLocationProvider.isEnabled()) {
 			// Tri par défaut si pas le localisation
 			comparator = comparators.get(SORT_NOM);
 		} else {
@@ -874,10 +874,10 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	@Override
-	public void onLocationConnecting() {
-		
+	public void onConnecting() {
+
 	}
-	
+
 	@Override
 	public void onLocationChanged(final Location location) {
 		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators.get(SORT_DISTANCE);
@@ -888,13 +888,18 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 	}
 
 	@Override
-	public void onLocationDisabled() {
+	public void onDisconnected() {
 		final FavoriDistanceComparator comparator = (FavoriDistanceComparator) comparators.get(SORT_DISTANCE);
 		comparator.setReferentiel(null);
 		if (mCurrentSort == SORT_DISTANCE) {
 			mCurrentSort = SORT_NOM;
 			sort();
 		}
+	}
+
+	@Override
+	public void onLocationTimeout() {
+
 	}
 
 }

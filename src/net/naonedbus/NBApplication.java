@@ -18,7 +18,7 @@
  */
 package net.naonedbus;
 
-import net.naonedbus.provider.impl.MyLocationProvider;
+import net.naonedbus.provider.impl.NaoLocationManager;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -36,7 +36,7 @@ public class NBApplication extends Application {
 	public static final String PREF_PLAN_CACHE = "plan.cache";
 	public static final String PREF_NAVIGATION_HOME = "navigation.home";
 
-	private static MyLocationProvider sMyLocationProvider;
+	private static NaoLocationManager sMyLocationProvider;
 	private static SharedPreferences sPreferences;
 
 	private static boolean sIsSetup;
@@ -49,7 +49,7 @@ public class NBApplication extends Application {
 				"net.naonedbus.provider.impl.FastDateTimeZoneProvider");
 
 		if (sMyLocationProvider == null) {
-			sMyLocationProvider = new MyLocationProvider(getApplicationContext());
+			sMyLocationProvider = new NaoLocationManager(getApplicationContext());
 		}
 
 		if (sPreferences == null) {
@@ -58,7 +58,7 @@ public class NBApplication extends Application {
 
 	}
 
-	public static MyLocationProvider getLocationProvider() {
+	public static NaoLocationManager getLocationProvider() {
 		return sMyLocationProvider;
 	}
 
