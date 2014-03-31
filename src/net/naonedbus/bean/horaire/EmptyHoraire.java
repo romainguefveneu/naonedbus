@@ -20,13 +20,15 @@ package net.naonedbus.bean.horaire;
 
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 public class EmptyHoraire extends Horaire {
 
 	private final int mTextId;
 
-	public EmptyHoraire(final int textId, final Date date) {
+	public EmptyHoraire(final int textId, final DateTime date) {
 		mTextId = textId;
-		setDate(date);
+		setDateTime(date);
 		setSection(date);
 	}
 

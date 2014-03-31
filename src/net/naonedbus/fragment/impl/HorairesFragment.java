@@ -421,14 +421,16 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 				// actuel (ligne de nuit par exemple) ne pas réafficher le jour.
 				if (((mLastDayLoaded == null || mLastDateTimeLoaded == null) || !mLastDayLoaded
 						.equals(mLastDateTimeLoaded.toDateMidnight()))) {
-					mHoraires.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDate()));
+					mHoraires.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDateTime()));
 				}
 			} else {
 				mHoraires.addAll(data);
 
 				final Horaire lastHoraire = mHoraires.get(mHoraires.size() - 1);
-				mLastDateTimeLoaded = new DateTime(lastHoraire.getTimestamp());
+				mLastDateTimeLoaded = new DateTime(lastHoraire.getDateTime());
 			}
+
+			Log.d(LOG_TAG, "\tmLastDateTimeLoaded " + mLastDateTimeLoaded);
 
 			result.setResult(mAdapter);
 
@@ -481,7 +483,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	 */
 	private void updateItemsTime() {
 
-		final Long currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
+		final DateTime currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0);
 		final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
 
 		int nextHorairePosition = -1;
@@ -497,7 +499,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 				continue;
 			}
 
-			itemDateTime = new DateTime(horaire.getDate()).withSecondOfMinute(0).withMillisOfSecond(0);
+			itemDateTime = new DateTime(horaire.getDateTime()).withSecondOfMinute(0).withMillisOfSecond(0);
 			delay = Minutes.minutesBetween(now, itemDateTime).getMinutes();
 
 			if (delay > 0 && delay < 60) {
@@ -510,7 +512,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 			horaire.setBeforeNow(itemDateTime.isBefore(now));
 
 			// Recherche le prochain horaire
-			if (nextHorairePosition == -1 && horaire.getTimestamp() >= currentTime) {
+			if (nextHorairePosition == -1 && currentTime.isAfter(horaire.getDateTime()) == true) {
 				nextHorairePosition = mAdapter.getPosition(horaire);
 			}
 		}

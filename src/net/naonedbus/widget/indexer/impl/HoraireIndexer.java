@@ -38,7 +38,7 @@ public class HoraireIndexer extends ArraySectionIndexer<Horaire> {
 		if (mDateFormat == null) {
 			mDateFormat = DateFormat.getDateInstance(DateFormat.FULL);
 		}
-		return mDateFormat.format(item.getDate());
+		return mDateFormat.format(item.getDateTime().toDate());
 	}
 
 }

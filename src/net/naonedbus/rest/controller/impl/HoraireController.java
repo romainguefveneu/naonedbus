@@ -20,7 +20,6 @@ package net.naonedbus.rest.controller.impl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,13 +35,15 @@ import net.naonedbus.rest.container.HoraireContainer.HoraireNode;
 import net.naonedbus.rest.controller.RestController;
 
 import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.MutableDateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
-import android.util.Log;
 
 @SuppressLint("SimpleDateFormat")
 public class HoraireController extends RestController<HoraireContainer> {
@@ -61,11 +62,11 @@ public class HoraireController extends RestController<HoraireContainer> {
 	private static final String PATH = "https://open.tan.fr/ewp/horairesarret.json";
 
 	private final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	private final SimpleDateFormat mDateDecode = new SimpleDateFormat("H'h'mm");
+	private final SimpleDateFormat mTimeFormat = new SimpleDateFormat("H'h'mm");
 
 	public HoraireController() {
 		super("horaires");
-		mDateDecode.setTimeZone(TimeZone.getTimeZone("GMT"));
+		mTimeFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 	}
 
 	/**
@@ -76,7 +77,6 @@ public class HoraireController extends RestController<HoraireContainer> {
 	 */
 	public synchronized List<Horaire> getAllFromWeb(final Arret arret, final DateMidnight date) throws IOException {
 		final UrlBuilder url = new UrlBuilder(PATH);
-		long timeOffset = date.getMillis();
 		final List<HoraireNode> horaires;
 		List<Horaire> result = null;
 
@@ -89,36 +89,43 @@ public class HoraireController extends RestController<HoraireContainer> {
 		if (content != null) {
 			horaires = content.horaires;
 			result = new ArrayList<Horaire>();
-			// Transformation des horaires TAN en horaire naonedbus.
-			for (final HoraireNode horaireTan : horaires) {
-				final String heure = horaireTan.heure;
 
-				// Changement de jour
-				if (heure.equals("0h")) {
-					timeOffset = date.plusDays(1).getMillis();
+			// Transformation des horaires TAN en horaire naonedbus.
+			MutableDateTime dateTime = new MutableDateTime(date);
+			dateTime.setZone(DateTimeZone.forID("GMT"));
+			
+			int lastHour = Integer.MIN_VALUE;
+			
+			for (final HoraireNode horaireTan : horaires) {
+				int hours = Integer.parseInt(horaireTan.heure.replaceAll("[^\\d.]", ""));
+				dateTime.setHourOfDay(hours);
+
+				if (hours < lastHour) { // Changement de jour
+					dateTime.addDays(1);
 				}
-				for (final String minute : horaireTan.passages) {
+				lastHour = hours;
+
+				for (final String passage : horaireTan.passages) {
 					final Horaire horaire = new Horaire();
-					horaire.setDayTrip(date.getMillis());
-					horaire.setTimestamp(parseTimestamp(heure, minute, timeOffset));
-					horaire.setTerminus(parseTerminus(minute, content.notes));
-					horaire.setSection(new DateMidnight(horaire.getTimestamp()));
+
+					int minutes = Integer.parseInt(passage.replaceAll("[^\\d.]", ""));
+
+					dateTime.setMinuteOfHour(minutes);
+
+					horaire.setYear(dateTime.getYear());
+					horaire.setDayOfYear(dateTime.getDayOfYear());
+
+					horaire.setMinutes(hours * 60 + minutes * 60);
+					horaire.setTerminus(parseTerminus(passage, content.notes));
+
+					horaire.setDateTime(new DateTime(dateTime));
+					horaire.setSection(new DateMidnight(dateTime));
 					result.add(horaire);
 				}
 			}
 		}
 
 		return result;
-	}
-
-	private long parseTimestamp(final String heure, final String minute, final long timeOffset) {
-		long timestamp = 0;
-		try {
-			timestamp = timeOffset + mDateDecode.parse(heure + minute).getTime();
-		} catch (final ParseException e) {
-			Log.e(LOG_TAG, "Erreur de convertion.", e);
-		}
-		return timestamp;
 	}
 
 	private String parseTerminus(final String minute, final Map<String, String> notes) {

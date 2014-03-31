@@ -267,7 +267,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				final TextView horaireView = mHoraireViews.get(indexView);
 
 				CharSequence formattedTime = FormatUtils.formatTimeAmPm(getContext(),
-						mTimeFormat.format(horaire.getDate()));
+						mTimeFormat.format(horaire.getDateTime()));
 
 				if (horaire.getTerminus() != null) {
 					CharSequence terminusLetter = mTerminusManager.getTerminusLetter(horaire.getTerminus());
@@ -283,7 +283,7 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 				if (indexView > 0) {
 					minutes = Minutes.minutesBetween(now,
-							new DateTime(horaire.getDate()).withSecondOfMinute(0).withMillisOfSecond(0)).getMinutes();
+							new DateTime(horaire.getDateTime()).withSecondOfMinute(0).withMillisOfSecond(0)).getMinutes();
 
 					if (minutes > 60) {
 						delai = getString(R.string.msg_depart_heure_short, minutes / 60);

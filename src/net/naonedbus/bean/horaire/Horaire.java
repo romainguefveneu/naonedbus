@@ -22,14 +22,17 @@ import java.util.Date;
 
 import net.naonedbus.widget.item.SectionItem;
 
+import org.joda.time.DateTime;
+
 public class Horaire implements SectionItem {
 
 	private int mId;
 	private String mTerminus;
-	private long mDayTrip;
-	private long mTimestamp;
+	private int mYear;
+	private int mDayOfYear;
+	private int mMinutes;
 
-	private Date mDate;
+	private DateTime mDate;
 	private String mDelai;
 	private Object mSection;
 	private boolean mIsBeforeNow;
@@ -39,9 +42,9 @@ public class Horaire implements SectionItem {
 
 	public Horaire(final Horaire horaire) {
 		mId = horaire.getId();
-		mDayTrip = horaire.getDayTrip();
+		mDayOfYear = horaire.getDayOfYear();
 		mTerminus = horaire.getTerminus();
-		mTimestamp = horaire.getTimestamp();
+		mMinutes = horaire.getMinutes();
 	}
 
 	public int getId() {
@@ -56,32 +59,40 @@ public class Horaire implements SectionItem {
 		return mTerminus;
 	}
 
-	public long getTimestamp() {
-		return mTimestamp;
-	}
-
-	public long getDayTrip() {
-		return mDayTrip;
-	}
-
-	public void setDayTrip(final long dayTrip) {
-		mDayTrip = dayTrip;
-	}
 
 	public void setTerminus(final String terminus) {
 		mTerminus = terminus;
 	}
 
-	public void setTimestamp(final long timestamp) {
-		mTimestamp = timestamp;
-		mDate = new Date(timestamp);
+	public int getYear() {
+		return mYear;
 	}
 
-	public Date getDate() {
+	public void setYear(int year) {
+		mYear = year;
+	}
+
+	public int getDayOfYear() {
+		return mDayOfYear;
+	}
+
+	public void setDayOfYear(int dayOfYear) {
+		mDayOfYear = dayOfYear;
+	}
+
+	public int getMinutes() {
+		return mMinutes;
+	}
+
+	public void setMinutes(int minutes) {
+		mMinutes = minutes;
+	}
+
+	public DateTime getDateTime() {
 		return mDate;
 	}
 
-	public void setDate(final Date date) {
+	public void setDateTime(final DateTime date) {
 		mDate = date;
 	}
 
@@ -100,6 +111,10 @@ public class Horaire implements SectionItem {
 	public void setBeforeNow(final boolean isBeforeNow) {
 		mIsBeforeNow = isBeforeNow;
 	}
+	
+	public long getTimestamp() {
+		return mDate.getMillis();
+	}
 
 	public void setSection(final Object section) {
 		mSection = section;
@@ -109,5 +124,12 @@ public class Horaire implements SectionItem {
 	public Object getSection() {
 		return mSection;
 	}
+
+	@Override
+	public String toString() {
+		return mDate.toString();
+	}
+
+
 
 }

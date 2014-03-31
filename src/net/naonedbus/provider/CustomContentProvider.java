@@ -19,7 +19,9 @@
 package net.naonedbus.provider;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 import net.naonedbus.BuildConfig;
@@ -27,6 +29,9 @@ import net.naonedbus.R;
 import net.naonedbus.helper.BulkLoaderHelper.BulkQuery;
 import net.naonedbus.helper.CompressedQueriesHelper;
 import net.naonedbus.utils.TimeLogUtils;
+
+import org.apache.commons.io.IOUtils;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
@@ -263,6 +268,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 			}
 
 		}
+
 	}
 
 }

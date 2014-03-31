@@ -18,6 +18,9 @@
  */
 package net.naonedbus.activity.impl;
 
+import java.io.File;
+import java.io.IOException;
+
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
@@ -30,6 +33,9 @@ import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
 import net.naonedbus.provider.impl.NaoLocationManager;
 import net.naonedbus.service.FavoriService;
+
+import org.apache.commons.io.FileUtils;
+
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,7 +57,20 @@ public class MainActivity extends MenuDrawerActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
+		// BugSenseHandler.initAndStartSession(this,
+		// getString(R.string.bugsense));
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				File database = getDatabasePath("data.db");
+				try {
+					FileUtils.copyFile(database, new File(getExternalCacheDir(), "naonedbus.db"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
 
 		handleSearchResult();
 		handleFavoriExport();
@@ -76,7 +95,6 @@ public class MainActivity extends MenuDrawerActivity {
 		}
 
 	}
-
 
 	private void hideActionBar() {
 		final ActionBar actionBar = getSupportActionBar();
