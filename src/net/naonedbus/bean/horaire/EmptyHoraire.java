@@ -18,17 +18,15 @@
  */
 package net.naonedbus.bean.horaire;
 
-import java.util.Date;
-
-import org.joda.time.DateTime;
+import org.joda.time.DateMidnight;
 
 public class EmptyHoraire extends Horaire {
 
 	private final int mTextId;
 
-	public EmptyHoraire(final int textId, final DateTime date) {
+	public EmptyHoraire(final int textId, final DateMidnight date) {
 		mTextId = textId;
-		setDateTime(date);
+		setJour(date);
 		setSection(date);
 	}
 

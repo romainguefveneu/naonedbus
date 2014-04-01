@@ -19,6 +19,8 @@
 package net.naonedbus.manager.impl;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -38,7 +40,6 @@ import net.naonedbus.rest.controller.impl.HoraireController;
 
 import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.joda.time.Minutes;
 
 import android.content.ContentResolver;
@@ -60,6 +61,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 
 	private static HoraireManager sInstance;
 
+	private SimpleDateFormat mIso8601Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	private final HoraireController mController;
 	private final ConcurrentLinkedQueue<NextHoraireTask> mSchedulesTasksQueue;
 	private final Set<ScheduleToken> mEmptySchedules;
@@ -67,9 +70,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	private Object mDatabaseLock;
 
 	private int mColId;
-	private int mColYear;
-	private int mColDayOfYear;
-	private int mColMinutes;
+	private int mColHoraire;
+	private int mColJour;
 	private int mColTerminus;
 
 	/**
@@ -93,9 +95,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	@Override
 	public void onIndexCursor(final Cursor c) {
 		mColId = c.getColumnIndex(HoraireTable._ID);
-		mColYear = c.getColumnIndex(HoraireTable.YEAR);
-		mColDayOfYear = c.getColumnIndex(HoraireTable.DAY_OF_YEAR);
-		mColMinutes = c.getColumnIndex(HoraireTable.MINUTES);
+		mColJour = c.getColumnIndex(HoraireTable.JOUR);
+		mColHoraire = c.getColumnIndex(HoraireTable.HORAIRE);
 		mColTerminus = c.getColumnIndex(HoraireTable.TERMINUS);
 	}
 
@@ -103,20 +104,14 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 	public Horaire getSingleFromCursor(final Cursor c) {
 		final Horaire item = new Horaire();
 		item.setId(c.getInt(mColId));
-		item.setYear(c.getInt(mColYear));
-		item.setMinutes(c.getInt(mColMinutes));
+		try {
+			item.setJour(new DateMidnight(mIso8601Format.parse(c.getString(mColJour))));
+			item.setHoraire(new DateTime(mIso8601Format.parse(c.getString(mColHoraire))));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		item.setTerminus(c.getString(mColTerminus));
-		item.setDayOfYear(c.getInt(mColDayOfYear));
-
-		int hours = item.getMinutes() % 60;
-		int minutes = item.getMinutes() - (hours * 60);
-
-		DateTime dateTime = new DateTime().withYear(item.getYear()).withDayOfYear(item.getDayOfYear())
-				.withHourOfDay(hours).withMinuteOfHour(minutes).withZone(DateTimeZone.forID("GMT"));
-
-		item.setDateTime(dateTime);
-
-		item.setSection(new DateMidnight(dateTime));
+		item.setSection(new DateMidnight(item.getHoraire()));
 		return item;
 	}
 
@@ -170,8 +165,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
 		builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
 		builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(token.getArretId()));
-		builder.appendQueryParameter(HoraireProvider.PARAM_YEAR, String.valueOf(token.getDate()));
-		builder.appendQueryParameter(HoraireProvider.PARAM_DAY_OF_YEAR, String.valueOf(token.getDate()));
+		builder.appendQueryParameter(HoraireProvider.PARAM_JOUR, mIso8601Format.format(token.getDate()));
 
 		synchronized (mDatabaseLock) {
 			final Cursor c = contentResolver.query(builder.build(), null, null, null, null);
@@ -189,8 +183,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			Log.i(LOG_TAG, "Nettoyage du cache horaires");
 
 		synchronized (mDatabaseLock) {
-			contentResolver.delete(HoraireProvider.CONTENT_URI, HoraireTable.DAY_OF_YEAR + " < ?",
-					new String[] { String.valueOf(new DateMidnight().minusDays(1).getDayOfYear()) });
+			contentResolver.delete(HoraireProvider.CONTENT_URI, HoraireTable.JOUR + " < ?",
+					new String[] { String.valueOf(new DateMidnight().minusDays(1).getMillis()) });
 		}
 	}
 
@@ -209,10 +203,8 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		final ContentValues values = new ContentValues();
 		values.put(HoraireTable.ID_ARRET, arretId);
 		values.put(HoraireTable.TERMINUS, horaire.getTerminus());
-		values.put(HoraireTable.YEAR, horaire.getYear());
-		values.put(HoraireTable.DAY_OF_YEAR, horaire.getDayOfYear());
-		values.put(HoraireTable.MINUTES, horaire.getMinutes());
-
+		values.put(HoraireTable.JOUR, mIso8601Format.format(horaire.getJour().toDate()));
+		values.put(HoraireTable.HORAIRE, mIso8601Format.format(horaire.getHoraire().toDate()));
 		return values;
 	}
 
@@ -295,12 +287,13 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 				final Uri.Builder builder = HoraireProvider.CONTENT_URI.buildUpon();
 				builder.path(HoraireProvider.HORAIRE_JOUR_URI_PATH_QUERY);
 				builder.appendQueryParameter(HoraireProvider.PARAM_ARRET_ID, String.valueOf(arret.getId()));
-				builder.appendQueryParameter(HoraireProvider.PARAM_DAY_TRIP, String.valueOf(date.getMillis()));
+				builder.appendQueryParameter(HoraireProvider.PARAM_JOUR, mIso8601Format.format(date.toDate()));
 				builder.appendQueryParameter(HoraireProvider.PARAM_INCLUDE_LAST_DAY_TRIP, "true");
 
 				// Eviter l'affichage de doublons
 				if (after != null) {
-					builder.appendQueryParameter(HoraireProvider.PARAM_AFTER_TIME, String.valueOf(after.getMillis()));
+					builder.appendQueryParameter(HoraireProvider.PARAM_AFTER_TIME,
+							mIso8601Format.format(after.toDate()));
 				}
 
 				final Cursor cursor = contentResolver.query(builder.build(), null, null, null, null);
@@ -346,7 +339,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		do {
 			schedules = getSchedules(contentResolver, arret, date, after);
 			for (final Horaire schedule : schedules) {
-				if (schedule.getDateTime().isBefore(now) == false) {
+				if (schedule.getHoraire().isAfter(now) || schedule.getHoraire().isEqual(now)) {
 					nextSchedules.add(schedule);
 					if (++schedulesCount >= limit) {
 						break;
@@ -355,7 +348,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			}
 
 			if (schedules.size() > 0)
-				after = schedules.get(schedules.size() - 1).getDateTime();
+				after = new DateTime(schedules.get(schedules.size() - 1).getHoraire());
 			else
 				after = null;
 
@@ -380,7 +373,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 		if (nextSchedules.size() > 0) {
 			final Horaire next = nextSchedules.get(0);
 
-			final DateTime itemDateTime = new DateTime(next.getDateTime()).withSecondOfMinute(0).withMillisOfSecond(0);
+			final DateTime itemDateTime = new DateTime(next.getHoraire()).withSecondOfMinute(0).withMillisOfSecond(0);
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
 
 			result = Minutes.minutesBetween(now, itemDateTime).getMinutes();

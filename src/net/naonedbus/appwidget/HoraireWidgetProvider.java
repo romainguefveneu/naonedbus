@@ -301,12 +301,12 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 		if (nextHoraires.size() > 0) {
 
 			// Programmer si besoin l'alarme
-			scheduleUpdate(context, nextHoraires.get(0).getTimestamp());
+			scheduleUpdate(context, nextHoraires.get(0).getHoraire().getMillis());
 
 			for (int i = 0; i < nextHoraires.size(); i++) {
 				final Horaire horaire = nextHoraires.get(i);
 				content = TextUtils.concat(content,
-						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getTimestamp())));
+						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getHoraire())));
 				if (i < nextHoraires.size() - 1) {
 					content = TextUtils.concat(content, " \u2022 ");
 				}

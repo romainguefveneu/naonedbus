@@ -18,21 +18,18 @@
  */
 package net.naonedbus.bean.horaire;
 
-import java.util.Date;
-
 import net.naonedbus.widget.item.SectionItem;
 
+import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 
 public class Horaire implements SectionItem {
 
-	private int mId;
+	private long mId;
 	private String mTerminus;
-	private int mYear;
-	private int mDayOfYear;
-	private int mMinutes;
+	private DateMidnight mJour;
+	private DateTime mHoraire;
 
-	private DateTime mDate;
 	private String mDelai;
 	private Object mSection;
 	private boolean mIsBeforeNow;
@@ -42,16 +39,16 @@ public class Horaire implements SectionItem {
 
 	public Horaire(final Horaire horaire) {
 		mId = horaire.getId();
-		mDayOfYear = horaire.getDayOfYear();
+		mJour = horaire.getJour();
 		mTerminus = horaire.getTerminus();
-		mMinutes = horaire.getMinutes();
+		mHoraire = horaire.getHoraire();
 	}
 
-	public int getId() {
+	public long getId() {
 		return mId;
 	}
 
-	public void setId(final int id) {
+	public void setId(long id) {
 		mId = id;
 	}
 
@@ -59,48 +56,31 @@ public class Horaire implements SectionItem {
 		return mTerminus;
 	}
 
-
-	public void setTerminus(final String terminus) {
+	public void setTerminus(String terminus) {
 		mTerminus = terminus;
 	}
 
-	public int getYear() {
-		return mYear;
+	public DateMidnight getJour() {
+		return mJour;
 	}
 
-	public void setYear(int year) {
-		mYear = year;
+	public void setJour(DateMidnight jour) {
+		mJour = jour;
 	}
 
-	public int getDayOfYear() {
-		return mDayOfYear;
+	public DateTime getHoraire() {
+		return mHoraire;
 	}
 
-	public void setDayOfYear(int dayOfYear) {
-		mDayOfYear = dayOfYear;
-	}
-
-	public int getMinutes() {
-		return mMinutes;
-	}
-
-	public void setMinutes(int minutes) {
-		mMinutes = minutes;
-	}
-
-	public DateTime getDateTime() {
-		return mDate;
-	}
-
-	public void setDateTime(final DateTime date) {
-		mDate = date;
+	public void setHoraire(DateTime horaire) {
+		mHoraire = horaire;
 	}
 
 	public String getDelai() {
 		return mDelai;
 	}
 
-	public void setDelai(final String delai) {
+	public void setDelai(String delai) {
 		mDelai = delai;
 	}
 
@@ -110,10 +90,6 @@ public class Horaire implements SectionItem {
 
 	public void setBeforeNow(final boolean isBeforeNow) {
 		mIsBeforeNow = isBeforeNow;
-	}
-	
-	public long getTimestamp() {
-		return mDate.getMillis();
 	}
 
 	public void setSection(final Object section) {
@@ -127,9 +103,7 @@ public class Horaire implements SectionItem {
 
 	@Override
 	public String toString() {
-		return mDate.toString();
+		return "[" + mId + ";" + mJour + ";" + mHoraire + "]";
 	}
-
-
 
 }

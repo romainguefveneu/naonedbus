@@ -36,7 +36,6 @@ import android.widget.TextView;
 
 public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 
-	final DateFormat mDateFormat;
 	final DateFormat mTimeFormat;
 	final float mClockHandWidth;
 	final float mClockHandHeight;
@@ -46,7 +45,6 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 	public HoraireArrayAdapter(final Context context, final List<Horaire> objects) {
 		super(context, R.layout.list_item_horaire, objects);
 		mTimeFormat = android.text.format.DateFormat.getTimeFormat(context);
-		mDateFormat = android.text.format.DateFormat.getDateFormat(context);
 
 		mClockHandWidth = context.getResources().getDimension(R.dimen.clock_hand_width);
 		mClockHandHeight = context.getResources().getDimension(R.dimen.clock_hand_height);
@@ -76,7 +74,7 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 	}
 
 	private void bindHoraireView(final ViewHolder holder, final Horaire item) {
-		holder.itemTitle.setText(mDateFormat.format(item.getDateTime().toDate()) + " " + mTimeFormat.format(item.getDateTime().toDate()));
+		holder.itemTitle.setText(mTimeFormat.format(item.getHoraire().toDate()));
 		holder.itemTitle.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
 		holder.itemTitle.setEnabled(true);
 
@@ -104,7 +102,7 @@ public class HoraireArrayAdapter extends ArraySectionAdapter<Horaire> {
 			holder.bitmap = Bitmap.createBitmap(mClockSize, mClockSize, Bitmap.Config.ARGB_8888);
 		}
 
-		mClockDrawer.drawClockBitmap(holder.bitmap, color, item.getDateTime().toDate());
+		mClockDrawer.drawClockBitmap(holder.bitmap, color, item.getHoraire().toDate());
 
 		holder.itemIcon.setImageBitmap(holder.bitmap);
 		holder.itemIcon.setVisibility(View.VISIBLE);

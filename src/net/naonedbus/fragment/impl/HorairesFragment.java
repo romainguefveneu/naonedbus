@@ -199,8 +199,8 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 			calIntent.putExtra(Events.TITLE, title);
 			calIntent.putExtra(Events.DESCRIPTION, description);
 			calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false);
-			calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, horaire.getTimestamp());
-			calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, horaire.getTimestamp());
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, horaire.getHoraire().getMillis());
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, horaire.getHoraire().getMillis());
 
 			try {
 				startActivity(calIntent);
@@ -220,7 +220,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		intent.putExtra(AddEventActivity.PARAM_LIGNE, mLigne);
 		intent.putExtra(AddEventActivity.PARAM_SENS, mSens);
 		intent.putExtra(AddEventActivity.PARAM_ARRET, mArret);
-		intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, horaire.getTimestamp());
+		intent.putExtra(AddEventActivity.PARAM_TIMESTAMP, horaire.getHoraire().getMillis());
 
 		startActivity(intent);
 		getActivity().overridePendingTransition(R.anim.slide_in_from_right, R.anim.half_fade_out);
@@ -421,16 +421,14 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 				// actuel (ligne de nuit par exemple) ne pas réafficher le jour.
 				if (((mLastDayLoaded == null || mLastDateTimeLoaded == null) || !mLastDayLoaded
 						.equals(mLastDateTimeLoaded.toDateMidnight()))) {
-					mHoraires.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded.toDateTime()));
+					mHoraires.add(new EmptyHoraire(R.string.msg_nothing_horaires, mLastDayLoaded));
 				}
 			} else {
 				mHoraires.addAll(data);
 
 				final Horaire lastHoraire = mHoraires.get(mHoraires.size() - 1);
-				mLastDateTimeLoaded = new DateTime(lastHoraire.getDateTime());
+				mLastDateTimeLoaded = lastHoraire.getHoraire();
 			}
-
-			Log.d(LOG_TAG, "\tmLastDateTimeLoaded " + mLastDateTimeLoaded);
 
 			result.setResult(mAdapter);
 
@@ -483,7 +481,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	 */
 	private void updateItemsTime() {
 
-		final DateTime currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0);
+		final Long currentTime = new DateTime().minusMinutes(5).withSecondOfMinute(0).withMillisOfSecond(0).getMillis();
 		final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
 
 		int nextHorairePosition = -1;
@@ -499,7 +497,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 				continue;
 			}
 
-			itemDateTime = new DateTime(horaire.getDateTime()).withSecondOfMinute(0).withMillisOfSecond(0);
+			itemDateTime = new DateTime(horaire.getHoraire()).withSecondOfMinute(0).withMillisOfSecond(0);
 			delay = Minutes.minutesBetween(now, itemDateTime).getMinutes();
 
 			if (delay > 0 && delay < 60) {
@@ -512,7 +510,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 			horaire.setBeforeNow(itemDateTime.isBefore(now));
 
 			// Recherche le prochain horaire
-			if (nextHorairePosition == -1 && currentTime.isAfter(horaire.getDateTime()) == true) {
+			if (nextHorairePosition == -1 && (horaire.getHoraire().isAfterNow() || horaire.getHoraire().isEqualNow())) {
 				nextHorairePosition = mAdapter.getPosition(horaire);
 			}
 		}

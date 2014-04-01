@@ -76,14 +76,13 @@ CREATE INDEX IF NOT EXISTS sens_code ON sens (code);
 CREATE TABLE IF NOT EXISTS horaires (
 	_id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	terminus NVARCHAR(255), 
-	year INTEGER NOT NULL,
-	dayOfYear INTEGER NOT NULL,
-	minutes INTEGER NOT NULL, 
+	jour DATE NOT NULL,
+	horaire DATETIME NOT NULL, 
 	idArret INTEGER NOT NULL);
 CREATE INDEX IF NOT EXISTS horaires_id ON horaires (_id);
-CREATE INDEX IF NOT EXISTS horaires_dayOfYear ON horaires (dayOfYear);
-CREATE INDEX IF NOT EXISTS horaires_idArret_dayOfYear ON horaires (idArret, dayOfYear);
-CREATE INDEX IF NOT EXISTS horaires_idArret_dayOfYear_minutes ON horaires (idArret, dayOfYear, minutes);
+CREATE INDEX IF NOT EXISTS horaires_jour ON horaires (jour);
+CREATE INDEX IF NOT EXISTS horaires_idArret_jour ON horaires (idArret, jour);
+CREATE INDEX IF NOT EXISTS horaires_idArret_jour_horaire ON horaires (idArret, jour, horaire);
 
 -- Table FAVORIS
 CREATE TABLE IF NOT EXISTS favoris (
@@ -153,7 +152,7 @@ SELECT
     g.nom AS nomGroupe,
     g._id AS idGroupe,
     g.ordre as ordreGroupe,
-    (SELECT minutes FROM horaires WHERE horaires.idArret = f._id AND horaires.year = strftime('%Y', 'now', 'localtime') AND horaires.dayOfYear = strftime('%j', 'now', 'localtime') AND minutes >=  (strftime('%H', 'now', 'localtime') * 60 + strftime('%M', 'now', 'localtime')) LIMIT 1) as nextHoraire
+   (SELECT (strftime('%s',horaire) - (strftime('%s','now','localtime') / 60 ) * 60 ) / 60 FROM horaires WHERE horaires.idArret = f._id AND datetime(horaire) >= datetime('now','localtime') LIMIT 1) as nextHoraire
 FROM
     favoris f 
     LEFT JOIN arrets a ON f._id = a._id

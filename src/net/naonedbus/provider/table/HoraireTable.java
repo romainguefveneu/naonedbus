@@ -24,8 +24,7 @@ public interface HoraireTable extends BaseColumns {
 	public static final String TABLE_NAME = "horaires";
 
 	public static final String TERMINUS = "terminus";
-	public static final String YEAR = "year";
-	public static final String DAY_OF_YEAR = "dayOfYear";
-	public static final String MINUTES = "minutes";
+	public static final String JOUR = "jour";
+	public static final String HORAIRE = "horaire";
 	public static final String ID_ARRET = "idArret";
 }

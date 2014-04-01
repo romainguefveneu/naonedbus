@@ -37,8 +37,7 @@ import android.text.TextUtils;
 public class HoraireProvider extends CustomContentProvider {
 
 	public static final String PARAM_ARRET_ID = "arretId";
-	public static final String PARAM_YEAR = "year";
-	public static final String PARAM_DAY_OF_YEAR = "dayOfYear";
+	public static final String PARAM_JOUR = "jour";
 	public static final String PARAM_INCLUDE_LAST_DAY_TRIP = "includeLastDayTrip";
 	public static final String PARAM_AFTER_TIME = "afterTime";
 
@@ -80,22 +79,22 @@ public class HoraireProvider extends CustomContentProvider {
 			break;
 		case HORAIRE_JOUR:
 			final String idArret = uri.getQueryParameter(PARAM_ARRET_ID);
-			final int dayOfYear = Integer.parseInt(uri.getQueryParameter(PARAM_DAY_OF_YEAR));
-			final String year = uri.getQueryParameter(PARAM_YEAR);
+			final String jour = uri.getQueryParameter(PARAM_JOUR);
 			final String afterTime = uri.getQueryParameter(PARAM_AFTER_TIME);
 
 			queryBuilder.appendWhere(HoraireTable.ID_ARRET + " = " + idArret);
 			queryBuilder.appendWhere(" AND (");
-			queryBuilder.appendWhere(HoraireTable.YEAR + " = " + year);
-			queryBuilder.appendWhere(" AND ");
-			queryBuilder.appendWhere(HoraireTable.DAY_OF_YEAR + " = " + dayOfYear);
+			queryBuilder.appendWhere(HoraireTable.JOUR + " = ");
+			queryBuilder.appendWhereEscapeString(jour);
 
 			// Fin du trip passé pour les horaires d'après minuit
 			if (uri.getQueryParameter(PARAM_INCLUDE_LAST_DAY_TRIP) != null) {
 				queryBuilder.appendWhere(" OR (");
-				queryBuilder.appendWhere(HoraireTable.DAY_OF_YEAR + " = " + (dayOfYear-1));
-//				queryBuilder.appendWhere(" AND ");
-//				queryBuilder.appendWhere(HoraireTable.MINUTES + " >= " + dayTrip);
+				queryBuilder.appendWhere(HoraireTable.JOUR + " < ");
+				queryBuilder.appendWhereEscapeString(jour);
+				queryBuilder.appendWhere(" AND ");
+				queryBuilder.appendWhere(HoraireTable.HORAIRE + " >= ");
+				queryBuilder.appendWhereEscapeString(jour);
 				queryBuilder.appendWhere(")");
 			}
 
@@ -104,7 +103,8 @@ public class HoraireProvider extends CustomContentProvider {
 			// Eviter l'affichage de doublons
 			if (afterTime != null) {
 				queryBuilder.appendWhere(" AND ");
-				queryBuilder.appendWhere(HoraireTable.MINUTES + " > " + afterTime);
+				queryBuilder.appendWhere(HoraireTable.HORAIRE + " > ");
+				queryBuilder.appendWhereEscapeString(afterTime);
 			}
 
 			break;
