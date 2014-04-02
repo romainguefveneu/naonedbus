@@ -18,7 +18,6 @@
  */
 package net.naonedbus.fragment.impl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -64,7 +63,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -123,6 +121,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	private final AtomicBoolean mIsLoading = new AtomicBoolean(false);
 
 	private DateMidnight mLastDayLoaded;
+	private DateMidnight mDayToLoad;
 	private DateTime mLastDateTimeLoaded;
 
 	private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -141,6 +140,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 
 		mHoraires = new ArrayList<Horaire>();
 		mLastDayLoaded = new DateMidnight();
+		mDayToLoad = new DateMidnight();
 	}
 
 	@Override
@@ -238,7 +238,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 			if (DBG)
 				Log.d(LOG_TAG, "loadHoraires " + date.toString() + "\t" + mIsLoading.get());
 
-			mLastDayLoaded = date;
+			mDayToLoad = date;
 			refreshContent();
 		}
 	}
@@ -409,12 +409,12 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 
 		if (DBG)
-			Log.d(LOG_TAG, "\tloadContent " + mLastDayLoaded.toString());
+			Log.d(LOG_TAG, "\tloadContent " + mDayToLoad.toString());
 
 		try {
 
-			final List<Horaire> data = mHoraireManager.getSchedules(context.getContentResolver(), mArret,
-					mLastDayLoaded, mLastDateTimeLoaded);
+			final List<Horaire> data = mHoraireManager.getSchedules(context.getContentResolver(), mArret, mDayToLoad,
+					mLastDateTimeLoaded);
 
 			if (data.size() == 0) {
 				// Si le précédent chargement à déjà charger la totalité du jour
@@ -430,38 +430,14 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 				mLastDateTimeLoaded = lastHoraire.getHoraire();
 			}
 
+			mLastDayLoaded = new DateMidnight(mDayToLoad);
+
 			result.setResult(mAdapter);
 
 		} catch (final Exception e) {
 			result.setException(e);
 		}
 		return result;
-	}
-
-	@Override
-	public void onLoadFinished(final Loader<AsyncResult<ListAdapter>> loader, final AsyncResult<ListAdapter> result) {
-
-		if (result.getException() == null) {
-			final ListAdapter adapter = result.getResult();
-			if (!adapter.equals(getListAdapter())) {
-				setListAdapter(adapter);
-			}
-
-			updateItemsTime();
-			showContent();
-		} else {
-			final Exception exception = result.getException();
-			if (exception instanceof IOException) {
-				showError(R.string.error_title_network, R.string.error_summary_network);
-			} else {
-				showError(R.string.error_title_webservice_tan, R.string.error_summary_webservice);
-			}
-			Log.w(LOG_TAG, "Erreur", exception);
-		}
-
-		resetNextUpdate();
-		onPostExecute();
-
 	}
 
 	@Override

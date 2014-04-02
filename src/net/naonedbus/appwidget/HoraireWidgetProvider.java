@@ -306,7 +306,7 @@ public abstract class HoraireWidgetProvider extends AppWidgetProvider {
 			for (int i = 0; i < nextHoraires.size(); i++) {
 				final Horaire horaire = nextHoraires.get(i);
 				content = TextUtils.concat(content,
-						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getHoraire())));
+						FormatUtils.formatTimeAmPm(context, timeFormat.format(horaire.getHoraire().toDate())));
 				if (i < nextHoraires.size() - 1) {
 					content = TextUtils.concat(content, " \u2022 ");
 				}
