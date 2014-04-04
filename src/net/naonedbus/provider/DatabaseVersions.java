@@ -16,9 +16,11 @@ public final class DatabaseVersions {
 	public static int BLUE_HAWAIIAN_MR1 = 16;
 	/** Version 3.2.4. */
 	public static int BLUE_HAWAIIAN_MR4 = 17;
-
+	/** Version 3.2.5. */
+	public static int BLUE_HAWAIIAN_MR5 = 18;
+	
 	/** Current version. */
-	public static int CURRENT = BLUE_HAWAIIAN_MR4;
+	public static int CURRENT = BLUE_HAWAIIAN_MR5;
 
 	private DatabaseVersions() {
 	}
