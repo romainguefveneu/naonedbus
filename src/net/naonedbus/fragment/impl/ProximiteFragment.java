@@ -41,6 +41,8 @@ import net.naonedbus.task.AddressResolverTask;
 import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
+import android.app.PendingIntent;
+import android.app.PendingIntent.CanceledException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,6 +64,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 public class ProximiteFragment extends CustomListFragment implements NaoLocationListener, AddressTaskListener {
 
@@ -79,6 +83,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 	private AddressResolverTask mAddressResolverTask;
 	private Location mLastLoadedLocation;
 	private String mLastAddress;
+	private boolean mPlayServiceSuccess;
 
 	private TextView headerTextView;
 
@@ -108,6 +113,14 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		if (mPlayServiceSuccess == false) {
+			tryToLoad();
+		}
+	}
+
+	@Override
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		if (DBG)
 			Log.d(LOG_TAG, "onCreateView");
@@ -122,6 +135,32 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		mLocationProvider.addListener(this);
+	}
+
+	private void tryToLoad() {
+		mPlayServiceSuccess = checkPlayServices();
+		if (mPlayServiceSuccess) {
+			showContent();
+		} else {
+			int errorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+
+			final String title = getString(R.string.msg_error_location_title);
+			final String summary = GooglePlayServicesUtil.b(getActivity(), errorCode, 0);
+			final String buttonTitle = GooglePlayServicesUtil.a(getActivity(), errorCode);
+			final PendingIntent intent = GooglePlayServicesUtil.getErrorPendingIntent(errorCode, getActivity(), 0);
+
+			showMessage(title, summary, R.drawable.ic_msg_google_play);
+			setMessageButton(buttonTitle, new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					try {
+						intent.send();
+					} catch (final CanceledException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 	}
 
 	@Override
@@ -296,27 +335,33 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 			Log.d(LOG_TAG, "onLocationDisabled");
 
 		headerTextView.setVisibility(View.GONE);
-		showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
-		setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-				getActivity().startActivity(intent);
-			}
-		});
+
+		if (mPlayServiceSuccess == true) {
+			showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
+			setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					getActivity().startActivity(intent);
+				}
+			});
+		}
 	}
 
 	@Override
 	public void onLocationTimeout() {
 		headerTextView.setVisibility(View.GONE);
-		showMessage(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.location);
-		setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-				getActivity().startActivity(intent);
-			}
-		});
+
+		if (mPlayServiceSuccess == true) {
+			showMessage(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.location);
+			setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
+				@Override
+				public void onClick(final View v) {
+					final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+					getActivity().startActivity(intent);
+				}
+			});
+		}
 	}
 
 	/**
@@ -359,6 +404,11 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 		} else {
 			headerTextView.setText(R.string.error_current_address);
 		}
+	}
+
+	private boolean checkPlayServices() {
+		final int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+		return checkGooglePlayServices == ConnectionResult.SUCCESS;
 	}
 
 }

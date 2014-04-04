@@ -132,6 +132,7 @@
 
     <!-- Donateurs -->
     <string-array name="donators">
+        <item>Fabrice Fontaine</item>
         <item>Arzhel</item>
         <item>Guillaume</item>
         <item>Stéphane Péchard</item>
