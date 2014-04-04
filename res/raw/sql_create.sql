@@ -152,7 +152,7 @@ SELECT
     g.nom AS nomGroupe,
     g._id AS idGroupe,
     g.ordre as ordreGroupe,
-   (SELECT (strftime('%s',horaire) - (strftime('%s','now','localtime') / 60 ) * 60 ) / 60 FROM horaires WHERE horaires.idArret = f._id AND datetime(horaire) >= datetime('now','localtime') LIMIT 1) as nextHoraire
+   (SELECT (strftime('%s',horaire) - (strftime('%s','now','localtime') / 60 ) * 60 ) / 60 FROM horaires WHERE horaires.idArret = f._id AND datetime(horaire) >= datetime((strftime('%s','now','localtime') / 60 ) * 60,'unixepoch') LIMIT 1) as nextHoraire
 FROM
     favoris f 
     LEFT JOIN arrets a ON f._id = a._id
