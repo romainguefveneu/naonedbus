@@ -11,7 +11,7 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.HoraireManager;
 
 import org.joda.time.DateMidnight;
-import org.joda.time.MutableDateTime;
+import org.joda.time.DateTime;
 
 import android.content.ContentResolver;
 import android.test.ActivityInstrumentationTestCase2;
@@ -61,7 +61,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		@Override
 		public void run() {
 			final HoraireManager horaireManager = HoraireManager.getInstance();
-			final MutableDateTime mutableDateTime = new MutableDateTime();
 
 			try {
 				for (int i = 0; i < 50; i++) {
@@ -73,11 +72,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 					assertTrue(horaires.size() > 0);
 
 					for (final Horaire horaire : horaires) {
-						mutableDateTime.setTime(horaire.getTimestamp());
+						DateMidnight day = horaire.getJour();
 
-						assertEquals(mutableDateTime.getDayOfMonth(), mDate.getDayOfMonth());
-						assertEquals(mutableDateTime.getMonthOfYear(), mDate.getMonthOfYear());
-						assertEquals(mutableDateTime.getYear(), mDate.getYear());
+						assertEquals(day.getDayOfMonth(), mDate.getDayOfMonth());
+						assertEquals(day.getMonthOfYear(), mDate.getMonthOfYear());
+						assertEquals(day.getYear(), mDate.getYear());
 					}
 				}
 			} catch (final IOException e) {

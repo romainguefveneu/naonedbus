@@ -329,8 +329,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 			Log.d(LOG_TAG, "getNextHoraires " + arret + " : " + date + "\t" + limit);
 
 		List<Horaire> schedules;
-		final long now = new DateTime().minusMinutes(minuteDelay).withSecondOfMinute(0).withMillisOfSecond(0)
-				.getMillis();
+		final DateTime now = new DateTime().minusMinutes(minuteDelay).withSecondOfMinute(0).withMillisOfSecond(0);
 		final List<Horaire> nextSchedules = new ArrayList<Horaire>();
 		int schedulesCount = 0; // Juste renvoyer le bon nombre d'horaires
 		int loopCount = 0; // Limiter le nombre d'itérations

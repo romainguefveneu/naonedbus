@@ -140,6 +140,11 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 
 	@Override
 	public void onDestroyView() {
+		removeMapFragment();
+		super.onDestroyView();
+	}
+
+	private void removeMapFragment() {
 		if (!mIsMapActivity) {
 			final Fragment fragment = (getFragmentManager().findFragmentById(R.id.map));
 			if (fragment != null) {
@@ -148,7 +153,6 @@ public class MapFragment extends SherlockFragment implements MapLoaderCallback, 
 				ft.commitAllowingStateLoss();
 			}
 		}
-		super.onDestroyView();
 	}
 
 	@Override

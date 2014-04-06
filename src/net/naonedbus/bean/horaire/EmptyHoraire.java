@@ -27,6 +27,7 @@ public class EmptyHoraire extends Horaire {
 	public EmptyHoraire(final int textId, final DateMidnight date) {
 		mTextId = textId;
 		setJour(date);
+		setHoraire(date.toDateTime());
 		setSection(date);
 	}
 

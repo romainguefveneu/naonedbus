@@ -18,8 +18,6 @@
  */
 package net.naonedbus.activity;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +39,6 @@ import net.naonedbus.fragment.header.ParkingsFragmentHeader;
 import net.naonedbus.fragment.header.SearchFragmentHeader;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
 import net.naonedbus.widget.item.impl.MainMenuItem;
-
-import org.apache.commons.io.FileUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -96,7 +91,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	/** Fragments tags. */
 	private String[] mFragmentsTags = new String[0];
 
-	private int mCurrentMenuItem;
+	private int mCurrentMenuItem = -1;
 	private PagerSlidingTabStrip mTabs;
 	private ViewPager mViewPager;
 	private TabsAdapter mSectionsPagerAdapter;
@@ -260,6 +255,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	}
 
 	protected void selectNavigationItem(final int position) {
+
 		selectNavigationItem(position, true);
 	}
 
@@ -267,16 +263,18 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		if (DBG)
 			Log.d(LOG_TAG, "selectItem " + position);
 
-		mCurrentMenuItem = position;
+		if (mCurrentMenuItem != position) {
+			mCurrentMenuItem = position;
 
-		final MainMenuItem item = mAdapter.getItem(position);
-		final FragmentHeader fragmentHeader = item.getFragmentHeader();
+			final MainMenuItem item = mAdapter.getItem(position);
+			final FragmentHeader fragmentHeader = item.getFragmentHeader();
 
-		mDrawerList.setItemChecked(position, true);
-		mAdapter.setCurrentItem(position);
+			mDrawerList.setItemChecked(position, true);
+			mAdapter.setCurrentItem(position);
 
-		if (setFragment) {
-			setFragment(fragmentHeader, item.getTitle());
+			if (setFragment) {
+				setFragment(fragmentHeader, item.getTitle());
+			}
 		}
 
 		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
