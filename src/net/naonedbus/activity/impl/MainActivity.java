@@ -18,9 +18,6 @@
  */
 package net.naonedbus.activity.impl;
 
-import java.io.File;
-import java.io.IOException;
-
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
@@ -33,9 +30,6 @@ import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
 import net.naonedbus.provider.impl.NaoLocationManager;
 import net.naonedbus.service.FavoriService;
-
-import org.apache.commons.io.FileUtils;
-
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,32 +39,14 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.bugsense.trace.BugSenseHandler;
 
 public class MainActivity extends MenuDrawerActivity {
-
-	private final NaoLocationManager mMyLocationProvider;
-
-	public MainActivity() {
-		mMyLocationProvider = NBApplication.getLocationProvider();
-	}
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// BugSenseHandler.initAndStartSession(this,
-		// getString(R.string.bugsense));
-
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				File database = getDatabasePath("data.db");
-				try {
-					FileUtils.copyFile(database, new File(getExternalCacheDir(), "naonedbus.db"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}).start();
+		BugSenseHandler.initAndStartSession(this, getString(R.string.bugsense));
 
 		handleSearchResult();
 		handleFavoriExport();
