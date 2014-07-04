@@ -189,6 +189,7 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 	public void onLoadFinished(final Loader<Cursor> loader, final Cursor cursor) {
 		mAdapter.changeCursor(cursor);
 		super.onLoadFinished(loader, cursor);
+		cancelLoading();
 	}
 
 	@Override

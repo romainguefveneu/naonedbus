@@ -107,7 +107,7 @@ interface CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type Tweet @tan_trafic.
+ * Ligne de commentaire de type Tweet @infotrafic_tan.
  */
 class TanTraficCommentaireAdapter implements CommentaireAdapter {
 
@@ -130,7 +130,7 @@ class TanTraficCommentaireAdapter implements CommentaireAdapter {
 }
 
 /**
- * Ligne de commentaire de type Tweet @tan_actus.
+ * Ligne de commentaire de type Tweet @reseau_tan.
  */
 class TanActusCommentaireAdapter implements CommentaireAdapter {
 

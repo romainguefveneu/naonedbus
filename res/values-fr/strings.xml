@@ -199,8 +199,8 @@
     <string name="source">Envoyé depuis %s</string>
     <string name="source_unknown">quelque chose, mais je sais pas trop quoi</string>
     <string name="source_naonedbus">naonedbus</string>
-    <string name="source_tan_trafic">\@tan_trafic sur Twitter\n(compte officiel de la SEMITAN)</string>
-    <string name="source_tan_actus">\@tan_actus sur Twitter\n(compte officiel de la SEMITAN)</string>
+    <string name="source_tan_trafic">\@infotrafic_tan sur Twitter\n(compte officiel de la SEMITAN)</string>
+    <string name="source_tan_actus">\@reseau_tan sur Twitter\n(compte officiel de la SEMITAN)</string>
     <string name="source_naonedbus_service">Discovery One</string>
     <string name="source_taninfos">\@TANinfos sur Twitter \n(compte non affilié à la SEMITAN)</string>
     <!-- Parkings -->

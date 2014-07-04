@@ -38,10 +38,6 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 	private static final String LOG_TAG = "FragmentsActivity";
 	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private static String BUNDLE_TABS_CURRENT = "tabsCurrent";
-	private static String BUNDLE_TABS_TITLES = "tabsTitles";
-	private static String BUNDLE_TABS_CLASSES = "tabsClasses";
-
 	/** Layout de l'activitée courante. */
 	private final int mLayoutId;
 
@@ -75,9 +71,6 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 		mTabs.setViewPager(mViewPager);
 	}
 
-	/**
-	 * Gérer les click sur les menus.
-	 */
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
@@ -87,35 +80,6 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	protected void onSaveInstanceState(final Bundle outState) {
-		outState.putInt(BUNDLE_TABS_CURRENT, mViewPager.getCurrentItem());
-		outState.putIntArray(BUNDLE_TABS_TITLES, mTitles);
-		outState.putStringArray(BUNDLE_TABS_CLASSES, mClasses);
-		super.onSaveInstanceState(outState);
-	}
-
-	@Override
-	protected void onRestoreInstanceState(final Bundle savedInstanceState) {
-		if (savedInstanceState.containsKey(BUNDLE_TABS_TITLES)) {
-			final int[] titles = savedInstanceState.getIntArray(BUNDLE_TABS_TITLES);
-			final String[] classes = savedInstanceState.getStringArray(BUNDLE_TABS_CLASSES);
-			final int selectedPosition = savedInstanceState.getInt(BUNDLE_TABS_CURRENT);
-
-			addFragments(titles, classes);
-			mViewPager.setCurrentItem(selectedPosition);
-		}
-		super.onRestoreInstanceState(savedInstanceState);
-	}
-
-	/**
-	 * Ajouter les informations de fragments.
-	 * 
-	 * @param titles
-	 *            Les titres (ressources).
-	 * @param classes
-	 *            Les classes des fragments.
-	 */
 	protected void addFragments(final int[] titles, final Class<?>[] classes) {
 		mClasses = new String[classes.length];
 		for (int i = 0; i < classes.length; i++) {
@@ -128,7 +92,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 		if (DBG)
 			Log.d(LOG_TAG, "addFragments " + titles.length);
 
-		// clearFragments();
+		clearFragments();
 
 		mClasses = classes;
 		mTitles = titles;
@@ -164,7 +128,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 				Log.d(LOG_TAG, "instantiateItem " + position);
 
 			final Fragment fragment = (Fragment) super.instantiateItem(container, position);
-			// fragment.setRetainInstance(true);
+			fragment.setRetainInstance(true);
 			mFragmentsTags[position] = fragment.getTag();
 			return fragment;
 		}
@@ -175,7 +139,7 @@ public abstract class FragmentsActivity extends SherlockFragmentActivity {
 				Log.d(LOG_TAG, "getItem " + position + " : " + mClasses[position]);
 
 			final Fragment fragment = Fragment.instantiate(FragmentsActivity.this, mClasses[position]);
-			// fragment.setRetainInstance(true);
+			fragment.setRetainInstance(true);
 			return fragment;
 		}
 

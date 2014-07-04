@@ -120,12 +120,10 @@
 
     <!-- Remerciements -->
     <string-array name="thanks">
-        <item>Netapsys</item>
         <item>Benoît Manteau</item>
         <item>Paul Alisir</item>
     </string-array>
     <string-array name="thanks_urls">
-        <item>http://www.netapsys.fr</item>
         <item></item>
         <item></item>
     </string-array>

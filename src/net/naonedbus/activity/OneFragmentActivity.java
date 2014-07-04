@@ -52,9 +52,6 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
-	/**
-	 * Show the menu when home icon is clicked.
-	 */
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
@@ -104,22 +101,10 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	/**
-	 * Ajouter les information de fragments.
-	 * 
-	 * @param clazz
-	 *            La classe du fragment.
-	 */
 	protected void addFragment(final Class<?> classe) {
 		addFragment(classe.getName());
 	}
 
-	/**
-	 * Ajouter les information de fragments.
-	 * 
-	 * @param classe
-	 *            La classe du fragment.
-	 */
 	protected void addFragment(final Class<?> classe, final Bundle bundle) {
 		addFragment(classe.getName(), bundle);
 	}

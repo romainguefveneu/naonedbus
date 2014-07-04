@@ -27,6 +27,6 @@ import net.naonedbus.security.NaonedbusClient;
 public class RestConfiguration {
 
 	public static final String ID_CLIENT = NaonedbusClient.NAONEDBUS.name();
-	public final static String PATH = "http://naonedbus.netapsys.fr/naonedbus-server/";
+	public final static String PATH = "http://92.222.21.236:8080/naonedbus-server/";
 
 }

@@ -255,7 +255,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	}
 
 	protected void selectNavigationItem(final int position) {
-
 		selectNavigationItem(position, true);
 	}
 
@@ -263,18 +262,16 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		if (DBG)
 			Log.d(LOG_TAG, "selectItem " + position);
 
-		if (mCurrentMenuItem != position) {
-			mCurrentMenuItem = position;
+		mCurrentMenuItem = position;
 
-			final MainMenuItem item = mAdapter.getItem(position);
-			final FragmentHeader fragmentHeader = item.getFragmentHeader();
+		final MainMenuItem item = mAdapter.getItem(position);
+		final FragmentHeader fragmentHeader = item.getFragmentHeader();
 
-			mDrawerList.setItemChecked(position, true);
-			mAdapter.setCurrentItem(position);
+		mDrawerList.setItemChecked(position, true);
+		mAdapter.setCurrentItem(position);
 
-			if (setFragment) {
-				setFragment(fragmentHeader, item.getTitle());
-			}
+		if (setFragment) {
+			setFragment(fragmentHeader, item.getTitle());
 		}
 
 		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
@@ -371,8 +368,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 				new BicloosFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking,
 				new ParkingsFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_equipements, R.drawable.ic_action_place,
-				new EquipementsFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_action_search,
 				new SearchFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_action_map, new MapFragmentHeader()));
