@@ -68,9 +68,6 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 		adapters.append(Equipement.Type.TYPE_ARRET.getId(), new ArretTypeAdapter(this));
 		adapters.append(Equipement.Type.TYPE_PARKING.getId(), new ParkingTypeAdapter(this));
 		adapters.append(Equipement.Type.TYPE_BICLOO.getId(), defaultTypeAdapter);
-		adapters.append(Equipement.Type.TYPE_COVOITURAGE.getId(), defaultTypeAdapter);
-		adapters.append(Equipement.Type.TYPE_LILA.getId(), defaultTypeAdapter);
-		adapters.append(Equipement.Type.TYPE_MARGUERITE.getId(), defaultTypeAdapter);
 	}
 
 	private void initUnschedulers() {

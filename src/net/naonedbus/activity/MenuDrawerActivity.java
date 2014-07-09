@@ -29,7 +29,6 @@ import net.naonedbus.activity.impl.DonateActivity;
 import net.naonedbus.activity.impl.OldSettingsActivity;
 import net.naonedbus.activity.impl.SettingsActivity;
 import net.naonedbus.fragment.header.BicloosFragmentHeader;
-import net.naonedbus.fragment.header.EquipementsFragmentHeader;
 import net.naonedbus.fragment.header.FragmentHeader;
 import net.naonedbus.fragment.header.InfoTraficFragmentHeader;
 import net.naonedbus.fragment.header.ItineraireFragmentHeader;

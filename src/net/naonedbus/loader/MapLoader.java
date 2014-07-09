@@ -35,9 +35,6 @@ public class MapLoader extends AsyncTask<Equipement.Type, ArrayList<InputPoint>,
 		mLoaders = new HashMap<Equipement.Type, MapLayerLoader>();
 		mLoaders.put(Type.TYPE_ARRET, new EquipementMapLoader(Type.TYPE_ARRET));
 		mLoaders.put(Type.TYPE_BICLOO, new BiclooMapLoader());
-		mLoaders.put(Type.TYPE_COVOITURAGE, new EquipementMapLoader(Type.TYPE_COVOITURAGE));
-		mLoaders.put(Type.TYPE_LILA, new EquipementMapLoader(Type.TYPE_LILA));
-		mLoaders.put(Type.TYPE_MARGUERITE, new EquipementMapLoader(Type.TYPE_MARGUERITE));
 		mLoaders.put(Type.TYPE_PARKING, new ParkingMapLoader());
 	}
 

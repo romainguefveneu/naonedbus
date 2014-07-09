@@ -45,22 +45,7 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 		 * Défini le type Bicloo.
 		 */
 		TYPE_BICLOO(2, R.string.map_calque_bicloo, R.drawable.map_layer_bicloo, R.color.map_pin_bicloo,
-				R.drawable.map_pin_bicloo),
-		/**
-		 * Défini le type Marguerite.
-		 */
-		TYPE_MARGUERITE(3, R.string.map_calque_marguerite, R.drawable.map_layer_marguerite, R.color.map_pin_marguerite,
-				R.drawable.map_pin_marguerite),
-		/**
-		 * Défini le type Covoiturage.
-		 */
-		TYPE_COVOITURAGE(4, R.string.map_calque_covoiturage, R.drawable.map_layer_covoiturage,
-				R.color.map_pin_covoiturage, R.drawable.map_pin_covoiturage),
-		/**
-		 * Défini le type Lila.
-		 */
-		TYPE_LILA(5, R.string.map_calque_lila, R.drawable.map_layer_arret, R.color.map_pin_lila,
-				R.drawable.map_pin_lila);
+				R.drawable.map_pin_bicloo);
 
 		private final int id;
 		private final int titleRes;

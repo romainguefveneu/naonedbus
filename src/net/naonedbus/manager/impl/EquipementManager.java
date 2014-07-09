@@ -424,46 +424,6 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 		return getEquipementCursorByType(contentResolver, Type.TYPE_BICLOO, sortOrder);
 	}
 
-	/**
-	 * Récupérer les stations Marguerite.
-	 * 
-	 * @param contentResolver
-	 * @return La liste des stations Marguerite
-	 */
-	public List<Equipement> getMarguerites(final ContentResolver contentResolver) {
-		return getEquipementsByType(contentResolver, Type.TYPE_MARGUERITE);
-	}
-
-	/**
-	 * Récupérer les stations Marguerite.
-	 * 
-	 * @param contentResolver
-	 * @return Le curseur stations Marguerite
-	 */
-	public Cursor getMargueritesCursor(final ContentResolver contentResolver, final String sortOrder) {
-		return getEquipementCursorByType(contentResolver, Type.TYPE_MARGUERITE, sortOrder);
-	}
-
-	/**
-	 * Récupérer les stations de covoiturage.
-	 * 
-	 * @param contentResolver
-	 * @return La liste des stations de covoiturage
-	 */
-	public List<Equipement> getCovoiturages(final ContentResolver contentResolver) {
-		return getEquipementsByType(contentResolver, Type.TYPE_COVOITURAGE);
-	}
-
-	/**
-	 * Récupérer les stations de covoiturage.
-	 * 
-	 * @param contentResolver
-	 * @return Le cursuer des stations de covoiturage
-	 */
-	public Cursor getCovoituresCursor(final ContentResolver contentResolver, final String sortOrder) {
-		return getEquipementCursorByType(contentResolver, Type.TYPE_COVOITURAGE, sortOrder);
-	}
-
 	@Override
 	public void onIndexCursor(final Cursor c) {
 		mColId = c.getColumnIndex(EquipementTable._ID);
