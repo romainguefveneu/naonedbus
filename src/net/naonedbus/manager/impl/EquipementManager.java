@@ -77,6 +77,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	private int mColId;
 	private int mColIdType;
 	private int mColIdSousType;
+	private int mColCode;
 	private int mColNom;
 	private int mColNormalizedNom;
 	private int mColAdresse;
@@ -429,6 +430,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 		mColId = c.getColumnIndex(EquipementTable._ID);
 		mColIdType = c.getColumnIndex(EquipementTable.ID_TYPE);
 		mColIdSousType = c.getColumnIndex(EquipementTable.ID_SOUS_TYPE);
+		mColCode = c.getColumnIndex(EquipementTable.CODE);
 		mColNom = c.getColumnIndex(EquipementTable.NOM);
 		mColNormalizedNom = c.getColumnIndex(EquipementTable.NORMALIZED_NOM);
 		mColAdresse = c.getColumnIndex(EquipementTable.ADRESSE);
@@ -445,6 +447,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 		item.setId(c.getInt(mColId));
 		item.setType(c.getInt(mColIdType));
 		item.setSousType(c.getInt(mColIdSousType));
+		item.setCode(c.getString(mColCode));
 		item.setNom(c.getString(mColNom));
 		item.setNormalizedNom(c.getString(mColNormalizedNom));
 		item.setAdresse(c.getString(mColAdresse));

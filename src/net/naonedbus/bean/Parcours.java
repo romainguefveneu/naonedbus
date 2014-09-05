@@ -23,6 +23,8 @@ public class Parcours {
 	public int idLigne;
 	public int idSens;
 	public String nomSens;
+	public String codeArret;
+	public String codeSens;
 	public String codeLigne;
 	public String lettre;
 	public int couleurBack;

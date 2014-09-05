@@ -22,6 +22,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Parcours;
+import net.naonedbus.bean.horaire.Attente;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
@@ -36,10 +37,12 @@ import android.widget.TextView;
 public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 
 	private final Typeface mTypeface;
+	private List<Attente> mAttentes;
 
-	public ParcoursAdapter(final Context context, final List<Parcours> objects) {
+	public ParcoursAdapter(final Context context, final List<Parcours> objects, List<Attente> attentes) {
 		super(context, 0, objects);
 		mTypeface = FontUtils.getRobotoBoldCondensed(context);
+		mAttentes = attentes;
 	}
 
 	@Override
@@ -59,6 +62,14 @@ public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(parcours.couleurBack));
 		holder.itemSymbole.setTextColor(parcours.couleurFront);
 		holder.itemTitle.setText(FormatUtils.formatSens(parcours.nomSens));
+
+		String temps = getAttenteTemps(parcours);
+		if (temps != null) {
+			holder.itemTime.setText(temps);
+			holder.itemTime.setVisibility(View.VISIBLE);
+		} else {
+			holder.itemTime.setVisibility(View.GONE);
+		}
 	}
 
 	protected void bindViewHolder(final View view) {
@@ -66,12 +77,29 @@ public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 		holder = new ViewHolder();
 		holder.itemSymbole = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
+		holder.itemTime = (TextView) view.findViewById(R.id.itemTime);
+
 		holder.itemSymbole.setTypeface(mTypeface);
 		view.setTag(holder);
+	}
+
+	private String getAttenteTemps(Parcours parcours) {
+		if (mAttentes == null)
+			return null;
+
+		for (Attente attente : mAttentes) {
+			if (attente.getCodeLigne().equals(parcours.codeLigne)
+					&& attente.getCodeSens().equals(attente.getCodeSens())
+					&& attente.getCodeArret().equals(parcours.codeArret))
+				return attente.getTemps();
+		}
+
+		return null;
 	}
 
 	protected static class ViewHolder {
 		TextView itemSymbole;
 		TextView itemTitle;
+		TextView itemTime;
 	}
 }

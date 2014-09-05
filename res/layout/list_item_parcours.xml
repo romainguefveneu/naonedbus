@@ -19,17 +19,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultLine.Content" >
 
     <TextView
         android:id="@id/itemSymbole"
-        style="@style/ItemSymbole" />
+        style="@style/ItemSymbole"
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@id/itemTitle"
         style="@style/ItemPrimaryText.SingleLine"
         android:layout_width="fill_parent"
-        android:layout_marginLeft="10dip" />
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dip"
+        android:layout_toLeftOf="@id/itemTime"
+        android:layout_toRightOf="@id/itemSymbole" />
 
-</LinearLayout>
+    <TextView
+        android:id="@id/itemTime"
+        style="@style/ItemTime"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible" />
+
+</RelativeLayout>

@@ -47,7 +47,11 @@ public class ParcoursProvider extends ReadOnlyContentProvider {
 
 	private static final String SQL_SELECT = "SELECT a."
 			+ ArretTable._ID
-			+ ", l."
+			+ ", a."
+			+ ArretTable.CODE
+			+ " AS codeArret, a."
+			+ ArretTable.CODE_SENS
+			+ " AS codeSens, l."
 			+ LigneTable.CODE
 			+ " AS codeLigne, l."
 			+ LigneTable._ID
@@ -73,6 +77,8 @@ public class ParcoursProvider extends ReadOnlyContentProvider {
 
 	public class ParcoursTable implements BaseColumns {
 		public static final String CODE_LIGNE = "codeLigne";
+		public static final String CODE_SENS = "codeSens";
+		public static final String CODE_ARRET = "codeArret";
 		public static final String LETTRE = "lettre";
 		public static final String COULEUR_BACK = "couleurBack";
 		public static final String COULEUR_FRONT = "couleurFront";

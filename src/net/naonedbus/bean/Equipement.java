@@ -95,6 +95,7 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 	private Integer mId;
 	private Type mType;
 	private Integer mSousType;
+	private String mCode;
 	private String mNom;
 	private String mNormalizedNom;
 	private String mAdresse;
@@ -133,6 +134,14 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 
 	public void setType(final int idType) {
 		mType = Type.getTypeById(idType);
+	}
+
+	public String getCode() {
+		return mCode;
+	}
+
+	public void setCode(String code) {
+		mCode = code;
 	}
 
 	public String getNom() {

@@ -18,7 +18,11 @@
  */
 package net.naonedbus.fragment.impl;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
+
+import org.json.JSONException;
 
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.ArretDetailActivity;
@@ -27,10 +31,12 @@ import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.Parcours;
 import net.naonedbus.bean.async.AsyncResult;
+import net.naonedbus.bean.horaire.Attente;
 import net.naonedbus.fragment.CustomListFragment;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.EquipementManager;
 import net.naonedbus.manager.impl.ParcoursManager;
+import net.naonedbus.rest.controller.impl.AttenteController;
 import net.naonedbus.widget.adapter.impl.ParcoursAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -85,10 +91,22 @@ public class ParcoursFragment extends CustomListFragment {
 
 	@Override
 	protected AsyncResult<ListAdapter> loadContent(final Context context, final Bundle bundle) {
+		final AttenteController attenteController = new AttenteController();
+		List<Attente> attentes = null;
+		try {
+			attentes = attenteController.getAll(mStation);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 		final ParcoursManager parcoursManager = ParcoursManager.getInstance();
 		final List<Parcours> parcoursList = parcoursManager.getParcoursList(context.getContentResolver(),
 				mStation.getNormalizedNom());
-		final ListAdapter adapter = new ParcoursAdapter(context, parcoursList);
+		final ListAdapter adapter = new ParcoursAdapter(context, parcoursList, attentes);
 		final AsyncResult<ListAdapter> result = new AsyncResult<ListAdapter>();
 		result.setResult(adapter);
 		return result;
