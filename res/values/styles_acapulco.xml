@@ -45,6 +45,7 @@
     <style name="ActionBar.Transparent.Acapulco" parent="@style/Widget.Sherlock.ActionBar">
         <item name="background">@drawable/ab_transparent_acapulco</item>
         <item name="progressBarStyle">@style/ProgressBar.Acapulco</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Acapulco</item>
     </style>
 
     <style name="PopupMenu.Acapulco" parent="@style/Widget.Sherlock.ListPopupWindow">
@@ -67,6 +68,10 @@
 
     <style name="ProgressBar.Acapulco" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_acapulco</item>
+        <item name="android:minWidth">28dp</item>
+        <item name="android:maxWidth">28dp</item>
+        <item name="android:minHeight">28dp</item>
+        <item name="android:maxHeight">28dp</item>
     </style>
 
     <style name="ActionButton.CloseMode.Acapulco" parent="@style/Widget.Sherlock.ActionButton.CloseMode">

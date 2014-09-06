@@ -48,11 +48,21 @@
         <item name="android:progressBarStyle">@style/ProgressBar.Acapulco</item>
         <item name="android:icon">@drawable/ic_icon_actionbar</item>
         <item name="icon">@drawable/ic_icon_actionbar</item>
+        <item name="android:indeterminateProgressStyle">@style/ActionBarIndeterminateProgressStyle.Acapulco</item>
     </style>
 
     <style name="ActionBar.Transparent.Acapulco" parent="@style/Widget.Sherlock.ActionBar">
         <item name="android:background">@drawable/ab_transparent_acapulco</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Acapulco</item>
+    </style>
+
+    <style name="ActionBarIndeterminateProgressStyle.Acapulco" parent="@style/Widget.Sherlock.ProgressBar">
+        <item name="android:minHeight">@dimen/indeterminate_progress_size</item>
+        <item name="android:layout_height">@dimen/indeterminate_progress_size</item>
+        <item name="android:maxHeight">@dimen/indeterminate_progress_size</item>
+        <item name="android:minWidth">@dimen/indeterminate_progress_size_width</item>
+        <item name="android:layout_width">@dimen/indeterminate_progress_size</item>
+        <item name="android:maxWidth">@dimen/indeterminate_progress_size_width</item>
     </style>
 
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->

@@ -447,7 +447,8 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 		item.setId(c.getInt(mColId));
 		item.setType(c.getInt(mColIdType));
 		item.setSousType(c.getInt(mColIdSousType));
-		item.setCode(c.getString(mColCode));
+		if (mColCode > -1)
+			item.setCode(c.getString(mColCode));
 		item.setNom(c.getString(mColNom));
 		item.setNormalizedNom(c.getString(mColNormalizedNom));
 		item.setAdresse(c.getString(mColAdresse));

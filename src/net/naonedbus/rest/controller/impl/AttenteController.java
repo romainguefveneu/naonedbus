@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.horaire.Attente;
 import net.naonedbus.rest.UrlBuilder;
 import net.naonedbus.rest.controller.RestController;
@@ -23,9 +22,9 @@ public class AttenteController extends RestController<Attente> {
 
 	private static final String PATH = "https://open.tan.fr/ewp/tempsattente.json/";
 
-	public List<Attente> getAll(final Equipement equipement) throws MalformedURLException, IOException, JSONException {
+	public List<Attente> getAll(final String codeEquipement) throws MalformedURLException, IOException, JSONException {
 		final UrlBuilder url = new UrlBuilder(PATH);
-		url.addSegment(equipement.getCode());
+		url.addSegment(codeEquipement);
 
 		return parseJson(url.getUrl());
 	}

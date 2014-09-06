@@ -25,6 +25,8 @@
     <dimen name="widget_limit">100dp</dimen>
     <dimen name="codeitem_margin">1dip</dimen>
     <dimen name="codeitem_width">35dip</dimen>
+    <dimen name="indeterminate_progress_size">32dp</dimen>
+    <dimen name="indeterminate_progress_size_width">42dp</dimen>
     <!-- Activity Header -->
     <dimen name="headeractivity_height">60dp</dimen>
     <dimen name="bigcode_text_size">40sp</dimen>

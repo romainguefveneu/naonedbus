@@ -46,6 +46,17 @@
 
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="icon">@drawable/ic_icon_actionbar</item>
+        <item name="indeterminateProgressStyle">@style/ActionBarIndeterminateProgressStyle.Acapulco</item>
+    </style>
+
+    <style name="ActionBarIndeterminateProgressStyle.Acapulco" parent="@style/Widget.Sherlock.ProgressBar">
+        <item name="android:minHeight">@dimen/indeterminate_progress_size</item>
+        <item name="android:layout_height">@dimen/indeterminate_progress_size</item>
+        <item name="android:maxHeight">@dimen/indeterminate_progress_size</item>
+        <item name="android:minWidth">@dimen/indeterminate_progress_size</item>
+        <item name="android:layout_width">@dimen/indeterminate_progress_size</item>
+        <item name="android:layout_marginRight">4dip</item>
+        <item name="android:maxWidth">@dimen/indeterminate_progress_size</item>
     </style>
 
     <style name="Theme.WidgetDialog" parent="@android:style/Theme.Dialog" />

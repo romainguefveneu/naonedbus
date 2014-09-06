@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 
@@ -48,8 +49,10 @@ public abstract class OneFragmentActivity extends SherlockFragmentActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(layoutId);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		setSupportProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override

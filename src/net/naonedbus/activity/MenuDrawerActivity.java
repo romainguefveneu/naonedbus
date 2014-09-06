@@ -64,6 +64,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 
 @SuppressLint("NewApi")
@@ -106,7 +107,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		
 		setContentView(R.layout.activity_drawer_base);
 
 		final ActionBar actionBar = getSupportActionBar();
