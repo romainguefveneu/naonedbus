@@ -164,11 +164,17 @@ public class Arret implements Parcelable {
 		mCodeArret = in.readString();
 		mCodeEquipement = in.readString();
 		mNormalizedNom = in.readString();
-		mLatitude = in.readFloat();
-		mLongitude = in.readFloat();
 		mIdStation = in.readInt();
 		mOrdre = in.readInt();
 		mNomArret = in.readString();
+		if (in.dataSize() > in.dataPosition())
+			mLatitude = in.readFloat();
+		else
+			mLatitude = null;
+		if (in.dataSize() > in.dataPosition())
+			mLongitude = in.readFloat();
+		else
+			mLongitude = null;
 	}
 
 	@Override
@@ -255,11 +261,13 @@ public class Arret implements Parcelable {
 		dest.writeString(mCodeArret);
 		dest.writeString(mCodeEquipement);
 		dest.writeString(mNormalizedNom);
-		dest.writeFloat(mLatitude);
-		dest.writeFloat(mLongitude);
 		dest.writeInt(mIdStation);
 		dest.writeInt(mOrdre);
 		dest.writeString(mNomArret);
+		if (mLatitude != null)
+			dest.writeFloat(mLatitude);
+		if (mLongitude != null)
+			dest.writeFloat(mLongitude);
 	}
 
 	public static final Parcelable.Creator<Arret> CREATOR = new Parcelable.Creator<Arret>() {
