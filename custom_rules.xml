@@ -12,6 +12,7 @@
 		    <filter token="version.build" value="${version.build}"/>
 		    <filter token="version.tag" value="${version.tag}"/>
 		    <filter token="maps.key" value="${maps.key}"/>
+		    <filter token="places.key" value="${places.key}"/>
 		    <filter token="bugsense.key" value="${bugsense.key}"/>
 		    <filter token="privatekey.mod" value="${privatekey.mod}"/>
 		    <filter token="privatekey.exp" value="${privatekey.exp}"/>

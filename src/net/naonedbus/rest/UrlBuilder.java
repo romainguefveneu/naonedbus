@@ -40,9 +40,6 @@ public class UrlBuilder {
 		for (final String string : params) {
 			stringBuilder.append(string);
 		}
-		if (!stringBuilder.toString().endsWith("/")) {
-			stringBuilder.append("/");
-		}
 	}
 
 	/**

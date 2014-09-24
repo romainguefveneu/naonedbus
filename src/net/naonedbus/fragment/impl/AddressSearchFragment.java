@@ -25,9 +25,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.AddressResult;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.fragment.AbstractListFragment;
-import net.naonedbus.loader.AddressLoader;
-import net.naonedbus.task.AddressResolverTask;
-import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
+import net.naonedbus.loader.PlacesLoader;
 import net.naonedbus.widget.ModalSearchView;
 import net.naonedbus.widget.ModalSearchView.OnQueryTextListener;
 import net.naonedbus.widget.adapter.impl.AddressResultArrayAdapter;
@@ -93,8 +91,7 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 
 		setListAdapter(mAdapter);
 
-		final Bundle bundle = new Bundle();
-		bundle.putBoolean(AddressLoader.PARAM_LOAD_ADDRESS, true);
+		Bundle bundle = PlacesLoader.create(mCurrentFilter, true);
 		getLoaderManager().initLoader(LOADER_EQUIPEMENTS, bundle, this);
 	}
 
@@ -124,7 +121,7 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 
 	@Override
 	public Loader<AsyncResult<List<AddressResult>>> onCreateLoader(final int loaderId, final Bundle bundle) {
-		return new AddressLoader(getActivity(), bundle);
+		return new PlacesLoader(getActivity(), bundle);
 	}
 
 	@Override
@@ -144,9 +141,7 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		getActivity().setProgressBarIndeterminateVisibility(false);
 
 		if (loader.getId() == LOADER_EQUIPEMENTS) {
-			final Bundle bundle = new Bundle();
-			bundle.putBoolean(AddressLoader.PARAM_LOAD_ADDRESS, true);
-			bundle.putString(AddressLoader.PARAM_FILTER, mCurrentFilter);
+			Bundle bundle = PlacesLoader.create(mCurrentFilter, true);
 			getLoaderManager().restartLoader(LOADER_FULL, bundle, this);
 		} else {
 			mProgressBar.setVisibility(View.GONE);
@@ -163,8 +158,7 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 	public void onQueryTextChange(final String newText) {
 		mCurrentFilter = newText;
 
-		final Bundle bundle = new Bundle();
-		bundle.putString(AddressLoader.PARAM_FILTER, newText);
+		Bundle bundle = PlacesLoader.create(mCurrentFilter, false);
 		getLoaderManager().restartLoader(LOADER_EQUIPEMENTS, bundle, this);
 
 		mProgressBar.setVisibility(View.VISIBLE);

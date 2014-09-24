@@ -1,9 +1,11 @@
 package net.naonedbus.loader;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.BuildConfig;
 import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.bean.AddressResult;
@@ -11,54 +13,67 @@ import net.naonedbus.bean.Equipement;
 import net.naonedbus.bean.Equipement.Type;
 import net.naonedbus.bean.async.AsyncResult;
 import net.naonedbus.manager.impl.EquipementManager;
+import net.naonedbus.rest.controller.impl.PlacesController;
 import net.naonedbus.utils.FormatUtils;
+
+import org.apache.http.HttpException;
+import org.json.JSONException;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.text.TextUtils;
+import android.util.Log;
 
-public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResult>>> {
+public class PlacesLoader extends AsyncTaskLoader<AsyncResult<List<AddressResult>>> {
 
-	public final static String PARAM_FILTER = "filter";
-	public final static String PARAM_LOAD_ADDRESS = "loadAddress";
+	private static final String TAG = "PlacesLoader";
+	private static final boolean DBG = BuildConfig.DEBUG;
 
-	private final static double LOWER_LEFT_LATITUDE = 47.081d;
-	private final static double LOWER_LEFT_LONGITUDE = -1.843d;
-	private final static double UPPER_RIGHT_LATITUDE = 47.346d;
-	private final static double UPPER_RIGHT_LONGITUDE = -1.214d;
+	private static final String KEYWORD = "keyword";
+	private static final String LOAD_ADDRESS = "loadAddress";
 
-	private final Geocoder mGeocoder;
+	public static final Bundle create(final String keyword, boolean loadAddress) {
+		final Bundle bundle = new Bundle();
+		bundle.putString(KEYWORD, keyword);
+		bundle.putBoolean(LOAD_ADDRESS, loadAddress);
+
+		return bundle;
+	}
+
 	private final EquipementManager mEquipementManager;
-	private final Bundle mBundle;
+	private final String mKeyword;
+	private final boolean mLoadAddress;
+
 	private AsyncResult<List<AddressResult>> mResult;
 
-	public AddressLoader(final Context context, final Bundle bundle) {
+	public PlacesLoader(final Context context, final Bundle bundle) {
 		super(context);
-		mBundle = bundle;
-		mGeocoder = new Geocoder(context);
+
+		mKeyword = bundle.getString(KEYWORD);
+		mLoadAddress = bundle.getBoolean(LOAD_ADDRESS);
 		mEquipementManager = EquipementManager.getInstance();
 	}
 
 	@Override
 	public AsyncResult<List<AddressResult>> loadInBackground() {
-
-		final String filter = mBundle == null ? null : mBundle.getString(PARAM_FILTER);
-		final boolean loadAddress = mBundle == null ? false : mBundle.getBoolean(PARAM_LOAD_ADDRESS, false);
+		if (DBG)
+			Log.d(TAG, "loadInBackground " + mKeyword);
 
 		final AsyncResult<List<AddressResult>> result = new AsyncResult<List<AddressResult>>();
 		final List<AddressResult> addressResults = new ArrayList<AddressResult>();
 
 		addCurrentLocation(addressResults);
 
-		if (!TextUtils.isEmpty(filter)) {
-			if (loadAddress) {
-				addAddresses(filter, addressResults);
+		if (!TextUtils.isEmpty(mKeyword)) {
+			if (mLoadAddress) {
+				addAddresses(mKeyword, addressResults);
 			}
-			addEquipements(filter, addressResults);
+			addEquipements(mKeyword, addressResults);
+
 		}
 
 		result.setResult(addressResults);
@@ -83,28 +98,18 @@ public class AddressLoader extends AsyncTaskLoader<AsyncResult<List<AddressResul
 		}
 	}
 
-	private void addAddresses(final String filter, final List<AddressResult> result) {
+	private void addAddresses(String filter, List<AddressResult> result) {
 		try {
-			final List<Address> addresses = mGeocoder.getFromLocationName(filter, 5, LOWER_LEFT_LATITUDE,
-					LOWER_LEFT_LONGITUDE, UPPER_RIGHT_LATITUDE, UPPER_RIGHT_LONGITUDE);
-
-			for (final Address address : addresses) {
-				final String[] title = FormatUtils.formatAddressTwoLine(address);
-				final AddressResult addressResult = new AddressResult(title[0], title[1], null,
-						R.drawable.ic_action_location_selector, Color.TRANSPARENT, address.getLatitude(),
-						address.getLongitude());
-
-				String addressString = title[0];
-				if (!TextUtils.isEmpty(title[1])) {
-					addressString += ", " + title[1];
-				}
-
-				addressResult.setAddress(addressString);
-				addressResult.setSection(0);
-				result.add(addressResult);
-			}
-
+			final PlacesController placesController = new PlacesController();
+			result.addAll(placesController.getPlaces(getContext().getResources(), mKeyword));
+		} catch (final MalformedURLException e) {
+			e.printStackTrace();
 		} catch (final IOException e) {
+			e.printStackTrace();
+		} catch (final JSONException e) {
+			e.printStackTrace();
+		} catch (final HttpException e) {
+			e.printStackTrace();
 		}
 	}
 
