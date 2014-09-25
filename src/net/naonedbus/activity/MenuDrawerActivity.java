@@ -107,7 +107,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_drawer_base);
 
 		final ActionBar actionBar = getSupportActionBar();
@@ -161,7 +161,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 			if (singleFragmentMode) {
 				mFragmentsTags = fragmentsTags;
 			}
-			mCurrentMenuItem = savedInstanceState.getInt(BUNDLE_MENU_POSITION);
+			mCurrentMenuItem = Math.max(0, savedInstanceState.getInt(BUNDLE_MENU_POSITION));
 			selectNavigationItem(mCurrentMenuItem, !singleFragmentMode);
 		}
 	}

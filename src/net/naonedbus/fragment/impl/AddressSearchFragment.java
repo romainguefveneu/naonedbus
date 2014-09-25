@@ -33,8 +33,10 @@ import net.naonedbus.widget.indexer.impl.AddressResultArrayIndexer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ListView;
@@ -51,12 +53,25 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 	private static final int LOADER_EQUIPEMENTS = 0;
 	private static final int LOADER_FULL = 1;
 
-	private AddressResultArrayAdapter mAdapter;
+	private static final long TRIGGER_DELAY = 300L;
+
 	private final ArrayList<AddressResult> mResults = new ArrayList<AddressResult>();
+	private AddressResultArrayAdapter mAdapter;
 	private ModalSearchView mModalSearchView;
 
 	private ProgressBar mProgressBar;
 	private String mCurrentFilter;
+
+	private final Handler mHandler = new Handler();
+	private final Runnable mTrigger = new Runnable() {
+		@Override
+		public void run() {
+			if (TextUtils.isEmpty(mCurrentFilter) == false) {
+				Bundle bundle = PlacesLoader.create(mCurrentFilter, false);
+				getLoaderManager().restartLoader(LOADER_EQUIPEMENTS, bundle, AddressSearchFragment.this);
+			}
+		}
+	};
 
 	public AddressSearchFragment() {
 		super(R.layout.fragment_address_search);
@@ -92,7 +107,7 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 		setListAdapter(mAdapter);
 
 		Bundle bundle = PlacesLoader.create(mCurrentFilter, true);
-		getLoaderManager().initLoader(LOADER_EQUIPEMENTS, bundle, this);
+		getLoaderManager().initLoader(LOADER_FULL, bundle, this);
 	}
 
 	@Override
@@ -158,13 +173,16 @@ public class AddressSearchFragment extends AbstractListFragment implements OnQue
 	public void onQueryTextChange(final String newText) {
 		mCurrentFilter = newText;
 
-		Bundle bundle = PlacesLoader.create(mCurrentFilter, false);
-		getLoaderManager().restartLoader(LOADER_EQUIPEMENTS, bundle, this);
+		mHandler.removeCallbacks(mTrigger);
 
-		mProgressBar.setVisibility(View.VISIBLE);
+		if (TextUtils.isEmpty(mCurrentFilter) == false) {
+			mHandler.postDelayed(mTrigger, TRIGGER_DELAY);
 
-		if (mAdapter.getCount() == 0)
-			showLoader();
+			mProgressBar.setVisibility(View.VISIBLE);
+
+			if (mAdapter.getCount() == 0)
+				showLoader();
+		}
 	}
 
 }
