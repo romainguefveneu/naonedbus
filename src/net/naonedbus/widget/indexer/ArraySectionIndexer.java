@@ -73,15 +73,15 @@ public abstract class ArraySectionIndexer<T extends SectionItem> implements Sect
 			}
 		}
 
-		this.mSections = new String[sectionsText.size()];
-		sectionsText.toArray(this.mSections);
+		mSections = new String[sectionsText.size()];
+		sectionsText.toArray(mSections);
 
 		mPositions = new int[sectionsCount.size()];
 		int position = 0;
 		for (int i = 0; i < sectionsCount.size(); i++) {
-			if (mSections[i] == null) {
-				mSections[i] = " ";
-			}
+//			if (mSections[i] == null) {
+//				mSections[i] = " ";
+//			}
 
 			mPositions[i] = position;
 			position += sectionsCount.get(i);

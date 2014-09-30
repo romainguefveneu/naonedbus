@@ -84,8 +84,7 @@ public abstract class RestController<T> {
 		try {
 			result = parseJsonObject(new JSONObject(source));
 		} catch (final JSONException e) {
-			if (DBG)
-				Log.e(getClass().getSimpleName(), e.getMessage());
+			Log.e(getClass().getSimpleName(), e.getMessage());
 		}
 
 		return result;

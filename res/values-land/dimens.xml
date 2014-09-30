@@ -17,7 +17,7 @@
 <resources>
 
     <!-- Activity Header -->
-    <dimen name="headeractivity_height">48dp</dimen>
+    <dimen name="headeractivity_height">48sp</dimen>
     <dimen name="bigcode_text_size">35sp</dimen>
     <dimen name="bigtitle_text_size">24sp</dimen>
     <dimen name="bigsens_text_size">12sp</dimen>

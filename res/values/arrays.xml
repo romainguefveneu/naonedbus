@@ -60,6 +60,7 @@
         <item>@string/map_calque_marguerite</item>
         <item>@string/map_calque_covoiturage</item>
         <item>@string/map_calque_lila</item>
+        <item>@string/itineraire_current_location</item>
     </string-array>
 
     <!--

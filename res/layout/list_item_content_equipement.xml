@@ -45,8 +45,8 @@
         <LinearLayout
             android:id="@id/itemLignes"
             android:layout_width="fill_parent"
-            android:layout_height="20dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
             android:clipChildren="true"
             android:gravity="left|center_vertical"
             android:orientation="horizontal"

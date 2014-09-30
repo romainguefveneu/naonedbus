@@ -69,11 +69,10 @@ public class PlacesLoader extends AsyncTaskLoader<AsyncResult<List<AddressResult
 		addCurrentLocation(addressResults);
 
 		if (!TextUtils.isEmpty(mKeyword)) {
+			addEquipements(mKeyword, addressResults);
 			if (mLoadAddress) {
 				addAddresses(mKeyword, addressResults);
 			}
-			addEquipements(mKeyword, addressResults);
-
 		}
 
 		result.setResult(addressResults);
@@ -92,7 +91,7 @@ public class PlacesLoader extends AsyncTaskLoader<AsyncResult<List<AddressResult
 			final AddressResult addressResult = new AddressResult(title, null, null, icon, Color.TRANSPARENT,
 					currentLocation.getLatitude(), currentLocation.getLongitude());
 			addressResult.setCurrentLocation(true);
-			addressResult.setSection(0);
+			addressResult.setSection(7);
 
 			result.add(addressResult);
 		}
@@ -101,7 +100,10 @@ public class PlacesLoader extends AsyncTaskLoader<AsyncResult<List<AddressResult
 	private void addAddresses(String filter, List<AddressResult> result) {
 		try {
 			final PlacesController placesController = new PlacesController();
-			result.addAll(placesController.getPlaces(getContext().getResources(), mKeyword));
+			List<AddressResult> addresses = placesController.getPlaces(getContext().getResources(), mKeyword);
+			if (addresses != null) {
+				result.addAll(addresses);
+			}
 		} catch (final MalformedURLException e) {
 			e.printStackTrace();
 		} catch (final IOException e) {

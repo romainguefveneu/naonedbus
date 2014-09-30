@@ -19,7 +19,7 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultLine.Content"
-    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
 
     <TextView
@@ -28,19 +28,16 @@
         android:layout_marginRight="10dp" />
 
     <TextView
-        android:id="@id/ligneTo"
+        android:id="@id/ligneFrom"
         style="@style/ItemPrimaryText.SingleLine"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@id/itemSymbole" />
 
     <TextView
-        android:id="@id/ligneFrom"
+        android:id="@id/ligneTo"
         style="@style/ItemPrimaryText.SingleLine"
-        android:layout_height="26dip"
-        android:layout_above="@id/ligneTo"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ligneFrom"
         android:layout_toRightOf="@id/itemSymbole" />
 
 </RelativeLayout>

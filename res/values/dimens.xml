@@ -28,7 +28,7 @@
     <dimen name="indeterminate_progress_size">32dp</dimen>
     <dimen name="indeterminate_progress_size_width">42dp</dimen>
     <!-- Activity Header -->
-    <dimen name="headeractivity_height">60dp</dimen>
+    <dimen name="headeractivity_height">60sp</dimen>
     <dimen name="bigcode_text_size">40sp</dimen>
     <dimen name="bigtitle_text_size">24sp</dimen>
     <dimen name="bigtitle_text_size_small">24sp</dimen>
