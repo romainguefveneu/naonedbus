@@ -20,60 +20,52 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine"
-    android:background="@drawable/item_block_background"
-    android:orientation="vertical" >
+    style="@style/DefaultLine.Content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="16dip"
+    android:paddingTop="16dip" >
 
-    <LinearLayout
-        style="@style/DefaultLine.Content.Space"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent" >
-
-        <ImageView
-            android:id="@id/itemIcon"
-            android:layout_width="40dip"
-            android:layout_height="40dip"
-            android:scaleType="fitCenter"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@id/itemSymbole"
-            style="@style/ItemSymbole"
-            android:layout_gravity="center|top"
-            android:background="@drawable/item_symbole_back"
-            android:textColor="#000000" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="10dip" >
-
-            <TextView
-                android:id="@+id/itemTitle"
-                style="@style/ItemSecondaryText.SingleLine"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="false" />
-
-            <TextView
-                android:id="@id/itemDescription"
-                style="@style/ItemPrimaryText.Medium"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/itemTitle"
-                android:gravity="left|center_vertical" />
-        </RelativeLayout>
-    </LinearLayout>
+    <ImageView
+        android:id="@id/itemIcon"
+        style="@style/ItemSymbole"
+        android:layout_gravity="top"
+        android:layout_marginRight="16dp"
+        android:visibility="gone" />
 
     <TextView
-        android:id="@id/itemTime"
-        style="@style/ItemTime.Secondary"
-        android:layout_width="fill_parent"
+        android:id="@id/itemSymbole"
+        style="@style/ItemSymbole"
+        android:layout_gravity="top"
+        android:layout_marginRight="16dp"
+        android:textColor="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/box_footer_background"
-        android:gravity="right"
-        android:padding="5dp" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@id/itemTitle"
+            style="@style/ItemPrimaryText.SingleLine.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@id/itemTime"
+            style="@style/ItemSecondaryText.SingleLine.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@id/itemDescription"
+            style="@style/ItemPrimaryText.Medium"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dip"
+            android:autoLink="all"
+            android:gravity="left|center_vertical"
+            android:linksClickable="true" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -36,11 +36,9 @@ import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.ParkingPublicManager;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.DistanceUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.ParkingUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.util.SparseArray;
@@ -90,7 +88,7 @@ public class EquipementArrayAdapter extends ArraySectionAdapter<Equipement> {
 		} else {
 			holder.itemSymbole.setImageResource(type.getDrawableRes());
 		}
-		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources().getColor(
+		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getCircle(context.getResources().getColor(
 				type.getBackgroundColorRes())));
 
 		// Définir la distance.
@@ -190,12 +188,10 @@ class DefaultTypeAdapter extends EquipementTypeAdapter {
 class ArretTypeAdapter extends EquipementTypeAdapter {
 
 	private final LigneManager mLigneManager;
-	private final Typeface mRoboto;
 
 	public ArretTypeAdapter(final EquipementArrayAdapter equipementArrayAdapter) {
 		super(equipementArrayAdapter);
 		mLigneManager = LigneManager.getInstance();
-		mRoboto = FontUtils.getRobotoBoldCondensed(equipementArrayAdapter.getContext());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -240,8 +236,7 @@ class ArretTypeAdapter extends EquipementTypeAdapter {
 			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, holder.itemLignes,
 					false);
 
-			textView.setTypeface(mRoboto);
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligne.getCouleur()));
+			textView.setBackgroundDrawable(ColorUtils.getCircle(ligne.getCouleur()));
 			textView.setText(ligne.getLettre());
 			textView.setTextColor(ligne.getCouleurTexte());
 
@@ -313,7 +308,7 @@ class ParkingTypeAdapter extends EquipementTypeAdapter {
 				couleur = context.getResources().getColor(parkingPublic.getStatut().getColorRes());
 			}
 
-			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
+			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getCircle(couleur));
 			holder.itemDescription.setText(detail);
 			holder.itemDescription.setVisibility(View.VISIBLE);
 			holder.itemSecondLine.setVisibility(View.VISIBLE);

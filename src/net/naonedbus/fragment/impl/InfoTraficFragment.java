@@ -53,7 +53,7 @@ public class InfoTraficFragment extends CustomListFragment {
 	private String mCodeLigne;
 
 	public InfoTraficFragment() {
-		super(R.layout.fragment_listview_box);
+		super(R.layout.fragment_listview_section);
 	}
 
 	@Override

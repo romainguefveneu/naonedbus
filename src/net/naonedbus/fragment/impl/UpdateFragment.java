@@ -6,10 +6,8 @@ import net.naonedbus.fragment.CustomFragment;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.VersionUtils;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -68,10 +66,6 @@ public class UpdateFragment extends CustomFragment {
 
 		public void show() {
 			mUpdateView.setVisibility(View.VISIBLE);
-
-			final Typeface robotoTypeface = FontUtils.getRobotoLight(mContext);
-			((TextView) mUpdateView.findViewById(android.R.id.title)).setTypeface(robotoTypeface);
-			((TextView) mUpdateView.findViewById(R.id.codename)).setTypeface(robotoTypeface);
 
 			((TextView) mUpdateView.findViewById(android.R.id.title)).setText(mTitleProgressId);
 

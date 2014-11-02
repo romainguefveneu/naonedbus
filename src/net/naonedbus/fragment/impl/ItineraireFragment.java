@@ -418,7 +418,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 			imageView.setBackgroundDrawable(null);
 			imageView.setPadding(0, 0, 0, 0);
 		} else {
-			imageView.setBackgroundDrawable(ColorUtils.getRoundedGradiant(color));
+			imageView.setBackgroundDrawable(ColorUtils.getCircle(color));
 			imageView.setPadding(mIconPadding, mIconPadding, mIconPadding, mIconPadding);
 		}
 	}

@@ -36,7 +36,7 @@
             android:id="@+id/zoneTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dip" >
+            android:paddingLeft="16dip" >
 
             <TextView
                 android:id="@id/itemTitle"
@@ -51,7 +51,6 @@
                 android:layout_width="20dip"
                 android:layout_height="20dip"
                 android:layout_alignParentRight="true"
-                android:layout_alignRight="@id/zoneTitle"
                 android:layout_centerVertical="true"
                 android:indeterminate="true"
                 android:visibility="gone" />
@@ -66,8 +65,7 @@
             android:id="@id/itemDescription"
             style="@style/ItemSecondaryText.SingleLine"
             android:layout_below="@id/zoneTitle"
-            android:layout_toRightOf="@id/itemSymbole"
-            android:paddingLeft="10dip" />
+            android:paddingLeft="16dip" />
     </RelativeLayout>
 
 </RelativeLayout>

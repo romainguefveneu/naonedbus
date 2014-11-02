@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.naonedbus.R;
-import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -213,17 +212,9 @@ public abstract class Card<T> implements LoaderCallbacks<T> {
 	}
 
 	protected void setTypefaceRobotoLight(final TextView textView) {
-		if (mRobotoLight == null) {
-			mRobotoLight = FontUtils.getRobotoLight(textView.getContext());
-		}
-		textView.setTypeface(mRobotoLight);
 	}
 
 	protected void setTypefaceRobotoBold(final TextView textView) {
-		if (mRobotoBold == null) {
-			mRobotoBold = FontUtils.getRobotoMedium(textView.getContext());
-		}
-		textView.setTypeface(mRobotoBold);
 	}
 
 	protected abstract void bindView(final Context context, final View base, final View view);

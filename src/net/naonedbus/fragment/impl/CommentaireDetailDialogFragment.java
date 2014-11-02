@@ -8,13 +8,10 @@ import net.naonedbus.bean.Sens;
 import net.naonedbus.formatter.CommentaireFomatter;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
-import net.naonedbus.utils.SmileyParser;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -58,18 +55,10 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		final View view = inflater.inflate(R.layout.dialog_comment_detail, null);
 
-		SmileyParser.init(getActivity());
-		final SmileyParser simSmileyParser = SmileyParser.getInstance();
-
-		final Typeface condensed = FontUtils.getRobotoBoldCondensed(getSherlockActivity());
-
 		mHeaderView = view.findViewById(R.id.headerView);
 		mTitle = (TextView) view.findViewById(R.id.headerTitle);
-		mTitle.setTypeface(condensed);
 		mSubtitle = (TextView) view.findViewById(R.id.headerSubTitle);
-		mSubtitle.setTypeface(condensed);
 		mItemCode = (TextView) view.findViewById(R.id.itemCode);
-		mItemCode.setTypeface(condensed);
 		mItemSymbole = (ImageView) view.findViewById(R.id.itemSymbole);
 		mHeaderDivider = view.findViewById(R.id.headerDivider);
 		mImageView = (ImageView) view.findViewById(R.id.menu_share);
@@ -84,7 +73,7 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 		mItemDate = (TextView) view.findViewById(R.id.itemDate);
 		mItemSource = (TextView) view.findViewById(R.id.itemSource);
 
-		mItemDescription.setText(simSmileyParser.addSmileySpans(mCommentaire.getMessage()));
+		mItemDescription.setText(mCommentaire.getMessage());
 
 		mItemDate.setText(DateUtils.formatDateTime(view.getContext(), mCommentaire.getTimestamp(),
 				DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));

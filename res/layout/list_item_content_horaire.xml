@@ -20,10 +20,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultLine.Content.Fixed" >
 
-    <ImageView
+    <net.naonedbus.widget.ClockView
         android:id="@id/itemIcon"
         style="@style/ItemSymbole"
-        android:layout_marginRight="10dip"
+        android:layout_marginRight="16dip"
         android:background="@drawable/item_symbole_back" />
 
     <TextView

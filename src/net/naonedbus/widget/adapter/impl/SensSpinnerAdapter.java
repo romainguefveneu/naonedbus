@@ -24,8 +24,6 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
-import android.graphics.Typeface;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SpinnerAdapter;
@@ -33,10 +31,11 @@ import android.widget.TextView;
 
 public class SensSpinnerAdapter extends SensArrayAdapter implements SpinnerAdapter {
 
-	public SensSpinnerAdapter(Context context, List<Sens> objects, int textColor, Typeface typeface) {
+	private int mTextColor;
+
+	public SensSpinnerAdapter(Context context, List<Sens> objects, int textColor) {
 		super(context, R.layout.list_item_sens_spinner, objects);
-		setTypeface(typeface);
-		setTextColor(textColor);
+		mTextColor = textColor;
 	}
 
 	@Override
@@ -44,16 +43,15 @@ public class SensSpinnerAdapter extends SensArrayAdapter implements SpinnerAdapt
 		final TextView view = (TextView) super.getView(position, convertView, parent);
 		final Sens sens = getItem(position);
 		view.setText(FormatUtils.formatSens(sens.text));
+		view.setTextColor(mTextColor);
 		return view;
 	}
 
 	@Override
 	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_icon, null);
-			bindViewHolder(convertView);
-		}
-		bindView(convertView, position);
-		return convertView;
+		final TextView view = (TextView) super.getView(position, convertView, parent);
+		final Sens sens = getItem(position);
+		view.setText(FormatUtils.formatSens(sens.text));
+		return view;
 	}
 }

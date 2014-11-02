@@ -7,9 +7,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.ItineraryWrapper;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +22,10 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 	private static final int VIEW_TYPE_EMPTY = 1;
 
 	private final LayoutInflater mLayoutInflater;
-	private final Typeface mRobotoCondensed;
-	private final Typeface mRobotoMedium;
 
 	public ItineraryWrapperArrayAdapter(final Context context, final List<ItineraryWrapper> objects) {
 		super(context, 0, objects);
 		mLayoutInflater = LayoutInflater.from(context);
-		mRobotoCondensed = FontUtils.getRobotoBoldCondensed(context);
-		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	@Override
@@ -104,7 +98,6 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 					viewHolder.gridLayout, false);
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
 			textView.setText(l.getLettre());
-			textView.setTypeface(mRobotoCondensed);
 			textView.setTextColor(l.getCouleurTexte());
 
 			viewHolder.gridLayout.addView(textView);
@@ -130,7 +123,6 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 
 		final ViewHolder viewHolder = new ViewHolder();
 		viewHolder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
-		viewHolder.itemTitle.setTypeface(mRobotoCondensed);
 
 		view.setTag(viewHolder);
 

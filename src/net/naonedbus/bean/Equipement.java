@@ -34,17 +34,17 @@ public class Equipement implements SectionItem, Comparable<Equipement> {
 		/**
 		 * Défini le type Arrêt Tan.
 		 */
-		TYPE_ARRET(0, R.string.map_calque_arret, R.drawable.map_layer_arret, R.color.map_pin_arret,
+		TYPE_ARRET(0, R.string.map_calque_arret, R.drawable.ic_directions_bus, R.color.map_pin_arret,
 				R.drawable.map_pin_arret),
 		/**
 		 * Défini le type Parking.
 		 */
-		TYPE_PARKING(1, R.string.map_calque_parkings, R.drawable.map_layer_parking, R.color.map_pin_parking,
+		TYPE_PARKING(1, R.string.map_calque_parkings, R.drawable.ic_local_parking, R.color.map_pin_parking,
 				R.drawable.map_pin_parking),
 		/**
 		 * Défini le type Bicloo.
 		 */
-		TYPE_BICLOO(2, R.string.map_calque_bicloo, R.drawable.map_layer_bicloo, R.color.map_pin_bicloo,
+		TYPE_BICLOO(2, R.string.map_calque_bicloo, R.drawable.ic_directions_bike, R.color.map_pin_bicloo,
 				R.drawable.map_pin_bicloo);
 
 		private final int id;

@@ -33,7 +33,8 @@
         android:drawableTop="@drawable/warning"
         android:gravity="center"
         android:text="@android:string/untitled"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@android:id/summary"
@@ -43,7 +44,8 @@
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
         android:text="@android:string/untitled"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="?android:attr/textColorSecondary" />
 
     <Button
         android:id="@android:id/button1"

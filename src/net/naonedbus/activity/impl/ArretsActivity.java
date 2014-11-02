@@ -28,9 +28,8 @@ import net.naonedbus.fragment.impl.ArretsFragment;
 import net.naonedbus.helper.StateHelper;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.impl.SensSpinnerAdapter;
-import android.graphics.Typeface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -81,18 +80,23 @@ public class ArretsActivity extends OneFragmentActivity {
 			addFragment(ArretsFragment.class, bundle);
 		}
 
-		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
-
 		final View header = findViewById(R.id.headerView);
 		header.setBackgroundDrawable(ColorUtils.getGradiant(mLigne.getCouleur()));
 
 		final TextView code = (TextView) findViewById(R.id.itemCode);
 		code.setText(mLigne.getLettre());
 		code.setTextColor(mLigne.getCouleurTexte());
-		code.setTypeface(robotoBold);
+
+		int circleColor;
+		if (mLigne.getCouleurTexte() == Color.WHITE) {
+			circleColor = ColorUtils.getDarkerColor(mLigne.getCouleur());
+		} else {
+			circleColor = ColorUtils.getLighterColor(mLigne.getCouleur());
+		}
+		code.setBackgroundDrawable(ColorUtils.getCircle(circleColor));
 
 		final Spinner sensTitle = (Spinner) findViewById(R.id.itemTitle);
-		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.getCouleurTexte(), robotoBold));
+		sensTitle.setAdapter(new SensSpinnerAdapter(this, sensList, mLigne.getCouleurTexte()));
 		sensTitle.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override

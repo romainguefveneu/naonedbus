@@ -218,7 +218,7 @@ public class HoraireManager extends SQLiteManager<Horaire> {
 				// Ajouter un marqueur pour indiquer que l'on a déjà cherché
 				// les horaires
 
-				mEmptySchedules.add(token);
+//				mEmptySchedules.add(token);
 			} else {
 				// Ajouter les horaires dans la db
 				final ContentValues[] values = new ContentValues[schedule.size()];

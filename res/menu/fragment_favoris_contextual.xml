@@ -3,27 +3,27 @@
 
     <item
         android:id="@id/menu_edit"
-        android:icon="@drawable/ic_action_edit"
+        android:icon="@drawable/ic_create"
         android:showAsAction="always"
         android:title="@string/action_rename"/>
     <item
         android:id="@id/menu_delete"
-        android:icon="@drawable/ic_action_discard"
+        android:icon="@drawable/ic_delete"
         android:showAsAction="always"
         android:title="@string/action_delete"/>
     <item
         android:id="@id/menu_place"
-        android:icon="@drawable/ic_action_place"
+        android:icon="@drawable/ic_place"
         android:showAsAction="always"
         android:title="@string/action_show_on_map"/>
     <item
         android:id="@id/menu_show_plan"
-        android:icon="@drawable/ic_action_plan"
+        android:icon="@drawable/ic_map"
         android:showAsAction="ifRoom"
         android:title="@string/action_show_plan"/>
     <item
         android:id="@id/menu_group"
-        android:icon="@drawable/ic_action_labels"
+        android:icon="@drawable/ic_label"
         android:showAsAction="ifRoom"
         android:title="@string/action_groups">
         <menu>

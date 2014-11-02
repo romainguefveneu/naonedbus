@@ -31,7 +31,6 @@ import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.manager.impl.SensManager;
 import net.naonedbus.security.NaonedbusClient;
-import net.naonedbus.utils.SmileyParser;
 import net.naonedbus.widget.adapter.impl.CommentaireArrayAdapter;
 import net.naonedbus.widget.indexer.impl.CommentaireIndexer;
 
@@ -62,7 +61,6 @@ public class CommentaireFomatter {
 	}
 
 	private final Context mContext;
-	private final SmileyParser mSmileyParser;
 
 	final DateMidnight mNow;
 	final DateMidnight mYesterday;
@@ -73,12 +71,9 @@ public class CommentaireFomatter {
 	public CommentaireFomatter(final Context context) {
 		this.mContext = context;
 
-		SmileyParser.init(context);
-
 		mNow = new DateMidnight();
 		mYesterday = mNow.minusDays(1);
 
-		mSmileyParser = SmileyParser.getInstance();
 		mLigneManager = LigneManager.getInstance();
 		mSensManager = SensManager.getInstance();
 		mArretManager = ArretManager.getInstance();
@@ -106,7 +101,7 @@ public class CommentaireFomatter {
 	 */
 
 	public void formatValues(final Commentaire commentaire) {
-		commentaire.setMessage(mSmileyParser.addSmileySpans(commentaire.getMessage()).toString());
+		commentaire.setMessage(commentaire.getMessage());
 		commentaire.setDateTime(new DateTime(commentaire.getTimestamp()));
 		commentaire.setDelay(DateUtils.getRelativeTimeSpanString(commentaire.getDateTime().getMillis(),
 				System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS).toString());

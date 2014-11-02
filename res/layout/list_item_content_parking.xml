@@ -21,9 +21,8 @@
     <ImageView
         android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
-        android:layout_marginRight="10dp"
-        android:padding="5dp"
-        android:src="@drawable/map_layer_parking" />
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_local_parking" />
 
     <TextView
         android:id="@id/itemTitle"

@@ -76,7 +76,7 @@ public class CommentairesFragment extends CustomListFragment {
 	};
 
 	public CommentairesFragment() {
-		super(R.layout.fragment_listview_box);
+		super(R.layout.fragment_listview_section);
 	}
 
 	@Override

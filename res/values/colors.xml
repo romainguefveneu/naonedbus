@@ -21,7 +21,8 @@
 -->
 <resources>
 
-    <color name="activity_background_light">#eeeeee</color>
+    <color name="activity_background_light">#FEFEFE</color>
+    <color name="activity_background_card">#EEEEEE</color>
     <color name="pinned_header_menu_text">#90ffffff</color>
     <color name="menu_background">#006699</color>
     <color name="menu_option_background">#005985</color>
@@ -46,7 +47,9 @@
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="background_tab">@android:color/transparent</color>
     <color name="card_text_color">#707070</color>
-    <color name="modern_section__color">#555555</color>
+    <color name="modern_section_color">#757575</color>
+    <color name="list_divider">#E6E6E6</color>
+    <color name="list_selected">@color/list_divider</color>
 
     <!-- Parkings -->
     <color name="parking_state_blue">#ff0079bc</color>

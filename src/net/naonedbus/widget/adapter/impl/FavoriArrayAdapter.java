@@ -23,12 +23,11 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.Favori;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -37,14 +36,12 @@ import android.widget.TextView;
 
 public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 
-	private final Typeface mRobotoBold;
 	private final boolean mShowDelay;
 	private SparseBooleanArray mCheckedItemPositions = new SparseBooleanArray();
 
 	public FavoriArrayAdapter(final Context context, final List<Favori> objects, final boolean showDelay) {
 		super(context, R.layout.list_item_favori, objects);
 		mShowDelay = showDelay;
-		mRobotoBold = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	public FavoriArrayAdapter(final Context context, final List<Favori> objects) {
@@ -65,7 +62,7 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 		}
 
 		if (item.getBackground() == null) {
-			final GradientDrawable background = ColorUtils.getRoundedGradiant(item.getCouleurBackground());
+			final Drawable background = ColorUtils.getCircle(item.getCouleurBackground());
 			item.setBackground(background);
 		}
 
@@ -103,7 +100,6 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 		holder.progressBar = (ProgressBar) view.findViewById(R.id.loading);
 		holder.nextHoraire = (TextView) view.findViewById(R.id.itemTime);
-		holder.ligneCode.setTypeface(mRobotoBold);
 
 		view.setTag(holder);
 	}

@@ -21,12 +21,10 @@ package net.naonedbus.widget.adapter.impl;
 import net.naonedbus.R;
 import net.naonedbus.provider.table.LigneTable;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.CursorSectionAdapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
 
@@ -38,12 +36,10 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 	private int COL_SENS1;
 	private int COL_SENS2;
 
-	private final Typeface mRoboto;
 	private boolean mHideDivider;
 
 	public LigneCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, R.layout.list_item_ligne);
-		mRoboto = FontUtils.getRobotoBoldCondensed(context);
 		if (c != null) {
 			initColumns(c);
 		}
@@ -95,7 +91,7 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 			holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			holder.icon.setTextColor(Color.WHITE);
 		} else {
-			holder.icon.setBackgroundDrawable(ColorUtils.getRoundedGradiant(color));
+			holder.icon.setBackgroundDrawable(ColorUtils.getCircle(color));
 			holder.icon.setTextColor(colorFront);
 		}
 		if ((depuis == null || depuis.length() == 0 || depuis.equals(vers))) {
@@ -118,7 +114,6 @@ public class LigneCursorAdapter extends CursorSectionAdapter {
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
 		holder.sens2 = (TextView) view.findViewById(R.id.ligneTo);
-		holder.icon.setTypeface(mRoboto);
 
 		view.setTag(holder);
 	}

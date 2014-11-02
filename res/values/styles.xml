@@ -31,8 +31,8 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingLeft">18dp</item>
-        <item name="android:paddingRight">18dp</item>
+        <item name="android:paddingLeft">?android:attr/scrollbarSize</item>
+        <item name="android:paddingRight">?android:attr/scrollbarSize</item>
     </style>
 
     <style name="DefaultActivityContent.Inner">
@@ -55,21 +55,19 @@
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
-        <item name="android:background">?attr/dividerColor</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@drawable/list_divider</item>
     </style>
 
     <style name="SectionTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <!-- See comments for @dimen/list_section_divider_min_height -->
         <item name="android:minHeight">@dimen/list_section_divider_min_height</item>
-        <item name="android:background">?attr/sectionBackground</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">?attr/sectionColor</item>
-        <item name="android:paddingLeft">8dip</item>
+        <item name="android:paddingLeft">16dip</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -90,7 +88,7 @@
         <item name="android:layout_marginTop">@dimen/padding_medium</item>
         <item name="android:layout_marginBottom">@dimen/padding_tiny</item>
         <item name="android:textStyle">italic</item>
-        <item name="android:textColor">@color/modern_section__color</item>
+        <item name="android:textColor">@color/modern_section_color</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
@@ -126,21 +124,19 @@
     <style name="DefaultLine.Single">
         <item name="android:paddingBottom">6dp</item>
         <item name="android:paddingTop">6dp</item>
-        <item name="android:paddingLeft">0dp</item>
-        <item name="android:paddingRight">0dp</item>
     </style>
 
     <style name="DefaultLine.Content">
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
         <item name="android:orientation">horizontal</item>
     </style>
 
     <style name="DefaultLine.Content.Space">
-        <item name="android:paddingBottom">15dp</item>
-        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">16dp</item>
     </style>
 
     <style name="DefaultLine.Content.Fixed">
@@ -158,14 +154,15 @@
     </style>
 
     <style name="ItemSymbole">
-        <item name="android:textSize">23sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:layout_width">40sp</item>
         <item name="android:layout_height">40sp</item>
         <item name="android:layout_alignParentTop">false</item>
         <item name="android:layout_gravity">center|center_vertical</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:scaleType">center</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
 
@@ -235,14 +232,19 @@
     </style>
 
     <style name="ItemMenuTitle" parent="ItemPrimaryText">
-        <item name="android:textColor">@color/item_primary_text_dark</item>
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">56dp</item>
-        <item name="android:drawablePadding">12dp</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">#757575</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="ItemMenuTitleSmall">
+        <item name="android:textColor">#757575</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">16dp</item>
     </style>
 
     <style name="ItemPrimaryText.Widget" parent="ItemPrimaryText.SingleLine">
@@ -354,8 +356,8 @@
     <style name="BigTitle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/bigtitle_text_size</item>
         <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:textColor">?attr/primaryColor</item>
     </style>
@@ -363,6 +365,7 @@
     <style name="BigTitle.Blue">
         <item name="android:textColor">@color/holo_blue_light</item>
     </style>
+
     <style name="BigTitle.Green">
         <item name="android:textColor">@color/holo_green</item>
     </style>
@@ -413,9 +416,9 @@
         <item name="android:layout_height">fill_parent</item>
         <item name="android:cacheColorHint">@android:color/transparent</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
+        <item name="android:divider">@drawable/list_divider</item>
+        <item name="android:dividerHeight">1dip</item>
         <item name="android:fastScrollEnabled">true</item>
-        <item name="android:paddingLeft">@dimen/padding_listview</item>
-        <item name="android:paddingRight">@dimen/padding_listview</item>
     </style>
 
     <style name="Listview.Holo">
@@ -479,7 +482,7 @@
     </style>
 
     <style name="Box">
-        <item name="android:background">@drawable/block_light</item>
+        <item name="android:background">@drawable/card_bg_play</item>
         <item name="android:paddingTop">@dimen/padding_medium</item>
         <item name="android:paddingBottom">@dimen/padding_medium</item>
         <item name="android:paddingLeft">@dimen/padding_tiny</item>
@@ -488,11 +491,10 @@
 
     <style name="Card">
         <item name="android:background">@drawable/item_block_background</item>
-        <item name="android:padding">0dp</item>
     </style>
 
     <style name="CardAbout">
-        <item name="android:background">@drawable/block_light</item>
+        <item name="android:background">@drawable/card_bg_play</item>
         <item name="android:padding">@dimen/padding_small</item>
         <item name="android:layout_marginBottom">@dimen/padding_medium</item>
         <item name="android:layout_width">match_parent</item>
@@ -502,13 +504,12 @@
 
     <style name="CardTextHuge">
         <item name="android:textSize">@dimen/horaire_huge</item>
-        <item name="android:textColor">@color/holo_green</item>
+        <item name="android:textColor">@color/holo_blue_light</item>
     </style>
 
     <style name="CardTitle" parent="BigTitle">
         <item name="android:paddingLeft">@dimen/padding_small</item>
         <item name="android:paddingRight">@dimen/padding_small</item>
-        <item name="android:textColor">@color/card_text_color</item>
     </style>
 
     <style name="CardTitle.Small">
@@ -565,7 +566,7 @@
         <item name="android:paddingRight">0dp</item>
     </style>
 
-    <style name="CardHoraire.Huge" parent="CardTextHuge"></style>
+    <style name="CardHoraire.Huge" parent="CardTextHuge" />
 
     <style name="CardDelai" parent="CardHoraire">
         <item name="android:textColor">@color/card_text_color</item>

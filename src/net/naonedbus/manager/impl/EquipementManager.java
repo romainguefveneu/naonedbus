@@ -45,7 +45,7 @@ public class EquipementManager extends SQLiteManager<Equipement> {
 	 * 
 	 */
 	public static enum SousType {
-		PARKING_PUBLIC(1, R.drawable.map_layer_parking), PARKING_RELAI(2, R.drawable.map_layer_parking_relai);
+		PARKING_PUBLIC(1, R.drawable.ic_local_parking), PARKING_RELAI(2, R.drawable.ic_local_parking);
 
 		private int value;
 		private int drawableRes;

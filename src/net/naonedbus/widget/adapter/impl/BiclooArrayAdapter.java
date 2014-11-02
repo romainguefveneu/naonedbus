@@ -33,7 +33,7 @@ public class BiclooArrayAdapter extends ArraySectionAdapter<Bicloo> {
 	public BiclooArrayAdapter(final Context context, final List<Bicloo> objects) {
 		super(context, R.layout.list_item_equipement, objects);
 
-		mSymboleBackground = ColorUtils.getRoundedGradiant(context.getResources().getColor(
+		mSymboleBackground = ColorUtils.getCircle(context.getResources().getColor(
 				Equipement.Type.TYPE_BICLOO.getBackgroundColorRes()));
 		mSymboleResId = Equipement.Type.TYPE_BICLOO.getDrawableRes();
 	}

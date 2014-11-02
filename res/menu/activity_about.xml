@@ -2,7 +2,7 @@
 
     <item
         android:id="@id/menu_rate"
-        android:icon="@drawable/ic_action_good"
+        android:icon="@drawable/ic_play_shopping_bag"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_rate"/>

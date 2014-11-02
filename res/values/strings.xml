@@ -3,7 +3,7 @@
 <resources>
   <string name="app_name">Naonedbus</string>
   <string name="version_number">Version %s</string>
-  <string name="version_name">Blue Hawaiian</string>
+  <string name="version_name">Caribbean Blues</string>
   <string name="today">Today</string>
   <string name="yesterday">Yesterday</string>
   <string name="tomorrow">Tomorrow</string>

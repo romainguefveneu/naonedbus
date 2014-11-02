@@ -60,7 +60,7 @@ public class InfoTraficLigneArrayAdapter extends ArraySectionAdapter<InfoTrafic>
 
 			holder.itemTitle.setText(item.getIntitule());
 			holder.itemDate.setText(item.getDateFormated());
-			holder.itemSymbole.setBackgroundDrawable(ColorUtils.getGradiant(ligne.getCouleur()));
+			holder.itemSymbole.setBackgroundColor(ligne.getCouleur());
 
 			if (isCurrent(item)) {
 				holder.itemDate.setCompoundDrawablesWithIntrinsicBounds(R.drawable.info_trafic_on, 0, 0, 0);

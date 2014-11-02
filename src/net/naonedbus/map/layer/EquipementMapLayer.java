@@ -12,10 +12,8 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.LigneManager;
 import net.naonedbus.map.ItemSelectedInfo;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,11 +97,8 @@ public class EquipementMapLayer extends MapLayer {
 		final LigneManager ligneManager = LigneManager.getInstance();
 		final List<Ligne> lignes = ligneManager.getLignesFromStation(context.getContentResolver(), station.getId());
 
-		Typeface roboto = FontUtils.getRobotoBoldCondensed(context);
-
 		for (final Ligne ligneItem : lignes) {
 			final TextView textView = (TextView) layoutInflater.inflate(R.layout.ligne_code_item, root, false);
-			textView.setTypeface(roboto);
 			textView.setTextColor(ligneItem.getCouleurTexte());
 			textView.setBackgroundDrawable(ColorUtils.getGradiant(ligneItem.getCouleur()));
 			textView.setText(ligneItem.getCode());

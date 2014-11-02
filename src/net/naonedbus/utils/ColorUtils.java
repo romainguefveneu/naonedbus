@@ -20,6 +20,8 @@ package net.naonedbus.utils;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 
 public abstract class ColorUtils {
 
@@ -108,13 +110,14 @@ public abstract class ColorUtils {
 		return color;
 	}
 
-	public static synchronized GradientDrawable getRoundedGradiant(final int color) {
+	public static synchronized ShapeDrawable getCircle(final int color) {
 		if (color == Color.TRANSPARENT) {
 			return null;
 		}
 
-		final GradientDrawable d = getGradiant(color);
-		d.setCornerRadius(3);
+		final ShapeDrawable d = new ShapeDrawable(new OvalShape());
+		d.getPaint().setColor(color);
+
 		return d;
 	}
 

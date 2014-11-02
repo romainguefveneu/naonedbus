@@ -2,7 +2,6 @@ package net.naonedbus.fragment.impl;
 
 import net.naonedbus.R;
 import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.utils.SmileyParser;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,9 +27,7 @@ public class DonateFragment extends CustomFragment implements OnClickListener {
 		donatePaypal.setOnClickListener(this);
 		donateFlattr.setOnClickListener(this);
 
-		SmileyParser.init(getActivity());
-		final SmileyParser smileyParser = SmileyParser.getInstance();
-		summary.setText(smileyParser.addSmileySpans(getString(R.string.donate_summary)));
+		summary.setText(R.string.donate_summary);
 	}
 
 	@Override

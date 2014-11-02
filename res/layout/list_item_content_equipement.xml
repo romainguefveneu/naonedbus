@@ -25,16 +25,16 @@
     <ImageView
         android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
-        android:layout_marginRight="@dimen/padding_small"
+        android:layout_marginRight="16dip"
         android:background="@drawable/item_symbole_back"
-        android:padding="5dp"
-        android:src="@drawable/map_layer_bicloo" />
+        android:src="@drawable/ic_directions_bike" />
 
     <FrameLayout
         android:id="@+id/secondLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+          android:layout_marginBottom="2sp"
         android:layout_toLeftOf="@id/itemDistance"
         android:layout_toRightOf="@id/itemSymbole" >
 

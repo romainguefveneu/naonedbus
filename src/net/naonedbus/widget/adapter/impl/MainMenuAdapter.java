@@ -21,52 +21,84 @@ package net.naonedbus.widget.adapter.impl;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.utils.FontUtils;
-import net.naonedbus.widget.item.impl.MainMenuItem;
+import net.naonedbus.widget.item.impl.DrawerMenuItem;
+import net.naonedbus.widget.item.impl.SettingMenuItem;
 import android.content.Context;
-import android.graphics.Typeface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class MainMenuAdapter extends ArrayAdapter<MainMenuItem> {
+public class MainMenuAdapter extends ArrayAdapter<DrawerMenuItem> {
 
-	private final Typeface mRoboto;
-	private int mCurrentItem;
+	private final LayoutInflater mLayoutInflater;
+	private int mFirstSettingsPosition = 0;
 
-	public MainMenuAdapter(final Context context, final List<MainMenuItem> items) {
-		super(context, R.layout.list_item_menu, items);
-		mRoboto = FontUtils.getRobotoLight(context);
+	public MainMenuAdapter(final Context context, final List<DrawerMenuItem> objects) {
+		super(context, 0, android.R.id.text1, objects);
+		mLayoutInflater = LayoutInflater.from(context);
+		indexSettingsPosition();
 	}
 
-	public void setCurrentItem(final int currentItem) {
-		mCurrentItem = currentItem;
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+		indexSettingsPosition();
+	}
+
+	@Override
+	public int getViewTypeCount() {
+		return 2;
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		final DrawerMenuItem item = getItem(position);
+		final boolean isSetting = item instanceof SettingMenuItem;
+		return isSetting ? 1 : 0;
 	}
 
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
-		final TextView textview = (TextView) super.getView(position, convertView, parent);
+		final DrawerMenuItem item = getItem(position);
 
-		final MainMenuItem item = getItem(position);
-		textview.setText(getContext().getString(item.getTitle()));
-		textview.setCompoundDrawablesWithIntrinsicBounds(item.getResIcon(), 0, 0, 0);
-		textview.setTypeface(mRoboto);
+		final boolean isSetting = item instanceof SettingMenuItem;
 
-		if (mCurrentItem == position) {
-			setViewBackgroundWithoutResettingPadding(textview, R.drawable.list_pressed_holo_light);
-		} else {
-			setViewBackgroundWithoutResettingPadding(textview, android.R.color.transparent);
+		View view = convertView;
+		if (view == null) {
+			final int layoutId = isSetting ? R.layout.list_item_menu_setting : R.layout.list_item_menu;
+			view = mLayoutInflater.inflate(layoutId, parent, false);
 		}
 
-		return textview;
+		final TextView label = (TextView) view.findViewById(android.R.id.text1);
+		label.setText(item.getTitle());
+		if (item.getResIcon() != 0) {
+			label.setCompoundDrawablesWithIntrinsicBounds(item.getResIcon(), 0, 0, 0);
+		}
+
+		if (isSetting) {
+			final View dividerBottom = view.findViewById(R.id.dividerTop);
+			if (dividerBottom != null) {
+				if (position == mFirstSettingsPosition) {
+					dividerBottom.setVisibility(View.VISIBLE);
+				} else {
+					dividerBottom.setVisibility(View.GONE);
+				}
+			}
+		}
+
+		return view;
 	}
 
-	public static void setViewBackgroundWithoutResettingPadding(final View v, final int backgroundResId) {
-		final int paddingBottom = v.getPaddingBottom(), paddingLeft = v.getPaddingLeft();
-		final int paddingRight = v.getPaddingRight(), paddingTop = v.getPaddingTop();
-		v.setBackgroundResource(backgroundResId);
-		v.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+	private void indexSettingsPosition() {
+		mFirstSettingsPosition = -1;
+		for (int i = 0; i < getCount(); i++) {
+			if (getItem(i) instanceof SettingMenuItem) {
+				mFirstSettingsPosition = i;
+				break;
+			}
+		}
 	}
 
 }

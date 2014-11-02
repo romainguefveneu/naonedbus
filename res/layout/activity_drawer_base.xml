@@ -27,14 +27,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+        <com.astuetz.PagerSlidingTabStrip
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@id/tabs"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            app:indicatorColor="@color/holo_blue_dark"
-            app:shouldExpand="true"
-            app:tabBackground="@drawable/background_tab" />
+            android:background="@color/acapulco"
+            android:textColor="@android:color/white"
+            app:pstsIndicatorColor="@android:color/white"
+            app:pstsTabBackground="@android:color/transparent" />
 
         <android.support.v4.view.ViewPager
             android:id="@id/pager"
@@ -50,14 +51,15 @@
 
     <ListView
         android:id="@+id/left_drawer"
-        android:layout_width="240dp"
+        android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/menu_option_background"
+        android:background="?android:attr/windowBackground"
         android:cacheColorHint="@android:color/transparent"
         android:choiceMode="singleChoice"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:listSelector="@drawable/selectable_background_acapulco" />
+        android:listSelector="@drawable/selectable_menu_background" >
+    </ListView>
 
 </android.support.v4.widget.DrawerLayout>

@@ -104,7 +104,7 @@ public class EquipementCursorAdapter extends CursorSectionAdapter {
 		} else {
 			holder.itemSymbole.setImageResource(type.getDrawableRes());
 		}
-		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources().getColor(
+		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getCircle(context.getResources().getColor(
 				type.getBackgroundColorRes())));
 
 		// Détail ou adresse

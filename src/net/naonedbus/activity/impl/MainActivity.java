@@ -57,12 +57,10 @@ public class MainActivity extends MenuDrawerActivity {
 
 			if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
 				hideActionBar();
-				setBaseMenuVisible(false);
 				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
 				showTutorial();
 			} else if (UpdateType.UPGRADE.equals(updateType)) {
 				hideActionBar();
-				setBaseMenuVisible(false);
 				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
 			} else {
 				final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -96,7 +94,6 @@ public class MainActivity extends MenuDrawerActivity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setDisplayShowTitleEnabled(true);
 
-		setBaseMenuVisible(true);
 		selectNavigationItem(0);
 		openDrawer();
 	}

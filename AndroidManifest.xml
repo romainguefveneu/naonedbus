@@ -82,7 +82,8 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
         <activity
             android:name=".activity.impl.BiclooDetailActivity"
-            android:label="@string/emptyString" />
+            android:label="@string/emptyString"
+            android:theme="@style/Theme.Acapulco.Light.Card" />
         <activity
             android:name=".activity.impl.SettingsActivity"
             android:label="@string/title_activity_parametres" />
@@ -108,7 +109,8 @@
         </activity>
         <activity
             android:name=".activity.impl.ParkingDetailActivity"
-            android:label="@string/emptyString" />
+            android:label="@string/emptyString"
+            android:theme="@style/Theme.Acapulco.Light.Card" />
         <activity
             android:name=".activity.impl.PlanActivity"
             android:label="@string/emptyString" />
@@ -127,7 +129,8 @@
             android:label="@string/title_activity_groupes" />
         <activity
             android:name=".activity.impl.ArretDetailActivity"
-            android:label="@string/emptyString" />
+            android:label="@string/emptyString"
+            android:theme="@style/Theme.Acapulco.Light.Card" />
         <activity
             android:name=".activity.impl.WebViewActivity"
             android:label="@string/emptyString" />

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Naonedbus</string>
     <string name="version_number">Version %s</string>
-    <string name="version_name">Blue Hawaiian</string>
     <string name="today">Aujourd\'hui</string>
     <string name="yesterday">Hier</string>
     <string name="tomorrow">Demain</string>
@@ -220,7 +218,7 @@
     <string name="parking_places_disponibles_zero">C\'est plein !</string>
 
     <plurals name="parking_places_disponibles">
-        <item quantity="one">1 place restante, dépéchez-vous !</item>
+        <item quantity="one">%d place restante, dépéchez-vous !</item>
         <item quantity="other">%d places disponibles</item>
     </plurals>
     <!-- Bicloo -->
@@ -372,7 +370,7 @@
 
     <!-- Items -->
     <plurals name="selected_items">
-        <item quantity="one">1 sélectionné</item>
+        <item quantity="one">%d sélectionné</item>
         <item quantity="other">%d sélectionnés</item>
     </plurals>
 

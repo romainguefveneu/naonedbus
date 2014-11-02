@@ -26,10 +26,9 @@
     <ImageView
         android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
-        android:layout_marginRight="@dimen/padding_small"
+        android:layout_marginRight="16dip"
         android:background="@drawable/item_symbole_back"
-        android:padding="5dp"
-        android:src="@drawable/map_layer_bicloo" />
+        android:src="@drawable/ic_directions_bike" />
 
     <FrameLayout
         android:id="@+id/secondLine"

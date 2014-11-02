@@ -35,7 +35,6 @@ import net.naonedbus.fragment.impl.CommentaireDetailDialogFragment;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.CommentaireManager;
 import net.naonedbus.security.NaonedbusClient;
-import net.naonedbus.utils.FontUtils;
 
 import org.joda.time.DateMidnight;
 import org.json.JSONException;
@@ -92,13 +91,11 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 	private Sens mSens;
 	private Arret mArret;
 	private ViewGroup mRoot;
-	private final Typeface mRobotoMedium;
 
 	public CommentairesCard(final Context context, final LoaderManager loaderManager,
 			final FragmentManager fragmentManager) {
 		super(context, loaderManager, fragmentManager, R.string.card_commentaires_title, R.layout.card_trafic);
 		getContext().registerReceiver(mIntentReceiver, intentFilter);
-		mRobotoMedium = FontUtils.getRobotoMedium(context);
 	}
 
 	public void setLigne(final Ligne ligne) {
@@ -177,7 +174,6 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 
 		itemDescription.setText(commentaire.getMessage(), BufferType.SPANNABLE);
 		itemDate.setText(commentaire.getDelay());
-		itemDate.setTypeface(mRobotoMedium);
 
 		if (title.trim().length() == 0) {
 			itemTitle.setVisibility(View.GONE);

@@ -25,11 +25,9 @@ import net.naonedbus.activity.map.overlay.BiclooItemizedOverlay;
 import net.naonedbus.activity.map.overlay.item.BasicOverlayItem;
 import net.naonedbus.bean.Bicloo;
 import net.naonedbus.manager.impl.FavoriBiclooManager;
-import net.naonedbus.utils.FontUtils;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -71,10 +69,6 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bicloo_detail);
 
-		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
-		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
-		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
-
 		mFavoriBiclooManager = FavoriBiclooManager.getInstance();
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,13 +80,6 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		mPlacesDisponibles = (TextView) findViewById(R.id.placesDisponibles);
 		mItemDate = (TextView) findViewById(R.id.itemDate);
 		mMessage = (TextView) findViewById(R.id.message);
-
-		mTitle.setTypeface(robotoBold);
-		mPaiement.setTypeface(robotoLight);
-		mBicloosDisponibles.setTypeface(robotoLight);
-		mPlacesDisponibles.setTypeface(robotoLight);
-		mItemDate.setTypeface(robotoMedium);
-		mAdresse.setTypeface(robotoMedium);
 
 		mMapView = (MapView) findViewById(R.id.map_view);
 		mMapView.setBuiltInZoomControls(true);
@@ -119,7 +106,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		menuInflater.inflate(R.menu.activity_bicloo_detail, menu);
 
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
-		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
 		menuFavori.setIcon(icon);
 
 		return super.onCreateOptionsMenu(menu);
@@ -129,7 +116,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	public boolean onPrepareOptionsMenu(final Menu menu) {
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
 		menuFavori.setIcon(icon);
 
 		return super.onPrepareOptionsMenu(menu);

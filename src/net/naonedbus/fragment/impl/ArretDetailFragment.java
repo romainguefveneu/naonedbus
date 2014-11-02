@@ -21,6 +21,7 @@ package net.naonedbus.fragment.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.naonedbus.NBApplication;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.CommentaireActivity;
 import net.naonedbus.activity.impl.MapActivity;
@@ -33,10 +34,12 @@ import net.naonedbus.bean.Sens;
 import net.naonedbus.card.Card;
 import net.naonedbus.card.impl.CommentairesCard;
 import net.naonedbus.card.impl.HoraireCard;
+import net.naonedbus.card.impl.MapCard;
 import net.naonedbus.card.impl.TraficCard;
 import net.naonedbus.manager.impl.ArretManager;
 import net.naonedbus.manager.impl.FavoriManager;
 import net.naonedbus.manager.impl.SensManager;
+import net.naonedbus.provider.impl.NaoLocationManager;
 
 import org.joda.time.DateMidnight;
 
@@ -118,10 +121,11 @@ public class ArretDetailFragment extends SherlockFragment {
 		commentairesCard.setArret(mArret);
 
 		// final MapCard mapCard = new MapCard(getActivity(),
-		// getLoaderManager(), mArret.latitude, mArret.longitude);
-		// final MyLocationProvider locationProvider =
+		// getLoaderManager(), getChildFragmentManager(),
+		// mArret.getLatitude(), mArret.getLongitude());
+		// final NaoLocationManager locationProvider =
 		// NBApplication.getLocationProvider();
-		// mapCard.setCurrentLocation(locationProvider.getLastKnownLocation());
+		// mapCard.setCurrentLocation(locationProvider.getLastLocation());
 
 		mCards.add(horaireCard);
 		mCards.add(traficCard);
@@ -143,7 +147,7 @@ public class ArretDetailFragment extends SherlockFragment {
 		inflater.inflate(R.menu.fragment_arret_detail, menu);
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
 		menuFavori.setIcon(icon);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -152,7 +156,7 @@ public class ArretDetailFragment extends SherlockFragment {
 	public void onPrepareOptionsMenu(final Menu menu) {
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_action_important : R.drawable.ic_action_not_important;
+		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
 		menuFavori.setIcon(icon);
 
 		super.onPrepareOptionsMenu(menu);

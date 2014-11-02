@@ -31,7 +31,7 @@ import net.naonedbus.R;
 import net.naonedbus.activity.MenuDrawerActivity;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.CalendarUtils;
-import net.naonedbus.widget.item.impl.MainMenuItem;
+import net.naonedbus.widget.item.impl.DrawerMenuItem;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
@@ -93,19 +93,19 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 	}
 
 	private void initNavigationHome(final SharedPreferences preferences) {
-		final List<MainMenuItem> items = MenuDrawerActivity.getMainMenuItems();
+		final List<DrawerMenuItem> items = MenuDrawerActivity.getMainMenuItems();
 
 		final String[] entriesName = new String[items.size()];
 		final String[] entriesId = new String[items.size()];
 
 		for (int i = 0; i < items.size(); i++) {
-			final MainMenuItem item = items.get(i);
+			final DrawerMenuItem item = items.get(i);
 			entriesName[i] = getString(item.getTitle());
 			entriesId[i] = String.valueOf(i);
 		}
 
 		final int section = Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0"));
-		final MainMenuItem item = items.get(section);
+		final DrawerMenuItem item = items.get(section);
 		mNavigationHome.setSummary(getString(item.getTitle()));
 
 		mNavigationHome.setEntries(entriesName);
@@ -113,7 +113,7 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 		mNavigationHome.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(final Preference preference, final Object newValue) {
-				final MainMenuItem item = items.get(Integer.parseInt((String) newValue));
+				final DrawerMenuItem item = items.get(Integer.parseInt((String) newValue));
 				mNavigationHome.setSummary(getString(item.getTitle()));
 				return true;
 			}

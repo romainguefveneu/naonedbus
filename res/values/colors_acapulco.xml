@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File created by the Android Action Bar Style Generator
+<!--
+     File created by the Android Action Bar Style Generator
 
      Copyright (C) 2011 The Android Open Source Project
      Copyright (C) 2012 readyState Software Ltd
@@ -18,5 +19,8 @@
 -->
 
 <resources>
-    <color name="pressed_acapulco">#CC0099CC</color>
+
+    <color name="acapulco">#137AAA</color>
+    <color name="pressed_acapulco">#CC137AAA</color>
+
 </resources>

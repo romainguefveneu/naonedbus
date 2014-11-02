@@ -24,10 +24,8 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Parcours;
 import net.naonedbus.bean.horaire.Attente;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,19 +34,17 @@ import android.widget.TextView;
 
 public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 
-	private final Typeface mTypeface;
 	private List<Attente> mAttentes;
 
 	public ParcoursAdapter(final Context context, final List<Parcours> objects, List<Attente> attentes) {
 		super(context, 0, objects);
-		mTypeface = FontUtils.getRobotoBoldCondensed(context);
 		mAttentes = attentes;
 	}
 
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_parcours, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_parcours, parent, false);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);
@@ -59,7 +55,7 @@ public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final Parcours parcours = getItem(position);
 		holder.itemSymbole.setText(parcours.lettre);
-		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(parcours.couleurBack));
+		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getCircle(parcours.couleurBack));
 		holder.itemSymbole.setTextColor(parcours.couleurFront);
 		holder.itemTitle.setText(FormatUtils.formatSens(parcours.nomSens));
 
@@ -79,7 +75,6 @@ public class ParcoursAdapter extends ArrayAdapter<Parcours> {
 		holder.itemTitle = (TextView) view.findViewById(R.id.itemTitle);
 		holder.itemTime = (TextView) view.findViewById(R.id.itemTime);
 
-		holder.itemSymbole.setTypeface(mTypeface);
 		view.setTag(holder);
 	}
 

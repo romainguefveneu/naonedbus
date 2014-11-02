@@ -37,7 +37,9 @@ import net.naonedbus.fragment.header.MapFragmentHeader;
 import net.naonedbus.fragment.header.ParkingsFragmentHeader;
 import net.naonedbus.fragment.header.SearchFragmentHeader;
 import net.naonedbus.widget.adapter.impl.MainMenuAdapter;
+import net.naonedbus.widget.item.impl.DrawerMenuItem;
 import net.naonedbus.widget.item.impl.MainMenuItem;
+import net.naonedbus.widget.item.impl.SettingMenuItem;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -64,8 +66,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
-import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.PagerSlidingTabStrip;
 
 @SuppressLint("NewApi")
 public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
@@ -82,8 +83,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private CharSequence mTitle;
 	private MainMenuAdapter mAdapter;
 
-	private boolean mBaseMenuVisible = true;
-
 	/** Titres des fragments. */
 	private int[] mTitles;
 	/** Classes des fragments */
@@ -97,7 +96,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	private TabsAdapter mSectionsPagerAdapter;
 	private FrameLayout mSingleFragmentContent;
 
-	private final OnItemClickListener mOnMenuItemCliclListener = new OnItemClickListener() {
+	private final OnItemClickListener mOnMenuItemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 			selectNavigationItem(position);
@@ -121,7 +120,8 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		mAdapter = buildMainMenuAdapter();
 		mDrawerList.setAdapter(mAdapter);
-		mDrawerList.setOnItemClickListener(mOnMenuItemCliclListener);
+		mDrawerList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		mDrawerList.setOnItemClickListener(mOnMenuItemClickListener);
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0) {
 			@Override
@@ -188,14 +188,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(final Menu menu) {
-		if (mBaseMenuVisible) {
-			getSupportMenuInflater().inflate(R.menu.activity_base, menu);
-		}
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
 		NBApplication.getLocationProvider().onResume();
@@ -225,19 +217,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 				mDrawerLayout.openDrawer(mDrawerList);
 			}
 			return true;
-		case R.id.menu_settings:
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				startActivity(new Intent(this, SettingsActivity.class));
-			} else {
-				startActivity(new Intent(this, OldSettingsActivity.class));
-			}
-			return true;
-		case R.id.menu_about:
-			startActivity(new Intent(this, AboutActivity.class));
-			return true;
-		case R.id.menu_donate:
-			startActivity(new Intent(this, DonateActivity.class));
-			return true;
 		default:
 			break;
 		}
@@ -264,14 +243,35 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 		mCurrentMenuItem = position;
 
-		final MainMenuItem item = mAdapter.getItem(position);
-		final FragmentHeader fragmentHeader = item.getFragmentHeader();
+		final DrawerMenuItem item = mAdapter.getItem(position);
+		if (item instanceof MainMenuItem) {
+			MainMenuItem mainItem = (MainMenuItem) item;
+			final FragmentHeader fragmentHeader = mainItem.getFragmentHeader();
 
-		mDrawerList.setItemChecked(position, true);
-		mAdapter.setCurrentItem(position);
+			mDrawerList.setItemChecked(position, true);
 
-		if (setFragment) {
-			setFragment(fragmentHeader, item.getTitle());
+			if (setFragment) {
+				setFragment(fragmentHeader, item.getTitle());
+			}
+		} else if (item instanceof SettingMenuItem) {
+			SettingMenuItem settingItem = (SettingMenuItem) item;
+			switch (settingItem.getId()) {
+			case R.id.menu_settings:
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+					startActivity(new Intent(this, SettingsActivity.class));
+				} else {
+					startActivity(new Intent(this, OldSettingsActivity.class));
+				}
+				break;
+			case R.id.menu_about:
+				startActivity(new Intent(this, AboutActivity.class));
+				break;
+			case R.id.menu_donate:
+				startActivity(new Intent(this, DonateActivity.class));
+				break;
+			default:
+				break;
+			}
 		}
 
 		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
@@ -353,24 +353,23 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		transaction.commit();
 	}
 
-	public void setBaseMenuVisible(final boolean baseMenuVisible) {
-		mBaseMenuVisible = baseMenuVisible;
-	}
-
-	public static List<MainMenuItem> getMainMenuItems() {
-		final List<MainMenuItem> items = new ArrayList<MainMenuItem>();
-		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_action_home, new MainFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_action_direction,
+	public static List<DrawerMenuItem> getMainMenuItems() {
+		final List<DrawerMenuItem> items = new ArrayList<DrawerMenuItem>();
+		items.add(new MainMenuItem(R.string.title_activity_main, R.drawable.ic_home_grey, new MainFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_itineraire, R.drawable.ic_navigation_grey,
 				new ItineraireFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_action_warning,
+		items.add(new MainMenuItem(R.string.title_activity_infos_trafic, R.drawable.ic_traffic_grey,
 				new InfoTraficFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_action_bicloo,
+		items.add(new MainMenuItem(R.string.title_activity_bicloo, R.drawable.ic_directions_bike_grey,
 				new BicloosFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_action_parking,
+		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_local_parking_grey,
 				new ParkingsFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_action_search,
+		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_search_grey,
 				new SearchFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_action_map, new MapFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_map_grey, new MapFragmentHeader()));
+		items.add(new SettingMenuItem(R.id.menu_settings, R.string.title_activity_parametres));
+		items.add(new SettingMenuItem(R.id.menu_about, R.string.title_activity_about));
+		items.add(new SettingMenuItem(R.id.menu_donate, R.string.title_activity_donate));
 
 		return items;
 	}

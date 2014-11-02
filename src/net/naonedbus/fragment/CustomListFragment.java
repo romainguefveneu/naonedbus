@@ -25,7 +25,6 @@ import java.util.List;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.bean.async.AsyncResult;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
 
 import org.joda.time.DateTime;
@@ -33,7 +32,6 @@ import org.json.JSONException;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
@@ -301,11 +299,11 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			content.setVisibility(View.VISIBLE);
 			content.startAnimation(AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in));
 		}
-		
-//		View message = mFragmentView.findViewById(R.id.fragmentMessage);
-//		if (message != null) {
-//			message.setVisibility(View.GONE);
-//		}
+
+		// View message = mFragmentView.findViewById(R.id.fragmentMessage);
+		// if (message != null) {
+		// message.setVisibility(View.GONE);
+		// }
 	}
 
 	/**
@@ -374,10 +372,6 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 		if (message == null) {
 			final ViewStub messageStrub = (ViewStub) mFragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
-			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
-			final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
-			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
-			((TextView) message.findViewById(android.R.id.title)).setTypeface(robotoCondensed);
 		}
 
 		message.setVisibility(View.VISIBLE);

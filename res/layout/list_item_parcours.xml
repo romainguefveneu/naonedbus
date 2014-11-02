@@ -25,14 +25,14 @@
     <TextView
         android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dip" />
 
     <TextView
         android:id="@id/itemTitle"
         style="@style/ItemPrimaryText.SingleLine"
         android:layout_width="fill_parent"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dip"
         android:layout_toLeftOf="@id/itemTime"
         android:layout_toRightOf="@id/itemSymbole" />
 

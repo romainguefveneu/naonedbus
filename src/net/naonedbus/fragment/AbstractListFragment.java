@@ -23,12 +23,10 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
 
 import org.joda.time.DateTime;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -303,10 +301,6 @@ public abstract class AbstractListFragment extends SherlockListFragment {
 		if (message == null) {
 			final ViewStub messageStrub = (ViewStub) mFragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
-			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
-			final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
-			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
-			((TextView) message.findViewById(android.R.id.title)).setTypeface(robotoCondensed);
 		}
 
 		message.setVisibility(View.VISIBLE);

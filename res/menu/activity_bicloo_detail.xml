@@ -2,17 +2,17 @@
 
     <item
         android:id="@id/menu_favori"
-        android:icon="@drawable/ic_action_important"
+        android:icon="@drawable/ic_favorite_off"
         android:showAsAction="always"
         android:title="@string/action_favori"/>
     <item
         android:id="@id/menu_navigation"
-        android:icon="@drawable/ic_action_direction"
+        android:icon="@drawable/ic_navigation"
         android:showAsAction="always"
         android:title="@string/action_navigate"/>
     <item
         android:id="@id/menu_share"
-        android:icon="@drawable/ic_action_share"
+        android:icon="@drawable/ic_share"
         android:showAsAction="always"
         android:title="@string/action_share"/>
 

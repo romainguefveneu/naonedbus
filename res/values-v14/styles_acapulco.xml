@@ -30,6 +30,7 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_acapulco</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowMenuButton</item>
 
         <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
@@ -73,6 +74,19 @@
         <!-- <item name="searchDropdownBackground">@drawable/abs__search_dropdown_light</item> -->
         <item name="searchAutoCompleteTextView">@style/Widget.Sherlock.Light.SearchAutoCompleteTextView</item>
         <item name="dropDownHintAppearance">@style/TextAppearance.Sherlock.Widget.DropDownHint</item>
+    </style>
+
+    <style name="Theme.Acapulco.Light.Main">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Plain</item>
+    </style>
+
+    <style name="ActionBar.Plain" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/acapulco</item>
+        <item name="android:backgroundStacked">@color/acapulco</item>
+        <item name="android:backgroundSplit">@color/acapulco</item>
+        <item name="android:icon">@drawable/ic_icon_actionbar</item>
+        <item name="android:indeterminateProgressStyle">@style/ActionBarIndeterminateProgressStyle.Acapulco</item>
     </style>
 
 </resources>

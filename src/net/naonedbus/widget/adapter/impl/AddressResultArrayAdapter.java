@@ -31,7 +31,7 @@ public class AddressResultArrayAdapter extends ArraySectionAdapter<AddressResult
 			holder.itemDescription.setVisibility(View.VISIBLE);
 		}
 		holder.itemSymbole.setImageResource(addressResult.getIcon());
-		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(addressResult.getColor()));
+		holder.itemSymbole.setBackgroundDrawable(ColorUtils.getCircle(addressResult.getColor()));
 	}
 
 	@Override

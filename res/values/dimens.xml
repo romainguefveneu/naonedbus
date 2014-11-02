@@ -36,7 +36,7 @@
     <dimen name="bigsubtitle_text_size">16sp</dimen>
     <dimen name="bigsubtitle_height">28dp</dimen>
     <dimen name="bigsubtitlesmall_text_size">10sp</dimen>
-    <dimen name="padding_header">13dp</dimen>
+    <dimen name="padding_header">8dp</dimen>
     <!-- Dimensions for PagerHeaders -->
     <dimen name="list_section_divider_min_height">32dip</dimen>
     <!-- Clock -->

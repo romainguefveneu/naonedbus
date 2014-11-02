@@ -20,9 +20,9 @@
  */
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine">
+    style="@style/DefaultLine" >
 
-    <include layout="@layout/list_item_header_simple" />
+    <include layout="@layout/list_item_header" />
 
     <include layout="@layout/list_item_content_commentaire" />
 

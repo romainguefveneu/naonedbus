@@ -20,7 +20,11 @@
  */
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultActivityContent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fadingEdge="none"
+    android:padding="8dip"
     android:scrollbars="none" >
 
     <LinearLayout
@@ -28,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:orientation="vertical" />
 
 </ScrollView>

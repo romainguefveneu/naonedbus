@@ -2,43 +2,43 @@
 
     <item
         android:id="@id/menu_favori"
-        android:icon="@drawable/ic_action_important"
+        android:icon="@drawable/ic_favorite_off"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_favori"/>
     <item
         android:id="@id/menu_show_plan"
-        android:icon="@drawable/ic_action_plan"
+        android:icon="@drawable/ic_map"
         android:orderInCategory="200"
         android:showAsAction="always"
         android:title="@string/action_show_plan"/>
     <item
         android:id="@id/menu_place"
-        android:icon="@drawable/ic_action_place"
+        android:icon="@drawable/ic_place"
         android:orderInCategory="300"
         android:showAsAction="always"
         android:title="@string/action_comment"/>
     <item
         android:id="@id/menu_comment"
-        android:icon="@drawable/ic_action_new_event"
+        android:icon="@drawable/ic_comment"
         android:orderInCategory="350"
         android:showAsAction="never"
         android:title="@string/action_comment"/>
     <item
         android:id="@id/menu_date"
-        android:icon="@drawable/ic_action_change_date"
+        android:icon="@drawable/ic_event"
         android:orderInCategory="400"
         android:showAsAction="never"
         android:title="@string/action_change_date"/>
     <item
         android:id="@id/menu_date_maintenant"
-        android:icon="@drawable/ic_action_go_to_today"
+        android:icon="@drawable/ic_event"
         android:orderInCategory="500"
         android:showAsAction="never"
         android:title="@string/action_change_date_now"/>
     <item
         android:id="@id/menu_sens"
-        android:icon="@drawable/ic_action_repeat"
+        android:icon="@drawable/ic_refresh"
         android:orderInCategory="600"
         android:showAsAction="never"
         android:title="@string/action_change_sens"/>

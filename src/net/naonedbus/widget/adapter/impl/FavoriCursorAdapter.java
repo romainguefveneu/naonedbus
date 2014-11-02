@@ -25,7 +25,7 @@ import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +50,7 @@ public class FavoriCursorAdapter extends CursorAdapter {
 		final Favori item = mFavoriManager.getSingleFromCursor(cursor);
 
 		if (item.getBackground() == null) {
-			final GradientDrawable background = ColorUtils.getRoundedGradiant(item.getCouleurBackground());
+			final Drawable background = ColorUtils.getCircle(item.getCouleurBackground());
 			item.setBackground(background);
 		}
 

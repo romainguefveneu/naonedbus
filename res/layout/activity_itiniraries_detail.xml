@@ -26,14 +26,14 @@
         android:id="@id/headerView"
         layout="@layout/itineraire_header" />
 
-    <com.astuetz.viewpager.extensions.PagerSlidingTabStrip
+    <com.astuetz.PagerSlidingTabStrip
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@id/tabs"
         android:layout_width="match_parent"
         android:layout_height="48dip"
-        app:indicatorColor="@color/holo_blue_dark"
-        app:shouldExpand="true"
-        app:tabBackground="@drawable/background_tab" />
+        app:pstsIndicatorColor="@color/holo_blue_dark"
+        app:pstsShouldExpand="true"
+        app:pstsTabBackground="@drawable/background_tab" />
 
     <android.support.v4.view.ViewPager
         android:id="@id/viewPager"

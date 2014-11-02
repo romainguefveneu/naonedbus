@@ -20,24 +20,13 @@ package net.naonedbus.widget.item.impl;
 
 import net.naonedbus.fragment.header.FragmentHeader;
 
-public class MainMenuItem {
+public class MainMenuItem extends DrawerMenuItem {
 
-	private final int mTitle;
-	private final int mResIcon;
 	private final FragmentHeader mFragmentHeader;
 
 	public MainMenuItem(final int title, final int resIcon, final FragmentHeader fragmentHeader) {
-		mTitle = title;
-		mResIcon = resIcon;
+		super(title, resIcon);
 		mFragmentHeader = fragmentHeader;
-	}
-
-	public int getTitle() {
-		return mTitle;
-	}
-
-	public int getResIcon() {
-		return mResIcon;
 	}
 
 	public FragmentHeader getFragmentHeader() {

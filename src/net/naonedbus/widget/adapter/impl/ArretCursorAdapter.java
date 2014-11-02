@@ -53,9 +53,7 @@ public class ArretCursorAdapter extends CursorAdapter {
 	public void bindView(final View view, final Context context, final Cursor cursor) {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		final String description = cursor.getString(cursor.getColumnIndex(EquipementTable.NOM));
-		final int id = cursor.getInt(cursor.getColumnIndex(ArretTable._ID));
 
-		holder.iconFavori.setVisibility((isFavori(id)) ? View.VISIBLE : View.GONE);
 		holder.title.setText(description);
 		if (mIconBackgroundDrawable != null) {
 			holder.icon.setBackgroundDrawable(mIconBackgroundDrawable);
@@ -67,7 +65,6 @@ public class ArretCursorAdapter extends CursorAdapter {
 		final View v = mLayoutInflater.inflate(this.mLayoutId, null);
 
 		final ViewHolder holder = new ViewHolder();
-		holder.iconFavori = (ImageView) v.findViewById(R.id.itemFavori);
 		holder.icon = (ImageView) v.findViewById(R.id.itemIcon);
 		holder.title = (TextView) v.findViewById(R.id.itemTitle);
 
@@ -76,23 +73,8 @@ public class ArretCursorAdapter extends CursorAdapter {
 	}
 
 	static class ViewHolder {
-		ImageView iconFavori = null;
 		ImageView icon = null;
 		TextView title = null;
-	}
-
-	private boolean isFavori(final int idArret) {
-		if (mFavoris == null)
-			return false;
-
-		final int colIndex = mFavoris.getColumnIndex(FavoriTable._ID);
-		mFavoris.moveToFirst();
-		while (mFavoris.isAfterLast() == false) {
-			if (idArret == mFavoris.getInt(colIndex))
-				return true;
-			mFavoris.moveToNext();
-		}
-		return false;
 	}
 
 	public void setFavoris(final Cursor favoris) {

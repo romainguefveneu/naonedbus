@@ -345,7 +345,7 @@ public class CommentaireActivity extends SherlockActivity {
 		if (ligne.getCouleur() == 0) {
 			mTextLigne.setBackgroundResource(R.drawable.item_symbole_back);
 		} else {
-			mTextLigne.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
+			mTextLigne.setBackgroundDrawable(ColorUtils.getCircle(ligne.getCouleur()));
 		}
 
 		setSens(mAllSens);

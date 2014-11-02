@@ -21,10 +21,8 @@ package net.naonedbus.fragment.impl;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.WebViewActivity;
 import net.naonedbus.fragment.CustomFragment;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.VersionUtils;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -83,12 +81,8 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 
 	@Override
 	protected void bindView(final View view, final Bundle savedInstanceState) {
-		final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
-
 		mVersion = getString(R.string.version_number, VersionUtils.getVersion(getActivity()));
 		mSha1 = getString(R.string.version_sha1);
-
-		((TextView) view.findViewById(R.id.codename)).setTypeface(robotoLight);
 
 		final TextView version = (TextView) view.findViewById(R.id.version);
 		version.setText(mVersion);

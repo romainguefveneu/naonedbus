@@ -30,12 +30,10 @@ import net.naonedbus.bean.parking.pub.ParkingPublic;
 import net.naonedbus.bean.parking.pub.ParkingPublicStatut;
 import net.naonedbus.bean.parking.relai.ParkingRelai;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.ParkingUtils;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -83,10 +81,6 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_parking_detail);
 
-		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(getApplicationContext());
-		final Typeface robotoMedium = FontUtils.getRobotoMedium(getApplicationContext());
-		final Typeface robotoLight = FontUtils.getRobotoLight(getApplicationContext());
-
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mItemTelephone = (TextView) findViewById(R.id.itemTelephone);
@@ -98,13 +92,6 @@ public class ParkingDetailActivity extends SherlockMapActivity {
 		mPlacesTotales = (TextView) findViewById(R.id.placesTotales);
 		mItemDate = (TextView) findViewById(R.id.itemDate);
 		mMessage = (TextView) findViewById(R.id.message);
-
-		mParkingTitle.setTypeface(robotoBold);
-		mPlacesDisponibles.setTypeface(robotoLight);
-		mPlacesTotales.setTypeface(robotoLight);
-		mItemDate.setTypeface(robotoMedium);
-		mItemTelephone.setTypeface(robotoLight);
-		mParkingAdresse.setTypeface(robotoMedium);
 
 		mMapView = (MapView) findViewById(R.id.map_view);
 		mMapView.setBuiltInZoomControls(true);
@@ -283,7 +270,7 @@ class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 		}
 
 		activity.mParkingDescription.setText(detail);
-		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
+		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getCircle(couleur));
 
 		if (parking.getStatut().equals(ParkingPublicStatut.INVALIDE)
 				|| parking.getStatut().equals(ParkingPublicStatut.ABONNES)) {
@@ -334,8 +321,8 @@ class ParkingRelaiDetailAdapter implements ParkingDetailAdapter {
 		final Context context = activity.getApplicationContext();
 
 		activity.mParkingDescription.setText("\u2022 " + activity.getString(R.string.parking_relai));
-		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getRoundedGradiant(context.getResources()
-				.getColor(R.color.parking_state_blue)));
+		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getCircle(context.getResources().getColor(
+				R.color.parking_state_blue)));
 	}
 
 	@Override

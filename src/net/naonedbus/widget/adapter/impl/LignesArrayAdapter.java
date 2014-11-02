@@ -22,7 +22,6 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -42,12 +41,10 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 		TextView sens2;
 	}
 
-	private final Typeface robotoMedium;
 	private boolean mHideDivider;
 
 	public LignesArrayAdapter(final Context context, final List<Ligne> lignes) {
 		super(context, R.layout.list_item_ligne, lignes);
-		robotoMedium = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	public void setHideDivider(final boolean hide) {
@@ -96,7 +93,6 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 		holder.icon = (TextView) view.findViewById(R.id.itemSymbole);
 		holder.sens1 = (TextView) view.findViewById(R.id.ligneFrom);
 		holder.sens2 = (TextView) view.findViewById(R.id.ligneTo);
-		holder.icon.setTypeface(robotoMedium);
 
 		view.setTag(holder);
 	}

@@ -26,12 +26,10 @@ import net.naonedbus.bean.Commentaire;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.security.NaonedbusClient;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import net.naonedbus.widget.adapter.impl.CommentaireArrayAdapter.ViewHolder;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,13 +57,8 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 		TextView ligneCode;
 	}
 
-	private final Typeface robotoMedium;
-	private final Typeface robotoCondensed;
-
 	public CommentaireArrayAdapter(final Context context) {
 		super(context, R.layout.list_item_commentaire);
-		robotoMedium = FontUtils.getRobotoMedium(context);
-		robotoCondensed = FontUtils.getRobotoBoldCondensed(context);
 	}
 
 	@Override
@@ -91,9 +84,6 @@ public class CommentaireArrayAdapter extends ArraySectionAdapter<Commentaire> {
 		holder.itemDate = (TextView) view.findViewById(R.id.itemTime);
 		holder.itemDescription = (TextView) view.findViewById(R.id.itemDescription);
 
-		holder.ligneCode.setTypeface(robotoCondensed);
-		holder.itemDate.setTypeface(robotoMedium);
-
 		view.setTag(holder);
 	}
 
@@ -115,8 +105,8 @@ class TanTraficCommentaireAdapter implements CommentaireAdapter {
 	public void setObject(final View itemView, final Commentaire item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
-		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_tan);
-		holder.ligneCodeBackground.setImageResource(0);
+		holder.ligneCodeBackground.setBackgroundResource(R.drawable.item_tan_back);
+		holder.ligneCodeBackground.setImageResource(R.drawable.ic_tan);
 		holder.ligneCodeBackground.setVisibility(View.VISIBLE);
 		holder.ligneCode.setVisibility(View.GONE);
 
@@ -138,8 +128,8 @@ class TanActusCommentaireAdapter implements CommentaireAdapter {
 	public void setObject(final View itemView, final Commentaire item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
-		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_tan);
-		holder.ligneCodeBackground.setImageResource(0);
+		holder.ligneCodeBackground.setBackgroundResource(R.drawable.item_tan_back);
+		holder.ligneCodeBackground.setImageResource(R.drawable.ic_tan);
 		holder.ligneCodeBackground.setVisibility(View.VISIBLE);
 		holder.ligneCode.setVisibility(View.GONE);
 
@@ -161,8 +151,8 @@ class TanInfosCommentaireAdapter implements CommentaireAdapter {
 	public void setObject(final View itemView, final Commentaire item) {
 		final ViewHolder holder = (ViewHolder) itemView.getTag();
 
-		holder.ligneCodeBackground.setBackgroundResource(R.drawable.logo_taninfos_background);
-		holder.ligneCodeBackground.setImageResource(R.drawable.logo_taninfos);
+		holder.ligneCodeBackground.setBackgroundResource(R.drawable.item_tan_infos_back);
+		holder.ligneCodeBackground.setImageResource(R.drawable.ic_tan_infos);
 		holder.ligneCodeBackground.setVisibility(View.VISIBLE);
 		holder.ligneCode.setVisibility(View.GONE);
 
@@ -215,7 +205,7 @@ class DefaultCommentaireAdapter implements CommentaireAdapter {
 
 			final Ligne ligne = item.getLigne();
 			if (item.getBackground() == null) {
-				item.setBackground(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
+				item.setBackground(ColorUtils.getCircle(ligne.getCouleur()));
 			}
 
 			holder.ligneCode.setText(ligne.getLettre());

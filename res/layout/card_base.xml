@@ -21,15 +21,12 @@
     style="@style/Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/padding_medium"
-    android:layout_marginTop="@dimen/padding_medium"
     android:orientation="vertical" >
 
     <TextView
         android:id="@android:id/title"
         style="@style/CardTitle"
-        android:paddingBottom="@dimen/padding_small"
-        android:paddingTop="@dimen/padding_small"
+        android:padding="@dimen/padding_medium"
         android:text="@string/card_horaires_title" />
 
     <ProgressBar

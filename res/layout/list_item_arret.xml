@@ -20,34 +20,25 @@
  */
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/DefaultLine"
-    android:layout_margin="0dip"
+    style="@style/DefaultLine.Content"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingBottom="0dip"
-    android:paddingLeft="8dip"
-    android:paddingRight="8dip"
-    android:paddingTop="0dip" >
+    android:paddingBottom="0dp"
+    android:paddingTop="0dp" >
 
     <ImageView
         android:id="@id/itemIcon"
         style="@style/ItemSymbole"
+        android:layout_marginRight="16dip"
         android:background="@drawable/item_symbole_back"
-        android:padding="5dp"
-        android:src="@drawable/ic_arret"
-        android:visibility="gone" />
+        android:src="@drawable/ic_directions_bus"
+        android:visibility="visible" />
 
     <net.naonedbus.widget.StopStepView
         android:id="@+id/itemMetroPoint"
         style="@style/ItemSymbole"
-        android:minHeight="?android:attr/listPreferredItemHeight"
-        android:layout_height="match_parent" />
-
-    <ImageView
-        android:id="@+id/itemFavori"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignBottom="@id/itemIcon"
-        android:layout_alignRight="@id/itemIcon" />
+        android:layout_height="match_parent"
+        android:layout_marginRight="16dip"
+        android:minHeight="?android:attr/listPreferredItemHeight" />
 
     <TextView
         android:id="@id/itemTitle"
@@ -55,8 +46,7 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/dotLocation"
         android:layout_toRightOf="@id/itemIcon"
-        android:paddingLeft="10dip"
-        android:paddingRight="8dp"
+        android:paddingRight="16dp"
         android:text="Titre" />
 
     <ImageView

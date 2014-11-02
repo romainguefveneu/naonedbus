@@ -3,7 +3,7 @@
 
     <item
         android:id="@id/menu_sort"
-        android:icon="@drawable/ic_action_sort_by_size"
+        android:icon="@drawable/ic_sort"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_sort">
@@ -20,7 +20,7 @@
     </item>
     <item
         android:id="@id/menu_group"
-        android:icon="@drawable/ic_action_labels"
+        android:icon="@drawable/ic_label"
         android:orderInCategory="200"
         android:showAsAction="always"
         android:title="@string/action_groups">

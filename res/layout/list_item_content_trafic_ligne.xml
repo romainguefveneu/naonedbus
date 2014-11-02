@@ -21,15 +21,13 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/contentView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/item_block_background"
+    style="@style/DefaultLine.Content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:orientation="vertical" >
 
     <View
         android:id="@id/itemSymbole"
-        android:layout_width="12dip"
+        android:layout_width="4dip"
         android:layout_height="match_parent"
         android:layout_alignBottom="@id/itemDate"
         android:layout_alignTop="@id/itemTitle"

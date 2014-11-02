@@ -5,10 +5,8 @@ import java.util.List;
 import net.naonedbus.R;
 import net.naonedbus.bean.Equipement;
 import net.naonedbus.map.ItemSelectedInfo;
-import net.naonedbus.utils.FontUtils;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,9 +34,6 @@ public abstract class MapLayer {
 		mDescription = (TextView) mContentView.findViewById(R.id.itemDescription);
 		mSubView = (LinearLayout) mContentView.findViewById(R.id.lignes);
 		mMoreAction = (ImageView) mContentView.findViewById(R.id.moreAction);
-
-		Typeface roboto = FontUtils.getRobotoBoldCondensed(inflater.getContext());
-		mTitle.setTypeface(roboto);
 	}
 
 	public LayoutInflater getLayoutInflater() {

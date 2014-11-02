@@ -81,7 +81,8 @@ public class HorairesActivity extends OneFragmentActivity implements OnSensChang
 		mHeaderHelper = new HeaderHelper(this);
 		mHeaderHelper.setColor(ligne.getCouleur(), ligne.getCouleurTexte());
 		mHeaderHelper.setTitle(arret.getNomArret());
-		mHeaderHelper.setSubTitle(FormatUtils.formatSens(ligne.getLettre(), sens.text));
+		mHeaderHelper.setSubTitle(FormatUtils.formatSens(sens.text));
+		mHeaderHelper.setSymbole(ligne.getLettre());
 	}
 
 	@Override

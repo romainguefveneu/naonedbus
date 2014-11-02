@@ -19,13 +19,12 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/DefaultLine.Content"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+    android:minHeight="?android:attr/listPreferredItemHeight" >
 
     <TextView
         android:id="@id/itemSymbole"
         style="@style/ItemSymbole"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="16dp" />
 
     <TextView
         android:id="@id/ligneFrom"

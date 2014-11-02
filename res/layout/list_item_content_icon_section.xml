@@ -25,14 +25,13 @@
     <ImageView
         android:id="@id/itemIcon"
         style="@style/ItemSymbole"
-        android:background="@drawable/item_symbole_back"
-        android:padding="5dp" />
+        android:layout_marginRight="16dip"
+        android:background="@drawable/item_symbole_back" />
 
     <TextView
         android:id="@id/itemTitle"
         style="@style/ItemPrimaryText"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/itemIcon"
-        android:paddingLeft="10dip" />
+        android:layout_toRightOf="@id/itemIcon" />
 
 </RelativeLayout>

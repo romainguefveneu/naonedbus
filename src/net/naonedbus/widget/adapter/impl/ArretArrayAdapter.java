@@ -60,7 +60,7 @@ public class ArretArrayAdapter extends ArrayAdapter<Arret> {
 	@Override
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		if (convertView == null) {
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_arret, null);
+			convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_arret, parent, false);
 			bindViewHolder(convertView);
 		}
 		bindView(convertView, position);

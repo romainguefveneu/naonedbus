@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.naonedbus.R;
-import net.naonedbus.utils.FontUtils;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -157,13 +155,11 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 		private final Context mContext;
 		private final List<TutorialView> mTutorialViews;
 		private final LayoutInflater mLayoutInflater;
-		private final Typeface mRoboto;
 
 		public TutorialPagerAdapter(final Context context) {
 			mContext = context;
 			mTutorialViews = new ArrayList<TutorialActivity.TutorialView>();
 			mLayoutInflater = LayoutInflater.from(context);
-			mRoboto = FontUtils.getRobotoLight(context);
 		}
 
 		public void addView(final TutorialView view) {
@@ -182,7 +178,6 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 
 			final TextView title = (TextView) layout.findViewById(android.R.id.title);
 			title.setText(mContext.getString(tutorialView.titleResId));
-			title.setTypeface(mRoboto);
 
 			final TextView summary = (TextView) layout.findViewById(android.R.id.summary);
 			summary.setText(Html.fromHtml(mContext.getString(tutorialView.summaryResId).toString()));

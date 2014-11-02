@@ -21,22 +21,6 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="SectionTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <!-- See comments for @dimen/list_section_divider_min_height -->
-        <item name="android:minHeight">@dimen/list_section_divider_min_height</item>
-        <item name="android:background">?attr/sectionBackground</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textColor">?attr/sectionColor</item>
-        <item name="android:paddingLeft">8dip</item>
-        <item name="android:ellipsize">end</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-
     <style name="SectionTitle.Small" parent="ItemPrimaryText.Small">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?attr/secondaryColor</item>
@@ -50,7 +34,7 @@
         <item name="android:layout_marginTop">@dimen/padding_medium</item>
         <item name="android:layout_marginBottom">@dimen/padding_tiny</item>
         <item name="android:textStyle">italic</item>
-        <item name="android:textColor">@color/modern_section__color</item>
+        <item name="android:textColor">@color/modern_section_color</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>

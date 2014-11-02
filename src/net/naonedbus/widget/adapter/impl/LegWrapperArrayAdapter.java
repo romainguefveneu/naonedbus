@@ -7,10 +7,8 @@ import net.naonedbus.bean.LegWrapper;
 import net.naonedbus.bean.LegWrapper.Type;
 import net.naonedbus.bean.Ligne;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -25,13 +23,10 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 
 	private final LayoutInflater mLayoutInflater;
 	private final int mSecondaryColor;
-	private final Typeface mRobotoCondensed;
 
 	public LegWrapperArrayAdapter(final Context context, final List<LegWrapper> objects) {
 		super(context, 0, objects);
 		mLayoutInflater = LayoutInflater.from(context);
-
-		mRobotoCondensed = FontUtils.getRobotoBoldCondensed(context);
 
 		// Lazily get the URL color from the current theme.
 		final TypedValue colorValue = new TypedValue();
@@ -62,8 +57,6 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 			viewHolder.itemTime = (TextView) view.findViewById(R.id.itemTime);
 			viewHolder.itemPlace = (TextView) view.findViewById(R.id.itemPlace);
 			viewHolder.itemMetroPoint = view.findViewById(R.id.itemMetroPoint);
-
-			viewHolder.itemSymbole.setTypeface(mRobotoCondensed);
 
 			view.setTag(viewHolder);
 		} else {
@@ -112,7 +105,7 @@ public class LegWrapperArrayAdapter extends ArrayAdapter<LegWrapper> {
 
 				viewHolder.itemSymbole.setText(ligne.getLettre());
 				viewHolder.itemSymbole.setTextColor(ligne.getCouleurTexte());
-				viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getRoundedGradiant(ligne.getCouleur()));
+				viewHolder.itemSymbole.setBackgroundDrawable(ColorUtils.getCircle(ligne.getCouleur()));
 			} else {
 				viewHolder.itemIcon.setVisibility(View.INVISIBLE);
 				viewHolder.itemSymbole.setVisibility(View.INVISIBLE);

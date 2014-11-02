@@ -102,7 +102,7 @@ public class ParkingPublicArrayAdapter extends ArraySectionAdapter<ParkingPublic
 			couleur = context.getResources().getColor(parkingPublic.getStatut().getColorRes());
 		}
 
-		parkingPublic.setBackgroundDrawable(ColorUtils.getRoundedGradiant(couleur));
+		parkingPublic.setBackgroundDrawable(ColorUtils.getCircle(couleur));
 		parkingPublic.setDetail(detail);
 	}
 

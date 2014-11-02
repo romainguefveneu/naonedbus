@@ -20,10 +20,9 @@ package net.naonedbus.helper;
 
 import net.naonedbus.R;
 import net.naonedbus.utils.ColorUtils;
-import net.naonedbus.utils.FontUtils;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
+import android.graphics.Color;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -37,6 +36,7 @@ public class HeaderHelper {
 	private View mHeader;
 	private TextView mTitle;
 	private TextView mSubTitle;
+	private TextView mSymbole;
 
 	public HeaderHelper(final Activity activity) {
 		mContext = activity;
@@ -49,22 +49,27 @@ public class HeaderHelper {
 	}
 
 	private void init(final View view) {
-		final Typeface robotoBold = FontUtils.getRobotoBoldCondensed(mContext);
-
 		mHeader = view.findViewById(R.id.headerView);
 
 		mTitle = (TextView) view.findViewById(R.id.headerTitle);
 		mSubTitle = (TextView) view.findViewById(R.id.headerSubTitle);
-
-		mTitle.setTypeface(robotoBold);
-		mSubTitle.setTypeface(robotoBold);
+		mSymbole = (TextView) view.findViewById(R.id.itemSymbole);
 	}
 
 	public void setColor(final int backColor, final int textColor) {
-		mHeader.setBackgroundDrawable(ColorUtils.getGradiant(backColor));
+		mHeader.setBackgroundColor(backColor);
 
 		mTitle.setTextColor(textColor);
 		mSubTitle.setTextColor(textColor);
+		mSymbole.setTextColor(textColor);
+
+		int circleColor;
+		if (textColor == Color.WHITE) {
+			circleColor = ColorUtils.getDarkerColor(backColor);
+		} else {
+			circleColor = ColorUtils.getLighterColor(backColor);
+		}
+		mSymbole.setBackgroundDrawable(ColorUtils.getCircle(circleColor));
 	}
 
 	public void setTitle(final CharSequence title) {
@@ -86,6 +91,10 @@ public class HeaderHelper {
 		} else {
 			mSubTitle.setVisibility(View.VISIBLE);
 		}
+	}
+
+	public void setSymbole(String symbole) {
+		mSymbole.setText(symbole);
 	}
 
 	public void setSubTitleAnimated(final CharSequence subtitle) {

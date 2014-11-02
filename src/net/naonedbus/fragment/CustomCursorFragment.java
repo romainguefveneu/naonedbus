@@ -23,14 +23,12 @@ import java.util.List;
 
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
-import net.naonedbus.utils.FontUtils;
 import net.naonedbus.widget.PinnedHeaderListView;
 
 import org.joda.time.DateTime;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -310,10 +308,6 @@ public abstract class CustomCursorFragment extends SherlockListFragment implemen
 		if (message == null) {
 			final ViewStub messageStrub = (ViewStub) mFragmentView.findViewById(R.id.fragmentMessageStub);
 			message = messageStrub.inflate();
-			final Typeface robotoLight = FontUtils.getRobotoLight(getActivity());
-			final Typeface robotoCondensed = FontUtils.getRobotoBoldCondensed(getActivity());
-			((TextView) message.findViewById(android.R.id.summary)).setTypeface(robotoLight);
-			((TextView) message.findViewById(android.R.id.title)).setTypeface(robotoCondensed);
 		}
 
 		message.setVisibility(View.VISIBLE);
