@@ -72,7 +72,8 @@
         </activity>
         <activity
             android:name=".activity.impl.AboutActivity"
-            android:label="@string/title_activity_about" />
+            android:label="@string/title_activity_about"
+            android:theme="@style/Theme.Acapulco.Light.Main" />
         <activity android:name=".activity.impl.SensActivity" />
         <activity android:name=".activity.impl.ArretsActivity" />
         <activity android:name=".activity.impl.HorairesActivity" />

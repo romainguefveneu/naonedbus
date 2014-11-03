@@ -105,13 +105,18 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:drawablePadding">8dip</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="android:padding">8dip</item>
+        <item name="android:paddingTop">8dip</item>
+        <item name="android:paddingBottom">8dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:clickable">true</item>
     </style>
 
     <style name="SectionContentItem.Small">
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:paddingRight">8dip</item>
         <item name="android:minHeight">0dp</item>
     </style>
 
@@ -489,17 +494,36 @@
         <item name="android:paddingRight">@dimen/padding_tiny</item>
     </style>
 
+    <style name="ContactView">
+        <item name="android:paddingBottom">8dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+        <item name="android:paddingTop">8dip</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="subtitleTextStyle">@style/ContactViewSubTitle</item>
+        <item name="titleTextStyle">@style/ContactViewTitle</item>
+        <item name="avatarSize">40dip</item>
+    </style>
+
+    <style name="ContactViewTitle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+    <style name="ContactViewSubTitle" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+
     <style name="Card">
         <item name="android:background">@drawable/item_block_background</item>
     </style>
 
     <style name="CardAbout">
-        <item name="android:background">@drawable/card_bg_play</item>
-        <item name="android:padding">@dimen/padding_small</item>
         <item name="android:layout_marginBottom">@dimen/padding_medium</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
+        <item name="android:padding">8dip</item>
     </style>
 
     <style name="CardTextHuge">
@@ -516,10 +540,7 @@
         <item name="android:textSize">24sp</item>
     </style>
 
-    <style name="CardAboutTitle" parent="CardTitle">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">italic</item>
-    </style>
+    <style name="CardAboutTitle" parent="SectionTitle" />
 
     <style name="CardTitle.Primary">
         <item name="android:textColor">@color/holo_green</item>

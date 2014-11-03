@@ -4,7 +4,7 @@
         android:id="@id/menu_sort"
         android:icon="@drawable/ic_sort"
         android:orderInCategory="100"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/action_sort">
         <menu>
             <group android:checkableBehavior="single" >
@@ -22,5 +22,11 @@
             </group>
         </menu>
     </item>
+    <item
+        android:id="@id/menu_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="200"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_search"/>
 
 </menu>

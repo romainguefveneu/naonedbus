@@ -39,6 +39,9 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
 public class MainActivity extends MenuDrawerActivity {
@@ -68,6 +71,17 @@ public class MainActivity extends MenuDrawerActivity {
 			}
 		}
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_search:
+			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private void hideActionBar() {

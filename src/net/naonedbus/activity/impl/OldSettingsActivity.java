@@ -21,6 +21,7 @@ package net.naonedbus.activity.impl;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import net.naonedbus.activity.MenuDrawerActivity;
 import net.naonedbus.manager.impl.HoraireManager;
 import net.naonedbus.utils.CalendarUtils;
 import net.naonedbus.widget.item.impl.DrawerMenuItem;
+import net.naonedbus.widget.item.impl.MainMenuItem;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
@@ -95,21 +97,23 @@ public class OldSettingsActivity extends SherlockPreferenceActivity {
 	private void initNavigationHome(final SharedPreferences preferences) {
 		final List<DrawerMenuItem> items = MenuDrawerActivity.getMainMenuItems();
 
-		final String[] entriesName = new String[items.size()];
-		final String[] entriesId = new String[items.size()];
+		final List<String> entriesName = new ArrayList<String>();
+		final List<String> entriesId = new ArrayList<String>();
 
 		for (int i = 0; i < items.size(); i++) {
 			final DrawerMenuItem item = items.get(i);
-			entriesName[i] = getString(item.getTitle());
-			entriesId[i] = String.valueOf(i);
+			if (item instanceof MainMenuItem) {
+				entriesName.add(getString(item.getTitle()));
+				entriesId.add(String.valueOf(i));
+			}
 		}
 
 		final int section = Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0"));
 		final DrawerMenuItem item = items.get(section);
 		mNavigationHome.setSummary(getString(item.getTitle()));
 
-		mNavigationHome.setEntries(entriesName);
-		mNavigationHome.setEntryValues(entriesId);
+		mNavigationHome.setEntries(entriesName.toArray(new String[entriesName.size()]));
+		mNavigationHome.setEntryValues(entriesId.toArray(new String[entriesId.size()]));
 		mNavigationHome.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 			@Override
 			public boolean onPreferenceChange(final Preference preference, final Object newValue) {

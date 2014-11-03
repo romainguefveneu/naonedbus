@@ -3,7 +3,7 @@
 
     <item
         android:id="@id/menu_filter"
-        android:icon="@drawable/ic_style"
+        android:icon="@drawable/ic_filter"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_favori">
@@ -20,5 +20,11 @@
             </group>
         </menu>
     </item>
+    <item
+        android:id="@id/menu_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="200"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_search"/>
 
 </menu>

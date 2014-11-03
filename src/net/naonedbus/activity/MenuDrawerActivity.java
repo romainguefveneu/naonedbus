@@ -241,6 +241,15 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		if (DBG)
 			Log.d(LOG_TAG, "selectItem " + position);
 
+		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					mDrawerLayout.closeDrawer(mDrawerList);
+				}
+			}, 100);
+		}
+
 		mCurrentMenuItem = position;
 
 		final DrawerMenuItem item = mAdapter.getItem(position);
@@ -272,15 +281,6 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 			default:
 				break;
 			}
-		}
-
-		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-			new Handler().postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					mDrawerLayout.closeDrawer(mDrawerList);
-				}
-			}, 100);
 		}
 	}
 
@@ -364,9 +364,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 				new BicloosFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_local_parking_grey,
 				new ParkingsFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_recherche, R.drawable.ic_search_grey,
-				new SearchFragmentHeader()));
-		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_map_grey, new MapFragmentHeader()));
+		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_explore_grey, new MapFragmentHeader()));
 		items.add(new SettingMenuItem(R.id.menu_settings, R.string.title_activity_parametres));
 		items.add(new SettingMenuItem(R.id.menu_about, R.string.title_activity_about));
 		items.add(new SettingMenuItem(R.id.menu_donate, R.string.title_activity_donate));

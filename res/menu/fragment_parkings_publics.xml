@@ -3,7 +3,7 @@
     <item
         android:id="@id/menu_sort"
         android:icon="@drawable/ic_sort"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/action_sort">
         <menu>
             <group android:checkableBehavior="single" >
@@ -29,7 +29,12 @@
     <item
         android:id="@id/menu_refresh"
         android:icon="@drawable/ic_refresh"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/action_refresh"/>
+    <item
+        android:id="@id/menu_search"
+        android:icon="@drawable/ic_search"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_search"/>
 
 </menu>

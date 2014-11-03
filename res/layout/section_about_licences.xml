@@ -25,7 +25,12 @@
         android:layout_height="wrap_content"
         android:text="@string/about_licences_title" />
 
-    <LinearLayout style="@style/CardAbout" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="?android:attr/dividerHorizontal"
+        android:orientation="vertical"
+        android:showDividers="middle" >
 
         <TextView
             android:id="@id/aboutLicenceIcons"
@@ -34,8 +39,6 @@
             android:layout_height="wrap_content"
             android:linksClickable="true"
             android:text="@string/about_licences_icons" />
-
-        <View style="@style/Divider" />
 
         <TextView
             android:id="@id/aboutLicenceLibs"

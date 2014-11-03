@@ -20,6 +20,7 @@
         <item name="actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
+        <item name="homeAsUpIndicator">@drawable/ic_drawer</item>
 
         <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
