@@ -145,7 +145,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 			int errorCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
 
 			final String title = getString(R.string.msg_error_location_title);
-			final String summary = GooglePlayServicesUtil.c(getActivity(), errorCode);
+			final String summary = GooglePlayServicesUtil.d(getActivity(), errorCode);
 			final String buttonTitle = GooglePlayServicesUtil.d(getActivity(), errorCode);
 			final PendingIntent intent = GooglePlayServicesUtil.getErrorPendingIntent(errorCode, getActivity(), 0);
 

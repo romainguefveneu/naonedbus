@@ -21,6 +21,7 @@
 <resources>
 
     <color name="acapulco">#137AAA</color>
+    <color name="acapulco_dark">#126A93</color>
     <color name="pressed_acapulco">#CC137AAA</color>
 
 </resources>

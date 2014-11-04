@@ -20,21 +20,7 @@
 
 <resources>
 
-    <style name="Theme.Acapulco" parent="@style/Theme.Sherlock.Light.DarkActionBar">
-        <item name="actionBarItemBackground">@drawable/selectable_background_acapulco</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Acapulco</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Acapulco</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Acapulco</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Acapulco</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.Acapulco</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_acapulco</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
-        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
-
-        <!-- Light.DarkActionBar specific -->
-        <item name="actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
-    </style>
-
+ 
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_acapulco</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>
