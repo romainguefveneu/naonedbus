@@ -25,4 +25,4 @@
     style="@style/SectionTitle"
     android:layout_gravity="fill"
     android:drawablePadding="@dimen/padding_small"
-    android:paddingLeft="@dimen/padding_small" />
+    android:paddingLeft="16dip" />

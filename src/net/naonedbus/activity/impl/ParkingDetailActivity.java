@@ -270,7 +270,7 @@ class ParkingPublicDetailAdapter implements ParkingDetailAdapter {
 		}
 
 		activity.mParkingDescription.setText(detail);
-		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getCircle(couleur));
+		activity.mParkingDescription.setBackgroundDrawable(ColorUtils.getRoundedRect(couleur));
 
 		if (parking.getStatut().equals(ParkingPublicStatut.INVALIDE)
 				|| parking.getStatut().equals(ParkingPublicStatut.ABONNES)) {

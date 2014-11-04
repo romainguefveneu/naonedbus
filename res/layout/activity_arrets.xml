@@ -65,6 +65,7 @@
         android:id="@+id/showcase"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dip"
         showcase:backgroundColor="#cc000000" >
 
         <TextView

@@ -31,7 +31,9 @@
     <ListView
         android:id="@id/android:list"
         style="@style/Listview"
-        android:layout_below="@id/form" />
+        android:layout_below="@id/form"
+        android:divider="@color/list_divider"
+        android:dividerHeight="1dip" />
 
     <ProgressBar
         android:id="@android:id/progress"

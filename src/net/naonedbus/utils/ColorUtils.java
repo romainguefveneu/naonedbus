@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RoundRectShape;
 
 public abstract class ColorUtils {
 
@@ -116,6 +117,20 @@ public abstract class ColorUtils {
 		}
 
 		final ShapeDrawable d = new ShapeDrawable(new OvalShape());
+		d.getPaint().setColor(color);
+
+		return d;
+	}
+
+	public static synchronized ShapeDrawable getRoundedRect(final int color) {
+		if (color == Color.TRANSPARENT) {
+			return null;
+		}
+		int r = 3;
+		float[] outerR = new float[] { r, r, r, r, r, r, r, r };
+		RoundRectShape rr = new RoundRectShape(outerR, null, null);
+
+		final ShapeDrawable d = new ShapeDrawable(rr);
 		d.getPaint().setColor(color);
 
 		return d;

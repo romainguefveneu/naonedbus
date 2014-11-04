@@ -31,6 +31,6 @@
     dslv:drag_scroll_start="0.33"
     dslv:drag_start_mode="onDown"
     dslv:float_alpha="0.6"
-    dslv:float_background_color="@color/holo_blue_selected"
+    dslv:float_background_color="?attr/selectableItemBackground"
     dslv:remove_enabled="false"
     dslv:slide_shuffle_speed="0.3" />

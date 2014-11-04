@@ -368,11 +368,7 @@
     </style>
 
     <style name="BigTitle.Blue">
-        <item name="android:textColor">@color/holo_blue_light</item>
-    </style>
-
-    <style name="BigTitle.Green">
-        <item name="android:textColor">@color/holo_green</item>
+        <item name="android:textColor">@color/acapulco</item>
     </style>
 
     <style name="BigSubTitle" parent="BigTitle">
@@ -424,6 +420,7 @@
         <item name="android:divider">@drawable/list_divider</item>
         <item name="android:dividerHeight">1dip</item>
         <item name="android:fastScrollEnabled">true</item>
+        <item name="android:listSelector">@drawable/selectable_menu_background</item>
     </style>
 
     <style name="Listview.Holo">
@@ -443,7 +440,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/bigtitle_text_size</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/holo_blue_light</item>
+        <item name="android:textColor">@color/acapulco</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:lines">2</item>
         <item name="android:layout_marginBottom">8dip</item>
@@ -499,7 +496,7 @@
         <item name="android:paddingLeft">16dip</item>
         <item name="android:paddingRight">16dip</item>
         <item name="android:paddingTop">8dip</item>
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:clickable">true</item>
         <item name="subtitleTextStyle">@style/ContactViewSubTitle</item>
         <item name="titleTextStyle">@style/ContactViewTitle</item>
@@ -528,7 +525,7 @@
 
     <style name="CardTextHuge">
         <item name="android:textSize">@dimen/horaire_huge</item>
-        <item name="android:textColor">@color/holo_blue_light</item>
+        <item name="android:textColor">@color/acapulco</item>
     </style>
 
     <style name="CardTitle" parent="BigTitle">

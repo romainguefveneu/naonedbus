@@ -55,7 +55,7 @@ public class FavoriArrayAdapter extends ArraySectionAdapter<Favori> {
 
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
 			if (mCheckedItemPositions.get(position)) {
-				view.setBackgroundResource(R.color.holo_blue_selected);
+				view.setBackgroundResource(R.color.list_selected);
 			} else {
 				view.setBackgroundResource(android.R.color.transparent);
 			}

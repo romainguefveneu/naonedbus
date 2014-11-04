@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:drawablePadding="16dp"
-            android:drawableTop="@drawable/logo_large"
+            android:drawableTop="@drawable/ic_logo"
             android:gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/tertiary_text_light" />

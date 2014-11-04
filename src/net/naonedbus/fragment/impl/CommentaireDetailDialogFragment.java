@@ -86,19 +86,19 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 
 		if (NaonedbusClient.TWITTER_TAN_TRAFIC.name().equals(source)) {
 
-			setSymbole(R.drawable.logo_tan, res.getColor(R.color.message_tan_header),
+			setSymbole(R.drawable.ic_tan, res.getColor(R.color.message_tan_header),
 					res.getColor(R.color.message_tan_text));
 			setTitle(getString(R.string.commentaire_tan_info_trafic));
 
 		} else if (NaonedbusClient.TWITTER_TAN_ACTUS.name().equals(source)) {
 
-			setSymbole(R.drawable.logo_tan, res.getColor(R.color.message_tan_header),
+			setSymbole(R.drawable.ic_tan, res.getColor(R.color.message_tan_header),
 					res.getColor(R.color.message_tan_text));
 			setTitle(getString(R.string.commentaire_tan_actus));
 
 		} else if (NaonedbusClient.TWITTER_TAN_INFOS.name().equals(source)) {
 
-			setSymbole(R.drawable.logo_taninfos, res.getColor(R.color.message_taninfos_header),
+			setSymbole(R.drawable.ic_tan_infos, res.getColor(R.color.message_taninfos_header),
 					res.getColor(R.color.message_taninfos_text));
 			setTitle(getString(R.string.commentaire_tan_infos));
 
@@ -126,6 +126,14 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 		setHeaderColor(backColor, textColor);
 
 		mItemSymbole.setVisibility(View.GONE);
+
+		int circleColor;
+		if (textColor == Color.WHITE) {
+			circleColor = ColorUtils.getDarkerColor(backColor);
+		} else {
+			circleColor = ColorUtils.getLighterColor(backColor);
+		}
+		mItemCode.setBackgroundDrawable(ColorUtils.getCircle(circleColor));
 	}
 
 	public void setSymbole(final int resId, final int backColor, final int textColor) {
@@ -139,13 +147,13 @@ public class CommentaireDetailDialogFragment extends SherlockDialogFragment {
 	}
 
 	public void setHeaderColor(final int backColor, final int textColor) {
-		mHeaderView.setBackgroundDrawable(ColorUtils.getGradiant(backColor));
+		mHeaderView.setBackgroundColor(backColor);
 		mHeaderDivider.setBackgroundColor(ColorUtils.getDarkerColor(backColor));
 
 		if (textColor == Color.WHITE) {
-			mImageView.setImageResource(R.drawable.ic_action_share);
+			mImageView.setImageResource(R.drawable.ic_share);
 		} else {
-			mImageView.setImageResource(R.drawable.ic_action_share_light);
+			mImageView.setImageResource(R.drawable.ic_share_black);
 		}
 	}
 

@@ -37,11 +37,11 @@
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Acapulco</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav.Acapulco</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Acapulco</item>
-        <item name="android:actionModeBackground">@drawable/cab_background_top_acapulco</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
+        <item name="android:actionModeBackground">@color/acapulco</item>
+        <item name="android:actionModeSplitBackground">@color/acapulco</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowMenuButton</item>
-        <item name="android:displayOptions">showTitle|homeAsUp</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_up_compat</item>
 
         <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
@@ -49,7 +49,8 @@
 
     <style name="Theme.Acapulco.Main">
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Plain.Main</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Plain</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_drawer</item>
     </style>
 
     <style name="Theme.Acapulco.Tabs">
@@ -62,9 +63,8 @@
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_acapulco</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Acapulco</item>
-        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:icon">@drawable/actionbar_icon_placeholder</item>
         <item name="android:indeterminateProgressStyle">@style/ActionBarIndeterminateProgressStyle.Acapulco</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_arrow_back</item>
     </style>
 
     <style name="ActionBarIndeterminateProgressStyle.Acapulco" parent="@style/Widget.Sherlock.ProgressBar">
@@ -90,15 +90,8 @@
         <item name="android:background">@color/acapulco</item>
         <item name="android:backgroundStacked">@color/acapulco</item>
         <item name="android:backgroundSplit">@color/acapulco</item>
-        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:icon">@drawable/actionbar_icon_placeholder</item>
         <item name="android:indeterminateProgressStyle">@style/ActionBarIndeterminateProgressStyle.Acapulco</item>
-        <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
-    </style>
-
-    <style name="ActionBar.Plain.Main">
-        <item name="android:icon">@drawable/ic_menu</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_menu</item>
-        <item name="homeAsUpIndicator">@drawable/ic_menu</item>
     </style>
 
 </resources>

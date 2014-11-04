@@ -16,12 +16,11 @@
         <item name="actionBarTabStyle">@style/ActionBarTabStyle.Acapulco</item>
         <item name="actionDropDownStyle">@style/DropDownNav.Acapulco</item>
         <item name="actionBarStyle">@style/ActionBar.Solid.Acapulco</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_acapulco</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_acapulco</item>
+        <item name="actionModeBackground">@color/acapulco</item>
+        <item name="actionModeSplitBackground">@color/acapulco</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Acapulco</item>
         <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
-        <item name="homeAsUpIndicator">@drawable/ic_arrow_back</item>
-        <item name="displayOptions">showTitle|homeAsUp</item>
+        <item name="homeAsUpIndicator">@drawable/ic_ab_up_compat</item>
 
         <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.Acapulco.Widget</item>
@@ -29,11 +28,13 @@
 
     <style name="Theme.Acapulco.Tabs">
         <item name="windowContentOverlay">@null</item>
+        <item name="actionBarStyle">@style/ActionBar.Plain</item>
     </style>
 
     <style name="Theme.Acapulco.Main">
         <item name="windowContentOverlay">@null</item>
-        <item name="actionBarStyle">@style/ActionBar.Plain.Main</item>
+        <item name="actionBarStyle">@style/ActionBar.Plain</item>
+        <item name="homeAsUpIndicator">@drawable/ic_drawer</item>
     </style>
 
     <style name="Theme.Acapulco.Card">
@@ -46,7 +47,7 @@
         <item name="primaryColor">@android:color/primary_text_dark</item>
         <item name="secondaryColor">@android:color/secondary_text_dark</item>
         <item name="dividerColor">@color/divider_dark</item>
-        <item name="sectionColor">@color/holo_blue_dark</item>
+        <item name="sectionColor">@color/acapulco</item>
         <item name="blockBackground">@drawable/block_dark</item>
         <item name="sectionBackground">@drawable/list_section_underline_dark</item>
     </style>
@@ -55,16 +56,16 @@
         <item name="background">@color/acapulco</item>
         <item name="backgroundStacked">@color/acapulco</item>
         <item name="backgroundSplit">@color/acapulco</item>
-        <item name="icon">@drawable/ic_icon_actionbar</item>
+        <item name="icon">@drawable/actionbar_icon_placeholder</item>
         <item name="indeterminateProgressStyle">@style/ActionBarIndeterminateProgressStyle.Acapulco</item>
     </style>
 
-    <style name="ActionBar.Plain.Main">
-        <item name="homeAsUpIndicator">@drawable/ic_menu</item>
-    </style>
-
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="icon">@drawable/ic_icon_actionbar</item>
+        <item name="background">@drawable/ab_solid_acapulco</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_acapulco</item>
+        <item name="progressBarStyle">@style/ProgressBar.Acapulco</item>
+        <item name="icon">@drawable/actionbar_icon_placeholder</item>
         <item name="indeterminateProgressStyle">@style/ActionBarIndeterminateProgressStyle.Acapulco</item>
     </style>
 

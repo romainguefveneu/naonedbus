@@ -85,7 +85,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 	private String mLastAddress;
 	private boolean mPlayServiceSuccess;
 
-	private TextView headerTextView;
+	private TextView mHeaderTextView;
 
 	public ProximiteFragment() {
 		super(R.layout.fragment_proximite);
@@ -126,7 +126,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 			Log.d(LOG_TAG, "onCreateView");
 
 		final View view = super.onCreateView(inflater, container, savedInstanceState);
-		headerTextView = (TextView) view.findViewById(R.id.text);
+		mHeaderTextView = (TextView) view.findViewById(R.id.text);
 
 		return view;
 	}
@@ -146,7 +146,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 
 			final String title = getString(R.string.msg_error_location_title);
 			final String summary = GooglePlayServicesUtil.d(getActivity(), errorCode);
-			final String buttonTitle = GooglePlayServicesUtil.d(getActivity(), errorCode);
+			final String buttonTitle = GooglePlayServicesUtil.e(getActivity(), errorCode);
 			final PendingIntent intent = GooglePlayServicesUtil.getErrorPendingIntent(errorCode, getActivity(), 0);
 
 			showMessage(title, summary, R.drawable.ic_msg_google_play);
@@ -311,9 +311,8 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 
 	@Override
 	public void onConnecting() {
-		headerTextView.setVisibility(View.VISIBLE);
-		headerTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-		headerTextView.setText(R.string.msg_loading_address);
+		mHeaderTextView.setVisibility(View.VISIBLE);
+		mHeaderTextView.setText(R.string.msg_loading_address);
 		showLoader();
 	}
 
@@ -334,7 +333,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 		if (DBG)
 			Log.d(LOG_TAG, "onLocationDisabled");
 
-		headerTextView.setVisibility(View.GONE);
+		mHeaderTextView.setVisibility(View.GONE);
 
 		if (mPlayServiceSuccess == true) {
 			showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
@@ -350,7 +349,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 
 	@Override
 	public void onLocationTimeout() {
-		headerTextView.setVisibility(View.GONE);
+		mHeaderTextView.setVisibility(View.GONE);
 
 		if (mPlayServiceSuccess == true) {
 			showMessage(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.location);
@@ -391,18 +390,16 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 
 	@Override
 	public void onAddressTaskPreExecute() {
-		headerTextView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-		headerTextView.setText(R.string.msg_loading_address);
+		mHeaderTextView.setText(R.string.msg_loading_address);
 	}
 
 	@Override
 	public void onAddressTaskResult(final Address address) {
 		if (address != null) {
 			mLastAddress = FormatUtils.formatAddress(address, null);
-			headerTextView.setText(mLastAddress);
-			headerTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_my_location_small, 0, 0, 0);
+			mHeaderTextView.setText(mLastAddress);
 		} else {
-			headerTextView.setText(R.string.error_current_address);
+			mHeaderTextView.setText(R.string.error_current_address);
 		}
 	}
 

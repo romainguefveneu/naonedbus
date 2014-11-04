@@ -34,11 +34,11 @@
         android:layout_marginRight="@dimen/padding_small"
         android:layout_marginTop="@dimen/padding_small"
         android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_action_share_light" />
+        android:src="@drawable/ic_share_black" />
 
     <TextView
         android:id="@id/itemTime"
-        style="@style/BigTitle.Green"
+        style="@style/BigTitle.Blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"

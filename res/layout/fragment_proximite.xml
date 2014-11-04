@@ -27,8 +27,6 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/padding_listview"
-        android:layout_marginRight="@dimen/padding_listview"
         layout="@layout/address_bar" />
 
     <net.naonedbus.widget.PinnedHeaderListView

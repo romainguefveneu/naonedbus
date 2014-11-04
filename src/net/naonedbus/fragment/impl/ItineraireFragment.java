@@ -37,6 +37,7 @@ import net.naonedbus.task.AddressResolverTask;
 import net.naonedbus.task.AddressResolverTask.AddressTaskListener;
 import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.utils.FormatUtils;
+import net.naonedbus.widget.adapter.impl.DateKindSpinnerAdaper;
 import net.naonedbus.widget.adapter.impl.ItineraryWrapperArrayAdapter;
 
 import org.joda.time.MutableDateTime;
@@ -70,7 +71,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.bugsense.trace.BugSenseHandler;
-import com.haarman.listviewanimations.swinginadapters.prepared.SwingBottomInAnimationAdapter;
 
 public class ItineraireFragment extends AbstractListFragment implements
 		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener, NaoLocationListener {
@@ -92,12 +92,10 @@ public class ItineraireFragment extends AbstractListFragment implements
 
 	private final List<ItineraryWrapper> mItineraryWrappers = new ArrayList<ItineraryWrapper>();
 	private ItineraryWrapperArrayAdapter mAdapter;
-	private SwingBottomInAnimationAdapter mAnimationAdapter;
 	private View mProgressView;
 
 	private DateFormat mDateFormat;
 	private AddressResolverTask mAddressResolverTask;
-	private String mCurrentAddress;
 
 	private final NaoLocationManager mLocationProvider;
 	private final Location mFromLocation = new Location(LocationManager.GPS_PROVIDER);
@@ -124,7 +122,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 	private int mIconPadding;
 
 	private boolean mDialogLock;
-	private boolean mAfterBindView;
 
 	public ItineraireFragment() {
 		super(R.layout.fragment_itineraire);
@@ -210,9 +207,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		mProgressView = view.findViewById(android.R.id.progress);
 
 		mAdapter = new ItineraryWrapperArrayAdapter(getActivity(), mItineraryWrappers);
-		mAnimationAdapter = new SwingBottomInAnimationAdapter(mAdapter);
-		mAnimationAdapter.setListView(listView);
-		listView.setAdapter(mAnimationAdapter);
+		listView.setAdapter(mAdapter);
 
 		mIconFrom = (ImageView) view.findViewById(R.id.formIconFrom);
 		mIconTo = (ImageView) view.findViewById(R.id.formIconTo);
@@ -242,6 +237,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		});
 
 		mDateKindSpinner = (Spinner) view.findViewById(R.id.dateKind);
+		mDateKindSpinner.setAdapter(new DateKindSpinnerAdaper(getActivity()));
 		mDateKindSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
@@ -295,7 +291,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 		}
 
 		setDateValue();
-		mAfterBindView = true;
 	}
 
 	@Override
@@ -459,7 +454,6 @@ public class ItineraireFragment extends AbstractListFragment implements
 	}
 
 	private void sendRequest() {
-		mAnimationAdapter.reset();
 		if (mFromLocation.bearingTo(mToLocation) == 0.0f) {
 			hideProgress();
 			mItineraryWrappers.add(ItineraryWrapper.getUnicornItinerary());

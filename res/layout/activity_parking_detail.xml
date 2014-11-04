@@ -25,11 +25,14 @@
 
     <TextView
         android:id="@id/itemTitle"
-        style="@style/BigTitle.Blue" />
+        style="@style/BigTitle.Blue"
+        android:layout_marginLeft="8dip"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@id/itemDescription"
-        style="@style/ItemParkingDescription" />
+        style="@style/ItemParkingDescription"
+        android:layout_marginLeft="8dip" />
 
     <LinearLayout
         style="@style/Card"

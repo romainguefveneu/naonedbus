@@ -25,7 +25,9 @@
 
     <TextView
         android:id="@id/itemTitle"
-        style="@style/BigTitle.Blue" />
+        style="@style/BigTitle.Blue"
+        android:layout_marginLeft="8dip"
+        android:textStyle="bold" />
 
     <LinearLayout
         style="@style/Card"

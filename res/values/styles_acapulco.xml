@@ -20,14 +20,6 @@
 
 <resources>
 
- 
-    <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="background">@drawable/ab_solid_acapulco</item>
-        <item name="backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>
-        <item name="backgroundSplit">@drawable/ab_bottom_solid_acapulco</item>
-        <item name="progressBarStyle">@style/ProgressBar.Acapulco</item>
-    </style>
-
     <style name="ActionBar.Transparent.Acapulco" parent="@style/Widget.Sherlock.ActionBar">
         <item name="background">@drawable/ab_transparent_acapulco</item>
         <item name="progressBarStyle">@style/ProgressBar.Acapulco</item>
