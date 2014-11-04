@@ -543,7 +543,7 @@
     <style name="CardAboutTitle" parent="SectionTitle" />
 
     <style name="CardTitle.Primary">
-        <item name="android:textColor">@color/holo_green</item>
+        <item name="android:textColor">@color/acapulco</item>
     </style>
 
     <style name="CardMessage" parent="@style/ItemSecondaryText.SingleLine">

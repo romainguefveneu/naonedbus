@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
+    android:background="@color/acapulco"
     android:orientation="vertical"
-    android:padding="@dimen/padding_small" >
+    android:paddingBottom="8dip"
+    android:paddingLeft="16dip"
+    android:paddingRight="8dip"
+    android:paddingTop="8dip" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,7 +69,8 @@
                 android:nextFocusForward="@id/formTo"
                 android:paddingBottom="@dimen/padding_small"
                 android:paddingTop="@dimen/padding_small"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMediumInverse"
+                android:textColorHint="#80ffffff" />
 
             <TextView
                 android:id="@id/formTo"
@@ -83,7 +87,8 @@
                 android:nextFocusForward="@id/dateAndTime"
                 android:paddingBottom="@dimen/padding_small"
                 android:paddingTop="@dimen/padding_small"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMediumInverse"
+                android:textColorHint="#80ffffff" />
         </LinearLayout>
 
         <ImageView
@@ -95,7 +100,7 @@
             android:layout_weight="2"
             android:background="?attr/selectableItemBackground"
             android:padding="@dimen/padding_tiny"
-            android:src="@drawable/ic_swap_black" />
+            android:src="@drawable/ic_swap" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,7 +113,8 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_clock" />
+            android:src="@drawable/ic_action_clock"
+            android:tint="#ffffff" />
 
         <TextView
             android:id="@id/dateAndTimeLabel"
@@ -118,14 +124,14 @@
             android:layout_weight="2"
             android:focusableInTouchMode="false"
             android:freezesText="true"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMediumInverse" />
 
         <Spinner
             android:id="@id/dateKind"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/spinner_background_holo_light"
+            android:background="@drawable/spinner_mtrl_am_alpha"
             android:entries="@array/itinerary_kind_labels" />
     </LinearLayout>
 

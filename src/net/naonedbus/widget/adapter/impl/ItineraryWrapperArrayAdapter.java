@@ -96,7 +96,7 @@ public class ItineraryWrapperArrayAdapter extends ArrayAdapter<ItineraryWrapper>
 		for (final Ligne l : lignes) {
 			final TextView textView = (TextView) mLayoutInflater.inflate(R.layout.ligne_code_item_medium,
 					viewHolder.gridLayout, false);
-			textView.setBackgroundDrawable(ColorUtils.getGradiant(l.getCouleur()));
+			textView.setBackgroundDrawable(ColorUtils.getCircle(l.getCouleur()));
 			textView.setText(l.getLettre());
 			textView.setTextColor(l.getCouleurTexte());
 

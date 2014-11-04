@@ -275,7 +275,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 				mFromAddressTextView.setText(R.string.itineraire_current_location);
 				mFromCurrentLocation = true;
 
-				mIconFromResId = R.drawable.ic_action_locate_blue;
+				mIconFromResId = R.drawable.ic_directions_form_mylocation;
 
 				notifyIconsChanged();
 				loadCurrentAddress(new AddressTaskListener() {

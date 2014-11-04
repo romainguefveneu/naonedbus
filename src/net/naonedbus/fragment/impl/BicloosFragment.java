@@ -39,7 +39,6 @@ import net.naonedbus.manager.impl.FavoriBiclooManager;
 import net.naonedbus.provider.impl.NaoLocationManager;
 import net.naonedbus.provider.impl.NaoLocationManager.NaoLocationListener;
 import net.naonedbus.widget.adapter.impl.BiclooArrayAdapter;
-import net.naonedbus.widget.adapter.impl.EquipementArrayAdapter;
 import net.naonedbus.widget.indexer.ArraySectionIndexer;
 import net.naonedbus.widget.indexer.impl.BiclooDistanceIndexer;
 import net.naonedbus.widget.indexer.impl.BiclooNomIndexer;
@@ -54,6 +53,7 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -421,7 +421,7 @@ public class BicloosFragment extends CustomListFragment {
 
 		@Override
 		protected void onPostExecute(final Void result) {
-			final EquipementArrayAdapter adapter = (EquipementArrayAdapter) getListAdapter();
+			final BaseAdapter adapter = (BaseAdapter) getListAdapter();
 			adapter.notifyDataSetChanged();
 		}
 
