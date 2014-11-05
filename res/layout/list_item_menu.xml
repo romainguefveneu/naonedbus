@@ -22,8 +22,6 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
     style="@style/ItemMenuTitle"
-    android:background="?attr/selectableItemBackground"
+    android:background="@drawable/menu_activated_background"
     android:paddingLeft="16dp"
     android:paddingRight="16dp" />
-
-

@@ -46,6 +46,7 @@
     <color name="modern_section_color">#757575</color>
     <color name="list_divider">#E6E6E6</color>
     <color name="list_selected">@color/list_divider</color>
+    <color name="list_activated">#D3D3D3</color>
 
     <!-- Parkings -->
     <color name="parking_state_blue">#ff0079bc</color>

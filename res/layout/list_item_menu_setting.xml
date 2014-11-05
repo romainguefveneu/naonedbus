@@ -34,7 +34,6 @@
     <TextView
         android:id="@android:id/text1"
         style="@style/ItemMenuTitleSmall"
-        android:background="?attr/selectableItemBackground"
         android:paddingLeft="16dp"
         android:paddingRight="16dp" />
 

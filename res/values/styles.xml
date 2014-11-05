@@ -420,7 +420,7 @@
         <item name="android:divider">@drawable/list_divider</item>
         <item name="android:dividerHeight">1dip</item>
         <item name="android:fastScrollEnabled">true</item>
-        <item name="android:listSelector">@drawable/selectable_menu_background</item>
+        <item name="android:listSelector">?attr/selectableItemBackground</item>
     </style>
 
     <style name="Listview.Holo">

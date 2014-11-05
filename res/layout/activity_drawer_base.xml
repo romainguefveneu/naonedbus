@@ -59,7 +59,7 @@
         android:choiceMode="singleChoice"
         android:divider="@null"
         android:dividerHeight="0dp"
-        android:listSelector="@drawable/selectable_menu_background" >
+        android:listSelector="?attr/selectableItemBackground" >
     </ListView>
 
 </android.support.v4.widget.DrawerLayout>
