@@ -24,6 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.widget.item.impl.DrawerMenuItem;
 import net.naonedbus.widget.item.impl.SettingMenuItem;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,11 +35,16 @@ public class MainMenuAdapter extends ArrayAdapter<DrawerMenuItem> {
 
 	private final LayoutInflater mLayoutInflater;
 	private int mFirstSettingsPosition = 0;
+	private int mCurrentPosition = 0;
 
 	public MainMenuAdapter(final Context context, final List<DrawerMenuItem> objects) {
 		super(context, 0, android.R.id.text1, objects);
 		mLayoutInflater = LayoutInflater.from(context);
 		indexSettingsPosition();
+	}
+
+	public void setCurrentPosition(int currentPosition) {
+		mCurrentPosition = currentPosition;
 	}
 
 	@Override
@@ -69,6 +75,14 @@ public class MainMenuAdapter extends ArrayAdapter<DrawerMenuItem> {
 		if (view == null) {
 			final int layoutId = isSetting ? R.layout.list_item_menu_setting : R.layout.list_item_menu;
 			view = mLayoutInflater.inflate(layoutId, parent, false);
+		}
+
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+			if (mCurrentPosition == position) {
+				view.setBackgroundResource(R.color.list_activated);
+			} else {
+				view.setBackgroundResource(android.R.color.transparent);
+			}
 		}
 
 		final TextView label = (TextView) view.findViewById(android.R.id.text1);

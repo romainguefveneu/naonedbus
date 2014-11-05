@@ -2,7 +2,5 @@
 <resources>
 
     <dimen name="widget_margin">0dp</dimen>
-    <dimen name="widget_padding">8dp</dimen>
-    <dimen name="widget_limit">0dp</dimen>
 
 </resources>

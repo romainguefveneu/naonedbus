@@ -149,7 +149,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 			final String buttonTitle = GooglePlayServicesUtil.e(getActivity(), errorCode);
 			final PendingIntent intent = GooglePlayServicesUtil.getErrorPendingIntent(errorCode, getActivity(), 0);
 
-			showMessage(title, summary, R.drawable.ic_msg_google_play);
+			showMessage(title, summary, R.drawable.ic_extension);
 			setMessageButton(buttonTitle, new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -336,7 +336,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 		mHeaderTextView.setVisibility(View.GONE);
 
 		if (mPlayServiceSuccess == true) {
-			showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.location);
+			showMessage(R.string.msg_error_location_title, R.string.msg_error_location_desc, R.drawable.ic_location_disabled);
 			setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
 				@Override
 				public void onClick(final View v) {
@@ -352,7 +352,7 @@ public class ProximiteFragment extends CustomListFragment implements NaoLocation
 		mHeaderTextView.setVisibility(View.GONE);
 
 		if (mPlayServiceSuccess == true) {
-			showMessage(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.location);
+			showMessage(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.ic_location_disabled);
 			setMessageButton(R.string.btn_geolocation_service, new OnClickListener() {
 				@Override
 				public void onClick(final View v) {

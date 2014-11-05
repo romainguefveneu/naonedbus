@@ -74,7 +74,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 
 	int mMessageEmptyTitleId = R.string.error_title_empty;
 	int mMessageEmptySummaryId = R.string.error_summary_empty;
-	int mMessageEmptyDrawableId = R.drawable.sad_face;
+	int mMessageEmptyDrawableId = R.drawable.ic_sad_face;
 
 	protected int mLayoutId;
 	protected int mLayoutListHeaderId = R.layout.list_item_header;
@@ -583,7 +583,7 @@ public abstract class CustomListFragment extends SherlockListFragment implements
 			if (exception instanceof IOException) {
 				titleRes = R.string.error_title_network;
 				messageRes = R.string.error_summary_network;
-				drawableRes = R.drawable.orage;
+				drawableRes = R.drawable.ic_thunderstorm;
 			} else if (exception instanceof JSONException) {
 				titleRes = R.string.error_title_webservice;
 				messageRes = R.string.error_summary_webservice;

@@ -280,7 +280,7 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 
 		setHasOptionsMenu(true);
 
-		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.ic_favorite_empty);
+		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori, R.drawable.ic_star_empty);
 
 		if (android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ECLAIR_MR1)
 			mBackupManager = new BackupManager(getActivity());
@@ -406,10 +406,10 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 
 			if (mSelectedGroupes.isEmpty()) {
 				setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
-						R.drawable.ic_favorite_empty);
+						R.drawable.ic_star_empty);
 			} else {
 				setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
-						R.drawable.ic_favorite_empty);
+						R.drawable.ic_star_empty);
 			}
 
 			refreshContent();
@@ -569,10 +569,10 @@ public class FavorisFragment extends CustomListFragment implements OnItemLongCli
 
 		if (mGroupes.isEmpty()) {
 			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori,
-					R.drawable.ic_favorite_empty);
+					R.drawable.ic_star_empty);
 		} else if (mSelectedGroupes.isEmpty()) {
 			setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_selected_groupe,
-					R.drawable.ic_favorite_empty);
+					R.drawable.ic_star_empty);
 		}
 	}
 

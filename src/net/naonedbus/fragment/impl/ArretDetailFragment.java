@@ -147,7 +147,7 @@ public class ArretDetailFragment extends SherlockFragment {
 		inflater.inflate(R.menu.fragment_arret_detail, menu);
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
+		final int icon = isFavori() ? R.drawable.ic_star : R.drawable.ic_star_outline;
 		menuFavori.setIcon(icon);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -156,7 +156,7 @@ public class ArretDetailFragment extends SherlockFragment {
 	public void onPrepareOptionsMenu(final Menu menu) {
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
+		final int icon = isFavori() ? R.drawable.ic_star : R.drawable.ic_star_outline;
 		menuFavori.setIcon(icon);
 
 		super.onPrepareOptionsMenu(menu);

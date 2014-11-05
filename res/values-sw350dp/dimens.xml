@@ -22,11 +22,8 @@
     <dimen name="bigtitle_text_size">30sp</dimen>
     <dimen name="bigsens_text_size">12sp</dimen>
     <dimen name="bigsubtitle_text_size">18sp</dimen>
-    <dimen name="bigsubtitle_height">28dp</dimen>
     <dimen name="bigsubtitlesmall_text_size">16sp</dimen>
     <!-- HoraireCard -->
     <dimen name="horaire_huge">48sp</dimen>
-    <!-- ListView -->
-    <dimen name="padding_listview">18dp</dimen>
 
 </resources>

@@ -14,7 +14,7 @@
         android:title="@string/action_search"/>
     <item
         android:id="@id/menu_layers"
-        android:icon="@drawable/ic_label"
+        android:icon="@drawable/ic_style"
         android:showAsAction="always"
         android:title="@string/map_calques">
         <menu>

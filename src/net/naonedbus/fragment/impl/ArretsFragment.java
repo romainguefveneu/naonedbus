@@ -363,10 +363,10 @@ public class ArretsFragment extends CustomListFragment implements OnChangeSens, 
 		mCurrentFilter = filter;
 
 		if (mCurrentFilter == FILTER_ALL) {
-			setEmptyMessageValues(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.sad_face);
+			setEmptyMessageValues(R.string.error_title_empty, R.string.error_summary_empty, R.drawable.ic_sad_face);
 		} else {
 			setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_arrets_favoris,
-					R.drawable.favori);
+					R.drawable.ic_star_empty);
 		}
 	}
 

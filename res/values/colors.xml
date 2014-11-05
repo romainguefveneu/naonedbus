@@ -23,15 +23,10 @@
 
     <color name="activity_background_light">#FEFEFE</color>
     <color name="activity_background_card">#EEEEEE</color>
-    <color name="pinned_header_menu_text">#90ffffff</color>
-    <color name="menu_background">#006699</color>
-    <color name="menu_option_background">#005985</color>
-    <color name="menu_current">#1683bc</color>
     <color name="divider_light">#cccccc</color>
     <color name="divider_dark">#333333</color>
     <color name="map_pane_text_color">#000000</color>
     <color name="holo_blue_card_background">#5dc4eb</color>
-    <color name="holo_blue_card_text">#33b5e5</color>
     <color name="message_service_header">#2F93C5</color>
     <color name="message_service_text">#ffffff</color>
     <color name="message_tan_header">#E5441F</color>
@@ -39,9 +34,7 @@
     <color name="message_taninfos_header">#111111</color>
     <color name="message_taninfos_text">#ffffff</color>
     <color name="query_hint_color">#9bc9e1</color>
-    <color name="adressbar_color">#dddddd</color>
     <color name="background_tab_pressed">#6633B5E5</color>
-    <color name="background_tab">@android:color/transparent</color>
     <color name="card_text_color">#707070</color>
     <color name="modern_section_color">#757575</color>
     <color name="list_divider">#E6E6E6</color>

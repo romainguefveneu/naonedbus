@@ -55,7 +55,7 @@ public abstract class AbstractListFragment extends SherlockListFragment {
 
 	int mMessageEmptyTitleId = R.string.error_title_empty;
 	int mMessageEmptySummaryId = R.string.error_summary_empty;
-	int mMessageEmptyDrawableId = R.drawable.sad_face;
+	int mMessageEmptyDrawableId = R.drawable.ic_sad_face;
 
 	protected int mLayoutId;
 	protected int mLayoutListHeaderId = R.layout.list_item_header;

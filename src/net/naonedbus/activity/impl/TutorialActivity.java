@@ -61,7 +61,7 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_about_title,
-				R.string.tuto_about_summary, R.drawable.logo_large));
+				R.string.tuto_about_summary, R.drawable.ic_logo));
 
 		mTutorialPagerAdapter.addView(new TutorialView(R.string.tuto_favoris_title, R.string.tuto_favoris_summary,
 				R.drawable.tuto_favoris));

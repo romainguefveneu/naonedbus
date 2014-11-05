@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/padding_large"
-            android:src="@drawable/map" />
+            android:src="@drawable/ic_map_grey" />
 
         <ProgressBar
             android:id="@android:id/progress"

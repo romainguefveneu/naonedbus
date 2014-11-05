@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/padding_medium"
-        android:drawableTop="@drawable/sad_face"
+        android:drawableTop="@drawable/ic_sad_face"
         android:gravity="center_horizontal"
         android:singleLine="false"
         android:text="@string/error_title_empty"

@@ -106,7 +106,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 		menuInflater.inflate(R.menu.activity_bicloo_detail, menu);
 
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
-		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
+		final int icon = isFavori() ? R.drawable.ic_star : R.drawable.ic_star_outline;
 		menuFavori.setIcon(icon);
 
 		return super.onCreateOptionsMenu(menu);
@@ -116,7 +116,7 @@ public class BiclooDetailActivity extends SherlockMapActivity {
 	public boolean onPrepareOptionsMenu(final Menu menu) {
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
+		final int icon = isFavori() ? R.drawable.ic_star : R.drawable.ic_star_outline;
 		menuFavori.setIcon(icon);
 
 		return super.onPrepareOptionsMenu(menu);

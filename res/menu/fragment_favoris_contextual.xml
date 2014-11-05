@@ -23,7 +23,7 @@
         android:title="@string/action_show_plan"/>
     <item
         android:id="@id/menu_group"
-        android:icon="@drawable/ic_label"
+        android:icon="@drawable/ic_style"
         android:showAsAction="ifRoom"
         android:title="@string/action_groups">
         <menu>

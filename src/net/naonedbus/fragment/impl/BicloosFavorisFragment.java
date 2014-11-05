@@ -47,7 +47,7 @@ public class BicloosFavorisFragment extends BicloosFragment implements OnItemLon
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setEmptyMessageValues(R.string.error_title_empty_favori, R.string.error_summary_empty_favori_bicloo,
-				R.drawable.ic_favorite_empty);
+				R.drawable.ic_star_empty);
 	};
 
 	@Override

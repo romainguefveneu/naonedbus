@@ -248,7 +248,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 		inflater.inflate(R.menu.fragment_horaires, menu);
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
+		final int icon = isFavori() ? R.drawable.ic_star : R.drawable.ic_star_outline;
 		menuFavori.setIcon(icon);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -257,7 +257,7 @@ public class HorairesFragment extends CustomInfiniteListFragement implements OnI
 	public void onPrepareOptionsMenu(final Menu menu) {
 		final MenuItem menuFavori = menu.findItem(R.id.menu_favori);
 
-		final int icon = isFavori() ? R.drawable.ic_favorite_on : R.drawable.ic_favorite_off;
+		final int icon = isFavori() ? R.drawable.ic_star : R.drawable.ic_star_outline;
 		menuFavori.setIcon(icon);
 		super.onPrepareOptionsMenu(menu);
 	}

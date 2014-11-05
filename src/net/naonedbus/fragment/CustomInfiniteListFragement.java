@@ -131,7 +131,7 @@ public abstract class CustomInfiniteListFragement extends CustomListFragment {
 			if (exception instanceof IOException) {
 				titleRes = R.string.error_title_network;
 				messageRes = R.string.error_summary_network;
-				drawableRes = R.drawable.orage;
+				drawableRes = R.drawable.ic_thunderstorm;
 			} else if (exception instanceof JSONException) {
 				titleRes = R.string.error_title_webservice;
 				messageRes = R.string.error_summary_webservice;

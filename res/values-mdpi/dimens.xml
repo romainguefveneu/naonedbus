@@ -1,7 +1,0 @@
-<resources>
-
-    <!-- Clock -->
-    <dimen name="clock_hand_width">2dip</dimen>
-    <dimen name="clock_hand_height">14dip</dimen>
-
-</resources>

@@ -17,7 +17,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ */
 -->
 <resources>
 
@@ -26,14 +26,13 @@
     <attr name="secondaryColor" format="color|reference" />
     <attr name="dividerColor" format="color|reference" />
     <attr name="sectionColor" format="color|reference" />
-    <attr name="blockBackground" format="reference" />
     <attr name="sectionBackground" format="reference" />
 
     <declare-styleable name="ContactView">
         <attr name="titleTextStyle" />
         <attr name="subtitleTextStyle" />
         <attr name="android:title" />
-        <attr name="subtitle"  />
+        <attr name="subtitle" />
         <attr name="android:icon" />
         <attr name="avatarSize" format="dimension|reference" />
         <attr name="url" format="string" />

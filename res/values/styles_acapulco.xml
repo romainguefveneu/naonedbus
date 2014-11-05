@@ -30,10 +30,6 @@
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_acapulco</item>
     </style>
 
-    <style name="DropDownListView.Acapulco" parent="@style/Widget.Sherlock.Light.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_acapulco</item>
-    </style>
-
     <style name="ActionBarTabStyle.Acapulco" parent="@style/Widget.Sherlock.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_acapulco</item>
     </style>
@@ -41,7 +37,6 @@
     <style name="DropDownNav.Acapulco" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_acapulco</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_acapulco</item>
-        <item name="android:dropDownSelector">@drawable/selectable_background_acapulco</item>
     </style>
 
     <style name="ProgressBar.Acapulco" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
@@ -59,7 +54,6 @@
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Acapulco.Widget" parent="@style/Theme.Sherlock">
         <item name="popupMenuStyle">@style/PopupMenu.Acapulco</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Acapulco</item>
     </style>
 
 </resources>

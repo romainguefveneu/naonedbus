@@ -136,12 +136,12 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void onDrawerOpened(View arg0) {
-
+				invalidateOptionsMenu();
 			}
 
 			@Override
 			public void onDrawerClosed(View arg0) {
-
+				invalidateOptionsMenu();
 			}
 		});
 
@@ -192,10 +192,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		final int itemCount = menu.size();
 		for (int i = 0; i < itemCount; i++) {
 			final MenuItem item = menu.getItem(i);
-			final int itemId = item.getItemId();
-			final boolean isGlobalMenuItem = (itemId == R.id.menu_about || itemId == R.id.menu_settings || itemId == R.id.menu_donate);
-
-			item.setVisible(!drawerOpen || isGlobalMenuItem);
+			item.setVisible(!drawerOpen);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -247,6 +244,7 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		if (item instanceof MainMenuItem) {
 			mCurrentMenuItem = position;
 			mDrawerList.setItemChecked(mCurrentMenuItem, true);
+			mAdapter.setCurrentPosition(mCurrentMenuItem);
 
 			MainMenuItem mainItem = (MainMenuItem) item;
 			final FragmentHeader fragmentHeader = mainItem.getFragmentHeader();
@@ -359,9 +357,10 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_local_parking_grey,
 				new ParkingsFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_explore_grey, new MapFragmentHeader()));
-		items.add(new SettingMenuItem(R.id.menu_settings, R.string.title_activity_parametres));
-		items.add(new SettingMenuItem(R.id.menu_about, R.string.title_activity_about));
-		items.add(new SettingMenuItem(R.id.menu_donate, R.string.title_activity_donate));
+		items.add(new SettingMenuItem(R.id.menu_settings, R.string.title_activity_parametres,
+				R.drawable.ic_settings_grey));
+		items.add(new SettingMenuItem(R.id.menu_about, R.string.title_activity_about, R.drawable.ic_info_grey));
+		items.add(new SettingMenuItem(R.id.menu_donate, R.string.title_activity_donate, R.drawable.ic_favorite_grey));
 
 		return items;
 	}

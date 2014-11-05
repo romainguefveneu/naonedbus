@@ -22,8 +22,8 @@ public class SettingMenuItem extends DrawerMenuItem {
 
 	private final int mId;
 
-	public SettingMenuItem(int id, final int title) {
-		super(title, 0);
+	public SettingMenuItem(int id, final int title, int resIcon) {
+		super(title, resIcon);
 		mId = id;
 	}
 

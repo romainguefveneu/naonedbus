@@ -2,7 +2,7 @@
 
     <item
         android:id="@id/menu_favori"
-        android:icon="@drawable/ic_favorite_off"
+        android:icon="@drawable/ic_star_outline"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_favori"/>

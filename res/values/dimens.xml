@@ -21,8 +21,6 @@
     <dimen name="padding_medium">16dp</dimen>
     <dimen name="padding_large">16dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
-    <dimen name="widget_padding">8dp</dimen>
-    <dimen name="widget_limit">100dp</dimen>
     <dimen name="codeitem_margin">1dip</dimen>
     <dimen name="codeitem_width">35dip</dimen>
     <dimen name="indeterminate_progress_size">32dp</dimen>
@@ -34,22 +32,14 @@
     <dimen name="bigtitle_text_size_small">24sp</dimen>
     <dimen name="bigsens_text_size">12sp</dimen>
     <dimen name="bigsubtitle_text_size">16sp</dimen>
-    <dimen name="bigsubtitle_height">28dp</dimen>
     <dimen name="bigsubtitlesmall_text_size">10sp</dimen>
-    <dimen name="padding_header">8dp</dimen>
     <!-- Dimensions for PagerHeaders -->
     <dimen name="list_section_divider_min_height">32dip</dimen>
-    <!-- Clock -->
-    <dimen name="clock_icon_size">48dip</dimen>
-    <dimen name="clock_hand_width">2dip</dimen>
-    <dimen name="clock_hand_height">12dip</dimen>
     <!-- Drag n drop -->
     <dimen name="drag_grip_ridge_size">4dp</dimen>
     <dimen name="drag_grip_ridge_gap">2dp</dimen>
     <!-- HoraireCard -->
     <dimen name="horaire_huge">38sp</dimen>
-    <!-- ListView -->
-    <dimen name="padding_listview">5dp</dimen>
 
     <!-- Maps -->
     <dimen name="cluster_text_size_small">10sp</dimen>

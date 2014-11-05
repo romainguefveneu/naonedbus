@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/padding_small"
-            android:drawableTop="@drawable/logo_large"
+            android:drawableTop="@drawable/ic_logo"
             android:text="@android:string/untitled" />
     </ScrollView>
 
