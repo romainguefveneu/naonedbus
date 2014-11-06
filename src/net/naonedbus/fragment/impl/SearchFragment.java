@@ -32,7 +32,6 @@ import net.naonedbus.widget.ModalSearchView;
 import net.naonedbus.widget.ModalSearchView.OnQueryTextListener;
 import net.naonedbus.widget.adapter.impl.EquipementCursorAdapter;
 import net.naonedbus.widget.indexer.impl.EquipementCursorIndexer;
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -40,15 +39,12 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FilterQueryProvider;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -65,17 +61,13 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 	}
 
 	@Override
-	public void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
+	public void onActivityCreated(final Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
 		final ActionBar actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setDisplayShowHomeEnabled(true);
-		actionBar.setCustomView(R.layout.search_view);
 
 		mModalSearchView = (ModalSearchView) actionBar.getCustomView();
 		mModalSearchView.setOnQueryTextListener(this);
+		mModalSearchView.requestFocus();
 
 		final Intent queryIntent = getActivity().getIntent();
 		final String queryAction = queryIntent.getAction();
@@ -84,11 +76,10 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 				// Lancer la recherche
 				final String query = queryIntent.getStringExtra(SearchManager.QUERY);
 				mModalSearchView.setText(query);
-				Toast.makeText(getActivity(), query, Toast.LENGTH_SHORT).show();
 			} else {
 				final Integer selectedItemId = Integer.valueOf(queryIntent.getStringExtra(SearchManager.QUERY));
-				final TypeOverlayItem selectedItemType = TypeOverlayItem.getById(Integer.valueOf(queryIntent
-						.getStringExtra(SearchManager.EXTRA_DATA_KEY)));
+				final int typeId = Integer.valueOf(queryIntent.getStringExtra(SearchManager.EXTRA_DATA_KEY));
+				final TypeOverlayItem selectedItemType = TypeOverlayItem.getById(typeId);
 
 				if (selectedItemType.equals(TypeOverlayItem.TYPE_STATION)) {
 					// Afficher les parcours de l'arrêt sélectionné
@@ -106,62 +97,20 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 			}
 		}
 
-		mEquipementManager = EquipementManager.getInstance();
-		final String[] types = getResources().getStringArray(R.array.types_equipements);
-
-		mAdapter = new EquipementCursorAdapter(getActivity(), null);
-		mAdapter.setIndexer(new EquipementCursorIndexer(null, types, EquipementTable.ID_TYPE));
-		mAdapter.setFilterQueryProvider(this);
-
-		mAdapter.registerDataSetObserver(new DataSetObserver() {
-			@Override
-			public void onChanged() {
-				if (mAdapter.getCount() == 0) {
-					showMessage();
-				} else {
-					showContent();
-				}
-			}
-		});
-
-		// Associate the (now empty) adapter with the ListView.
-		setListAdapter(mAdapter);
-
 		mModalSearchView.requestFocus();
-
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				final Activity activity = getActivity();
-				if (activity != null) {
-					final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-							Context.INPUT_METHOD_SERVICE);
-					imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
-				}
-			}
-		}, 500);
-
 	}
 
 	@Override
-	public void onDestroy() {
-		final ActionBar actionBar = ((SherlockFragmentActivity) getActivity()).getSupportActionBar();
-		actionBar.setCustomView(null);
-		actionBar.setDisplayShowCustomEnabled(false);
-		actionBar.setDisplayShowTitleEnabled(true);
-
-		final InputMethodManager imm = (InputMethodManager) getActivity()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-		super.onDestroy();
+	public void onStop() {
+		super.onStop();
 	}
 
 	@Override
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
-		Intent intent;
 		final CursorWrapper equipement = (CursorWrapper) getListAdapter().getItem(position);
 		final int idType = equipement.getInt(equipement.getColumnIndex(EquipementTable.ID_TYPE));
 
+		Intent intent;
 		if (idType == Type.TYPE_ARRET.getId()) {
 			intent = new Intent(getActivity(), ParcoursActivity.class);
 			intent.putExtra(ParcoursActivity.PARAM_ID_SATION, (int) id);
@@ -175,21 +124,29 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 
 	@Override
 	public Loader<Cursor> onCreateLoader(final int loaderId, final Bundle bundle) {
-		final CursorLoader cursorLoader = new CursorLoader(getActivity(), EquipementProvider.CONTENT_URI, null, null,
-				null, null);
-		return cursorLoader;
+		return new CursorLoader(getActivity(), EquipementProvider.CONTENT_URI, null, null, null, null);
 	}
 
 	@Override
 	protected CursorAdapter getCursorAdapter(final Context context) {
-		return mAdapter;
-	}
+		mEquipementManager = EquipementManager.getInstance();
+		final String[] types = getResources().getStringArray(R.array.types_equipements);
 
-	@Override
-	public void onLoadFinished(final Loader<Cursor> loader, final Cursor cursor) {
-		mAdapter.changeCursor(cursor);
-		super.onLoadFinished(loader, cursor);
-		cancelLoading();
+		mAdapter = new EquipementCursorAdapter(getActivity(), null);
+		mAdapter.setIndexer(new EquipementCursorIndexer(null, types, EquipementTable.ID_TYPE));
+		mAdapter.setFilterQueryProvider(this);
+		mAdapter.registerDataSetObserver(new DataSetObserver() {
+			@Override
+			public void onChanged() {
+				if (mAdapter.getCount() == 0) {
+					showMessage();
+				} else {
+					showContent();
+				}
+			}
+		});
+
+		return mAdapter;
 	}
 
 	@Override
@@ -202,5 +159,4 @@ public class SearchFragment extends CustomCursorFragment implements OnQueryTextL
 		return mEquipementManager.getEquipementsCursorByName(getActivity().getContentResolver(), null,
 				constraint.toString());
 	}
-
 }

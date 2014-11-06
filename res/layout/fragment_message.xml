@@ -34,7 +34,7 @@
         android:gravity="center"
         android:text="@android:string/untitled"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="?android:attr/textColorTertiary" />
 
     <TextView
         android:id="@android:id/summary"
@@ -45,7 +45,7 @@
         android:gravity="center_horizontal"
         android:text="@android:string/untitled"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textColor="?android:attr/textColorTertiary" />
 
     <Button
         android:id="@android:id/button1"

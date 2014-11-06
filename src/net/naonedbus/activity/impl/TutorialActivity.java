@@ -55,10 +55,6 @@ public class TutorialActivity extends SherlockActivity implements OnPageChangeLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tutorial);
 
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayUseLogoEnabled(true);
-		actionBar.setLogo(R.drawable.ic_logo);
-
 		mTutorialPagerAdapter = new TutorialPagerAdapter(this);
 		mTutorialPagerAdapter.addView(new TutorialView(R.layout.tutorial_view_welcome, R.string.tuto_about_title,
 				R.string.tuto_about_summary, R.drawable.ic_logo));

@@ -58,6 +58,14 @@
         <item name="android:actionBarStyle">@style/ActionBar.Plain</item>
     </style>
 
+    <style name="Theme.Acapulco.Tuto">
+        <item name="android:homeAsUpIndicator">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Acapulco.Search">
+        <item name="android:actionBarWidgetTheme">@style/Theme.Sherlock</item>
+    </style>
+
     <style name="ActionBar.Solid.Acapulco" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_solid_acapulco</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_acapulco</item>
@@ -77,7 +85,20 @@
     </style>
 
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Acapulco.Widget" parent="@style/Theme.Sherlock.Light" />
+    <style name="Theme.Acapulco.Widget" parent="@style/Theme.Sherlock.Light">
+
+        <!-- We want the dark action bar SearchView stuff -->
+        <item name="searchDropdownBackground">@drawable/abs__search_dropdown_dark</item>
+        <item name="searchViewTextField">@drawable/abs__textfield_searchview_holo_dark</item>
+        <item name="searchViewTextFieldRight">@drawable/abs__textfield_searchview_right_holo_dark</item>
+        <item name="searchViewCloseIcon">@drawable/abs__ic_clear</item>
+        <item name="searchViewSearchIcon">@drawable/abs__ic_search</item>
+        <item name="searchViewGoIcon">@drawable/abs__ic_go</item>
+        <item name="searchViewVoiceIcon">@drawable/abs__ic_voice_search</item>
+        <item name="searchAutoCompleteTextView">@style/Widget.Sherlock.SearchAutoCompleteTextView</item>
+        <item name="dropDownHintAppearance">@style/TextAppearance.Sherlock.Widget.DropDownHint</item>
+        <item name="searchViewEditQuery">@drawable/abs__ic_commit_search_api_holo_dark</item>
+    </style>
 
     <style name="ActionBar.Plain" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/acapulco</item>

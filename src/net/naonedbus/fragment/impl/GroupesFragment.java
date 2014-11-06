@@ -30,7 +30,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -71,7 +70,8 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_empty_groupe, R.drawable.ic_style_empty);
+		setEmptyMessageValues(R.string.error_title_empty_groupe, R.string.error_summary_empty_groupe,
+				R.drawable.ic_style_empty);
 	}
 
 	@Override
@@ -121,9 +121,7 @@ public class GroupesFragment extends CustomCursorFragment implements ActionMode.
 
 	@Override
 	public Loader<Cursor> onCreateLoader(final int arg0, final Bundle arg1) {
-		final Uri uri = GroupeProvider.CONTENT_URI;
-		final CursorLoader cursorLoader = new CursorLoader(getActivity(), uri, null, null, null, null);
-		return cursorLoader;
+		return new CursorLoader(getActivity(), GroupeProvider.CONTENT_URI, null, null, null, null);
 	}
 
 	@Override

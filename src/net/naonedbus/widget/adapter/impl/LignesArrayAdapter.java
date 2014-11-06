@@ -22,6 +22,7 @@ import java.util.List;
 
 import net.naonedbus.R;
 import net.naonedbus.bean.Ligne;
+import net.naonedbus.utils.ColorUtils;
 import net.naonedbus.widget.adapter.ArraySectionAdapter;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -60,7 +61,7 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 		holder.icon.setTextColor(ligne.getCouleurTexte());
 
 		if (ligne.getId() == -1) {
-			holder.icon.setBackgroundDrawable(null);
+			holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			holder.sens1.setTypeface(null, Typeface.BOLD);
 		} else {
 			holder.sens1.setTypeface(null, Typeface.NORMAL);
@@ -68,7 +69,7 @@ public class LignesArrayAdapter extends ArraySectionAdapter<Ligne> {
 			if (ligne.getCouleur() == 0) {
 				holder.icon.setBackgroundResource(R.drawable.item_symbole_back);
 			} else {
-				holder.icon.setBackgroundColor(ligne.getCouleur());
+				holder.icon.setBackgroundDrawable(ColorUtils.getCircle(ligne.getCouleur()));
 			}
 		}
 

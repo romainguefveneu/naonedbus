@@ -38,11 +38,11 @@ public class EquipementCursorAdapter extends CursorSectionAdapter {
 	private final Context mContext;
 	private final EquipementManager mEquipementManager;
 
-	private int mColIdType;
-	private int mColIdSousType;
-	private int mColNom;
-	private int mColAdresse;
-	private int mColDetails;
+	private int mColIdType = -1;
+	private int mColIdSousType = -1;
+	private int mColNom = -1;
+	private int mColAdresse = -1;
+	private int mColDetails = -1;
 
 	public EquipementCursorAdapter(final Context context, final Cursor c) {
 		super(context, c, R.layout.list_item_equipement);
@@ -84,6 +84,9 @@ public class EquipementCursorAdapter extends CursorSectionAdapter {
 	@Override
 	public void bindView(final View view, final Context context, final Cursor cursor) {
 		super.bindView(view, context, cursor);
+
+		if (mColNom == -1)
+			initColumns();
 
 		final ViewHolder holder = (ViewHolder) view.getTag();
 

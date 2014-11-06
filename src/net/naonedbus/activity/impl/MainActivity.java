@@ -28,7 +28,6 @@ import net.naonedbus.helper.FavorisHelper;
 import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
-import net.naonedbus.provider.impl.NaoLocationManager;
 import net.naonedbus.service.FavoriService;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -39,8 +38,6 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.bugsense.trace.BugSenseHandler;
 
@@ -56,14 +53,12 @@ public class MainActivity extends MenuDrawerActivity {
 
 		if (savedInstanceState == null) {
 			final UpdaterManager updaterManager = new UpdaterManager();
-			final UpdateType updateType = updaterManager.needUpdate(this);
+			UpdateType updateType = updaterManager.needUpdate(this);
 
 			if (UpdateType.FIRST_LAUNCH.equals(updateType)) {
-				hideActionBar();
 				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
 				showTutorial();
 			} else if (UpdateType.UPGRADE.equals(updateType)) {
-				hideActionBar();
 				setFragment(new UpdateFragmentHeader(), R.string.title_activity_main);
 			} else {
 				final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -77,19 +72,11 @@ public class MainActivity extends MenuDrawerActivity {
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_search:
-			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
+			startActivity(new Intent(this, SearchActivity.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	private void hideActionBar() {
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayHomeAsUpEnabled(false);
-		actionBar.setDisplayUseLogoEnabled(true);
-		actionBar.setLogo(R.drawable.ic_logo);
 	}
 
 	private void showTutorial() {
@@ -103,11 +90,6 @@ public class MainActivity extends MenuDrawerActivity {
 	}
 
 	public void onUpgradeDone() {
-		final ActionBar actionBar = getSupportActionBar();
-		actionBar.setDisplayUseLogoEnabled(false);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setDisplayShowTitleEnabled(true);
-
 		selectNavigationItem(0);
 		openDrawer();
 	}

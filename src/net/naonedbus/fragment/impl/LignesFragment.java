@@ -213,8 +213,7 @@ public class LignesFragment extends CustomCursorFragment {
 			uri = uri.buildUpon().path(LigneProvider.LIGNE_FAVORIS_URI_PATH_QUERY).build();
 		}
 
-		final CursorLoader cursorLoader = new CursorLoader(getActivity(), uri, null, null, null, null);
-		return cursorLoader;
+		return new CursorLoader(getActivity(), uri, null, null, null, null);
 	}
 
 	@Override

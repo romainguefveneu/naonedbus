@@ -142,36 +142,21 @@ public class AboutFragment extends CustomFragment implements OnClickListener {
 	}
 
 	private void fillThanks(final ViewGroup parent) {
-		fillView(parent, R.array.thanks, R.array.thanks_urls);
+		fillView(parent, R.array.thanks);
 	}
 
 	private void fillTranslators(final ViewGroup parent) {
-		fillView(parent, R.array.translators, R.array.translators_urls);
+		fillView(parent, R.array.translators);
 	}
 
-	private void fillView(final ViewGroup parent, final int idLabels, final int idUrls) {
+	private void fillView(final ViewGroup parent, final int idLabels) {
 		final String[] values = getActivity().getResources().getStringArray(idLabels);
-		final String[] urls = getActivity().getResources().getStringArray(idUrls);
 		final LayoutInflater inflater = LayoutInflater.from(getActivity());
 
 		for (int i = 0; i < values.length; i++) {
-			final LinearLayout view = (LinearLayout) inflater.inflate(R.layout.section_item_small, parent, false);
-
-			final TextView label = (TextView) view.findViewById(android.R.id.text1);
-			final TextView url = (TextView) view.findViewById(android.R.id.text2);
-
+			final TextView label = (TextView) inflater.inflate(R.layout.section_item_small, parent, false);
 			label.setText(values[i]);
-
-			if (TextUtils.isEmpty(urls[i])) {
-				view.setClickable(false);
-				url.setVisibility(View.GONE);
-			} else {
-				view.setOnClickListener(this);
-				view.setTag(urls[i]);
-				url.setText(urls[i].substring(7) + " ↗");
-			}
-
-			parent.addView(view);
+			parent.addView(label);
 		}
 	}
 

@@ -40,6 +40,12 @@
         <item name="android:windowBackground">@color/activity_background_card</item>
     </style>
 
+    <style name="Theme.Acapulco.Tuto">
+        <item name="homeAsUpIndicator">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Acapulco.Search" />
+
     <style name="Theme.Acapulco.Dark" parent="@style/Theme.Sherlock">
         <item name="activityBackground">@android:color/background_dark</item>
         <item name="primaryColor">@android:color/primary_text_dark</item>
