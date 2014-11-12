@@ -51,7 +51,7 @@
   <string name="tuto_parkings_title">Aparcamientos</string>
   <string name="tuto_parkings_summary">Vea la lista de los aparcamientos de Nantes, así como su disponibilidad en tiempo real</string>
   <string name="tuto_mobilite_title">Movilidad</string>
-  <string name="tuto_mobilite_summary">¿Dónde está el bicloo más cercano? Y también las estaciones de Marguerite, uso compartido de coche y Lila</string>
+  <string name="tuto_mobilite_summary">¿Dónde está el bicloo más cercano?</string>
   <string name="tuto_widgets_title">Widgets</string>
   <string name="tuto_widgets_summary">Coloque sus paradas favoritas en widgets!</string>
   <string name="tuto_beta_title">Versión beta</string>

@@ -53,7 +53,7 @@
   <string name="tuto_parkings_title">Car parks</string>
   <string name="tuto_parkings_summary">Consult the Nantes\' car parks list and their availability in real time</string>
   <string name="tuto_mobilite_title">Mobility</string>
-  <string name="tuto_mobilite_summary">Where is the nearest bicloo? Also works with Marguerite stations, carpooling and Lila</string>
+  <string name="tuto_mobilite_summary">Where is the nearest bicloo?</string>
   <string name="tuto_widgets_title">Widgets</string>
   <string name="tuto_widgets_summary">Place your favorite stops as widgets!</string>
   <string name="tuto_beta_title">Beta version</string>

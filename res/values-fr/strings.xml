@@ -57,7 +57,7 @@
     <string name="tuto_parkings_title">Parkings</string>
     <string name="tuto_parkings_summary">Consultez la liste des parkings nantais ainsi que leur disponibilité en temps réel</string>
     <string name="tuto_mobilite_title">Mobilité</string>
-    <string name="tuto_mobilite_summary">Où est le bicloo le plus proche ? Mais également les stations Marguerite, co-voiturage et Lila</string>
+    <string name="tuto_mobilite_summary">Où est le bicloo le plus proche ?</string>
     <string name="tuto_widgets_title">Widgets</string>
     <string name="tuto_widgets_summary">Placez vos arrêts favoris en widgets !</string>
     <string name="tuto_beta_title">Version bêta</string>

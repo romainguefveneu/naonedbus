@@ -30,7 +30,6 @@ public class StopStepView extends TextView {
 	private int mColumnWidth;
 	private int mDotRadius;
 	private int mDotRadiusHeadsign;
-	private int mDotRadiusBorder;
 	private float mStrokeWidth;
 
 	private Type mType = Type.MIDDLE;
@@ -54,7 +53,6 @@ public class StopStepView extends TextView {
 		final DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
 		mColumnWidth = Math.round(COLUMN_WIDTH * metrics.density);
 		mDotRadius = Math.round(DOT_RADIUS * metrics.density);
-		mDotRadiusBorder = Math.round(DOT_RADIUS_BORDER * metrics.density);
 		mDotRadiusHeadsign = Math.round(DOT_RADIUS_HEADSIGN * metrics.density);
 		mStrokeWidth = STROKE_WIDTH * metrics.density;
 
@@ -85,20 +83,17 @@ public class StopStepView extends TextView {
 		switch (mType) {
 		case MIDDLE:
 			drawLine(canvas);
+			drawNormalDot(canvas);
 			break;
 		case FIRST:
 			drawBottomLine(canvas);
+			drawHeadsignDot(canvas);
 			break;
 		case LAST:
 			drawTopLine(canvas);
+			drawHeadsignDot(canvas);
 			break;
 		}
-
-		if (mType == Type.MIDDLE) {
-			drawNormalDot(canvas);
-		} else
-			drawHeadsignDot(canvas);
-
 		super.onDraw(canvas);
 	}
 
