@@ -68,7 +68,10 @@ public class StopStepView extends TextView {
 	}
 
 	public void setType(final Type type) {
-		mType = type;
+		if (mType != type) {
+			mType = type;
+			invalidate();
+		}
 	}
 
 	public void setColor(final int color) {
