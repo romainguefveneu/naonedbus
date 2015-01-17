@@ -22,6 +22,7 @@ third-party/
 # generated files
 bin/
 gen/
+doc/
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -38,3 +39,15 @@ proguard/
 *.ipr
 *.iws
 .idea/
+
+# Temp files
+*~
+*.bak
+
+# GNU Emacs temp files
+\#*#
+.\#*
+
+# OS specific useless files
+thumbs.db
+Thumbs.db

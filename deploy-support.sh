@@ -1,6 +1,8 @@
+#!/bin/bash
+
 # Update projects and sub projects
 updateProjects(){
-    local file="project.properties"
+    local file='project.properties'
     cd $1
     local folder=$(pwd)
     if [ -f $file ]
@@ -12,7 +14,7 @@ updateProjects(){
                 local libpath="${BASH_REMATCH[1]}"
                 if [ -d $libpath ]
                 then
-                    echo "---------------------------------"
+                    echo '---------------------------------'
                     echo "Update project ${BASH_REMATCH[1]}"
 
                     android update project -p ${libpath} -t android-19
@@ -23,7 +25,7 @@ updateProjects(){
                         echo "Copy lib $folder/android-support-v4.jar to $libpath/libs/"
                         cp -f $folder/android-support-v4.jar $libpath/libs/
                     fi
-                    echo "---------------------------------"
+                    echo '---------------------------------'
 
                     updateProjects ${libpath}
                     cd $folder
@@ -32,5 +34,5 @@ updateProjects(){
         done < "$file"
     fi
 }
-updateProjects .
 
+updateProjects .
