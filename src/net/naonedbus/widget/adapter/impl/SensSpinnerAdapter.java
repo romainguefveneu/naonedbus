@@ -24,6 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SpinnerAdapter;
@@ -49,7 +50,8 @@ public class SensSpinnerAdapter extends SensArrayAdapter implements SpinnerAdapt
 
 	@Override
 	public View getDropDownView(int position, View convertView, ViewGroup parent) {
-		final TextView view = (TextView) super.getView(position, convertView, parent);
+		final TextView view = (TextView) LayoutInflater.from(getContext()).inflate(
+				R.layout.list_item_sens_spinner_content, parent, false);
 		final Sens sens = getItem(position);
 		view.setText(FormatUtils.formatSens(sens.text));
 		return view;

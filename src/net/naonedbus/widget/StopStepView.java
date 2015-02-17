@@ -19,9 +19,9 @@ public class StopStepView extends TextView {
 
 	private static final int DOT_RADIUS = 4;
 	private static final int DOT_RADIUS_HEADSIGN = 8;
-	private static final int DOT_RADIUS_BORDER = 1;
+	private static final float DOT_RADIUS_BORDER = 1f;
 
-	private static final float STROKE_WIDTH = 2f;
+	private static final float STROKE_WIDTH = 3f;
 
 	private Paint mPaint;
 	private int mColor;
@@ -31,6 +31,7 @@ public class StopStepView extends TextView {
 	private int mDotRadius;
 	private int mDotRadiusHeadsign;
 	private float mStrokeWidth;
+	private float mDotRadiusBorder;
 
 	private Type mType = Type.MIDDLE;
 
@@ -54,6 +55,7 @@ public class StopStepView extends TextView {
 		mColumnWidth = Math.round(COLUMN_WIDTH * metrics.density);
 		mDotRadius = Math.round(DOT_RADIUS * metrics.density);
 		mDotRadiusHeadsign = Math.round(DOT_RADIUS_HEADSIGN * metrics.density);
+		mDotRadiusBorder = Math.round(DOT_RADIUS_BORDER * metrics.density);
 		mStrokeWidth = STROKE_WIDTH * metrics.density;
 
 		mPaint = new Paint();
@@ -129,11 +131,13 @@ public class StopStepView extends TextView {
 		final int x = mColumnWidth - mColumnWidth / 2;
 		final int y = getHeight() / 2;
 
-		mPaint.setColor(mColor);
-		canvas.drawCircle(x, y, mDotRadius, mPaint);
-
 		mPaint.setStyle(Paint.Style.FILL);
 
+		// Outter circle
+		mPaint.setColor(mColor);
+		canvas.drawCircle(x, y, mDotRadius + mDotRadiusBorder, mPaint);
+
+		// Inner circle
 		mPaint.setColor(mSecondaryColor);
 		canvas.drawCircle(x, y, mDotRadius, mPaint);
 

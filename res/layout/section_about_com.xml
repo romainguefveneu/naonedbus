@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/twitter_account"
+            android:drawableTop="@drawable/ic_about_twitter"
             android:gravity="center_horizontal"
             android:text="@string/about_com_twitter" />
 
@@ -48,7 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/facebook_account"
+            android:drawableTop="@drawable/ic_about_facebook"
             android:gravity="center_horizontal"
             android:text="@string/about_com_facebook" />
 
@@ -58,7 +58,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableTop="@drawable/gmail"
+            android:drawableTop="@drawable/ic_about_gmail"
             android:gravity="center_horizontal"
             android:text="@string/about_com_mail" />
     </LinearLayout>

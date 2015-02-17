@@ -72,6 +72,9 @@
 
     <!-- Donateurs -->
     <string-array name="donators">
+		<item>Halvard Douaud</item>
+        <item>Dominique Jocal</item>
+        <item>Arnaud Brochard</item>
         <item>Fabrice Fontaine</item>
         <item>Arzhel</item>
         <item>Guillaume</item>
