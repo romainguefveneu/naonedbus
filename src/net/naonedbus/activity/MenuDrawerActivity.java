@@ -357,10 +357,9 @@ public abstract class MenuDrawerActivity extends SherlockFragmentActivity {
 		items.add(new MainMenuItem(R.string.title_activity_parkings, R.drawable.ic_local_parking_grey,
 				new ParkingsFragmentHeader()));
 		items.add(new MainMenuItem(R.string.title_activity_carte, R.drawable.ic_explore_grey, new MapFragmentHeader()));
-		items.add(new SettingMenuItem(R.id.menu_settings, R.string.title_activity_parametres,
-				R.drawable.ic_settings_grey));
-		items.add(new SettingMenuItem(R.id.menu_about, R.string.title_activity_about, R.drawable.ic_info_grey));
-		items.add(new SettingMenuItem(R.id.menu_donate, R.string.title_activity_donate, R.drawable.ic_favorite_grey));
+		items.add(new SettingMenuItem(R.id.menu_settings, R.string.title_activity_parametres));
+		items.add(new SettingMenuItem(R.id.menu_about, R.string.title_activity_about));
+		items.add(new SettingMenuItem(R.id.menu_donate, R.string.title_activity_donate));
 
 		return items;
 	}

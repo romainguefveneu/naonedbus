@@ -69,7 +69,6 @@ public class ArretProvider extends ReadOnlyContentProvider {
 		Cursor cursor;
 		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 		queryBuilder.setTables(ArretTable.TABLE_NAME + ArretTable.TABLE_JOIN_STATIONS);
-		String groupBy = EquipementTable.NORMALIZED_NOM;
 		projection = ArretTable.PROJECTION;
 
 		int uriType = URI_MATCHER.match(uri);
@@ -105,7 +104,7 @@ public class ArretProvider extends ReadOnlyContentProvider {
 			throw new IllegalArgumentException("Unknown URI (" + uri + ")");
 		}
 
-		cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, groupBy, null,
+		cursor = queryBuilder.query(getReadableDatabase(), projection, selection, selectionArgs, null, null,
 				sortOrder);
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		return cursor;
