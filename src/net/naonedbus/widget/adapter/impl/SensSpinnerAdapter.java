@@ -24,6 +24,7 @@ import net.naonedbus.R;
 import net.naonedbus.bean.Sens;
 import net.naonedbus.utils.FormatUtils;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -80,6 +80,7 @@
         <activity
             android:name=".activity.impl.SearchActivity"
             android:label="@string/title_activity_recherche"
+            android:theme="@style/Theme.Acapulco.Search"
             android:windowSoftInputMode="adjustResize|stateAlwaysVisible" />
         <activity
             android:name=".activity.impl.CommentaireActivity"

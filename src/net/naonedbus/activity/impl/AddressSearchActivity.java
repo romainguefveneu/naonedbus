@@ -23,7 +23,7 @@ public class AddressSearchActivity extends OneFragmentActivity {
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setDisplayShowHomeEnabled(true);
+		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setCustomView(R.layout.search_view);
 
 		if (savedInstanceState == null) {
