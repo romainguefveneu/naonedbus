@@ -180,6 +180,7 @@ public class EquipementProvider extends CustomContentProvider {
                  query = query.replace(diacritics[i].charAt(j), diacritics[i].charAt(0));
             }
         }
+        query = query.replace(" ", " %");
         return query;
     }
 
