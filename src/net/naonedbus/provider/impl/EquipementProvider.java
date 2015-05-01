@@ -132,7 +132,7 @@ public class EquipementProvider extends CustomContentProvider {
 		case EQUIPEMENTS_NAME:
 			queryBuilder.setTables(EquipementTable.TABLE_NAME + EquipementTable.TABLE_JOIN_TYPE_EQUIPEMENT);
 			queryBuilder.appendWhere(EquipementTable.TABLE_NAME + "." + EquipementTable.NORMALIZED_NOM + " LIKE ");
-			queryBuilder.appendWhereEscapeString('%' + uri.getLastPathSegment() + '%');
+			queryBuilder.appendWhereEscapeString('%' + normalizeQuery(uri.getLastPathSegment()) + '%');
 
 			projection = EquipementTable.PROJECTION;
 			sortOrder = TypeEquipementTable.TABLE_NAME + "." + TypeEquipementTable._ID + ","
@@ -164,6 +164,24 @@ public class EquipementProvider extends CustomContentProvider {
 		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 		return cursor;
 	}
+
+
+    static String[] diacritics = {
+            "eéèêÉÈÊ",
+            "aàÀâÂ",
+            "iïÏ",
+            "uùÙ",
+            "oôÔ",
+            "ccçÇ"
+    };
+    private String normalizeQuery(String query) {
+        for (int i=0; i<diacritics.length; i++) {
+            for (int j=1; j<diacritics[i].length(); j++) {
+                 query = query.replace(diacritics[i].charAt(j), diacritics[i].charAt(0));
+            }
+        }
+        return query;
+    }
 
 	@Override
 	public Uri insert(final Uri uri, final ContentValues initialValues) {
