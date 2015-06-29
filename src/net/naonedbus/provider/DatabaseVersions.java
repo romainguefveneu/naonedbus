@@ -28,9 +28,11 @@ public final class DatabaseVersions {
 	public static int BLUE_HAWAIIAN_MR9 = 22;
 	/** Version 3.3.1. */
 	public static int CARIBBEAN_BLUES_MR1 = 23;
+	/** Version 3.3.2. */
+	public static int CARIBBEAN_BLUES_MR2 = 24;
 
 	/** Current version. */
-	public static int CURRENT = CARIBBEAN_BLUES_MR1;
+	public static int CURRENT = CARIBBEAN_BLUES_MR2;
 
 	private DatabaseVersions() {
 	}

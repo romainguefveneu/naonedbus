@@ -8,6 +8,7 @@ ant.properties
 ant-profiles/
 ant-templates/
 third-party/
+third-party/google-play-services_lib/bin/
 
 # built application files
 *.apk
