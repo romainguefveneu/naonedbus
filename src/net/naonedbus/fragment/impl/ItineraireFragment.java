@@ -57,6 +57,7 @@ import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -74,6 +75,8 @@ import com.bugsense.trace.BugSenseHandler;
 
 public class ItineraireFragment extends AbstractListFragment implements
 		LoaderCallbacks<AsyncResult<List<ItineraryWrapper>>>, OnDateSetListener, OnTimeSetListener, NaoLocationListener {
+
+	private static final String TAG = "ItineraireFragment";
 
 	private static final String BUNDLE_LOCATION_FROM = "ItineraireFragment:locationFrom";
 	private static final String BUNDLE_LOCATION_TO = "ItineraireFragment:locationTo";
@@ -507,6 +510,7 @@ public class ItineraireFragment extends AbstractListFragment implements
 		} else {
 			mItineraryWrappers.add(ItineraryWrapper.getErrorItinerary());
 			BugSenseHandler.sendExceptionMessage("Erreur de calcul d'itinéraire.", null, result.getException());
+			Log.e(TAG, "Erreur de calcul d'itinéraire.", result.getException());
 		}
 
 		mAdapter.notifyDataSetChanged();

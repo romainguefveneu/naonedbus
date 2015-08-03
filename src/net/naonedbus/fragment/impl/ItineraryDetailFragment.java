@@ -147,8 +147,8 @@ public class ItineraryDetailFragment extends CustomListFragment {
 			final LegWrapper fromWrapper = new LegWrapper(Type.IN);
 			final LegWrapper toWrapper = new LegWrapper(Type.OUT);
 
-			final long startTime = leg.startTime.getTime();
-			final long endTime = leg.endTime.getTime();
+			final long startTime = leg.startTime.getTime() / 1000L;
+			final long endTime = leg.endTime.getTime() / 1000L;
 
 			fromWrapper.setPlace(leg.from);
 			fromWrapper.setDuration(FormatUtils.formatMinutes(context, endTime - startTime));

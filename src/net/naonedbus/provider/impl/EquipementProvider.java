@@ -18,7 +18,9 @@
  */
 package net.naonedbus.provider.impl;
 
+import java.text.Normalizer;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import net.naonedbus.provider.CustomContentProvider;
 import net.naonedbus.provider.table.EquipementTable;
@@ -132,7 +134,7 @@ public class EquipementProvider extends CustomContentProvider {
 		case EQUIPEMENTS_NAME:
 			queryBuilder.setTables(EquipementTable.TABLE_NAME + EquipementTable.TABLE_JOIN_TYPE_EQUIPEMENT);
 			queryBuilder.appendWhere(EquipementTable.TABLE_NAME + "." + EquipementTable.NORMALIZED_NOM + " LIKE ");
-			queryBuilder.appendWhereEscapeString('%' + uri.getLastPathSegment() + '%');
+			queryBuilder.appendWhereEscapeString('%' + removeDiacritics(uri.getLastPathSegment()) + '%');
 
 			projection = EquipementTable.PROJECTION;
 			sortOrder = TypeEquipementTable.TABLE_NAME + "." + TypeEquipementTable._ID + ","
@@ -219,6 +221,12 @@ public class EquipementProvider extends CustomContentProvider {
 	@Override
 	public int update(final Uri uri, final ContentValues values, final String selection, final String[] selectionArgs) {
 		return 0;
+	}
+
+	private String removeDiacritics(final String s) {
+		String result = Normalizer.normalize(s, Normalizer.Form.NFD);
+		result = result.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+		return result;
 	}
 
 	/**

@@ -39,7 +39,7 @@ public class ItineraryLoader extends AsyncTaskLoader<AsyncResult<List<ItineraryW
 	public static final String PARAM_TIME = "time";
 	public static final String PARAM_ARRIVE_BY = "arriveBy";
 
-	private static final String URL_WEBSERVICE = "http://92.222.21.236:8080/opentripplanner-api-webapp";
+	private static final String URL_WEBSERVICE = "http://92.222.21.236:9090/otp";
 
 	private final Bundle mBundle;
 	private AsyncResult<List<ItineraryWrapper>> mResult;

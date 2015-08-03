@@ -88,10 +88,11 @@ public abstract class FormatUtils {
 		spannable.setSpan(new RelativeSizeSpan(0.9f), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return spannable;
 	}
+	
 
-	public static String formatMinutes(final Context context, final long millisecondes) {
+	public static String formatMinutes(final Context context, final long secondes) {
 		String delay = "";
-		final int minutes = (int) (millisecondes / 60000);
+		final int minutes = (int) (secondes / 60);
 
 		if (minutes < 60) {
 			delay = context.getString(R.string.format_minutes, minutes);
