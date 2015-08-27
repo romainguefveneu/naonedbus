@@ -20,8 +20,8 @@
  */
 -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="20sp"
-    android:layout_height="20sp"
+    android:layout_width="24sp"
+    android:layout_height="24sp"
     android:layout_marginRight="1dp"
     android:gravity="center_horizontal|center_vertical"
     android:paddingLeft="3dp"
