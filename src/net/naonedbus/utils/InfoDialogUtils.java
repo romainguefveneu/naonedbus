@@ -34,6 +34,7 @@ import android.webkit.WebView;
 import android.widget.ScrollView;
 
 import com.bugsense.trace.BugSenseHandler;
+import com.google.android.gms.internal.fi;
 
 public abstract class InfoDialogUtils {
 
@@ -92,18 +93,9 @@ public abstract class InfoDialogUtils {
 
 		webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		webView.setBackgroundColor(Color.WHITE);
-		webView.loadDataWithBaseURL("fake://not/needed", html, "text/html", "UTF-8", null); // Encoding
-																							// fix
-																							// for
-																							// Android
-																							// 3.x
-																							// /
-																							// 4.x
+		webView.loadDataWithBaseURL("fake://not/needed", html, "text/html", "UTF-8", null);
 		scrollView.addView(webView);
-
 		moreDetailsDialog = new AlertDialog.Builder(context);
-		moreDetailsDialog.setIcon(android.R.drawable.ic_dialog_info);
-		moreDetailsDialog.setTitle("Informations");
 		moreDetailsDialog.setView(scrollView);
 		moreDetailsDialog.setPositiveButton(android.R.string.ok, null);
 		moreDetailsDialog.show();
@@ -166,6 +158,20 @@ public abstract class InfoDialogUtils {
 			e.printStackTrace();
 		} catch (final IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void showHtmlFromRawIfNecessary(final Context context, final int fileId) {
+		final File dataFile = new File(context.getFilesDir(), MESSAGE_FOLDER + File.separator + fileId);
+
+		createDir(context);
+		if (!dataFile.exists()) {
+			showHtmlFromRaw(context, fileId);
+			try {
+				dataFile.createNewFile();
+			} catch (final IOException e) {
+				BugSenseHandler.sendExceptionMessage("Erreur lors de la création du marqueur", null, e);
+			}
 		}
 	}
 

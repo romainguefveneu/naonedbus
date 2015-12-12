@@ -242,7 +242,7 @@ public class CommentairesCard extends Card<List<Commentaire>> implements OnSensC
 			List<Commentaire> commentaires = null;
 
 			try {
-				if (mForceUpdate) {
+				if (mForceUpdate || !manager.isUpToDate()) {
 					manager.updateCache(getContext().getContentResolver());
 				}
 				commentaires = manager.getAll(getContext().getContentResolver(), mLigne.getCode(), mSens.code, null);

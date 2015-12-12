@@ -29,6 +29,7 @@ import net.naonedbus.intent.ParamIntent;
 import net.naonedbus.manager.impl.UpdaterManager;
 import net.naonedbus.manager.impl.UpdaterManager.UpdateType;
 import net.naonedbus.service.FavoriService;
+import net.naonedbus.utils.InfoDialogUtils;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -64,6 +65,8 @@ public class MainActivity extends MenuDrawerActivity {
 				final SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 				selectNavigationItem(Integer.parseInt(preferences.getString(NBApplication.PREF_NAVIGATION_HOME, "0")));
 			}
+
+			showServerNotice();
 		}
 
 	}
@@ -76,6 +79,14 @@ public class MainActivity extends MenuDrawerActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void showServerNotice() {
+		if (InfoDialogUtils.isNotAlreadyShown(this, R.raw.server_notice)) {
+			final Intent intent = new Intent(this, WebViewActivity.class);
+			intent.putExtra(WebViewActivity.PARAM_RAW_ID, R.raw.server_notice);
+			startActivity(intent);
 		}
 	}
 

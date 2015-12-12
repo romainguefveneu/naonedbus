@@ -61,7 +61,8 @@ public class ParcoursFragment extends CustomListFragment {
 		@Override
 		public void onLoadFinished(Loader<List<Attente>> arg0, List<Attente> data) {
 			mAttentes.clear();
-			mAttentes.addAll(data);
+			if (data != null)
+				mAttentes.addAll(data);
 
 			mParcoursAdapter.notifyDataSetChanged();
 

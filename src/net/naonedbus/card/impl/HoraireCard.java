@@ -29,6 +29,7 @@ import java.util.Map.Entry;
 import net.naonedbus.BuildConfig;
 import net.naonedbus.R;
 import net.naonedbus.activity.impl.HorairesActivity;
+import net.naonedbus.activity.impl.WebViewActivity;
 import net.naonedbus.bean.Arret;
 import net.naonedbus.bean.horaire.Horaire;
 import net.naonedbus.card.Card;
@@ -96,6 +97,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	private final LayoutInflater mLayoutInflater;
 	private ViewGroup mTerminusView;
 
+	private boolean mHasSchedules;
+
 	public HoraireCard(final Context context, final LoaderManager loaderManager, final FragmentManager fragmentManager,
 			final Arret arret) {
 		super(context, loaderManager, fragmentManager, R.string.card_horaires_title, R.layout.card_horaire);
@@ -126,10 +129,19 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 	@Override
 	protected Intent getMoreIntent() {
-		final Intent intent = new Intent(getContext(), HorairesActivity.class);
-		intent.putExtra(HorairesActivity.PARAM_ARRET, mArret);
-		intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_horaires);
-		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_list);
+		final Intent intent;
+		if (mHasSchedules) {
+			intent = new Intent(getContext(), HorairesActivity.class);
+			intent.putExtra(HorairesActivity.PARAM_ARRET, mArret);
+			intent.putExtra(Intent.EXTRA_TITLE, R.string.card_more_horaires);
+			intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_list);
+		} else {
+			intent = new Intent(getContext(), WebViewActivity.class);
+			intent.putExtra(WebViewActivity.PARAM_RAW_ID, R.raw.server_notice);
+			intent.putExtra(Intent.EXTRA_TITLE, R.string.server_notice_title);
+			intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, R.drawable.ic_card_warning);
+		}
+
 		return intent;
 	}
 
@@ -228,7 +240,6 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 	@Override
 	public void onLoadFinished(final Loader<List<Horaire>> loader, final List<Horaire> horaires) {
 		if (horaires != null && !horaires.isEmpty()) {
-
 			final DateTime now = new DateTime().withSecondOfMinute(0).withMillisOfSecond(0);
 
 			int minutes;
@@ -283,7 +294,8 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 
 				if (indexView > 0) {
 					minutes = Minutes.minutesBetween(now,
-							new DateTime(horaire.getHoraire()).withSecondOfMinute(0).withMillisOfSecond(0)).getMinutes();
+							new DateTime(horaire.getHoraire()).withSecondOfMinute(0).withMillisOfSecond(0))
+							.getMinutes();
 
 					if (minutes > 60) {
 						delai = getString(R.string.msg_depart_heure_short, minutes / 60);
@@ -310,8 +322,10 @@ public class HoraireCard extends Card<List<Horaire>> implements OnArretChangeLis
 				mTerminusView.addView(textView);
 			}
 
+			mHasSchedules = true;
 			showContent();
 		} else {
+			mHasSchedules = false;
 			showMessage(R.string.msg_nothing_horaires);
 		}
 	}
