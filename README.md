@@ -1,4 +1,4 @@
-A propos
+À propos
 =========
 
 ![favoris](https://raw.github.com/romainguefveneu/naonedbus/master/res/drawable-nodpi/tuto_favoris.png)
@@ -7,7 +7,7 @@ A propos
 Naonedbus est une application gratuite et open source vous permettant de consulter les horaires du réseau Tan à Nantes, 
 ainsi que la position et la disponibilité des parkings de la ville.
 
-[![Get it on Google Play](https://developer.android.com/images/brand/fr_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=net.naonedbus)
+[![Get it on Google Play Store](https://developer.android.com/images/brand/fr_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=net.naonedbus)
 
 Licence
 ========
