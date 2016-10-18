@@ -1,3 +1,6 @@
+[DEPRECATED]
+Cette version n'est plus maintenue.
+
 A propos
 =========
 
